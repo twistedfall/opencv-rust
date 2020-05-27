@@ -2917,6 +2917,7 @@ pub fn get_elem_size(typ: i32) -> Result<size_t> {
 	unsafe { sys::cv_getElemSize_int(typ) }.into_result()
 }
 
+#[cfg(not(target_os = "windows"))]
 pub fn get_impl(impl_: &mut core::Vector::<i32>, fun_name: &mut core::Vector::<String>) -> Result<i32> {
 	unsafe { sys::cv_getImpl_vector_int_X_vector_String_X(impl_.as_raw_mut_VectorOfi32(), fun_name.as_raw_mut_VectorOfString()) }.into_result()
 }
@@ -9814,6 +9815,7 @@ impl MatConstIterator {
 		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), &_pt) }.into_result().map(|ptr| unsafe { core::MatConstIterator::from_raw(ptr) })
 	}
 	
+	#[cfg(not(target_os = "windows"))]
 	/// constructor that sets the iterator to the specified element of the matrix
 	pub fn new_slice(_m: &core::Mat, _idx: &i32) -> Result<core::MatConstIterator> {
 		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(_m.as_raw_Mat(), _idx) }.into_result().map(|ptr| unsafe { core::MatConstIterator::from_raw(ptr) })
@@ -12887,6 +12889,7 @@ impl SparseMatIterator {
 		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat()) }.into_result().map(|ptr| unsafe { core::SparseMatIterator::from_raw(ptr) })
 	}
 	
+	#[cfg(not(target_os = "windows"))]
 	/// the full constructor setting the iterator to the specified sparse matrix element
 	pub fn new_1(_m: &mut core::SparseMat, idx: &i32) -> Result<core::SparseMatIterator> {
 		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(_m.as_raw_mut_SparseMat(), idx) }.into_result().map(|ptr| unsafe { core::SparseMatIterator::from_raw(ptr) })

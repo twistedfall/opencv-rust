@@ -547,6 +547,7 @@ mod core_sys {
 		pub fn cv_getCPUTickCount() -> Result<i64>;
 		pub fn cv_getElemSize_int(typ: i32) -> Result<size_t>;
 		pub fn cv_getHardwareFeatureName_int(feature: i32) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_getImpl_vector_int_X_vector_String_X(impl_: *mut c_void, fun_name: *mut c_void) -> Result<i32>;
 		pub fn cv_getNumThreads() -> Result<i32>;
 		pub fn cv_getNumberOfCPUs() -> Result<i32>;
@@ -1034,6 +1035,7 @@ mod core_sys {
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX(_m: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m: *const c_void, _row: i32, _col: i32) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m: *const c_void, _pt: *const core::Point) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(_m: *const c_void, _idx: *const i32) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatConstIteratorX(it: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_operatorX_const(instance: *const c_void) -> Result<*const u8>;
@@ -1298,6 +1300,7 @@ mod core_sys {
 		pub fn cv_SparseMatConstIterator_seekEnd(instance: *mut c_void) -> Result_void;
 		pub fn cv_SparseMatIterator_SparseMatIterator() -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m: *mut c_void) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(_m: *mut c_void, idx: *const i32) -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorX(it: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_node_const(instance: *const c_void) -> Result<*mut c_void>;
@@ -1817,6 +1820,7 @@ mod dnn_sys {
 		pub fn cv_dnn_BNLLLayer_create_const_LayerParamsX(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_BackendNode_backendId_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_BackendNode_setBackendId_int(instance: *mut c_void, val: i32) -> Result_void;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_dnn_BackendNode_BackendNode_int(backend_id: i32) -> Result<*mut c_void>;
 		pub fn cv_dnn_BackendWrapper_backendId_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_BackendWrapper_setBackendId_int(instance: *mut c_void, val: i32) -> Result_void;
@@ -2974,6 +2978,7 @@ mod imgproc_sys {
 		pub fn cv_getPerspectiveTransform_const__InputArrayX_const__InputArrayX_int(src: *const c_void, dst: *const c_void, solve_method: i32) -> Result<*mut c_void>;
 		pub fn cv_getRectSubPix_const__InputArrayX_Size_Point2f_const__OutputArrayX_int(image: *const c_void, patch_size: *const core::Size, center: *const core::Point2f, patch: *const c_void, patch_type: i32) -> Result_void;
 		pub fn cv_getRotationMatrix2D_Point2f_double_double(center: *const core::Point2f, angle: f64, scale: f64) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_getRotationMatrix2D__Point2f_double_double(center: *const core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d>;
 		pub fn cv_getStructuringElement_int_Size_Point(shape: i32, ksize: *const core::Size, anchor: *const core::Point) -> Result<*mut c_void>;
 		pub fn cv_getTextSize_const_StringX_int_double_int_intX(text: *const c_char, font_face: i32, font_scale: f64, thickness: i32, base_line: *mut i32) -> Result<core::Size>;
@@ -3892,7 +3897,9 @@ mod stitching_sys {
 	use super::*;
 
 	extern "C" {
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_createStitcherScans_bool(try_use_gpu: bool) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_createStitcher_bool(try_use_gpu: bool) -> Result<*mut c_void>;
 		pub fn cv_detail_computeImageFeatures_const_Ptr_Feature2D_X_const__InputArrayX_ImageFeaturesX_const__InputArrayX(features_finder: *const c_void, image: *const c_void, features: *mut c_void, mask: *const c_void) -> Result_void;
 		pub fn cv_detail_computeImageFeatures_const_Ptr_Feature2D_X_const__InputArrayX_vector_ImageFeatures_X_const__InputArrayX(features_finder: *const c_void, images: *const c_void, features: *mut c_void, masks: *const c_void) -> Result_void;
@@ -4410,7 +4417,9 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_PPF3DDetector_setSearchParams_double_double_bool(instance: *mut c_void, position_threshold: f64, rotation_threshold: f64, use_weighted_clustering: bool) -> Result_void;
 		pub fn cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatX(instance: *mut c_void, model: *const c_void) -> Result_void;
 		pub fn cv_ppf_match_3d_PPF3DDetector_match_const_MatX_vector_Pose3DPtr_X_double_double(instance: *mut c_void, scene: *const c_void, results: *mut c_void, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result_void;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeX(instance: *mut c_void, fn_: *const c_void) -> Result_void;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageX(instance: *const c_void, fs: *mut c_void) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_alpha_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_ppf_match_3d_Pose3D_setAlpha_double(instance: *mut c_void, val: f64) -> Result_void;

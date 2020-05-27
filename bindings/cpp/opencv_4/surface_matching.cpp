@@ -72,19 +72,23 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result_void cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeX(cv::ppf_match_3d::PPF3DDetector* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
+	#endif
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result_void cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageX(const cv::ppf_match_3d::PPF3DDetector* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
+	#endif
 	
 	Result<double> cv_ppf_match_3d_Pose3D_alpha_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {

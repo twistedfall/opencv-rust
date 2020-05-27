@@ -1,3 +1,15 @@
+* 0.38.0
+  * Fix crosscompilation when targeting Windows platform.
+  * Fix generation of bigger binaries
+
+* 0.37.0
+  * Add `clang-runtime` feature for compatiblity with dependencies that require `clang` or `clang-sys` that
+    enable its `runtime` feature unconditionally (like `bindgen`).
+  * Add `OPENCV_CLANG_STDLIB_PATH` environment variable to allow working around header detection of libclang
+    when it fails (should fix #125).
+  * Stop using synchronization primitives for callback handling.
+  * Improve cmake based library discovery.
+
 * 0.36.0
   * Large internal rework of `Matx`, `PtrOf…` and `VectorOf…` structs. They have been made generic and their
     code generation have been mostly moved to Rust macros. This change should have no user facing consequences,

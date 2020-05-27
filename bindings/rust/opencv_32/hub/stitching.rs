@@ -98,6 +98,7 @@ pub enum Stitcher_Status {
 	ERR_CAMERA_PARAMS_ADJUST_FAIL = 3 as isize,
 }
 
+#[cfg(not(target_os = "windows"))]
 /// ## C++ default parameters
 /// * try_use_gpu: false
 pub fn create_stitcher(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {

@@ -788,6 +788,7 @@ impl crate::dnn::BackendNodeTrait for BackendNode {
 }
 
 impl BackendNode {
+	#[cfg(not(target_os = "windows"))]
 	pub fn new(backend_id: i32) -> Result<crate::dnn::BackendNode> {
 		unsafe { sys::cv_dnn_BackendNode_BackendNode_int(backend_id) }.into_result().map(|ptr| unsafe { crate::dnn::BackendNode::from_raw(ptr) })
 	}

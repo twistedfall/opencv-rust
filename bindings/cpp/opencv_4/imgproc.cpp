@@ -632,12 +632,14 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result<cv::Matx23d> cv_getRotationMatrix2D__Point2f_double_double(const cv::Point2f* center, double angle, double scale) {
 		try {
 			cv::Matx23d ret = cv::getRotationMatrix2D_(*center, angle, scale);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Matx23d>)
 	}
+	#endif
 	
 	Result<cv::Mat*> cv_getStructuringElement_int_Size_Point(int shape, const cv::Size* ksize, const cv::Point* anchor) {
 		try {

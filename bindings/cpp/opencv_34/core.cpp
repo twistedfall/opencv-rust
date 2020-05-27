@@ -555,12 +555,14 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result<int> cv_getImpl_vector_int_X_vector_String_X(std::vector<int>* impl, std::vector<cv::String>* funName) {
 		try {
 			int ret = cv::getImpl(*impl, *funName);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
+	#endif
 	
 	Result<int> cv_getNumThreads() {
 		try {
@@ -4026,12 +4028,14 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(const cv::Mat* _m, const int* _idx) {
 		try {
 			cv::MatConstIterator* ret = new cv::MatConstIterator(_m, _idx);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
+	#endif
 	
 	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatConstIteratorX(const cv::MatConstIterator* it) {
 		try {
@@ -5975,12 +5979,14 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(cv::SparseMat* _m, const int* idx) {
 		try {
 			cv::SparseMatIterator* ret = new cv::SparseMatIterator(_m, idx);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
+	#endif
 	
 	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorX(const cv::SparseMatIterator* it) {
 		try {
