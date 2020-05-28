@@ -998,6 +998,7 @@ fn main() -> Result<()> {
 	if features != 1 {
 		panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-4");
 	}
+	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
 	for &v in ENV_VARS.iter() {
 		eprintln!("===   {} = {:?}", v, env::var_os(v));
