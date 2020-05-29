@@ -110,7 +110,7 @@ impl<'tu, 'g> Field<'tu, 'g> {
 	pub fn parent(&self) -> Class<'tu, 'g> {
 		let parent_entity = self.entity.get_semantic_parent().expect("Can't get parent of field");
 		match parent_entity.get_kind() {
-			EntityKind::ClassDecl | EntityKind::StructDecl => {
+			EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
 				Class::new(parent_entity, self.gen_env)
 			},
 			_ => {

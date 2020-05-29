@@ -694,11 +694,7 @@ impl Element for Func<'_, '_> {
 					let ret = self.return_type();
 					ret.is_ignored() || ret.as_class().map_or(false, |cls| cls.is_abstract())
 				}
-			|| if let Some(&"-") = settings::FUNC_RENAME.get(identifier.as_ref()) {
-			true
-		} else {
-			false
-		}
+			|| settings::FUNC_RENAME.get(identifier.as_ref()).filter(|&&n| n == "-").is_some()
 	}
 
 	fn is_system(&self) -> bool {

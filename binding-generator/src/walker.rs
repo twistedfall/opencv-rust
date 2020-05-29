@@ -55,7 +55,8 @@ impl<'tu> EntityWalker<'tu> {
 				}
 				EntityKind::Constructor | EntityKind::ConversionFunction | EntityKind::Destructor
 				| EntityKind::Method | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate
-				| EntityKind::UsingDeclaration | EntityKind::UsingDirective => {
+				| EntityKind::UsingDeclaration | EntityKind::UsingDirective | EntityKind::TypeAliasTemplateDecl
+				| EntityKind::TypeAliasDecl => {
 					/* ignoring */ true
 				}
 				_ => {

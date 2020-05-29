@@ -38,7 +38,7 @@ impl<'tu, 'g> SmartPtr<'tu, 'g> {
 	}
 
 	pub fn pointee(&self) -> TypeRef<'tu, 'g> {
-		self.type_ref().template_args().into_iter()
+		self.type_ref().template_specialization_args().into_iter()
 			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
 				Some(type_ref)
 			} else {

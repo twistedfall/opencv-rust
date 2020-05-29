@@ -295,9 +295,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}
 
 			TypeKind::FunctionPrototype => {
-				Kind::Function(
-					Function::new(self.type_ref, self.parent_entity.expect("Can't get parent entity in function prototype"), self.gen_env)
-				)
+				if let Some(parent) = self.parent_entity {
+					Kind::Function(Function::new(self.type_ref, parent, self.gen_env))
+				} else {
+					Kind::Ignored
+				}
 			}
 
 			TypeKind::ConstantArray | TypeKind::IncompleteArray => {
@@ -311,7 +313,12 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					self.type_ref.get_size(),
 				)
 			}
+
 			TypeKind::MemberPointer => {
+				Kind::Ignored
+			}
+
+			TypeKind::DependentSizedArray => {
 				Kind::Ignored
 			}
 
@@ -821,7 +828,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn template_args(&self) -> Vec<TemplateArg<'tu, 'g>> {
+	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu, 'g>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
 				vec![]
@@ -1011,7 +1018,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	pub fn rust_tpl_decl(&self, full: bool) -> String {
-		let generic_types = self.template_args();
+		let generic_types = self.template_specialization_args();
 		if !generic_types.is_empty() {
 			let mut constant_suffix = String::new();
 			let generic_types = generic_types.iter()
@@ -1509,7 +1516,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	fn cpp_tpl_decl(&self, full: bool) -> String {
-		let generic_types = self.template_args();
+		let generic_types = self.template_specialization_args();
 		if !generic_types.is_empty() {
 			let generic_types = generic_types.iter()
 				.filter_map(|t| {
@@ -1719,7 +1726,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 			.field("props", &props)
 			.field("kind", &self.kind())
 			.field("type_hint", &self.type_hint)
-			.field("template_types", &self.template_args())
+			.field("template_types", &self.template_specialization_args())
 			.finish()
 	}
 }
