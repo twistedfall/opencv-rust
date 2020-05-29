@@ -31,10 +31,8 @@ use dunce::canonicalize;
 
 pub use class::Class;
 pub use constant::Const;
-use element::{DefaultElement, EntityElement};
-pub use element::{Element, GeneratedElement};
-use element::{is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
-use entity::EntityExt;
+pub use element::{DefaultElement, Element, EntityElement, GeneratedElement, is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
+pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
 pub use func::{Func, FunctionTypeHint};
@@ -42,7 +40,7 @@ use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
 pub use generator::{Generator, GeneratorVisitor};
-use generator_env::{ExportConfig, GeneratorEnv};
+pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 #[allow(unused)]
 use memoize::{memo, memo_map, Memoize, MemoizeMap};
@@ -53,7 +51,7 @@ pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use type_ref::{Constness, DependentTypeMode, TypeRef, TypeRefTypeHint};
 pub use typedef::Typedef;
 use vector::Vector;
-use walker::{EntityWalker, EntityWalkerVisitor};
+pub use walker::{EntityWalker, EntityWalkerVisitor};
 
 mod class;
 pub mod comment;

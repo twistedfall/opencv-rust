@@ -28,8 +28,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### calib3d ###
 	"cv_LMSolver_create_const_Ptr_Callback_X_int_double" => "+_ext",
-	"cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_const_CirclesGridFinderParametersX" => "+_params",
-	"cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_CirclesGridFinderParameters" => "+_params", // 3.4
 	"cv_findEssentialMat_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX" => "+_matrix",
 	"cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double" => "+_mask",
 	"cv_findHomography_const__InputArrayX_const__InputArrayX_int_double_const__OutputArrayX_int_double" => "+_ext",
@@ -72,7 +70,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_MatOp_divide_const_double_const_MatExprX_MatExprX" => "+_f64",
 	"cv_MatOp_multiply_const_const_MatExprX_double_MatExprX" => "+_f64",
 	"cv_MatOp_subtract_const_const_ScalarX_const_MatExprX_MatExprX" => "+_scalar",
-	"cv_MatOp_type_const_MatExpr" => "typ",
 	"cv_Mat_Mat_Size_int" => "+_size",
 	"cv_Mat_Mat_Size_int_const_ScalarX" => "+_size_with_default",
 	"cv_Mat_Mat_Size_int_voidX_size_t" => "+_size_with_data",
@@ -250,13 +247,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_operatorX_const_MatX_double" => "+_mat_f64",
 	"cv_operatorX_double_const_MatExprX" => "+_f64_matexpr",
 	"cv_operatorX_double_const_MatX" => "+_f64_mat",
-	"cv_read_FileNode_Range_Range" => "+_range",
-	"cv_read_FileNode_VectorOfDMatch_VectorOfDMatch" => "+_dmatch_vec",
-	"cv_read_FileNode_VectorOfKeyPoint_VectorOfKeyPoint" => "+_keypoint_vec",
-	"cv_read_FileNode_bool_bool" => "+_bool",
-	"cv_read_FileNode_short_short" => "+_i16",
-	"cv_read_FileNode_uchar_uchar" => "+_u8",
-	"cv_read_FileNode_ushort_ushort" => "+_u16",
 	"cv_read_const_FileNodeX_DMatchX_const_DMatchX" => "+_dmatch",
 	"cv_read_const_FileNodeX_KeyPointX_const_KeyPointX" => "+_keypoint",
 	"cv_read_const_FileNodeX_MatX_const_MatX" => "+_mat",
@@ -284,53 +274,29 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_write_FileStorageX_const_StringX_double" => "+_f64",
 	"cv_write_FileStorageX_const_StringX_float" => "+_f32",
 	"cv_write_FileStorageX_const_StringX_int" => "+_i32",
-	"cv_write_FileStorage_DMatch" => "+_dmatch",
-	"cv_write_FileStorage_KeyPoint" => "+_keypoint",
-	"cv_write_FileStorage_Range" => "+_range",
-	"cv_write_FileStorage_String_DMatch" => "+_dmatch",
-	"cv_write_FileStorage_String_KeyPoint" => "+_keypoint",
-	"cv_write_FileStorage_String_Range" => "+_range",
-	"cv_write_FileStorage_VectorOfDMatch" => "+_dmatch_vec",
-	"cv_write_FileStorage_VectorOfKeyPoint" => "+_keypoint_vec",
 
 	"cv_AsyncArray__getImpl_const" => "-",
 	"cv_MatExpr_op_const" => "-", // fixme implement PointerOf types
 	"cv_Mat_Mat_const_MatX_const_RangeX" => "-", // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
-	"cv_Mat_Mat_int_const_int_X_int" => "-", // duplicate of cv_Mat_Mat_VectorOfint_int, but with pointers
-	"cv_Mat_Mat_int_const_int_X_int_Scalar" => "-", // duplicate of cv_Mat_Mat_VectorOfint_int_Scalar, but with pointers
-	"cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X" => "-", // duplicate of cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X, but with pointers
 	"cv_Mat_copySize_const_MatX" => "-", // internal function
 	"cv_Mat_push_back__const_voidX" => "-", // internal method
 	"cv_Mat_setSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
 	"cv_Mat_setStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
-	"cv_Mat_set_size_MatSize" => "-", // doesn't allow writing
-	"cv_Mat_set_step_MatStep" => "-", // same as above
 	"cv_UMat_UMat_const_UMatX_const_RangeX" => "-", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 	"cv_UMat_copySize_const_UMatX" => "-", // internal function
 	"cv_UMat_setSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
 	"cv_UMat_setStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
-	"cv_UMat_set_size_MatSize" => "-", // doesn't allow writing
-	"cv_UMat_set_step_MatStep" => "-", // same as above
 	"cv_addImpl_int_const_charX" => "-",
 	"cv_calcCovarMatrix_const_MatX_int_MatX_MatX_int_int" => "-", // duplicate of cv_calcCovarMatrix_const__InputArrayX_const__OutputArrayX_const__InputOutputArrayX_int_int, but with pointers
 	"cv_cv_abs_short" => "-",
-	"cv_cv_abs_uchar" => "-",
 	"cv_detail_depthToString__int" => "-", // detail function
 	"cv_detail_typeToString__int" => "-", // detail function
-	"cv_double_const" => "-",
 	"cv_fastFree_voidX" => "-", // manual memory allocation
 	"cv_fastMalloc_size_t" => "-", // manual memory allocation
-	"cv_float_const" => "-",
 	"cv_format_const_charX" => "-", // 3.2 accepts varargs, duplicate definition
 	"cv_hconcat_const_MatX_size_t_const__OutputArrayX" => "-", // duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
-	"cv_int_const" => "-",
 	"cv_mixChannels_const_MatX_size_t_MatX_size_t_const_intX_size_t" => "-", // duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
 	"cv_ocl_ProgramSource_ProgramSource_const_charX" => "-", // has duplicate with String
-	"cv_ocl_internal_isCLBuffer_UMat" => "-",
-	"cv_ocl_internal_isOpenCLForced" => "-",
-	"cv_ocl_internal_isPerformanceCheckBypassed" => "-",
-	"cv_operator_std_string_const" => "-",
-	"cv_read_FileNode_schar_schar" => "-",
 	"cv_setImpl_int" => "-",
 	"cv_setUseCollection_bool" => "-",
 	"cv_useCollection" => "-",
@@ -347,7 +313,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_dnn_DictValue_get_double_const_int" => "+_f64",
 	"cv_dnn_DictValue_get_int64_t_const_int" => "+_i64",
 	"cv_dnn_DictValue_get_int_const_int" => "+_i32",
-	"cv_dnn_Dict_ptr_String" => "ptr_mut",
+	"cv_dnn_Dict_ptr_const_StringX" => "+_mut",
 	"cv_dnn_Dict_set_cv_String_const_StringX_const_StringX" => "+_str",
 	"cv_dnn_Dict_set_double_const_StringX_const_doubleX" => "+_f64",
 	"cv_dnn_Dict_set_int64_t_const_StringX_const_int64_tX" => "+_i64",
@@ -362,7 +328,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_dnn_Net_getMemoryConsumption_const_int_const_vector_MatShape_X_size_tX_size_tX" => "+_for_layer",
 	"cv_dnn_blobFromImage_const__InputArrayX_const__OutputArrayX_double_const_SizeX_const_ScalarX_bool_bool_int" => "+_to",
 	"cv_dnn_blobFromImages_const__InputArrayX_const__OutputArrayX_double_Size_const_ScalarX_bool_bool_int" => "+_to",
-	"cv_dnn_clamp_Range_int" => "clamp_range",
 	"cv_dnn_readNetFromCaffe_const_charX_size_t_const_charX_size_t" => "+_str",
 	"cv_dnn_readNetFromCaffe_const_vector_unsigned_char_X_const_vector_unsigned_char_X" => "+_buffer",
 	"cv_dnn_readNetFromDarknet_const_charX_size_t_const_charX_size_t" => "+_str",
@@ -378,16 +343,13 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	// ### face ###
 	"cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArrayX__const_cv__OutputArrayX__voidX__voidX" => "-", // fixme
 	"cv_face_FacemarkLBF_Params_pupils" => "-", // fixme array of vectors
-	"cv_face_FacemarkLBF_Params_setPupils_vector_int__X__2_" => "-", // fixme array of vectors
 
 	// ### features2d ###
 	"cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool" => "AGAST",
 	"cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool_DetectorType" => "AGAST_with_type",
 	"cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool_int" => "AGAST_with_type", // 3.x only
-	"cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorExtractor_X_const_Ptr_DescriptorMatcher_X" => "+_with_dextractor",
 	"cv_BOWImgDescriptorExtractor_compute2_const_MatX_vector_KeyPoint_X_MatX" => "compute2",
 	"cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_vector_vector_int__X_MatX" => "+_desc",
-	"cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int" => "+_with_criteria",
 	"cv_BOWTrainer_cluster_const_const_MatX" => "+_with_descriptors", // 3.2
 	"cv_BRISK_create_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X" => "+_with_pattern",
 	"cv_BRISK_create_int_int_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X" => "+_with_pattern_threshold_octaves",
@@ -436,7 +398,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_calcHist_const_MatX_int_const_intX_const__InputArrayX_SparseMatX_int_const_intX_const_floatXX_bool_bool" => "-", // slice pointers
 	"cv_calcHist_const_MatX_int_const_intX_const__InputArrayX_const__OutputArrayX_int_const_intX_const_floatXX_bool_bool" => "-", // slice pointers
 	"cv_fillConvexPoly_MatX_const_PointX_int_const_ScalarX_int_int" => "-", // 3.2
-	"cv_fillConvexPoly_Mat_const_Point_X_int_Scalar_int_int" => "-", // duplicate of cv_fillConvexPoly__InputOutputArrayX__InputArrayX_Scalar_int_int, but with pointers
 	"cv_fillConvexPoly_const__InputOutputArrayX_const_PointX_int_const_ScalarX_int_int" => "-",
 	"cv_fillPoly_MatX_const_PointXX_const_intX_int_const_ScalarX_int_int_Point" => "-", // 3.2
 	"cv_fillPoly_const__InputOutputArrayX_const_PointXX_const_intX_int_const_ScalarX_int_int_Point" => "-",
@@ -454,8 +415,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	// ### objdetect ###
 	"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size" => "+_num",
 	"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool" => "+_levels",
-	"cv_CascadeClassifier_detectMultiScale__InputArrayX_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool" => "+_levels",
-	"cv_CascadeClassifier_detectMultiScale__InputArrayX_VectorOfRect_VectorOfint_double_int_int_Size_Size" => "+_num",
 	"cv_HOGDescriptor_HOGDescriptor_const_StringX" => "+_from_file",
 	"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool" => "+_weights",
 	"cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X" => "+_weights", // 3.2 3.4
@@ -468,7 +427,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	// ### photo ###
 	"cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_const_vector_float_X_int_int_int" => "+_vec",
 	"cv_fastNlMeansDenoising_const__InputArrayX_const__OutputArrayX_const_vector_float_X_int_int_int" => "+_vec",
-	"cv_fastNlMeansDenoising_Mat_Mat_float_int_int" => "+_window", // 3.x only?
 	"cv_AlignMTB_process_const__InputArrayX_vector_Mat_X_const__InputArrayX_const__InputArrayX" => "+_with_response",
 	"cv_MergeDebevec_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX" => "+_with_response",
 	"cv_MergeMertens_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX" => "+_with_response",
@@ -487,7 +445,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_text_ERStat_setPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
 
 	// ### videoio ###
-	"cv_VideoCapture_VideoCapture_String_int" => "from_file_with_backend", // 3.2
 	"cv_VideoCapture_VideoCapture_const_StringX" => "from_file_default", // 3.2
 	"cv_VideoCapture_VideoCapture_const_StringX_int" => "from_file",
 	"cv_VideoCapture_VideoCapture_int" => "+_default", // 3.4
@@ -500,9 +457,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### videostab ###
 	"cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatX_const_MatX_boolX" => "+_mat",
-
-	// ### xfeatures2d ###
-	"cv_xfeatures2d_AffineFeature2D_create_Ptr_FeatureDetector__Ptr_DescriptorExtractor_" => "+_with_extractor",
 });
 
 pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashmap! {
@@ -672,8 +626,8 @@ pub static FUNC_UNSAFE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv_Mat_ptr_int_int",
 	"cv_Mat_ptr_int_int_int",
 	// pointer to internal data
-	"cv_dnn_Dict_ptr_String",
-	"cv_dnn_Dict_ptr_const_String",
+	"cv_dnn_Dict_ptr_const_StringX",
+	"cv_dnn_Dict_ptr_const_const_StringX",
 });
 
 pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
@@ -804,7 +758,7 @@ pub enum SliceHint {
 	ConvertSlice(&'static str, &'static str, usize),
 }
 
-/// rust_leafname
+/// cpp_fullname
 pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), SliceHint>> = Lazy::new(|| hashmap! {
 	("cv::Mat::at", 1) => SliceHint::ForceSlice("idx"),
 	("cv::Mat::ptr", 1) => SliceHint::ForceSlice("idx"),
