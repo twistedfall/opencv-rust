@@ -47,12 +47,11 @@ pub trait GeneratorVisitor {
 }
 
 #[derive(Debug)]
-pub struct Generator<'m, 'c> {
+pub struct Generator<'g> {
 	clang_include_dirs: Vec<PathBuf>,
 	opencv_include_dir: PathBuf,
 	src_cpp_dir: PathBuf,
-	module: &'m str,
-	clang: &'c Clang,
+	clang: &'g Clang,
 }
 
 struct OpenCVWalker<'tu, V: GeneratorVisitor> {
@@ -312,8 +311,8 @@ impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, V> {
 	}
 }
 
-impl<'m, 'c> Generator<'m, 'c> {
-	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, module: &'m str, clang: &'c Clang) -> Self {
+impl<'g> Generator<'g> {
+	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, clang: &'g Clang) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
 		if let Some(clang_stdlib_include_dir) = clang_stdlib_include_dir {
@@ -323,7 +322,6 @@ impl<'m, 'c> Generator<'m, 'c> {
 			clang_include_dirs,
 			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
-			module,
 			clang,
 		}
 	}
@@ -340,21 +338,31 @@ impl<'m, 'c> Generator<'m, 'c> {
 		args
 	}
 
-	pub fn process_file<V: GeneratorVisitor>(&self, file: &Path, visitor: V) {
+	pub fn process_module(&self, module: &str, entity_processor: impl FnOnce(Entity)) {
 		let index = Index::new(&self.clang, true, false);
-		let top = index.parser(canonicalize(file).expect("Can't canonicalize file"))
+		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
+		if !module_file.exists() {
+			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
+		}
+		let root_tu = index.parser(module_file)
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse().expect("Cannot parse");
-		let top_entity = top.get_entity();
-		let opencv_walker = OpenCVWalker::new(
-			&self.opencv_include_dir,
-			visitor,
-			GeneratorEnv::new(top_entity, self.module),
-		);
-		let walker = EntityWalker::new(top_entity);
-		walker.walk_opencv_entities(opencv_walker);
+		entity_processor(root_tu.get_entity());
+	}
+
+	pub fn process_opencv_module(&self, module: &str, visitor: impl GeneratorVisitor) {
+		self.process_module(module, |root_entity| {
+			let gen_env = GeneratorEnv::new(root_entity, module);
+			let opencv_walker = OpenCVWalker::new(
+				&self.opencv_include_dir,
+				visitor,
+				gen_env,
+			);
+			let walker = EntityWalker::new(root_entity);
+			walker.walk_opencv_entities(opencv_walker);
+		});
 	}
 }
 

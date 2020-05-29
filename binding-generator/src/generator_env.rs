@@ -42,11 +42,21 @@ impl ExportConfig {
 
 type ExportIdx = (PathBuf, u32, u32);
 
-struct CacheFiller<'ge, 'tu> {
+struct DBPopulator<'ge, 'tu> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for CacheFiller<'_, 'tu> {
+impl DBPopulator<'_, '_> {
+	fn add_func_comment(&mut self, entity: Entity) {
+		let raw_comment = entity.get_comment().unwrap_or_default();
+		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
+			let name = entity.cpp_fullname().into_owned();
+			self.gen_env.func_comments.insert(name, comment::strip_comment_markers(&raw_comment));
+		}
+	}
+}
+
+impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
 			|| path.ends_with("ocvrs_resolve_types.hpp")
@@ -71,7 +81,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for CacheFiller<'_, 'tu> {
 //						}
 						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
-							self.gen_env.add_func_comment(c);
+							self.add_func_comment(c);
 						}
 						_ => {}
 					}
@@ -79,7 +89,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for CacheFiller<'_, 'tu> {
 				});
 			}
 			EntityKind::FunctionDecl => {
-				self.gen_env.add_func_comment(entity);
+				self.add_func_comment(entity);
 			}
 			_ => {}
 		}
@@ -88,7 +98,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for CacheFiller<'_, 'tu> {
 }
 
 pub struct GeneratorEnv<'tu> {
-	root_entity: Entity<'tu>,
 	module: &'tu str,
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	pub func_names: NamePool,
@@ -101,7 +110,6 @@ pub struct GeneratorEnv<'tu> {
 impl<'tu> GeneratorEnv<'tu> {
 	pub fn new(root_entity: Entity<'tu>, module: &'tu str) -> Self {
 		let mut out = Self {
-			root_entity,
 			module,
 			export_map: HashMap::with_capacity(1024),
 			func_names: NamePool::with_capacity(512),
@@ -110,21 +118,9 @@ impl<'tu> GeneratorEnv<'tu> {
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			type_resolve_cache: HashMap::with_capacity(32),
 		};
-		out.fill_caches();
+		let walker = EntityWalker::new(root_entity);
+		walker.walk_opencv_entities(DBPopulator { gen_env: &mut out });
 		out
-	}
-
-	fn fill_caches(&mut self) {
-		let walker = EntityWalker::new(self.root_entity);
-		walker.walk_opencv_entities(CacheFiller { gen_env: self });
-	}
-
-	fn add_func_comment(&mut self, entity: Entity<'tu>) {
-		let raw_comment = entity.get_comment().unwrap_or_default();
-		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
-			let name = entity.cpp_fullname().into_owned();
-			self.func_comments.insert(name, comment::strip_comment_markers(&raw_comment));
-		}
 	}
 
 	pub fn module(&self) -> &str {

@@ -102,10 +102,6 @@ mod generator {
 		let start = Instant::now();
 		let shown_args = AtomicBool::new(false);
 		let build_func = |module: &String| {
-			let mut module_file = SRC_CPP_DIR.join(format!("{}.hpp", module));
-			if !module_file.exists() {
-				module_file = opencv_dir.join(format!("{}.hpp", module));
-			}
 			let bindings_writer = binding_generator::writer::RustBindingWriter::new(
 				&*SRC_CPP_DIR,
 				&*OUT_DIR,
@@ -115,11 +111,11 @@ mod generator {
 			);
 			let clang_stdlib_include_dir = env::var_os("OPENCV_CLANG_STDLIB_PATH")
 				.map(|p| PathBuf::from(p));
-			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, module, &clang);
+			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, &clang);
 			if !shown_args.compare_and_swap(false, true, Ordering::Relaxed) {
 				eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			}
-			gen.process_file(&module_file, bindings_writer);
+			gen.process_opencv_module(&module, bindings_writer);
 			println!("Generated: {}", module);
 		};
 

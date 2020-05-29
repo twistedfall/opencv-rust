@@ -20,12 +20,8 @@ fn main() {
 	let version = args.next().expect("5th argument must be OpenCV version");
 	let version = version.to_str().expect("Not a valid version");
 	let debug = args.next().map_or(false, |x| x == "1");
-	let mut module_file = src_cpp_dir.join(format!("{}.hpp", module));
-	if !module_file.exists() {
-		module_file = opencv_header_dir.join(format!("opencv2/{}.hpp", module));
-	}
 	let clang = Clang::new().expect("Cannot initialize clang");
 	let bindings_writer = RustBindingWriter::new(&src_cpp_dir, &out_dir, module, version, debug);
-	Generator::new(None, &opencv_header_dir, &src_cpp_dir, module, &clang)
-		.process_file(&module_file, bindings_writer);
+	Generator::new(None, &opencv_header_dir, &src_cpp_dir, &clang)
+		.process_opencv_module(&module, bindings_writer);
 }
