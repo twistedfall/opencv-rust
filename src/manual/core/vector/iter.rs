@@ -25,7 +25,8 @@ impl<T: VectorElement> Iterator for VectorIterator<T> where Vector<T>: VectorExt
 	}
 
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		(self.vec.len(), None)
+		let len = self.vec.len();
+		(len, Some(len))
 	}
 
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
@@ -33,11 +34,7 @@ impl<T: VectorElement> Iterator for VectorIterator<T> where Vector<T>: VectorExt
 	}
 }
 
-impl<T: VectorElement> ExactSizeIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {
-	fn len(&self) -> usize {
-		self.vec.len()
-	}
-}
+impl<T: VectorElement> ExactSizeIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
 
 impl<T: VectorElement> FusedIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
 
@@ -62,7 +59,8 @@ impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: Ve
 	}
 
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		(self.vec.len(), None)
+		let len = self.vec.len();
+		(len, Some(len))
 	}
 
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
@@ -70,10 +68,6 @@ impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: Ve
 	}
 }
 
-impl<T: VectorElement> ExactSizeIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {
-	fn len(&self) -> usize {
-		self.vec.len()
-	}
-}
+impl<T: VectorElement> ExactSizeIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
 
 impl<T: VectorElement> FusedIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
