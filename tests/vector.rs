@@ -382,6 +382,30 @@ fn iter() -> Result<()> {
 		}
 	}
 
+	{
+		let vec = VectorOfi32::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.into_iter();
+		let mut len = vec_iter.len();
+		assert_eq!(4, len);
+		while let Some(..) = vec_iter.next() {
+			len -= 1;
+			assert_eq!(len, vec_iter.len());
+			assert_eq!((len, Some(len)), vec_iter.size_hint());
+		}
+	}
+
+	{
+		let vec = VectorOfi32::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.iter();
+		let mut len = vec_iter.len();
+		assert_eq!(4, len);
+		while let Some(..) = vec_iter.next() {
+			len -= 1;
+			assert_eq!(len, vec_iter.len());
+			assert_eq!((len, Some(len)), vec_iter.size_hint());
+		}
+	}
+
 	Ok(())
 }
 

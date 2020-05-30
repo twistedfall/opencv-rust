@@ -4,6 +4,26 @@ use libc::size_t;
 
 use crate::core::{Vector, VectorElement, VectorExtern};
 
+impl<T: VectorElement> IntoIterator for Vector<T> where Vector<T>: VectorExtern<T> {
+	type Item = T;
+	type IntoIter = VectorIterator<T>;
+
+	#[inline]
+	fn into_iter(self) -> VectorIterator<T> {
+		Self::IntoIter::new(self)
+	}
+}
+
+impl<'i, T: VectorElement> IntoIterator for &'i Vector<T> where Vector<T>: VectorExtern<T> {
+	type Item = T;
+	type IntoIter = VectorRefIterator<'i, T>;
+
+	#[inline]
+	fn into_iter(self) -> VectorRefIterator<'i, T> {
+		self.iter()
+	}
+}
+
 pub struct VectorIterator<T: VectorElement> where Vector<T>: VectorExtern<T> {
 	vec: Vector<T>,
 	i: size_t,
@@ -25,7 +45,7 @@ impl<T: VectorElement> Iterator for VectorIterator<T> where Vector<T>: VectorExt
 	}
 
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		let len = self.vec.len();
+		let len = self.vec.len() - self.i;
 		(len, Some(len))
 	}
 
@@ -59,7 +79,7 @@ impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: Ve
 	}
 
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		let len = self.vec.len();
+		let len = self.vec.len() - self.i;
 		(len, Some(len))
 	}
 
