@@ -1,3 +1,7 @@
+* 0.39.0
+  * Iterators for `Vector` now correctly return remaining length in `size_hint` and `len` methods.
+  * Internal improvements and cleanups
+
 * 0.38.0
   * Fix crosscompilation when targeting Windows platform.
   * Fix generation of bigger binaries
