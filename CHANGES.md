@@ -1,3 +1,7 @@
+* 0.40.0
+  * Optimized dependencies, the crate has now 19 (including transitional) dependencies less.
+  * Fixed pre-generated bindings for version 3.4 that got left out in the previous release.
+
 * 0.39.0
   * Iterators for `Vector` now correctly return remaining length in `size_hint` and `len` methods.
   * Internal improvements and cleanups

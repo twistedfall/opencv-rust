@@ -1488,17 +1488,17 @@ pub trait DictTrait {
 	}
 	
 	/// If the @p key in the dictionary then returns pointer to its value, else returns NULL.
-	fn ptr(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
+	unsafe fn ptr_mut(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
 		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_ptr_const_StringX(self.as_raw_mut_Dict(), key.as_ptr()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		{ sys::cv_dnn_Dict_ptr_const_StringX(self.as_raw_mut_Dict(), key.as_ptr()) }.into_result().map(|ptr| { crate::dnn::DictValue::from_raw(ptr) })
 	}
 	
 	/// If the @p key in the dictionary then returns pointer to its value, else returns NULL.
 	/// 
 	/// ## Overloaded parameters
-	fn ptr_1(&self, key: &str) -> Result<crate::dnn::DictValue> {
+	unsafe fn ptr(&self, key: &str) -> Result<crate::dnn::DictValue> {
 		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_ptr_const_const_StringX(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		{ sys::cv_dnn_Dict_ptr_const_const_StringX(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|ptr| { crate::dnn::DictValue::from_raw(ptr) })
 	}
 	
 	/// If the @p key in the dictionary then returns its value, else an error will be generated.
