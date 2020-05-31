@@ -4,7 +4,7 @@ use std::{
 };
 use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign};
 
-use num::{NumCast, ToPrimitive};
+use num_traits::{NumCast, ToPrimitive};
 
 use crate::core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType};
 

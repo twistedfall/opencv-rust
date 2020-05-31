@@ -1,6 +1,6 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-use num::{NumCast, ToPrimitive};
+use num_traits::{NumCast, ToPrimitive};
 
 use crate::core::{Point_, ValidPointType};
 

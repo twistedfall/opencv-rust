@@ -3,7 +3,7 @@ use std::{
 	fmt,
 };
 
-use num::{One, Zero};
+use num_traits::{One, Zero};
 
 use crate::{
 	core::{self, Boxed, ToInputArray, ToInputOutputArray, ToOutputArray},

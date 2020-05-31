@@ -21,7 +21,7 @@ members = ["binding-generator"]
 
 [dependencies]
 libc = "0.2"
-num = "0.2"
+num-traits = "0.2"
 once_cell = "1.0"
 
 [features]
