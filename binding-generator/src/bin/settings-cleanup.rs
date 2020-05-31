@@ -99,7 +99,6 @@ fn main() {
 	let opencv_header_dirs = opencv_header_base_dir.read_dir().expect("Can't read opencv_header_base_dir")
 		.map(|p| p.expect("Bad path").path())
 		.filter(|p| p.is_dir());
-	let clang = Clang::new().expect("Cannot initialize clang");
 	let mut func_rename_unused = settings::FUNC_RENAME.keys().copied().collect::<HashSet<_>>();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
@@ -122,10 +121,11 @@ fn main() {
 					.and_then(|f| f.to_str())
 					.map(|f| f.to_string())
 			});
+		let clang = Clang::new().expect("Cannot initialize clang");
+		let gen = Generator::new(None, &opencv_header_dir, &src_cpp_dir, clang);
 		for module in modules {
 			println!("  {}", module);
-			Generator::new(None, &opencv_header_dir, &src_cpp_dir, &clang)
-				.process_module(&module, |root_entity| {
+			gen.process_module(&module, |root_entity| {
 					let gen_env = GeneratorEnv::new(root_entity, &module);
 					let walker = EntityWalker::new(root_entity);
 					walker.walk_opencv_entities(FunctionFinder {
