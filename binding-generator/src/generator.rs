@@ -47,11 +47,11 @@ pub trait GeneratorVisitor {
 }
 
 #[derive(Debug)]
-pub struct Generator<'g> {
+pub struct Generator {
 	clang_include_dirs: Vec<PathBuf>,
 	opencv_include_dir: PathBuf,
 	src_cpp_dir: PathBuf,
-	clang: &'g Clang,
+	clang: Clang,
 }
 
 struct OpenCVWalker<'tu, V: GeneratorVisitor> {
@@ -311,8 +311,8 @@ impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, V> {
 	}
 }
 
-impl<'g> Generator<'g> {
-	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, clang: &'g Clang) -> Self {
+impl Generator {
+	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, clang: Clang) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
 		if let Some(clang_stdlib_include_dir) = clang_stdlib_include_dir {

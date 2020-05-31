@@ -23,12 +23,12 @@ mod generator {
 		fs::{self, DirEntry, File, OpenOptions},
 		io::{self, BufRead, BufReader, Write},
 		path::{Path, PathBuf},
-		sync::atomic::{AtomicBool, Ordering},
+		sync::Arc,
+		thread,
 		time::Instant,
 	};
 
 	use glob_crate::glob;
-	use rayon::prelude::*;
 
 	use super::{
 		file_copy_to_dir,
@@ -98,10 +98,14 @@ mod generator {
 		} else {
 			unreachable!();
 		};
+
 		let clang = clang::Clang::new().expect("Cannot initialize clang");
+		let clang_stdlib_include_dir = env::var_os("OPENCV_CLANG_STDLIB_PATH")
+			.map(|p| PathBuf::from(p));
+		let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
+		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 		let start = Instant::now();
-		let shown_args = AtomicBool::new(false);
-		let build_func = |module: &String| {
+		let build_func = move |module: &str, gen: &binding_generator::Generator| {
 			let bindings_writer = binding_generator::writer::RustBindingWriter::new(
 				&*SRC_CPP_DIR,
 				&*OUT_DIR,
@@ -109,20 +113,33 @@ mod generator {
 				version,
 				false,
 			);
-			let clang_stdlib_include_dir = env::var_os("OPENCV_CLANG_STDLIB_PATH")
-				.map(|p| PathBuf::from(p));
-			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, &clang);
-			if !shown_args.compare_and_swap(false, true, Ordering::Relaxed) {
-				eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
-			}
 			gen.process_opencv_module(&module, bindings_writer);
 			println!("Generated: {}", module);
 		};
 
 		if cfg!(feature = "clang-runtime") {
-			modules.iter().for_each(build_func);
+			modules.iter().for_each(|module| build_func(module, &gen));
 		} else {
-			modules.par_iter().for_each(build_func);
+			let num_jobs = env::var("NUM_JOBS").ok()
+				.and_then(|jobs| jobs.parse().ok())
+				.unwrap_or(2);
+			let job_server = jobserver::Client::new(num_jobs).expect("Can't create job server");
+			let mut join_handles = Vec::with_capacity(modules.len());
+			let gen = Arc::new(gen);
+			modules.iter().for_each(|module| {
+				let token = job_server.acquire().expect("Can't acquire token from job server");
+				let join_handle = thread::spawn({
+					let gen = Arc::clone(&gen);
+					move || {
+						build_func(module, &gen);
+						drop(token); // needed to move the token to the thread
+					}
+				});
+				join_handles.push(join_handle);
+			});
+			for join_handle in join_handles {
+				join_handle.join().expect("Can't join thread");
+			}
 		}
 		println!("Total binding generation time: {:?}", start.elapsed());
 
