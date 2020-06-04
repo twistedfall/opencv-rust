@@ -580,7 +580,9 @@ impl Library {
 				.and_then(|output| {
 					if output.status.success() {
 						let mut include_paths = Vec::with_capacity(4);
-						for mut arg in Shlex::new(&String::from_utf8(output.stdout)?) {
+						let stdout = String::from_utf8(output.stdout)?;
+						eprintln!("=== cmake include arguments: {:#?}", stdout);
+						for mut arg in Shlex::new(stdout.trim()) {
 							const INCLUDE_PREFIX: &str = "-I";
 							if arg.starts_with(INCLUDE_PREFIX) {
 								arg.drain(..INCLUDE_PREFIX.len());
@@ -619,7 +621,9 @@ impl Library {
 					.map_err(Box::<dyn std::error::Error>::from)
 					.and_then(|output| if output.status.success() {
 						let mut cmake_link_paths = if link_paths.is_some() { HashSet::new() } else { HashSet::with_capacity(4) };
-						for mut arg in Shlex::new(&String::from_utf8(output.stdout)?) {
+						let stdout = String::from_utf8(output.stdout)?;
+						eprintln!("=== cmake link arguments: {:#?}", stdout);
+						for mut arg in Shlex::new(stdout.trim()) {
 							const RPATH_PREFIX: &str = "-Wl,-rpath,";
 							if arg.starts_with(RPATH_PREFIX) {
 								arg.drain(..RPATH_PREFIX.len());
