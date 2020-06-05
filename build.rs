@@ -696,7 +696,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some();
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
-		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
+		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || cfg!(target_os = "windows");
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
 		let disabled_probes = disabled_probes.as_ref()
