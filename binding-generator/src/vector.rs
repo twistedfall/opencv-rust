@@ -109,7 +109,7 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 	}
 
 	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id()).into()
+		format!("VectorOf{typ}", typ=self.element_type().rust_safe_id()).into()
 	}
 
 	pub fn rust_fullalias(&self) -> Cow<str> {

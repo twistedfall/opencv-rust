@@ -92,15 +92,15 @@ impl GeneratedElement for Enum<'_> {
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/enum/enum.tpl.ru.rs").compile_interpolation()
+			|| include_str!("../tpl/enum/enum.tpl.rs").compile_interpolation()
 		);
 
 		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/enum/const.tpl.ru.rs").compile_interpolation()
+			|| include_str!("../tpl/enum/const.tpl.rs").compile_interpolation()
 		);
 
 		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/enum/const_ignored.tpl.ru.rs").compile_interpolation()
+			|| include_str!("../tpl/enum/const_ignored.tpl.rs").compile_interpolation()
 		);
 
 		let consts = self.consts();

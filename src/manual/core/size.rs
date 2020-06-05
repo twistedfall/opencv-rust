@@ -43,7 +43,7 @@ impl<T: ValidSizeType> Size_<T> {
 
 impl<T> Add for Size_<T>
     where
-        T: ValidSizeType + AddAssign,
+       T: ValidSizeType + AddAssign,
 {
     type Output = Size_<T>;
 
