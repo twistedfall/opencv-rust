@@ -201,33 +201,13 @@ impl GeneratedElement for Vector<'_, '_> {
 
 		let vec_type = self.type_ref();
 		let element_type = self.element_type();
-		let inner_rust_full_arg = if element_type.is_string() {
-			"&'i str".into()
-		} else {
-			element_type.rust_full()
-		};
-		let mut pre_call = element_type.rust_arg_pre_call("val", false);
-		if !pre_call.is_empty() {
-			pre_call.push_str(";");
-		}
-		let mut pre_call_infallible = element_type.rust_arg_pre_call("val", true);
-		if !pre_call_infallible.is_empty() {
-			pre_call_infallible.push_str(";");
-		}
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_fullname(),
 			"rust_extern_const" => vec_type.rust_extern_with_const(Constness::Const),
 			"rust_extern_mut" => vec_type.rust_extern_with_const(Constness::Mut),
-			"inner_rust_func_decl" => element_type.rust_arg_func_decl("val").into(),
-			"inner_rust_extern_func_decl" => element_type.rust_extern_arg_func_decl("val", Constness::Auto).into(),
-			"inner_rust_func_call" => element_type.rust_arg_func_call("val", false).into(),
 			"inner_rust_full" => element_type.rust_full(),
-			"inner_rust_full_arg" => inner_rust_full_arg.into(),
-			"pre_call" => pre_call.into(),
-			"pre_call_infallible" => pre_call_infallible.into(),
 			"inner_rust_extern_return" => element_type.rust_extern_return(),
-			"inner_rust_extern_return_wrapper" => element_type.rust_extern_return_wrapper_full(),
 		};
 		if element_type.as_typedef().is_some()
 			&& !element_type.is_data_type()

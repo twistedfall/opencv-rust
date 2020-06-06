@@ -17,7 +17,7 @@ pub mod prelude {
 		core::{DataType, Mat},
 		hub_prelude::*,
 		manual::prelude::*,
-		traits::{Boxed, VectorTrait},
+		traits::Boxed,
 	};
 }
 
@@ -26,7 +26,7 @@ pub(crate) mod mod_prelude_types {
 
 	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
 
-	pub use crate::traits::{Boxed, OpenCVType, OpenCVTypeExternContainer, VectorTrait};
+	pub use crate::traits::{Boxed, OpenCVType, OpenCVTypeExternContainer};
 }
 
 pub(crate) mod mod_prelude {
