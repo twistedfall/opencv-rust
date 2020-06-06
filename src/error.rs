@@ -1,4 +1,9 @@
-use std::fmt;
+use std::{
+	ffi::NulError,
+	fmt,
+};
+
+use crate::core;
 
 #[derive(Debug)]
 pub struct Error {
@@ -15,6 +20,12 @@ impl Error {
 impl fmt::Display for Error {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{} (code: {})", self.message, self.code)
+	}
+}
+
+impl From<NulError> for Error {
+	fn from(_: NulError) -> Self {
+		Self::new(core::StsBadArg, "Passed Rust string contains nul byte".into())
 	}
 }
 

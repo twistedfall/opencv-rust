@@ -5,7 +5,7 @@ use std::{
 
 macro_rules! string_arg {
 	($name: ident) => {
-		let $name = $crate::templ::cstring_new_infallible($name);
+		let $name = std::ffi::CString::new($name)?;
 	};
 }
 
