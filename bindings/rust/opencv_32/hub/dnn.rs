@@ -21,6 +21,8 @@ pub enum Blob_AllocFlag {
 	ALLOC_BOTH = 3 as isize,
 }
 
+opencv_type_enum! { crate::dnn::Blob_AllocFlag }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Blob_DataState {
@@ -30,6 +32,8 @@ pub enum Blob_DataState {
 	SYNCED = 3 as isize,
 }
 
+opencv_type_enum! { crate::dnn::Blob_DataState }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum EltwiseLayer_EltwiseOp {
@@ -38,12 +42,16 @@ pub enum EltwiseLayer_EltwiseOp {
 	MAX = 2 as isize,
 }
 
+opencv_type_enum! { crate::dnn::EltwiseLayer_EltwiseOp }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum LRNLayer_Type {
 	CHANNEL_NRM = 0 as isize,
 	SPATIAL_NRM = 1 as isize,
 }
+
+opencv_type_enum! { crate::dnn::LRNLayer_Type }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -52,6 +60,8 @@ pub enum PoolingLayer_Type {
 	AVE = 1 as isize,
 	STOCHASTIC = 2 as isize,
 }
+
+opencv_type_enum! { crate::dnn::PoolingLayer_Type }
 
 /// Each Layer class must provide this function to the factory
 pub type LayerFactory_Constuctor = Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>;
@@ -68,9 +78,9 @@ pub type Shape = crate::dnn::BlobShape;
 /// ## C++ default parameters
 /// * caffe_model: String()
 pub fn create_caffe_importer(prototxt: &str, caffe_model: &str) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
-	string_arg!(prototxt);
-	string_arg!(caffe_model);
-	unsafe { sys::cv_dnn_createCaffeImporter_const_StringX_const_StringX(prototxt.as_ptr(), caffe_model.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::Importer>::from_raw(ptr) })
+	extern_container_arg!(prototxt);
+	extern_container_arg!(caffe_model);
+	unsafe { sys::cv_dnn_createCaffeImporter_const_StringX_const_StringX(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Creates the importer of <a href="http://www.tensorflow.org">TensorFlow</a> framework network.
@@ -79,8 +89,8 @@ pub fn create_caffe_importer(prototxt: &str, caffe_model: &str) -> Result<core::
 /// ## Returns
 /// Pointer to the created importer, NULL in failure cases.
 pub fn create_tensorflow_importer(model: &str) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
-	string_arg!(model);
-	unsafe { sys::cv_dnn_createTensorflowImporter_const_StringX(model.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::Importer>::from_raw(ptr) })
+	extern_container_arg!(model);
+	unsafe { sys::cv_dnn_createTensorflowImporter_const_StringX(model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Creates the importer of <a href="http://torch.ch">Torch7</a> framework network.
@@ -114,8 +124,8 @@ pub fn create_tensorflow_importer(model: &str) -> Result<core::Ptr::<dyn crate::
 /// ## C++ default parameters
 /// * is_binary: true
 pub fn create_torch_importer(filename: &str, is_binary: bool) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
-	string_arg!(filename);
-	unsafe { sys::cv_dnn_createTorchImporter_const_StringX_bool(filename.as_ptr(), is_binary) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::Importer>::from_raw(ptr) })
+	extern_container_arg!(filename);
+	unsafe { sys::cv_dnn_createTorchImporter_const_StringX_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Initialize dnn module and built-in layers.
@@ -132,9 +142,9 @@ pub fn init_module() -> Result<()> {
 /// ## C++ default parameters
 /// * caffe_model: String()
 pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::dnn::Net> {
-	string_arg!(prototxt);
-	string_arg!(caffe_model);
-	unsafe { sys::cv_dnn_readNetFromCaffe_const_StringX_const_StringX(prototxt.as_ptr(), caffe_model.as_ptr()) }.into_result().map(|ptr| unsafe { crate::dnn::Net::from_raw(ptr) })
+	extern_container_arg!(prototxt);
+	extern_container_arg!(caffe_model);
+	unsafe { sys::cv_dnn_readNetFromCaffe_const_StringX_const_StringX(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
 }
 
 /// Loads blob which was serialized as torch.Tensor object of Torch7 framework.
@@ -143,8 +153,8 @@ pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::d
 /// ## C++ default parameters
 /// * is_binary: true
 pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<crate::dnn::Blob> {
-	string_arg!(filename);
-	unsafe { sys::cv_dnn_readTorchBlob_const_StringX_bool(filename.as_ptr(), is_binary) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+	extern_container_arg!(filename);
+	unsafe { sys::cv_dnn_readTorchBlob_const_StringX_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 }
 
 pub trait AbsLayer: crate::dnn::Layer {
@@ -155,7 +165,7 @@ pub trait AbsLayer: crate::dnn::Layer {
 
 impl dyn AbsLayer + '_ {
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::AbsLayer>> {
-		unsafe { sys::cv_dnn_AbsLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::AbsLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_AbsLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::AbsLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -167,7 +177,7 @@ pub trait BNLLLayer: crate::dnn::Layer {
 
 impl dyn BNLLLayer + '_ {
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::BNLLLayer>> {
-		unsafe { sys::cv_dnn_BNLLLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::BNLLLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BNLLLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::BNLLLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -176,44 +186,44 @@ pub trait BaseConvolutionLayer: crate::dnn::Layer {
 	fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void;
 
 	fn kernel(&self) -> core::Size {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: kernel")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropKernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: kernel")
 	}
 	
 	fn set_kernel(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_setKernel_Size(self.as_raw_mut_BaseConvolutionLayer(), &val) }.into_result().expect("Infallible function failed: set_kernel")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropKernel_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_kernel")
 	}
 	
 	fn stride(&self) -> core::Size {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_stride_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: stride")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropStride_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: stride")
 	}
 	
 	fn set_stride(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_setStride_Size(self.as_raw_mut_BaseConvolutionLayer(), &val) }.into_result().expect("Infallible function failed: set_stride")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropStride_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_stride")
 	}
 	
 	fn pad(&self) -> core::Size {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_pad_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: pad")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPad_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: pad")
 	}
 	
 	fn set_pad(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPad_Size(self.as_raw_mut_BaseConvolutionLayer(), &val) }.into_result().expect("Infallible function failed: set_pad")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPad_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pad")
 	}
 	
 	fn dilation(&self) -> core::Size {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_dilation_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: dilation")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropDilation_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: dilation")
 	}
 	
 	fn set_dilation(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_setDilation_Size(self.as_raw_mut_BaseConvolutionLayer(), &val) }.into_result().expect("Infallible function failed: set_dilation")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropDilation_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_dilation")
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPadMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPadMode_String(self.as_raw_mut_BaseConvolutionLayer(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_pad_mode")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPadMode_String(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_pad_mode")
 	}
 	
 }
@@ -273,21 +283,21 @@ pub trait BlobTrait {
 	/// ## C++ default parameters
 	/// * write_only: true
 	fn mat_ref(&mut self, write_only: bool) -> Result<core::Mat> {
-		unsafe { sys::cv_dnn_Blob_matRef_bool(self.as_raw_mut_Blob(), write_only) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_matRef_bool(self.as_raw_mut_Blob(), write_only) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn mat_ref_const(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_dnn_Blob_matRefConst_const(self.as_raw_Blob()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_matRefConst_const(self.as_raw_Blob()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * write_only: true
 	fn umat_ref(&mut self, write_only: bool) -> Result<core::UMat> {
-		unsafe { sys::cv_dnn_Blob_umatRef_bool(self.as_raw_mut_Blob(), write_only) }.into_result().map(|ptr| unsafe { core::UMat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_umatRef_bool(self.as_raw_mut_Blob(), write_only) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
 	fn umat_ref_const(&self) -> Result<core::UMat> {
-		unsafe { sys::cv_dnn_Blob_umatRefConst_const(self.as_raw_Blob()) }.into_result().map(|ptr| unsafe { core::UMat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_umatRefConst_const(self.as_raw_Blob()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -348,7 +358,7 @@ pub trait BlobTrait {
 	
 	/// Returns shape of the blob.
 	fn shape(&self) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_Blob_shape_const(self.as_raw_Blob()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_shape_const(self.as_raw_Blob()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	/// Checks equality of two blobs shapes.
@@ -359,7 +369,7 @@ pub trait BlobTrait {
 	/// Returns slice of first two dimensions.
 	/// @details The behaviour is similar to the following numpy code: blob[n, cn, ...]
 	fn get_plane(&mut self, n: i32, cn: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_dnn_Blob_getPlane_int_int(self.as_raw_mut_Blob(), n, cn) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_getPlane_int_int(self.as_raw_mut_Blob(), n, cn) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// Returns slice of first dimension.
@@ -367,7 +377,7 @@ pub trait BlobTrait {
 	/// channels * rows * cols values, corresponding to the n-th value
 	/// of the first dimension.
 	fn get_planes(&mut self, n: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_dnn_Blob_getPlanes_int(self.as_raw_mut_Blob(), n) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_getPlanes_int(self.as_raw_mut_Blob(), n) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn cols(&self) -> Result<i32> {
@@ -440,21 +450,21 @@ pub trait BlobTrait {
 	/// ## Returns
 	/// *this
 	fn share_from(&mut self, blob: &crate::dnn::Blob) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_shareFrom_const_BlobX(self.as_raw_mut_Blob(), blob.as_raw_Blob()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_shareFrom_const_BlobX(self.as_raw_mut_Blob(), blob.as_raw_Blob()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Changes shape of the blob without copying the data.
 	/// ## Returns
 	/// *this
 	fn reshape(&mut self, shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_reshape_const_BlobShapeX(self.as_raw_mut_Blob(), shape.as_raw_BlobShape()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_reshape_const_BlobShapeX(self.as_raw_mut_Blob(), shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Changes shape of the blob without copying the data.
 	/// ## Returns
 	/// shallow copy of original blob with new shape.
 	fn reshaped(&self, new_shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_reshaped_const_const_BlobShapeX(self.as_raw_Blob(), new_shape.as_raw_BlobShape()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_reshaped_const_const_BlobShapeX(self.as_raw_Blob(), new_shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	fn typ(&self) -> Result<i32> {
@@ -479,7 +489,7 @@ pub struct Blob {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Blob }
+opencv_type_boxed! { Blob }
 
 impl Drop for Blob {
 	fn drop(&mut self) {
@@ -502,7 +512,7 @@ impl crate::dnn::BlobTrait for Blob {
 
 impl Blob {
 	pub fn default() -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_Blob() }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_Blob() }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs blob with specified @p shape and @p type.
@@ -511,13 +521,13 @@ impl Blob {
 	/// * typ: CV_32F
 	/// * alloc_flags: ALLOC_MAT
 	pub fn new(shape: &crate::dnn::BlobShape, typ: i32, alloc_flags: i32) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_Blob_const_BlobShapeX_int_int(shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_Blob_const_BlobShapeX_int_int(shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs Blob from existing Mat or UMat.
 	pub fn new_1(data: &dyn core::ToInputArray) -> Result<crate::dnn::Blob> {
 		input_array_arg!(data);
-		unsafe { sys::cv_dnn_Blob_Blob_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_Blob_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs 4-dimensional blob (so-called batch) from image or array of images.
@@ -529,7 +539,7 @@ impl Blob {
 	/// * dst_cn: -1
 	pub fn from_images(image: &dyn core::ToInputArray, dst_cn: i32) -> Result<crate::dnn::Blob> {
 		input_array_arg!(image);
-		unsafe { sys::cv_dnn_Blob_fromImages_const__InputArrayX_int(image.as_raw__InputArray(), dst_cn) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Blob_fromImages_const__InputArrayX_int(image.as_raw__InputArray(), dst_cn) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 }
@@ -601,7 +611,7 @@ pub trait BlobShapeTrait {
 	/// ## C++ default parameters
 	/// * end_axis: INT_MAX
 	fn slice(&self, start_axis: i32, end_axis: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_slice_const_int_int(self.as_raw_BlobShape(), start_axis, end_axis) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_slice_const_int_int(self.as_raw_BlobShape(), start_axis, end_axis) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	/// Returns pointer to the first element of continuous size array.
@@ -621,7 +631,7 @@ pub trait BlobShapeTrait {
 	}
 	
 	fn add(&self, r: &crate::dnn::BlobShape) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_operatorA_const_const_BlobShapeX(self.as_raw_BlobShape(), r.as_raw_BlobShape()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_operatorA_const_const_BlobShapeX(self.as_raw_BlobShape(), r.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	fn is_empty(&self) -> Result<bool> {
@@ -635,7 +645,7 @@ pub struct BlobShape {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BlobShape }
+opencv_type_boxed! { BlobShape }
 
 impl Drop for BlobShape {
 	fn drop(&mut self) {
@@ -658,32 +668,32 @@ impl crate::dnn::BlobShapeTrait for BlobShape {
 
 impl BlobShape {
 	pub fn default() -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape() }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape() }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn new(s0: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_int(s0) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_int(s0) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_1(s0: i32, s1: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int(s0, s1) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int(s0, s1) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_2(s0: i32, s1: i32, s2: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int(s0, s1, s2) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int(s0, s1, s2) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_3(num: i32, cn: i32, rows: i32, cols: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int_int(num, cn, rows, cols) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int_int(num, cn, rows, cols) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	/// Creates n-dim shape from the @p sizes array; if @p sizes is NULL then shape will contain unspecified data
 	pub fn new_4(ndims: i32, sizes: &i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_const_intX(ndims, sizes) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_int_const_intX(ndims, sizes) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_5(sizes: &core::Vector::<i32>) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_const_vector_int_X(sizes.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_const_vector_int_X(sizes.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	/// Creates n-dim shape and fill its by @p fill
@@ -691,19 +701,19 @@ impl BlobShape {
 	/// ## C++ default parameters
 	/// * fill: 1
 	pub fn all(ndims: i32, fill: i32) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_all_int_int(ndims, fill) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_all_int_int(ndims, fill) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn like(m: &core::Mat) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_like_const_MatX(m.as_raw_Mat()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_like_const_MatX(m.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn like_1(m: &core::UMat) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_like_const_UMatX(m.as_raw_UMat()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_like_const_UMatX(m.as_raw_UMat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn empty() -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_empty() }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) })
+		unsafe { sys::cv_dnn_BlobShape_empty() }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 }
@@ -713,11 +723,11 @@ pub trait ConcatLayer: crate::dnn::Layer {
 	fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void;
 
 	fn axis(&self) -> i32 {
-		unsafe { sys::cv_dnn_ConcatLayer_axis_const(self.as_raw_ConcatLayer()) }.into_result().expect("Infallible function failed: axis")
+		unsafe { sys::cv_dnn_ConcatLayer_getPropAxis_const(self.as_raw_ConcatLayer()) }.into_result().expect("Infallible function failed: axis")
 	}
 	
 	fn set_axis(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_ConcatLayer_setAxis_int(self.as_raw_mut_ConcatLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
+		unsafe { sys::cv_dnn_ConcatLayer_setPropAxis_int(self.as_raw_mut_ConcatLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
 	}
 	
 }
@@ -726,7 +736,7 @@ impl dyn ConcatLayer + '_ {
 	/// ## C++ default parameters
 	/// * axis: 1
 	pub fn create(axis: i32) -> Result<core::Ptr::<dyn crate::dnn::ConcatLayer>> {
-		unsafe { sys::cv_dnn_ConcatLayer_create_int(axis) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::ConcatLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_ConcatLayer_create_int(axis) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ConcatLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -743,7 +753,7 @@ impl dyn ConvolutionLayer + '_ {
 	/// * pad: Size(0,0)
 	/// * dilation: Size(1,1)
 	pub fn create(kernel: core::Size, stride: core::Size, pad: core::Size, dilation: core::Size) -> Result<core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>> {
-		unsafe { sys::cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(&kernel, &stride, &pad, &dilation) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(kernel.opencv_to_extern(), stride.opencv_to_extern(), pad.opencv_to_extern(), dilation.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -752,26 +762,26 @@ pub trait CropLayer: crate::dnn::Layer {
 	fn as_raw_mut_CropLayer(&mut self) -> *mut c_void;
 
 	fn start_axis(&self) -> i32 {
-		unsafe { sys::cv_dnn_CropLayer_startAxis_const(self.as_raw_CropLayer()) }.into_result().expect("Infallible function failed: start_axis")
+		unsafe { sys::cv_dnn_CropLayer_getPropStartAxis_const(self.as_raw_CropLayer()) }.into_result().expect("Infallible function failed: start_axis")
 	}
 	
 	fn set_start_axis(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_CropLayer_setStartAxis_int(self.as_raw_mut_CropLayer(), val) }.into_result().expect("Infallible function failed: set_start_axis")
+		unsafe { sys::cv_dnn_CropLayer_setPropStartAxis_int(self.as_raw_mut_CropLayer(), val) }.into_result().expect("Infallible function failed: set_start_axis")
 	}
 	
 	fn offset(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_dnn_CropLayer_offset(self.as_raw_mut_CropLayer()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) }).expect("Infallible function failed: offset")
+		unsafe { sys::cv_dnn_CropLayer_getPropOffset(self.as_raw_mut_CropLayer()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: offset")
 	}
 	
 	fn set_offset(&mut self, mut val: core::Vector::<i32>) -> () {
-		unsafe { sys::cv_dnn_CropLayer_setOffset_vector_int_(self.as_raw_mut_CropLayer(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_offset")
+		unsafe { sys::cv_dnn_CropLayer_setPropOffset_vector_int_(self.as_raw_mut_CropLayer(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_offset")
 	}
 	
 }
 
 impl dyn CropLayer + '_ {
 	pub fn create(start_axis: i32, offset: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::CropLayer>> {
-		unsafe { sys::cv_dnn_CropLayer_create_int_const_vector_int_X(start_axis, offset.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::CropLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_CropLayer_create_int_const_vector_int_X(start_axis, offset.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::CropLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -788,7 +798,7 @@ impl dyn DeconvolutionLayer + '_ {
 	/// * pad: Size(0,0)
 	/// * dilation: Size(1,1)
 	pub fn create(kernel: core::Size, stride: core::Size, pad: core::Size, dilation: core::Size) -> Result<core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>> {
-		unsafe { sys::cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(&kernel, &stride, &pad, &dilation) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(kernel.opencv_to_extern(), stride.opencv_to_extern(), pad.opencv_to_extern(), dilation.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -799,45 +809,45 @@ pub trait DictTrait {
 
 	/// Checks a presence of the @p key in the dictionary.
 	fn has(&self, key: &str) -> Result<bool> {
-		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_has_const_const_StringX(self.as_raw_Dict(), key.as_ptr()) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_dnn_Dict_has_const_const_StringX(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result()
 	}
 	
 	/// If the @p key in the dictionary then returns pointer to its value, else returns NULL.
 	unsafe fn ptr_mut(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
-		string_arg!(key);
-		{ sys::cv_dnn_Dict_ptr_const_StringX(self.as_raw_mut_Dict(), key.as_ptr()) }.into_result().map(|ptr| { crate::dnn::DictValue::from_raw(ptr) })
+		extern_container_arg!(key);
+		{ sys::cv_dnn_Dict_ptr_const_StringX(self.as_raw_mut_Dict(), key.opencv_to_extern()) }.into_result().map(|r| { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// If the @p key in the dictionary then returns its value, else an error will be generated.
 	fn get(&self, key: &str) -> Result<crate::dnn::DictValue> {
-		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_get_const_const_StringX(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		extern_container_arg!(key);
+		unsafe { sys::cv_dnn_Dict_get_const_const_StringX(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_str(&mut self, key: &str, value: &str) -> Result<String> {
-		string_arg!(key);
-		string_arg!(value);
-		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_mut_Dict(), key.as_ptr(), value.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		extern_container_arg!(key);
+		extern_container_arg!(value);
+		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set(&mut self, key: &str, value: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
-		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_cv_dnn_DictValue_const_StringX_const_DictValueX(self.as_raw_mut_Dict(), key.as_ptr(), value.as_raw_DictValue()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		extern_container_arg!(key);
+		unsafe { sys::cv_dnn_Dict_set_cv_dnn_DictValue_const_StringX_const_DictValueX(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_f64(&mut self, key: &str, value: &f64) -> Result<f64> {
-		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_double_const_StringX_const_doubleX(self.as_raw_mut_Dict(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_dnn_Dict_set_double_const_StringX_const_doubleR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_i64(&mut self, key: &str, value: &i64) -> Result<i64> {
-		string_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_int64_t_const_StringX_const_int64_tX(self.as_raw_mut_Dict(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_dnn_Dict_set_int64_t_const_StringX_const_int64_tR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 }
@@ -847,7 +857,7 @@ pub struct Dict {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Dict }
+opencv_type_boxed! { Dict }
 
 impl Drop for Dict {
 	fn drop(&mut self) {
@@ -880,7 +890,7 @@ pub trait DictValueTrait {
 	/// ## C++ default parameters
 	/// * idx: -1
 	fn get_str(&self, idx: i32) -> Result<String> {
-		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -925,7 +935,7 @@ pub struct DictValue {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { DictValue }
+opencv_type_boxed! { DictValue }
 
 impl Drop for DictValue {
 	fn drop(&mut self) {
@@ -948,30 +958,30 @@ impl crate::dnn::DictValueTrait for DictValue {
 
 impl DictValue {
 	pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_const_DictValueX(r.as_raw_DictValue()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DictValue_DictValue_const_DictValueX(r.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * i: 0
 	pub fn from_i64(i: i64) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_int64_t(i) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DictValue_DictValue_int64_t(i) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_i32(i: i32) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_int(i) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DictValue_DictValue_int(i) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_u32(p: u32) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_unsigned_int(p) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DictValue_DictValue_unsigned_int(p) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_f64(p: f64) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_double(p) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		unsafe { sys::cv_dnn_DictValue_DictValue_double(p) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_str(s: &str) -> Result<crate::dnn::DictValue> {
-		string_arg!(s);
-		unsafe { sys::cv_dnn_DictValue_DictValue_const_charX(s.as_ptr()) }.into_result().map(|ptr| unsafe { crate::dnn::DictValue::from_raw(ptr) })
+		extern_container_arg!(s);
+		unsafe { sys::cv_dnn_DictValue_DictValue_const_charX(s.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 }
@@ -984,7 +994,7 @@ pub trait EltwiseLayer: crate::dnn::Layer {
 
 impl dyn EltwiseLayer + '_ {
 	pub fn create(op: crate::dnn::EltwiseLayer_EltwiseOp, coeffs: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::EltwiseLayer>> {
-		unsafe { sys::cv_dnn_EltwiseLayer_create_EltwiseOp_const_vector_int_X(op, coeffs.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::EltwiseLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_EltwiseLayer_create_EltwiseOp_const_vector_int_X(op, coeffs.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::EltwiseLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1005,11 +1015,11 @@ pub trait InnerProductLayer: crate::dnn::Layer {
 	fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void;
 
 	fn axis(&self) -> i32 {
-		unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result().expect("Infallible function failed: axis")
+		unsafe { sys::cv_dnn_InnerProductLayer_getPropAxis_const(self.as_raw_InnerProductLayer()) }.into_result().expect("Infallible function failed: axis")
 	}
 	
 	fn set_axis(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_InnerProductLayer_setAxis_int(self.as_raw_mut_InnerProductLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
+		unsafe { sys::cv_dnn_InnerProductLayer_setPropAxis_int(self.as_raw_mut_InnerProductLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
 	}
 	
 }
@@ -1018,7 +1028,7 @@ impl dyn InnerProductLayer + '_ {
 	/// ## C++ default parameters
 	/// * axis: 1
 	pub fn create(axis: i32) -> Result<core::Ptr::<dyn crate::dnn::InnerProductLayer>> {
-		unsafe { sys::cv_dnn_InnerProductLayer_create_int(axis) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::InnerProductLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_InnerProductLayer_create_int(axis) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::InnerProductLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1027,51 +1037,51 @@ pub trait LRNLayer: crate::dnn::Layer {
 	fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void;
 
 	fn typ(&self) -> i32 {
-		unsafe { sys::cv_dnn_LRNLayer_type_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_LRNLayer_getPropType_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: typ")
 	}
 	
 	fn set_type(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setType_int(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_type")
+		unsafe { sys::cv_dnn_LRNLayer_setPropType_int(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_type")
 	}
 	
 	fn size(&self) -> i32 {
-		unsafe { sys::cv_dnn_LRNLayer_size_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: size")
+		unsafe { sys::cv_dnn_LRNLayer_getPropSize_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: size")
 	}
 	
 	fn set_size(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setSize_int(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_size")
+		unsafe { sys::cv_dnn_LRNLayer_setPropSize_int(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_size")
 	}
 	
 	fn alpha(&self) -> f64 {
-		unsafe { sys::cv_dnn_LRNLayer_alpha_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: alpha")
+		unsafe { sys::cv_dnn_LRNLayer_getPropAlpha_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: alpha")
 	}
 	
 	fn set_alpha(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setAlpha_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_alpha")
+		unsafe { sys::cv_dnn_LRNLayer_setPropAlpha_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_alpha")
 	}
 	
 	fn beta(&self) -> f64 {
-		unsafe { sys::cv_dnn_LRNLayer_beta_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: beta")
+		unsafe { sys::cv_dnn_LRNLayer_getPropBeta_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: beta")
 	}
 	
 	fn set_beta(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setBeta_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_beta")
+		unsafe { sys::cv_dnn_LRNLayer_setPropBeta_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_beta")
 	}
 	
 	fn bias(&self) -> f64 {
-		unsafe { sys::cv_dnn_LRNLayer_bias_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: bias")
+		unsafe { sys::cv_dnn_LRNLayer_getPropBias_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: bias")
 	}
 	
 	fn set_bias(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setBias_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_bias")
+		unsafe { sys::cv_dnn_LRNLayer_setPropBias_double(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_bias")
 	}
 	
 	fn norm_by_size(&self) -> bool {
-		unsafe { sys::cv_dnn_LRNLayer_normBySize_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: norm_by_size")
+		unsafe { sys::cv_dnn_LRNLayer_getPropNormBySize_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: norm_by_size")
 	}
 	
 	fn set_norm_by_size(&mut self, val: bool) -> () {
-		unsafe { sys::cv_dnn_LRNLayer_setNormBySize_bool(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_norm_by_size")
+		unsafe { sys::cv_dnn_LRNLayer_setPropNormBySize_bool(self.as_raw_mut_LRNLayer(), val) }.into_result().expect("Infallible function failed: set_norm_by_size")
 	}
 	
 }
@@ -1085,7 +1095,7 @@ impl dyn LRNLayer + '_ {
 	/// * bias: 1
 	/// * norm_by_size: true
 	pub fn create(typ: i32, size: i32, alpha: f64, beta: f64, bias: f64, norm_by_size: bool) -> Result<core::Ptr::<dyn crate::dnn::LRNLayer>> {
-		unsafe { sys::cv_dnn_LRNLayer_create_int_int_double_double_double_bool(typ, size, alpha, beta, bias, norm_by_size) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::LRNLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_LRNLayer_create_int_int_double_double_double_bool(typ, size, alpha, beta, bias, norm_by_size) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::LRNLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1146,7 +1156,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	
 	/// Returns current @f$ h_{t-1} @f$ value (deep copy).
 	fn get_h(&self) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_LSTMLayer_getH_const(self.as_raw_LSTMLayer()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_LSTMLayer_getH_const(self.as_raw_LSTMLayer()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Set @f$ c_{t-1} @f$ value that will be used in next forward() calls.
@@ -1157,7 +1167,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	
 	/// Returns current @f$ c_{t-1} @f$ value (deep copy).
 	fn get_c(&self) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_LSTMLayer_getC_const(self.as_raw_LSTMLayer()) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_LSTMLayer_getC_const(self.as_raw_LSTMLayer()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Specifies either interpet first dimension of input blob as timestamp dimenion either as sample.
@@ -1198,13 +1208,13 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	}
 	
 	fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
-		string_arg!(input_name);
-		unsafe { sys::cv_dnn_LSTMLayer_inputNameToIndex_String(self.as_raw_mut_LSTMLayer(), input_name.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut input_name);
+		unsafe { sys::cv_dnn_LSTMLayer_inputNameToIndex_String(self.as_raw_mut_LSTMLayer(), input_name.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn output_name_to_index(&mut self, output_name: &str) -> Result<i32> {
-		string_arg!(output_name);
-		unsafe { sys::cv_dnn_LSTMLayer_outputNameToIndex_String(self.as_raw_mut_LSTMLayer(), output_name.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut output_name);
+		unsafe { sys::cv_dnn_LSTMLayer_outputNameToIndex_String(self.as_raw_mut_LSTMLayer(), output_name.opencv_to_extern_mut()) }.into_result()
 	}
 	
 }
@@ -1212,7 +1222,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 impl dyn LSTMLayer + '_ {
 	/// Creates instance of LSTM layer
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::LSTMLayer>> {
-		unsafe { sys::cv_dnn_LSTMLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::LSTMLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_LSTMLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::LSTMLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1226,34 +1236,34 @@ pub trait Layer {
 
 	/// List of learned parameters must be stored here to allow read them by using Net::getParam().
 	fn blobs(&mut self) -> core::Vector::<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Layer_blobs(self.as_raw_mut_Layer()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::dnn::Blob>::from_raw(ptr) }).expect("Infallible function failed: blobs")
+		unsafe { sys::cv_dnn_Layer_getPropBlobs(self.as_raw_mut_Layer()) }.into_result().map(|r| unsafe { core::Vector::<crate::dnn::Blob>::opencv_from_extern(r) } ).expect("Infallible function failed: blobs")
 	}
 	
 	/// List of learned parameters must be stored here to allow read them by using Net::getParam().
 	fn set_blobs(&mut self, mut val: core::Vector::<crate::dnn::Blob>) -> () {
-		unsafe { sys::cv_dnn_Layer_setBlobs_vector_Blob_(self.as_raw_mut_Layer(), val.as_raw_mut_VectorOfBlob()) }.into_result().expect("Infallible function failed: set_blobs")
+		unsafe { sys::cv_dnn_Layer_setPropBlobs_vector_Blob_(self.as_raw_mut_Layer(), val.as_raw_mut_VectorOfBlob()) }.into_result().expect("Infallible function failed: set_blobs")
 	}
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_name_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_Layer_getPropName_const(self.as_raw_Layer()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
 	fn set_name(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_Layer_setName_String(self.as_raw_mut_Layer(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_name")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_Layer_setPropName_String(self.as_raw_mut_Layer(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_name")
 	}
 	
 	/// Type name which was used for creating layer by layer factory.
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_type_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_Layer_getPropType_const(self.as_raw_Layer()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory.
 	fn set_type(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_Layer_setType_String(self.as_raw_mut_Layer(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_type")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_Layer_setPropType_String(self.as_raw_mut_Layer(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_type")
 	}
 	
 	/// Allocates internal buffers and output blobs with respect to the shape of inputs.
@@ -1301,7 +1311,7 @@ pub trait Layer {
 	/// 
 	/// ## Overloaded parameters
 	fn allocate_2(&mut self, inputs: &core::Vector::<crate::dnn::Blob>) -> Result<core::Vector::<crate::dnn::Blob>> {
-		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::dnn::Blob>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob()) }.into_result().map(|r| unsafe { core::Vector::<crate::dnn::Blob>::opencv_from_extern(r) } )
 	}
 	
 	/// Given the @p input blobs, computes the output @p blobs.
@@ -1326,16 +1336,16 @@ pub trait Layer {
 	/// Each layer input and output can be labeled to easily identify them using "%<layer_name%>[.output_name]" notation.
 	/// This method maps label of input blob to its index into input vector.
 	fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
-		string_arg!(input_name);
-		unsafe { sys::cv_dnn_Layer_inputNameToIndex_String(self.as_raw_mut_Layer(), input_name.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut input_name);
+		unsafe { sys::cv_dnn_Layer_inputNameToIndex_String(self.as_raw_mut_Layer(), input_name.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	/// Returns index of output blob in output array.
 	/// ## See also
 	/// inputNameToIndex()
 	fn output_name_to_index(&mut self, output_name: &str) -> Result<i32> {
-		string_arg!(output_name);
-		unsafe { sys::cv_dnn_Layer_outputNameToIndex_String(self.as_raw_mut_Layer(), output_name.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut output_name);
+		unsafe { sys::cv_dnn_Layer_outputNameToIndex_String(self.as_raw_mut_Layer(), output_name.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
@@ -1356,7 +1366,7 @@ pub struct LayerFactory {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LayerFactory }
+opencv_type_boxed! { LayerFactory }
 
 impl Drop for LayerFactory {
 	fn drop(&mut self) {
@@ -1380,14 +1390,14 @@ impl crate::dnn::LayerFactoryTrait for LayerFactory {
 impl LayerFactory {
 	/// Registers the layer class with typename @p type and specified @p constructor.
 	pub fn register_layer(typ: &str, constructor: crate::dnn::LayerFactory_Constuctor) -> Result<()> {
-		string_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_registerLayer_const_StringX_Constuctor(typ.as_ptr(), constructor) }.into_result()
+		extern_container_arg!(typ);
+		unsafe { sys::cv_dnn_LayerFactory_registerLayer_const_StringX_Constuctor(typ.opencv_to_extern(), constructor) }.into_result()
 	}
 	
 	/// Unregisters registered layer with specified type name.
 	pub fn unregister_layer(typ: &str) -> Result<()> {
-		string_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_const_StringX(typ.as_ptr()) }.into_result()
+		extern_container_arg!(typ);
+		unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_const_StringX(typ.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Creates instance of registered layer.
@@ -1395,8 +1405,8 @@ impl LayerFactory {
 	/// * type: type name of creating layer.
 	/// * params: parameters which will be used for layer initialization.
 	pub fn create_layer_instance(typ: &str, params: &mut crate::dnn::LayerParams) -> Result<core::Ptr::<dyn crate::dnn::Layer>> {
-		string_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(typ.as_ptr(), params.as_raw_mut_LayerParams()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::Layer>::from_raw(ptr) })
+		extern_container_arg!(typ);
+		unsafe { sys::cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Layer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1411,34 +1421,34 @@ pub trait LayerParamsTrait: crate::dnn::DictTrait {
 
 	/// List of learned parameters stored as blobs.
 	fn blobs(&mut self) -> core::Vector::<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_LayerParams_blobs(self.as_raw_mut_LayerParams()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::dnn::Blob>::from_raw(ptr) }).expect("Infallible function failed: blobs")
+		unsafe { sys::cv_dnn_LayerParams_getPropBlobs(self.as_raw_mut_LayerParams()) }.into_result().map(|r| unsafe { core::Vector::<crate::dnn::Blob>::opencv_from_extern(r) } ).expect("Infallible function failed: blobs")
 	}
 	
 	/// List of learned parameters stored as blobs.
 	fn set_blobs(&mut self, mut val: core::Vector::<crate::dnn::Blob>) -> () {
-		unsafe { sys::cv_dnn_LayerParams_setBlobs_vector_Blob_(self.as_raw_mut_LayerParams(), val.as_raw_mut_VectorOfBlob()) }.into_result().expect("Infallible function failed: set_blobs")
+		unsafe { sys::cv_dnn_LayerParams_setPropBlobs_vector_Blob_(self.as_raw_mut_LayerParams(), val.as_raw_mut_VectorOfBlob()) }.into_result().expect("Infallible function failed: set_blobs")
 	}
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_name_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_LayerParams_getPropName_const(self.as_raw_LayerParams()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
 	fn set_name(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_LayerParams_setName_String(self.as_raw_mut_LayerParams(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_name")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_LayerParams_setPropName_String(self.as_raw_mut_LayerParams(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_name")
 	}
 	
 	/// Type name which was used for creating layer by layer factory (optional).
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_type_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_LayerParams_getPropType_const(self.as_raw_LayerParams()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory (optional).
 	fn set_type(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_LayerParams_setType_String(self.as_raw_mut_LayerParams(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_type")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_LayerParams_setPropType_String(self.as_raw_mut_LayerParams(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_type")
 	}
 	
 }
@@ -1451,7 +1461,7 @@ pub struct LayerParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LayerParams }
+opencv_type_boxed! { LayerParams }
 
 impl Drop for LayerParams {
 	fn drop(&mut self) {
@@ -1485,27 +1495,27 @@ pub trait MVNLayer: crate::dnn::Layer {
 	fn as_raw_mut_MVNLayer(&mut self) -> *mut c_void;
 
 	fn eps(&self) -> f64 {
-		unsafe { sys::cv_dnn_MVNLayer_eps_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: eps")
+		unsafe { sys::cv_dnn_MVNLayer_getPropEps_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: eps")
 	}
 	
 	fn set_eps(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_MVNLayer_setEps_double(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_eps")
+		unsafe { sys::cv_dnn_MVNLayer_setPropEps_double(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_eps")
 	}
 	
 	fn norm_variance(&self) -> bool {
-		unsafe { sys::cv_dnn_MVNLayer_normVariance_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: norm_variance")
+		unsafe { sys::cv_dnn_MVNLayer_getPropNormVariance_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: norm_variance")
 	}
 	
 	fn set_norm_variance(&mut self, val: bool) -> () {
-		unsafe { sys::cv_dnn_MVNLayer_setNormVariance_bool(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_norm_variance")
+		unsafe { sys::cv_dnn_MVNLayer_setPropNormVariance_bool(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_norm_variance")
 	}
 	
 	fn across_channels(&self) -> bool {
-		unsafe { sys::cv_dnn_MVNLayer_acrossChannels_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: across_channels")
+		unsafe { sys::cv_dnn_MVNLayer_getPropAcrossChannels_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: across_channels")
 	}
 	
 	fn set_across_channels(&mut self, val: bool) -> () {
-		unsafe { sys::cv_dnn_MVNLayer_setAcrossChannels_bool(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_across_channels")
+		unsafe { sys::cv_dnn_MVNLayer_setPropAcrossChannels_bool(self.as_raw_mut_MVNLayer(), val) }.into_result().expect("Infallible function failed: set_across_channels")
 	}
 	
 }
@@ -1516,7 +1526,7 @@ impl dyn MVNLayer + '_ {
 	/// * across_channels: false
 	/// * eps: 1e-9
 	pub fn create(norm_variance: bool, across_channels: bool, eps: f64) -> Result<core::Ptr::<dyn crate::dnn::MVNLayer>> {
-		unsafe { sys::cv_dnn_MVNLayer_create_bool_bool_double(norm_variance, across_channels, eps) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::MVNLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_MVNLayer_create_bool_bool_double(norm_variance, across_channels, eps) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::MVNLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1546,35 +1556,35 @@ pub trait NetTrait {
 	/// ## Returns
 	/// unique identifier of created layer, or -1 if a failure will happen.
 	fn add_layer(&mut self, name: &str, typ: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
-		string_arg!(name);
-		string_arg!(typ);
-		unsafe { sys::cv_dnn_Net_addLayer_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.as_ptr(), typ.as_ptr(), params.as_raw_mut_LayerParams()) }.into_result()
+		extern_container_arg!(name);
+		extern_container_arg!(typ);
+		unsafe { sys::cv_dnn_Net_addLayer_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
 	}
 	
 	/// Adds new layer and connects its first input to the first output of previously added layer.
 	/// ## See also
 	/// addLayer()
 	fn add_layer_to_prev(&mut self, name: &str, typ: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
-		string_arg!(name);
-		string_arg!(typ);
-		unsafe { sys::cv_dnn_Net_addLayerToPrev_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.as_ptr(), typ.as_ptr(), params.as_raw_mut_LayerParams()) }.into_result()
+		extern_container_arg!(name);
+		extern_container_arg!(typ);
+		unsafe { sys::cv_dnn_Net_addLayerToPrev_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
 	}
 	
 	/// Converts string name of the layer to the integer identifier.
 	/// ## Returns
 	/// id of the layer, or -1 if the layer wasn't found.
 	fn get_layer_id(&mut self, layer: &str) -> Result<i32> {
-		string_arg!(layer);
-		unsafe { sys::cv_dnn_Net_getLayerId_const_StringX(self.as_raw_mut_Net(), layer.as_ptr()) }.into_result()
+		extern_container_arg!(layer);
+		unsafe { sys::cv_dnn_Net_getLayerId_const_StringX(self.as_raw_mut_Net(), layer.opencv_to_extern()) }.into_result()
 	}
 	
 	fn get_layer_names(&self) -> Result<core::Vector::<String>> {
-		unsafe { sys::cv_dnn_Net_getLayerNames_const(self.as_raw_Net()) }.into_result().map(|ptr| unsafe { core::Vector::<String>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Net_getLayerNames_const(self.as_raw_Net()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
 	}
 	
 	/// Returns pointer to layer with specified name which the network use.
 	fn get_layer(&mut self, mut layer_id: crate::dnn::Net_LayerId) -> Result<core::Ptr::<dyn crate::dnn::Layer>> {
-		unsafe { sys::cv_dnn_Net_getLayer_LayerId(self.as_raw_mut_Net(), layer_id.as_raw_mut_DictValue()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::Layer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Net_getLayer_LayerId(self.as_raw_mut_Net(), layer_id.as_raw_mut_DictValue()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Layer>::opencv_from_extern(r) } )
 	}
 	
 	/// Delete layer for the network (not implemented yet)
@@ -1596,9 +1606,9 @@ pub trait NetTrait {
 	/// ## See also
 	/// setNetInputs(), Layer::inputNameToIndex(), Layer::outputNameToIndex()
 	fn connect_first_second(&mut self, out_pin: &str, inp_pin: &str) -> Result<()> {
-		string_arg!(out_pin);
-		string_arg!(inp_pin);
-		unsafe { sys::cv_dnn_Net_connect_String_String(self.as_raw_mut_Net(), out_pin.as_ptr() as _, inp_pin.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut out_pin);
+		extern_container_arg!(mut inp_pin);
+		unsafe { sys::cv_dnn_Net_connect_String_String(self.as_raw_mut_Net(), out_pin.opencv_to_extern_mut(), inp_pin.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	/// Connects #@p outNum output of the first layer to #@p inNum input of the second layer.
@@ -1673,8 +1683,8 @@ pub trait NetTrait {
 	/// Note: If updating blob is not empty then @p blob must have the same shape,
 	/// because network reshaping is not implemented yet.
 	fn set_blob(&mut self, output_name: &str, blob: &crate::dnn::Blob) -> Result<()> {
-		string_arg!(output_name);
-		unsafe { sys::cv_dnn_Net_setBlob_String_const_BlobX(self.as_raw_mut_Net(), output_name.as_ptr() as _, blob.as_raw_Blob()) }.into_result()
+		extern_container_arg!(mut output_name);
+		unsafe { sys::cv_dnn_Net_setBlob_String_const_BlobX(self.as_raw_mut_Net(), output_name.opencv_to_extern_mut(), blob.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns the layer output blob.
@@ -1683,8 +1693,8 @@ pub trait NetTrait {
 	/// ## See also
 	/// connect(String, String)
 	fn get_blob(&mut self, output_name: &str) -> Result<crate::dnn::Blob> {
-		string_arg!(output_name);
-		unsafe { sys::cv_dnn_Net_getBlob_String(self.as_raw_mut_Net(), output_name.as_ptr() as _) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		extern_container_arg!(mut output_name);
+		unsafe { sys::cv_dnn_Net_getBlob_String(self.as_raw_mut_Net(), output_name.opencv_to_extern_mut()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Sets the new value for the learned param of the layer.
@@ -1711,7 +1721,7 @@ pub trait NetTrait {
 	/// ## C++ default parameters
 	/// * num_param: 0
 	fn get_param(&mut self, mut layer: crate::dnn::Net_LayerId, num_param: i32) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Net_getParam_LayerId_int(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param) }.into_result().map(|ptr| unsafe { crate::dnn::Blob::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Net_getParam_LayerId_int(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1729,7 +1739,7 @@ pub struct Net {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Net }
+opencv_type_boxed! { Net }
 
 impl Drop for Net {
 	fn drop(&mut self) {
@@ -1752,7 +1762,7 @@ impl crate::dnn::NetTrait for Net {
 
 impl Net {
 	pub fn default() -> Result<crate::dnn::Net> {
-		unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| unsafe { crate::dnn::Net::from_raw(ptr) })
+		unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1762,52 +1772,52 @@ pub trait PoolingLayer: crate::dnn::Layer {
 	fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void;
 
 	fn typ(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_type_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropType_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: typ")
 	}
 	
 	fn set_type(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setType_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_type")
+		unsafe { sys::cv_dnn_PoolingLayer_setPropType_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_type")
 	}
 	
 	fn kernel(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_kernel_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: kernel")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropKernel_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: kernel")
 	}
 	
 	fn set_kernel(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setKernel_Size(self.as_raw_mut_PoolingLayer(), &val) }.into_result().expect("Infallible function failed: set_kernel")
+		unsafe { sys::cv_dnn_PoolingLayer_setPropKernel_Size(self.as_raw_mut_PoolingLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_kernel")
 	}
 	
 	fn stride(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_stride_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: stride")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropStride_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: stride")
 	}
 	
 	fn set_stride(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setStride_Size(self.as_raw_mut_PoolingLayer(), &val) }.into_result().expect("Infallible function failed: set_stride")
+		unsafe { sys::cv_dnn_PoolingLayer_setPropStride_Size(self.as_raw_mut_PoolingLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_stride")
 	}
 	
 	fn pad(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_pad_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad")
 	}
 	
 	fn set_pad(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPad_Size(self.as_raw_mut_PoolingLayer(), &val) }.into_result().expect("Infallible function failed: set_pad")
+		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_Size(self.as_raw_mut_PoolingLayer(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pad")
 	}
 	
 	fn global_pooling(&self) -> bool {
-		unsafe { sys::cv_dnn_PoolingLayer_globalPooling_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: global_pooling")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropGlobalPooling_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: global_pooling")
 	}
 	
 	fn set_global_pooling(&mut self, val: bool) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setGlobalPooling_bool(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_global_pooling")
+		unsafe { sys::cv_dnn_PoolingLayer_setPropGlobalPooling_bool(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_global_pooling")
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_PoolingLayer_padMode_const(self.as_raw_PoolingLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_PoolingLayer_getPropPadMode_const(self.as_raw_PoolingLayer()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_dnn_PoolingLayer_setPadMode_String(self.as_raw_mut_PoolingLayer(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_pad_mode")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_dnn_PoolingLayer_setPropPadMode_String(self.as_raw_mut_PoolingLayer(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_pad_mode")
 	}
 	
 }
@@ -1820,14 +1830,14 @@ impl dyn PoolingLayer + '_ {
 	/// * pad: Size(0,0)
 	/// * pad_mode: ""
 	pub fn create(typ: i32, kernel: core::Size, stride: core::Size, pad: core::Size, pad_mode: &str) -> Result<core::Ptr::<dyn crate::dnn::PoolingLayer>> {
-		string_arg!(pad_mode);
-		unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringX(typ, &kernel, &stride, &pad, pad_mode.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::from_raw(ptr) })
+		extern_container_arg!(pad_mode);
+		unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringX(typ, kernel.opencv_to_extern(), stride.opencv_to_extern(), pad.opencv_to_extern(), pad_mode.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * typ: PoolingLayer::MAX
 	pub fn create_global(typ: i32) -> Result<core::Ptr::<dyn crate::dnn::PoolingLayer>> {
-		unsafe { sys::cv_dnn_PoolingLayer_createGlobal_int(typ) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_PoolingLayer_createGlobal_int(typ) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1836,27 +1846,27 @@ pub trait PowerLayer: crate::dnn::Layer {
 	fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void;
 
 	fn power(&self) -> f64 {
-		unsafe { sys::cv_dnn_PowerLayer_power_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: power")
+		unsafe { sys::cv_dnn_PowerLayer_getPropPower_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: power")
 	}
 	
 	fn set_power(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_PowerLayer_setPower_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_power")
+		unsafe { sys::cv_dnn_PowerLayer_setPropPower_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_power")
 	}
 	
 	fn scale(&self) -> f64 {
-		unsafe { sys::cv_dnn_PowerLayer_scale_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: scale")
+		unsafe { sys::cv_dnn_PowerLayer_getPropScale_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: scale")
 	}
 	
 	fn set_scale(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_PowerLayer_setScale_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_scale")
+		unsafe { sys::cv_dnn_PowerLayer_setPropScale_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_scale")
 	}
 	
 	fn shift(&self) -> f64 {
-		unsafe { sys::cv_dnn_PowerLayer_shift_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: shift")
+		unsafe { sys::cv_dnn_PowerLayer_getPropShift_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: shift")
 	}
 	
 	fn set_shift(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_PowerLayer_setShift_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_shift")
+		unsafe { sys::cv_dnn_PowerLayer_setPropShift_double(self.as_raw_mut_PowerLayer(), val) }.into_result().expect("Infallible function failed: set_shift")
 	}
 	
 }
@@ -1867,7 +1877,7 @@ impl dyn PowerLayer + '_ {
 	/// * scale: 1
 	/// * shift: 0
 	pub fn create(power: f64, scale: f64, shift: f64) -> Result<core::Ptr::<dyn crate::dnn::PowerLayer>> {
-		unsafe { sys::cv_dnn_PowerLayer_create_double_double_double(power, scale, shift) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::PowerLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_PowerLayer_create_double_double_double(power, scale, shift) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::PowerLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1923,7 +1933,7 @@ pub trait RNNLayer: crate::dnn::Layer {
 impl dyn RNNLayer + '_ {
 	/// Creates instance of RNNLayer
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::RNNLayer>> {
-		unsafe { sys::cv_dnn_RNNLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::RNNLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_RNNLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::RNNLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1932,11 +1942,11 @@ pub trait ReLULayer: crate::dnn::Layer {
 	fn as_raw_mut_ReLULayer(&mut self) -> *mut c_void;
 
 	fn negative_slope(&self) -> f64 {
-		unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result().expect("Infallible function failed: negative_slope")
+		unsafe { sys::cv_dnn_ReLULayer_getPropNegativeSlope_const(self.as_raw_ReLULayer()) }.into_result().expect("Infallible function failed: negative_slope")
 	}
 	
 	fn set_negative_slope(&mut self, val: f64) -> () {
-		unsafe { sys::cv_dnn_ReLULayer_setNegativeSlope_double(self.as_raw_mut_ReLULayer(), val) }.into_result().expect("Infallible function failed: set_negative_slope")
+		unsafe { sys::cv_dnn_ReLULayer_setPropNegativeSlope_double(self.as_raw_mut_ReLULayer(), val) }.into_result().expect("Infallible function failed: set_negative_slope")
 	}
 	
 }
@@ -1945,7 +1955,7 @@ impl dyn ReLULayer + '_ {
 	/// ## C++ default parameters
 	/// * negative_slope: 0
 	pub fn create(negative_slope: f64) -> Result<core::Ptr::<dyn crate::dnn::ReLULayer>> {
-		unsafe { sys::cv_dnn_ReLULayer_create_double(negative_slope) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::ReLULayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_ReLULayer_create_double(negative_slope) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ReLULayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1954,19 +1964,19 @@ pub trait ReshapeLayer: crate::dnn::Layer {
 	fn as_raw_mut_ReshapeLayer(&mut self) -> *mut c_void;
 
 	fn new_shape_desc(&mut self) -> crate::dnn::BlobShape {
-		unsafe { sys::cv_dnn_ReshapeLayer_newShapeDesc(self.as_raw_mut_ReshapeLayer()) }.into_result().map(|ptr| unsafe { crate::dnn::BlobShape::from_raw(ptr) }).expect("Infallible function failed: new_shape_desc")
+		unsafe { sys::cv_dnn_ReshapeLayer_getPropNewShapeDesc(self.as_raw_mut_ReshapeLayer()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } ).expect("Infallible function failed: new_shape_desc")
 	}
 	
 	fn set_new_shape_desc(&mut self, mut val: crate::dnn::BlobShape) -> () {
-		unsafe { sys::cv_dnn_ReshapeLayer_setNewShapeDesc_BlobShape(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_BlobShape()) }.into_result().expect("Infallible function failed: set_new_shape_desc")
+		unsafe { sys::cv_dnn_ReshapeLayer_setPropNewShapeDesc_BlobShape(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_BlobShape()) }.into_result().expect("Infallible function failed: set_new_shape_desc")
 	}
 	
 	fn new_shape_range(&mut self) -> core::Range {
-		unsafe { sys::cv_dnn_ReshapeLayer_newShapeRange(self.as_raw_mut_ReshapeLayer()) }.into_result().map(|ptr| unsafe { core::Range::from_raw(ptr) }).expect("Infallible function failed: new_shape_range")
+		unsafe { sys::cv_dnn_ReshapeLayer_getPropNewShapeRange(self.as_raw_mut_ReshapeLayer()) }.into_result().map(|r| unsafe { core::Range::opencv_from_extern(r) } ).expect("Infallible function failed: new_shape_range")
 	}
 	
 	fn set_new_shape_range(&mut self, mut val: core::Range) -> () {
-		unsafe { sys::cv_dnn_ReshapeLayer_setNewShapeRange_Range(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_Range()) }.into_result().expect("Infallible function failed: set_new_shape_range")
+		unsafe { sys::cv_dnn_ReshapeLayer_setPropNewShapeRange_Range(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_Range()) }.into_result().expect("Infallible function failed: set_new_shape_range")
 	}
 	
 }
@@ -1976,7 +1986,7 @@ impl dyn ReshapeLayer + '_ {
 	/// * applying_range: Range::all()
 	/// * enable_reordering: false
 	pub fn create(new_shape: &crate::dnn::BlobShape, mut applying_range: core::Range, enable_reordering: bool) -> Result<core::Ptr::<dyn crate::dnn::ReshapeLayer>> {
-		unsafe { sys::cv_dnn_ReshapeLayer_create_const_BlobShapeX_Range_bool(new_shape.as_raw_BlobShape(), applying_range.as_raw_mut_Range(), enable_reordering) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::ReshapeLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_ReshapeLayer_create_const_BlobShapeX_Range_bool(new_shape.as_raw_BlobShape(), applying_range.as_raw_mut_Range(), enable_reordering) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ReshapeLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1988,7 +1998,7 @@ pub trait SigmoidLayer: crate::dnn::Layer {
 
 impl dyn SigmoidLayer + '_ {
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::SigmoidLayer>> {
-		unsafe { sys::cv_dnn_SigmoidLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::SigmoidLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_SigmoidLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SigmoidLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1997,30 +2007,30 @@ pub trait SliceLayer: crate::dnn::Layer {
 	fn as_raw_mut_SliceLayer(&mut self) -> *mut c_void;
 
 	fn axis(&self) -> i32 {
-		unsafe { sys::cv_dnn_SliceLayer_axis_const(self.as_raw_SliceLayer()) }.into_result().expect("Infallible function failed: axis")
+		unsafe { sys::cv_dnn_SliceLayer_getPropAxis_const(self.as_raw_SliceLayer()) }.into_result().expect("Infallible function failed: axis")
 	}
 	
 	fn set_axis(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_SliceLayer_setAxis_int(self.as_raw_mut_SliceLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
+		unsafe { sys::cv_dnn_SliceLayer_setPropAxis_int(self.as_raw_mut_SliceLayer(), val) }.into_result().expect("Infallible function failed: set_axis")
 	}
 	
 	fn slice_indices(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_dnn_SliceLayer_sliceIndices(self.as_raw_mut_SliceLayer()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) }).expect("Infallible function failed: slice_indices")
+		unsafe { sys::cv_dnn_SliceLayer_getPropSliceIndices(self.as_raw_mut_SliceLayer()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: slice_indices")
 	}
 	
 	fn set_slice_indices(&mut self, mut val: core::Vector::<i32>) -> () {
-		unsafe { sys::cv_dnn_SliceLayer_setSliceIndices_vector_int_(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_slice_indices")
+		unsafe { sys::cv_dnn_SliceLayer_setPropSliceIndices_vector_int_(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_slice_indices")
 	}
 	
 }
 
 impl dyn SliceLayer + '_ {
 	pub fn create(axis: i32) -> Result<core::Ptr::<dyn crate::dnn::SliceLayer>> {
-		unsafe { sys::cv_dnn_SliceLayer_create_int(axis) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_SliceLayer_create_int(axis) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1(axis: i32, slice_indices: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::SliceLayer>> {
-		unsafe { sys::cv_dnn_SliceLayer_create_int_const_vector_int_X(axis, slice_indices.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_SliceLayer_create_int_const_vector_int_X(axis, slice_indices.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2034,7 +2044,7 @@ impl dyn SoftmaxLayer + '_ {
 	/// ## C++ default parameters
 	/// * axis: 1
 	pub fn create(axis: i32) -> Result<core::Ptr::<dyn crate::dnn::SoftmaxLayer>> {
-		unsafe { sys::cv_dnn_SoftmaxLayer_create_int(axis) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::SoftmaxLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_SoftmaxLayer_create_int(axis) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SoftmaxLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2044,12 +2054,12 @@ pub trait SplitLayer: crate::dnn::Layer {
 
 	/// Number of copies that will be produced (is ignored when negative).
 	fn outputs_count(&self) -> i32 {
-		unsafe { sys::cv_dnn_SplitLayer_outputsCount_const(self.as_raw_SplitLayer()) }.into_result().expect("Infallible function failed: outputs_count")
+		unsafe { sys::cv_dnn_SplitLayer_getPropOutputsCount_const(self.as_raw_SplitLayer()) }.into_result().expect("Infallible function failed: outputs_count")
 	}
 	
 	/// Number of copies that will be produced (is ignored when negative).
 	fn set_outputs_count(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_SplitLayer_setOutputsCount_int(self.as_raw_mut_SplitLayer(), val) }.into_result().expect("Infallible function failed: set_outputs_count")
+		unsafe { sys::cv_dnn_SplitLayer_setPropOutputsCount_int(self.as_raw_mut_SplitLayer(), val) }.into_result().expect("Infallible function failed: set_outputs_count")
 	}
 	
 }
@@ -2058,7 +2068,7 @@ impl dyn SplitLayer + '_ {
 	/// ## C++ default parameters
 	/// * outputs_count: -1
 	pub fn create(outputs_count: i32) -> Result<core::Ptr::<dyn crate::dnn::SplitLayer>> {
-		unsafe { sys::cv_dnn_SplitLayer_create_int(outputs_count) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::SplitLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_SplitLayer_create_int(outputs_count) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SplitLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2070,7 +2080,7 @@ pub trait TanHLayer: crate::dnn::Layer {
 
 impl dyn TanHLayer + '_ {
 	pub fn create() -> Result<core::Ptr::<dyn crate::dnn::TanHLayer>> {
-		unsafe { sys::cv_dnn_TanHLayer_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::dnn::TanHLayer>::from_raw(ptr) })
+		unsafe { sys::cv_dnn_TanHLayer_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::TanHLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2084,7 +2094,7 @@ pub struct _Range {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { _Range }
+opencv_type_boxed! { _Range }
 
 impl Drop for _Range {
 	fn drop(&mut self) {
@@ -2112,13 +2122,13 @@ impl crate::dnn::_RangeTrait for _Range {
 
 impl _Range {
 	pub fn new(r: &core::Range) -> Result<crate::dnn::_Range> {
-		unsafe { sys::cv_dnn__Range__Range_const_RangeX(r.as_raw_Range()) }.into_result().map(|ptr| unsafe { crate::dnn::_Range::from_raw(ptr) })
+		unsafe { sys::cv_dnn__Range__Range_const_RangeX(r.as_raw_Range()) }.into_result().map(|r| unsafe { crate::dnn::_Range::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * size: 1
 	pub fn new_1(start: i32, size: i32) -> Result<crate::dnn::_Range> {
-		unsafe { sys::cv_dnn__Range__Range_int_int(start, size) }.into_result().map(|ptr| unsafe { crate::dnn::_Range::from_raw(ptr) })
+		unsafe { sys::cv_dnn__Range__Range_int_int(start, size) }.into_result().map(|r| unsafe { crate::dnn::_Range::opencv_from_extern(r) } )
 	}
 	
 }

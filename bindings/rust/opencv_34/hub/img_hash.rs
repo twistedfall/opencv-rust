@@ -76,6 +76,8 @@ pub enum BlockMeanHashMode {
 	BLOCK_MEAN_HASH_MODE_1 = 1 as isize,
 }
 
+opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
+
 /// Calculates img_hash::AverageHash in one call
 /// ## Parameters
 /// * inputArr: input image want to compute hash value, type should be CV_8UC4, CV_8UC3 or CV_8UC1.
@@ -177,7 +179,7 @@ pub struct AverageHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { AverageHash }
+opencv_type_boxed! { AverageHash }
 
 impl Drop for AverageHash {
 	fn drop(&mut self) {
@@ -210,7 +212,7 @@ impl crate::img_hash::ImgHashBaseTrait for AverageHash {
 
 impl AverageHash {
 	pub fn create() -> Result<core::Ptr::<crate::img_hash::AverageHash>> {
-		unsafe { sys::cv_img_hash_AverageHash_create() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::AverageHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_AverageHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -230,7 +232,7 @@ pub trait BlockMeanHashTrait: crate::img_hash::ImgHashBaseTrait {
 	}
 	
 	fn get_mean(&self) -> Result<core::Vector::<f64>> {
-		unsafe { sys::cv_img_hash_BlockMeanHash_getMean_const(self.as_raw_BlockMeanHash()) }.into_result().map(|ptr| unsafe { core::Vector::<f64>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_BlockMeanHash_getMean_const(self.as_raw_BlockMeanHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -242,7 +244,7 @@ pub struct BlockMeanHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BlockMeanHash }
+opencv_type_boxed! { BlockMeanHash }
 
 impl Drop for BlockMeanHash {
 	fn drop(&mut self) {
@@ -277,7 +279,7 @@ impl BlockMeanHash {
 	/// ## C++ default parameters
 	/// * mode: BLOCK_MEAN_HASH_MODE_0
 	pub fn create(mode: i32) -> Result<core::Ptr::<crate::img_hash::BlockMeanHash>> {
-		unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -298,7 +300,7 @@ pub struct ColorMomentHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { ColorMomentHash }
+opencv_type_boxed! { ColorMomentHash }
 
 impl Drop for ColorMomentHash {
 	fn drop(&mut self) {
@@ -331,7 +333,7 @@ impl crate::img_hash::ImgHashBaseTrait for ColorMomentHash {
 
 impl ColorMomentHash {
 	pub fn create() -> Result<core::Ptr::<crate::img_hash::ColorMomentHash>> {
-		unsafe { sys::cv_img_hash_ColorMomentHash_create() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_ColorMomentHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -371,7 +373,7 @@ pub struct ImgHashBase {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { ImgHashBase }
+opencv_type_boxed! { ImgHashBase }
 
 impl Drop for ImgHashBase {
 	fn drop(&mut self) {
@@ -434,7 +436,7 @@ pub struct MarrHildrethHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { MarrHildrethHash }
+opencv_type_boxed! { MarrHildrethHash }
 
 impl Drop for MarrHildrethHash {
 	fn drop(&mut self) {
@@ -474,7 +476,7 @@ impl MarrHildrethHash {
 	/// * alpha: 2.0f
 	/// * scale: 1.0f
 	pub fn create(alpha: f32, scale: f32) -> Result<core::Ptr::<crate::img_hash::MarrHildrethHash>> {
-		unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -499,7 +501,7 @@ pub struct PHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { PHash }
+opencv_type_boxed! { PHash }
 
 impl Drop for PHash {
 	fn drop(&mut self) {
@@ -532,7 +534,7 @@ impl crate::img_hash::PHashTrait for PHash {
 
 impl PHash {
 	pub fn create() -> Result<core::Ptr::<crate::img_hash::PHash>> {
-		unsafe { sys::cv_img_hash_PHash_create() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::PHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_PHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -561,19 +563,19 @@ pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait {
 	}
 	
 	fn get_features(&mut self) -> Result<core::Vector::<f64>> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getFeatures(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|ptr| unsafe { core::Vector::<f64>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_RadialVarianceHash_getFeatures(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
 	}
 	
 	fn get_hash(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getHash(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_RadialVarianceHash_getHash(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn get_pix_per_line(&mut self, input: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatX(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatX(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn get_projection(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getProjection(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_RadialVarianceHash_getProjection(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }
@@ -585,7 +587,7 @@ pub struct RadialVarianceHash {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { RadialVarianceHash }
+opencv_type_boxed! { RadialVarianceHash }
 
 impl Drop for RadialVarianceHash {
 	fn drop(&mut self) {
@@ -621,7 +623,7 @@ impl RadialVarianceHash {
 	/// * sigma: 1
 	/// * num_of_angle_line: 180
 	pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr::<crate::img_hash::RadialVarianceHash>> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::from_raw(ptr) })
+		unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(r) } )
 	}
 	
 }

@@ -26,6 +26,8 @@ pub mod freetype;
 pub mod fuzzy;
 #[cfg(feature = "contrib")]
 pub mod hdf;
+#[cfg(feature = "contrib")]
+pub mod hfs;
 pub mod highgui;
 #[cfg(feature = "contrib")]
 pub mod img_hash;
@@ -38,16 +40,26 @@ pub mod line_descriptor;
 pub mod ml;
 pub mod objdetect;
 #[cfg(feature = "contrib")]
+pub mod optflow;
+#[cfg(feature = "contrib")]
 pub mod phase_unwrapping;
 pub mod photo;
 #[cfg(feature = "contrib")]
 pub mod plot;
 #[cfg(feature = "contrib")]
+pub mod quality;
+#[cfg(feature = "contrib")]
 pub mod rapid;
+#[cfg(feature = "contrib")]
+pub mod rgbd;
+#[cfg(feature = "contrib")]
+pub mod saliency;
 #[cfg(feature = "contrib")]
 pub mod sfm;
 #[cfg(feature = "contrib")]
 pub mod shape;
+#[cfg(feature = "contrib")]
+pub mod stereo;
 pub mod stitching;
 #[cfg(feature = "contrib")]
 pub mod structured_light;
@@ -57,6 +69,8 @@ pub mod superres;
 pub mod surface_matching;
 #[cfg(feature = "contrib")]
 pub mod text;
+#[cfg(feature = "contrib")]
+pub mod tracking;
 pub mod video;
 pub mod videoio;
 #[cfg(feature = "contrib")]
@@ -64,6 +78,8 @@ pub mod videostab;
 pub mod viz;
 #[cfg(feature = "contrib")]
 pub mod xfeatures2d;
+#[cfg(feature = "contrib")]
+pub mod ximgproc;
 #[cfg(feature = "contrib")]
 pub mod xobjdetect;
 #[cfg(feature = "contrib")]
@@ -100,6 +116,8 @@ pub mod hub_prelude {
 	pub use super::fuzzy::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::hdf::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::hfs::prelude::*;
 	pub use super::highgui::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::img_hash::prelude::*;
@@ -112,16 +130,26 @@ pub mod hub_prelude {
 	pub use super::ml::prelude::*;
 	pub use super::objdetect::prelude::*;
 	#[cfg(feature = "contrib")]
+	pub use super::optflow::prelude::*;
+	#[cfg(feature = "contrib")]
 	pub use super::phase_unwrapping::prelude::*;
 	pub use super::photo::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::plot::prelude::*;
 	#[cfg(feature = "contrib")]
+	pub use super::quality::prelude::*;
+	#[cfg(feature = "contrib")]
 	pub use super::rapid::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::rgbd::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::saliency::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::sfm::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::shape::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::stereo::prelude::*;
 	pub use super::stitching::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::structured_light::prelude::*;
@@ -131,6 +159,8 @@ pub mod hub_prelude {
 	pub use super::surface_matching::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::text::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::tracking::prelude::*;
 	pub use super::video::prelude::*;
 	pub use super::videoio::prelude::*;
 	#[cfg(feature = "contrib")]
@@ -138,6 +168,8 @@ pub mod hub_prelude {
 	pub use super::viz::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::xfeatures2d::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::ximgproc::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::xobjdetect::prelude::*;
 	#[cfg(feature = "contrib")]

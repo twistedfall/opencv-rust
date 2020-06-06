@@ -18,17 +18,17 @@ pub mod prelude {
 pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector::<core::KeyPoint>, img2: &dyn core::ToInputArray, mut keypoints2: core::Vector::<core::KeyPoint>, mut matches: core::Vector::<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
 	input_array_arg!(img1);
 	input_array_arg!(img2);
-	string_arg!(description);
-	string_arg!(view);
-	unsafe { sys::cvv_impl_debugDMatch_const__InputArrayX_vector_KeyPoint__const__InputArrayX_vector_KeyPoint__vector_DMatch__const_CallMetaDataX_const_charX_const_charX_bool(img1.as_raw__InputArray(), keypoints1.as_raw_mut_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_mut_VectorOfKeyPoint(), matches.as_raw_mut_VectorOfDMatch(), data.as_raw_CallMetaData(), description.as_ptr(), view.as_ptr(), use_train_descriptor) }.into_result()
+	extern_container_arg!(description);
+	extern_container_arg!(view);
+	unsafe { sys::cvv_impl_debugDMatch_const__InputArrayX_vector_KeyPoint__const__InputArrayX_vector_KeyPoint__vector_DMatch__const_CallMetaDataX_const_charX_const_charX_bool(img1.as_raw__InputArray(), keypoints1.as_raw_mut_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_mut_VectorOfKeyPoint(), matches.as_raw_mut_VectorOfDMatch(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern(), use_train_descriptor) }.into_result()
 }
 
 pub fn debug_filter(original: &dyn core::ToInputArray, result: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
 	input_array_arg!(original);
 	input_array_arg!(result);
-	string_arg!(description);
-	string_arg!(view);
-	unsafe { sys::cvv_impl_debugFilter_const__InputArrayX_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(original.as_raw__InputArray(), result.as_raw__InputArray(), data.as_raw_CallMetaData(), description.as_ptr(), view.as_ptr()) }.into_result()
+	extern_container_arg!(description);
+	extern_container_arg!(view);
+	unsafe { sys::cvv_impl_debugFilter_const__InputArrayX_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(original.as_raw__InputArray(), result.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern()) }.into_result()
 }
 
 pub fn final_show() -> Result<()> {
@@ -37,9 +37,9 @@ pub fn final_show() -> Result<()> {
 
 pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
 	input_array_arg!(img);
-	string_arg!(description);
-	string_arg!(view);
-	unsafe { sys::cvv_impl_showImage_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(img.as_raw__InputArray(), data.as_raw_CallMetaData(), description.as_ptr(), view.as_ptr()) }.into_result()
+	extern_container_arg!(description);
+	extern_container_arg!(view);
+	unsafe { sys::cvv_impl_showImage_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(img.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern()) }.into_result()
 }
 
 /// Optional information about a location in Code.
@@ -48,20 +48,20 @@ pub trait CallMetaDataTrait {
 	fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void;
 
 	fn file(&self) -> String {
-		unsafe { sys::cvv_impl_CallMetaData_file_const(self.as_raw_CallMetaData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: file")
+		unsafe { sys::cvv_impl_CallMetaData_getPropFile_const(self.as_raw_CallMetaData()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: file")
 	}
 	
 	fn line(&self) -> size_t {
-		unsafe { sys::cvv_impl_CallMetaData_line_const(self.as_raw_CallMetaData()) }.into_result().expect("Infallible function failed: line")
+		unsafe { sys::cvv_impl_CallMetaData_getPropLine_const(self.as_raw_CallMetaData()) }.into_result().expect("Infallible function failed: line")
 	}
 	
 	fn function(&self) -> String {
-		unsafe { sys::cvv_impl_CallMetaData_function_const(self.as_raw_CallMetaData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: function")
+		unsafe { sys::cvv_impl_CallMetaData_getPropFunction_const(self.as_raw_CallMetaData()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: function")
 	}
 	
 	/// Whether *this holds actual data.
 	fn is_known(&self) -> bool {
-		unsafe { sys::cvv_impl_CallMetaData_isKnown_const(self.as_raw_CallMetaData()) }.into_result().expect("Infallible function failed: is_known")
+		unsafe { sys::cvv_impl_CallMetaData_getPropIsKnown_const(self.as_raw_CallMetaData()) }.into_result().expect("Infallible function failed: is_known")
 	}
 	
 	fn to_bool(&mut self) -> Result<bool> {
@@ -75,7 +75,7 @@ pub struct CallMetaData {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { CallMetaData }
+opencv_type_boxed! { CallMetaData }
 
 impl Drop for CallMetaData {
 	fn drop(&mut self) {
@@ -99,16 +99,16 @@ impl crate::cvv::CallMetaDataTrait for CallMetaData {
 impl CallMetaData {
 	/// Creates an unknown location.
 	pub fn default() -> Result<crate::cvv::CallMetaData> {
-		unsafe { sys::cvv_impl_CallMetaData_CallMetaData() }.into_result().map(|ptr| unsafe { crate::cvv::CallMetaData::from_raw(ptr) })
+		unsafe { sys::cvv_impl_CallMetaData_CallMetaData() }.into_result().map(|r| unsafe { crate::cvv::CallMetaData::opencv_from_extern(r) } )
 	}
 	
 	/// Creates the provided location.
 	/// 
 	/// Argument should be self-explaining.
 	pub fn new(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
-		string_arg!(file);
-		string_arg!(function);
-		unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.as_ptr(), line, function.as_ptr()) }.into_result().map(|ptr| unsafe { crate::cvv::CallMetaData::from_raw(ptr) })
+		extern_container_arg!(file);
+		extern_container_arg!(function);
+		unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_to_extern(), line, function.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::cvv::CallMetaData::opencv_from_extern(r) } )
 	}
 	
 }

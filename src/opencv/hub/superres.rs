@@ -12,45 +12,45 @@ pub mod prelude {
 /// ## C++ default parameters
 /// * device_id: 0
 pub fn create_frame_source_camera(device_id: i32) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
-	unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_frame_source_empty() -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
-	unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
-	string_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringX(file_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::from_raw(ptr) })
+	extern_container_arg!(file_name);
+	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringX(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
-	string_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_const_StringX(file_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::from_raw(ptr) })
+	extern_container_arg!(file_name);
+	unsafe { sys::cv_superres_createFrameSource_Video_const_StringX(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Brox_CUDA() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_Brox_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_DualTVL1() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_DualTVL1() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_dual_tvl1_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_farneback() -> Result<core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Farneback() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_Farneback() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_farneback_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>::opencv_from_extern(r) } )
 }
 
 /// Create Bilateral TV-L1 Super Resolution.
@@ -72,11 +72,11 @@ pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr::<dyn crate::superres::
 /// *   **int temporalAreaRadius** Radius of the temporal search area.
 /// *   **Ptr\<DenseOpticalFlowExt\> opticalFlow** Dense optical flow algorithm.
 pub fn create_super_resolution_btvl1() -> Result<core::Ptr::<dyn crate::superres::Superres_SuperResolution>> {
-	unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(r) } )
 }
 
 pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_SuperResolution>> {
-	unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::from_raw(ptr) })
+	unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(r) } )
 }
 
 pub trait Superres_BroxOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt {
@@ -602,7 +602,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// ## See also
 	/// setOpticalFlow
 	fn get_optical_flow(&self) -> Result<core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>> {
-		unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_Superres_SuperResolution()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>::from_raw(ptr) })
+		unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_Superres_SuperResolution()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>::opencv_from_extern(r) } )
 	}
 	
 	/// Dense optical flow algorithm

@@ -224,6 +224,8 @@ pub enum MouseEventFlags {
 	EVENT_FLAG_ALTKEY = 32 as isize,
 }
 
+opencv_type_enum! { crate::highgui::MouseEventFlags }
+
 /// Mouse Events see cv::MouseCallback
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -254,6 +256,8 @@ pub enum MouseEventTypes {
 	EVENT_MOUSEHWHEEL = 11 as isize,
 }
 
+opencv_type_enum! { crate::highgui::MouseEventTypes }
+
 /// Qt "button" type
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -268,6 +272,8 @@ pub enum QtButtonTypes {
 	QT_NEW_BUTTONBAR = 1024 as isize,
 }
 
+opencv_type_enum! { crate::highgui::QtButtonTypes }
+
 /// Qt font style
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -279,6 +285,8 @@ pub enum QtFontStyles {
 	/// Oblique font.
 	QT_STYLE_OBLIQUE = 2 as isize,
 }
+
+opencv_type_enum! { crate::highgui::QtFontStyles }
 
 /// Qt font weight
 #[repr(C)]
@@ -295,6 +303,8 @@ pub enum QtFontWeights {
 	/// Weight of 87
 	QT_FONT_BLACK = 87 as isize,
 }
+
+opencv_type_enum! { crate::highgui::QtFontWeights }
 
 /// Flags for cv::namedWindow
 #[repr(C)]
@@ -318,6 +328,8 @@ pub enum WindowFlags {
 	WINDOW_GUI_NORMAL = 16 as isize,
 }
 
+opencv_type_enum! { crate::highgui::WindowFlags }
+
 /// Flags for cv::setWindowProperty / cv::getWindowProperty
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -333,6 +345,8 @@ pub enum WindowPropertyFlags {
 	/// checks whether the window exists and is visible
 	WND_PROP_VISIBLE = 4 as isize,
 }
+
+opencv_type_enum! { crate::highgui::WindowPropertyFlags }
 
 /// Callback function for a button created by cv::createButton
 /// ## Parameters
@@ -367,8 +381,8 @@ pub type TrackbarCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'sta
 /// * org: Point(x,y) where the text should start on an image.
 /// * font: Font to use to draw a text.
 pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::highgui::QtFont) -> Result<()> {
-	string_arg!(text);
-	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_QtFontX(img.as_raw_Mat(), text.as_ptr(), &org, font.as_raw_QtFont()) }.into_result()
+	extern_container_arg!(text);
+	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_QtFontX(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), font.as_raw_QtFont()) }.into_result()
 }
 
 /// Draws a text on the image.
@@ -393,9 +407,9 @@ pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::hig
 /// * style: QT_STYLE_NORMAL
 /// * spacing: 0
 pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
-	string_arg!(text);
-	string_arg!(name_font);
-	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(img.as_raw_Mat(), text.as_ptr(), &org, name_font.as_ptr(), point_size, &color, weight, style, spacing) }.into_result()
+	extern_container_arg!(text);
+	extern_container_arg!(name_font);
+	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result()
 }
 
 /// Attaches a button to the control panel.
@@ -431,10 +445,10 @@ pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, name_fo
 /// * typ: QT_PUSH_BUTTON
 /// * initial_button_state: false
 pub fn create_button(bar_name: &str, on_change: crate::highgui::ButtonCallback, typ: i32, initial_button_state: bool) -> Result<i32> {
-	string_arg!(bar_name);
+	extern_container_arg!(bar_name);
 	callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(state: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_change);
-	unsafe { sys::cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name.as_ptr(), on_change_trampoline, userdata, typ, initial_button_state) }.into_result()
+	unsafe { sys::cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name.opencv_to_extern(), on_change_trampoline, userdata, typ, initial_button_state) }.into_result()
 }
 
 /// Creates a trackbar and attaches it to the specified window.
@@ -469,11 +483,11 @@ pub fn create_button(bar_name: &str, on_change: crate::highgui::ButtonCallback, 
 /// * on_change: 0
 /// * userdata: 0
 pub fn create_trackbar(trackbarname: &str, winname: &str, value: &mut i32, count: i32, on_change: crate::highgui::TrackbarCallback) -> Result<i32> {
-	string_arg!(trackbarname);
-	string_arg!(winname);
+	extern_container_arg!(trackbarname);
+	extern_container_arg!(winname);
 	callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(pos: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_change);
-	unsafe { sys::cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname.as_ptr(), winname.as_ptr(), value, count, on_change_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), value, count, on_change_trampoline, userdata) }.into_result()
 }
 
 /// Destroys all of the HighGUI windows.
@@ -490,8 +504,8 @@ pub fn destroy_all_windows() -> Result<()> {
 /// ## Parameters
 /// * winname: Name of the window to be destroyed.
 pub fn destroy_window(winname: &str) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_destroyWindow_const_StringX(winname.as_ptr()) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_destroyWindow_const_StringX(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Displays a text on a window image as an overlay for a specified duration.
@@ -510,9 +524,9 @@ pub fn destroy_window(winname: &str) -> Result<()> {
 /// ## C++ default parameters
 /// * delayms: 0
 pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
-	string_arg!(winname);
-	string_arg!(text);
-	unsafe { sys::cv_displayOverlay_const_StringX_const_StringX_int(winname.as_ptr(), text.as_ptr(), delayms) }.into_result()
+	extern_container_arg!(winname);
+	extern_container_arg!(text);
+	unsafe { sys::cv_displayOverlay_const_StringX_const_StringX_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
 }
 
 /// Displays a text on the window statusbar during the specified period of time.
@@ -531,9 +545,9 @@ pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
 /// ## C++ default parameters
 /// * delayms: 0
 pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()> {
-	string_arg!(winname);
-	string_arg!(text);
-	unsafe { sys::cv_displayStatusBar_const_StringX_const_StringX_int(winname.as_ptr(), text.as_ptr(), delayms) }.into_result()
+	extern_container_arg!(winname);
+	extern_container_arg!(text);
+	unsafe { sys::cv_displayStatusBar_const_StringX_const_StringX_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
 }
 
 /// Creates the font to draw a text on an image.
@@ -565,8 +579,8 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 /// * style: QT_STYLE_NORMAL
 /// * spacing: 0
 pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
-	string_arg!(name_font);
-	unsafe { sys::cv_fontQt_const_StringX_int_Scalar_int_int_int(name_font.as_ptr(), point_size, &color, weight, style, spacing) }.into_result().map(|ptr| unsafe { crate::highgui::QtFont::from_raw(ptr) })
+	extern_container_arg!(name_font);
+	unsafe { sys::cv_fontQt_const_StringX_int_Scalar_int_int_int(name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result().map(|r| unsafe { crate::highgui::QtFont::opencv_from_extern(r) } )
 }
 
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
@@ -608,9 +622,9 @@ pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of the trackbar.
 pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
-	string_arg!(trackbarname);
-	string_arg!(winname);
-	unsafe { sys::cv_getTrackbarPos_const_StringX_const_StringX(trackbarname.as_ptr(), winname.as_ptr()) }.into_result()
+	extern_container_arg!(trackbarname);
+	extern_container_arg!(winname);
+	unsafe { sys::cv_getTrackbarPos_const_StringX_const_StringX(trackbarname.opencv_to_extern(), winname.opencv_to_extern()) }.into_result()
 }
 
 /// Provides parameters of a window.
@@ -623,8 +637,8 @@ pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
 /// ## See also
 /// setWindowProperty
 pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
-	string_arg!(winname);
-	unsafe { sys::cv_getWindowProperty_const_StringX_int(winname.as_ptr(), prop_id) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_getWindowProperty_const_StringX_int(winname.opencv_to_extern(), prop_id) }.into_result()
 }
 
 /// Displays an image in the specified window.
@@ -664,9 +678,9 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 /// * winname: Name of the window.
 /// * mat: Image to be shown.
 pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
-	string_arg!(winname);
+	extern_container_arg!(winname);
 	input_array_arg!(mat);
-	unsafe { sys::cv_imshow_const_StringX_const__InputArrayX(winname.as_ptr(), mat.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_imshow_const_StringX_const__InputArrayX(winname.opencv_to_extern(), mat.as_raw__InputArray()) }.into_result()
 }
 
 /// Loads parameters of the specified window.
@@ -677,8 +691,8 @@ pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
 /// ## Parameters
 /// * windowName: Name of the window.
 pub fn load_window_parameters(window_name: &str) -> Result<()> {
-	string_arg!(window_name);
-	unsafe { sys::cv_loadWindowParameters_const_StringX(window_name.as_ptr()) }.into_result()
+	extern_container_arg!(window_name);
+	unsafe { sys::cv_loadWindowParameters_const_StringX(window_name.opencv_to_extern()) }.into_result()
 }
 
 /// Moves window to the specified position
@@ -688,8 +702,8 @@ pub fn load_window_parameters(window_name: &str) -> Result<()> {
 /// * x: The new x-coordinate of the window.
 /// * y: The new y-coordinate of the window.
 pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_moveWindow_const_StringX_int_int(winname.as_ptr(), x, y) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_moveWindow_const_StringX_int_int(winname.opencv_to_extern(), x, y) }.into_result()
 }
 
 /// Creates a window.
@@ -723,8 +737,8 @@ pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 /// ## C++ default parameters
 /// * flags: WINDOW_AUTOSIZE
 pub fn named_window(winname: &str, flags: i32) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_namedWindow_const_StringX_int(winname.as_ptr(), flags) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_namedWindow_const_StringX_int(winname.opencv_to_extern(), flags) }.into_result()
 }
 
 /// Resizes window to the specified size
@@ -740,8 +754,8 @@ pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 /// * width: The new window width.
 /// * height: The new window height.
 pub fn resize_window(winname: &str, width: i32, height: i32) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_resizeWindow_const_StringX_int_int(winname.as_ptr(), width, height) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_resizeWindow_const_StringX_int_int(winname.opencv_to_extern(), width, height) }.into_result()
 }
 
 /// Saves parameters of the specified window.
@@ -752,8 +766,8 @@ pub fn resize_window(winname: &str, width: i32, height: i32) -> Result<()> {
 /// ## Parameters
 /// * windowName: Name of the window.
 pub fn save_window_parameters(window_name: &str) -> Result<()> {
-	string_arg!(window_name);
-	unsafe { sys::cv_saveWindowParameters_const_StringX(window_name.as_ptr()) }.into_result()
+	extern_container_arg!(window_name);
+	unsafe { sys::cv_saveWindowParameters_const_StringX(window_name.opencv_to_extern()) }.into_result()
 }
 
 /// Sets mouse handler for the specified window
@@ -768,10 +782,10 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 /// ## C++ default parameters
 /// * userdata: 0
 pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback) -> Result<()> {
-	string_arg!(winname);
+	extern_container_arg!(winname);
 	callback_arg!(on_mouse_trampoline(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_mouse(event: i32, x: i32, y: i32, flags: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_mouse);
-	unsafe { sys::cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname.as_ptr(), on_mouse_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname.opencv_to_extern(), on_mouse_trampoline, userdata) }.into_result()
 }
 
 /// Sets the specified window as current OpenGL context.
@@ -779,8 +793,8 @@ pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback
 /// ## Parameters
 /// * winname: Name of the window.
 pub fn set_opengl_context(winname: &str) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_setOpenGlContext_const_StringX(winname.as_ptr()) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_setOpenGlContext_const_StringX(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Sets a callback function to be called to draw on top of displayed image.
@@ -828,10 +842,10 @@ pub fn set_opengl_context(winname: &str) -> Result<()> {
 /// ## C++ default parameters
 /// * userdata: 0
 pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::OpenGlDrawCallback) -> Result<()> {
-	string_arg!(winname);
+	extern_container_arg!(winname);
 	callback_arg!(on_opengl_draw_trampoline(userdata: *mut c_void) -> () => userdata in callbacks => on_opengl_draw() -> ());
 	userdata_arg!(userdata in callbacks => on_opengl_draw);
-	unsafe { sys::cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname.as_ptr(), on_opengl_draw_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname.opencv_to_extern(), on_opengl_draw_trampoline, userdata) }.into_result()
 }
 
 /// Sets the trackbar maximum position.
@@ -849,9 +863,9 @@ pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::O
 /// * winname: Name of the window that is the parent of trackbar.
 /// * maxval: New maximum position.
 pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Result<()> {
-	string_arg!(trackbarname);
-	string_arg!(winname);
-	unsafe { sys::cv_setTrackbarMax_const_StringX_const_StringX_int(trackbarname.as_ptr(), winname.as_ptr(), maxval) }.into_result()
+	extern_container_arg!(trackbarname);
+	extern_container_arg!(winname);
+	unsafe { sys::cv_setTrackbarMax_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), maxval) }.into_result()
 }
 
 /// Sets the trackbar minimum position.
@@ -869,9 +883,9 @@ pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Resul
 /// * winname: Name of the window that is the parent of trackbar.
 /// * minval: New maximum position.
 pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Result<()> {
-	string_arg!(trackbarname);
-	string_arg!(winname);
-	unsafe { sys::cv_setTrackbarMin_const_StringX_const_StringX_int(trackbarname.as_ptr(), winname.as_ptr(), minval) }.into_result()
+	extern_container_arg!(trackbarname);
+	extern_container_arg!(winname);
+	unsafe { sys::cv_setTrackbarMin_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), minval) }.into_result()
 }
 
 /// Sets the trackbar position.
@@ -889,9 +903,9 @@ pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Resul
 /// * winname: Name of the window that is the parent of trackbar.
 /// * pos: New position.
 pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<()> {
-	string_arg!(trackbarname);
-	string_arg!(winname);
-	unsafe { sys::cv_setTrackbarPos_const_StringX_const_StringX_int(trackbarname.as_ptr(), winname.as_ptr(), pos) }.into_result()
+	extern_container_arg!(trackbarname);
+	extern_container_arg!(winname);
+	unsafe { sys::cv_setTrackbarPos_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), pos) }.into_result()
 }
 
 /// Changes parameters of a window dynamically.
@@ -903,8 +917,8 @@ pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<(
 /// * prop_id: Window property to edit. The supported operation flags are: (cv::WindowPropertyFlags)
 /// * prop_value: New value of the window property. The supported flags are: (cv::WindowFlags)
 pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_setWindowProperty_const_StringX_int_double(winname.as_ptr(), prop_id, prop_value) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_setWindowProperty_const_StringX_int_double(winname.opencv_to_extern(), prop_id, prop_value) }.into_result()
 }
 
 /// Updates window title
@@ -912,9 +926,9 @@ pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Resu
 /// * winname: Name of the window.
 /// * title: New title.
 pub fn set_window_title(winname: &str, title: &str) -> Result<()> {
-	string_arg!(winname);
-	string_arg!(title);
-	unsafe { sys::cv_setWindowTitle_const_StringX_const_StringX(winname.as_ptr(), title.as_ptr()) }.into_result()
+	extern_container_arg!(winname);
+	extern_container_arg!(title);
+	unsafe { sys::cv_setWindowTitle_const_StringX_const_StringX(winname.opencv_to_extern(), title.opencv_to_extern()) }.into_result()
 }
 
 pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: &mut [&str]) -> Result<i32> {
@@ -935,8 +949,8 @@ pub fn stop_loop() -> Result<()> {
 /// ## Parameters
 /// * winname: Name of the window.
 pub fn update_window(winname: &str) -> Result<()> {
-	string_arg!(winname);
-	unsafe { sys::cv_updateWindow_const_StringX(winname.as_ptr()) }.into_result()
+	extern_container_arg!(winname);
+	unsafe { sys::cv_updateWindow_const_StringX(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Similar to #waitKey, but returns full key code.
@@ -989,96 +1003,96 @@ pub trait QtFontTrait {
 
 	/// Name of the font
 	fn name_font(&self) -> String {
-		unsafe { sys::cv_QtFont_nameFont_const(self.as_raw_QtFont()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name_font")
+		unsafe { sys::cv_QtFont_getPropNameFont_const(self.as_raw_QtFont()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: name_font")
 	}
 	
 	/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 	fn color(&self) -> core::Scalar {
-		unsafe { sys::cv_QtFont_color_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: color")
+		unsafe { sys::cv_QtFont_getPropColor_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: color")
 	}
 	
 	/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 	fn set_color(&mut self, val: core::Scalar) -> () {
-		unsafe { sys::cv_QtFont_setColor_Scalar(self.as_raw_mut_QtFont(), &val) }.into_result().expect("Infallible function failed: set_color")
+		unsafe { sys::cv_QtFont_setPropColor_Scalar(self.as_raw_mut_QtFont(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_color")
 	}
 	
 	/// See cv::QtFontStyles
 	fn font_face(&self) -> i32 {
-		unsafe { sys::cv_QtFont_font_face_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: font_face")
+		unsafe { sys::cv_QtFont_getPropFont_face_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: font_face")
 	}
 	
 	/// See cv::QtFontStyles
 	fn set_font_face(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setFont_face_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_font_face")
+		unsafe { sys::cv_QtFont_setPropFont_face_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_font_face")
 	}
 	
 	/// font data and metrics
 	fn ascii(&self) -> &i32 {
-		unsafe { sys::cv_QtFont_ascii_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ascii")
+		unsafe { sys::cv_QtFont_getPropAscii_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ascii")
 	}
 	
 	fn greek(&self) -> &i32 {
-		unsafe { sys::cv_QtFont_greek_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: greek")
+		unsafe { sys::cv_QtFont_getPropGreek_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: greek")
 	}
 	
 	fn cyrillic(&self) -> &i32 {
-		unsafe { sys::cv_QtFont_cyrillic_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: cyrillic")
+		unsafe { sys::cv_QtFont_getPropCyrillic_const(self.as_raw_QtFont()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: cyrillic")
 	}
 	
 	fn hscale(&self) -> f32 {
-		unsafe { sys::cv_QtFont_hscale_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: hscale")
+		unsafe { sys::cv_QtFont_getPropHscale_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: hscale")
 	}
 	
 	fn set_hscale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setHscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_hscale")
+		unsafe { sys::cv_QtFont_setPropHscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_hscale")
 	}
 	
 	fn vscale(&self) -> f32 {
-		unsafe { sys::cv_QtFont_vscale_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: vscale")
+		unsafe { sys::cv_QtFont_getPropVscale_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: vscale")
 	}
 	
 	fn set_vscale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setVscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_vscale")
+		unsafe { sys::cv_QtFont_setPropVscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_vscale")
 	}
 	
 	/// slope coefficient: 0 - normal, >0 - italic
 	fn shear(&self) -> f32 {
-		unsafe { sys::cv_QtFont_shear_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: shear")
+		unsafe { sys::cv_QtFont_getPropShear_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: shear")
 	}
 	
 	/// slope coefficient: 0 - normal, >0 - italic
 	fn set_shear(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setShear_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_shear")
+		unsafe { sys::cv_QtFont_setPropShear_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_shear")
 	}
 	
 	/// See cv::QtFontWeights
 	fn thickness(&self) -> i32 {
-		unsafe { sys::cv_QtFont_thickness_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: thickness")
+		unsafe { sys::cv_QtFont_getPropThickness_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: thickness")
 	}
 	
 	/// See cv::QtFontWeights
 	fn set_thickness(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setThickness_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_thickness")
+		unsafe { sys::cv_QtFont_setPropThickness_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_thickness")
 	}
 	
 	/// horizontal interval between letters
 	fn dx(&self) -> f32 {
-		unsafe { sys::cv_QtFont_dx_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: dx")
+		unsafe { sys::cv_QtFont_getPropDx_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: dx")
 	}
 	
 	/// horizontal interval between letters
 	fn set_dx(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setDx_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_dx")
+		unsafe { sys::cv_QtFont_setPropDx_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_dx")
 	}
 	
 	/// PointSize
 	fn line_type(&self) -> i32 {
-		unsafe { sys::cv_QtFont_line_type_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: line_type")
+		unsafe { sys::cv_QtFont_getPropLine_type_const(self.as_raw_QtFont()) }.into_result().expect("Infallible function failed: line_type")
 	}
 	
 	/// PointSize
 	fn set_line_type(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setLine_type_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_line_type")
+		unsafe { sys::cv_QtFont_setPropLine_type_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_line_type")
 	}
 	
 }
@@ -1088,7 +1102,7 @@ pub struct QtFont {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { QtFont }
+opencv_type_boxed! { QtFont }
 
 impl Drop for QtFont {
 	fn drop(&mut self) {

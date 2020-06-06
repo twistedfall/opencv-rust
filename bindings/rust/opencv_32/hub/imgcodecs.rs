@@ -105,6 +105,8 @@ pub enum ImreadModes {
 	IMREAD_IGNORE_ORIENTATION = 128 as isize,
 }
 
+opencv_type_enum! { crate::imgcodecs::ImreadModes }
+
 /// Imwrite flags
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -135,6 +137,8 @@ pub enum ImwriteFlags {
 	IMWRITE_PAM_TUPLETYPE = 128 as isize,
 }
 
+opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
+
 /// Imwrite PAM specific tupletype flags used to define the 'TUPETYPE' field of a PAM file.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -146,6 +150,8 @@ pub enum ImwritePAMFlags {
 	IMWRITE_PAM_FORMAT_RGB = 4 as isize,
 	IMWRITE_PAM_FORMAT_RGB_ALPHA = 5 as isize,
 }
+
+opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
 
 /// Imwrite PNG specific flags used to tune the compression algorithm.
 /// These flags will be modify the way of PNG image compression and will be passed to the underlying zlib processing stage.
@@ -169,6 +175,8 @@ pub enum ImwritePNGFlags {
 	IMWRITE_PNG_STRATEGY_FIXED = 4 as isize,
 }
 
+opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
+
 /// Reads an image from a buffer in memory.
 /// 
 /// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
@@ -183,7 +191,7 @@ pub enum ImwritePNGFlags {
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	unsafe { sys::cv_imdecode_const__InputArrayX_int(buf.as_raw__InputArray(), flags) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_imdecode_const__InputArrayX_int(buf.as_raw__InputArray(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Reads an image from a buffer in memory.
@@ -207,7 +215,7 @@ pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 /// reallocations when the function is called repeatedly for images of the same size.
 pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	unsafe { sys::cv_imdecode_const__InputArrayX_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_imdecode_const__InputArrayX_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Encodes an image into a memory buffer.
@@ -224,9 +232,9 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 /// ## C++ default parameters
 /// * params: std::vector<int>()
 pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector::<u8>, params: &core::Vector::<i32>) -> Result<bool> {
-	string_arg!(ext);
+	extern_container_arg!(ext);
 	input_array_arg!(img);
-	unsafe { sys::cv_imencode_const_StringX_const__InputArrayX_vector_unsigned_char_X_const_vector_int_X(ext.as_ptr(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imencode_const_StringX_const__InputArrayX_vector_unsigned_char_X_const_vector_int_X(ext.opencv_to_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
 }
 
 /// Loads an image from a file.
@@ -278,8 +286,8 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector:
 /// ## C++ default parameters
 /// * flags: IMREAD_COLOR
 pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
-	string_arg!(filename);
-	unsafe { sys::cv_imread_const_StringX_int(filename.as_ptr(), flags) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	extern_container_arg!(filename);
+	unsafe { sys::cv_imread_const_StringX_int(filename.opencv_to_extern(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Loads a multi-page image from a file.
@@ -295,8 +303,8 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// ## C++ default parameters
 /// * flags: IMREAD_ANYCOLOR
 pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: i32) -> Result<bool> {
-	string_arg!(filename);
-	unsafe { sys::cv_imreadmulti_const_StringX_vector_Mat_X_int(filename.as_ptr(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
+	extern_container_arg!(filename);
+	unsafe { sys::cv_imreadmulti_const_StringX_vector_Mat_X_int(filename.opencv_to_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
 }
 
 /// Saves an image to a specified file.
@@ -365,7 +373,7 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 /// ## C++ default parameters
 /// * params: std::vector<int>()
 pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector::<i32>) -> Result<bool> {
-	string_arg!(filename);
+	extern_container_arg!(filename);
 	input_array_arg!(img);
-	unsafe { sys::cv_imwrite_const_StringX_const__InputArrayX_const_vector_int_X(filename.as_ptr(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imwrite_const_StringX_const__InputArrayX_const_vector_int_X(filename.opencv_to_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
 }

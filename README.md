@@ -14,17 +14,17 @@ Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your sy
 
 Update your Cargo.toml
 ```toml
-opencv = "0.40"
+opencv = "0.41"
 ```
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.40", default-features = false, features = ["opencv-34"]}
+opencv = {version = "0.41", default-features = false, features = ["opencv-34"]}
 ```
 
 Or enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.40", features = ["contrib"]}
+opencv = {version = "0.41", features = ["contrib"]}
 ```
 
 Import prelude
@@ -34,7 +34,7 @@ use opencv::prelude::*;
 
 When building on Windows and macOS you must enable `buildtime-bindgen` feature to avoid link errors:
 ```toml
-opencv = {version = "0.40", features = ["buildtime-bindgen"]}
+opencv = {version = "0.41", features = ["buildtime-bindgen"]}
 ```
 
 ## Getting OpenCV
@@ -314,7 +314,8 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 
 ## Contrib modules
 
-The following modules require [`opencv_contrib`](https://github.com/opencv/opencv_contrib) installed:
+To be able to use some modules you need to have [`opencv_contrib`](https://github.com/opencv/opencv_contrib)
+installed. You can find the full list of contrib modules [here](https://github.com/opencv/opencv_contrib/tree/master/modules) with the exception that `dnn` module is also considered contrib for OpenCV 3.2.
  * aruco
  * bgsegm
  * bioinspired

@@ -53,7 +53,7 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// ## C++ default parameters
 	/// * parameters: HistogramPhaseUnwrapping::Params()
 	pub fn create(parameters: &crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::from_raw(ptr) })
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -70,43 +70,43 @@ pub trait HistogramPhaseUnwrapping_ParamsTrait {
 	fn as_raw_mut_HistogramPhaseUnwrapping_Params(&mut self) -> *mut c_void;
 
 	fn width(&self) -> i32 {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_width_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: width")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropWidth_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: width")
 	}
 	
 	fn set_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setWidth_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_width")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setPropWidth_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_width")
 	}
 	
 	fn height(&self) -> i32 {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_height_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: height")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropHeight_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: height")
 	}
 	
 	fn set_height(&mut self, val: i32) -> () {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHeight_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_height")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setPropHeight_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_height")
 	}
 	
 	fn hist_thresh(&self) -> f32 {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_histThresh_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: hist_thresh")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropHistThresh_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: hist_thresh")
 	}
 	
 	fn set_hist_thresh(&mut self, val: f32) -> () {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHistThresh_float(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_hist_thresh")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setPropHistThresh_float(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_hist_thresh")
 	}
 	
 	fn nbr_of_small_bins(&self) -> i32 {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfSmallBins_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: nbr_of_small_bins")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropNbrOfSmallBins_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: nbr_of_small_bins")
 	}
 	
 	fn set_nbr_of_small_bins(&mut self, val: i32) -> () {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfSmallBins_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_small_bins")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setPropNbrOfSmallBins_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_small_bins")
 	}
 	
 	fn nbr_of_large_bins(&self) -> i32 {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfLargeBins_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: nbr_of_large_bins")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropNbrOfLargeBins_const(self.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().expect("Infallible function failed: nbr_of_large_bins")
 	}
 	
 	fn set_nbr_of_large_bins(&mut self, val: i32) -> () {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfLargeBins_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_large_bins")
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setPropNbrOfLargeBins_int(self.as_raw_mut_HistogramPhaseUnwrapping_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_large_bins")
 	}
 	
 }
@@ -123,7 +123,7 @@ pub struct HistogramPhaseUnwrapping_Params {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { HistogramPhaseUnwrapping_Params }
+opencv_type_boxed! { HistogramPhaseUnwrapping_Params }
 
 impl Drop for HistogramPhaseUnwrapping_Params {
 	fn drop(&mut self) {
@@ -146,7 +146,7 @@ impl crate::phase_unwrapping::HistogramPhaseUnwrapping_ParamsTrait for Histogram
 
 impl HistogramPhaseUnwrapping_Params {
 	pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result().map(|ptr| unsafe { crate::phase_unwrapping::HistogramPhaseUnwrapping_Params::from_raw(ptr) })
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result().map(|r| unsafe { crate::phase_unwrapping::HistogramPhaseUnwrapping_Params::opencv_from_extern(r) } )
 	}
 	
 }

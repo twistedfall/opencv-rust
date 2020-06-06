@@ -292,7 +292,7 @@ pub struct BinaryDescriptor {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptor }
+opencv_type_boxed! { BinaryDescriptor }
 
 impl Drop for BinaryDescriptor {
 	fn drop(&mut self) {
@@ -330,17 +330,17 @@ impl BinaryDescriptor {
 	/// ## C++ default parameters
 	/// * parameters: BinaryDescriptor::Params()
 	pub fn new(parameters: &crate::line_descriptor::BinaryDescriptor_Params) -> Result<crate::line_descriptor::BinaryDescriptor> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsX(parameters.as_raw_BinaryDescriptor_Params()) }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptor::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsX(parameters.as_raw_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor::opencv_from_extern(r) } )
 	}
 	
 	/// Create a BinaryDescriptor object with default parameters (or with the ones provided)
 	/// and return a smart pointer to it
 	pub fn create_binary_descriptor() -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptor>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_binary_descriptor_1(mut parameters: crate::line_descriptor::BinaryDescriptor_Params) -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptor>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -352,40 +352,40 @@ pub trait BinaryDescriptor_ParamsTrait {
 
 	/// the number of image octaves (default = 1)
 	fn num_of_octave_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_numOfOctave__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: num_of_octave_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropNumOfOctave__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: num_of_octave_")
 	}
 	
 	/// the number of image octaves (default = 1)
 	fn set_num_of_octave_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_num_of_octave_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_num_of_octave_")
 	}
 	
 	/// the width of band; (default: 7)
 	fn width_of_band_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_widthOfBand__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: width_of_band_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropWidthOfBand__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: width_of_band_")
 	}
 	
 	/// the width of band; (default: 7)
 	fn set_width_of_band_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_width_of_band_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_width_of_band_")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
 	fn reduction_ratio(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_reductionRatio_const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: reduction_ratio")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropReductionRatio_const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: reduction_ratio")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
 	fn set_reduction_ratio(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_reduction_ratio")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_reduction_ratio")
 	}
 	
 	fn ksize_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_ksize__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: ksize_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropKsize__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: ksize_")
 	}
 	
 	fn set_ksize_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_ksize_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_ksize_")
 	}
 	
 	/// read parameters from a FileNode object and store them (struct function)
@@ -405,7 +405,7 @@ pub struct BinaryDescriptor_Params {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptor_Params }
+opencv_type_boxed! { BinaryDescriptor_Params }
 
 impl Drop for BinaryDescriptor_Params {
 	fn drop(&mut self) {
@@ -428,7 +428,7 @@ impl crate::line_descriptor::BinaryDescriptor_ParamsTrait for BinaryDescriptor_P
 
 impl BinaryDescriptor_Params {
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptor_Params::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor_Params::opencv_from_extern(r) } )
 	}
 	
 }
@@ -679,7 +679,7 @@ pub struct BinaryDescriptorMatcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptorMatcher }
+opencv_type_boxed! { BinaryDescriptorMatcher }
 
 impl Drop for BinaryDescriptorMatcher {
 	fn drop(&mut self) {
@@ -708,14 +708,14 @@ impl crate::line_descriptor::BinaryDescriptorMatcherTrait for BinaryDescriptorMa
 impl BinaryDescriptorMatcher {
 	/// Create a BinaryDescriptorMatcher object and return a smart pointer to it.
 	pub fn create_binary_descriptor_matcher() -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>::opencv_from_extern(r) } )
 	}
 	
 	/// Constructor.
 	/// 
 	/// The BinaryDescriptorMatcher constructed is able to store and manage 256-bits long entries.
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptorMatcher> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptorMatcher::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptorMatcher::opencv_from_extern(r) } )
 	}
 	
 }
@@ -732,7 +732,7 @@ pub struct DrawLinesMatchesFlags {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { DrawLinesMatchesFlags }
+opencv_type_boxed! { DrawLinesMatchesFlags }
 
 impl Drop for DrawLinesMatchesFlags {
 	fn drop(&mut self) {
@@ -783,154 +783,154 @@ pub trait KeyLineTrait {
 
 	/// orientation of the line
 	fn angle(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_angle_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: angle")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropAngle_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: angle")
 	}
 	
 	/// orientation of the line
 	fn set_angle(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setAngle_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_angle")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropAngle_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_angle")
 	}
 	
 	/// object ID, that can be used to cluster keylines by the line they represent
 	fn class_id(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_class_id_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: class_id")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropClass_id_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: class_id")
 	}
 	
 	/// object ID, that can be used to cluster keylines by the line they represent
 	fn set_class_id(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setClass_id_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_class_id")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropClass_id_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_class_id")
 	}
 	
 	/// octave (pyramid layer), from which the keyline has been extracted
 	fn octave(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_octave_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: octave")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropOctave_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: octave")
 	}
 	
 	/// octave (pyramid layer), from which the keyline has been extracted
 	fn set_octave(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setOctave_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_octave")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropOctave_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_octave")
 	}
 	
 	/// coordinates of the middlepoint
 	fn pt(&self) -> core::Point2f {
-		unsafe { sys::cv_line_descriptor_KeyLine_pt_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: pt")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropPt_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: pt")
 	}
 	
 	/// coordinates of the middlepoint
 	fn set_pt(&mut self, val: core::Point2f) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setPt_Point2f(self.as_raw_mut_KeyLine(), &val) }.into_result().expect("Infallible function failed: set_pt")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropPt_Point2f(self.as_raw_mut_KeyLine(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pt")
 	}
 	
 	/// the response, by which the strongest keylines have been selected.
 	/// It's represented by the ratio between line's length and maximum between
 	/// image's width and height
 	fn response(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_response_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: response")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropResponse_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: response")
 	}
 	
 	/// the response, by which the strongest keylines have been selected.
 	/// It's represented by the ratio between line's length and maximum between
 	/// image's width and height
 	fn set_response(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setResponse_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_response")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropResponse_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_response")
 	}
 	
 	/// minimum area containing line
 	fn size(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_size_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: size")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropSize_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: size")
 	}
 	
 	/// minimum area containing line
 	fn set_size(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setSize_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_size")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropSize_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_size")
 	}
 	
 	/// lines's extremes in original image
 	fn start_point_x(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_startPointX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: start_point_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropStartPointX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: start_point_x")
 	}
 	
 	/// lines's extremes in original image
 	fn set_start_point_x(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setStartPointX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_start_point_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropStartPointX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_start_point_x")
 	}
 	
 	fn start_point_y(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_startPointY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: start_point_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropStartPointY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: start_point_y")
 	}
 	
 	fn set_start_point_y(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setStartPointY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_start_point_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropStartPointY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_start_point_y")
 	}
 	
 	fn end_point_x(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_endPointX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: end_point_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropEndPointX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: end_point_x")
 	}
 	
 	fn set_end_point_x(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setEndPointX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_end_point_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropEndPointX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_end_point_x")
 	}
 	
 	fn end_point_y(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_endPointY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: end_point_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropEndPointY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: end_point_y")
 	}
 	
 	fn set_end_point_y(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setEndPointY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_end_point_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropEndPointY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_end_point_y")
 	}
 	
 	/// line's extremes in image it was extracted from
 	fn s_point_in_octave_x(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_sPointInOctaveX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: s_point_in_octave_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropSPointInOctaveX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: s_point_in_octave_x")
 	}
 	
 	/// line's extremes in image it was extracted from
 	fn set_s_point_in_octave_x(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setSPointInOctaveX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_s_point_in_octave_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropSPointInOctaveX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_s_point_in_octave_x")
 	}
 	
 	fn s_point_in_octave_y(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_sPointInOctaveY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: s_point_in_octave_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropSPointInOctaveY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: s_point_in_octave_y")
 	}
 	
 	fn set_s_point_in_octave_y(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setSPointInOctaveY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_s_point_in_octave_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropSPointInOctaveY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_s_point_in_octave_y")
 	}
 	
 	fn e_point_in_octave_x(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_ePointInOctaveX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: e_point_in_octave_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropEPointInOctaveX_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: e_point_in_octave_x")
 	}
 	
 	fn set_e_point_in_octave_x(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setEPointInOctaveX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_e_point_in_octave_x")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropEPointInOctaveX_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_e_point_in_octave_x")
 	}
 	
 	fn e_point_in_octave_y(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_ePointInOctaveY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: e_point_in_octave_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropEPointInOctaveY_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: e_point_in_octave_y")
 	}
 	
 	fn set_e_point_in_octave_y(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setEPointInOctaveY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_e_point_in_octave_y")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropEPointInOctaveY_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_e_point_in_octave_y")
 	}
 	
 	/// the length of line
 	fn line_length(&self) -> f32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_lineLength_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: line_length")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropLineLength_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: line_length")
 	}
 	
 	/// the length of line
 	fn set_line_length(&mut self, val: f32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setLineLength_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_line_length")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropLineLength_float(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_line_length")
 	}
 	
 	/// number of pixels covered by the line
 	fn num_of_pixels(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_KeyLine_numOfPixels_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: num_of_pixels")
+		unsafe { sys::cv_line_descriptor_KeyLine_getPropNumOfPixels_const(self.as_raw_KeyLine()) }.into_result().expect("Infallible function failed: num_of_pixels")
 	}
 	
 	/// number of pixels covered by the line
 	fn set_num_of_pixels(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setNumOfPixels_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_num_of_pixels")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropNumOfPixels_int(self.as_raw_mut_KeyLine(), val) }.into_result().expect("Infallible function failed: set_num_of_pixels")
 	}
 	
 	/// Returns the start point of the line in the original image
@@ -980,7 +980,7 @@ pub struct KeyLine {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { KeyLine }
+opencv_type_boxed! { KeyLine }
 
 impl Drop for KeyLine {
 	fn drop(&mut self) {
@@ -1004,7 +1004,7 @@ impl crate::line_descriptor::KeyLineTrait for KeyLine {
 impl KeyLine {
 	/// constructor
 	pub fn default() -> Result<crate::line_descriptor::KeyLine> {
-		unsafe { sys::cv_line_descriptor_KeyLine_KeyLine() }.into_result().map(|ptr| unsafe { crate::line_descriptor::KeyLine::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_KeyLine_KeyLine() }.into_result().map(|r| unsafe { crate::line_descriptor::KeyLine::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1087,7 +1087,7 @@ pub struct LSDDetector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LSDDetector }
+opencv_type_boxed! { LSDDetector }
 
 impl Drop for LSDDetector {
 	fn drop(&mut self) {
@@ -1115,12 +1115,12 @@ impl crate::line_descriptor::LSDDetectorTrait for LSDDetector {
 
 impl LSDDetector {
 	pub fn default() -> Result<crate::line_descriptor::LSDDetector> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|ptr| unsafe { crate::line_descriptor::LSDDetector::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
 	/// Creates ad LSDDetector object, using smart pointers.
 	pub fn create_lsd_detector() -> Result<core::Ptr::<crate::line_descriptor::LSDDetector>> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
 	
 }

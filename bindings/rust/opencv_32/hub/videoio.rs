@@ -679,6 +679,8 @@ pub enum VideoCaptureAPIs {
 	CAP_ARAVIS = 2100 as isize,
 }
 
+opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
+
 /// Generic camera output modes identifier.
 /// 
 /// Note: Currently, these are supported through the libv4l backend only.
@@ -694,6 +696,8 @@ pub enum VideoCaptureModes {
 	/// YUYV
 	CAP_MODE_YUYV = 3 as isize,
 }
+
+opencv_type_enum! { crate::videoio::VideoCaptureModes }
 
 /// %VideoCapture generic properties identifier.
 /// ## See also
@@ -764,6 +768,8 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_AUTOFOCUS = 39 as isize,
 }
 
+opencv_type_enum! { crate::videoio::VideoCaptureProperties }
+
 /// %VideoWriter generic properties identifier.
 /// ## See also
 /// VideoWriter::get(), VideoWriter::set()
@@ -777,6 +783,8 @@ pub enum VideoWriterProperties {
 	/// Number of stripes for parallel encoding. -1 for auto detection.
 	VIDEOWRITER_PROP_NSTRIPES = 3 as isize,
 }
+
+opencv_type_enum! { crate::videoio::VideoWriterProperties }
 
 /// Class for video capturing from video files, image sequences or cameras.
 /// 
@@ -811,8 +819,8 @@ pub trait VideoCaptureTrait {
 	/// 
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file_default(&mut self, filename: &str) -> Result<bool> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringX(self.as_raw_mut_VideoCapture(), filename.as_ptr()) }.into_result()
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_open_const_StringX(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	///  Open a camera for video capturing
@@ -976,8 +984,8 @@ pub trait VideoCaptureTrait {
 	/// 
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringX_int(self.as_raw_mut_VideoCapture(), filename.as_ptr(), api_preference) }.into_result()
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_open_const_StringX_int(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern(), api_preference) }.into_result()
 	}
 	
 }
@@ -1005,7 +1013,7 @@ pub struct VideoCapture {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { VideoCapture }
+opencv_type_boxed! { VideoCapture }
 
 impl Drop for VideoCapture {
 	fn drop(&mut self) {
@@ -1033,7 +1041,7 @@ impl VideoCapture {
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	pub fn default() -> Result<crate::videoio::VideoCapture> {
-		unsafe { sys::cv_VideoCapture_VideoCapture() }.into_result().map(|ptr| unsafe { crate::videoio::VideoCapture::from_raw(ptr) })
+		unsafe { sys::cv_VideoCapture_VideoCapture() }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1048,8 +1056,8 @@ impl VideoCapture {
 	/// 
 	///    Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
 	pub fn from_file_default(filename: &str) -> Result<crate::videoio::VideoCapture> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { crate::videoio::VideoCapture::from_raw(ptr) })
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1074,8 +1082,8 @@ impl VideoCapture {
 	/// ## See also
 	/// The list of supported API backends cv::VideoCaptureAPIs
 	pub fn from_file(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX_int(filename.as_ptr(), api_preference) }.into_result().map(|ptr| unsafe { crate::videoio::VideoCapture::from_raw(ptr) })
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX_int(filename.opencv_to_extern(), api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1095,7 +1103,7 @@ impl VideoCapture {
 	/// ## See also
 	/// The list of supported API backends cv::VideoCaptureAPIs
 	pub fn new_default(index: i32) -> Result<crate::videoio::VideoCapture> {
-		unsafe { sys::cv_VideoCapture_VideoCapture_int(index) }.into_result().map(|ptr| unsafe { crate::videoio::VideoCapture::from_raw(ptr) })
+		unsafe { sys::cv_VideoCapture_VideoCapture_int(index) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1122,8 +1130,8 @@ pub trait VideoWriterTrait {
 	/// ## C++ default parameters
 	/// * is_color: true
 	fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoWriter_open_const_StringX_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.as_ptr(), fourcc, fps, &frame_size, is_color) }.into_result()
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_open_const_StringX_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result()
 	}
 	
 	/// Returns true if video writer has been successfully initialized.
@@ -1188,7 +1196,7 @@ pub struct VideoWriter {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { VideoWriter }
+opencv_type_boxed! { VideoWriter }
 
 impl Drop for VideoWriter {
 	fn drop(&mut self) {
@@ -1217,7 +1225,7 @@ impl VideoWriter {
 	/// *   On Windows FFMPEG or VFW is used;
 	/// *   On MacOSX QTKit is used.
 	pub fn default() -> Result<crate::videoio::VideoWriter> {
-		unsafe { sys::cv_VideoWriter_VideoWriter() }.into_result().map(|ptr| unsafe { crate::videoio::VideoWriter::from_raw(ptr) })
+		unsafe { sys::cv_VideoWriter_VideoWriter() }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructors
@@ -1253,8 +1261,8 @@ impl VideoWriter {
 	/// ## C++ default parameters
 	/// * is_color: true
 	pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
-		string_arg!(filename);
-		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(filename.as_ptr(), fourcc, fps, &frame_size, is_color) }.into_result().map(|ptr| unsafe { crate::videoio::VideoWriter::from_raw(ptr) })
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
 	}
 	
 	/// Concatenates 4 chars to a fourcc code

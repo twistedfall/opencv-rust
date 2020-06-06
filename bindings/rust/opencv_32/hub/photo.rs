@@ -60,7 +60,7 @@ pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray,
 /// * exclude_range: 4
 /// * cut: true
 pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<core::Ptr::<dyn crate::photo::AlignMTB>> {
-	unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::AlignMTB>::from_raw(ptr) })
+	unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::AlignMTB>::opencv_from_extern(r) } )
 }
 
 /// Creates CalibrateDebevec object
@@ -77,7 +77,7 @@ pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<
 /// * lambda: 10.0f
 /// * random: false
 pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Result<core::Ptr::<dyn crate::photo::CalibrateDebevec>> {
-	unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::CalibrateDebevec>::from_raw(ptr) })
+	unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::CalibrateDebevec>::opencv_from_extern(r) } )
 }
 
 /// Creates CalibrateRobertson object
@@ -90,12 +90,12 @@ pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Resu
 /// * max_iter: 30
 /// * threshold: 0.01f
 pub fn create_calibrate_robertson(max_iter: i32, threshold: f32) -> Result<core::Ptr::<dyn crate::photo::CalibrateRobertson>> {
-	unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::CalibrateRobertson>::from_raw(ptr) })
+	unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::CalibrateRobertson>::opencv_from_extern(r) } )
 }
 
 /// Creates MergeDebevec object
 pub fn create_merge_debevec() -> Result<core::Ptr::<dyn crate::photo::MergeDebevec>> {
-	unsafe { sys::cv_createMergeDebevec() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::MergeDebevec>::from_raw(ptr) })
+	unsafe { sys::cv_createMergeDebevec() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeDebevec>::opencv_from_extern(r) } )
 }
 
 /// Creates MergeMertens object
@@ -110,12 +110,12 @@ pub fn create_merge_debevec() -> Result<core::Ptr::<dyn crate::photo::MergeDebev
 /// * saturation_weight: 1.0f
 /// * exposure_weight: 0.0f
 pub fn create_merge_mertens(contrast_weight: f32, saturation_weight: f32, exposure_weight: f32) -> Result<core::Ptr::<dyn crate::photo::MergeMertens>> {
-	unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::MergeMertens>::from_raw(ptr) })
+	unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeMertens>::opencv_from_extern(r) } )
 }
 
 /// Creates MergeRobertson object
 pub fn create_merge_robertson() -> Result<core::Ptr::<dyn crate::photo::MergeRobertson>> {
-	unsafe { sys::cv_createMergeRobertson() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::MergeRobertson>::from_raw(ptr) })
+	unsafe { sys::cv_createMergeRobertson() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeRobertson>::opencv_from_extern(r) } )
 }
 
 /// Creates TonemapDrago object
@@ -132,7 +132,7 @@ pub fn create_merge_robertson() -> Result<core::Ptr::<dyn crate::photo::MergeRob
 /// * saturation: 1.0f
 /// * bias: 0.85f
 pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<core::Ptr::<dyn crate::photo::TonemapDrago>> {
-	unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::TonemapDrago>::from_raw(ptr) })
+	unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapDrago>::opencv_from_extern(r) } )
 }
 
 /// Creates TonemapDurand object
@@ -152,7 +152,7 @@ pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<co
 /// * sigma_space: 2.0f
 /// * sigma_color: 2.0f
 pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_space: f32, sigma_color: f32) -> Result<core::Ptr::<dyn crate::photo::TonemapDurand>> {
-	unsafe { sys::cv_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_space, sigma_color) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::TonemapDurand>::from_raw(ptr) })
+	unsafe { sys::cv_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_space, sigma_color) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapDurand>::opencv_from_extern(r) } )
 }
 
 /// Creates TonemapMantiuk object
@@ -168,7 +168,7 @@ pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_s
 /// * scale: 0.7f
 /// * saturation: 1.0f
 pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result<core::Ptr::<dyn crate::photo::TonemapMantiuk>> {
-	unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::TonemapMantiuk>::from_raw(ptr) })
+	unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapMantiuk>::opencv_from_extern(r) } )
 }
 
 /// Creates TonemapReinhard object
@@ -187,7 +187,7 @@ pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result
 /// * light_adapt: 1.0f
 /// * color_adapt: 0.0f
 pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, color_adapt: f32) -> Result<core::Ptr::<dyn crate::photo::TonemapReinhard>> {
-	unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::TonemapReinhard>::from_raw(ptr) })
+	unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapReinhard>::opencv_from_extern(r) } )
 }
 
 /// Creates simple linear mapper with gamma correction
@@ -200,7 +200,7 @@ pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, col
 /// ## C++ default parameters
 /// * gamma: 1.0f
 pub fn create_tonemap(gamma: f32) -> Result<core::Ptr::<dyn crate::photo::Tonemap>> {
-	unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::photo::Tonemap>::from_raw(ptr) })
+	unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::Tonemap>::opencv_from_extern(r) } )
 }
 
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
@@ -604,7 +604,7 @@ pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray
 	input_array_arg!(dst);
 	input_array_arg!(mask);
 	output_array_arg!(blend);
-	unsafe { sys::cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), &p, blend.as_raw__OutputArray(), flags) }.into_result()
+	unsafe { sys::cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_to_extern(), blend.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Stylization aims to produce digital imagery with a wide variety of effects not focused on
@@ -727,7 +727,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), &shift) }.into_result()
+		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Computes median threshold and exclude bitmaps of given image.
@@ -849,7 +849,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
 	}
 	
 	fn get_radiance(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }

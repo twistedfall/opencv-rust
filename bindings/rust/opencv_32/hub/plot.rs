@@ -12,7 +12,7 @@ pub mod prelude {
 /// will be equal to indexes of correspondind elements in data matrix.
 pub fn create_plot2d(data: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::plot::Plot2d>> {
 	input_array_arg!(data);
-	unsafe { sys::cv_plot_createPlot2d_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::from_raw(ptr) })
+	unsafe { sys::cv_plot_createPlot2d_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
 }
 
 /// Creates Plot2d object
@@ -23,7 +23,7 @@ pub fn create_plot2d(data: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn cr
 pub fn create_plot2d_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::plot::Plot2d>> {
 	input_array_arg!(data_x);
 	input_array_arg!(data_y);
-	unsafe { sys::cv_plot_createPlot2d_const__InputArrayX_const__InputArrayX(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::from_raw(ptr) })
+	unsafe { sys::cv_plot_createPlot2d_const__InputArrayX_const__InputArrayX(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
 }
 
 pub trait Plot2d: core::AlgorithmTrait {
@@ -60,23 +60,23 @@ pub trait Plot2d: core::AlgorithmTrait {
 	}
 	
 	fn set_plot_line_color(&mut self, _plot_line_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotLineColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_line_color) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotLineColor_Scalar(self.as_raw_mut_Plot2d(), _plot_line_color.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_plot_background_color(&mut self, _plot_background_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotBackgroundColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_background_color) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotBackgroundColor_Scalar(self.as_raw_mut_Plot2d(), _plot_background_color.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_plot_axis_color(&mut self, _plot_axis_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotAxisColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_axis_color) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotAxisColor_Scalar(self.as_raw_mut_Plot2d(), _plot_axis_color.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_plot_grid_color(&mut self, _plot_grid_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotGridColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_grid_color) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotGridColor_Scalar(self.as_raw_mut_Plot2d(), _plot_grid_color.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_plot_text_color(&mut self, _plot_text_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotTextColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_text_color) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotTextColor_Scalar(self.as_raw_mut_Plot2d(), _plot_text_color.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_plot_size(&mut self, _plot_size_width: i32, _plot_size_height: i32) -> Result<()> {

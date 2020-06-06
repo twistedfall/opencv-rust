@@ -61,8 +61,8 @@ pub const HDF5_H5_UNLIMITED: i32 = -1;
 /// ```
 /// 
 pub fn open(hdf5_filename: &str) -> Result<core::Ptr::<dyn crate::hdf::HDF5>> {
-	string_arg!(hdf5_filename);
-	unsafe { sys::cv_hdf_open_String(hdf5_filename.as_ptr() as _) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::hdf::HDF5>::from_raw(ptr) })
+	extern_container_arg!(mut hdf5_filename);
+	unsafe { sys::cv_hdf_open_String(hdf5_filename.opencv_to_extern_mut()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::hdf::HDF5>::opencv_from_extern(r) } )
 }
 
 /// Hierarchical Data Format version 5 interface.
@@ -111,8 +111,8 @@ pub trait HDF5 {
 	/// Note: When a dataset is created with dscreate() or kpcreate() it can be created right within a group by specifying
 	/// full path within the label, in our example would be: 'Group1/SubGroup1/MyDataSet'. It is not thread safe.
 	fn grcreate(&mut self, grlabel: &str) -> Result<()> {
-		string_arg!(grlabel);
-		unsafe { sys::cv_hdf_HDF5_grcreate_String(self.as_raw_mut_HDF5(), grlabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut grlabel);
+		unsafe { sys::cv_hdf_HDF5_grcreate_String(self.as_raw_mut_HDF5(), grlabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	/// Check if label exists or not.
@@ -124,23 +124,23 @@ pub trait HDF5 {
 	/// 
 	/// Note: Checks if dataset, group or other object type (hdf5 link) exists under the label name. It is thread safe.
 	fn hlexists(&self, label: &str) -> Result<bool> {
-		string_arg!(label);
-		unsafe { sys::cv_hdf_HDF5_hlexists_const_String(self.as_raw_HDF5(), label.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut label);
+		unsafe { sys::cv_hdf_HDF5_hlexists_const_String(self.as_raw_HDF5(), label.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dscreate(&self, rows: i32, cols: i32, typ: i32, dslabel: &str) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dscreate_1(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _, compresslevel) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_to_extern_mut(), compresslevel) }.into_result()
 	}
 	
 	fn dscreate_2(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &core::Vector::<i32>) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_vector_int_X(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _, compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_vector_int_X(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_to_extern_mut(), compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Create and allocate storage for two dimensional single or multi channel dataset.
@@ -214,26 +214,26 @@ pub trait HDF5 {
 	/// Note: It is **not** thread safe, it must be called only once at dataset creation otherwise exception will occur.
 	/// Multiple datasets inside single hdf5 file is allowed.
 	fn dscreate_3(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &i32) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_intX(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _, compresslevel, dims_chunks) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_intX(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_to_extern_mut(), compresslevel, dims_chunks) }.into_result()
 	}
 	
 	fn dscreate_4(&self, n_dims: i32, sizes: &i32, typ: i32, dslabel: &str) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dscreate_5(&self, n_dims: i32, sizes: &i32, typ: i32, dslabel: &str, compresslevel: i32) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String_int(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.as_ptr() as _, compresslevel) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String_int(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.opencv_to_extern_mut(), compresslevel) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * compresslevel: HDF5::H5_NONE
 	/// * dims_chunks: vector<int>()
 	fn dscreate_6(&self, sizes: &core::Vector::<i32>, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &core::Vector::<i32>) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vector_int_X_int_String_int_const_vector_int_X(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.as_ptr() as _, compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vector_int_X_int_String_int_const_vector_int_X(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.opencv_to_extern_mut(), compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Create and allocate storage for n-dimensional dataset, single or mutichannel type.
@@ -310,8 +310,8 @@ pub trait HDF5 {
 	/// ```
 	/// 
 	fn dscreate_7(&self, n_dims: i32, sizes: &i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &i32) -> Result<()> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String_int_const_intX(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.as_ptr() as _, compresslevel, dims_chunks) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_const_intX_int_String_int_const_intX(self.as_raw_HDF5(), n_dims, sizes, typ, dslabel.opencv_to_extern_mut(), compresslevel, dims_chunks) }.into_result()
 	}
 	
 	/// Fetch dataset sizes
@@ -333,8 +333,8 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * dims_flag: HDF5::H5_GETDIMS
 	fn dsgetsize(&self, dslabel: &str, dims_flag: i32) -> Result<core::Vector::<i32>> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsgetsize_const_String_int(self.as_raw_HDF5(), dslabel.as_ptr() as _, dims_flag) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsgetsize_const_String_int(self.as_raw_HDF5(), dslabel.opencv_to_extern_mut(), dims_flag) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 	}
 	
 	/// Fetch dataset type
@@ -348,28 +348,28 @@ pub trait HDF5 {
 	/// Note: Result can be parsed with CV_MAT_CN() to obtain amount of channels and CV_MAT_DEPTH() to obtain native cvdata type.
 	/// It is thread safe.
 	fn dsgettype(&self, dslabel: &str) -> Result<i32> {
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsgettype_const_String(self.as_raw_HDF5(), dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsgettype_const_String(self.as_raw_HDF5(), dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dswrite(&self, array: &dyn core::ToInputArray, dslabel: &str) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dswrite_1(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
 	fn dswrite_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Write or overwrite a Mat object into specified dataset of hdf5 file.
@@ -439,28 +439,28 @@ pub trait HDF5 {
 	/// 
 	fn dswrite_3(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset, dims_counts) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset, dims_counts) }.into_result()
 	}
 	
 	fn dsinsert(&self, array: &dyn core::ToInputArray, dslabel: &str) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dsinsert_1(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
 	fn dsinsert_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Insert or overwrite a Mat object into specified dataset and autoexpand dataset size if **unlimited** property allows.
@@ -514,28 +514,28 @@ pub trait HDF5 {
 	/// 
 	fn dsinsert_3(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
 		input_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset, dims_counts) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_to_extern_mut(), dims_offset, dims_counts) }.into_result()
 	}
 	
 	fn dsread(&self, array: &mut dyn core::ToOutputArray, dslabel: &str) -> Result<()> {
 		output_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.as_ptr() as _) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_to_extern_mut()) }.into_result()
 	}
 	
 	fn dsread_1(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
 		output_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.as_ptr() as _, dims_offset) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_to_extern_mut(), dims_offset) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
 	fn dsread_2(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		output_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_to_extern_mut(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Read specific dataset from hdf5 file into Mat object.
@@ -582,8 +582,8 @@ pub trait HDF5 {
 	/// 
 	fn dsread_3(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
 		output_array_arg!(array);
-		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.as_ptr() as _, dims_offset, dims_counts) }.into_result()
+		extern_container_arg!(mut dslabel);
+		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_to_extern_mut(), dims_offset, dims_counts) }.into_result()
 	}
 	
 	/// Fetch keypoint dataset size
@@ -604,8 +604,8 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * dims_flag: HDF5::H5_GETDIMS
 	fn kpgetsize(&self, kplabel: &str, dims_flag: i32) -> Result<i32> {
-		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpgetsize_const_String_int(self.as_raw_HDF5(), kplabel.as_ptr() as _, dims_flag) }.into_result()
+		extern_container_arg!(mut kplabel);
+		unsafe { sys::cv_hdf_HDF5_kpgetsize_const_String_int(self.as_raw_HDF5(), kplabel.opencv_to_extern_mut(), dims_flag) }.into_result()
 	}
 	
 	/// Create and allocate special storage for cv::KeyPoint dataset.
@@ -652,8 +652,8 @@ pub trait HDF5 {
 	/// * compresslevel: H5_NONE
 	/// * chunks: H5_NONE
 	fn kpcreate(&self, size: i32, kplabel: &str, compresslevel: i32, chunks: i32) -> Result<()> {
-		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpcreate_const_int_String_int_int(self.as_raw_HDF5(), size, kplabel.as_ptr() as _, compresslevel, chunks) }.into_result()
+		extern_container_arg!(mut kplabel);
+		unsafe { sys::cv_hdf_HDF5_kpcreate_const_int_String_int_int(self.as_raw_HDF5(), size, kplabel.opencv_to_extern_mut(), compresslevel, chunks) }.into_result()
 	}
 	
 	/// Write or overwrite list of KeyPoint into specified dataset of hdf5 file.
@@ -714,8 +714,8 @@ pub trait HDF5 {
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
 	fn kpwrite(&self, keypoints: core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
-		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
+		extern_container_arg!(mut kplabel);
+		unsafe { sys::cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_to_extern_mut(), offset, counts) }.into_result()
 	}
 	
 	/// Insert or overwrite list of KeyPoint into specified dataset and autoexpand dataset size if **unlimited** property allows.
@@ -757,8 +757,8 @@ pub trait HDF5 {
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
 	fn kpinsert(&self, keypoints: core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
-		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
+		extern_container_arg!(mut kplabel);
+		unsafe { sys::cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_to_extern_mut(), offset, counts) }.into_result()
 	}
 	
 	/// Read specific keypoint dataset from hdf5 file into vector<KeyPoint> object.
@@ -804,8 +804,8 @@ pub trait HDF5 {
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
 	fn kpread(&self, keypoints: &mut core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
-		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpread_const_vector_KeyPoint_X_String_int_int(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
+		extern_container_arg!(mut kplabel);
+		unsafe { sys::cv_hdf_HDF5_kpread_const_vector_KeyPoint_X_String_int_int(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.opencv_to_extern_mut(), offset, counts) }.into_result()
 	}
 	
 }

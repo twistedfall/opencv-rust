@@ -111,11 +111,11 @@ impl dyn GrayCodePattern + '_ {
 	/// ## C++ default parameters
 	/// * parameters: GrayCodePattern::Params()
 	pub fn create(parameters: &crate::structured_light::GrayCodePattern_Params) -> Result<core::Ptr::<dyn crate::structured_light::GrayCodePattern>> {
-		unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsX(parameters.as_raw_GrayCodePattern_Params()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::from_raw(ptr) })
+		unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsX(parameters.as_raw_GrayCodePattern_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1(width: i32, height: i32) -> Result<core::Ptr::<dyn crate::structured_light::GrayCodePattern>> {
-		unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::from_raw(ptr) })
+		unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -128,19 +128,19 @@ pub trait GrayCodePattern_ParamsTrait {
 	fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void;
 
 	fn width(&self) -> i32 {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_width_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: width")
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropWidth_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: width")
 	}
 	
 	fn set_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
 	}
 	
 	fn height(&self) -> i32 {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_height_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: height")
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropHeight_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: height")
 	}
 	
 	fn set_height(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
 	}
 	
 }
@@ -153,7 +153,7 @@ pub struct GrayCodePattern_Params {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { GrayCodePattern_Params }
+opencv_type_boxed! { GrayCodePattern_Params }
 
 impl Drop for GrayCodePattern_Params {
 	fn drop(&mut self) {
@@ -176,7 +176,7 @@ impl crate::structured_light::GrayCodePattern_ParamsTrait for GrayCodePattern_Pa
 
 impl GrayCodePattern_Params {
 	pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params() }.into_result().map(|ptr| unsafe { crate::structured_light::GrayCodePattern_Params::from_raw(ptr) })
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params() }.into_result().map(|r| unsafe { crate::structured_light::GrayCodePattern_Params::opencv_from_extern(r) } )
 	}
 	
 }
@@ -220,7 +220,7 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
 		input_array_arg!(wrapped_phase_map);
 		output_array_arg!(unwrapped_phase_map);
 		input_array_arg!(shadow_mask);
-		unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_Size_const__InputArrayX(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), &cam_size, shadow_mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_Size_const__InputArrayX(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), cam_size.opencv_to_extern(), shadow_mask.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Find correspondences between the two devices thanks to unwrapped phase maps.
@@ -257,7 +257,7 @@ impl dyn SinusoidalPattern + '_ {
 	/// ## C++ default parameters
 	/// * parameters: makePtr<SinusoidalPattern::Params>()
 	pub fn create(mut parameters: core::Ptr::<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr::<dyn crate::structured_light::SinusoidalPattern>> {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_create_Ptr_Params_(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::structured_light::SinusoidalPattern>::from_raw(ptr) })
+		unsafe { sys::cv_structured_light_SinusoidalPattern_create_Ptr_Params_(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::SinusoidalPattern>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -276,75 +276,75 @@ pub trait SinusoidalPattern_ParamsTrait {
 	fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void;
 
 	fn width(&self) -> i32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_width_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: width")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropWidth_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: width")
 	}
 	
 	fn set_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
 	}
 	
 	fn height(&self) -> i32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_height_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: height")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHeight_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: height")
 	}
 	
 	fn set_height(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
 	}
 	
 	fn nbr_of_periods(&self) -> i32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_nbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_periods")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_periods")
 	}
 	
 	fn set_nbr_of_periods(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_periods")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_periods")
 	}
 	
 	fn shift_value(&self) -> f32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_shiftValue_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: shift_value")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropShiftValue_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: shift_value")
 	}
 	
 	fn set_shift_value(&mut self, val: f32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_shift_value")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_shift_value")
 	}
 	
 	fn method_id(&self) -> i32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_methodId_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: method_id")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMethodId_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: method_id")
 	}
 	
 	fn set_method_id(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_method_id")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_method_id")
 	}
 	
 	fn nbr_of_pixels_between_markers(&self) -> i32 {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_nbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_pixels_between_markers")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_pixels_between_markers")
 	}
 	
 	fn set_nbr_of_pixels_between_markers(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_pixels_between_markers")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_pixels_between_markers")
 	}
 	
 	fn horizontal(&self) -> bool {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_horizontal_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: horizontal")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHorizontal_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: horizontal")
 	}
 	
 	fn set_horizontal(&mut self, val: bool) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_horizontal")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_horizontal")
 	}
 	
 	fn set_markers(&self) -> bool {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: set_markers")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropSetMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: set_markers")
 	}
 	
 	fn set_set_markers(&mut self, val: bool) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_set_markers")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_set_markers")
 	}
 	
 	fn markers_location(&mut self) -> core::Vector::<core::Point2f> {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_markersLocation(self.as_raw_mut_SinusoidalPattern_Params()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Point2f>::from_raw(ptr) }).expect("Infallible function failed: markers_location")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMarkersLocation(self.as_raw_mut_SinusoidalPattern_Params()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: markers_location")
 	}
 	
 	fn set_markers_location(&mut self, mut val: core::Vector::<core::Point2f>) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setMarkersLocation_vector_Point2f_(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_markers_location")
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMarkersLocation_vector_Point2f_(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_markers_location")
 	}
 	
 }
@@ -363,7 +363,7 @@ pub struct SinusoidalPattern_Params {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { SinusoidalPattern_Params }
+opencv_type_boxed! { SinusoidalPattern_Params }
 
 impl Drop for SinusoidalPattern_Params {
 	fn drop(&mut self) {
@@ -386,7 +386,7 @@ impl crate::structured_light::SinusoidalPattern_ParamsTrait for SinusoidalPatter
 
 impl SinusoidalPattern_Params {
 	pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params() }.into_result().map(|ptr| unsafe { crate::structured_light::SinusoidalPattern_Params::from_raw(ptr) })
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params() }.into_result().map(|r| unsafe { crate::structured_light::SinusoidalPattern_Params::opencv_from_extern(r) } )
 	}
 	
 }

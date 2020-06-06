@@ -14,6 +14,8 @@ pub enum LSBPCameraMotionCompensation {
 	LSBP_CAMERA_MOTION_COMPENSATION_LK = 1 as isize,
 }
 
+opencv_type_enum! { crate::bgsegm::LSBPCameraMotionCompensation }
+
 /// Creates a CNT Background Subtractor
 /// 
 /// ## Parameters
@@ -28,7 +30,7 @@ pub enum LSBPCameraMotionCompensation {
 /// * max_pixel_stability: 15*60
 /// * is_parallel: true
 pub fn create_background_subtractor_cnt(min_pixel_stability: i32, use_history: bool, max_pixel_stability: i32, is_parallel: bool) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorCNT>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorCNT_int_bool_int_bool(min_pixel_stability, use_history, max_pixel_stability, is_parallel) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorCNT>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorCNT_int_bool_int_bool(min_pixel_stability, use_history, max_pixel_stability, is_parallel) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(r) } )
 }
 
 /// Creates a GMG Background Subtractor
@@ -41,7 +43,7 @@ pub fn create_background_subtractor_cnt(min_pixel_stability: i32, use_history: b
 /// * initialization_frames: 120
 /// * decision_threshold: 0.8
 pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of BackgroundSubtractorGSOC algorithm.
@@ -74,7 +76,7 @@ pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_thr
 /// * noise_removal_threshold_fac_bg: 0.0004f
 /// * noise_removal_threshold_fac_fg: 0.0008f
 pub fn create_background_subtractor_gsoc(mc: i32, n_samples: i32, replace_rate: f32, propagation_rate: f32, hits_threshold: i32, alpha: f32, beta: f32, blinking_supression_decay: f32, blinking_supression_multiplier: f32, noise_removal_threshold_fac_bg: f32, noise_removal_threshold_fac_fg: f32) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGSOC>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGSOC_int_int_float_float_int_float_float_float_float_float_float(mc, n_samples, replace_rate, propagation_rate, hits_threshold, alpha, beta, blinking_supression_decay, blinking_supression_multiplier, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGSOC>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGSOC_int_int_float_float_int_float_float_float_float_float_float(mc, n_samples, replace_rate, propagation_rate, hits_threshold, alpha, beta, blinking_supression_decay, blinking_supression_multiplier, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of BackgroundSubtractorLSBP algorithm.
@@ -111,7 +113,7 @@ pub fn create_background_subtractor_gsoc(mc: i32, n_samples: i32, replace_rate: 
 /// * lsb_pthreshold: 8
 /// * min_count: 2
 pub fn create_background_subtractor_lsbp(mc: i32, n_samples: i32, lsbp_radius: i32, tlower: f32, tupper: f32, tinc: f32, tdec: f32, rscale: f32, rincdec: f32, noise_removal_threshold_fac_bg: f32, noise_removal_threshold_fac_fg: f32, lsb_pthreshold: i32, min_count: i32) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorLSBP>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorLSBP_int_int_int_float_float_float_float_float_float_float_float_int_int(mc, n_samples, lsbp_radius, tlower, tupper, tinc, tdec, rscale, rincdec, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg, lsb_pthreshold, min_count) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorLSBP>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorLSBP_int_int_int_float_float_float_float_float_float_float_float_int_int(mc, n_samples, lsbp_radius, tlower, tupper, tinc, tdec, rscale, rincdec, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg, lsb_pthreshold, min_count) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(r) } )
 }
 
 /// Creates mixture-of-gaussian background subtractor
@@ -129,7 +131,7 @@ pub fn create_background_subtractor_lsbp(mc: i32, n_samples: i32, lsbp_radius: i
 /// * background_ratio: 0.7
 /// * noise_sigma: 0
 pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of SyntheticSequenceGenerator.
@@ -150,7 +152,7 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>> {
 	input_array_arg!(background);
 	input_array_arg!(object);
-	unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(r) } )
 }
 
 /// Background subtraction based on counting.
@@ -392,7 +394,7 @@ pub struct BackgroundSubtractorLSBPDesc {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BackgroundSubtractorLSBPDesc }
+opencv_type_boxed! { BackgroundSubtractorLSBPDesc }
 
 impl Drop for BackgroundSubtractorLSBPDesc {
 	fn drop(&mut self) {
@@ -501,7 +503,7 @@ pub struct SyntheticSequenceGenerator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { SyntheticSequenceGenerator }
+opencv_type_boxed! { SyntheticSequenceGenerator }
 
 impl Drop for SyntheticSequenceGenerator {
 	fn drop(&mut self) {
@@ -540,7 +542,7 @@ impl SyntheticSequenceGenerator {
 	pub fn new(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
 		input_array_arg!(background);
 		input_array_arg!(object);
-		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|ptr| unsafe { crate::bgsegm::SyntheticSequenceGenerator::from_raw(ptr) })
+		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { crate::bgsegm::SyntheticSequenceGenerator::opencv_from_extern(r) } )
 	}
 	
 }

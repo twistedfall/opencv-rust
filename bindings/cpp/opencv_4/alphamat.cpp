@@ -7,7 +7,7 @@ extern "C" {
 		try {
 			cv::alphamat::infoFlow(*image, *tmap, *result);
 			return Ok();
-		} OCVRS_CATCH(Result_void)
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 }

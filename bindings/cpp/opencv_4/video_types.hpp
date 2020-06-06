@@ -37,11 +37,27 @@ extern "C" cv::DISOpticalFlow* cv_PtrOfDISOpticalFlow_get_inner_ptr(cv::Ptr<cv::
 	return instance->get();
 }
 
+extern "C" void cv_PtrOfDenseOpticalFlow_delete(cv::Ptr<cv::DenseOpticalFlow>* instance) {
+	delete instance;
+}
+
+extern "C" cv::DenseOpticalFlow* cv_PtrOfDenseOpticalFlow_get_inner_ptr(cv::Ptr<cv::DenseOpticalFlow>* instance) {
+	return instance->get();
+}
+
 extern "C" void cv_PtrOfFarnebackOpticalFlow_delete(cv::Ptr<cv::FarnebackOpticalFlow>* instance) {
 	delete instance;
 }
 
 extern "C" cv::FarnebackOpticalFlow* cv_PtrOfFarnebackOpticalFlow_get_inner_ptr(cv::Ptr<cv::FarnebackOpticalFlow>* instance) {
+	return instance->get();
+}
+
+extern "C" void cv_PtrOfSparseOpticalFlow_delete(cv::Ptr<cv::SparseOpticalFlow>* instance) {
+	delete instance;
+}
+
+extern "C" cv::SparseOpticalFlow* cv_PtrOfSparseOpticalFlow_get_inner_ptr(cv::Ptr<cv::SparseOpticalFlow>* instance) {
 	return instance->get();
 }
 

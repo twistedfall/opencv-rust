@@ -116,6 +116,8 @@ pub enum FlannIndexType {
 	// LAST_VALUE_FLANN_INDEX_TYPE = 9 as isize, // duplicate discriminant
 }
 
+opencv_type_enum! { crate::flann::FlannIndexType }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum flann_algorithm_t {
@@ -137,6 +139,8 @@ pub enum flann_algorithm_t {
 	// AUTOTUNED = 255 as isize, // duplicate discriminant
 }
 
+opencv_type_enum! { crate::flann::flann_algorithm_t }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum flann_centers_init_t {
@@ -148,6 +152,8 @@ pub enum flann_centers_init_t {
 	// CENTERS_GONZALES = 1 as isize, // duplicate discriminant
 	// CENTERS_KMEANSPP = 2 as isize, // duplicate discriminant
 }
+
+opencv_type_enum! { crate::flann::flann_centers_init_t }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -163,6 +169,8 @@ pub enum flann_datatype_t {
 	FLANN_FLOAT32 = 8 as isize,
 	FLANN_FLOAT64 = 9 as isize,
 }
+
+opencv_type_enum! { crate::flann::flann_datatype_t }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -191,6 +199,8 @@ pub enum flann_distance_t {
 	// KULLBACK_LEIBLER = 8 as isize, // duplicate discriminant
 }
 
+opencv_type_enum! { crate::flann::flann_distance_t }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum flann_log_level_t {
@@ -200,6 +210,8 @@ pub enum flann_log_level_t {
 	FLANN_LOG_WARN = 3 as isize,
 	FLANN_LOG_INFO = 4 as isize,
 }
+
+opencv_type_enum! { crate::flann::flann_log_level_t }
 
 /// The id from which we can get a bucket back in an LSH table
 pub type bucket_key = u32;
@@ -223,7 +235,7 @@ pub struct AutotunedIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { AutotunedIndexParams }
+opencv_type_boxed! { AutotunedIndexParams }
 
 impl Drop for AutotunedIndexParams {
 	fn drop(&mut self) {
@@ -256,7 +268,7 @@ impl AutotunedIndexParams {
 	/// * memory_weight: 0
 	/// * sample_fraction: 0.1f
 	pub fn new(target_precision: f32, build_weight: f32, memory_weight: f32, sample_fraction: f32) -> Result<crate::flann::AutotunedIndexParams> {
-		unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction) }.into_result().map(|ptr| unsafe { crate::flann::AutotunedIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction) }.into_result().map(|r| unsafe { crate::flann::AutotunedIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -271,7 +283,7 @@ pub struct CompositeIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { CompositeIndexParams }
+opencv_type_boxed! { CompositeIndexParams }
 
 impl Drop for CompositeIndexParams {
 	fn drop(&mut self) {
@@ -305,7 +317,7 @@ impl CompositeIndexParams {
 	/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
 	/// * cb_index: 0.2f
 	pub fn new(trees: i32, branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::CompositeIndexParams> {
-		unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| unsafe { crate::flann::CompositeIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index) }.into_result().map(|r| unsafe { crate::flann::CompositeIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -320,7 +332,7 @@ pub struct HierarchicalClusteringIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { HierarchicalClusteringIndexParams }
+opencv_type_boxed! { HierarchicalClusteringIndexParams }
 
 impl Drop for HierarchicalClusteringIndexParams {
 	fn drop(&mut self) {
@@ -353,7 +365,7 @@ impl HierarchicalClusteringIndexParams {
 	/// * trees: 4
 	/// * leaf_size: 100
 	pub fn new(branching: i32, centers_init: crate::flann::flann_centers_init_t, trees: i32, leaf_size: i32) -> Result<crate::flann::HierarchicalClusteringIndexParams> {
-		unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size) }.into_result().map(|ptr| unsafe { crate::flann::HierarchicalClusteringIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size) }.into_result().map(|r| unsafe { crate::flann::HierarchicalClusteringIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -388,14 +400,14 @@ pub trait IndexTrait {
 	}
 	
 	fn save(&self, filename: &str) -> Result<()> {
-		string_arg!(filename);
-		unsafe { sys::cv_flann_Index_save_const_const_StringX(self.as_raw_Index(), filename.as_ptr()) }.into_result()
+		extern_container_arg!(filename);
+		unsafe { sys::cv_flann_Index_save_const_const_StringX(self.as_raw_Index(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	fn load(&mut self, features: &dyn core::ToInputArray, filename: &str) -> Result<bool> {
 		input_array_arg!(features);
-		string_arg!(filename);
-		unsafe { sys::cv_flann_Index_load_const__InputArrayX_const_StringX(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.as_ptr()) }.into_result()
+		extern_container_arg!(filename);
+		unsafe { sys::cv_flann_Index_load_const__InputArrayX_const_StringX(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	fn release(&mut self) -> Result<()> {
@@ -416,7 +428,7 @@ pub struct Index {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Index }
+opencv_type_boxed! { Index }
 
 impl Drop for Index {
 	fn drop(&mut self) {
@@ -439,14 +451,14 @@ impl crate::flann::IndexTrait for Index {
 
 impl Index {
 	pub fn default() -> Result<crate::flann::Index> {
-		unsafe { sys::cv_flann_Index_Index() }.into_result().map(|ptr| unsafe { crate::flann::Index::from_raw(ptr) })
+		unsafe { sys::cv_flann_Index_Index() }.into_result().map(|r| unsafe { crate::flann::Index::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * dist_type: cvflann::FLANN_DIST_L2
 	pub fn new(features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
 		input_array_arg!(features);
-		unsafe { sys::cv_flann_Index_Index_const__InputArrayX_const_IndexParamsX_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result().map(|ptr| unsafe { crate::flann::Index::from_raw(ptr) })
+		unsafe { sys::cv_flann_Index_Index_const__InputArrayX_const_IndexParamsX_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result().map(|r| unsafe { crate::flann::Index::opencv_from_extern(r) } )
 	}
 	
 }
@@ -456,59 +468,59 @@ pub trait IndexParamsTrait {
 	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void;
 
 	fn params(&mut self) -> *mut c_void {
-		unsafe { sys::cv_flann_IndexParams_params(self.as_raw_mut_IndexParams()) }.into_result().expect("Infallible function failed: params")
+		unsafe { sys::cv_flann_IndexParams_getPropParams(self.as_raw_mut_IndexParams()) }.into_result().expect("Infallible function failed: params")
 	}
 	
 	fn set_params(&mut self, val: *mut c_void) -> () {
-		unsafe { sys::cv_flann_IndexParams_setParams_voidX(self.as_raw_mut_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
+		unsafe { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
 	}
 	
 	/// ## C++ default parameters
 	/// * default_val: String()
 	fn get_string(&self, key: &str, default_val: &str) -> Result<String> {
-		string_arg!(key);
-		string_arg!(default_val);
-		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringX_const_StringX(self.as_raw_IndexParams(), key.as_ptr(), default_val.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		extern_container_arg!(key);
+		extern_container_arg!(default_val);
+		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringX_const_StringX(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * default_val: -1
 	fn get_int(&self, key: &str, default_val: i32) -> Result<i32> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringX_int(self.as_raw_IndexParams(), key.as_ptr(), default_val) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringX_int(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * default_val: -1
 	fn get_double(&self, key: &str, default_val: f64) -> Result<f64> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringX_double(self.as_raw_IndexParams(), key.as_ptr(), default_val) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringX_double(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val) }.into_result()
 	}
 	
 	fn set_string(&mut self, key: &str, value: &str) -> Result<()> {
-		string_arg!(key);
-		string_arg!(value);
-		unsafe { sys::cv_flann_IndexParams_setString_const_StringX_const_StringX(self.as_raw_mut_IndexParams(), key.as_ptr(), value.as_ptr()) }.into_result()
+		extern_container_arg!(key);
+		extern_container_arg!(value);
+		unsafe { sys::cv_flann_IndexParams_setString_const_StringX_const_StringX(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value.opencv_to_extern()) }.into_result()
 	}
 	
 	fn set_int(&mut self, key: &str, value: i32) -> Result<()> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setInt_const_StringX_int(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_setInt_const_StringX_int(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	fn set_double(&mut self, key: &str, value: f64) -> Result<()> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringX_double(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringX_double(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	fn set_float(&mut self, key: &str, value: f32) -> Result<()> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringX_float(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringX_float(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	fn set_bool(&mut self, key: &str, value: bool) -> Result<()> {
-		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setBool_const_StringX_bool(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
+		extern_container_arg!(key);
+		unsafe { sys::cv_flann_IndexParams_setBool_const_StringX_bool(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	fn set_algorithm(&mut self, value: i32) -> Result<()> {
@@ -525,7 +537,7 @@ pub struct IndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { IndexParams }
+opencv_type_boxed! { IndexParams }
 
 impl Drop for IndexParams {
 	fn drop(&mut self) {
@@ -548,7 +560,7 @@ impl crate::flann::IndexParamsTrait for IndexParams {
 
 impl IndexParams {
 	pub fn default() -> Result<crate::flann::IndexParams> {
-		unsafe { sys::cv_flann_IndexParams_IndexParams() }.into_result().map(|ptr| unsafe { crate::flann::IndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_IndexParams_IndexParams() }.into_result().map(|r| unsafe { crate::flann::IndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -563,7 +575,7 @@ pub struct KDTreeIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { KDTreeIndexParams }
+opencv_type_boxed! { KDTreeIndexParams }
 
 impl Drop for KDTreeIndexParams {
 	fn drop(&mut self) {
@@ -593,7 +605,7 @@ impl KDTreeIndexParams {
 	/// ## C++ default parameters
 	/// * trees: 4
 	pub fn new(trees: i32) -> Result<crate::flann::KDTreeIndexParams> {
-		unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees) }.into_result().map(|ptr| unsafe { crate::flann::KDTreeIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees) }.into_result().map(|r| unsafe { crate::flann::KDTreeIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -608,7 +620,7 @@ pub struct KMeansIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { KMeansIndexParams }
+opencv_type_boxed! { KMeansIndexParams }
 
 impl Drop for KMeansIndexParams {
 	fn drop(&mut self) {
@@ -641,7 +653,7 @@ impl KMeansIndexParams {
 	/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
 	/// * cb_index: 0.2f
 	pub fn new(branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::KMeansIndexParams> {
-		unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| unsafe { crate::flann::KMeansIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index) }.into_result().map(|r| unsafe { crate::flann::KMeansIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -656,7 +668,7 @@ pub struct LinearIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LinearIndexParams }
+opencv_type_boxed! { LinearIndexParams }
 
 impl Drop for LinearIndexParams {
 	fn drop(&mut self) {
@@ -684,7 +696,7 @@ impl crate::flann::LinearIndexParamsTrait for LinearIndexParams {
 
 impl LinearIndexParams {
 	pub fn default() -> Result<crate::flann::LinearIndexParams> {
-		unsafe { sys::cv_flann_LinearIndexParams_LinearIndexParams() }.into_result().map(|ptr| unsafe { crate::flann::LinearIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_LinearIndexParams_LinearIndexParams() }.into_result().map(|r| unsafe { crate::flann::LinearIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -699,7 +711,7 @@ pub struct LshIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LshIndexParams }
+opencv_type_boxed! { LshIndexParams }
 
 impl Drop for LshIndexParams {
 	fn drop(&mut self) {
@@ -727,7 +739,7 @@ impl crate::flann::LshIndexParamsTrait for LshIndexParams {
 
 impl LshIndexParams {
 	pub fn new(table_number: i32, key_size: i32, multi_probe_level: i32) -> Result<crate::flann::LshIndexParams> {
-		unsafe { sys::cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number, key_size, multi_probe_level) }.into_result().map(|ptr| unsafe { crate::flann::LshIndexParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number, key_size, multi_probe_level) }.into_result().map(|r| unsafe { crate::flann::LshIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -742,7 +754,7 @@ pub struct SavedIndexParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { SavedIndexParams }
+opencv_type_boxed! { SavedIndexParams }
 
 impl Drop for SavedIndexParams {
 	fn drop(&mut self) {
@@ -770,8 +782,8 @@ impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
 
 impl SavedIndexParams {
 	pub fn new(filename: &str) -> Result<crate::flann::SavedIndexParams> {
-		string_arg!(filename);
-		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { crate::flann::SavedIndexParams::from_raw(ptr) })
+		extern_container_arg!(filename);
+		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::flann::SavedIndexParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -786,7 +798,7 @@ pub struct SearchParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { SearchParams }
+opencv_type_boxed! { SearchParams }
 
 impl Drop for SearchParams {
 	fn drop(&mut self) {
@@ -818,7 +830,7 @@ impl SearchParams {
 	/// * eps: 0
 	/// * sorted: true
 	pub fn new(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
-		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted) }.into_result().map(|ptr| unsafe { crate::flann::SearchParams::from_raw(ptr) })
+		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted) }.into_result().map(|r| unsafe { crate::flann::SearchParams::opencv_from_extern(r) } )
 	}
 	
 }

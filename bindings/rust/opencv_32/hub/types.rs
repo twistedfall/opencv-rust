@@ -257,6 +257,27 @@ mod calib3d_types {
 		fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfStereoMatcher = core::Ptr::<dyn crate::calib3d::StereoMatcher>;
+	
+	ptr_extern! { dyn crate::calib3d::StereoMatcher,
+		cv_PtrOfStereoMatcher_delete, cv_PtrOfStereoMatcher_get_inner_ptr
+	}
+	
+	impl PtrOfStereoMatcher {
+		pub fn as_raw_PtrOfStereoMatcher(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfStereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfStereoMatcher {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcher for PtrOfStereoMatcher {
+		fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfStereoSGBM = core::Ptr::<dyn crate::calib3d::StereoSGBM>;
 	
 	ptr_extern! { dyn crate::calib3d::StereoSGBM,
@@ -402,45 +423,11 @@ mod core_types {
 		cv_VectorOfDMatch_capacity, cv_VectorOfDMatch_shrink_to_fit,
 		cv_VectorOfDMatch_reserve, cv_VectorOfDMatch_remove,
 		cv_VectorOfDMatch_swap, cv_VectorOfDMatch_clear,
-		cv_VectorOfDMatch_get -> sys::Result<core::DMatch>,
-		ret_map: 
+		cv_VectorOfDMatch_get, cv_VectorOfDMatch_set,
+		cv_VectorOfDMatch_push, cv_VectorOfDMatch_insert,
 	}
 	vector_copy_non_bool! { core::DMatch, *const c_void,
 		cv_VectorOfDMatch_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::DMatch> {
-		type Arg = core::DMatch;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::DMatch) {
-			extern "C" { fn cv_VectorOfDMatch_push(instance: *mut c_void, val: *const core::DMatch); }
-			unsafe { cv_VectorOfDMatch_push(self.as_raw_mut_VectorOfDMatch(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::DMatch) -> Result<()> {
-			extern "C" { fn cv_VectorOfDMatch_insert(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDMatch_insert(self.as_raw_mut_VectorOfDMatch(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::DMatch) -> Result<()> {
-			extern "C" { fn cv_VectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDMatch_set(self.as_raw_mut_VectorOfDMatch(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::DMatch) {
-			extern "C" { fn cv_VectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
-			cv_VectorOfDMatch_set(self.as_raw_mut_VectorOfDMatch(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::DMatch> {}
@@ -458,45 +445,11 @@ mod core_types {
 		cv_VectorOfKeyPoint_capacity, cv_VectorOfKeyPoint_shrink_to_fit,
 		cv_VectorOfKeyPoint_reserve, cv_VectorOfKeyPoint_remove,
 		cv_VectorOfKeyPoint_swap, cv_VectorOfKeyPoint_clear,
-		cv_VectorOfKeyPoint_get -> sys::Result<core::KeyPoint>,
-		ret_map: 
+		cv_VectorOfKeyPoint_get, cv_VectorOfKeyPoint_set,
+		cv_VectorOfKeyPoint_push, cv_VectorOfKeyPoint_insert,
 	}
 	vector_copy_non_bool! { core::KeyPoint, *const c_void,
 		cv_VectorOfKeyPoint_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::KeyPoint> {
-		type Arg = core::KeyPoint;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::KeyPoint) {
-			extern "C" { fn cv_VectorOfKeyPoint_push(instance: *mut c_void, val: *const core::KeyPoint); }
-			unsafe { cv_VectorOfKeyPoint_push(self.as_raw_mut_VectorOfKeyPoint(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::KeyPoint) -> Result<()> {
-			extern "C" { fn cv_VectorOfKeyPoint_insert(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfKeyPoint_insert(self.as_raw_mut_VectorOfKeyPoint(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::KeyPoint) -> Result<()> {
-			extern "C" { fn cv_VectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfKeyPoint_set(self.as_raw_mut_VectorOfKeyPoint(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::KeyPoint) {
-			extern "C" { fn cv_VectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
-			cv_VectorOfKeyPoint_set(self.as_raw_mut_VectorOfKeyPoint(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::KeyPoint> {}
@@ -514,44 +467,10 @@ mod core_types {
 		cv_VectorOfMat_capacity, cv_VectorOfMat_shrink_to_fit,
 		cv_VectorOfMat_reserve, cv_VectorOfMat_remove,
 		cv_VectorOfMat_swap, cv_VectorOfMat_clear,
-		cv_VectorOfMat_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Mat::from_raw(ptr) })
+		cv_VectorOfMat_get, cv_VectorOfMat_set,
+		cv_VectorOfMat_push, cv_VectorOfMat_insert,
 	}
 	vector_non_copy_or_bool! { core::Mat }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Mat> {
-		type Arg = core::Mat;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Mat) {
-			extern "C" { fn cv_VectorOfMat_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfMat_push(self.as_raw_mut_VectorOfMat(), val.as_raw_mut_Mat()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Mat) -> Result<()> {
-			extern "C" { fn cv_VectorOfMat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfMat_insert(self.as_raw_mut_VectorOfMat(), index, val.as_raw_mut_Mat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Mat) -> Result<()> {
-			extern "C" { fn cv_VectorOfMat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfMat_set(self.as_raw_mut_VectorOfMat(), index, val.as_raw_mut_Mat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Mat) {
-			extern "C" { fn cv_VectorOfMat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfMat_set(self.as_raw_mut_VectorOfMat(), index, val.as_raw_mut_Mat())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Mat> {}
 	
@@ -568,44 +487,10 @@ mod core_types {
 		cv_VectorOfPlatformInfo_capacity, cv_VectorOfPlatformInfo_shrink_to_fit,
 		cv_VectorOfPlatformInfo_reserve, cv_VectorOfPlatformInfo_remove,
 		cv_VectorOfPlatformInfo_swap, cv_VectorOfPlatformInfo_clear,
-		cv_VectorOfPlatformInfo_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::PlatformInfo::from_raw(ptr) })
+		cv_VectorOfPlatformInfo_get, cv_VectorOfPlatformInfo_set,
+		cv_VectorOfPlatformInfo_push, cv_VectorOfPlatformInfo_insert,
 	}
 	vector_non_copy_or_bool! { core::PlatformInfo }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::PlatformInfo> {
-		type Arg = core::PlatformInfo;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::PlatformInfo) {
-			extern "C" { fn cv_VectorOfPlatformInfo_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfPlatformInfo_push(self.as_raw_mut_VectorOfPlatformInfo(), val.as_raw_mut_PlatformInfo()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::PlatformInfo) -> Result<()> {
-			extern "C" { fn cv_VectorOfPlatformInfo_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPlatformInfo_insert(self.as_raw_mut_VectorOfPlatformInfo(), index, val.as_raw_mut_PlatformInfo()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::PlatformInfo) -> Result<()> {
-			extern "C" { fn cv_VectorOfPlatformInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPlatformInfo_set(self.as_raw_mut_VectorOfPlatformInfo(), index, val.as_raw_mut_PlatformInfo()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::PlatformInfo) {
-			extern "C" { fn cv_VectorOfPlatformInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfPlatformInfo_set(self.as_raw_mut_VectorOfPlatformInfo(), index, val.as_raw_mut_PlatformInfo())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::PlatformInfo> {}
 	
@@ -622,45 +507,11 @@ mod core_types {
 		cv_VectorOfPoint_capacity, cv_VectorOfPoint_shrink_to_fit,
 		cv_VectorOfPoint_reserve, cv_VectorOfPoint_remove,
 		cv_VectorOfPoint_swap, cv_VectorOfPoint_clear,
-		cv_VectorOfPoint_get -> sys::Result<core::Point>,
-		ret_map: 
+		cv_VectorOfPoint_get, cv_VectorOfPoint_set,
+		cv_VectorOfPoint_push, cv_VectorOfPoint_insert,
 	}
 	vector_copy_non_bool! { core::Point, *const c_void,
 		cv_VectorOfPoint_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point> {
-		type Arg = core::Point;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point) {
-			extern "C" { fn cv_VectorOfPoint_push(instance: *mut c_void, val: *const core::Point); }
-			unsafe { cv_VectorOfPoint_push(self.as_raw_mut_VectorOfPoint(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint_insert(instance: *mut c_void, index: size_t, val: *const core::Point); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint_insert(self.as_raw_mut_VectorOfPoint(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint_set(instance: *mut c_void, index: size_t, val: *const core::Point); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint_set(self.as_raw_mut_VectorOfPoint(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point) {
-			extern "C" { fn cv_VectorOfPoint_set(instance: *mut c_void, index: size_t, val: *const core::Point); }
-			cv_VectorOfPoint_set(self.as_raw_mut_VectorOfPoint(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point> {}
@@ -729,45 +580,11 @@ mod core_types {
 		cv_VectorOfPoint2d_capacity, cv_VectorOfPoint2d_shrink_to_fit,
 		cv_VectorOfPoint2d_reserve, cv_VectorOfPoint2d_remove,
 		cv_VectorOfPoint2d_swap, cv_VectorOfPoint2d_clear,
-		cv_VectorOfPoint2d_get -> sys::Result<core::Point2d>,
-		ret_map: 
+		cv_VectorOfPoint2d_get, cv_VectorOfPoint2d_set,
+		cv_VectorOfPoint2d_push, cv_VectorOfPoint2d_insert,
 	}
 	vector_copy_non_bool! { core::Point2d, *const c_void,
 		cv_VectorOfPoint2d_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point2d> {
-		type Arg = core::Point2d;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point2d) {
-			extern "C" { fn cv_VectorOfPoint2d_push(instance: *mut c_void, val: *const core::Point2d); }
-			unsafe { cv_VectorOfPoint2d_push(self.as_raw_mut_VectorOfPoint2d(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point2d) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint2d_insert(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint2d_insert(self.as_raw_mut_VectorOfPoint2d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point2d) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint2d_set(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint2d_set(self.as_raw_mut_VectorOfPoint2d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point2d) {
-			extern "C" { fn cv_VectorOfPoint2d_set(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
-			cv_VectorOfPoint2d_set(self.as_raw_mut_VectorOfPoint2d(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point2d> {}
@@ -836,45 +653,11 @@ mod core_types {
 		cv_VectorOfPoint2f_capacity, cv_VectorOfPoint2f_shrink_to_fit,
 		cv_VectorOfPoint2f_reserve, cv_VectorOfPoint2f_remove,
 		cv_VectorOfPoint2f_swap, cv_VectorOfPoint2f_clear,
-		cv_VectorOfPoint2f_get -> sys::Result<core::Point2f>,
-		ret_map: 
+		cv_VectorOfPoint2f_get, cv_VectorOfPoint2f_set,
+		cv_VectorOfPoint2f_push, cv_VectorOfPoint2f_insert,
 	}
 	vector_copy_non_bool! { core::Point2f, *const c_void,
 		cv_VectorOfPoint2f_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point2f> {
-		type Arg = core::Point2f;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point2f) {
-			extern "C" { fn cv_VectorOfPoint2f_push(instance: *mut c_void, val: *const core::Point2f); }
-			unsafe { cv_VectorOfPoint2f_push(self.as_raw_mut_VectorOfPoint2f(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point2f) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint2f_insert(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint2f_insert(self.as_raw_mut_VectorOfPoint2f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point2f) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint2f_set(self.as_raw_mut_VectorOfPoint2f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point2f) {
-			extern "C" { fn cv_VectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
-			cv_VectorOfPoint2f_set(self.as_raw_mut_VectorOfPoint2f(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point2f> {}
@@ -943,45 +726,11 @@ mod core_types {
 		cv_VectorOfPoint3d_capacity, cv_VectorOfPoint3d_shrink_to_fit,
 		cv_VectorOfPoint3d_reserve, cv_VectorOfPoint3d_remove,
 		cv_VectorOfPoint3d_swap, cv_VectorOfPoint3d_clear,
-		cv_VectorOfPoint3d_get -> sys::Result<core::Point3d>,
-		ret_map: 
+		cv_VectorOfPoint3d_get, cv_VectorOfPoint3d_set,
+		cv_VectorOfPoint3d_push, cv_VectorOfPoint3d_insert,
 	}
 	vector_copy_non_bool! { core::Point3d, *const c_void,
 		cv_VectorOfPoint3d_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point3d> {
-		type Arg = core::Point3d;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point3d) {
-			extern "C" { fn cv_VectorOfPoint3d_push(instance: *mut c_void, val: *const core::Point3d); }
-			unsafe { cv_VectorOfPoint3d_push(self.as_raw_mut_VectorOfPoint3d(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point3d) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3d_insert(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint3d_insert(self.as_raw_mut_VectorOfPoint3d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point3d) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint3d_set(self.as_raw_mut_VectorOfPoint3d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point3d) {
-			extern "C" { fn cv_VectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
-			cv_VectorOfPoint3d_set(self.as_raw_mut_VectorOfPoint3d(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3d> {}
@@ -1050,45 +799,11 @@ mod core_types {
 		cv_VectorOfPoint3f_capacity, cv_VectorOfPoint3f_shrink_to_fit,
 		cv_VectorOfPoint3f_reserve, cv_VectorOfPoint3f_remove,
 		cv_VectorOfPoint3f_swap, cv_VectorOfPoint3f_clear,
-		cv_VectorOfPoint3f_get -> sys::Result<core::Point3f>,
-		ret_map: 
+		cv_VectorOfPoint3f_get, cv_VectorOfPoint3f_set,
+		cv_VectorOfPoint3f_push, cv_VectorOfPoint3f_insert,
 	}
 	vector_copy_non_bool! { core::Point3f, *const c_void,
 		cv_VectorOfPoint3f_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point3f> {
-		type Arg = core::Point3f;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point3f) {
-			extern "C" { fn cv_VectorOfPoint3f_push(instance: *mut c_void, val: *const core::Point3f); }
-			unsafe { cv_VectorOfPoint3f_push(self.as_raw_mut_VectorOfPoint3f(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point3f) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3f_insert(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint3f_insert(self.as_raw_mut_VectorOfPoint3f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point3f) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint3f_set(self.as_raw_mut_VectorOfPoint3f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point3f) {
-			extern "C" { fn cv_VectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
-			cv_VectorOfPoint3f_set(self.as_raw_mut_VectorOfPoint3f(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3f> {}
@@ -1157,45 +872,11 @@ mod core_types {
 		cv_VectorOfPoint3i_capacity, cv_VectorOfPoint3i_shrink_to_fit,
 		cv_VectorOfPoint3i_reserve, cv_VectorOfPoint3i_remove,
 		cv_VectorOfPoint3i_swap, cv_VectorOfPoint3i_clear,
-		cv_VectorOfPoint3i_get -> sys::Result<core::Point3i>,
-		ret_map: 
+		cv_VectorOfPoint3i_get, cv_VectorOfPoint3i_set,
+		cv_VectorOfPoint3i_push, cv_VectorOfPoint3i_insert,
 	}
 	vector_copy_non_bool! { core::Point3i, *const c_void,
 		cv_VectorOfPoint3i_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Point3i> {
-		type Arg = core::Point3i;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Point3i) {
-			extern "C" { fn cv_VectorOfPoint3i_push(instance: *mut c_void, val: *const core::Point3i); }
-			unsafe { cv_VectorOfPoint3i_push(self.as_raw_mut_VectorOfPoint3i(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Point3i) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3i_insert(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPoint3i_insert(self.as_raw_mut_VectorOfPoint3i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Point3i) -> Result<()> {
-			extern "C" { fn cv_VectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPoint3i_set(self.as_raw_mut_VectorOfPoint3i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Point3i) {
-			extern "C" { fn cv_VectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
-			cv_VectorOfPoint3i_set(self.as_raw_mut_VectorOfPoint3i(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3i> {}
@@ -1264,44 +945,10 @@ mod core_types {
 		cv_VectorOfRange_capacity, cv_VectorOfRange_shrink_to_fit,
 		cv_VectorOfRange_reserve, cv_VectorOfRange_remove,
 		cv_VectorOfRange_swap, cv_VectorOfRange_clear,
-		cv_VectorOfRange_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Range::from_raw(ptr) })
+		cv_VectorOfRange_get, cv_VectorOfRange_set,
+		cv_VectorOfRange_push, cv_VectorOfRange_insert,
 	}
 	vector_non_copy_or_bool! { core::Range }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Range> {
-		type Arg = core::Range;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Range) {
-			extern "C" { fn cv_VectorOfRange_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfRange_push(self.as_raw_mut_VectorOfRange(), val.as_raw_mut_Range()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Range) -> Result<()> {
-			extern "C" { fn cv_VectorOfRange_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfRange_insert(self.as_raw_mut_VectorOfRange(), index, val.as_raw_mut_Range()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Range) -> Result<()> {
-			extern "C" { fn cv_VectorOfRange_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfRange_set(self.as_raw_mut_VectorOfRange(), index, val.as_raw_mut_Range()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Range) {
-			extern "C" { fn cv_VectorOfRange_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfRange_set(self.as_raw_mut_VectorOfRange(), index, val.as_raw_mut_Range())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Range> {}
 	
@@ -1318,45 +965,11 @@ mod core_types {
 		cv_VectorOfRect_capacity, cv_VectorOfRect_shrink_to_fit,
 		cv_VectorOfRect_reserve, cv_VectorOfRect_remove,
 		cv_VectorOfRect_swap, cv_VectorOfRect_clear,
-		cv_VectorOfRect_get -> sys::Result<core::Rect>,
-		ret_map: 
+		cv_VectorOfRect_get, cv_VectorOfRect_set,
+		cv_VectorOfRect_push, cv_VectorOfRect_insert,
 	}
 	vector_copy_non_bool! { core::Rect, *const c_void,
 		cv_VectorOfRect_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Rect> {
-		type Arg = core::Rect;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Rect) {
-			extern "C" { fn cv_VectorOfRect_push(instance: *mut c_void, val: *const core::Rect); }
-			unsafe { cv_VectorOfRect_push(self.as_raw_mut_VectorOfRect(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Rect) -> Result<()> {
-			extern "C" { fn cv_VectorOfRect_insert(instance: *mut c_void, index: size_t, val: *const core::Rect); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfRect_insert(self.as_raw_mut_VectorOfRect(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Rect) -> Result<()> {
-			extern "C" { fn cv_VectorOfRect_set(instance: *mut c_void, index: size_t, val: *const core::Rect); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfRect_set(self.as_raw_mut_VectorOfRect(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Rect) {
-			extern "C" { fn cv_VectorOfRect_set(instance: *mut c_void, index: size_t, val: *const core::Rect); }
-			cv_VectorOfRect_set(self.as_raw_mut_VectorOfRect(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Rect> {}
@@ -1412,6 +1025,152 @@ mod core_types {
 		}
 	}
 	
+	pub type VectorOfRect2d = core::Vector::<core::Rect2d>;
+	
+	impl VectorOfRect2d {
+		pub fn as_raw_VectorOfRect2d(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfRect2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Rect2d, *const c_void, *mut c_void,
+		cv_VectorOfRect2d_new, cv_VectorOfRect2d_delete,
+		cv_VectorOfRect2d_len, cv_VectorOfRect2d_is_empty,
+		cv_VectorOfRect2d_capacity, cv_VectorOfRect2d_shrink_to_fit,
+		cv_VectorOfRect2d_reserve, cv_VectorOfRect2d_remove,
+		cv_VectorOfRect2d_swap, cv_VectorOfRect2d_clear,
+		cv_VectorOfRect2d_get, cv_VectorOfRect2d_set,
+		cv_VectorOfRect2d_push, cv_VectorOfRect2d_insert,
+	}
+	vector_copy_non_bool! { core::Rect2d, *const c_void,
+		cv_VectorOfRect2d_data
+	}
+	
+	unsafe impl Send for core::Vector::<core::Rect2d> {}
+	
+	impl core::ToInputArray for VectorOfRect2d {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			extern "C" { fn cv_VectorOfRect2d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfRect2d_input_array(self.as_raw_VectorOfRect2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
+		}
+	}
+	
+	impl core::ToInputArray for &VectorOfRect2d {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			(*self).input_array()
+		}
+	}
+	
+	impl core::ToOutputArray for VectorOfRect2d {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			extern "C" { fn cv_VectorOfRect2d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfRect2d_output_array(self.as_raw_mut_VectorOfRect2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToOutputArray for &mut VectorOfRect2d {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			(*self).output_array()
+		}
+	}
+	
+	impl core::ToInputOutputArray for VectorOfRect2d {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			extern "C" { fn cv_VectorOfRect2d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfRect2d_input_output_array(self.as_raw_mut_VectorOfRect2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToInputOutputArray for &mut VectorOfRect2d {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			(*self).input_output_array()
+		}
+	}
+	
+	pub type VectorOfScalar = core::Vector::<core::Scalar>;
+	
+	impl VectorOfScalar {
+		pub fn as_raw_VectorOfScalar(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfScalar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Scalar, *const c_void, *mut c_void,
+		cv_VectorOfScalar_new, cv_VectorOfScalar_delete,
+		cv_VectorOfScalar_len, cv_VectorOfScalar_is_empty,
+		cv_VectorOfScalar_capacity, cv_VectorOfScalar_shrink_to_fit,
+		cv_VectorOfScalar_reserve, cv_VectorOfScalar_remove,
+		cv_VectorOfScalar_swap, cv_VectorOfScalar_clear,
+		cv_VectorOfScalar_get, cv_VectorOfScalar_set,
+		cv_VectorOfScalar_push, cv_VectorOfScalar_insert,
+	}
+	vector_copy_non_bool! { core::Scalar, *const c_void,
+		cv_VectorOfScalar_data
+	}
+	
+	unsafe impl Send for core::Vector::<core::Scalar> {}
+	
+	impl core::ToInputArray for VectorOfScalar {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			extern "C" { fn cv_VectorOfScalar_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfScalar_input_array(self.as_raw_VectorOfScalar()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
+		}
+	}
+	
+	impl core::ToInputArray for &VectorOfScalar {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			(*self).input_array()
+		}
+	}
+	
+	impl core::ToOutputArray for VectorOfScalar {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			extern "C" { fn cv_VectorOfScalar_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfScalar_output_array(self.as_raw_mut_VectorOfScalar()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToOutputArray for &mut VectorOfScalar {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			(*self).output_array()
+		}
+	}
+	
+	impl core::ToInputOutputArray for VectorOfScalar {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			extern "C" { fn cv_VectorOfScalar_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfScalar_input_output_array(self.as_raw_mut_VectorOfScalar()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToInputOutputArray for &mut VectorOfScalar {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			(*self).input_output_array()
+		}
+	}
+	
 	pub type VectorOfSize = core::Vector::<core::Size>;
 	
 	impl VectorOfSize {
@@ -1425,45 +1184,11 @@ mod core_types {
 		cv_VectorOfSize_capacity, cv_VectorOfSize_shrink_to_fit,
 		cv_VectorOfSize_reserve, cv_VectorOfSize_remove,
 		cv_VectorOfSize_swap, cv_VectorOfSize_clear,
-		cv_VectorOfSize_get -> sys::Result<core::Size>,
-		ret_map: 
+		cv_VectorOfSize_get, cv_VectorOfSize_set,
+		cv_VectorOfSize_push, cv_VectorOfSize_insert,
 	}
 	vector_copy_non_bool! { core::Size, *const c_void,
 		cv_VectorOfSize_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Size> {
-		type Arg = core::Size;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Size) {
-			extern "C" { fn cv_VectorOfSize_push(instance: *mut c_void, val: *const core::Size); }
-			unsafe { cv_VectorOfSize_push(self.as_raw_mut_VectorOfSize(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Size) -> Result<()> {
-			extern "C" { fn cv_VectorOfSize_insert(instance: *mut c_void, index: size_t, val: *const core::Size); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfSize_insert(self.as_raw_mut_VectorOfSize(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Size) -> Result<()> {
-			extern "C" { fn cv_VectorOfSize_set(instance: *mut c_void, index: size_t, val: *const core::Size); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfSize_set(self.as_raw_mut_VectorOfSize(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Size) {
-			extern "C" { fn cv_VectorOfSize_set(instance: *mut c_void, index: size_t, val: *const core::Size); }
-			cv_VectorOfSize_set(self.as_raw_mut_VectorOfSize(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Size> {}
@@ -1532,48 +1257,10 @@ mod core_types {
 		cv_VectorOfString_capacity, cv_VectorOfString_shrink_to_fit,
 		cv_VectorOfString_reserve, cv_VectorOfString_remove,
 		cv_VectorOfString_swap, cv_VectorOfString_clear,
-		cv_VectorOfString_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|s| { crate::templ::receive_string(s as *mut String) })
+		cv_VectorOfString_get, cv_VectorOfString_set,
+		cv_VectorOfString_push, cv_VectorOfString_insert,
 	}
 	vector_non_copy_or_bool! { String }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<String> {
-		type Arg = &'i str;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: &str) {
-			extern "C" { fn cv_VectorOfString_push(instance: *mut c_void, val: *mut c_char); }
-			string_arg_infallible!(val);
-			unsafe { cv_VectorOfString_push(self.as_raw_mut_VectorOfString(), val.as_ptr() as _) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: &str) -> Result<()> {
-			extern "C" { fn cv_VectorOfString_insert(instance: *mut c_void, index: size_t, val: *mut c_char); }
-			core::vector_index_check(index, self.len() + 1)?;
-			string_arg!(val);
-			unsafe { cv_VectorOfString_insert(self.as_raw_mut_VectorOfString(), index, val.as_ptr() as _) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: &str) -> Result<()> {
-			extern "C" { fn cv_VectorOfString_set(instance: *mut c_void, index: size_t, val: *mut c_char); }
-			core::vector_index_check(index, self.len())?;
-			string_arg!(val);
-			unsafe { cv_VectorOfString_set(self.as_raw_mut_VectorOfString(), index, val.as_ptr() as _) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: &str) {
-			extern "C" { fn cv_VectorOfString_set(instance: *mut c_void, index: size_t, val: *mut c_char); }
-			string_arg_infallible!(val);
-			cv_VectorOfString_set(self.as_raw_mut_VectorOfString(), index, val.as_ptr() as _)
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<String> {}
 	
@@ -1590,44 +1277,10 @@ mod core_types {
 		cv_VectorOfUMat_capacity, cv_VectorOfUMat_shrink_to_fit,
 		cv_VectorOfUMat_reserve, cv_VectorOfUMat_remove,
 		cv_VectorOfUMat_swap, cv_VectorOfUMat_clear,
-		cv_VectorOfUMat_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::UMat::from_raw(ptr) })
+		cv_VectorOfUMat_get, cv_VectorOfUMat_set,
+		cv_VectorOfUMat_push, cv_VectorOfUMat_insert,
 	}
 	vector_non_copy_or_bool! { core::UMat }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::UMat> {
-		type Arg = core::UMat;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::UMat) {
-			extern "C" { fn cv_VectorOfUMat_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfUMat_push(self.as_raw_mut_VectorOfUMat(), val.as_raw_mut_UMat()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::UMat) -> Result<()> {
-			extern "C" { fn cv_VectorOfUMat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfUMat_insert(self.as_raw_mut_VectorOfUMat(), index, val.as_raw_mut_UMat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::UMat) -> Result<()> {
-			extern "C" { fn cv_VectorOfUMat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfUMat_set(self.as_raw_mut_VectorOfUMat(), index, val.as_raw_mut_UMat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::UMat) {
-			extern "C" { fn cv_VectorOfUMat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfUMat_set(self.as_raw_mut_VectorOfUMat(), index, val.as_raw_mut_UMat())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::UMat> {}
 	
@@ -1644,45 +1297,11 @@ mod core_types {
 		cv_VectorOfVec2i_capacity, cv_VectorOfVec2i_shrink_to_fit,
 		cv_VectorOfVec2i_reserve, cv_VectorOfVec2i_remove,
 		cv_VectorOfVec2i_swap, cv_VectorOfVec2i_clear,
-		cv_VectorOfVec2i_get -> sys::Result<core::Vec2i>,
-		ret_map: 
+		cv_VectorOfVec2i_get, cv_VectorOfVec2i_set,
+		cv_VectorOfVec2i_push, cv_VectorOfVec2i_insert,
 	}
 	vector_copy_non_bool! { core::Vec2i, *const c_void,
 		cv_VectorOfVec2i_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec2i> {
-		type Arg = core::Vec2i;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec2i) {
-			extern "C" { fn cv_VectorOfVec2i_push(instance: *mut c_void, val: *const core::Vec2i); }
-			unsafe { cv_VectorOfVec2i_push(self.as_raw_mut_VectorOfVec2i(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec2i) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec2i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec2i_insert(self.as_raw_mut_VectorOfVec2i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec2i) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec2i_set(self.as_raw_mut_VectorOfVec2i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec2i) {
-			extern "C" { fn cv_VectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
-			cv_VectorOfVec2i_set(self.as_raw_mut_VectorOfVec2i(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec2i> {}
@@ -1751,45 +1370,11 @@ mod core_types {
 		cv_VectorOfVec3d_capacity, cv_VectorOfVec3d_shrink_to_fit,
 		cv_VectorOfVec3d_reserve, cv_VectorOfVec3d_remove,
 		cv_VectorOfVec3d_swap, cv_VectorOfVec3d_clear,
-		cv_VectorOfVec3d_get -> sys::Result<core::Vec3d>,
-		ret_map: 
+		cv_VectorOfVec3d_get, cv_VectorOfVec3d_set,
+		cv_VectorOfVec3d_push, cv_VectorOfVec3d_insert,
 	}
 	vector_copy_non_bool! { core::Vec3d, *const c_void,
 		cv_VectorOfVec3d_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec3d> {
-		type Arg = core::Vec3d;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec3d) {
-			extern "C" { fn cv_VectorOfVec3d_push(instance: *mut c_void, val: *const core::Vec3d); }
-			unsafe { cv_VectorOfVec3d_push(self.as_raw_mut_VectorOfVec3d(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec3d) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec3d_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec3d_insert(self.as_raw_mut_VectorOfVec3d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec3d) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec3d_set(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec3d_set(self.as_raw_mut_VectorOfVec3d(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec3d) {
-			extern "C" { fn cv_VectorOfVec3d_set(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
-			cv_VectorOfVec3d_set(self.as_raw_mut_VectorOfVec3d(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec3d> {}
@@ -1858,45 +1443,11 @@ mod core_types {
 		cv_VectorOfVec3f_capacity, cv_VectorOfVec3f_shrink_to_fit,
 		cv_VectorOfVec3f_reserve, cv_VectorOfVec3f_remove,
 		cv_VectorOfVec3f_swap, cv_VectorOfVec3f_clear,
-		cv_VectorOfVec3f_get -> sys::Result<core::Vec3f>,
-		ret_map: 
+		cv_VectorOfVec3f_get, cv_VectorOfVec3f_set,
+		cv_VectorOfVec3f_push, cv_VectorOfVec3f_insert,
 	}
 	vector_copy_non_bool! { core::Vec3f, *const c_void,
 		cv_VectorOfVec3f_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec3f> {
-		type Arg = core::Vec3f;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec3f) {
-			extern "C" { fn cv_VectorOfVec3f_push(instance: *mut c_void, val: *const core::Vec3f); }
-			unsafe { cv_VectorOfVec3f_push(self.as_raw_mut_VectorOfVec3f(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec3f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec3f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec3f_insert(self.as_raw_mut_VectorOfVec3f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec3f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec3f_set(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec3f_set(self.as_raw_mut_VectorOfVec3f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec3f) {
-			extern "C" { fn cv_VectorOfVec3f_set(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
-			cv_VectorOfVec3f_set(self.as_raw_mut_VectorOfVec3f(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec3f> {}
@@ -1965,45 +1516,11 @@ mod core_types {
 		cv_VectorOfVec4f_capacity, cv_VectorOfVec4f_shrink_to_fit,
 		cv_VectorOfVec4f_reserve, cv_VectorOfVec4f_remove,
 		cv_VectorOfVec4f_swap, cv_VectorOfVec4f_clear,
-		cv_VectorOfVec4f_get -> sys::Result<core::Vec4f>,
-		ret_map: 
+		cv_VectorOfVec4f_get, cv_VectorOfVec4f_set,
+		cv_VectorOfVec4f_push, cv_VectorOfVec4f_insert,
 	}
 	vector_copy_non_bool! { core::Vec4f, *const c_void,
 		cv_VectorOfVec4f_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec4f> {
-		type Arg = core::Vec4f;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec4f) {
-			extern "C" { fn cv_VectorOfVec4f_push(instance: *mut c_void, val: *const core::Vec4f); }
-			unsafe { cv_VectorOfVec4f_push(self.as_raw_mut_VectorOfVec4f(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec4f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec4f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec4f_insert(self.as_raw_mut_VectorOfVec4f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec4f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec4f_set(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec4f_set(self.as_raw_mut_VectorOfVec4f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec4f) {
-			extern "C" { fn cv_VectorOfVec4f_set(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
-			cv_VectorOfVec4f_set(self.as_raw_mut_VectorOfVec4f(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec4f> {}
@@ -2072,45 +1589,11 @@ mod core_types {
 		cv_VectorOfVec4i_capacity, cv_VectorOfVec4i_shrink_to_fit,
 		cv_VectorOfVec4i_reserve, cv_VectorOfVec4i_remove,
 		cv_VectorOfVec4i_swap, cv_VectorOfVec4i_clear,
-		cv_VectorOfVec4i_get -> sys::Result<core::Vec4i>,
-		ret_map: 
+		cv_VectorOfVec4i_get, cv_VectorOfVec4i_set,
+		cv_VectorOfVec4i_push, cv_VectorOfVec4i_insert,
 	}
 	vector_copy_non_bool! { core::Vec4i, *const c_void,
 		cv_VectorOfVec4i_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec4i> {
-		type Arg = core::Vec4i;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec4i) {
-			extern "C" { fn cv_VectorOfVec4i_push(instance: *mut c_void, val: *const core::Vec4i); }
-			unsafe { cv_VectorOfVec4i_push(self.as_raw_mut_VectorOfVec4i(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec4i) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec4i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec4i_insert(self.as_raw_mut_VectorOfVec4i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec4i) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec4i_set(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec4i_set(self.as_raw_mut_VectorOfVec4i(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec4i) {
-			extern "C" { fn cv_VectorOfVec4i_set(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
-			cv_VectorOfVec4i_set(self.as_raw_mut_VectorOfVec4i(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec4i> {}
@@ -2179,45 +1662,11 @@ mod core_types {
 		cv_VectorOfVec6f_capacity, cv_VectorOfVec6f_shrink_to_fit,
 		cv_VectorOfVec6f_reserve, cv_VectorOfVec6f_remove,
 		cv_VectorOfVec6f_swap, cv_VectorOfVec6f_clear,
-		cv_VectorOfVec6f_get -> sys::Result<core::Vec6f>,
-		ret_map: 
+		cv_VectorOfVec6f_get, cv_VectorOfVec6f_set,
+		cv_VectorOfVec6f_push, cv_VectorOfVec6f_insert,
 	}
 	vector_copy_non_bool! { core::Vec6f, *const c_void,
 		cv_VectorOfVec6f_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vec6f> {
-		type Arg = core::Vec6f;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: core::Vec6f) {
-			extern "C" { fn cv_VectorOfVec6f_push(instance: *mut c_void, val: *const core::Vec6f); }
-			unsafe { cv_VectorOfVec6f_push(self.as_raw_mut_VectorOfVec6f(), &val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: core::Vec6f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec6f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVec6f_insert(self.as_raw_mut_VectorOfVec6f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: core::Vec6f) -> Result<()> {
-			extern "C" { fn cv_VectorOfVec6f_set(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVec6f_set(self.as_raw_mut_VectorOfVec6f(), index, &val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: core::Vec6f) {
-			extern "C" { fn cv_VectorOfVec6f_set(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
-			cv_VectorOfVec6f_set(self.as_raw_mut_VectorOfVec6f(), index, &val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec6f> {}
@@ -2286,44 +1735,10 @@ mod core_types {
 		cv_VectorOfVectorOfDMatch_capacity, cv_VectorOfVectorOfDMatch_shrink_to_fit,
 		cv_VectorOfVectorOfDMatch_reserve, cv_VectorOfVectorOfDMatch_remove,
 		cv_VectorOfVectorOfDMatch_swap, cv_VectorOfVectorOfDMatch_clear,
-		cv_VectorOfVectorOfDMatch_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::DMatch>::from_raw(ptr) })
+		cv_VectorOfVectorOfDMatch_get, cv_VectorOfVectorOfDMatch_set,
+		cv_VectorOfVectorOfDMatch_push, cv_VectorOfVectorOfDMatch_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::DMatch> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::DMatch>> {
-		type Arg = core::Vector::<core::DMatch>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::DMatch>) {
-			extern "C" { fn cv_VectorOfVectorOfDMatch_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfDMatch_push(self.as_raw_mut_VectorOfVectorOfDMatch(), val.as_raw_mut_VectorOfDMatch()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::DMatch>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfDMatch_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfDMatch_insert(self.as_raw_mut_VectorOfVectorOfDMatch(), index, val.as_raw_mut_VectorOfDMatch()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::DMatch>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfDMatch_set(self.as_raw_mut_VectorOfVectorOfDMatch(), index, val.as_raw_mut_VectorOfDMatch()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::DMatch>) {
-			extern "C" { fn cv_VectorOfVectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfDMatch_set(self.as_raw_mut_VectorOfVectorOfDMatch(), index, val.as_raw_mut_VectorOfDMatch())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::DMatch>> {}
 	
@@ -2340,44 +1755,10 @@ mod core_types {
 		cv_VectorOfVectorOfKeyPoint_capacity, cv_VectorOfVectorOfKeyPoint_shrink_to_fit,
 		cv_VectorOfVectorOfKeyPoint_reserve, cv_VectorOfVectorOfKeyPoint_remove,
 		cv_VectorOfVectorOfKeyPoint_swap, cv_VectorOfVectorOfKeyPoint_clear,
-		cv_VectorOfVectorOfKeyPoint_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::KeyPoint>::from_raw(ptr) })
+		cv_VectorOfVectorOfKeyPoint_get, cv_VectorOfVectorOfKeyPoint_set,
+		cv_VectorOfVectorOfKeyPoint_push, cv_VectorOfVectorOfKeyPoint_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::KeyPoint> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::KeyPoint>> {
-		type Arg = core::Vector::<core::KeyPoint>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::KeyPoint>) {
-			extern "C" { fn cv_VectorOfVectorOfKeyPoint_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfKeyPoint_push(self.as_raw_mut_VectorOfVectorOfKeyPoint(), val.as_raw_mut_VectorOfKeyPoint()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::KeyPoint>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfKeyPoint_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfKeyPoint_insert(self.as_raw_mut_VectorOfVectorOfKeyPoint(), index, val.as_raw_mut_VectorOfKeyPoint()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::KeyPoint>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfKeyPoint_set(self.as_raw_mut_VectorOfVectorOfKeyPoint(), index, val.as_raw_mut_VectorOfKeyPoint()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::KeyPoint>) {
-			extern "C" { fn cv_VectorOfVectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfKeyPoint_set(self.as_raw_mut_VectorOfVectorOfKeyPoint(), index, val.as_raw_mut_VectorOfKeyPoint())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::KeyPoint>> {}
 	
@@ -2394,44 +1775,10 @@ mod core_types {
 		cv_VectorOfVectorOfPoint_capacity, cv_VectorOfVectorOfPoint_shrink_to_fit,
 		cv_VectorOfVectorOfPoint_reserve, cv_VectorOfVectorOfPoint_remove,
 		cv_VectorOfVectorOfPoint_swap, cv_VectorOfVectorOfPoint_clear,
-		cv_VectorOfVectorOfPoint_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Point>::from_raw(ptr) })
+		cv_VectorOfVectorOfPoint_get, cv_VectorOfVectorOfPoint_set,
+		cv_VectorOfVectorOfPoint_push, cv_VectorOfVectorOfPoint_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Point> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Point>> {
-		type Arg = core::Vector::<core::Point>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Point>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfPoint_push(self.as_raw_mut_VectorOfVectorOfPoint(), val.as_raw_mut_VectorOfPoint()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Point>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfPoint_insert(self.as_raw_mut_VectorOfVectorOfPoint(), index, val.as_raw_mut_VectorOfPoint()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Point>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfPoint_set(self.as_raw_mut_VectorOfVectorOfPoint(), index, val.as_raw_mut_VectorOfPoint()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Point>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfPoint_set(self.as_raw_mut_VectorOfVectorOfPoint(), index, val.as_raw_mut_VectorOfPoint())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point>> {}
 	
@@ -2499,44 +1846,10 @@ mod core_types {
 		cv_VectorOfVectorOfPoint2f_capacity, cv_VectorOfVectorOfPoint2f_shrink_to_fit,
 		cv_VectorOfVectorOfPoint2f_reserve, cv_VectorOfVectorOfPoint2f_remove,
 		cv_VectorOfVectorOfPoint2f_swap, cv_VectorOfVectorOfPoint2f_clear,
-		cv_VectorOfVectorOfPoint2f_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Point2f>::from_raw(ptr) })
+		cv_VectorOfVectorOfPoint2f_get, cv_VectorOfVectorOfPoint2f_set,
+		cv_VectorOfVectorOfPoint2f_push, cv_VectorOfVectorOfPoint2f_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Point2f> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Point2f>> {
-		type Arg = core::Vector::<core::Point2f>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Point2f>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfPoint2f_push(self.as_raw_mut_VectorOfVectorOfPoint2f(), val.as_raw_mut_VectorOfPoint2f()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Point2f>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfPoint2f_insert(self.as_raw_mut_VectorOfVectorOfPoint2f(), index, val.as_raw_mut_VectorOfPoint2f()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Point2f>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfPoint2f_set(self.as_raw_mut_VectorOfVectorOfPoint2f(), index, val.as_raw_mut_VectorOfPoint2f()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Point2f>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfPoint2f_set(self.as_raw_mut_VectorOfVectorOfPoint2f(), index, val.as_raw_mut_VectorOfPoint2f())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point2f>> {}
 	
@@ -2604,44 +1917,10 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3d_capacity, cv_VectorOfVectorOfPoint3d_shrink_to_fit,
 		cv_VectorOfVectorOfPoint3d_reserve, cv_VectorOfVectorOfPoint3d_remove,
 		cv_VectorOfVectorOfPoint3d_swap, cv_VectorOfVectorOfPoint3d_clear,
-		cv_VectorOfVectorOfPoint3d_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Point3d>::from_raw(ptr) })
+		cv_VectorOfVectorOfPoint3d_get, cv_VectorOfVectorOfPoint3d_set,
+		cv_VectorOfVectorOfPoint3d_push, cv_VectorOfVectorOfPoint3d_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Point3d> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Point3d>> {
-		type Arg = core::Vector::<core::Point3d>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Point3d>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfPoint3d_push(self.as_raw_mut_VectorOfVectorOfPoint3d(), val.as_raw_mut_VectorOfPoint3d()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Point3d>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfPoint3d_insert(self.as_raw_mut_VectorOfVectorOfPoint3d(), index, val.as_raw_mut_VectorOfPoint3d()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Point3d>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfPoint3d_set(self.as_raw_mut_VectorOfVectorOfPoint3d(), index, val.as_raw_mut_VectorOfPoint3d()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Point3d>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfPoint3d_set(self.as_raw_mut_VectorOfVectorOfPoint3d(), index, val.as_raw_mut_VectorOfPoint3d())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3d>> {}
 	
@@ -2709,44 +1988,10 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3f_capacity, cv_VectorOfVectorOfPoint3f_shrink_to_fit,
 		cv_VectorOfVectorOfPoint3f_reserve, cv_VectorOfVectorOfPoint3f_remove,
 		cv_VectorOfVectorOfPoint3f_swap, cv_VectorOfVectorOfPoint3f_clear,
-		cv_VectorOfVectorOfPoint3f_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Point3f>::from_raw(ptr) })
+		cv_VectorOfVectorOfPoint3f_get, cv_VectorOfVectorOfPoint3f_set,
+		cv_VectorOfVectorOfPoint3f_push, cv_VectorOfVectorOfPoint3f_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Point3f> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Point3f>> {
-		type Arg = core::Vector::<core::Point3f>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Point3f>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfPoint3f_push(self.as_raw_mut_VectorOfVectorOfPoint3f(), val.as_raw_mut_VectorOfPoint3f()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Point3f>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfPoint3f_insert(self.as_raw_mut_VectorOfVectorOfPoint3f(), index, val.as_raw_mut_VectorOfPoint3f()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Point3f>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfPoint3f_set(self.as_raw_mut_VectorOfVectorOfPoint3f(), index, val.as_raw_mut_VectorOfPoint3f()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Point3f>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfPoint3f_set(self.as_raw_mut_VectorOfVectorOfPoint3f(), index, val.as_raw_mut_VectorOfPoint3f())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3f>> {}
 	
@@ -2814,44 +2059,10 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3i_capacity, cv_VectorOfVectorOfPoint3i_shrink_to_fit,
 		cv_VectorOfVectorOfPoint3i_reserve, cv_VectorOfVectorOfPoint3i_remove,
 		cv_VectorOfVectorOfPoint3i_swap, cv_VectorOfVectorOfPoint3i_clear,
-		cv_VectorOfVectorOfPoint3i_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Point3i>::from_raw(ptr) })
+		cv_VectorOfVectorOfPoint3i_get, cv_VectorOfVectorOfPoint3i_set,
+		cv_VectorOfVectorOfPoint3i_push, cv_VectorOfVectorOfPoint3i_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Point3i> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Point3i>> {
-		type Arg = core::Vector::<core::Point3i>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Point3i>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfPoint3i_push(self.as_raw_mut_VectorOfVectorOfPoint3i(), val.as_raw_mut_VectorOfPoint3i()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Point3i>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfPoint3i_insert(self.as_raw_mut_VectorOfVectorOfPoint3i(), index, val.as_raw_mut_VectorOfPoint3i()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Point3i>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfPoint3i_set(self.as_raw_mut_VectorOfVectorOfPoint3i(), index, val.as_raw_mut_VectorOfPoint3i()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Point3i>) {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfPoint3i_set(self.as_raw_mut_VectorOfVectorOfPoint3i(), index, val.as_raw_mut_VectorOfPoint3i())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3i>> {}
 	
@@ -2919,44 +2130,10 @@ mod core_types {
 		cv_VectorOfVectorOfRect_capacity, cv_VectorOfVectorOfRect_shrink_to_fit,
 		cv_VectorOfVectorOfRect_reserve, cv_VectorOfVectorOfRect_remove,
 		cv_VectorOfVectorOfRect_swap, cv_VectorOfVectorOfRect_clear,
-		cv_VectorOfVectorOfRect_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Rect>::from_raw(ptr) })
+		cv_VectorOfVectorOfRect_get, cv_VectorOfVectorOfRect_set,
+		cv_VectorOfVectorOfRect_push, cv_VectorOfVectorOfRect_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Rect> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Rect>> {
-		type Arg = core::Vector::<core::Rect>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Rect>) {
-			extern "C" { fn cv_VectorOfVectorOfRect_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfRect_push(self.as_raw_mut_VectorOfVectorOfRect(), val.as_raw_mut_VectorOfRect()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Rect>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfRect_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfRect_insert(self.as_raw_mut_VectorOfVectorOfRect(), index, val.as_raw_mut_VectorOfRect()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Rect>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfRect_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfRect_set(self.as_raw_mut_VectorOfVectorOfRect(), index, val.as_raw_mut_VectorOfRect()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Rect>) {
-			extern "C" { fn cv_VectorOfVectorOfRect_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfRect_set(self.as_raw_mut_VectorOfVectorOfRect(), index, val.as_raw_mut_VectorOfRect())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Rect>> {}
 	
@@ -3024,44 +2201,10 @@ mod core_types {
 		cv_VectorOfVectorOfVec2i_capacity, cv_VectorOfVectorOfVec2i_shrink_to_fit,
 		cv_VectorOfVectorOfVec2i_reserve, cv_VectorOfVectorOfVec2i_remove,
 		cv_VectorOfVectorOfVec2i_swap, cv_VectorOfVectorOfVec2i_clear,
-		cv_VectorOfVectorOfVec2i_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<core::Vec2i>::from_raw(ptr) })
+		cv_VectorOfVectorOfVec2i_get, cv_VectorOfVectorOfVec2i_set,
+		cv_VectorOfVectorOfVec2i_push, cv_VectorOfVectorOfVec2i_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<core::Vec2i> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<core::Vec2i>> {
-		type Arg = core::Vector::<core::Vec2i>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<core::Vec2i>) {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfVec2i_push(self.as_raw_mut_VectorOfVectorOfVec2i(), val.as_raw_mut_VectorOfVec2i()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<core::Vec2i>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfVec2i_insert(self.as_raw_mut_VectorOfVectorOfVec2i(), index, val.as_raw_mut_VectorOfVec2i()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<core::Vec2i>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfVec2i_set(self.as_raw_mut_VectorOfVectorOfVec2i(), index, val.as_raw_mut_VectorOfVec2i()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<core::Vec2i>) {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfVec2i_set(self.as_raw_mut_VectorOfVectorOfVec2i(), index, val.as_raw_mut_VectorOfVec2i())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Vec2i>> {}
 	
@@ -3129,44 +2272,10 @@ mod core_types {
 		cv_VectorOfVectorOff64_capacity, cv_VectorOfVectorOff64_shrink_to_fit,
 		cv_VectorOfVectorOff64_reserve, cv_VectorOfVectorOff64_remove,
 		cv_VectorOfVectorOff64_swap, cv_VectorOfVectorOff64_clear,
-		cv_VectorOfVectorOff64_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<f64>::from_raw(ptr) })
+		cv_VectorOfVectorOff64_get, cv_VectorOfVectorOff64_set,
+		cv_VectorOfVectorOff64_push, cv_VectorOfVectorOff64_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<f64> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<f64>> {
-		type Arg = core::Vector::<f64>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<f64>) {
-			extern "C" { fn cv_VectorOfVectorOff64_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOff64_push(self.as_raw_mut_VectorOfVectorOff64(), val.as_raw_mut_VectorOff64()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<f64>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOff64_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOff64_insert(self.as_raw_mut_VectorOfVectorOff64(), index, val.as_raw_mut_VectorOff64()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<f64>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOff64_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOff64_set(self.as_raw_mut_VectorOfVectorOff64(), index, val.as_raw_mut_VectorOff64()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<f64>) {
-			extern "C" { fn cv_VectorOfVectorOff64_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOff64_set(self.as_raw_mut_VectorOfVectorOff64(), index, val.as_raw_mut_VectorOff64())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<f64>> {}
 	
@@ -3234,44 +2343,10 @@ mod core_types {
 		cv_VectorOfVectorOfi32_capacity, cv_VectorOfVectorOfi32_shrink_to_fit,
 		cv_VectorOfVectorOfi32_reserve, cv_VectorOfVectorOfi32_remove,
 		cv_VectorOfVectorOfi32_swap, cv_VectorOfVectorOfi32_clear,
-		cv_VectorOfVectorOfi32_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<i32>::from_raw(ptr) })
+		cv_VectorOfVectorOfi32_get, cv_VectorOfVectorOfi32_set,
+		cv_VectorOfVectorOfi32_push, cv_VectorOfVectorOfi32_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<i32> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<i32>> {
-		type Arg = core::Vector::<i32>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<i32>) {
-			extern "C" { fn cv_VectorOfVectorOfi32_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfi32_push(self.as_raw_mut_VectorOfVectorOfi32(), val.as_raw_mut_VectorOfi32()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<i32>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfi32_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfi32_insert(self.as_raw_mut_VectorOfVectorOfi32(), index, val.as_raw_mut_VectorOfi32()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<i32>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfi32_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfi32_set(self.as_raw_mut_VectorOfVectorOfi32(), index, val.as_raw_mut_VectorOfi32()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<i32>) {
-			extern "C" { fn cv_VectorOfVectorOfi32_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfi32_set(self.as_raw_mut_VectorOfVectorOfi32(), index, val.as_raw_mut_VectorOfi32())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<i32>> {}
 	
@@ -3339,44 +2414,10 @@ mod core_types {
 		cv_VectorOfVectorOfi8_capacity, cv_VectorOfVectorOfi8_shrink_to_fit,
 		cv_VectorOfVectorOfi8_reserve, cv_VectorOfVectorOfi8_remove,
 		cv_VectorOfVectorOfi8_swap, cv_VectorOfVectorOfi8_clear,
-		cv_VectorOfVectorOfi8_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<i8>::from_raw(ptr) })
+		cv_VectorOfVectorOfi8_get, cv_VectorOfVectorOfi8_set,
+		cv_VectorOfVectorOfi8_push, cv_VectorOfVectorOfi8_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<i8> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<i8>> {
-		type Arg = core::Vector::<i8>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<i8>) {
-			extern "C" { fn cv_VectorOfVectorOfi8_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfi8_push(self.as_raw_mut_VectorOfVectorOfi8(), val.as_raw_mut_VectorOfi8()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<i8>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfi8_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfi8_insert(self.as_raw_mut_VectorOfVectorOfi8(), index, val.as_raw_mut_VectorOfi8()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<i8>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfi8_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfi8_set(self.as_raw_mut_VectorOfVectorOfi8(), index, val.as_raw_mut_VectorOfi8()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<i8>) {
-			extern "C" { fn cv_VectorOfVectorOfi8_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfi8_set(self.as_raw_mut_VectorOfVectorOfi8(), index, val.as_raw_mut_VectorOfi8())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<i8>> {}
 	
@@ -3444,44 +2485,10 @@ mod core_types {
 		cv_VectorOfVectorOfu8_capacity, cv_VectorOfVectorOfu8_shrink_to_fit,
 		cv_VectorOfVectorOfu8_reserve, cv_VectorOfVectorOfu8_remove,
 		cv_VectorOfVectorOfu8_swap, cv_VectorOfVectorOfu8_clear,
-		cv_VectorOfVectorOfu8_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<u8>::from_raw(ptr) })
+		cv_VectorOfVectorOfu8_get, cv_VectorOfVectorOfu8_set,
+		cv_VectorOfVectorOfu8_push, cv_VectorOfVectorOfu8_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<u8> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<u8>> {
-		type Arg = core::Vector::<u8>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<u8>) {
-			extern "C" { fn cv_VectorOfVectorOfu8_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfu8_push(self.as_raw_mut_VectorOfVectorOfu8(), val.as_raw_mut_VectorOfu8()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<u8>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfu8_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfu8_insert(self.as_raw_mut_VectorOfVectorOfu8(), index, val.as_raw_mut_VectorOfu8()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<u8>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfu8_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfu8_set(self.as_raw_mut_VectorOfVectorOfu8(), index, val.as_raw_mut_VectorOfu8()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<u8>) {
-			extern "C" { fn cv_VectorOfVectorOfu8_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfu8_set(self.as_raw_mut_VectorOfVectorOfu8(), index, val.as_raw_mut_VectorOfu8())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<u8>> {}
 	
@@ -3549,44 +2556,10 @@ mod core_types {
 		cv_VectorOfbool_capacity, cv_VectorOfbool_shrink_to_fit,
 		cv_VectorOfbool_reserve, cv_VectorOfbool_remove,
 		cv_VectorOfbool_swap, cv_VectorOfbool_clear,
-		cv_VectorOfbool_get -> sys::Result<bool>,
-		ret_map: 
+		cv_VectorOfbool_get, cv_VectorOfbool_set,
+		cv_VectorOfbool_push, cv_VectorOfbool_insert,
 	}
 	vector_non_copy_or_bool! { bool }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<bool> {
-		type Arg = bool;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: bool) {
-			extern "C" { fn cv_VectorOfbool_push(instance: *mut c_void, val: bool); }
-			unsafe { cv_VectorOfbool_push(self.as_raw_mut_VectorOfbool(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: bool) -> Result<()> {
-			extern "C" { fn cv_VectorOfbool_insert(instance: *mut c_void, index: size_t, val: bool); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfbool_insert(self.as_raw_mut_VectorOfbool(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: bool) -> Result<()> {
-			extern "C" { fn cv_VectorOfbool_set(instance: *mut c_void, index: size_t, val: bool); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfbool_set(self.as_raw_mut_VectorOfbool(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: bool) {
-			extern "C" { fn cv_VectorOfbool_set(instance: *mut c_void, index: size_t, val: bool); }
-			cv_VectorOfbool_set(self.as_raw_mut_VectorOfbool(), index, val)
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<bool> {}
 	
@@ -3603,45 +2576,11 @@ mod core_types {
 		cv_VectorOff32_capacity, cv_VectorOff32_shrink_to_fit,
 		cv_VectorOff32_reserve, cv_VectorOff32_remove,
 		cv_VectorOff32_swap, cv_VectorOff32_clear,
-		cv_VectorOff32_get -> sys::Result<f32>,
-		ret_map: 
+		cv_VectorOff32_get, cv_VectorOff32_set,
+		cv_VectorOff32_push, cv_VectorOff32_insert,
 	}
 	vector_copy_non_bool! { f32, *const c_void,
 		cv_VectorOff32_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<f32> {
-		type Arg = f32;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: f32) {
-			extern "C" { fn cv_VectorOff32_push(instance: *mut c_void, val: f32); }
-			unsafe { cv_VectorOff32_push(self.as_raw_mut_VectorOff32(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: f32) -> Result<()> {
-			extern "C" { fn cv_VectorOff32_insert(instance: *mut c_void, index: size_t, val: f32); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOff32_insert(self.as_raw_mut_VectorOff32(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: f32) -> Result<()> {
-			extern "C" { fn cv_VectorOff32_set(instance: *mut c_void, index: size_t, val: f32); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOff32_set(self.as_raw_mut_VectorOff32(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: f32) {
-			extern "C" { fn cv_VectorOff32_set(instance: *mut c_void, index: size_t, val: f32); }
-			cv_VectorOff32_set(self.as_raw_mut_VectorOff32(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<f32> {}
@@ -3710,45 +2649,11 @@ mod core_types {
 		cv_VectorOff64_capacity, cv_VectorOff64_shrink_to_fit,
 		cv_VectorOff64_reserve, cv_VectorOff64_remove,
 		cv_VectorOff64_swap, cv_VectorOff64_clear,
-		cv_VectorOff64_get -> sys::Result<f64>,
-		ret_map: 
+		cv_VectorOff64_get, cv_VectorOff64_set,
+		cv_VectorOff64_push, cv_VectorOff64_insert,
 	}
 	vector_copy_non_bool! { f64, *const c_void,
 		cv_VectorOff64_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<f64> {
-		type Arg = f64;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: f64) {
-			extern "C" { fn cv_VectorOff64_push(instance: *mut c_void, val: f64); }
-			unsafe { cv_VectorOff64_push(self.as_raw_mut_VectorOff64(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: f64) -> Result<()> {
-			extern "C" { fn cv_VectorOff64_insert(instance: *mut c_void, index: size_t, val: f64); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOff64_insert(self.as_raw_mut_VectorOff64(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: f64) -> Result<()> {
-			extern "C" { fn cv_VectorOff64_set(instance: *mut c_void, index: size_t, val: f64); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOff64_set(self.as_raw_mut_VectorOff64(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: f64) {
-			extern "C" { fn cv_VectorOff64_set(instance: *mut c_void, index: size_t, val: f64); }
-			cv_VectorOff64_set(self.as_raw_mut_VectorOff64(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<f64> {}
@@ -3817,45 +2722,11 @@ mod core_types {
 		cv_VectorOfi32_capacity, cv_VectorOfi32_shrink_to_fit,
 		cv_VectorOfi32_reserve, cv_VectorOfi32_remove,
 		cv_VectorOfi32_swap, cv_VectorOfi32_clear,
-		cv_VectorOfi32_get -> sys::Result<i32>,
-		ret_map: 
+		cv_VectorOfi32_get, cv_VectorOfi32_set,
+		cv_VectorOfi32_push, cv_VectorOfi32_insert,
 	}
 	vector_copy_non_bool! { i32, *const c_void,
 		cv_VectorOfi32_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<i32> {
-		type Arg = i32;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: i32) {
-			extern "C" { fn cv_VectorOfi32_push(instance: *mut c_void, val: i32); }
-			unsafe { cv_VectorOfi32_push(self.as_raw_mut_VectorOfi32(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: i32) -> Result<()> {
-			extern "C" { fn cv_VectorOfi32_insert(instance: *mut c_void, index: size_t, val: i32); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfi32_insert(self.as_raw_mut_VectorOfi32(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: i32) -> Result<()> {
-			extern "C" { fn cv_VectorOfi32_set(instance: *mut c_void, index: size_t, val: i32); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfi32_set(self.as_raw_mut_VectorOfi32(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: i32) {
-			extern "C" { fn cv_VectorOfi32_set(instance: *mut c_void, index: size_t, val: i32); }
-			cv_VectorOfi32_set(self.as_raw_mut_VectorOfi32(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<i32> {}
@@ -3924,45 +2795,11 @@ mod core_types {
 		cv_VectorOfi8_capacity, cv_VectorOfi8_shrink_to_fit,
 		cv_VectorOfi8_reserve, cv_VectorOfi8_remove,
 		cv_VectorOfi8_swap, cv_VectorOfi8_clear,
-		cv_VectorOfi8_get -> sys::Result<i8>,
-		ret_map: 
+		cv_VectorOfi8_get, cv_VectorOfi8_set,
+		cv_VectorOfi8_push, cv_VectorOfi8_insert,
 	}
 	vector_copy_non_bool! { i8, *const c_void,
 		cv_VectorOfi8_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<i8> {
-		type Arg = i8;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: i8) {
-			extern "C" { fn cv_VectorOfi8_push(instance: *mut c_void, val: i8); }
-			unsafe { cv_VectorOfi8_push(self.as_raw_mut_VectorOfi8(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: i8) -> Result<()> {
-			extern "C" { fn cv_VectorOfi8_insert(instance: *mut c_void, index: size_t, val: i8); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfi8_insert(self.as_raw_mut_VectorOfi8(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: i8) -> Result<()> {
-			extern "C" { fn cv_VectorOfi8_set(instance: *mut c_void, index: size_t, val: i8); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfi8_set(self.as_raw_mut_VectorOfi8(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: i8) {
-			extern "C" { fn cv_VectorOfi8_set(instance: *mut c_void, index: size_t, val: i8); }
-			cv_VectorOfi8_set(self.as_raw_mut_VectorOfi8(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<i8> {}
@@ -4031,45 +2868,11 @@ mod core_types {
 		cv_VectorOfsize_t_capacity, cv_VectorOfsize_t_shrink_to_fit,
 		cv_VectorOfsize_t_reserve, cv_VectorOfsize_t_remove,
 		cv_VectorOfsize_t_swap, cv_VectorOfsize_t_clear,
-		cv_VectorOfsize_t_get -> sys::Result<size_t>,
-		ret_map: 
+		cv_VectorOfsize_t_get, cv_VectorOfsize_t_set,
+		cv_VectorOfsize_t_push, cv_VectorOfsize_t_insert,
 	}
 	vector_copy_non_bool! { size_t, *const c_void,
 		cv_VectorOfsize_t_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<size_t> {
-		type Arg = size_t;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: size_t) {
-			extern "C" { fn cv_VectorOfsize_t_push(instance: *mut c_void, val: size_t); }
-			unsafe { cv_VectorOfsize_t_push(self.as_raw_mut_VectorOfsize_t(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: size_t) -> Result<()> {
-			extern "C" { fn cv_VectorOfsize_t_insert(instance: *mut c_void, index: size_t, val: size_t); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfsize_t_insert(self.as_raw_mut_VectorOfsize_t(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: size_t) -> Result<()> {
-			extern "C" { fn cv_VectorOfsize_t_set(instance: *mut c_void, index: size_t, val: size_t); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfsize_t_set(self.as_raw_mut_VectorOfsize_t(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: size_t) {
-			extern "C" { fn cv_VectorOfsize_t_set(instance: *mut c_void, index: size_t, val: size_t); }
-			cv_VectorOfsize_t_set(self.as_raw_mut_VectorOfsize_t(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<size_t> {}
@@ -4087,45 +2890,11 @@ mod core_types {
 		cv_VectorOfu8_capacity, cv_VectorOfu8_shrink_to_fit,
 		cv_VectorOfu8_reserve, cv_VectorOfu8_remove,
 		cv_VectorOfu8_swap, cv_VectorOfu8_clear,
-		cv_VectorOfu8_get -> sys::Result<u8>,
-		ret_map: 
+		cv_VectorOfu8_get, cv_VectorOfu8_set,
+		cv_VectorOfu8_push, cv_VectorOfu8_insert,
 	}
 	vector_copy_non_bool! { u8, *const c_void,
 		cv_VectorOfu8_data
-	}
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<u8> {
-		type Arg = u8;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, val: u8) {
-			extern "C" { fn cv_VectorOfu8_push(instance: *mut c_void, val: u8); }
-			unsafe { cv_VectorOfu8_push(self.as_raw_mut_VectorOfu8(), val) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, val: u8) -> Result<()> {
-			extern "C" { fn cv_VectorOfu8_insert(instance: *mut c_void, index: size_t, val: u8); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfu8_insert(self.as_raw_mut_VectorOfu8(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, val: u8) -> Result<()> {
-			extern "C" { fn cv_VectorOfu8_set(instance: *mut c_void, index: size_t, val: u8); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfu8_set(self.as_raw_mut_VectorOfu8(), index, val) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, val: u8) {
-			extern "C" { fn cv_VectorOfu8_set(instance: *mut c_void, index: size_t, val: u8); }
-			cv_VectorOfu8_set(self.as_raw_mut_VectorOfu8(), index, val)
-		}
 	}
 	
 	unsafe impl Send for core::Vector::<u8> {}
@@ -4653,44 +3422,10 @@ mod dnn_types {
 		cv_VectorOfBlob_capacity, cv_VectorOfBlob_shrink_to_fit,
 		cv_VectorOfBlob_reserve, cv_VectorOfBlob_remove,
 		cv_VectorOfBlob_swap, cv_VectorOfBlob_clear,
-		cv_VectorOfBlob_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::dnn::Blob::from_raw(ptr) })
+		cv_VectorOfBlob_get, cv_VectorOfBlob_set,
+		cv_VectorOfBlob_push, cv_VectorOfBlob_insert,
 	}
 	vector_non_copy_or_bool! { crate::dnn::Blob }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::dnn::Blob> {
-		type Arg = crate::dnn::Blob;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::dnn::Blob) {
-			extern "C" { fn cv_VectorOfBlob_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfBlob_push(self.as_raw_mut_VectorOfBlob(), val.as_raw_mut_Blob()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::dnn::Blob) -> Result<()> {
-			extern "C" { fn cv_VectorOfBlob_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfBlob_insert(self.as_raw_mut_VectorOfBlob(), index, val.as_raw_mut_Blob()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::dnn::Blob) -> Result<()> {
-			extern "C" { fn cv_VectorOfBlob_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfBlob_set(self.as_raw_mut_VectorOfBlob(), index, val.as_raw_mut_Blob()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::dnn::Blob) {
-			extern "C" { fn cv_VectorOfBlob_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfBlob_set(self.as_raw_mut_VectorOfBlob(), index, val.as_raw_mut_Blob())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::dnn::Blob> {}
 	
@@ -4707,44 +3442,10 @@ mod dnn_types {
 		cv_VectorOfNet_LayerId_capacity, cv_VectorOfNet_LayerId_shrink_to_fit,
 		cv_VectorOfNet_LayerId_reserve, cv_VectorOfNet_LayerId_remove,
 		cv_VectorOfNet_LayerId_swap, cv_VectorOfNet_LayerId_clear,
-		cv_VectorOfNet_LayerId_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::dnn::DictValue::from_raw(ptr) })
+		cv_VectorOfNet_LayerId_get, cv_VectorOfNet_LayerId_set,
+		cv_VectorOfNet_LayerId_push, cv_VectorOfNet_LayerId_insert,
 	}
 	vector_non_copy_or_bool! { crate::dnn::Net_LayerId }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::dnn::Net_LayerId> {
-		type Arg = crate::dnn::Net_LayerId;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::dnn::Net_LayerId) {
-			extern "C" { fn cv_VectorOfNet_LayerId_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfNet_LayerId_push(self.as_raw_mut_VectorOfNet_LayerId(), val.as_raw_mut_DictValue()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::dnn::Net_LayerId) -> Result<()> {
-			extern "C" { fn cv_VectorOfNet_LayerId_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfNet_LayerId_insert(self.as_raw_mut_VectorOfNet_LayerId(), index, val.as_raw_mut_DictValue()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::dnn::Net_LayerId) -> Result<()> {
-			extern "C" { fn cv_VectorOfNet_LayerId_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfNet_LayerId_set(self.as_raw_mut_VectorOfNet_LayerId(), index, val.as_raw_mut_DictValue()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::dnn::Net_LayerId) {
-			extern "C" { fn cv_VectorOfNet_LayerId_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfNet_LayerId_set(self.as_raw_mut_VectorOfNet_LayerId(), index, val.as_raw_mut_DictValue())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::dnn::Net_LayerId> {}
 	
@@ -4785,44 +3486,10 @@ mod dpm_types {
 		cv_VectorOfDPMDetector_ObjectDetection_capacity, cv_VectorOfDPMDetector_ObjectDetection_shrink_to_fit,
 		cv_VectorOfDPMDetector_ObjectDetection_reserve, cv_VectorOfDPMDetector_ObjectDetection_remove,
 		cv_VectorOfDPMDetector_ObjectDetection_swap, cv_VectorOfDPMDetector_ObjectDetection_clear,
-		cv_VectorOfDPMDetector_ObjectDetection_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::dpm::DPMDetector_ObjectDetection::from_raw(ptr) })
+		cv_VectorOfDPMDetector_ObjectDetection_get, cv_VectorOfDPMDetector_ObjectDetection_set,
+		cv_VectorOfDPMDetector_ObjectDetection_push, cv_VectorOfDPMDetector_ObjectDetection_insert,
 	}
 	vector_non_copy_or_bool! { crate::dpm::DPMDetector_ObjectDetection }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::dpm::DPMDetector_ObjectDetection> {
-		type Arg = crate::dpm::DPMDetector_ObjectDetection;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::dpm::DPMDetector_ObjectDetection) {
-			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDPMDetector_ObjectDetection_push(self.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), val.as_raw_mut_DPMDetector_ObjectDetection()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::dpm::DPMDetector_ObjectDetection) -> Result<()> {
-			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDPMDetector_ObjectDetection_insert(self.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_mut_DPMDetector_ObjectDetection()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::dpm::DPMDetector_ObjectDetection) -> Result<()> {
-			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDPMDetector_ObjectDetection_set(self.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_mut_DPMDetector_ObjectDetection()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::dpm::DPMDetector_ObjectDetection) {
-			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDPMDetector_ObjectDetection_set(self.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_mut_DPMDetector_ObjectDetection())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::dpm::DPMDetector_ObjectDetection> {}
 	
@@ -5558,44 +4225,10 @@ mod line_descriptor_types {
 		cv_VectorOfKeyLine_capacity, cv_VectorOfKeyLine_shrink_to_fit,
 		cv_VectorOfKeyLine_reserve, cv_VectorOfKeyLine_remove,
 		cv_VectorOfKeyLine_swap, cv_VectorOfKeyLine_clear,
-		cv_VectorOfKeyLine_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::line_descriptor::KeyLine::from_raw(ptr) })
+		cv_VectorOfKeyLine_get, cv_VectorOfKeyLine_set,
+		cv_VectorOfKeyLine_push, cv_VectorOfKeyLine_insert,
 	}
 	vector_non_copy_or_bool! { crate::line_descriptor::KeyLine }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::line_descriptor::KeyLine> {
-		type Arg = crate::line_descriptor::KeyLine;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::line_descriptor::KeyLine) {
-			extern "C" { fn cv_VectorOfKeyLine_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfKeyLine_push(self.as_raw_mut_VectorOfKeyLine(), val.as_raw_mut_KeyLine()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::line_descriptor::KeyLine) -> Result<()> {
-			extern "C" { fn cv_VectorOfKeyLine_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfKeyLine_insert(self.as_raw_mut_VectorOfKeyLine(), index, val.as_raw_mut_KeyLine()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::line_descriptor::KeyLine) -> Result<()> {
-			extern "C" { fn cv_VectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfKeyLine_set(self.as_raw_mut_VectorOfKeyLine(), index, val.as_raw_mut_KeyLine()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::line_descriptor::KeyLine) {
-			extern "C" { fn cv_VectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfKeyLine_set(self.as_raw_mut_VectorOfKeyLine(), index, val.as_raw_mut_KeyLine())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::line_descriptor::KeyLine> {}
 	
@@ -5612,44 +4245,10 @@ mod line_descriptor_types {
 		cv_VectorOfVectorOfKeyLine_capacity, cv_VectorOfVectorOfKeyLine_shrink_to_fit,
 		cv_VectorOfVectorOfKeyLine_reserve, cv_VectorOfVectorOfKeyLine_remove,
 		cv_VectorOfVectorOfKeyLine_swap, cv_VectorOfVectorOfKeyLine_clear,
-		cv_VectorOfVectorOfKeyLine_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<crate::line_descriptor::KeyLine>::from_raw(ptr) })
+		cv_VectorOfVectorOfKeyLine_get, cv_VectorOfVectorOfKeyLine_set,
+		cv_VectorOfVectorOfKeyLine_push, cv_VectorOfVectorOfKeyLine_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<crate::line_descriptor::KeyLine> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<crate::line_descriptor::KeyLine>> {
-		type Arg = core::Vector::<crate::line_descriptor::KeyLine>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<crate::line_descriptor::KeyLine>) {
-			extern "C" { fn cv_VectorOfVectorOfKeyLine_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfKeyLine_push(self.as_raw_mut_VectorOfVectorOfKeyLine(), val.as_raw_mut_VectorOfKeyLine()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<crate::line_descriptor::KeyLine>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfKeyLine_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfKeyLine_insert(self.as_raw_mut_VectorOfVectorOfKeyLine(), index, val.as_raw_mut_VectorOfKeyLine()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<crate::line_descriptor::KeyLine>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfKeyLine_set(self.as_raw_mut_VectorOfVectorOfKeyLine(), index, val.as_raw_mut_VectorOfKeyLine()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<crate::line_descriptor::KeyLine>) {
-			extern "C" { fn cv_VectorOfVectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfKeyLine_set(self.as_raw_mut_VectorOfVectorOfKeyLine(), index, val.as_raw_mut_VectorOfKeyLine())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<crate::line_descriptor::KeyLine>> {}
 	
@@ -5980,44 +4579,10 @@ mod ml_types {
 		cv_VectorOfDTrees_Node_capacity, cv_VectorOfDTrees_Node_shrink_to_fit,
 		cv_VectorOfDTrees_Node_reserve, cv_VectorOfDTrees_Node_remove,
 		cv_VectorOfDTrees_Node_swap, cv_VectorOfDTrees_Node_clear,
-		cv_VectorOfDTrees_Node_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::ml::DTrees_Node::from_raw(ptr) })
+		cv_VectorOfDTrees_Node_get, cv_VectorOfDTrees_Node_set,
+		cv_VectorOfDTrees_Node_push, cv_VectorOfDTrees_Node_insert,
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Node }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::ml::DTrees_Node> {
-		type Arg = crate::ml::DTrees_Node;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::ml::DTrees_Node) {
-			extern "C" { fn cv_VectorOfDTrees_Node_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDTrees_Node_push(self.as_raw_mut_VectorOfDTrees_Node(), val.as_raw_mut_DTrees_Node()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::ml::DTrees_Node) -> Result<()> {
-			extern "C" { fn cv_VectorOfDTrees_Node_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDTrees_Node_insert(self.as_raw_mut_VectorOfDTrees_Node(), index, val.as_raw_mut_DTrees_Node()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::ml::DTrees_Node) -> Result<()> {
-			extern "C" { fn cv_VectorOfDTrees_Node_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDTrees_Node_set(self.as_raw_mut_VectorOfDTrees_Node(), index, val.as_raw_mut_DTrees_Node()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::ml::DTrees_Node) {
-			extern "C" { fn cv_VectorOfDTrees_Node_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDTrees_Node_set(self.as_raw_mut_VectorOfDTrees_Node(), index, val.as_raw_mut_DTrees_Node())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::ml::DTrees_Node> {}
 	
@@ -6034,44 +4599,10 @@ mod ml_types {
 		cv_VectorOfDTrees_Split_capacity, cv_VectorOfDTrees_Split_shrink_to_fit,
 		cv_VectorOfDTrees_Split_reserve, cv_VectorOfDTrees_Split_remove,
 		cv_VectorOfDTrees_Split_swap, cv_VectorOfDTrees_Split_clear,
-		cv_VectorOfDTrees_Split_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::ml::DTrees_Split::from_raw(ptr) })
+		cv_VectorOfDTrees_Split_get, cv_VectorOfDTrees_Split_set,
+		cv_VectorOfDTrees_Split_push, cv_VectorOfDTrees_Split_insert,
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Split }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::ml::DTrees_Split> {
-		type Arg = crate::ml::DTrees_Split;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::ml::DTrees_Split) {
-			extern "C" { fn cv_VectorOfDTrees_Split_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDTrees_Split_push(self.as_raw_mut_VectorOfDTrees_Split(), val.as_raw_mut_DTrees_Split()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::ml::DTrees_Split) -> Result<()> {
-			extern "C" { fn cv_VectorOfDTrees_Split_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDTrees_Split_insert(self.as_raw_mut_VectorOfDTrees_Split(), index, val.as_raw_mut_DTrees_Split()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::ml::DTrees_Split) -> Result<()> {
-			extern "C" { fn cv_VectorOfDTrees_Split_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDTrees_Split_set(self.as_raw_mut_VectorOfDTrees_Split(), index, val.as_raw_mut_DTrees_Split()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::ml::DTrees_Split) {
-			extern "C" { fn cv_VectorOfDTrees_Split_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDTrees_Split_set(self.as_raw_mut_VectorOfDTrees_Split(), index, val.as_raw_mut_DTrees_Split())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::ml::DTrees_Split> {}
 	
@@ -6147,44 +4678,10 @@ mod objdetect_types {
 		cv_VectorOfDetectionBasedTracker_ExtObject_capacity, cv_VectorOfDetectionBasedTracker_ExtObject_shrink_to_fit,
 		cv_VectorOfDetectionBasedTracker_ExtObject_reserve, cv_VectorOfDetectionBasedTracker_ExtObject_remove,
 		cv_VectorOfDetectionBasedTracker_ExtObject_swap, cv_VectorOfDetectionBasedTracker_ExtObject_clear,
-		cv_VectorOfDetectionBasedTracker_ExtObject_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::objdetect::DetectionBasedTracker_ExtObject::from_raw(ptr) })
+		cv_VectorOfDetectionBasedTracker_ExtObject_get, cv_VectorOfDetectionBasedTracker_ExtObject_set,
+		cv_VectorOfDetectionBasedTracker_ExtObject_push, cv_VectorOfDetectionBasedTracker_ExtObject_insert,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_ExtObject }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::objdetect::DetectionBasedTracker_ExtObject> {
-		type Arg = crate::objdetect::DetectionBasedTracker_ExtObject;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::objdetect::DetectionBasedTracker_ExtObject) {
-			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_push(self.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject(), val.as_raw_mut_DetectionBasedTracker_ExtObject()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::objdetect::DetectionBasedTracker_ExtObject) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_insert(self.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_mut_DetectionBasedTracker_ExtObject()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::objdetect::DetectionBasedTracker_ExtObject) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_set(self.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_mut_DetectionBasedTracker_ExtObject()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::objdetect::DetectionBasedTracker_ExtObject) {
-			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDetectionBasedTracker_ExtObject_set(self.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_mut_DetectionBasedTracker_ExtObject())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::objdetect::DetectionBasedTracker_ExtObject> {}
 	
@@ -6201,49 +4698,148 @@ mod objdetect_types {
 		cv_VectorOfDetectionROI_capacity, cv_VectorOfDetectionROI_shrink_to_fit,
 		cv_VectorOfDetectionROI_reserve, cv_VectorOfDetectionROI_remove,
 		cv_VectorOfDetectionROI_swap, cv_VectorOfDetectionROI_clear,
-		cv_VectorOfDetectionROI_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::objdetect::DetectionROI::from_raw(ptr) })
+		cv_VectorOfDetectionROI_get, cv_VectorOfDetectionROI_set,
+		cv_VectorOfDetectionROI_push, cv_VectorOfDetectionROI_insert,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionROI }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::objdetect::DetectionROI> {
-		type Arg = crate::objdetect::DetectionROI;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::objdetect::DetectionROI) {
-			extern "C" { fn cv_VectorOfDetectionROI_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDetectionROI_push(self.as_raw_mut_VectorOfDetectionROI(), val.as_raw_mut_DetectionROI()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::objdetect::DetectionROI) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetectionROI_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDetectionROI_insert(self.as_raw_mut_VectorOfDetectionROI(), index, val.as_raw_mut_DetectionROI()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::objdetect::DetectionROI) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetectionROI_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDetectionROI_set(self.as_raw_mut_VectorOfDetectionROI(), index, val.as_raw_mut_DetectionROI()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::objdetect::DetectionROI) {
-			extern "C" { fn cv_VectorOfDetectionROI_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDetectionROI_set(self.as_raw_mut_VectorOfDetectionROI(), index, val.as_raw_mut_DetectionROI())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::objdetect::DetectionROI> {}
 	
 }
 pub use objdetect_types::*;
+
+#[cfg(feature = "contrib")]
+mod optflow_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfDISOpticalFlow = core::Ptr::<dyn crate::optflow::DISOpticalFlow>;
+	
+	ptr_extern! { dyn crate::optflow::DISOpticalFlow,
+		cv_PtrOfDISOpticalFlow_delete, cv_PtrOfDISOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfDISOpticalFlow {
+		pub fn as_raw_PtrOfDISOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfDISOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDISOpticalFlow {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::optflow::DISOpticalFlow for PtrOfDISOpticalFlow {
+		fn as_raw_DISOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DISOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::DenseOpticalFlow for PtrOfDISOpticalFlow {
+		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfGPCTrainingSamples = core::Ptr::<crate::optflow::GPCTrainingSamples>;
+	
+	ptr_extern! { crate::optflow::GPCTrainingSamples,
+		cv_PtrOfGPCTrainingSamples_delete, cv_PtrOfGPCTrainingSamples_get_inner_ptr
+	}
+	
+	impl PtrOfGPCTrainingSamples {
+		pub fn as_raw_PtrOfGPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfGPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::optflow::GPCTrainingSamplesTrait for PtrOfGPCTrainingSamples {
+		fn as_raw_GPCTrainingSamples(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_GPCTrainingSamples(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfGPCTree = core::Ptr::<crate::optflow::GPCTree>;
+	
+	ptr_extern! { crate::optflow::GPCTree,
+		cv_PtrOfGPCTree_delete, cv_PtrOfGPCTree_get_inner_ptr
+	}
+	
+	impl PtrOfGPCTree {
+		pub fn as_raw_PtrOfGPCTree(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfGPCTree(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfGPCTree {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::optflow::GPCTreeTrait for PtrOfGPCTree {
+		fn as_raw_GPCTree(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_GPCTree(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfPCAPrior = core::Ptr::<crate::optflow::PCAPrior>;
+	
+	ptr_extern! { crate::optflow::PCAPrior,
+		cv_PtrOfPCAPrior_delete, cv_PtrOfPCAPrior_get_inner_ptr
+	}
+	
+	impl PtrOfPCAPrior {
+		pub fn as_raw_PtrOfPCAPrior(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfPCAPrior(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::optflow::PCAPriorTrait for PtrOfPCAPrior {
+		fn as_raw_PCAPrior(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_PCAPrior(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfVariationalRefinement = core::Ptr::<dyn crate::optflow::VariationalRefinement>;
+	
+	ptr_extern! { dyn crate::optflow::VariationalRefinement,
+		cv_PtrOfVariationalRefinement_delete, cv_PtrOfVariationalRefinement_get_inner_ptr
+	}
+	
+	impl PtrOfVariationalRefinement {
+		pub fn as_raw_PtrOfVariationalRefinement(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfVariationalRefinement(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfVariationalRefinement {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::DenseOpticalFlow for PtrOfVariationalRefinement {
+		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::optflow::VariationalRefinement for PtrOfVariationalRefinement {
+		fn as_raw_VariationalRefinement(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_VariationalRefinement(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type VectorOfGPCPatchDescriptor = core::Vector::<crate::optflow::GPCPatchDescriptor>;
+	
+	impl VectorOfGPCPatchDescriptor {
+		pub fn as_raw_VectorOfGPCPatchDescriptor(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGPCPatchDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::optflow::GPCPatchDescriptor, *const c_void, *mut c_void,
+		cv_VectorOfGPCPatchDescriptor_new, cv_VectorOfGPCPatchDescriptor_delete,
+		cv_VectorOfGPCPatchDescriptor_len, cv_VectorOfGPCPatchDescriptor_is_empty,
+		cv_VectorOfGPCPatchDescriptor_capacity, cv_VectorOfGPCPatchDescriptor_shrink_to_fit,
+		cv_VectorOfGPCPatchDescriptor_reserve, cv_VectorOfGPCPatchDescriptor_remove,
+		cv_VectorOfGPCPatchDescriptor_swap, cv_VectorOfGPCPatchDescriptor_clear,
+		cv_VectorOfGPCPatchDescriptor_get, cv_VectorOfGPCPatchDescriptor_set,
+		cv_VectorOfGPCPatchDescriptor_push, cv_VectorOfGPCPatchDescriptor_insert,
+	}
+	vector_non_copy_or_bool! { crate::optflow::GPCPatchDescriptor }
+	
+	unsafe impl Send for core::Vector::<crate::optflow::GPCPatchDescriptor> {}
+	
+}
+#[cfg(feature = "contrib")]
+pub use optflow_types::*;
 
 #[cfg(feature = "contrib")]
 mod phase_unwrapping_types {
@@ -6596,6 +5192,337 @@ mod plot_types {
 pub use plot_types::*;
 
 #[cfg(feature = "contrib")]
+mod rgbd_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfLinemod_Detector = core::Ptr::<crate::rgbd::Linemod_Detector>;
+	
+	ptr_extern! { crate::rgbd::Linemod_Detector,
+		cv_PtrOfLinemod_Detector_delete, cv_PtrOfLinemod_Detector_get_inner_ptr
+	}
+	
+	impl PtrOfLinemod_Detector {
+		pub fn as_raw_PtrOfLinemod_Detector(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfLinemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Linemod_DetectorTrait for PtrOfLinemod_Detector {
+		fn as_raw_Linemod_Detector(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfLinemod_Modality = core::Ptr::<dyn crate::rgbd::Linemod_Modality>;
+	
+	ptr_extern! { dyn crate::rgbd::Linemod_Modality,
+		cv_PtrOfLinemod_Modality_delete, cv_PtrOfLinemod_Modality_get_inner_ptr
+	}
+	
+	impl PtrOfLinemod_Modality {
+		pub fn as_raw_PtrOfLinemod_Modality(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfLinemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Linemod_Modality for PtrOfLinemod_Modality {
+		fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfLinemod_QuantizedPyramid = core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>;
+	
+	ptr_extern! { dyn crate::rgbd::Linemod_QuantizedPyramid,
+		cv_PtrOfLinemod_QuantizedPyramid_delete, cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr
+	}
+	
+	impl PtrOfLinemod_QuantizedPyramid {
+		pub fn as_raw_PtrOfLinemod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfLinemod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Linemod_QuantizedPyramid for PtrOfLinemod_QuantizedPyramid {
+		fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfOdometry = core::Ptr::<dyn crate::rgbd::Odometry>;
+	
+	ptr_extern! { dyn crate::rgbd::Odometry,
+		cv_PtrOfOdometry_delete, cv_PtrOfOdometry_get_inner_ptr
+	}
+	
+	impl PtrOfOdometry {
+		pub fn as_raw_PtrOfOdometry(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfOdometry {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Odometry for PtrOfOdometry {
+		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfOdometryFrame = core::Ptr::<crate::rgbd::OdometryFrame>;
+	
+	ptr_extern! { crate::rgbd::OdometryFrame,
+		cv_PtrOfOdometryFrame_delete, cv_PtrOfOdometryFrame_get_inner_ptr
+	}
+	
+	impl PtrOfOdometryFrame {
+		pub fn as_raw_PtrOfOdometryFrame(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfOdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::OdometryFrameTrait for PtrOfOdometryFrame {
+		fn as_raw_OdometryFrame(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::rgbd::RgbdFrameTrait for PtrOfOdometryFrame {
+		fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type VectorOfLinemod_Feature = core::Vector::<crate::rgbd::Linemod_Feature>;
+	
+	impl VectorOfLinemod_Feature {
+		pub fn as_raw_VectorOfLinemod_Feature(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfLinemod_Feature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::rgbd::Linemod_Feature, *const c_void, *mut c_void,
+		cv_VectorOfLinemod_Feature_new, cv_VectorOfLinemod_Feature_delete,
+		cv_VectorOfLinemod_Feature_len, cv_VectorOfLinemod_Feature_is_empty,
+		cv_VectorOfLinemod_Feature_capacity, cv_VectorOfLinemod_Feature_shrink_to_fit,
+		cv_VectorOfLinemod_Feature_reserve, cv_VectorOfLinemod_Feature_remove,
+		cv_VectorOfLinemod_Feature_swap, cv_VectorOfLinemod_Feature_clear,
+		cv_VectorOfLinemod_Feature_get, cv_VectorOfLinemod_Feature_set,
+		cv_VectorOfLinemod_Feature_push, cv_VectorOfLinemod_Feature_insert,
+	}
+	vector_non_copy_or_bool! { crate::rgbd::Linemod_Feature }
+	
+	unsafe impl Send for core::Vector::<crate::rgbd::Linemod_Feature> {}
+	
+	pub type VectorOfLinemod_Match = core::Vector::<crate::rgbd::Linemod_Match>;
+	
+	impl VectorOfLinemod_Match {
+		pub fn as_raw_VectorOfLinemod_Match(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfLinemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::rgbd::Linemod_Match, *const c_void, *mut c_void,
+		cv_VectorOfLinemod_Match_new, cv_VectorOfLinemod_Match_delete,
+		cv_VectorOfLinemod_Match_len, cv_VectorOfLinemod_Match_is_empty,
+		cv_VectorOfLinemod_Match_capacity, cv_VectorOfLinemod_Match_shrink_to_fit,
+		cv_VectorOfLinemod_Match_reserve, cv_VectorOfLinemod_Match_remove,
+		cv_VectorOfLinemod_Match_swap, cv_VectorOfLinemod_Match_clear,
+		cv_VectorOfLinemod_Match_get, cv_VectorOfLinemod_Match_set,
+		cv_VectorOfLinemod_Match_push, cv_VectorOfLinemod_Match_insert,
+	}
+	vector_non_copy_or_bool! { crate::rgbd::Linemod_Match }
+	
+	unsafe impl Send for core::Vector::<crate::rgbd::Linemod_Match> {}
+	
+	pub type VectorOfLinemod_Template = core::Vector::<crate::rgbd::Linemod_Template>;
+	
+	impl VectorOfLinemod_Template {
+		pub fn as_raw_VectorOfLinemod_Template(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfLinemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::rgbd::Linemod_Template, *const c_void, *mut c_void,
+		cv_VectorOfLinemod_Template_new, cv_VectorOfLinemod_Template_delete,
+		cv_VectorOfLinemod_Template_len, cv_VectorOfLinemod_Template_is_empty,
+		cv_VectorOfLinemod_Template_capacity, cv_VectorOfLinemod_Template_shrink_to_fit,
+		cv_VectorOfLinemod_Template_reserve, cv_VectorOfLinemod_Template_remove,
+		cv_VectorOfLinemod_Template_swap, cv_VectorOfLinemod_Template_clear,
+		cv_VectorOfLinemod_Template_get, cv_VectorOfLinemod_Template_set,
+		cv_VectorOfLinemod_Template_push, cv_VectorOfLinemod_Template_insert,
+	}
+	vector_non_copy_or_bool! { crate::rgbd::Linemod_Template }
+	
+	unsafe impl Send for core::Vector::<crate::rgbd::Linemod_Template> {}
+	
+	pub type VectorOfPtrOfLinemod_Modality = core::Vector::<core::Ptr::<dyn crate::rgbd::Linemod_Modality>>;
+	
+	impl VectorOfPtrOfLinemod_Modality {
+		pub fn as_raw_VectorOfPtrOfLinemod_Modality(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfLinemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Ptr::<dyn crate::rgbd::Linemod_Modality>, *const c_void, *mut c_void,
+		cv_VectorOfPtrOfLinemod_Modality_new, cv_VectorOfPtrOfLinemod_Modality_delete,
+		cv_VectorOfPtrOfLinemod_Modality_len, cv_VectorOfPtrOfLinemod_Modality_is_empty,
+		cv_VectorOfPtrOfLinemod_Modality_capacity, cv_VectorOfPtrOfLinemod_Modality_shrink_to_fit,
+		cv_VectorOfPtrOfLinemod_Modality_reserve, cv_VectorOfPtrOfLinemod_Modality_remove,
+		cv_VectorOfPtrOfLinemod_Modality_swap, cv_VectorOfPtrOfLinemod_Modality_clear,
+		cv_VectorOfPtrOfLinemod_Modality_get, cv_VectorOfPtrOfLinemod_Modality_set,
+		cv_VectorOfPtrOfLinemod_Modality_push, cv_VectorOfPtrOfLinemod_Modality_insert,
+	}
+	vector_non_copy_or_bool! { core::Ptr::<dyn crate::rgbd::Linemod_Modality> }
+	
+	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::rgbd::Linemod_Modality>> {}
+	
+}
+#[cfg(feature = "contrib")]
+pub use rgbd_types::*;
+
+#[cfg(feature = "contrib")]
+mod saliency_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfMotionSaliencyBinWangApr2014 = core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>;
+	
+	ptr_extern! { crate::saliency::MotionSaliencyBinWangApr2014,
+		cv_PtrOfMotionSaliencyBinWangApr2014_delete, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr
+	}
+	
+	impl PtrOfMotionSaliencyBinWangApr2014 {
+		pub fn as_raw_PtrOfMotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfMotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfMotionSaliencyBinWangApr2014 {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::MotionSaliency for PtrOfMotionSaliencyBinWangApr2014 {
+		fn as_raw_MotionSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::MotionSaliencyBinWangApr2014Trait for PtrOfMotionSaliencyBinWangApr2014 {
+		fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Saliency for PtrOfMotionSaliencyBinWangApr2014 {
+		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfObjectnessBING = core::Ptr::<crate::saliency::ObjectnessBING>;
+	
+	ptr_extern! { crate::saliency::ObjectnessBING,
+		cv_PtrOfObjectnessBING_delete, cv_PtrOfObjectnessBING_get_inner_ptr
+	}
+	
+	impl PtrOfObjectnessBING {
+		pub fn as_raw_PtrOfObjectnessBING(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfObjectnessBING {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Objectness for PtrOfObjectnessBING {
+		fn as_raw_Objectness(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::ObjectnessBINGTrait for PtrOfObjectnessBING {
+		fn as_raw_ObjectnessBING(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Saliency for PtrOfObjectnessBING {
+		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSaliency = core::Ptr::<dyn crate::saliency::Saliency>;
+	
+	ptr_extern! { dyn crate::saliency::Saliency,
+		cv_PtrOfSaliency_delete, cv_PtrOfSaliency_get_inner_ptr
+	}
+	
+	impl PtrOfSaliency {
+		pub fn as_raw_PtrOfSaliency(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSaliency {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Saliency for PtrOfSaliency {
+		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfStaticSaliencyFineGrained = core::Ptr::<crate::saliency::StaticSaliencyFineGrained>;
+	
+	ptr_extern! { crate::saliency::StaticSaliencyFineGrained,
+		cv_PtrOfStaticSaliencyFineGrained_delete, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr
+	}
+	
+	impl PtrOfStaticSaliencyFineGrained {
+		pub fn as_raw_PtrOfStaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfStaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfStaticSaliencyFineGrained {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Saliency for PtrOfStaticSaliencyFineGrained {
+		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::StaticSaliency for PtrOfStaticSaliencyFineGrained {
+		fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::StaticSaliencyFineGrainedTrait for PtrOfStaticSaliencyFineGrained {
+		fn as_raw_StaticSaliencyFineGrained(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfStaticSaliencySpectralResidual = core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>;
+	
+	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
+		cv_PtrOfStaticSaliencySpectralResidual_delete, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr
+	}
+	
+	impl PtrOfStaticSaliencySpectralResidual {
+		pub fn as_raw_PtrOfStaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfStaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfStaticSaliencySpectralResidual {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::Saliency for PtrOfStaticSaliencySpectralResidual {
+		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::StaticSaliency for PtrOfStaticSaliencySpectralResidual {
+		fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::saliency::StaticSaliencySpectralResidualTrait for PtrOfStaticSaliencySpectralResidual {
+		fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use saliency_types::*;
+
+#[cfg(feature = "contrib")]
 mod sfm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6941,44 +5868,10 @@ mod stitching_types {
 		cv_VectorOfDetail_CameraParams_capacity, cv_VectorOfDetail_CameraParams_shrink_to_fit,
 		cv_VectorOfDetail_CameraParams_reserve, cv_VectorOfDetail_CameraParams_remove,
 		cv_VectorOfDetail_CameraParams_swap, cv_VectorOfDetail_CameraParams_clear,
-		cv_VectorOfDetail_CameraParams_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::stitching::Detail_CameraParams::from_raw(ptr) })
+		cv_VectorOfDetail_CameraParams_get, cv_VectorOfDetail_CameraParams_set,
+		cv_VectorOfDetail_CameraParams_push, cv_VectorOfDetail_CameraParams_insert,
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_CameraParams }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::stitching::Detail_CameraParams> {
-		type Arg = crate::stitching::Detail_CameraParams;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::stitching::Detail_CameraParams) {
-			extern "C" { fn cv_VectorOfDetail_CameraParams_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDetail_CameraParams_push(self.as_raw_mut_VectorOfDetail_CameraParams(), val.as_raw_mut_Detail_CameraParams()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::stitching::Detail_CameraParams) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_CameraParams_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDetail_CameraParams_insert(self.as_raw_mut_VectorOfDetail_CameraParams(), index, val.as_raw_mut_Detail_CameraParams()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::stitching::Detail_CameraParams) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_CameraParams_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDetail_CameraParams_set(self.as_raw_mut_VectorOfDetail_CameraParams(), index, val.as_raw_mut_Detail_CameraParams()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::stitching::Detail_CameraParams) {
-			extern "C" { fn cv_VectorOfDetail_CameraParams_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDetail_CameraParams_set(self.as_raw_mut_VectorOfDetail_CameraParams(), index, val.as_raw_mut_Detail_CameraParams())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::stitching::Detail_CameraParams> {}
 	
@@ -6995,44 +5888,10 @@ mod stitching_types {
 		cv_VectorOfDetail_ImageFeatures_capacity, cv_VectorOfDetail_ImageFeatures_shrink_to_fit,
 		cv_VectorOfDetail_ImageFeatures_reserve, cv_VectorOfDetail_ImageFeatures_remove,
 		cv_VectorOfDetail_ImageFeatures_swap, cv_VectorOfDetail_ImageFeatures_clear,
-		cv_VectorOfDetail_ImageFeatures_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::stitching::Detail_ImageFeatures::from_raw(ptr) })
+		cv_VectorOfDetail_ImageFeatures_get, cv_VectorOfDetail_ImageFeatures_set,
+		cv_VectorOfDetail_ImageFeatures_push, cv_VectorOfDetail_ImageFeatures_insert,
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_ImageFeatures }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::stitching::Detail_ImageFeatures> {
-		type Arg = crate::stitching::Detail_ImageFeatures;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::stitching::Detail_ImageFeatures) {
-			extern "C" { fn cv_VectorOfDetail_ImageFeatures_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDetail_ImageFeatures_push(self.as_raw_mut_VectorOfDetail_ImageFeatures(), val.as_raw_mut_Detail_ImageFeatures()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::stitching::Detail_ImageFeatures) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_ImageFeatures_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDetail_ImageFeatures_insert(self.as_raw_mut_VectorOfDetail_ImageFeatures(), index, val.as_raw_mut_Detail_ImageFeatures()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::stitching::Detail_ImageFeatures) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_ImageFeatures_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDetail_ImageFeatures_set(self.as_raw_mut_VectorOfDetail_ImageFeatures(), index, val.as_raw_mut_Detail_ImageFeatures()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::stitching::Detail_ImageFeatures) {
-			extern "C" { fn cv_VectorOfDetail_ImageFeatures_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDetail_ImageFeatures_set(self.as_raw_mut_VectorOfDetail_ImageFeatures(), index, val.as_raw_mut_Detail_ImageFeatures())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::stitching::Detail_ImageFeatures> {}
 	
@@ -7049,44 +5908,10 @@ mod stitching_types {
 		cv_VectorOfDetail_MatchesInfo_capacity, cv_VectorOfDetail_MatchesInfo_shrink_to_fit,
 		cv_VectorOfDetail_MatchesInfo_reserve, cv_VectorOfDetail_MatchesInfo_remove,
 		cv_VectorOfDetail_MatchesInfo_swap, cv_VectorOfDetail_MatchesInfo_clear,
-		cv_VectorOfDetail_MatchesInfo_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::stitching::Detail_MatchesInfo::from_raw(ptr) })
+		cv_VectorOfDetail_MatchesInfo_get, cv_VectorOfDetail_MatchesInfo_set,
+		cv_VectorOfDetail_MatchesInfo_push, cv_VectorOfDetail_MatchesInfo_insert,
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_MatchesInfo }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::stitching::Detail_MatchesInfo> {
-		type Arg = crate::stitching::Detail_MatchesInfo;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::stitching::Detail_MatchesInfo) {
-			extern "C" { fn cv_VectorOfDetail_MatchesInfo_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfDetail_MatchesInfo_push(self.as_raw_mut_VectorOfDetail_MatchesInfo(), val.as_raw_mut_Detail_MatchesInfo()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::stitching::Detail_MatchesInfo) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_MatchesInfo_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfDetail_MatchesInfo_insert(self.as_raw_mut_VectorOfDetail_MatchesInfo(), index, val.as_raw_mut_Detail_MatchesInfo()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::stitching::Detail_MatchesInfo) -> Result<()> {
-			extern "C" { fn cv_VectorOfDetail_MatchesInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfDetail_MatchesInfo_set(self.as_raw_mut_VectorOfDetail_MatchesInfo(), index, val.as_raw_mut_Detail_MatchesInfo()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::stitching::Detail_MatchesInfo) {
-			extern "C" { fn cv_VectorOfDetail_MatchesInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfDetail_MatchesInfo_set(self.as_raw_mut_VectorOfDetail_MatchesInfo(), index, val.as_raw_mut_Detail_MatchesInfo())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::stitching::Detail_MatchesInfo> {}
 	
@@ -7375,44 +6200,10 @@ mod surface_matching_types {
 		cv_VectorOfPose3DPtr_capacity, cv_VectorOfPose3DPtr_shrink_to_fit,
 		cv_VectorOfPose3DPtr_reserve, cv_VectorOfPose3DPtr_remove,
 		cv_VectorOfPose3DPtr_swap, cv_VectorOfPose3DPtr_clear,
-		cv_VectorOfPose3DPtr_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Ptr::<crate::surface_matching::Pose3D>::from_raw(ptr) })
+		cv_VectorOfPose3DPtr_get, cv_VectorOfPose3DPtr_set,
+		cv_VectorOfPose3DPtr_push, cv_VectorOfPose3DPtr_insert,
 	}
 	vector_non_copy_or_bool! { crate::surface_matching::Pose3DPtr }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::surface_matching::Pose3DPtr> {
-		type Arg = crate::surface_matching::Pose3DPtr;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::surface_matching::Pose3DPtr) {
-			extern "C" { fn cv_VectorOfPose3DPtr_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfPose3DPtr_push(self.as_raw_mut_VectorOfPose3DPtr(), val.as_raw_mut_PtrOfPose3D()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::surface_matching::Pose3DPtr) -> Result<()> {
-			extern "C" { fn cv_VectorOfPose3DPtr_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfPose3DPtr_insert(self.as_raw_mut_VectorOfPose3DPtr(), index, val.as_raw_mut_PtrOfPose3D()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::surface_matching::Pose3DPtr) -> Result<()> {
-			extern "C" { fn cv_VectorOfPose3DPtr_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfPose3DPtr_set(self.as_raw_mut_VectorOfPose3DPtr(), index, val.as_raw_mut_PtrOfPose3D()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::surface_matching::Pose3DPtr) {
-			extern "C" { fn cv_VectorOfPose3DPtr_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfPose3DPtr_set(self.as_raw_mut_VectorOfPose3DPtr(), index, val.as_raw_mut_PtrOfPose3D())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::surface_matching::Pose3DPtr> {}
 	
@@ -7569,44 +6360,10 @@ mod text_types {
 		cv_VectorOfERStat_capacity, cv_VectorOfERStat_shrink_to_fit,
 		cv_VectorOfERStat_reserve, cv_VectorOfERStat_remove,
 		cv_VectorOfERStat_swap, cv_VectorOfERStat_clear,
-		cv_VectorOfERStat_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { crate::text::ERStat::from_raw(ptr) })
+		cv_VectorOfERStat_get, cv_VectorOfERStat_set,
+		cv_VectorOfERStat_push, cv_VectorOfERStat_insert,
 	}
 	vector_non_copy_or_bool! { crate::text::ERStat }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<crate::text::ERStat> {
-		type Arg = crate::text::ERStat;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: crate::text::ERStat) {
-			extern "C" { fn cv_VectorOfERStat_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfERStat_push(self.as_raw_mut_VectorOfERStat(), val.as_raw_mut_ERStat()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: crate::text::ERStat) -> Result<()> {
-			extern "C" { fn cv_VectorOfERStat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfERStat_insert(self.as_raw_mut_VectorOfERStat(), index, val.as_raw_mut_ERStat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: crate::text::ERStat) -> Result<()> {
-			extern "C" { fn cv_VectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfERStat_set(self.as_raw_mut_VectorOfERStat(), index, val.as_raw_mut_ERStat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: crate::text::ERStat) {
-			extern "C" { fn cv_VectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfERStat_set(self.as_raw_mut_VectorOfERStat(), index, val.as_raw_mut_ERStat())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<crate::text::ERStat> {}
 	
@@ -7623,50 +6380,337 @@ mod text_types {
 		cv_VectorOfVectorOfERStat_capacity, cv_VectorOfVectorOfERStat_shrink_to_fit,
 		cv_VectorOfVectorOfERStat_reserve, cv_VectorOfVectorOfERStat_remove,
 		cv_VectorOfVectorOfERStat_swap, cv_VectorOfVectorOfERStat_clear,
-		cv_VectorOfVectorOfERStat_get -> sys::Result<*mut c_void>,
-		ret_map: .map(|ptr| { core::Vector::<crate::text::ERStat>::from_raw(ptr) })
+		cv_VectorOfVectorOfERStat_get, cv_VectorOfVectorOfERStat_set,
+		cv_VectorOfVectorOfERStat_push, cv_VectorOfVectorOfERStat_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector::<crate::text::ERStat> }
-	
-	impl<'i> core::VectorTrait<'i> for core::Vector::<core::Vector::<crate::text::ERStat>> {
-		type Arg = core::Vector::<crate::text::ERStat>;
-	
-		fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }
-	
-		#[inline]
-		fn push(&mut self, mut val: core::Vector::<crate::text::ERStat>) {
-			extern "C" { fn cv_VectorOfVectorOfERStat_push(instance: *mut c_void, val: *mut c_void); }
-			unsafe { cv_VectorOfVectorOfERStat_push(self.as_raw_mut_VectorOfVectorOfERStat(), val.as_raw_mut_VectorOfERStat()) }
-		}
-	
-		#[inline]
-		fn insert(&mut self, index: size_t, mut val: core::Vector::<crate::text::ERStat>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfERStat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len() + 1)?;
-			unsafe { cv_VectorOfVectorOfERStat_insert(self.as_raw_mut_VectorOfVectorOfERStat(), index, val.as_raw_mut_VectorOfERStat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		fn set(&mut self, index: size_t, mut val: core::Vector::<crate::text::ERStat>) -> Result<()> {
-			extern "C" { fn cv_VectorOfVectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			core::vector_index_check(index, self.len())?;
-			unsafe { cv_VectorOfVectorOfERStat_set(self.as_raw_mut_VectorOfVectorOfERStat(), index, val.as_raw_mut_VectorOfERStat()) }
-			Ok(())
-		}
-	
-		#[inline]
-		unsafe fn set_unchecked(&mut self, index: size_t, mut val: core::Vector::<crate::text::ERStat>) {
-			extern "C" { fn cv_VectorOfVectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void); }
-			cv_VectorOfVectorOfERStat_set(self.as_raw_mut_VectorOfVectorOfERStat(), index, val.as_raw_mut_VectorOfERStat())
-		}
-	}
 	
 	unsafe impl Send for core::Vector::<core::Vector::<crate::text::ERStat>> {}
 	
 }
 #[cfg(feature = "contrib")]
 pub use text_types::*;
+
+#[cfg(feature = "contrib")]
+mod tracking_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCvFeatureParams = core::Ptr::<crate::tracking::CvFeatureParams>;
+	
+	ptr_extern! { crate::tracking::CvFeatureParams,
+		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr
+	}
+	
+	impl PtrOfCvFeatureParams {
+		pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfCvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::CvFeatureParamsTrait for PtrOfCvFeatureParams {
+		fn as_raw_CvFeatureParams(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTracker = core::Ptr::<dyn crate::tracking::Tracker>;
+	
+	ptr_extern! { dyn crate::tracking::Tracker,
+		cv_PtrOfTracker_delete, cv_PtrOfTracker_get_inner_ptr
+	}
+	
+	impl PtrOfTracker {
+		pub fn as_raw_PtrOfTracker(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTracker {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTracker {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerBoosting = core::Ptr::<dyn crate::tracking::TrackerBoosting>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerBoosting,
+		cv_PtrOfTrackerBoosting_delete, cv_PtrOfTrackerBoosting_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerBoosting {
+		pub fn as_raw_PtrOfTrackerBoosting(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerBoosting {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerBoosting {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerBoosting for PtrOfTrackerBoosting {
+		fn as_raw_TrackerBoosting(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerBoosting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerFeature = core::Ptr::<dyn crate::tracking::TrackerFeature>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerFeature,
+		cv_PtrOfTrackerFeature_delete, cv_PtrOfTrackerFeature_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerFeature {
+		pub fn as_raw_PtrOfTrackerFeature(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerFeature for PtrOfTrackerFeature {
+		fn as_raw_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::tracking::TrackerGOTURN>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerGOTURN,
+		cv_PtrOfTrackerGOTURN_delete, cv_PtrOfTrackerGOTURN_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerGOTURN {
+		pub fn as_raw_PtrOfTrackerGOTURN(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerGOTURN {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerGOTURN {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerGOTURN for PtrOfTrackerGOTURN {
+		fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerKCF = core::Ptr::<dyn crate::tracking::TrackerKCF>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerKCF,
+		cv_PtrOfTrackerKCF_delete, cv_PtrOfTrackerKCF_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerKCF {
+		pub fn as_raw_PtrOfTrackerKCF(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerKCF {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerKCF {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerKCF for PtrOfTrackerKCF {
+		fn as_raw_TrackerKCF(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerMIL = core::Ptr::<dyn crate::tracking::TrackerMIL>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerMIL,
+		cv_PtrOfTrackerMIL_delete, cv_PtrOfTrackerMIL_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerMIL {
+		pub fn as_raw_PtrOfTrackerMIL(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerMIL {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerMIL {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerMIL for PtrOfTrackerMIL {
+		fn as_raw_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerMedianFlow = core::Ptr::<dyn crate::tracking::TrackerMedianFlow>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerMedianFlow,
+		cv_PtrOfTrackerMedianFlow_delete, cv_PtrOfTrackerMedianFlow_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerMedianFlow {
+		pub fn as_raw_PtrOfTrackerMedianFlow(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerMedianFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerMedianFlow {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerMedianFlow {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerMedianFlow for PtrOfTrackerMedianFlow {
+		fn as_raw_TrackerMedianFlow(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerMedianFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerModel = core::Ptr::<dyn crate::tracking::TrackerModel>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerModel,
+		cv_PtrOfTrackerModel_delete, cv_PtrOfTrackerModel_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerModel {
+		pub fn as_raw_PtrOfTrackerModel(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerModel for PtrOfTrackerModel {
+		fn as_raw_TrackerModel(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerSamplerAlgorithm = core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerSamplerAlgorithm,
+		cv_PtrOfTrackerSamplerAlgorithm_delete, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerSamplerAlgorithm {
+		pub fn as_raw_PtrOfTrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerSamplerAlgorithm for PtrOfTrackerSamplerAlgorithm {
+		fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerStateEstimator = core::Ptr::<dyn crate::tracking::TrackerStateEstimator>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerStateEstimator,
+		cv_PtrOfTrackerStateEstimator_delete, cv_PtrOfTrackerStateEstimator_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerStateEstimator {
+		pub fn as_raw_PtrOfTrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerStateEstimator for PtrOfTrackerStateEstimator {
+		fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerTLD = core::Ptr::<dyn crate::tracking::TrackerTLD>;
+	
+	ptr_extern! { dyn crate::tracking::TrackerTLD,
+		cv_PtrOfTrackerTLD_delete, cv_PtrOfTrackerTLD_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerTLD {
+		pub fn as_raw_PtrOfTrackerTLD(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTrackerTLD {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::Tracker for PtrOfTrackerTLD {
+		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerTLD for PtrOfTrackerTLD {
+		fn as_raw_TrackerTLD(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerTLD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerTargetState = core::Ptr::<crate::tracking::TrackerTargetState>;
+	
+	ptr_extern! { crate::tracking::TrackerTargetState,
+		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr
+	}
+	
+	impl PtrOfTrackerTargetState {
+		pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfTrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::tracking::TrackerTargetStateTrait for PtrOfTrackerTargetState {
+		fn as_raw_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type VectorOfCvHaarEvaluator_FeatureHaar = core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar>;
+	
+	impl VectorOfCvHaarEvaluator_FeatureHaar {
+		pub fn as_raw_VectorOfCvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfCvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::tracking::CvHaarEvaluator_FeatureHaar, *const c_void, *mut c_void,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_new, cv_VectorOfCvHaarEvaluator_FeatureHaar_delete,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_len, cv_VectorOfCvHaarEvaluator_FeatureHaar_is_empty,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_capacity, cv_VectorOfCvHaarEvaluator_FeatureHaar_shrink_to_fit,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_reserve, cv_VectorOfCvHaarEvaluator_FeatureHaar_remove,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_swap, cv_VectorOfCvHaarEvaluator_FeatureHaar_clear,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_get, cv_VectorOfCvHaarEvaluator_FeatureHaar_set,
+		cv_VectorOfCvHaarEvaluator_FeatureHaar_push, cv_VectorOfCvHaarEvaluator_FeatureHaar_insert,
+	}
+	vector_non_copy_or_bool! { crate::tracking::CvHaarEvaluator_FeatureHaar }
+	
+	unsafe impl Send for core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar> {}
+	
+	pub type VectorOfPtrOfTracker = core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>>;
+	
+	impl VectorOfPtrOfTracker {
+		pub fn as_raw_VectorOfPtrOfTracker(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Ptr::<dyn crate::tracking::Tracker>, *const c_void, *mut c_void,
+		cv_VectorOfPtrOfTracker_new, cv_VectorOfPtrOfTracker_delete,
+		cv_VectorOfPtrOfTracker_len, cv_VectorOfPtrOfTracker_is_empty,
+		cv_VectorOfPtrOfTracker_capacity, cv_VectorOfPtrOfTracker_shrink_to_fit,
+		cv_VectorOfPtrOfTracker_reserve, cv_VectorOfPtrOfTracker_remove,
+		cv_VectorOfPtrOfTracker_swap, cv_VectorOfPtrOfTracker_clear,
+		cv_VectorOfPtrOfTracker_get, cv_VectorOfPtrOfTracker_set,
+		cv_VectorOfPtrOfTracker_push, cv_VectorOfPtrOfTracker_insert,
+	}
+	vector_non_copy_or_bool! { core::Ptr::<dyn crate::tracking::Tracker> }
+	
+	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>> {}
+	
+}
+#[cfg(feature = "contrib")]
+pub use tracking_types::*;
 
 mod video_types {
 	use crate::{mod_prelude::*, core, types, sys};
@@ -7721,6 +6765,27 @@ mod video_types {
 	impl crate::video::BackgroundSubtractorMOG2 for PtrOfBackgroundSubtractorMOG2 {
 		fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
 		fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfDenseOpticalFlow = core::Ptr::<dyn crate::video::DenseOpticalFlow>;
+	
+	ptr_extern! { dyn crate::video::DenseOpticalFlow,
+		cv_PtrOfDenseOpticalFlow_delete, cv_PtrOfDenseOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfDenseOpticalFlow {
+		pub fn as_raw_PtrOfDenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfDenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDenseOpticalFlow {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::DenseOpticalFlow for PtrOfDenseOpticalFlow {
+		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDualTVL1OpticalFlow = core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>;
@@ -8342,6 +7407,469 @@ mod xfeatures2d_types {
 }
 #[cfg(feature = "contrib")]
 pub use xfeatures2d_types::*;
+
+#[cfg(feature = "contrib")]
+mod ximgproc_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfAdaptiveManifoldFilter = core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>;
+	
+	ptr_extern! { dyn crate::ximgproc::AdaptiveManifoldFilter,
+		cv_PtrOfAdaptiveManifoldFilter_delete, cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr
+	}
+	
+	impl PtrOfAdaptiveManifoldFilter {
+		pub fn as_raw_PtrOfAdaptiveManifoldFilter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfAdaptiveManifoldFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::AdaptiveManifoldFilter for PtrOfAdaptiveManifoldFilter {
+		fn as_raw_AdaptiveManifoldFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_AdaptiveManifoldFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAdaptiveManifoldFilter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfDTFilter = core::Ptr::<dyn crate::ximgproc::DTFilter>;
+	
+	ptr_extern! { dyn crate::ximgproc::DTFilter,
+		cv_PtrOfDTFilter_delete, cv_PtrOfDTFilter_get_inner_ptr
+	}
+	
+	impl PtrOfDTFilter {
+		pub fn as_raw_PtrOfDTFilter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfDTFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDTFilter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::DTFilter for PtrOfDTFilter {
+		fn as_raw_DTFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DTFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfDisparityWLSFilter = core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>;
+	
+	ptr_extern! { dyn crate::ximgproc::DisparityWLSFilter,
+		cv_PtrOfDisparityWLSFilter_delete, cv_PtrOfDisparityWLSFilter_get_inner_ptr
+	}
+	
+	impl PtrOfDisparityWLSFilter {
+		pub fn as_raw_PtrOfDisparityWLSFilter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfDisparityWLSFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDisparityWLSFilter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::DisparityFilter for PtrOfDisparityWLSFilter {
+		fn as_raw_DisparityFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DisparityFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::DisparityWLSFilter for PtrOfDisparityWLSFilter {
+		fn as_raw_DisparityWLSFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_DisparityWLSFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfEdgeAwareInterpolator = core::Ptr::<dyn crate::ximgproc::EdgeAwareInterpolator>;
+	
+	ptr_extern! { dyn crate::ximgproc::EdgeAwareInterpolator,
+		cv_PtrOfEdgeAwareInterpolator_delete, cv_PtrOfEdgeAwareInterpolator_get_inner_ptr
+	}
+	
+	impl PtrOfEdgeAwareInterpolator {
+		pub fn as_raw_PtrOfEdgeAwareInterpolator(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfEdgeAwareInterpolator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfEdgeAwareInterpolator {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::EdgeAwareInterpolator for PtrOfEdgeAwareInterpolator {
+		fn as_raw_EdgeAwareInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_EdgeAwareInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SparseMatchInterpolator for PtrOfEdgeAwareInterpolator {
+		fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfFastGlobalSmootherFilter = core::Ptr::<dyn crate::ximgproc::FastGlobalSmootherFilter>;
+	
+	ptr_extern! { dyn crate::ximgproc::FastGlobalSmootherFilter,
+		cv_PtrOfFastGlobalSmootherFilter_delete, cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr
+	}
+	
+	impl PtrOfFastGlobalSmootherFilter {
+		pub fn as_raw_PtrOfFastGlobalSmootherFilter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfFastGlobalSmootherFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfFastGlobalSmootherFilter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::FastGlobalSmootherFilter for PtrOfFastGlobalSmootherFilter {
+		fn as_raw_FastGlobalSmootherFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_FastGlobalSmootherFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfFastLineDetector = core::Ptr::<dyn crate::ximgproc::FastLineDetector>;
+	
+	ptr_extern! { dyn crate::ximgproc::FastLineDetector,
+		cv_PtrOfFastLineDetector_delete, cv_PtrOfFastLineDetector_get_inner_ptr
+	}
+	
+	impl PtrOfFastLineDetector {
+		pub fn as_raw_PtrOfFastLineDetector(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfFastLineDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfFastLineDetector {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::FastLineDetector for PtrOfFastLineDetector {
+		fn as_raw_FastLineDetector(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_FastLineDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfGraphSegmentation = core::Ptr::<dyn crate::ximgproc::GraphSegmentation>;
+	
+	ptr_extern! { dyn crate::ximgproc::GraphSegmentation,
+		cv_PtrOfGraphSegmentation_delete, cv_PtrOfGraphSegmentation_get_inner_ptr
+	}
+	
+	impl PtrOfGraphSegmentation {
+		pub fn as_raw_PtrOfGraphSegmentation(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfGraphSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfGraphSegmentation {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::GraphSegmentation for PtrOfGraphSegmentation {
+		fn as_raw_GraphSegmentation(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_GraphSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfGuidedFilter = core::Ptr::<dyn crate::ximgproc::GuidedFilter>;
+	
+	ptr_extern! { dyn crate::ximgproc::GuidedFilter,
+		cv_PtrOfGuidedFilter_delete, cv_PtrOfGuidedFilter_get_inner_ptr
+	}
+	
+	impl PtrOfGuidedFilter {
+		pub fn as_raw_PtrOfGuidedFilter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfGuidedFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfGuidedFilter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::GuidedFilter for PtrOfGuidedFilter {
+		fn as_raw_GuidedFilter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_GuidedFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfRFFeatureGetter = core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>;
+	
+	ptr_extern! { dyn crate::ximgproc::RFFeatureGetter,
+		cv_PtrOfRFFeatureGetter_delete, cv_PtrOfRFFeatureGetter_get_inner_ptr
+	}
+	
+	impl PtrOfRFFeatureGetter {
+		pub fn as_raw_PtrOfRFFeatureGetter(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfRFFeatureGetter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfRFFeatureGetter {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::RFFeatureGetter for PtrOfRFFeatureGetter {
+		fn as_raw_RFFeatureGetter(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_RFFeatureGetter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentation = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentation>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentation,
+		cv_PtrOfSelectiveSearchSegmentation_delete, cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentation {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentation(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentation {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentation for PtrOfSelectiveSearchSegmentation {
+		fn as_raw_SelectiveSearchSegmentation(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategy = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategy,
+		cv_PtrOfSelectiveSearchSegmentationStrategy_delete, cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategy {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategy {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategy {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategyColor = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor,
+		cv_PtrOfSelectiveSearchSegmentationStrategyColor_delete, cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategyColor {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyColor {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyColor {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategyColor for PtrOfSelectiveSearchSegmentationStrategyColor {
+		fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategyFill = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill,
+		cv_PtrOfSelectiveSearchSegmentationStrategyFill_delete, cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategyFill {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyFill {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyFill {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategyFill for PtrOfSelectiveSearchSegmentationStrategyFill {
+		fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategyMultiple = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple,
+		cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_delete, cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategyMultiple {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyMultiple {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyMultiple {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple for PtrOfSelectiveSearchSegmentationStrategyMultiple {
+		fn as_raw_SelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategySize = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize,
+		cv_PtrOfSelectiveSearchSegmentationStrategySize_delete, cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategySize {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategySize {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategySize {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategySize for PtrOfSelectiveSearchSegmentationStrategySize {
+		fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSelectiveSearchSegmentationStrategyTexture = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>;
+	
+	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture,
+		cv_PtrOfSelectiveSearchSegmentationStrategyTexture_delete, cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr
+	}
+	
+	impl PtrOfSelectiveSearchSegmentationStrategyTexture {
+		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyTexture {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyTexture {
+		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTexture for PtrOfSelectiveSearchSegmentationStrategyTexture {
+		fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfStructuredEdgeDetection = core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>;
+	
+	ptr_extern! { dyn crate::ximgproc::StructuredEdgeDetection,
+		cv_PtrOfStructuredEdgeDetection_delete, cv_PtrOfStructuredEdgeDetection_get_inner_ptr
+	}
+	
+	impl PtrOfStructuredEdgeDetection {
+		pub fn as_raw_PtrOfStructuredEdgeDetection(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfStructuredEdgeDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfStructuredEdgeDetection {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::StructuredEdgeDetection for PtrOfStructuredEdgeDetection {
+		fn as_raw_StructuredEdgeDetection(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_StructuredEdgeDetection(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSuperpixelLSC = core::Ptr::<dyn crate::ximgproc::SuperpixelLSC>;
+	
+	ptr_extern! { dyn crate::ximgproc::SuperpixelLSC,
+		cv_PtrOfSuperpixelLSC_delete, cv_PtrOfSuperpixelLSC_get_inner_ptr
+	}
+	
+	impl PtrOfSuperpixelLSC {
+		pub fn as_raw_PtrOfSuperpixelLSC(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSuperpixelLSC(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSuperpixelLSC {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SuperpixelLSC for PtrOfSuperpixelLSC {
+		fn as_raw_SuperpixelLSC(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SuperpixelLSC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSuperpixelSEEDS = core::Ptr::<dyn crate::ximgproc::SuperpixelSEEDS>;
+	
+	ptr_extern! { dyn crate::ximgproc::SuperpixelSEEDS,
+		cv_PtrOfSuperpixelSEEDS_delete, cv_PtrOfSuperpixelSEEDS_get_inner_ptr
+	}
+	
+	impl PtrOfSuperpixelSEEDS {
+		pub fn as_raw_PtrOfSuperpixelSEEDS(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSuperpixelSEEDS(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSuperpixelSEEDS {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SuperpixelSEEDS for PtrOfSuperpixelSEEDS {
+		fn as_raw_SuperpixelSEEDS(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SuperpixelSEEDS(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSuperpixelSLIC = core::Ptr::<dyn crate::ximgproc::SuperpixelSLIC>;
+	
+	ptr_extern! { dyn crate::ximgproc::SuperpixelSLIC,
+		cv_PtrOfSuperpixelSLIC_delete, cv_PtrOfSuperpixelSLIC_get_inner_ptr
+	}
+	
+	impl PtrOfSuperpixelSLIC {
+		pub fn as_raw_PtrOfSuperpixelSLIC(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_PtrOfSuperpixelSLIC(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSuperpixelSLIC {
+		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::SuperpixelSLIC for PtrOfSuperpixelSLIC {
+		fn as_raw_SuperpixelSLIC(&self) -> *const c_void { self.inner_as_raw() }
+		fn as_raw_mut_SuperpixelSLIC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use ximgproc_types::*;
 
 #[cfg(feature = "contrib")]
 mod xobjdetect_types {

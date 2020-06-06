@@ -15,7 +15,7 @@ pub mod prelude {
 /// * initialization_frames: 120
 /// * decision_threshold: 0.8
 pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(r) } )
 }
 
 /// Creates mixture-of-gaussian background subtractor
@@ -33,7 +33,7 @@ pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_thr
 /// * background_ratio: 0.7
 /// * noise_sigma: 0
 pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>::from_raw(ptr) })
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(r) } )
 }
 
 /// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Gold2012) .

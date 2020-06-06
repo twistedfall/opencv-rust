@@ -20,7 +20,7 @@ pub mod prelude {
 /// 
 /// The function createFreeType2 create instance to draw UTF-8 strings.
 pub fn create_free_type2() -> Result<core::Ptr::<dyn crate::freetype::FreeType2>> {
-	unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::from_raw(ptr) })
+	unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(r) } )
 }
 
 pub trait FreeType2: core::AlgorithmTrait {
@@ -35,8 +35,8 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// * fontFileName: FontFile Name
 	/// * id: face_index to select a font faces in a single file.
 	fn load_font_data(&mut self, font_file_name: &str, id: i32) -> Result<()> {
-		string_arg!(font_file_name);
-		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.as_ptr() as _, id) }.into_result()
+		extern_container_arg!(mut font_file_name);
+		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_to_extern_mut(), id) }.into_result()
 	}
 	
 	/// Set Split Number from Bezier-curve to line
@@ -66,8 +66,8 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 		input_output_array_arg!(img);
-		string_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayX_const_StringX_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.as_ptr(), &org, font_height, &color, thickness, line_type, bottom_left_origin) }.into_result()
+		extern_container_arg!(text);
+		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayX_const_StringX_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_height, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
 	}
 	
 	/// Calculates the width and height of a text string.
@@ -128,8 +128,8 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// ## See also
 	/// cv::putText
 	fn get_text_size(&mut self, text: &str, font_height: i32, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
-		string_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringX_int_int_intX(self.as_raw_mut_FreeType2(), text.as_ptr(), font_height, thickness, base_line) }.into_result()
+		extern_container_arg!(text);
+		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringX_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_to_extern(), font_height, thickness, base_line) }.into_result()
 	}
 	
 }

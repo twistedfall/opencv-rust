@@ -22,14 +22,14 @@ pub fn emdl1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInput
 
 /// Complete constructor
 pub fn create_affine_transformer(full_affine: bool) -> Result<core::Ptr::<dyn crate::shape::AffineTransformer>> {
-	unsafe { sys::cv_createAffineTransformer_bool(full_affine) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::AffineTransformer>::from_raw(ptr) })
+	unsafe { sys::cv_createAffineTransformer_bool(full_affine) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::AffineTransformer>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<core::Ptr::<dyn crate::shape::HistogramCostExtractor>> {
-	unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
@@ -37,21 +37,21 @@ pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) ->
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_emd_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<core::Ptr::<dyn crate::shape::HistogramCostExtractor>> {
-	unsafe { sys::cv_createEMDHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createEMDHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_emdl1_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<core::Ptr::<dyn crate::shape::HistogramCostExtractor>> {
-	unsafe { sys::cv_createEMDL1HistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createEMDL1HistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
 /// * distance_flag: cv::NORM_L2
 /// * rank_prop: 0.6f
 pub fn create_hausdorff_distance_extractor(distance_flag: i32, rank_prop: f32) -> Result<core::Ptr::<dyn crate::shape::HausdorffDistanceExtractor>> {
-	unsafe { sys::cv_createHausdorffDistanceExtractor_int_float(distance_flag, rank_prop) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HausdorffDistanceExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createHausdorffDistanceExtractor_int_float(distance_flag, rank_prop) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HausdorffDistanceExtractor>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
@@ -59,7 +59,7 @@ pub fn create_hausdorff_distance_extractor(distance_flag: i32, rank_prop: f32) -
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<core::Ptr::<dyn crate::shape::HistogramCostExtractor>> {
-	unsafe { sys::cv_createNormHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createNormHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
@@ -71,7 +71,7 @@ pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_c
 /// * comparer: createChiHistogramCostExtractor()
 /// * transformer: createThinPlateSplineShapeTransformer()
 pub fn create_shape_context_distance_extractor(n_angular_bins: i32, n_radial_bins: i32, inner_radius: f32, outer_radius: f32, iterations: i32, comparer: &core::Ptr::<dyn crate::shape::HistogramCostExtractor>, transformer: &core::Ptr::<dyn crate::shape::ShapeTransformer>) -> Result<core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>> {
-	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_X_const_Ptr_ShapeTransformer_X(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>::from_raw(ptr) })
+	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_X_const_Ptr_ShapeTransformer_X(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(r) } )
 }
 
 /// Complete constructor
@@ -79,7 +79,7 @@ pub fn create_shape_context_distance_extractor(n_angular_bins: i32, n_radial_bin
 /// ## C++ default parameters
 /// * regularization_parameter: 0
 pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64) -> Result<core::Ptr::<dyn crate::shape::ThinPlateSplineShapeTransformer>> {
-	unsafe { sys::cv_createThinPlateSplineShapeTransformer_double(regularization_parameter) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::ThinPlateSplineShapeTransformer>::from_raw(ptr) })
+	unsafe { sys::cv_createThinPlateSplineShapeTransformer_double(regularization_parameter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::ThinPlateSplineShapeTransformer>::opencv_from_extern(r) } )
 }
 
 /// Wrapper class for the OpenCV Affine Transformation algorithm. :
@@ -364,7 +364,7 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 	}
 	
 	fn get_cost_extractor(&self) -> Result<core::Ptr::<dyn crate::shape::HistogramCostExtractor>> {
-		unsafe { sys::cv_ShapeContextDistanceExtractor_getCostExtractor_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::from_raw(ptr) })
+		unsafe { sys::cv_ShapeContextDistanceExtractor_getCostExtractor_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::HistogramCostExtractor>::opencv_from_extern(r) } )
 	}
 	
 	/// Set the value of the standard deviation for the Gaussian window for the image appearance cost.
@@ -389,7 +389,7 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 	}
 	
 	fn get_transform_algorithm(&self) -> Result<core::Ptr::<dyn crate::shape::ShapeTransformer>> {
-		unsafe { sys::cv_ShapeContextDistanceExtractor_getTransformAlgorithm_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::shape::ShapeTransformer>::from_raw(ptr) })
+		unsafe { sys::cv_ShapeContextDistanceExtractor_getTransformAlgorithm_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::ShapeTransformer>::opencv_from_extern(r) } )
 	}
 	
 }

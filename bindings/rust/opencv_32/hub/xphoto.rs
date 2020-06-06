@@ -29,6 +29,8 @@ pub enum Bm3dSteps {
 	BM3D_STEP2 = 2 as isize,
 }
 
+opencv_type_enum! { crate::xphoto::Bm3dSteps }
+
 /// various inpainting algorithms
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -39,6 +41,8 @@ pub enum InpaintTypes {
 	INPAINT_SHIFTMAP = 0 as isize,
 }
 
+opencv_type_enum! { crate::xphoto::InpaintTypes }
+
 /// BM3D transform types
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -46,6 +50,8 @@ pub enum TransformTypes {
 	/// Un-normalized Haar transform
 	HAAR = 0 as isize,
 }
+
+opencv_type_enum! { crate::xphoto::TransformTypes }
 
 /// Implements an efficient fixed-point approximation for applying channel gains, which is
 ///    the last step of multiple white balance algorithms.
@@ -175,7 +181,7 @@ pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 
 /// Creates an instance of GrayworldWB
 pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldWB>> {
-	unsafe { sys::cv_xphoto_createGrayworldWB() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::GrayworldWB>::from_raw(ptr) })
+	unsafe { sys::cv_xphoto_createGrayworldWB() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::GrayworldWB>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of LearningBasedWB
@@ -186,13 +192,13 @@ pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldW
 /// ## C++ default parameters
 /// * path_to_model: String()
 pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr::<dyn crate::xphoto::LearningBasedWB>> {
-	string_arg!(path_to_model);
-	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringX(path_to_model.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::from_raw(ptr) })
+	extern_container_arg!(path_to_model);
+	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringX(path_to_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of SimpleWB
 pub fn create_simple_wb() -> Result<core::Ptr::<dyn crate::xphoto::SimpleWB>> {
-	unsafe { sys::cv_xphoto_createSimpleWB() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::SimpleWB>::from_raw(ptr) })
+	unsafe { sys::cv_xphoto_createSimpleWB() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::SimpleWB>::opencv_from_extern(r) } )
 }
 
 /// The function implements simple dct-based denoising

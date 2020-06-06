@@ -29,9 +29,9 @@ pub trait WBDetector {
 	/// * pos_samples: Path to directory with cropped positive samples
 	/// * neg_imgs: Path to directory with negative (background) images
 	fn train(&mut self, pos_samples: &str, neg_imgs: &str) -> Result<()> {
-		string_arg!(pos_samples);
-		string_arg!(neg_imgs);
-		unsafe { sys::cv_xobjdetect_WBDetector_train_const_stringX_const_stringX(self.as_raw_mut_WBDetector(), pos_samples.as_ptr(), neg_imgs.as_ptr()) }.into_result()
+		extern_container_arg!(pos_samples);
+		extern_container_arg!(neg_imgs);
+		unsafe { sys::cv_xobjdetect_WBDetector_train_const_stringX_const_stringX(self.as_raw_mut_WBDetector(), pos_samples.opencv_to_extern(), neg_imgs.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Detect objects on image using WaldBoost detector
@@ -48,7 +48,7 @@ pub trait WBDetector {
 impl dyn WBDetector + '_ {
 	/// Create instance of WBDetector
 	pub fn create() -> Result<core::Ptr::<dyn crate::xobjdetect::WBDetector>> {
-		unsafe { sys::cv_xobjdetect_WBDetector_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xobjdetect::WBDetector>::from_raw(ptr) })
+		unsafe { sys::cv_xobjdetect_WBDetector_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xobjdetect::WBDetector>::opencv_from_extern(r) } )
 	}
 	
 }

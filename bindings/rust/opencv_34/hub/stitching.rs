@@ -60,6 +60,8 @@ pub enum Detail_DpSeamFinder_CostFunction {
 	COLOR_GRAD = 1 as isize,
 }
 
+opencv_type_enum! { crate::stitching::Detail_DpSeamFinder_CostFunction }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Detail_GraphCutSeamFinderBase_CostType {
@@ -67,12 +69,16 @@ pub enum Detail_GraphCutSeamFinderBase_CostType {
 	COST_COLOR_GRAD = 1 as isize,
 }
 
+opencv_type_enum! { crate::stitching::Detail_GraphCutSeamFinderBase_CostType }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Detail_WaveCorrectKind {
 	WAVE_CORRECT_HORIZ = 0 as isize,
 	WAVE_CORRECT_VERT = 1 as isize,
 }
+
+opencv_type_enum! { crate::stitching::Detail_WaveCorrectKind }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -89,6 +95,8 @@ pub enum Stitcher_Mode {
 	SCANS = 1 as isize,
 }
 
+opencv_type_enum! { crate::stitching::Stitcher_Mode }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Stitcher_Status {
@@ -98,18 +106,20 @@ pub enum Stitcher_Status {
 	ERR_CAMERA_PARAMS_ADJUST_FAIL = 3 as isize,
 }
 
+opencv_type_enum! { crate::stitching::Stitcher_Status }
+
 #[cfg(not(target_os = "windows"))]
 /// ## C++ default parameters
 /// * try_use_gpu: false
 pub fn create_stitcher_scans(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-	unsafe { sys::cv_createStitcherScans_bool(try_use_gpu) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Stitcher>::from_raw(ptr) })
+	unsafe { sys::cv_createStitcherScans_bool(try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
 }
 
 #[cfg(not(target_os = "windows"))]
 /// ## C++ default parameters
 /// * try_use_gpu: false
 pub fn create_stitcher(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-	unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Stitcher>::from_raw(ptr) })
+	unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
 }
 
 pub fn create_laplace_pyr_gpu(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector::<core::UMat>) -> Result<()> {
@@ -133,12 +143,12 @@ pub fn find_max_spanning_tree(num_images: i32, pairwise_matches: &core::Vector::
 }
 
 pub fn leave_biggest_component(features: &mut core::Vector::<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector::<crate::stitching::Detail_MatchesInfo>, conf_threshold: f32) -> Result<core::Vector::<i32>> {
-	unsafe { sys::cv_detail_leaveBiggestComponent_vector_ImageFeatures_X_vector_MatchesInfo_X_float(features.as_raw_mut_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
+	unsafe { sys::cv_detail_leaveBiggestComponent_vector_ImageFeatures_X_vector_MatchesInfo_X_float(features.as_raw_mut_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 }
 
 /// ///////////////////////////////////////////////////////////////////////////
 pub fn matches_graph_as_string(pathes: &mut core::Vector::<String>, pairwise_matches: &mut core::Vector::<crate::stitching::Detail_MatchesInfo>, conf_threshold: f32) -> Result<String> {
-	unsafe { sys::cv_detail_matchesGraphAsString_vector_String_X_vector_MatchesInfo_X_float(pathes.as_raw_mut_VectorOfString(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+	unsafe { sys::cv_detail_matchesGraphAsString_vector_String_X_vector_MatchesInfo_X_float(pathes.as_raw_mut_VectorOfString(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
 /// ///////////////////////////////////////////////////////////////////////////
@@ -150,7 +160,7 @@ pub fn normalize_using_weight_map(weight: &dyn core::ToInputArray, src: &mut dyn
 
 /// ///////////////////////////////////////////////////////////////////////////
 pub fn overlap_roi(tl1: core::Point, tl2: core::Point, sz1: core::Size, sz2: core::Size, roi: &mut core::Rect) -> Result<bool> {
-	unsafe { sys::cv_detail_overlapRoi_Point_Point_Size_Size_RectX(&tl1, &tl2, &sz1, &sz2, roi) }.into_result()
+	unsafe { sys::cv_detail_overlapRoi_Point_Point_Size_Size_RectX(tl1.opencv_to_extern(), tl2.opencv_to_extern(), sz1.opencv_to_extern(), sz2.opencv_to_extern(), roi) }.into_result()
 }
 
 pub fn restore_image_from_laplace_pyr_gpu(pyr: &mut core::Vector::<core::UMat>) -> Result<()> {
@@ -202,7 +212,7 @@ pub trait AffineWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_AffineWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_AffineWarper_create_const_float(self.as_raw_AffineWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_AffineWarper_create_const_float(self.as_raw_AffineWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -214,7 +224,7 @@ pub struct AffineWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { AffineWarper }
+opencv_type_boxed! { AffineWarper }
 
 impl Drop for AffineWarper {
 	fn drop(&mut self) {
@@ -248,7 +258,7 @@ pub trait CompressedRectilinearPortraitWarperTrait: crate::stitching::WarperCrea
 	fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_CompressedRectilinearPortraitWarper_create_const_float(self.as_raw_CompressedRectilinearPortraitWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_CompressedRectilinearPortraitWarper_create_const_float(self.as_raw_CompressedRectilinearPortraitWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -257,7 +267,7 @@ pub struct CompressedRectilinearPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { CompressedRectilinearPortraitWarper }
+opencv_type_boxed! { CompressedRectilinearPortraitWarper }
 
 impl Drop for CompressedRectilinearPortraitWarper {
 	fn drop(&mut self) {
@@ -288,7 +298,7 @@ impl CompressedRectilinearPortraitWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(a: f32, b: f32) -> Result<crate::stitching::CompressedRectilinearPortraitWarper> {
-		unsafe { sys::cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float(a, b) }.into_result().map(|ptr| unsafe { crate::stitching::CompressedRectilinearPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float(a, b) }.into_result().map(|r| unsafe { crate::stitching::CompressedRectilinearPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -298,7 +308,7 @@ pub trait CompressedRectilinearWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_CompressedRectilinearWarper_create_const_float(self.as_raw_CompressedRectilinearWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_CompressedRectilinearWarper_create_const_float(self.as_raw_CompressedRectilinearWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -307,7 +317,7 @@ pub struct CompressedRectilinearWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { CompressedRectilinearWarper }
+opencv_type_boxed! { CompressedRectilinearWarper }
 
 impl Drop for CompressedRectilinearWarper {
 	fn drop(&mut self) {
@@ -338,7 +348,7 @@ impl CompressedRectilinearWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(a: f32, b: f32) -> Result<crate::stitching::CompressedRectilinearWarper> {
-		unsafe { sys::cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a, b) }.into_result().map(|ptr| unsafe { crate::stitching::CompressedRectilinearWarper::from_raw(ptr) })
+		unsafe { sys::cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a, b) }.into_result().map(|r| unsafe { crate::stitching::CompressedRectilinearWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -351,7 +361,7 @@ pub trait CylindricalWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_CylindricalWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_CylindricalWarper_create_const_float(self.as_raw_CylindricalWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_CylindricalWarper_create_const_float(self.as_raw_CylindricalWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -363,7 +373,7 @@ pub struct CylindricalWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { CylindricalWarper }
+opencv_type_boxed! { CylindricalWarper }
 
 impl Drop for CylindricalWarper {
 	fn drop(&mut self) {
@@ -397,7 +407,7 @@ pub trait FisheyeWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_FisheyeWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_FisheyeWarper_create_const_float(self.as_raw_FisheyeWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_FisheyeWarper_create_const_float(self.as_raw_FisheyeWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -406,7 +416,7 @@ pub struct FisheyeWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { FisheyeWarper }
+opencv_type_boxed! { FisheyeWarper }
 
 impl Drop for FisheyeWarper {
 	fn drop(&mut self) {
@@ -440,7 +450,7 @@ pub trait MercatorWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_MercatorWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_MercatorWarper_create_const_float(self.as_raw_MercatorWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_MercatorWarper_create_const_float(self.as_raw_MercatorWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -449,7 +459,7 @@ pub struct MercatorWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { MercatorWarper }
+opencv_type_boxed! { MercatorWarper }
 
 impl Drop for MercatorWarper {
 	fn drop(&mut self) {
@@ -483,7 +493,7 @@ pub trait PaniniPortraitWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_PaniniPortraitWarper_create_const_float(self.as_raw_PaniniPortraitWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_PaniniPortraitWarper_create_const_float(self.as_raw_PaniniPortraitWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -492,7 +502,7 @@ pub struct PaniniPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { PaniniPortraitWarper }
+opencv_type_boxed! { PaniniPortraitWarper }
 
 impl Drop for PaniniPortraitWarper {
 	fn drop(&mut self) {
@@ -523,7 +533,7 @@ impl PaniniPortraitWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(a: f32, b: f32) -> Result<crate::stitching::PaniniPortraitWarper> {
-		unsafe { sys::cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(a, b) }.into_result().map(|ptr| unsafe { crate::stitching::PaniniPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(a, b) }.into_result().map(|r| unsafe { crate::stitching::PaniniPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -533,7 +543,7 @@ pub trait PaniniWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_PaniniWarper_create_const_float(self.as_raw_PaniniWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_PaniniWarper_create_const_float(self.as_raw_PaniniWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -542,7 +552,7 @@ pub struct PaniniWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { PaniniWarper }
+opencv_type_boxed! { PaniniWarper }
 
 impl Drop for PaniniWarper {
 	fn drop(&mut self) {
@@ -573,7 +583,7 @@ impl PaniniWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(a: f32, b: f32) -> Result<crate::stitching::PaniniWarper> {
-		unsafe { sys::cv_PaniniWarper_PaniniWarper_float_float(a, b) }.into_result().map(|ptr| unsafe { crate::stitching::PaniniWarper::from_raw(ptr) })
+		unsafe { sys::cv_PaniniWarper_PaniniWarper_float_float(a, b) }.into_result().map(|r| unsafe { crate::stitching::PaniniWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -586,7 +596,7 @@ pub trait PlaneWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_PlaneWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_PlaneWarper_create_const_float(self.as_raw_PlaneWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_PlaneWarper_create_const_float(self.as_raw_PlaneWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -598,7 +608,7 @@ pub struct PlaneWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { PlaneWarper }
+opencv_type_boxed! { PlaneWarper }
 
 impl Drop for PlaneWarper {
 	fn drop(&mut self) {
@@ -633,7 +643,7 @@ pub trait SphericalWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_SphericalWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_SphericalWarper_create_const_float(self.as_raw_SphericalWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_SphericalWarper_create_const_float(self.as_raw_SphericalWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -643,7 +653,7 @@ pub struct SphericalWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { SphericalWarper }
+opencv_type_boxed! { SphericalWarper }
 
 impl Drop for SphericalWarper {
 	fn drop(&mut self) {
@@ -677,7 +687,7 @@ pub trait StereographicWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_StereographicWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_StereographicWarper_create_const_float(self.as_raw_StereographicWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_StereographicWarper_create_const_float(self.as_raw_StereographicWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -686,7 +696,7 @@ pub struct StereographicWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { StereographicWarper }
+opencv_type_boxed! { StereographicWarper }
 
 impl Drop for StereographicWarper {
 	fn drop(&mut self) {
@@ -780,11 +790,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn features_finder(&mut self) -> Result<core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>> {
-		unsafe { sys::cv_Stitcher_featuresFinder(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_featuresFinder(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>::opencv_from_extern(r) } )
 	}
 	
 	fn features_finder_1(&self) -> Result<core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>> {
-		unsafe { sys::cv_Stitcher_featuresFinder_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_featuresFinder_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>::opencv_from_extern(r) } )
 	}
 	
 	fn set_features_finder(&mut self, mut features_finder: core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>) -> Result<()> {
@@ -792,11 +802,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn features_matcher(&mut self) -> Result<core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>> {
-		unsafe { sys::cv_Stitcher_featuresMatcher(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_featuresMatcher(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>::opencv_from_extern(r) } )
 	}
 	
 	fn features_matcher_1(&self) -> Result<core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>> {
-		unsafe { sys::cv_Stitcher_featuresMatcher_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_featuresMatcher_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>::opencv_from_extern(r) } )
 	}
 	
 	fn set_features_matcher(&mut self, mut features_matcher: core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>) -> Result<()> {
@@ -804,7 +814,7 @@ pub trait StitcherTrait {
 	}
 	
 	fn matching_mask(&self) -> Result<core::UMat> {
-		unsafe { sys::cv_Stitcher_matchingMask_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::UMat::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_matchingMask_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
 	fn set_matching_mask(&mut self, mask: &core::UMat) -> Result<()> {
@@ -812,11 +822,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn bundle_adjuster(&mut self) -> Result<core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>> {
-		unsafe { sys::cv_Stitcher_bundleAdjuster(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_bundleAdjuster(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>::opencv_from_extern(r) } )
 	}
 	
 	fn bundle_adjuster_1(&self) -> Result<core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>> {
-		unsafe { sys::cv_Stitcher_bundleAdjuster_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_bundleAdjuster_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>::opencv_from_extern(r) } )
 	}
 	
 	fn set_bundle_adjuster(&mut self, mut bundle_adjuster: core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>) -> Result<()> {
@@ -824,11 +834,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn warper(&mut self) -> Result<core::Ptr::<dyn crate::stitching::WarperCreator>> {
-		unsafe { sys::cv_Stitcher_warper(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::WarperCreator>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_warper(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::WarperCreator>::opencv_from_extern(r) } )
 	}
 	
 	fn warper_1(&self) -> Result<core::Ptr::<dyn crate::stitching::WarperCreator>> {
-		unsafe { sys::cv_Stitcher_warper_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::WarperCreator>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_warper_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::WarperCreator>::opencv_from_extern(r) } )
 	}
 	
 	fn set_warper(&mut self, mut creator: core::Ptr::<dyn crate::stitching::WarperCreator>) -> Result<()> {
@@ -836,11 +846,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn exposure_compensator(&mut self) -> Result<core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>> {
-		unsafe { sys::cv_Stitcher_exposureCompensator(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_exposureCompensator(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::opencv_from_extern(r) } )
 	}
 	
 	fn exposure_compensator_1(&self) -> Result<core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>> {
-		unsafe { sys::cv_Stitcher_exposureCompensator_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_exposureCompensator_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::opencv_from_extern(r) } )
 	}
 	
 	fn set_exposure_compensator(&mut self, mut exposure_comp: core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>) -> Result<()> {
@@ -848,11 +858,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn seam_finder(&mut self) -> Result<core::Ptr::<dyn crate::stitching::Detail_SeamFinder>> {
-		unsafe { sys::cv_Stitcher_seamFinder(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_SeamFinder>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_seamFinder(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_SeamFinder>::opencv_from_extern(r) } )
 	}
 	
 	fn seam_finder_1(&self) -> Result<core::Ptr::<dyn crate::stitching::Detail_SeamFinder>> {
-		unsafe { sys::cv_Stitcher_seamFinder_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_SeamFinder>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_seamFinder_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_SeamFinder>::opencv_from_extern(r) } )
 	}
 	
 	fn set_seam_finder(&mut self, mut seam_finder: core::Ptr::<dyn crate::stitching::Detail_SeamFinder>) -> Result<()> {
@@ -860,11 +870,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn blender(&mut self) -> Result<core::Ptr::<crate::stitching::Detail_Blender>> {
-		unsafe { sys::cv_Stitcher_blender(self.as_raw_mut_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_blender(self.as_raw_mut_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(r) } )
 	}
 	
 	fn blender_1(&self) -> Result<core::Ptr::<crate::stitching::Detail_Blender>> {
-		unsafe { sys::cv_Stitcher_blender_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_blender_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(r) } )
 	}
 	
 	fn set_blender(&mut self, mut b: core::Ptr::<crate::stitching::Detail_Blender>) -> Result<()> {
@@ -975,11 +985,11 @@ pub trait StitcherTrait {
 	}
 	
 	fn component(&self) -> Result<core::Vector::<i32>> {
-		unsafe { sys::cv_Stitcher_component_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_component_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 	}
 	
 	fn cameras(&self) -> Result<core::Vector::<crate::stitching::Detail_CameraParams>> {
-		unsafe { sys::cv_Stitcher_cameras_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::stitching::Detail_CameraParams>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_cameras_const(self.as_raw_Stitcher()) }.into_result().map(|r| unsafe { core::Vector::<crate::stitching::Detail_CameraParams>::opencv_from_extern(r) } )
 	}
 	
 	fn work_scale(&self) -> Result<f64> {
@@ -1004,7 +1014,7 @@ pub struct Stitcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Stitcher }
+opencv_type_boxed! { Stitcher }
 
 impl Drop for Stitcher {
 	fn drop(&mut self) {
@@ -1036,7 +1046,7 @@ impl Stitcher {
 	/// ## C++ default parameters
 	/// * try_use_gpu: false
 	pub fn create_default(try_use_gpu: bool) -> Result<crate::stitching::Stitcher> {
-		unsafe { sys::cv_Stitcher_createDefault_bool(try_use_gpu) }.into_result().map(|ptr| unsafe { crate::stitching::Stitcher::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_createDefault_bool(try_use_gpu) }.into_result().map(|r| unsafe { crate::stitching::Stitcher::opencv_from_extern(r) } )
 	}
 	
 	/// Creates a Stitcher configured in one of the stitching modes.
@@ -1053,7 +1063,7 @@ impl Stitcher {
 	/// * mode: PANORAMA
 	/// * try_use_gpu: false
 	pub fn create(mode: crate::stitching::Stitcher_Mode, try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-		unsafe { sys::cv_Stitcher_create_Mode_bool(mode, try_use_gpu) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Stitcher>::from_raw(ptr) })
+		unsafe { sys::cv_Stitcher_create_Mode_bool(mode, try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1063,7 +1073,7 @@ pub trait TransverseMercatorWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_mut_TransverseMercatorWarper(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_TransverseMercatorWarper_create_const_float(self.as_raw_TransverseMercatorWarper(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_TransverseMercatorWarper_create_const_float(self.as_raw_TransverseMercatorWarper(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1072,7 +1082,7 @@ pub struct TransverseMercatorWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { TransverseMercatorWarper }
+opencv_type_boxed! { TransverseMercatorWarper }
 
 impl Drop for TransverseMercatorWarper {
 	fn drop(&mut self) {
@@ -1107,7 +1117,7 @@ pub trait WarperCreator {
 	fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void;
 
 	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
-		unsafe { sys::cv_WarperCreator_create_const_float(self.as_raw_WarperCreator(), scale) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::from_raw(ptr) })
+		unsafe { sys::cv_WarperCreator_create_const_float(self.as_raw_WarperCreator(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1128,7 +1138,7 @@ pub struct Detail_AKAZEFeaturesFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_AKAZEFeaturesFinder }
+opencv_type_boxed! { Detail_AKAZEFeaturesFinder }
 
 impl Drop for Detail_AKAZEFeaturesFinder {
 	fn drop(&mut self) {
@@ -1164,7 +1174,7 @@ impl Detail_AKAZEFeaturesFinder {
 	/// * n_octave_layers: 4
 	/// * diffusivity: KAZE::DIFF_PM_G2
 	pub fn new(descriptor_type: i32, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: i32) -> Result<crate::stitching::Detail_AKAZEFeaturesFinder> {
-		unsafe { sys::cv_detail_AKAZEFeaturesFinder_AKAZEFeaturesFinder_int_int_int_float_int_int_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_AKAZEFeaturesFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_AKAZEFeaturesFinder_AKAZEFeaturesFinder_int_int_int_float_int_int_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|r| unsafe { crate::stitching::Detail_AKAZEFeaturesFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1191,7 +1201,7 @@ pub struct Detail_AffineBasedEstimator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_AffineBasedEstimator }
+opencv_type_boxed! { Detail_AffineBasedEstimator }
 
 impl Drop for Detail_AffineBasedEstimator {
 	fn drop(&mut self) {
@@ -1246,7 +1256,7 @@ pub struct Detail_AffineBestOf2NearestMatcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_AffineBestOf2NearestMatcher }
+opencv_type_boxed! { Detail_AffineBestOf2NearestMatcher }
 
 impl Drop for Detail_AffineBestOf2NearestMatcher {
 	fn drop(&mut self) {
@@ -1297,7 +1307,7 @@ impl Detail_AffineBestOf2NearestMatcher {
 	/// * match_conf: 0.3f
 	/// * num_matches_thresh1: 6
 	pub fn new(full_affine: bool, try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32) -> Result<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
-		unsafe { sys::cv_detail_AffineBestOf2NearestMatcher_AffineBestOf2NearestMatcher_bool_bool_float_int(full_affine, try_use_gpu, match_conf, num_matches_thresh1) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_AffineBestOf2NearestMatcher::from_raw(ptr) })
+		unsafe { sys::cv_detail_AffineBestOf2NearestMatcher_AffineBestOf2NearestMatcher_bool_bool_float_int(full_affine, try_use_gpu, match_conf, num_matches_thresh1) }.into_result().map(|r| unsafe { crate::stitching::Detail_AffineBestOf2NearestMatcher::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1339,7 +1349,7 @@ pub trait Detail_AffineWarperTrait: crate::stitching::Detail_PlaneWarperTrait {
 		input_array_arg!(h);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_AffineWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_AffineWarper(), &src_size, k.as_raw__InputArray(), h.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_AffineWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_AffineWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), h.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Projects the image.
@@ -1370,7 +1380,7 @@ pub trait Detail_AffineWarperTrait: crate::stitching::Detail_PlaneWarperTrait {
 	fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
 		input_array_arg!(h);
-		unsafe { sys::cv_detail_AffineWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_AffineWarper(), &src_size, k.as_raw__InputArray(), h.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_AffineWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_AffineWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), h.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -1383,7 +1393,7 @@ pub struct Detail_AffineWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_AffineWarper }
+opencv_type_boxed! { Detail_AffineWarper }
 
 impl Drop for Detail_AffineWarper {
 	fn drop(&mut self) {
@@ -1423,7 +1433,7 @@ impl Detail_AffineWarper {
 	/// ## C++ default parameters
 	/// * scale: 1.f
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_AffineWarper> {
-		unsafe { sys::cv_detail_AffineWarper_AffineWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_AffineWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_AffineWarper_AffineWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1450,7 +1460,7 @@ pub struct Detail_BestOf2NearestMatcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BestOf2NearestMatcher }
+opencv_type_boxed! { Detail_BestOf2NearestMatcher }
 
 impl Drop for Detail_BestOf2NearestMatcher {
 	fn drop(&mut self) {
@@ -1493,7 +1503,7 @@ impl Detail_BestOf2NearestMatcher {
 	/// * num_matches_thresh1: 6
 	/// * num_matches_thresh2: 6
 	pub fn new(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32) -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
-		unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BestOf2NearestMatcher::from_raw(ptr) })
+		unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2) }.into_result().map(|r| unsafe { crate::stitching::Detail_BestOf2NearestMatcher::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1508,7 +1518,7 @@ pub struct Detail_BestOf2NearestRangeMatcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BestOf2NearestRangeMatcher }
+opencv_type_boxed! { Detail_BestOf2NearestRangeMatcher }
 
 impl Drop for Detail_BestOf2NearestRangeMatcher {
 	fn drop(&mut self) {
@@ -1547,7 +1557,7 @@ impl Detail_BestOf2NearestRangeMatcher {
 	/// * num_matches_thresh1: 6
 	/// * num_matches_thresh2: 6
 	pub fn new(range_width: i32, try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32) -> Result<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
-		unsafe { sys::cv_detail_BestOf2NearestRangeMatcher_BestOf2NearestRangeMatcher_int_bool_float_int_int(range_width, try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BestOf2NearestRangeMatcher::from_raw(ptr) })
+		unsafe { sys::cv_detail_BestOf2NearestRangeMatcher_BestOf2NearestRangeMatcher_int_bool_float_int_int(range_width, try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2) }.into_result().map(|r| unsafe { crate::stitching::Detail_BestOf2NearestRangeMatcher::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1576,7 +1586,7 @@ pub trait Detail_BlenderTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn prepare_1(&mut self, dst_roi: core::Rect) -> Result<()> {
-		unsafe { sys::cv_detail_Blender_prepare_Rect(self.as_raw_mut_Detail_Blender(), &dst_roi) }.into_result()
+		unsafe { sys::cv_detail_Blender_prepare_Rect(self.as_raw_mut_Detail_Blender(), dst_roi.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Processes the image.
@@ -1588,7 +1598,7 @@ pub trait Detail_BlenderTrait {
 	fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
 		input_array_arg!(img);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_Blender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_Blender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), &tl) }.into_result()
+		unsafe { sys::cv_detail_Blender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_Blender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Blends and returns the final pano.
@@ -1611,7 +1621,7 @@ pub struct Detail_Blender {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_Blender }
+opencv_type_boxed! { Detail_Blender }
 
 impl Drop for Detail_Blender {
 	fn drop(&mut self) {
@@ -1636,7 +1646,7 @@ impl Detail_Blender {
 	/// ## C++ default parameters
 	/// * try_gpu: false
 	pub fn create_default(typ: i32, try_gpu: bool) -> Result<core::Ptr::<crate::stitching::Detail_Blender>> {
-		unsafe { sys::cv_detail_Blender_createDefault_int_bool(typ, try_gpu) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::from_raw(ptr) })
+		unsafe { sys::cv_detail_Blender_createDefault_int_bool(typ, try_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1650,7 +1660,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_ExposureCo
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_BlocksGainCompensator(), index, &corner, image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_BlocksGainCompensator(), index, corner.opencv_to_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -1661,7 +1671,7 @@ pub struct Detail_BlocksGainCompensator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BlocksGainCompensator }
+opencv_type_boxed! { Detail_BlocksGainCompensator }
 
 impl Drop for Detail_BlocksGainCompensator {
 	fn drop(&mut self) {
@@ -1692,7 +1702,7 @@ impl Detail_BlocksGainCompensator {
 	/// * bl_width: 32
 	/// * bl_height: 32
 	pub fn new(bl_width: i32, bl_height: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
-		unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(bl_width, bl_height) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BlocksGainCompensator::from_raw(ptr) })
+		unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(bl_width, bl_height) }.into_result().map(|r| unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1723,7 +1733,7 @@ pub struct Detail_BundleAdjusterAffine {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BundleAdjusterAffine }
+opencv_type_boxed! { Detail_BundleAdjusterAffine }
 
 impl Drop for Detail_BundleAdjusterAffine {
 	fn drop(&mut self) {
@@ -1756,7 +1766,7 @@ impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterAffine {
 
 impl Detail_BundleAdjusterAffine {
 	pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffine> {
-		unsafe { sys::cv_detail_BundleAdjusterAffine_BundleAdjusterAffine() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BundleAdjusterAffine::from_raw(ptr) })
+		unsafe { sys::cv_detail_BundleAdjusterAffine_BundleAdjusterAffine() }.into_result().map(|r| unsafe { crate::stitching::Detail_BundleAdjusterAffine::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1787,7 +1797,7 @@ pub struct Detail_BundleAdjusterAffinePartial {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BundleAdjusterAffinePartial }
+opencv_type_boxed! { Detail_BundleAdjusterAffinePartial }
 
 impl Drop for Detail_BundleAdjusterAffinePartial {
 	fn drop(&mut self) {
@@ -1820,7 +1830,7 @@ impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterAffinePartial {
 
 impl Detail_BundleAdjusterAffinePartial {
 	pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffinePartial> {
-		unsafe { sys::cv_detail_BundleAdjusterAffinePartial_BundleAdjusterAffinePartial() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BundleAdjusterAffinePartial::from_raw(ptr) })
+		unsafe { sys::cv_detail_BundleAdjusterAffinePartial_BundleAdjusterAffinePartial() }.into_result().map(|r| unsafe { crate::stitching::Detail_BundleAdjusterAffinePartial::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1831,7 +1841,7 @@ pub trait Detail_BundleAdjusterBase: crate::stitching::Detail_Estimator {
 	fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void;
 
 	fn refinement_mask(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_detail_BundleAdjusterBase_refinementMask_const(self.as_raw_Detail_BundleAdjusterBase()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_detail_BundleAdjusterBase_refinementMask_const(self.as_raw_Detail_BundleAdjusterBase()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn set_refinement_mask(&mut self, mask: &core::Mat) -> Result<()> {
@@ -1874,7 +1884,7 @@ pub struct Detail_BundleAdjusterRay {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BundleAdjusterRay }
+opencv_type_boxed! { Detail_BundleAdjusterRay }
 
 impl Drop for Detail_BundleAdjusterRay {
 	fn drop(&mut self) {
@@ -1907,7 +1917,7 @@ impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterRay {
 
 impl Detail_BundleAdjusterRay {
 	pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterRay> {
-		unsafe { sys::cv_detail_BundleAdjusterRay_BundleAdjusterRay() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BundleAdjusterRay::from_raw(ptr) })
+		unsafe { sys::cv_detail_BundleAdjusterRay_BundleAdjusterRay() }.into_result().map(|r| unsafe { crate::stitching::Detail_BundleAdjusterRay::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1932,7 +1942,7 @@ pub struct Detail_BundleAdjusterReproj {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_BundleAdjusterReproj }
+opencv_type_boxed! { Detail_BundleAdjusterReproj }
 
 impl Drop for Detail_BundleAdjusterReproj {
 	fn drop(&mut self) {
@@ -1965,7 +1975,7 @@ impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterReproj {
 
 impl Detail_BundleAdjusterReproj {
 	pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterReproj> {
-		unsafe { sys::cv_detail_BundleAdjusterReproj_BundleAdjusterReproj() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_BundleAdjusterReproj::from_raw(ptr) })
+		unsafe { sys::cv_detail_BundleAdjusterReproj_BundleAdjusterReproj() }.into_result().map(|r| unsafe { crate::stitching::Detail_BundleAdjusterReproj::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1979,55 +1989,55 @@ pub trait Detail_CameraParamsTrait {
 	fn as_raw_mut_Detail_CameraParams(&mut self) -> *mut c_void;
 
 	fn focal(&self) -> f64 {
-		unsafe { sys::cv_detail_CameraParams_focal_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: focal")
+		unsafe { sys::cv_detail_CameraParams_getPropFocal_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: focal")
 	}
 	
 	fn set_focal(&mut self, val: f64) -> () {
-		unsafe { sys::cv_detail_CameraParams_setFocal_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_focal")
+		unsafe { sys::cv_detail_CameraParams_setPropFocal_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_focal")
 	}
 	
 	fn aspect(&self) -> f64 {
-		unsafe { sys::cv_detail_CameraParams_aspect_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: aspect")
+		unsafe { sys::cv_detail_CameraParams_getPropAspect_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: aspect")
 	}
 	
 	fn set_aspect(&mut self, val: f64) -> () {
-		unsafe { sys::cv_detail_CameraParams_setAspect_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_aspect")
+		unsafe { sys::cv_detail_CameraParams_setPropAspect_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_aspect")
 	}
 	
 	fn ppx(&self) -> f64 {
-		unsafe { sys::cv_detail_CameraParams_ppx_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: ppx")
+		unsafe { sys::cv_detail_CameraParams_getPropPpx_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: ppx")
 	}
 	
 	fn set_ppx(&mut self, val: f64) -> () {
-		unsafe { sys::cv_detail_CameraParams_setPpx_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_ppx")
+		unsafe { sys::cv_detail_CameraParams_setPropPpx_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_ppx")
 	}
 	
 	fn ppy(&self) -> f64 {
-		unsafe { sys::cv_detail_CameraParams_ppy_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: ppy")
+		unsafe { sys::cv_detail_CameraParams_getPropPpy_const(self.as_raw_Detail_CameraParams()) }.into_result().expect("Infallible function failed: ppy")
 	}
 	
 	fn set_ppy(&mut self, val: f64) -> () {
-		unsafe { sys::cv_detail_CameraParams_setPpy_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_ppy")
+		unsafe { sys::cv_detail_CameraParams_setPropPpy_double(self.as_raw_mut_Detail_CameraParams(), val) }.into_result().expect("Infallible function failed: set_ppy")
 	}
 	
 	fn r(&mut self) -> core::Mat {
-		unsafe { sys::cv_detail_CameraParams_R(self.as_raw_mut_Detail_CameraParams()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: r")
+		unsafe { sys::cv_detail_CameraParams_getPropR(self.as_raw_mut_Detail_CameraParams()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: r")
 	}
 	
 	fn set_r(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_detail_CameraParams_setR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_r")
+		unsafe { sys::cv_detail_CameraParams_setPropR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_r")
 	}
 	
 	fn t(&mut self) -> core::Mat {
-		unsafe { sys::cv_detail_CameraParams_t(self.as_raw_mut_Detail_CameraParams()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: t")
+		unsafe { sys::cv_detail_CameraParams_getPropT(self.as_raw_mut_Detail_CameraParams()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: t")
 	}
 	
 	fn set_t(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_detail_CameraParams_setT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_t")
+		unsafe { sys::cv_detail_CameraParams_setPropT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_t")
 	}
 	
 	fn k(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_detail_CameraParams_K_const(self.as_raw_Detail_CameraParams()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_detail_CameraParams_K_const(self.as_raw_Detail_CameraParams()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2040,7 +2050,7 @@ pub struct Detail_CameraParams {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CameraParams }
+opencv_type_boxed! { Detail_CameraParams }
 
 impl Drop for Detail_CameraParams {
 	fn drop(&mut self) {
@@ -2063,11 +2073,11 @@ impl crate::stitching::Detail_CameraParamsTrait for Detail_CameraParams {
 
 impl Detail_CameraParams {
 	pub fn default() -> Result<crate::stitching::Detail_CameraParams> {
-		unsafe { sys::cv_detail_CameraParams_CameraParams() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CameraParams::from_raw(ptr) })
+		unsafe { sys::cv_detail_CameraParams_CameraParams() }.into_result().map(|r| unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(r) } )
 	}
 	
 	pub fn copy(other: &crate::stitching::Detail_CameraParams) -> Result<crate::stitching::Detail_CameraParams> {
-		unsafe { sys::cv_detail_CameraParams_CameraParams_const_CameraParamsX(other.as_raw_Detail_CameraParams()) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CameraParams::from_raw(ptr) })
+		unsafe { sys::cv_detail_CameraParams_CameraParams_const_CameraParamsX(other.as_raw_Detail_CameraParams()) }.into_result().map(|r| unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2077,27 +2087,27 @@ pub trait Detail_CompressedRectilinearPortraitProjectorTrait: crate::stitching::
 	fn as_raw_mut_Detail_CompressedRectilinearPortraitProjector(&mut self) -> *mut c_void;
 
 	fn a(&self) -> f32 {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_a_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) }.into_result().expect("Infallible function failed: a")
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_getPropA_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) }.into_result().expect("Infallible function failed: a")
 	}
 	
 	fn set_a(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_a")
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setPropA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_a")
 	}
 	
 	fn b(&self) -> f32 {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_b_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) }.into_result().expect("Infallible function failed: b")
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_getPropB_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) }.into_result().expect("Infallible function failed: b")
 	}
 	
 	fn set_b(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_b")
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setPropB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_b")
 	}
 	
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -2106,7 +2116,7 @@ pub struct Detail_CompressedRectilinearPortraitProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CompressedRectilinearPortraitProjector }
+opencv_type_boxed! { Detail_CompressedRectilinearPortraitProjector }
 
 impl Drop for Detail_CompressedRectilinearPortraitProjector {
 	fn drop(&mut self) {
@@ -2145,7 +2155,7 @@ pub struct Detail_CompressedRectilinearPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CompressedRectilinearPortraitWarper }
+opencv_type_boxed! { Detail_CompressedRectilinearPortraitWarper }
 
 impl Drop for Detail_CompressedRectilinearPortraitWarper {
 	fn drop(&mut self) {
@@ -2176,7 +2186,7 @@ impl Detail_CompressedRectilinearPortraitWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_CompressedRectilinearPortraitWarper> {
-		unsafe { sys::cv_detail_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float_float(scale, a, b) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CompressedRectilinearPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float_float(scale, a, b) }.into_result().map(|r| unsafe { crate::stitching::Detail_CompressedRectilinearPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2186,27 +2196,27 @@ pub trait Detail_CompressedRectilinearProjectorTrait: crate::stitching::Detail_P
 	fn as_raw_mut_Detail_CompressedRectilinearProjector(&mut self) -> *mut c_void;
 
 	fn a(&self) -> f32 {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_a_const(self.as_raw_Detail_CompressedRectilinearProjector()) }.into_result().expect("Infallible function failed: a")
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_getPropA_const(self.as_raw_Detail_CompressedRectilinearProjector()) }.into_result().expect("Infallible function failed: a")
 	}
 	
 	fn set_a(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_setA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) }.into_result().expect("Infallible function failed: set_a")
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_setPropA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) }.into_result().expect("Infallible function failed: set_a")
 	}
 	
 	fn b(&self) -> f32 {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_b_const(self.as_raw_Detail_CompressedRectilinearProjector()) }.into_result().expect("Infallible function failed: b")
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_getPropB_const(self.as_raw_Detail_CompressedRectilinearProjector()) }.into_result().expect("Infallible function failed: b")
 	}
 	
 	fn set_b(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_setB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) }.into_result().expect("Infallible function failed: set_b")
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_setPropB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) }.into_result().expect("Infallible function failed: set_b")
 	}
 	
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_CompressedRectilinearProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_CompressedRectilinearProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CompressedRectilinearProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_CompressedRectilinearProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_CompressedRectilinearProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_CompressedRectilinearProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -2215,7 +2225,7 @@ pub struct Detail_CompressedRectilinearProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CompressedRectilinearProjector }
+opencv_type_boxed! { Detail_CompressedRectilinearProjector }
 
 impl Drop for Detail_CompressedRectilinearProjector {
 	fn drop(&mut self) {
@@ -2254,7 +2264,7 @@ pub struct Detail_CompressedRectilinearWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CompressedRectilinearWarper }
+opencv_type_boxed! { Detail_CompressedRectilinearWarper }
 
 impl Drop for Detail_CompressedRectilinearWarper {
 	fn drop(&mut self) {
@@ -2285,7 +2295,7 @@ impl Detail_CompressedRectilinearWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_CompressedRectilinearWarper> {
-		unsafe { sys::cv_detail_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float_float(scale, a, b) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CompressedRectilinearWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float_float(scale, a, b) }.into_result().map(|r| unsafe { crate::stitching::Detail_CompressedRectilinearWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2295,11 +2305,11 @@ pub trait Detail_CylindricalPortraitProjectorTrait: crate::stitching::Detail_Pro
 	fn as_raw_mut_Detail_CylindricalPortraitProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CylindricalPortraitProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_CylindricalPortraitProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_CylindricalPortraitProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_CylindricalPortraitProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CylindricalPortraitProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_CylindricalPortraitProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_CylindricalPortraitProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_CylindricalPortraitProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -2308,7 +2318,7 @@ pub struct Detail_CylindricalPortraitProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CylindricalPortraitProjector }
+opencv_type_boxed! { Detail_CylindricalPortraitProjector }
 
 impl Drop for Detail_CylindricalPortraitProjector {
 	fn drop(&mut self) {
@@ -2347,7 +2357,7 @@ pub struct Detail_CylindricalPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CylindricalPortraitWarper }
+opencv_type_boxed! { Detail_CylindricalPortraitWarper }
 
 impl Drop for Detail_CylindricalPortraitWarper {
 	fn drop(&mut self) {
@@ -2375,7 +2385,7 @@ impl crate::stitching::Detail_RotationWarper for Detail_CylindricalPortraitWarpe
 
 impl Detail_CylindricalPortraitWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalPortraitWarper> {
-		unsafe { sys::cv_detail_CylindricalPortraitWarper_CylindricalPortraitWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CylindricalPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_CylindricalPortraitWarper_CylindricalPortraitWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_CylindricalPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2385,11 +2395,11 @@ pub trait Detail_CylindricalProjectorTrait: crate::stitching::Detail_ProjectorBa
 	fn as_raw_mut_Detail_CylindricalProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CylindricalProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_CylindricalProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_CylindricalProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_CylindricalProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_CylindricalProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_CylindricalProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_CylindricalProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_CylindricalProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -2398,7 +2408,7 @@ pub struct Detail_CylindricalProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CylindricalProjector }
+opencv_type_boxed! { Detail_CylindricalProjector }
 
 impl Drop for Detail_CylindricalProjector {
 	fn drop(&mut self) {
@@ -2437,7 +2447,7 @@ pub trait Detail_CylindricalWarperTrait {
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_CylindricalWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_CylindricalWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -2455,7 +2465,7 @@ pub struct Detail_CylindricalWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CylindricalWarper }
+opencv_type_boxed! { Detail_CylindricalWarper }
 
 impl Drop for Detail_CylindricalWarper {
 	fn drop(&mut self) {
@@ -2487,7 +2497,7 @@ impl Detail_CylindricalWarper {
 	/// ## Parameters
 	/// * scale: Projected image scale multiplier
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarper> {
-		unsafe { sys::cv_detail_CylindricalWarper_CylindricalWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CylindricalWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_CylindricalWarper_CylindricalWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_CylindricalWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2501,7 +2511,7 @@ pub trait Detail_CylindricalWarperGpuTrait: crate::stitching::Detail_Cylindrical
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_CylindricalWarperGpu(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_CylindricalWarperGpu(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -2518,7 +2528,7 @@ pub struct Detail_CylindricalWarperGpu {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_CylindricalWarperGpu }
+opencv_type_boxed! { Detail_CylindricalWarperGpu }
 
 impl Drop for Detail_CylindricalWarperGpu {
 	fn drop(&mut self) {
@@ -2551,7 +2561,7 @@ impl crate::stitching::Detail_RotationWarper for Detail_CylindricalWarperGpu {
 
 impl Detail_CylindricalWarperGpu {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarperGpu> {
-		unsafe { sys::cv_detail_CylindricalWarperGpu_CylindricalWarperGpu_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_CylindricalWarperGpu::from_raw(ptr) })
+		unsafe { sys::cv_detail_CylindricalWarperGpu_CylindricalWarperGpu_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_CylindricalWarperGpu::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2561,19 +2571,19 @@ pub trait Detail_DisjointSetsTrait {
 	fn as_raw_mut_Detail_DisjointSets(&mut self) -> *mut c_void;
 
 	fn parent(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_detail_DisjointSets_parent(self.as_raw_mut_Detail_DisjointSets()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) }).expect("Infallible function failed: parent")
+		unsafe { sys::cv_detail_DisjointSets_getPropParent(self.as_raw_mut_Detail_DisjointSets()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: parent")
 	}
 	
 	fn set_parent(&mut self, mut val: core::Vector::<i32>) -> () {
-		unsafe { sys::cv_detail_DisjointSets_setParent_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_parent")
+		unsafe { sys::cv_detail_DisjointSets_setPropParent_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_parent")
 	}
 	
 	fn size(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_detail_DisjointSets_size(self.as_raw_mut_Detail_DisjointSets()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) }).expect("Infallible function failed: size")
+		unsafe { sys::cv_detail_DisjointSets_getPropSize(self.as_raw_mut_Detail_DisjointSets()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: size")
 	}
 	
 	fn set_size(&mut self, mut val: core::Vector::<i32>) -> () {
-		unsafe { sys::cv_detail_DisjointSets_setSize_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_size")
+		unsafe { sys::cv_detail_DisjointSets_setPropSize_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_size")
 	}
 	
 	fn create_one_elem_sets(&mut self, elem_count: i32) -> Result<()> {
@@ -2594,7 +2604,7 @@ pub struct Detail_DisjointSets {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_DisjointSets }
+opencv_type_boxed! { Detail_DisjointSets }
 
 impl Drop for Detail_DisjointSets {
 	fn drop(&mut self) {
@@ -2619,7 +2629,7 @@ impl Detail_DisjointSets {
 	/// ## C++ default parameters
 	/// * elem_count: 0
 	pub fn new(elem_count: i32) -> Result<crate::stitching::Detail_DisjointSets> {
-		unsafe { sys::cv_detail_DisjointSets_DisjointSets_int(elem_count) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_DisjointSets::from_raw(ptr) })
+		unsafe { sys::cv_detail_DisjointSets_DisjointSets_int(elem_count) }.into_result().map(|r| unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2646,7 +2656,7 @@ pub struct Detail_DpSeamFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_DpSeamFinder }
+opencv_type_boxed! { Detail_DpSeamFinder }
 
 impl Drop for Detail_DpSeamFinder {
 	fn drop(&mut self) {
@@ -2676,7 +2686,7 @@ impl Detail_DpSeamFinder {
 	/// ## C++ default parameters
 	/// * cost_func: COLOR
 	pub fn new(cost_func: crate::stitching::Detail_DpSeamFinder_CostFunction) -> Result<crate::stitching::Detail_DpSeamFinder> {
-		unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cost_func) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_DpSeamFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cost_func) }.into_result().map(|r| unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2719,14 +2729,14 @@ pub trait Detail_ExposureCompensator {
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_ExposureCompensator(), index, &corner, image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_ExposureCompensator(), index, corner.opencv_to_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 	}
 	
 }
 
 impl dyn Detail_ExposureCompensator + '_ {
 	pub fn create_default(typ: i32) -> Result<core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>> {
-		unsafe { sys::cv_detail_ExposureCompensator_createDefault_int(typ) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::from_raw(ptr) })
+		unsafe { sys::cv_detail_ExposureCompensator_createDefault_int(typ) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2744,13 +2754,13 @@ pub trait Detail_FeatherBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	}
 	
 	fn prepare(&mut self, dst_roi: core::Rect) -> Result<()> {
-		unsafe { sys::cv_detail_FeatherBlender_prepare_Rect(self.as_raw_mut_Detail_FeatherBlender(), &dst_roi) }.into_result()
+		unsafe { sys::cv_detail_FeatherBlender_prepare_Rect(self.as_raw_mut_Detail_FeatherBlender(), dst_roi.opencv_to_extern()) }.into_result()
 	}
 	
 	fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
 		input_array_arg!(img);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_FeatherBlender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_FeatherBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), &tl) }.into_result()
+		unsafe { sys::cv_detail_FeatherBlender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_FeatherBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_to_extern()) }.into_result()
 	}
 	
 	fn blend(&mut self, dst: &mut dyn core::ToInputOutputArray, dst_mask: &mut dyn core::ToInputOutputArray) -> Result<()> {
@@ -2772,7 +2782,7 @@ pub struct Detail_FeatherBlender {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_FeatherBlender }
+opencv_type_boxed! { Detail_FeatherBlender }
 
 impl Drop for Detail_FeatherBlender {
 	fn drop(&mut self) {
@@ -2802,7 +2812,7 @@ impl Detail_FeatherBlender {
 	/// ## C++ default parameters
 	/// * sharpness: 0.02f
 	pub fn new(sharpness: f32) -> Result<crate::stitching::Detail_FeatherBlender> {
-		unsafe { sys::cv_detail_FeatherBlender_FeatherBlender_float(sharpness) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_FeatherBlender::from_raw(ptr) })
+		unsafe { sys::cv_detail_FeatherBlender_FeatherBlender_float(sharpness) }.into_result().map(|r| unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2842,11 +2852,11 @@ pub trait Detail_FisheyeProjectorTrait: crate::stitching::Detail_ProjectorBaseTr
 	fn as_raw_mut_Detail_FisheyeProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_FisheyeProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_FisheyeProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_FisheyeProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_FisheyeProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_FisheyeProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_FisheyeProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_FisheyeProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_FisheyeProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -2855,7 +2865,7 @@ pub struct Detail_FisheyeProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_FisheyeProjector }
+opencv_type_boxed! { Detail_FisheyeProjector }
 
 impl Drop for Detail_FisheyeProjector {
 	fn drop(&mut self) {
@@ -2894,7 +2904,7 @@ pub struct Detail_FisheyeWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_FisheyeWarper }
+opencv_type_boxed! { Detail_FisheyeWarper }
 
 impl Drop for Detail_FisheyeWarper {
 	fn drop(&mut self) {
@@ -2922,7 +2932,7 @@ impl crate::stitching::Detail_RotationWarper for Detail_FisheyeWarper {
 
 impl Detail_FisheyeWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_FisheyeWarper> {
-		unsafe { sys::cv_detail_FisheyeWarper_FisheyeWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_FisheyeWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_FisheyeWarper_FisheyeWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_FisheyeWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2936,11 +2946,11 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_GainCompensator(), index, &corner, image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_GainCompensator(), index, corner.opencv_to_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn gains(&self) -> Result<core::Vector::<f64>> {
-		unsafe { sys::cv_detail_GainCompensator_gains_const(self.as_raw_Detail_GainCompensator()) }.into_result().map(|ptr| unsafe { core::Vector::<f64>::from_raw(ptr) })
+		unsafe { sys::cv_detail_GainCompensator_gains_const(self.as_raw_Detail_GainCompensator()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2951,7 +2961,7 @@ pub struct Detail_GainCompensator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_GainCompensator }
+opencv_type_boxed! { Detail_GainCompensator }
 
 impl Drop for Detail_GainCompensator {
 	fn drop(&mut self) {
@@ -3002,7 +3012,7 @@ pub struct Detail_Graph {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_Graph }
+opencv_type_boxed! { Detail_Graph }
 
 impl Drop for Detail_Graph {
 	fn drop(&mut self) {
@@ -3027,7 +3037,7 @@ impl Detail_Graph {
 	/// ## C++ default parameters
 	/// * num_vertices: 0
 	pub fn new(num_vertices: i32) -> Result<crate::stitching::Detail_Graph> {
-		unsafe { sys::cv_detail_Graph_Graph_int(num_vertices) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_Graph::from_raw(ptr) })
+		unsafe { sys::cv_detail_Graph_Graph_int(num_vertices) }.into_result().map(|r| unsafe { crate::stitching::Detail_Graph::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3048,7 +3058,7 @@ pub struct Detail_GraphCutSeamFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_GraphCutSeamFinder }
+opencv_type_boxed! { Detail_GraphCutSeamFinder }
 
 impl Drop for Detail_GraphCutSeamFinder {
 	fn drop(&mut self) {
@@ -3085,7 +3095,7 @@ impl Detail_GraphCutSeamFinder {
 	/// * terminal_cost: 10000.f
 	/// * bad_region_penalty: 1000.f
 	pub fn new(cost_type: i32, terminal_cost: f32, bad_region_penalty: f32) -> Result<crate::stitching::Detail_GraphCutSeamFinder> {
-		unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_int_float_float(cost_type, terminal_cost, bad_region_penalty) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_GraphCutSeamFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_int_float_float(cost_type, terminal_cost, bad_region_penalty) }.into_result().map(|r| unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3102,7 +3112,7 @@ pub struct Detail_GraphCutSeamFinderBase {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_GraphCutSeamFinderBase }
+opencv_type_boxed! { Detail_GraphCutSeamFinderBase }
 
 impl Drop for Detail_GraphCutSeamFinderBase {
 	fn drop(&mut self) {
@@ -3131,27 +3141,27 @@ pub trait Detail_GraphEdgeTrait {
 	fn as_raw_mut_Detail_GraphEdge(&mut self) -> *mut c_void;
 
 	fn from(&self) -> i32 {
-		unsafe { sys::cv_detail_GraphEdge_from_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: from")
+		unsafe { sys::cv_detail_GraphEdge_getPropFrom_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: from")
 	}
 	
 	fn set_from(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_GraphEdge_setFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_from")
+		unsafe { sys::cv_detail_GraphEdge_setPropFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_from")
 	}
 	
 	fn to(&self) -> i32 {
-		unsafe { sys::cv_detail_GraphEdge_to_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: to")
+		unsafe { sys::cv_detail_GraphEdge_getPropTo_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: to")
 	}
 	
 	fn set_to(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_GraphEdge_setTo_int(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_to")
+		unsafe { sys::cv_detail_GraphEdge_setPropTo_int(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_to")
 	}
 	
 	fn weight(&self) -> f32 {
-		unsafe { sys::cv_detail_GraphEdge_weight_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: weight")
+		unsafe { sys::cv_detail_GraphEdge_getPropWeight_const(self.as_raw_Detail_GraphEdge()) }.into_result().expect("Infallible function failed: weight")
 	}
 	
 	fn set_weight(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_GraphEdge_setWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_weight")
+		unsafe { sys::cv_detail_GraphEdge_setPropWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) }.into_result().expect("Infallible function failed: set_weight")
 	}
 	
 }
@@ -3160,7 +3170,7 @@ pub struct Detail_GraphEdge {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_GraphEdge }
+opencv_type_boxed! { Detail_GraphEdge }
 
 impl Drop for Detail_GraphEdge {
 	fn drop(&mut self) {
@@ -3183,7 +3193,7 @@ impl crate::stitching::Detail_GraphEdgeTrait for Detail_GraphEdge {
 
 impl Detail_GraphEdge {
 	pub fn new(from: i32, to: i32, weight: f32) -> Result<crate::stitching::Detail_GraphEdge> {
-		unsafe { sys::cv_detail_GraphEdge_GraphEdge_int_int_float(from, to, weight) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_GraphEdge::from_raw(ptr) })
+		unsafe { sys::cv_detail_GraphEdge_GraphEdge_int_int_float(from, to, weight) }.into_result().map(|r| unsafe { crate::stitching::Detail_GraphEdge::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3200,7 +3210,7 @@ pub struct Detail_HomographyBasedEstimator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_HomographyBasedEstimator }
+opencv_type_boxed! { Detail_HomographyBasedEstimator }
 
 impl Drop for Detail_HomographyBasedEstimator {
 	fn drop(&mut self) {
@@ -3230,7 +3240,7 @@ impl Detail_HomographyBasedEstimator {
 	/// ## C++ default parameters
 	/// * is_focals_estimated: false
 	pub fn new(is_focals_estimated: bool) -> Result<crate::stitching::Detail_HomographyBasedEstimator> {
-		unsafe { sys::cv_detail_HomographyBasedEstimator_HomographyBasedEstimator_bool(is_focals_estimated) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_HomographyBasedEstimator::from_raw(ptr) })
+		unsafe { sys::cv_detail_HomographyBasedEstimator_HomographyBasedEstimator_bool(is_focals_estimated) }.into_result().map(|r| unsafe { crate::stitching::Detail_HomographyBasedEstimator::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3241,35 +3251,35 @@ pub trait Detail_ImageFeaturesTrait {
 	fn as_raw_mut_Detail_ImageFeatures(&mut self) -> *mut c_void;
 
 	fn img_idx(&self) -> i32 {
-		unsafe { sys::cv_detail_ImageFeatures_img_idx_const(self.as_raw_Detail_ImageFeatures()) }.into_result().expect("Infallible function failed: img_idx")
+		unsafe { sys::cv_detail_ImageFeatures_getPropImg_idx_const(self.as_raw_Detail_ImageFeatures()) }.into_result().expect("Infallible function failed: img_idx")
 	}
 	
 	fn set_img_idx(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_ImageFeatures_setImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) }.into_result().expect("Infallible function failed: set_img_idx")
+		unsafe { sys::cv_detail_ImageFeatures_setPropImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) }.into_result().expect("Infallible function failed: set_img_idx")
 	}
 	
 	fn img_size(&self) -> core::Size {
-		unsafe { sys::cv_detail_ImageFeatures_img_size_const(self.as_raw_Detail_ImageFeatures()) }.into_result().expect("Infallible function failed: img_size")
+		unsafe { sys::cv_detail_ImageFeatures_getPropImg_size_const(self.as_raw_Detail_ImageFeatures()) }.into_result().expect("Infallible function failed: img_size")
 	}
 	
 	fn set_img_size(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_detail_ImageFeatures_setImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), &val) }.into_result().expect("Infallible function failed: set_img_size")
+		unsafe { sys::cv_detail_ImageFeatures_setPropImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_img_size")
 	}
 	
 	fn keypoints(&mut self) -> core::Vector::<core::KeyPoint> {
-		unsafe { sys::cv_detail_ImageFeatures_keypoints(self.as_raw_mut_Detail_ImageFeatures()) }.into_result().map(|ptr| unsafe { core::Vector::<core::KeyPoint>::from_raw(ptr) }).expect("Infallible function failed: keypoints")
+		unsafe { sys::cv_detail_ImageFeatures_getPropKeypoints(self.as_raw_mut_Detail_ImageFeatures()) }.into_result().map(|r| unsafe { core::Vector::<core::KeyPoint>::opencv_from_extern(r) } ).expect("Infallible function failed: keypoints")
 	}
 	
 	fn set_keypoints(&mut self, mut val: core::Vector::<core::KeyPoint>) -> () {
-		unsafe { sys::cv_detail_ImageFeatures_setKeypoints_vector_KeyPoint_(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) }.into_result().expect("Infallible function failed: set_keypoints")
+		unsafe { sys::cv_detail_ImageFeatures_setPropKeypoints_vector_KeyPoint_(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) }.into_result().expect("Infallible function failed: set_keypoints")
 	}
 	
 	fn descriptors(&mut self) -> core::UMat {
-		unsafe { sys::cv_detail_ImageFeatures_descriptors(self.as_raw_mut_Detail_ImageFeatures()) }.into_result().map(|ptr| unsafe { core::UMat::from_raw(ptr) }).expect("Infallible function failed: descriptors")
+		unsafe { sys::cv_detail_ImageFeatures_getPropDescriptors(self.as_raw_mut_Detail_ImageFeatures()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: descriptors")
 	}
 	
 	fn set_descriptors(&mut self, mut val: core::UMat) -> () {
-		unsafe { sys::cv_detail_ImageFeatures_setDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) }.into_result().expect("Infallible function failed: set_descriptors")
+		unsafe { sys::cv_detail_ImageFeatures_setPropDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) }.into_result().expect("Infallible function failed: set_descriptors")
 	}
 	
 }
@@ -3279,7 +3289,7 @@ pub struct Detail_ImageFeatures {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_ImageFeatures }
+opencv_type_boxed! { Detail_ImageFeatures }
 
 impl Drop for Detail_ImageFeatures {
 	fn drop(&mut self) {
@@ -3315,70 +3325,70 @@ pub trait Detail_MatchesInfoTrait {
 
 	/// Images indices (optional)
 	fn src_img_idx(&self) -> i32 {
-		unsafe { sys::cv_detail_MatchesInfo_src_img_idx_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: src_img_idx")
+		unsafe { sys::cv_detail_MatchesInfo_getPropSrc_img_idx_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: src_img_idx")
 	}
 	
 	/// Images indices (optional)
 	fn set_src_img_idx(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_src_img_idx")
+		unsafe { sys::cv_detail_MatchesInfo_setPropSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_src_img_idx")
 	}
 	
 	/// Images indices (optional)
 	fn dst_img_idx(&self) -> i32 {
-		unsafe { sys::cv_detail_MatchesInfo_dst_img_idx_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: dst_img_idx")
+		unsafe { sys::cv_detail_MatchesInfo_getPropDst_img_idx_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: dst_img_idx")
 	}
 	
 	/// Images indices (optional)
 	fn set_dst_img_idx(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_dst_img_idx")
+		unsafe { sys::cv_detail_MatchesInfo_setPropDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_dst_img_idx")
 	}
 	
 	fn matches(&mut self) -> core::Vector::<core::DMatch> {
-		unsafe { sys::cv_detail_MatchesInfo_matches(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|ptr| unsafe { core::Vector::<core::DMatch>::from_raw(ptr) }).expect("Infallible function failed: matches")
+		unsafe { sys::cv_detail_MatchesInfo_getPropMatches(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|r| unsafe { core::Vector::<core::DMatch>::opencv_from_extern(r) } ).expect("Infallible function failed: matches")
 	}
 	
 	fn set_matches(&mut self, mut val: core::Vector::<core::DMatch>) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setMatches_vector_DMatch_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) }.into_result().expect("Infallible function failed: set_matches")
+		unsafe { sys::cv_detail_MatchesInfo_setPropMatches_vector_DMatch_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) }.into_result().expect("Infallible function failed: set_matches")
 	}
 	
 	/// Geometrically consistent matches mask
 	fn inliers_mask(&mut self) -> core::Vector::<u8> {
-		unsafe { sys::cv_detail_MatchesInfo_inliers_mask(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|ptr| unsafe { core::Vector::<u8>::from_raw(ptr) }).expect("Infallible function failed: inliers_mask")
+		unsafe { sys::cv_detail_MatchesInfo_getPropInliers_mask(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|r| unsafe { core::Vector::<u8>::opencv_from_extern(r) } ).expect("Infallible function failed: inliers_mask")
 	}
 	
 	/// Geometrically consistent matches mask
 	fn set_inliers_mask(&mut self, mut val: core::Vector::<u8>) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setInliers_mask_vector_unsigned_char_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) }.into_result().expect("Infallible function failed: set_inliers_mask")
+		unsafe { sys::cv_detail_MatchesInfo_setPropInliers_mask_vector_unsigned_char_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) }.into_result().expect("Infallible function failed: set_inliers_mask")
 	}
 	
 	/// Number of geometrically consistent matches
 	fn num_inliers(&self) -> i32 {
-		unsafe { sys::cv_detail_MatchesInfo_num_inliers_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: num_inliers")
+		unsafe { sys::cv_detail_MatchesInfo_getPropNum_inliers_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: num_inliers")
 	}
 	
 	/// Number of geometrically consistent matches
 	fn set_num_inliers(&mut self, val: i32) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_num_inliers")
+		unsafe { sys::cv_detail_MatchesInfo_setPropNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_num_inliers")
 	}
 	
 	/// Estimated transformation
 	fn h(&mut self) -> core::Mat {
-		unsafe { sys::cv_detail_MatchesInfo_H(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: h")
+		unsafe { sys::cv_detail_MatchesInfo_getPropH(self.as_raw_mut_Detail_MatchesInfo()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: h")
 	}
 	
 	/// Estimated transformation
 	fn set_h(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_h")
+		unsafe { sys::cv_detail_MatchesInfo_setPropH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_h")
 	}
 	
 	/// Confidence two images are from the same panorama
 	fn confidence(&self) -> f64 {
-		unsafe { sys::cv_detail_MatchesInfo_confidence_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: confidence")
+		unsafe { sys::cv_detail_MatchesInfo_getPropConfidence_const(self.as_raw_Detail_MatchesInfo()) }.into_result().expect("Infallible function failed: confidence")
 	}
 	
 	/// Confidence two images are from the same panorama
 	fn set_confidence(&mut self, val: f64) -> () {
-		unsafe { sys::cv_detail_MatchesInfo_setConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_confidence")
+		unsafe { sys::cv_detail_MatchesInfo_setPropConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) }.into_result().expect("Infallible function failed: set_confidence")
 	}
 	
 }
@@ -3393,7 +3403,7 @@ pub struct Detail_MatchesInfo {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_MatchesInfo }
+opencv_type_boxed! { Detail_MatchesInfo }
 
 impl Drop for Detail_MatchesInfo {
 	fn drop(&mut self) {
@@ -3416,11 +3426,11 @@ impl crate::stitching::Detail_MatchesInfoTrait for Detail_MatchesInfo {
 
 impl Detail_MatchesInfo {
 	pub fn default() -> Result<crate::stitching::Detail_MatchesInfo> {
-		unsafe { sys::cv_detail_MatchesInfo_MatchesInfo() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_MatchesInfo::from_raw(ptr) })
+		unsafe { sys::cv_detail_MatchesInfo_MatchesInfo() }.into_result().map(|r| unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(r) } )
 	}
 	
 	pub fn copy(other: &crate::stitching::Detail_MatchesInfo) -> Result<crate::stitching::Detail_MatchesInfo> {
-		unsafe { sys::cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoX(other.as_raw_Detail_MatchesInfo()) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_MatchesInfo::from_raw(ptr) })
+		unsafe { sys::cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoX(other.as_raw_Detail_MatchesInfo()) }.into_result().map(|r| unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3430,11 +3440,11 @@ pub trait Detail_MercatorProjectorTrait: crate::stitching::Detail_ProjectorBaseT
 	fn as_raw_mut_Detail_MercatorProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_MercatorProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_MercatorProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_MercatorProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_MercatorProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_MercatorProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_MercatorProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_MercatorProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_MercatorProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -3443,7 +3453,7 @@ pub struct Detail_MercatorProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_MercatorProjector }
+opencv_type_boxed! { Detail_MercatorProjector }
 
 impl Drop for Detail_MercatorProjector {
 	fn drop(&mut self) {
@@ -3482,7 +3492,7 @@ pub struct Detail_MercatorWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_MercatorWarper }
+opencv_type_boxed! { Detail_MercatorWarper }
 
 impl Drop for Detail_MercatorWarper {
 	fn drop(&mut self) {
@@ -3510,7 +3520,7 @@ impl crate::stitching::Detail_RotationWarper for Detail_MercatorWarper {
 
 impl Detail_MercatorWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_MercatorWarper> {
-		unsafe { sys::cv_detail_MercatorWarper_MercatorWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_MercatorWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_MercatorWarper_MercatorWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_MercatorWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3529,13 +3539,13 @@ pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	}
 	
 	fn prepare(&mut self, dst_roi: core::Rect) -> Result<()> {
-		unsafe { sys::cv_detail_MultiBandBlender_prepare_Rect(self.as_raw_mut_Detail_MultiBandBlender(), &dst_roi) }.into_result()
+		unsafe { sys::cv_detail_MultiBandBlender_prepare_Rect(self.as_raw_mut_Detail_MultiBandBlender(), dst_roi.opencv_to_extern()) }.into_result()
 	}
 	
 	fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
 		input_array_arg!(img);
 		input_array_arg!(mask);
-		unsafe { sys::cv_detail_MultiBandBlender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_MultiBandBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), &tl) }.into_result()
+		unsafe { sys::cv_detail_MultiBandBlender_feed_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_Detail_MultiBandBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_to_extern()) }.into_result()
 	}
 	
 	fn blend(&mut self, dst: &mut dyn core::ToInputOutputArray, dst_mask: &mut dyn core::ToInputOutputArray) -> Result<()> {
@@ -3551,7 +3561,7 @@ pub struct Detail_MultiBandBlender {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_MultiBandBlender }
+opencv_type_boxed! { Detail_MultiBandBlender }
 
 impl Drop for Detail_MultiBandBlender {
 	fn drop(&mut self) {
@@ -3583,7 +3593,7 @@ impl Detail_MultiBandBlender {
 	/// * num_bands: 5
 	/// * weight_type: CV_32F
 	pub fn new(try_gpu: i32, num_bands: i32, weight_type: i32) -> Result<crate::stitching::Detail_MultiBandBlender> {
-		unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(try_gpu, num_bands, weight_type) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_MultiBandBlender::from_raw(ptr) })
+		unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(try_gpu, num_bands, weight_type) }.into_result().map(|r| unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3600,7 +3610,7 @@ pub struct Detail_NoBundleAdjuster {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_NoBundleAdjuster }
+opencv_type_boxed! { Detail_NoBundleAdjuster }
 
 impl Drop for Detail_NoBundleAdjuster {
 	fn drop(&mut self) {
@@ -3633,7 +3643,7 @@ impl crate::stitching::Detail_NoBundleAdjusterTrait for Detail_NoBundleAdjuster 
 
 impl Detail_NoBundleAdjuster {
 	pub fn default() -> Result<crate::stitching::Detail_NoBundleAdjuster> {
-		unsafe { sys::cv_detail_NoBundleAdjuster_NoBundleAdjuster() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_NoBundleAdjuster::from_raw(ptr) })
+		unsafe { sys::cv_detail_NoBundleAdjuster_NoBundleAdjuster() }.into_result().map(|r| unsafe { crate::stitching::Detail_NoBundleAdjuster::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3646,7 +3656,7 @@ pub trait Detail_NoExposureCompensatorTrait: crate::stitching::Detail_ExposureCo
 	fn apply(&mut self, unnamed: i32, unnamed_1: core::Point, unnamed_2: &mut dyn core::ToInputOutputArray, unnamed_3: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(unnamed_2);
 		input_array_arg!(unnamed_3);
-		unsafe { sys::cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_NoExposureCompensator(), unnamed, &unnamed_1, unnamed_2.as_raw__InputOutputArray(), unnamed_3.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_Detail_NoExposureCompensator(), unnamed, unnamed_1.opencv_to_extern(), unnamed_2.as_raw__InputOutputArray(), unnamed_3.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -3656,7 +3666,7 @@ pub struct Detail_NoExposureCompensator {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_NoExposureCompensator }
+opencv_type_boxed! { Detail_NoExposureCompensator }
 
 impl Drop for Detail_NoExposureCompensator {
 	fn drop(&mut self) {
@@ -3701,7 +3711,7 @@ pub struct Detail_NoSeamFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_NoSeamFinder }
+opencv_type_boxed! { Detail_NoSeamFinder }
 
 impl Drop for Detail_NoSeamFinder {
 	fn drop(&mut self) {
@@ -3746,7 +3756,7 @@ pub struct Detail_OrbFeaturesFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_OrbFeaturesFinder }
+opencv_type_boxed! { Detail_OrbFeaturesFinder }
 
 impl Drop for Detail_OrbFeaturesFinder {
 	fn drop(&mut self) {
@@ -3779,7 +3789,7 @@ impl Detail_OrbFeaturesFinder {
 	/// * scale_factor: 1.3f
 	/// * nlevels: 5
 	pub fn new(_grid_size: core::Size, nfeatures: i32, scale_factor: f32, nlevels: i32) -> Result<crate::stitching::Detail_OrbFeaturesFinder> {
-		unsafe { sys::cv_detail_OrbFeaturesFinder_OrbFeaturesFinder_Size_int_float_int(&_grid_size, nfeatures, scale_factor, nlevels) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_OrbFeaturesFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_OrbFeaturesFinder_OrbFeaturesFinder_Size_int_float_int(_grid_size.opencv_to_extern(), nfeatures, scale_factor, nlevels) }.into_result().map(|r| unsafe { crate::stitching::Detail_OrbFeaturesFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3800,27 +3810,27 @@ pub trait Detail_PaniniPortraitProjectorTrait: crate::stitching::Detail_Projecto
 	fn as_raw_mut_Detail_PaniniPortraitProjector(&mut self) -> *mut c_void;
 
 	fn a(&self) -> f32 {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_a_const(self.as_raw_Detail_PaniniPortraitProjector()) }.into_result().expect("Infallible function failed: a")
+		unsafe { sys::cv_detail_PaniniPortraitProjector_getPropA_const(self.as_raw_Detail_PaniniPortraitProjector()) }.into_result().expect("Infallible function failed: a")
 	}
 	
 	fn set_a(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_setA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_a")
+		unsafe { sys::cv_detail_PaniniPortraitProjector_setPropA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_a")
 	}
 	
 	fn b(&self) -> f32 {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_b_const(self.as_raw_Detail_PaniniPortraitProjector()) }.into_result().expect("Infallible function failed: b")
+		unsafe { sys::cv_detail_PaniniPortraitProjector_getPropB_const(self.as_raw_Detail_PaniniPortraitProjector()) }.into_result().expect("Infallible function failed: b")
 	}
 	
 	fn set_b(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_setB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_b")
+		unsafe { sys::cv_detail_PaniniPortraitProjector_setPropB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) }.into_result().expect("Infallible function failed: set_b")
 	}
 	
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_PaniniPortraitProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_PaniniPortraitProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_PaniniPortraitProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PaniniPortraitProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_PaniniPortraitProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_PaniniPortraitProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_PaniniPortraitProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -3829,7 +3839,7 @@ pub struct Detail_PaniniPortraitProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PaniniPortraitProjector }
+opencv_type_boxed! { Detail_PaniniPortraitProjector }
 
 impl Drop for Detail_PaniniPortraitProjector {
 	fn drop(&mut self) {
@@ -3868,7 +3878,7 @@ pub struct Detail_PaniniPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PaniniPortraitWarper }
+opencv_type_boxed! { Detail_PaniniPortraitWarper }
 
 impl Drop for Detail_PaniniPortraitWarper {
 	fn drop(&mut self) {
@@ -3899,7 +3909,7 @@ impl Detail_PaniniPortraitWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_PaniniPortraitWarper> {
-		unsafe { sys::cv_detail_PaniniPortraitWarper_PaniniPortraitWarper_float_float_float(scale, a, b) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_PaniniPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_PaniniPortraitWarper_PaniniPortraitWarper_float_float_float(scale, a, b) }.into_result().map(|r| unsafe { crate::stitching::Detail_PaniniPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3909,27 +3919,27 @@ pub trait Detail_PaniniProjectorTrait: crate::stitching::Detail_ProjectorBaseTra
 	fn as_raw_mut_Detail_PaniniProjector(&mut self) -> *mut c_void;
 
 	fn a(&self) -> f32 {
-		unsafe { sys::cv_detail_PaniniProjector_a_const(self.as_raw_Detail_PaniniProjector()) }.into_result().expect("Infallible function failed: a")
+		unsafe { sys::cv_detail_PaniniProjector_getPropA_const(self.as_raw_Detail_PaniniProjector()) }.into_result().expect("Infallible function failed: a")
 	}
 	
 	fn set_a(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_PaniniProjector_setA_float(self.as_raw_mut_Detail_PaniniProjector(), val) }.into_result().expect("Infallible function failed: set_a")
+		unsafe { sys::cv_detail_PaniniProjector_setPropA_float(self.as_raw_mut_Detail_PaniniProjector(), val) }.into_result().expect("Infallible function failed: set_a")
 	}
 	
 	fn b(&self) -> f32 {
-		unsafe { sys::cv_detail_PaniniProjector_b_const(self.as_raw_Detail_PaniniProjector()) }.into_result().expect("Infallible function failed: b")
+		unsafe { sys::cv_detail_PaniniProjector_getPropB_const(self.as_raw_Detail_PaniniProjector()) }.into_result().expect("Infallible function failed: b")
 	}
 	
 	fn set_b(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_PaniniProjector_setB_float(self.as_raw_mut_Detail_PaniniProjector(), val) }.into_result().expect("Infallible function failed: set_b")
+		unsafe { sys::cv_detail_PaniniProjector_setPropB_float(self.as_raw_mut_Detail_PaniniProjector(), val) }.into_result().expect("Infallible function failed: set_b")
 	}
 	
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PaniniProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_PaniniProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_PaniniProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_PaniniProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PaniniProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_PaniniProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_PaniniProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_PaniniProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -3938,7 +3948,7 @@ pub struct Detail_PaniniProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PaniniProjector }
+opencv_type_boxed! { Detail_PaniniProjector }
 
 impl Drop for Detail_PaniniProjector {
 	fn drop(&mut self) {
@@ -3977,7 +3987,7 @@ pub struct Detail_PaniniWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PaniniWarper }
+opencv_type_boxed! { Detail_PaniniWarper }
 
 impl Drop for Detail_PaniniWarper {
 	fn drop(&mut self) {
@@ -4008,7 +4018,7 @@ impl Detail_PaniniWarper {
 	/// * a: 1
 	/// * b: 1
 	pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_PaniniWarper> {
-		unsafe { sys::cv_detail_PaniniWarper_PaniniWarper_float_float_float(scale, a, b) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_PaniniWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_PaniniWarper_PaniniWarper_float_float_float(scale, a, b) }.into_result().map(|r| unsafe { crate::stitching::Detail_PaniniWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4018,11 +4028,11 @@ pub trait Detail_PlanePortraitProjectorTrait: crate::stitching::Detail_Projector
 	fn as_raw_mut_Detail_PlanePortraitProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PlanePortraitProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_PlanePortraitProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_PlanePortraitProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_PlanePortraitProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PlanePortraitProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_PlanePortraitProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_PlanePortraitProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_PlanePortraitProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -4031,7 +4041,7 @@ pub struct Detail_PlanePortraitProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PlanePortraitProjector }
+opencv_type_boxed! { Detail_PlanePortraitProjector }
 
 impl Drop for Detail_PlanePortraitProjector {
 	fn drop(&mut self) {
@@ -4070,7 +4080,7 @@ pub struct Detail_PlanePortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PlanePortraitWarper }
+opencv_type_boxed! { Detail_PlanePortraitWarper }
 
 impl Drop for Detail_PlanePortraitWarper {
 	fn drop(&mut self) {
@@ -4098,7 +4108,7 @@ impl crate::stitching::Detail_RotationWarper for Detail_PlanePortraitWarper {
 
 impl Detail_PlanePortraitWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlanePortraitWarper> {
-		unsafe { sys::cv_detail_PlanePortraitWarper_PlanePortraitWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_PlanePortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_PlanePortraitWarper_PlanePortraitWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_PlanePortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4108,11 +4118,11 @@ pub trait Detail_PlaneProjectorTrait: crate::stitching::Detail_ProjectorBaseTrai
 	fn as_raw_mut_Detail_PlaneProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PlaneProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_PlaneProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_PlaneProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_PlaneProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_PlaneProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_PlaneProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_PlaneProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_PlaneProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -4121,7 +4131,7 @@ pub struct Detail_PlaneProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PlaneProjector }
+opencv_type_boxed! { Detail_PlaneProjector }
 
 impl Drop for Detail_PlaneProjector {
 	fn drop(&mut self) {
@@ -4174,7 +4184,7 @@ pub trait Detail_PlaneWarperTrait {
 		input_array_arg!(t);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
@@ -4182,7 +4192,7 @@ pub trait Detail_PlaneWarperTrait {
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -4205,14 +4215,14 @@ pub trait Detail_PlaneWarperTrait {
 	fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
 		input_array_arg!(r);
-		unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_PlaneWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn warp_roi_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
 		input_array_arg!(r);
 		input_array_arg!(t);
-		unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_PlaneWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -4222,7 +4232,7 @@ pub struct Detail_PlaneWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PlaneWarper }
+opencv_type_boxed! { Detail_PlaneWarper }
 
 impl Drop for Detail_PlaneWarper {
 	fn drop(&mut self) {
@@ -4257,7 +4267,7 @@ impl Detail_PlaneWarper {
 	/// ## C++ default parameters
 	/// * scale: 1.f
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarper> {
-		unsafe { sys::cv_detail_PlaneWarper_PlaneWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_PlaneWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_PlaneWarper_PlaneWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4271,7 +4281,7 @@ pub trait Detail_PlaneWarperGpuTrait: crate::stitching::Detail_PlaneWarperTrait 
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarperGpu(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
@@ -4280,7 +4290,7 @@ pub trait Detail_PlaneWarperGpuTrait: crate::stitching::Detail_PlaneWarperTrait 
 		input_array_arg!(t);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarperGpu(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -4306,7 +4316,7 @@ pub struct Detail_PlaneWarperGpu {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_PlaneWarperGpu }
+opencv_type_boxed! { Detail_PlaneWarperGpu }
 
 impl Drop for Detail_PlaneWarperGpu {
 	fn drop(&mut self) {
@@ -4341,7 +4351,7 @@ impl Detail_PlaneWarperGpu {
 	/// ## C++ default parameters
 	/// * scale: 1.f
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarperGpu> {
-		unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_PlaneWarperGpu::from_raw(ptr) })
+		unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4352,31 +4362,31 @@ pub trait Detail_ProjectorBaseTrait {
 	fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void;
 
 	fn scale(&self) -> f32 {
-		unsafe { sys::cv_detail_ProjectorBase_scale_const(self.as_raw_Detail_ProjectorBase()) }.into_result().expect("Infallible function failed: scale")
+		unsafe { sys::cv_detail_ProjectorBase_getPropScale_const(self.as_raw_Detail_ProjectorBase()) }.into_result().expect("Infallible function failed: scale")
 	}
 	
 	fn set_scale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_detail_ProjectorBase_setScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) }.into_result().expect("Infallible function failed: set_scale")
+		unsafe { sys::cv_detail_ProjectorBase_setPropScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) }.into_result().expect("Infallible function failed: set_scale")
 	}
 	
 	fn k(&mut self) -> &mut [f32; 9] {
-		unsafe { sys::cv_detail_ProjectorBase_k(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: k")
+		unsafe { sys::cv_detail_ProjectorBase_getPropK(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: k")
 	}
 	
 	fn rinv(&mut self) -> &mut [f32; 9] {
-		unsafe { sys::cv_detail_ProjectorBase_rinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: rinv")
+		unsafe { sys::cv_detail_ProjectorBase_getPropRinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: rinv")
 	}
 	
 	fn r_kinv(&mut self) -> &mut [f32; 9] {
-		unsafe { sys::cv_detail_ProjectorBase_r_kinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: r_kinv")
+		unsafe { sys::cv_detail_ProjectorBase_getPropR_kinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: r_kinv")
 	}
 	
 	fn k_rinv(&mut self) -> &mut [f32; 9] {
-		unsafe { sys::cv_detail_ProjectorBase_k_rinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: k_rinv")
+		unsafe { sys::cv_detail_ProjectorBase_getPropK_rinv(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: k_rinv")
 	}
 	
 	fn t(&mut self) -> &mut [f32; 3] {
-		unsafe { sys::cv_detail_ProjectorBase_t(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: t")
+		unsafe { sys::cv_detail_ProjectorBase_getPropT(self.as_raw_mut_Detail_ProjectorBase()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: t")
 	}
 	
 	/// ## C++ default parameters
@@ -4397,7 +4407,7 @@ pub struct Detail_ProjectorBase {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_ProjectorBase }
+opencv_type_boxed! { Detail_ProjectorBase }
 
 impl Drop for Detail_ProjectorBase {
 	fn drop(&mut self) {
@@ -4455,7 +4465,7 @@ pub trait Detail_RotationWarper {
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_RotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_RotationWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_RotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_RotationWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Projects the image.
@@ -4492,7 +4502,7 @@ pub trait Detail_RotationWarper {
 		input_array_arg!(k);
 		input_array_arg!(r);
 		output_array_arg!(dst);
-		unsafe { sys::cv_detail_RotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(self.as_raw_mut_Detail_RotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, &dst_size, dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_RotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(self.as_raw_mut_Detail_RotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst_size.opencv_to_extern(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## Parameters
@@ -4504,7 +4514,7 @@ pub trait Detail_RotationWarper {
 	fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
 		input_array_arg!(r);
-		unsafe { sys::cv_detail_RotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_RotationWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_detail_RotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(self.as_raw_mut_Detail_RotationWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn get_scale(&self) -> Result<f32> {
@@ -4550,7 +4560,7 @@ pub struct Detail_SiftFeaturesFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SiftFeaturesFinder }
+opencv_type_boxed! { Detail_SiftFeaturesFinder }
 
 impl Drop for Detail_SiftFeaturesFinder {
 	fn drop(&mut self) {
@@ -4578,7 +4588,7 @@ impl crate::stitching::Detail_SiftFeaturesFinderTrait for Detail_SiftFeaturesFin
 
 impl Detail_SiftFeaturesFinder {
 	pub fn default() -> Result<crate::stitching::Detail_SiftFeaturesFinder> {
-		unsafe { sys::cv_detail_SiftFeaturesFinder_SiftFeaturesFinder() }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SiftFeaturesFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_SiftFeaturesFinder_SiftFeaturesFinder() }.into_result().map(|r| unsafe { crate::stitching::Detail_SiftFeaturesFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4588,11 +4598,11 @@ pub trait Detail_SphericalPortraitProjectorTrait: crate::stitching::Detail_Proje
 	fn as_raw_mut_Detail_SphericalPortraitProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_SphericalPortraitProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_SphericalPortraitProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_SphericalPortraitProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalPortraitProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_SphericalPortraitProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_SphericalPortraitProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_SphericalPortraitProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalPortraitProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -4601,7 +4611,7 @@ pub struct Detail_SphericalPortraitProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SphericalPortraitProjector }
+opencv_type_boxed! { Detail_SphericalPortraitProjector }
 
 impl Drop for Detail_SphericalPortraitProjector {
 	fn drop(&mut self) {
@@ -4640,7 +4650,7 @@ pub struct Detail_SphericalPortraitWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SphericalPortraitWarper }
+opencv_type_boxed! { Detail_SphericalPortraitWarper }
 
 impl Drop for Detail_SphericalPortraitWarper {
 	fn drop(&mut self) {
@@ -4668,7 +4678,7 @@ impl crate::stitching::Detail_SphericalPortraitWarperTrait for Detail_SphericalP
 
 impl Detail_SphericalPortraitWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalPortraitWarper> {
-		unsafe { sys::cv_detail_SphericalPortraitWarper_SphericalPortraitWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SphericalPortraitWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_SphericalPortraitWarper_SphericalPortraitWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_SphericalPortraitWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4678,11 +4688,11 @@ pub trait Detail_SphericalProjectorTrait: crate::stitching::Detail_ProjectorBase
 	fn as_raw_mut_Detail_SphericalProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_SphericalProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_SphericalProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_SphericalProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_SphericalProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_SphericalProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_SphericalProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -4691,7 +4701,7 @@ pub struct Detail_SphericalProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SphericalProjector }
+opencv_type_boxed! { Detail_SphericalProjector }
 
 impl Drop for Detail_SphericalProjector {
 	fn drop(&mut self) {
@@ -4734,7 +4744,7 @@ pub trait Detail_SphericalWarperTrait {
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_SphericalWarper(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_SphericalWarper(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -4756,7 +4766,7 @@ pub struct Detail_SphericalWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SphericalWarper }
+opencv_type_boxed! { Detail_SphericalWarper }
 
 impl Drop for Detail_SphericalWarper {
 	fn drop(&mut self) {
@@ -4789,7 +4799,7 @@ impl Detail_SphericalWarper {
 	/// * scale: Radius of the projected sphere, in pixels. An image spanning the
 	///              whole sphere will have a width of 2 * scale * PI pixels.
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarper> {
-		unsafe { sys::cv_detail_SphericalWarper_SphericalWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SphericalWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_SphericalWarper_SphericalWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_SphericalWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4803,7 +4813,7 @@ pub trait Detail_SphericalWarperGpuTrait: crate::stitching::Detail_SphericalWarp
 		input_array_arg!(r);
 		output_array_arg!(xmap);
 		output_array_arg!(ymap);
-		unsafe { sys::cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_SphericalWarperGpu(), &src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Detail_SphericalWarperGpu(), src_size.opencv_to_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
@@ -4820,7 +4830,7 @@ pub struct Detail_SphericalWarperGpu {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SphericalWarperGpu }
+opencv_type_boxed! { Detail_SphericalWarperGpu }
 
 impl Drop for Detail_SphericalWarperGpu {
 	fn drop(&mut self) {
@@ -4853,7 +4863,7 @@ impl crate::stitching::Detail_SphericalWarperGpuTrait for Detail_SphericalWarper
 
 impl Detail_SphericalWarperGpu {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarperGpu> {
-		unsafe { sys::cv_detail_SphericalWarperGpu_SphericalWarperGpu_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SphericalWarperGpu::from_raw(ptr) })
+		unsafe { sys::cv_detail_SphericalWarperGpu_SphericalWarperGpu_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_SphericalWarperGpu::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4863,11 +4873,11 @@ pub trait Detail_StereographicProjectorTrait: crate::stitching::Detail_Projector
 	fn as_raw_mut_Detail_StereographicProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_StereographicProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_StereographicProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_StereographicProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_StereographicProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_StereographicProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_StereographicProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_StereographicProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_StereographicProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -4876,7 +4886,7 @@ pub struct Detail_StereographicProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_StereographicProjector }
+opencv_type_boxed! { Detail_StereographicProjector }
 
 impl Drop for Detail_StereographicProjector {
 	fn drop(&mut self) {
@@ -4915,7 +4925,7 @@ pub struct Detail_StereographicWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_StereographicWarper }
+opencv_type_boxed! { Detail_StereographicWarper }
 
 impl Drop for Detail_StereographicWarper {
 	fn drop(&mut self) {
@@ -4943,7 +4953,7 @@ impl crate::stitching::Detail_StereographicWarperTrait for Detail_StereographicW
 
 impl Detail_StereographicWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_StereographicWarper> {
-		unsafe { sys::cv_detail_StereographicWarper_StereographicWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_StereographicWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_StereographicWarper_StereographicWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_StereographicWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -4964,7 +4974,7 @@ pub struct Detail_SurfFeaturesFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SurfFeaturesFinder }
+opencv_type_boxed! { Detail_SurfFeaturesFinder }
 
 impl Drop for Detail_SurfFeaturesFinder {
 	fn drop(&mut self) {
@@ -4998,7 +5008,7 @@ impl Detail_SurfFeaturesFinder {
 	/// * num_octaves_descr: /*4*/3
 	/// * num_layers_descr: /*2*/4
 	pub fn new(hess_thresh: f64, num_octaves: i32, num_layers: i32, num_octaves_descr: i32, num_layers_descr: i32) -> Result<crate::stitching::Detail_SurfFeaturesFinder> {
-		unsafe { sys::cv_detail_SurfFeaturesFinder_SurfFeaturesFinder_double_int_int_int_int(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SurfFeaturesFinder::from_raw(ptr) })
+		unsafe { sys::cv_detail_SurfFeaturesFinder_SurfFeaturesFinder_double_int_int_int_int(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr) }.into_result().map(|r| unsafe { crate::stitching::Detail_SurfFeaturesFinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -5017,7 +5027,7 @@ pub struct Detail_SurfFeaturesFinderGpu {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_SurfFeaturesFinderGpu }
+opencv_type_boxed! { Detail_SurfFeaturesFinderGpu }
 
 impl Drop for Detail_SurfFeaturesFinderGpu {
 	fn drop(&mut self) {
@@ -5051,7 +5061,7 @@ impl Detail_SurfFeaturesFinderGpu {
 	/// * num_octaves_descr: 4
 	/// * num_layers_descr: 2
 	pub fn new(hess_thresh: f64, num_octaves: i32, num_layers: i32, num_octaves_descr: i32, num_layers_descr: i32) -> Result<crate::stitching::Detail_SurfFeaturesFinderGpu> {
-		unsafe { sys::cv_detail_SurfFeaturesFinderGpu_SurfFeaturesFinderGpu_double_int_int_int_int(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_SurfFeaturesFinderGpu::from_raw(ptr) })
+		unsafe { sys::cv_detail_SurfFeaturesFinderGpu_SurfFeaturesFinderGpu_double_int_int_int_int(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr) }.into_result().map(|r| unsafe { crate::stitching::Detail_SurfFeaturesFinderGpu::opencv_from_extern(r) } )
 	}
 	
 }
@@ -5061,11 +5071,11 @@ pub trait Detail_TransverseMercatorProjectorTrait: crate::stitching::Detail_Proj
 	fn as_raw_mut_Detail_TransverseMercatorProjector(&mut self) -> *mut c_void;
 
 	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_TransverseMercatorProjector_mapForward_float_float_floatX_floatX(self.as_raw_mut_Detail_TransverseMercatorProjector(), x, y, u, v) }.into_result()
+		unsafe { sys::cv_detail_TransverseMercatorProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_TransverseMercatorProjector(), x, y, u, v) }.into_result()
 	}
 	
 	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		unsafe { sys::cv_detail_TransverseMercatorProjector_mapBackward_float_float_floatX_floatX(self.as_raw_mut_Detail_TransverseMercatorProjector(), u, v, x, y) }.into_result()
+		unsafe { sys::cv_detail_TransverseMercatorProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_TransverseMercatorProjector(), u, v, x, y) }.into_result()
 	}
 	
 }
@@ -5074,7 +5084,7 @@ pub struct Detail_TransverseMercatorProjector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_TransverseMercatorProjector }
+opencv_type_boxed! { Detail_TransverseMercatorProjector }
 
 impl Drop for Detail_TransverseMercatorProjector {
 	fn drop(&mut self) {
@@ -5113,7 +5123,7 @@ pub struct Detail_TransverseMercatorWarper {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_TransverseMercatorWarper }
+opencv_type_boxed! { Detail_TransverseMercatorWarper }
 
 impl Drop for Detail_TransverseMercatorWarper {
 	fn drop(&mut self) {
@@ -5141,7 +5151,7 @@ impl crate::stitching::Detail_TransverseMercatorWarperTrait for Detail_Transvers
 
 impl Detail_TransverseMercatorWarper {
 	pub fn new(scale: f32) -> Result<crate::stitching::Detail_TransverseMercatorWarper> {
-		unsafe { sys::cv_detail_TransverseMercatorWarper_TransverseMercatorWarper_float(scale) }.into_result().map(|ptr| unsafe { crate::stitching::Detail_TransverseMercatorWarper::from_raw(ptr) })
+		unsafe { sys::cv_detail_TransverseMercatorWarper_TransverseMercatorWarper_float(scale) }.into_result().map(|r| unsafe { crate::stitching::Detail_TransverseMercatorWarper::opencv_from_extern(r) } )
 	}
 	
 }
@@ -5166,7 +5176,7 @@ pub struct Detail_VoronoiSeamFinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Detail_VoronoiSeamFinder }
+opencv_type_boxed! { Detail_VoronoiSeamFinder }
 
 impl Drop for Detail_VoronoiSeamFinder {
 	fn drop(&mut self) {

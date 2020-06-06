@@ -273,12 +273,12 @@ pub fn homogeneous_to_euclidean(src: &dyn core::ToInputArray, dst: &mut dyn core
 /// ## C++ default parameters
 /// * file_format: SFM_IO_BUNDLER
 pub fn import_reconstruction(file: &str, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, ks: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, file_format: i32) -> Result<()> {
-	string_arg!(file);
+	extern_container_arg!(file);
 	output_array_arg!(rs);
 	output_array_arg!(ts);
 	output_array_arg!(ks);
 	output_array_arg!(points3d);
-	unsafe { sys::cv_sfm_importReconstruction_const_StringX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(file.as_ptr(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ks.as_raw__OutputArray(), points3d.as_raw__OutputArray(), file_format) }.into_result()
+	unsafe { sys::cv_sfm_importReconstruction_const_StringX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(file.opencv_to_extern(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ks.as_raw__OutputArray(), points3d.as_raw__OutputArray(), file_format) }.into_result()
 }
 
 /// Point conditioning (isotropic).
@@ -582,7 +582,7 @@ pub fn relative_camera_motion(r1: &dyn core::ToInputArray, t1: &dyn core::ToInpu
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
 pub fn skew(x: &dyn core::ToInputArray) -> Result<core::Mat> {
 	input_array_arg!(x);
-	unsafe { sys::cv_sfm_skew_const__InputArrayX(x.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_sfm_skew_const__InputArrayX(x.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Reconstructs bunch of points by triangulation.
@@ -641,7 +641,7 @@ pub trait BaseSFM {
 	}
 	
 	fn get_intrinsics(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_sfm_BaseSFM_getIntrinsics_const(self.as_raw_BaseSFM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_sfm_BaseSFM_getIntrinsics_const(self.as_raw_BaseSFM()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -744,7 +744,7 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
 	
 	/// Returns the refined camera calibration matrix.
 	fn get_intrinsics(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getIntrinsics_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getIntrinsics_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// Returns the estimated camera extrinsic parameters.
@@ -782,7 +782,7 @@ impl dyn SFMLibmvEuclideanReconstruction + '_ {
 	/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
 	/// * reconstruction_options: libmv_ReconstructionOptions()
 	pub fn create(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>> {
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create_const_libmv_CameraIntrinsicsOptionsX_const_libmv_ReconstructionOptionsX(&camera_instrinsic_options, &reconstruction_options) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>::from_raw(ptr) })
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create_const_libmv_CameraIntrinsicsOptionsX_const_libmv_ReconstructionOptionsX(&camera_instrinsic_options, &reconstruction_options) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -820,6 +820,8 @@ pub struct libmv_CameraIntrinsicsOptions {
 	pub division_k2: f64,
 }
 
+opencv_type_simple! { crate::sfm::libmv_CameraIntrinsicsOptions }
+
 impl libmv_CameraIntrinsicsOptions {
 	/// ## C++ default parameters
 	/// * _distortion_model: 0
@@ -853,6 +855,8 @@ pub struct libmv_ReconstructionOptions {
 	pub select_keyframes: i32,
 	pub verbosity_level: i32,
 }
+
+opencv_type_simple! { crate::sfm::libmv_ReconstructionOptions }
 
 impl libmv_ReconstructionOptions {
 	/// ## C++ default parameters

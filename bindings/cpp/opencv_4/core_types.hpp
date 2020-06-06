@@ -32,7 +32,6 @@ template struct Result<cv::Matx_ScaleOp*>;
 template struct Result<cv::Matx_SubOp*>;
 template struct Result<cv::Matx_TOp*>;
 template struct Result<cv::Moments>;
-template struct Result<cv::NormTypes>;
 template struct Result<cv::PCA*>;
 template struct Result<cv::Point3_<double>>;
 template struct Result<cv::Point3_<float>>;

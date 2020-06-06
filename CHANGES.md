@@ -1,3 +1,13 @@
+* 0.41.0
+  * Enable parallel build even if `clang-runtime` is enabled (it uses helper generator binary in multiple threads)
+  * Enable most of the remaining contrib modules, namely: quality, saliency, stereo, ximgproc, tracking, rgbd,
+    hfs and optflow.
+  * Move all the remaining methods from `VectorTrait` to `Vector` struct and remove `VectorTrait`.
+  * Improve `Mat_` usability.
+  * Enable class constant generations (these were previously methods).
+  * Fix the issue where functions accepting strings will not reject strings with null characters in them, but
+    silently truncate them.
+
 * 0.40.1
   * Fix parsing of cmake output during package discovery (fixes #136)
   * Prefer vcpkg over cmake when building on Windows (fixes #137)

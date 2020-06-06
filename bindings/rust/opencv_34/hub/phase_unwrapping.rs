@@ -53,7 +53,7 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// ## C++ default parameters
 	/// * parameters: HistogramPhaseUnwrapping::Params()
 	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(&parameters) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::from_raw(ptr) })
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(&parameters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -74,6 +74,8 @@ pub struct HistogramPhaseUnwrapping_Params {
 	pub nbr_of_small_bins: i32,
 	pub nbr_of_large_bins: i32,
 }
+
+opencv_type_simple! { crate::phase_unwrapping::HistogramPhaseUnwrapping_Params }
 
 impl HistogramPhaseUnwrapping_Params {
 	pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {

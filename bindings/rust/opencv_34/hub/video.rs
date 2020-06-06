@@ -40,7 +40,7 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 ///    opencv_source_code/samples/python/camshift.py
 pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
 	input_array_arg!(prob_image);
-	unsafe { sys::cv_CamShift_const__InputArrayX_RectX_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria) }.into_result().map(|ptr| unsafe { core::RotatedRect::from_raw(ptr) })
+	unsafe { sys::cv_CamShift_const__InputArrayX_RectX_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_to_extern()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
@@ -68,7 +68,7 @@ pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, c
 pub fn build_optical_flow_pyramid(img: &dyn core::ToInputArray, pyramid: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
 	input_array_arg!(img);
 	output_array_arg!(pyramid);
-	unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayX_const__OutputArrayX_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), &win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
+	unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayX_const__OutputArrayX_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_to_extern(), max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
 }
 
 /// Computes a dense optical flow using the Gunnar Farneback's algorithm.
@@ -179,7 +179,7 @@ pub fn calc_optical_flow_pyr_lk(prev_img: &dyn core::ToInputArray, next_img: &dy
 	input_output_array_arg!(next_pts);
 	output_array_arg!(status);
 	output_array_arg!(err);
-	unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), &win_size, max_level, &criteria, flags, min_eig_threshold) }.into_result()
+	unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size.opencv_to_extern(), max_level, criteria.opencv_to_extern(), flags, min_eig_threshold) }.into_result()
 }
 
 /// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EP08) .
@@ -215,7 +215,7 @@ pub fn compute_ecc(template_image: &dyn core::ToInputArray, input_image: &dyn co
 /// * dist2_threshold: 400.0
 /// * detect_shadows: true
 pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, detect_shadows: bool) -> Result<core::Ptr::<dyn crate::video::BackgroundSubtractorKNN>> {
-	unsafe { sys::cv_createBackgroundSubtractorKNN_int_double_bool(history, dist2_threshold, detect_shadows) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::BackgroundSubtractorKNN>::from_raw(ptr) })
+	unsafe { sys::cv_createBackgroundSubtractorKNN_int_double_bool(history, dist2_threshold, detect_shadows) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::BackgroundSubtractorKNN>::opencv_from_extern(r) } )
 }
 
 /// Creates MOG2 Background Subtractor
@@ -233,12 +233,12 @@ pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, dete
 /// * var_threshold: 16
 /// * detect_shadows: true
 pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detect_shadows: bool) -> Result<core::Ptr::<dyn crate::video::BackgroundSubtractorMOG2>> {
-	unsafe { sys::cv_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::BackgroundSubtractorMOG2>::from_raw(ptr) })
+	unsafe { sys::cv_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::BackgroundSubtractorMOG2>::opencv_from_extern(r) } )
 }
 
 /// Creates instance of cv::DenseOpticalFlow
 pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>> {
-	unsafe { sys::cv_createOptFlow_DualTVL1() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>::from_raw(ptr) })
+	unsafe { sys::cv_createOptFlow_DualTVL1() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>::opencv_from_extern(r) } )
 }
 
 /// Computes an optimal affine transformation between two 2D point sets.
@@ -270,13 +270,13 @@ pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr::<dyn crate::video::DualT
 pub fn estimate_rigid_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, full_affine: bool) -> Result<core::Mat> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
-	unsafe { sys::cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 pub fn estimate_rigid_transform_1(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, full_affine: bool, ransac_max_iters: i32, ransac_good_ratio: f64, ransac_size0: i32) -> Result<core::Mat> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
-	unsafe { sys::cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool_int_double_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool_int_double_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EP08) .
@@ -341,7 +341,7 @@ pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image
 	input_array_arg!(input_image);
 	input_output_array_arg!(warp_matrix);
 	input_array_arg!(input_mask);
-	unsafe { sys::cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_to_extern(), input_mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EP08) .
@@ -399,7 +399,7 @@ pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: 
 	input_array_arg!(input_image);
 	input_output_array_arg!(warp_matrix);
 	input_array_arg!(input_mask);
-	unsafe { sys::cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray(), gauss_filt_size) }.into_result()
+	unsafe { sys::cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_to_extern(), input_mask.as_raw__InputArray(), gauss_filt_size) }.into_result()
 }
 
 /// Finds an object on a back projection image.
@@ -422,7 +422,7 @@ pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: 
 /// remaining contours with drawContours.
 pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
 	input_array_arg!(prob_image);
-	unsafe { sys::cv_meanShift_const__InputArrayX_RectX_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria) }.into_result()
+	unsafe { sys::cv_meanShift_const__InputArrayX_RectX_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_to_extern()) }.into_result()
 }
 
 /// Base class for background/foreground segmentation. :
@@ -995,7 +995,7 @@ impl dyn DualTVL1OpticalFlow + '_ {
 	/// * median_filtering: 5
 	/// * use_initial_flow: false
 	pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>> {
-		unsafe { sys::cv_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>::from_raw(ptr) })
+		unsafe { sys::cv_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1081,7 +1081,7 @@ impl dyn FarnebackOpticalFlow + '_ {
 	/// * poly_sigma: 1.1
 	/// * flags: 0
 	pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr::<dyn crate::video::FarnebackOpticalFlow>> {
-		unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::FarnebackOpticalFlow>::from_raw(ptr) })
+		unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::FarnebackOpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1099,142 +1099,142 @@ pub trait KalmanFilterTrait {
 
 	/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 	fn state_pre(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: state_pre")
+		unsafe { sys::cv_KalmanFilter_getPropStatePre(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: state_pre")
 	}
 	
 	/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 	fn set_state_pre(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setStatePre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_state_pre")
+		unsafe { sys::cv_KalmanFilter_setPropStatePre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_state_pre")
 	}
 	
 	/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 	fn state_post(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: state_post")
+		unsafe { sys::cv_KalmanFilter_getPropStatePost(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: state_post")
 	}
 	
 	/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 	fn set_state_post(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setStatePost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_state_post")
+		unsafe { sys::cv_KalmanFilter_setPropStatePost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_state_post")
 	}
 	
 	/// state transition matrix (A)
 	fn transition_matrix(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: transition_matrix")
+		unsafe { sys::cv_KalmanFilter_getPropTransitionMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: transition_matrix")
 	}
 	
 	/// state transition matrix (A)
 	fn set_transition_matrix(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTransitionMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_transition_matrix")
+		unsafe { sys::cv_KalmanFilter_setPropTransitionMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_transition_matrix")
 	}
 	
 	/// control matrix (B) (not used if there is no control)
 	fn control_matrix(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: control_matrix")
+		unsafe { sys::cv_KalmanFilter_getPropControlMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: control_matrix")
 	}
 	
 	/// control matrix (B) (not used if there is no control)
 	fn set_control_matrix(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setControlMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_control_matrix")
+		unsafe { sys::cv_KalmanFilter_setPropControlMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_control_matrix")
 	}
 	
 	/// measurement matrix (H)
 	fn measurement_matrix(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: measurement_matrix")
+		unsafe { sys::cv_KalmanFilter_getPropMeasurementMatrix(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: measurement_matrix")
 	}
 	
 	/// measurement matrix (H)
 	fn set_measurement_matrix(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setMeasurementMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_measurement_matrix")
+		unsafe { sys::cv_KalmanFilter_setPropMeasurementMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_measurement_matrix")
 	}
 	
 	/// process noise covariance matrix (Q)
 	fn process_noise_cov(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: process_noise_cov")
+		unsafe { sys::cv_KalmanFilter_getPropProcessNoiseCov(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: process_noise_cov")
 	}
 	
 	/// process noise covariance matrix (Q)
 	fn set_process_noise_cov(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setProcessNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_process_noise_cov")
+		unsafe { sys::cv_KalmanFilter_setPropProcessNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_process_noise_cov")
 	}
 	
 	/// measurement noise covariance matrix (R)
 	fn measurement_noise_cov(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: measurement_noise_cov")
+		unsafe { sys::cv_KalmanFilter_getPropMeasurementNoiseCov(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: measurement_noise_cov")
 	}
 	
 	/// measurement noise covariance matrix (R)
 	fn set_measurement_noise_cov(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setMeasurementNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_measurement_noise_cov")
+		unsafe { sys::cv_KalmanFilter_setPropMeasurementNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_measurement_noise_cov")
 	}
 	
 	/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 	fn error_cov_pre(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: error_cov_pre")
+		unsafe { sys::cv_KalmanFilter_getPropErrorCovPre(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: error_cov_pre")
 	}
 	
 	/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 	fn set_error_cov_pre(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setErrorCovPre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_error_cov_pre")
+		unsafe { sys::cv_KalmanFilter_setPropErrorCovPre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_error_cov_pre")
 	}
 	
 	/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 	fn gain(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_gain(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: gain")
+		unsafe { sys::cv_KalmanFilter_getPropGain(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: gain")
 	}
 	
 	/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 	fn set_gain(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setGain_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_gain")
+		unsafe { sys::cv_KalmanFilter_setPropGain_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_gain")
 	}
 	
 	/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 	fn error_cov_post(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: error_cov_post")
+		unsafe { sys::cv_KalmanFilter_getPropErrorCovPost(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: error_cov_post")
 	}
 	
 	/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 	fn set_error_cov_post(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setErrorCovPost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_error_cov_post")
+		unsafe { sys::cv_KalmanFilter_setPropErrorCovPost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_error_cov_post")
 	}
 	
 	fn temp1(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_temp1(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: temp1")
+		unsafe { sys::cv_KalmanFilter_getPropTemp1(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: temp1")
 	}
 	
 	fn set_temp1(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTemp1_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp1")
+		unsafe { sys::cv_KalmanFilter_setPropTemp1_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp1")
 	}
 	
 	fn temp2(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_temp2(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: temp2")
+		unsafe { sys::cv_KalmanFilter_getPropTemp2(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: temp2")
 	}
 	
 	fn set_temp2(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTemp2_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp2")
+		unsafe { sys::cv_KalmanFilter_setPropTemp2_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp2")
 	}
 	
 	fn temp3(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_temp3(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: temp3")
+		unsafe { sys::cv_KalmanFilter_getPropTemp3(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: temp3")
 	}
 	
 	fn set_temp3(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTemp3_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp3")
+		unsafe { sys::cv_KalmanFilter_setPropTemp3_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp3")
 	}
 	
 	fn temp4(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_temp4(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: temp4")
+		unsafe { sys::cv_KalmanFilter_getPropTemp4(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: temp4")
 	}
 	
 	fn set_temp4(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTemp4_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp4")
+		unsafe { sys::cv_KalmanFilter_setPropTemp4_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp4")
 	}
 	
 	fn temp5(&mut self) -> core::Mat {
-		unsafe { sys::cv_KalmanFilter_temp5(self.as_raw_mut_KalmanFilter()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: temp5")
+		unsafe { sys::cv_KalmanFilter_getPropTemp5(self.as_raw_mut_KalmanFilter()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: temp5")
 	}
 	
 	fn set_temp5(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_KalmanFilter_setTemp5_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp5")
+		unsafe { sys::cv_KalmanFilter_setPropTemp5_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_temp5")
 	}
 	
 	/// Re-initializes Kalman filter. The previous content is destroyed.
@@ -1260,7 +1260,7 @@ pub trait KalmanFilterTrait {
 	/// ## C++ default parameters
 	/// * control: Mat()
 	fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_KalmanFilter_predict_const_MatX(self.as_raw_mut_KalmanFilter(), control.as_raw_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_KalmanFilter_predict_const_MatX(self.as_raw_mut_KalmanFilter(), control.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// Updates the predicted state from the measurement.
@@ -1268,7 +1268,7 @@ pub trait KalmanFilterTrait {
 	/// ## Parameters
 	/// * measurement: The measured system parameters
 	fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_KalmanFilter_correct_const_MatX(self.as_raw_mut_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_KalmanFilter_correct_const_MatX(self.as_raw_mut_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1285,7 +1285,7 @@ pub struct KalmanFilter {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { KalmanFilter }
+opencv_type_boxed! { KalmanFilter }
 
 impl Drop for KalmanFilter {
 	fn drop(&mut self) {
@@ -1308,7 +1308,7 @@ impl crate::video::KalmanFilterTrait for KalmanFilter {
 
 impl KalmanFilter {
 	pub fn default() -> Result<crate::video::KalmanFilter> {
-		unsafe { sys::cv_KalmanFilter_KalmanFilter() }.into_result().map(|ptr| unsafe { crate::video::KalmanFilter::from_raw(ptr) })
+		unsafe { sys::cv_KalmanFilter_KalmanFilter() }.into_result().map(|r| unsafe { crate::video::KalmanFilter::opencv_from_extern(r) } )
 	}
 	
 	/// ## Parameters
@@ -1321,7 +1321,7 @@ impl KalmanFilter {
 	/// * control_params: 0
 	/// * typ: CV_32F
 	pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
-		unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ) }.into_result().map(|ptr| unsafe { crate::video::KalmanFilter::from_raw(ptr) })
+		unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ) }.into_result().map(|r| unsafe { crate::video::KalmanFilter::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1371,7 +1371,7 @@ pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
 	}
 	
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), &win_size) }.into_result()
+		unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), win_size.opencv_to_extern()) }.into_result()
 	}
 	
 	fn get_max_level(&self) -> Result<i32> {
@@ -1416,7 +1416,7 @@ impl dyn SparsePyrLKOpticalFlow + '_ {
 	/// * flags: 0
 	/// * min_eig_threshold: 1e-4
 	pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>> {
-		unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(&win_size, max_level, &crit, flags, min_eig_threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>::from_raw(ptr) })
+		unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size.opencv_to_extern(), max_level, crit.opencv_to_extern(), flags, min_eig_threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }

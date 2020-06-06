@@ -292,7 +292,7 @@ pub struct BinaryDescriptor {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptor }
+opencv_type_boxed! { BinaryDescriptor }
 
 impl Drop for BinaryDescriptor {
 	fn drop(&mut self) {
@@ -330,17 +330,17 @@ impl BinaryDescriptor {
 	/// ## C++ default parameters
 	/// * parameters: BinaryDescriptor::Params()
 	pub fn new(parameters: &crate::line_descriptor::BinaryDescriptor_Params) -> Result<crate::line_descriptor::BinaryDescriptor> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsX(parameters.as_raw_BinaryDescriptor_Params()) }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptor::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsX(parameters.as_raw_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor::opencv_from_extern(r) } )
 	}
 	
 	/// Create a BinaryDescriptor object with default parameters (or with the ones provided)
 	/// and return a smart pointer to it
 	pub fn create_binary_descriptor() -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptor>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_binary_descriptor_1(mut parameters: crate::line_descriptor::BinaryDescriptor_Params) -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptor>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -352,40 +352,40 @@ pub trait BinaryDescriptor_ParamsTrait {
 
 	/// the number of image octaves (default = 1)
 	fn num_of_octave_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_numOfOctave__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: num_of_octave_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropNumOfOctave__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: num_of_octave_")
 	}
 	
 	/// the number of image octaves (default = 1)
 	fn set_num_of_octave_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_num_of_octave_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_num_of_octave_")
 	}
 	
 	/// the width of band; (default: 7)
 	fn width_of_band_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_widthOfBand__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: width_of_band_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropWidthOfBand__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: width_of_band_")
 	}
 	
 	/// the width of band; (default: 7)
 	fn set_width_of_band_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_width_of_band_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_width_of_band_")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
 	fn reduction_ratio(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_reductionRatio_const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: reduction_ratio")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropReductionRatio_const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: reduction_ratio")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
 	fn set_reduction_ratio(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_reduction_ratio")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_reduction_ratio")
 	}
 	
 	fn ksize_(&self) -> i32 {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_ksize__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: ksize_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropKsize__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: ksize_")
 	}
 	
 	fn set_ksize_(&mut self, val: i32) -> () {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_ksize_")
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_ksize_")
 	}
 	
 	/// read parameters from a FileNode object and store them (struct function)
@@ -405,7 +405,7 @@ pub struct BinaryDescriptor_Params {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptor_Params }
+opencv_type_boxed! { BinaryDescriptor_Params }
 
 impl Drop for BinaryDescriptor_Params {
 	fn drop(&mut self) {
@@ -428,7 +428,7 @@ impl crate::line_descriptor::BinaryDescriptor_ParamsTrait for BinaryDescriptor_P
 
 impl BinaryDescriptor_Params {
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptor_Params::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor_Params::opencv_from_extern(r) } )
 	}
 	
 }
@@ -679,7 +679,7 @@ pub struct BinaryDescriptorMatcher {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { BinaryDescriptorMatcher }
+opencv_type_boxed! { BinaryDescriptorMatcher }
 
 impl Drop for BinaryDescriptorMatcher {
 	fn drop(&mut self) {
@@ -708,14 +708,14 @@ impl crate::line_descriptor::BinaryDescriptorMatcherTrait for BinaryDescriptorMa
 impl BinaryDescriptorMatcher {
 	/// Create a BinaryDescriptorMatcher object and return a smart pointer to it.
 	pub fn create_binary_descriptor_matcher() -> Result<core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>::opencv_from_extern(r) } )
 	}
 	
 	/// Constructor.
 	/// 
 	/// The BinaryDescriptorMatcher constructed is able to store and manage 256-bits long entries.
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptorMatcher> {
-		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|ptr| unsafe { crate::line_descriptor::BinaryDescriptorMatcher::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptorMatcher::opencv_from_extern(r) } )
 	}
 	
 }
@@ -726,6 +726,8 @@ impl BinaryDescriptorMatcher {
 pub struct DrawLinesMatchesFlags {
 	__rust_private: [u8; 0],
 }
+
+opencv_type_simple! { crate::line_descriptor::DrawLinesMatchesFlags }
 
 impl DrawLinesMatchesFlags {
 }
@@ -784,25 +786,27 @@ pub struct KeyLine {
 	pub num_of_pixels: i32,
 }
 
+opencv_type_simple! { crate::line_descriptor::KeyLine }
+
 impl KeyLine {
 	/// Returns the start point of the line in the original image
 	pub fn get_start_point(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(&self) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the original image
 	pub fn get_end_point(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(&self) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(self.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Returns the start point of the line in the octave it was extracted from
 	pub fn get_start_point_in_octave(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(&self) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(self.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the octave it was extracted from
 	pub fn get_end_point_in_octave(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(&self) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(self.opencv_to_extern()) }.into_result()
 	}
 	
 	/// constructor
@@ -860,7 +864,7 @@ pub struct LSDDetector {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { LSDDetector }
+opencv_type_boxed! { LSDDetector }
 
 impl Drop for LSDDetector {
 	fn drop(&mut self) {
@@ -888,20 +892,20 @@ impl crate::line_descriptor::LSDDetectorTrait for LSDDetector {
 
 impl LSDDetector {
 	pub fn default() -> Result<crate::line_descriptor::LSDDetector> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|ptr| unsafe { crate::line_descriptor::LSDDetector::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
 	pub fn new(_params: crate::line_descriptor::LSDParam) -> Result<crate::line_descriptor::LSDDetector> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(&_params) }.into_result().map(|ptr| unsafe { crate::line_descriptor::LSDDetector::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(_params.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
 	/// Creates ad LSDDetector object, using smart pointers.
 	pub fn create_lsd_detector() -> Result<core::Ptr::<crate::line_descriptor::LSDDetector>> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_lsd_detector_with_params(params: crate::line_descriptor::LSDParam) -> Result<core::Ptr::<crate::line_descriptor::LSDDetector>> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(&params) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::from_raw(ptr) })
+		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(params.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -932,6 +936,8 @@ pub struct LSDParam {
 	pub density_th: f64,
 	pub n_bins: i32,
 }
+
+opencv_type_simple! { crate::line_descriptor::LSDParam }
 
 impl LSDParam {
 	pub fn default() -> Result<crate::line_descriptor::LSDParam> {

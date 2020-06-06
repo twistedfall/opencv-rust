@@ -60,6 +60,8 @@ pub enum KeyboardEvent_Action {
 	KEY_DOWN = 1 as isize,
 }
 
+opencv_type_enum! { crate::viz::KeyboardEvent_Action }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MouseEvent_MouseButton {
@@ -69,6 +71,8 @@ pub enum MouseEvent_MouseButton {
 	RightButton = 3 as isize,
 	VScroll = 4 as isize,
 }
+
+opencv_type_enum! { crate::viz::MouseEvent_MouseButton }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -80,6 +84,8 @@ pub enum MouseEvent_Type {
 	MouseScrollUp = 5 as isize,
 	MouseDblClick = 6 as isize,
 }
+
+opencv_type_enum! { crate::viz::MouseEvent_Type }
 
 /// //////////////////////////////////////////////////////////////////////////
 /// Widget rendering properties
@@ -97,6 +103,8 @@ pub enum RenderingProperties {
 	LIGHTING = 8 as isize,
 }
 
+opencv_type_enum! { crate::viz::RenderingProperties }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RepresentationValues {
@@ -105,6 +113,8 @@ pub enum RepresentationValues {
 	REPRESENTATION_SURFACE = 2 as isize,
 }
 
+opencv_type_enum! { crate::viz::RepresentationValues }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ShadingValues {
@@ -112,6 +122,8 @@ pub enum ShadingValues {
 	SHADING_GOURAUD = 1 as isize,
 	SHADING_PHONG = 2 as isize,
 }
+
+opencv_type_enum! { crate::viz::ShadingValues }
 
 pub type Viz3d_Color = crate::viz::Color;
 pub type Viz3d_KeyboardCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send + Sync + 'static>>;
@@ -146,8 +158,8 @@ pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutput
 ///    ```
 /// 
 pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
-	string_arg!(window_name);
-	unsafe { sys::cv_viz_getWindowByName_const_StringX(window_name.as_ptr()) }.into_result().map(|ptr| unsafe { crate::viz::Viz3d::from_raw(ptr) })
+	extern_container_arg!(window_name);
+	unsafe { sys::cv_viz_getWindowByName_const_StringX(window_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 }
 
 /// Displays image in specified window
@@ -155,9 +167,9 @@ pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 /// ## C++ default parameters
 /// * window_size: Size(-1,-1)
 pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
-	string_arg!(window_name);
+	extern_container_arg!(window_name);
 	input_array_arg!(image);
-	unsafe { sys::cv_viz_imshow_const_StringX_const__InputArrayX_const_SizeX(window_name.as_ptr(), image.as_raw__InputArray(), &window_size) }.into_result().map(|ptr| unsafe { crate::viz::Viz3d::from_raw(ptr) })
+	unsafe { sys::cv_viz_imshow_const_StringX_const__InputArrayX_const_SizeX(window_name.opencv_to_extern(), image.as_raw__InputArray(), &window_size) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 }
 
 /// Constructs camera pose from position, focal_point and up_vector (see gluLookAt() for more
@@ -205,17 +217,17 @@ pub fn make_transform_to_global(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z
 /// * colors: noArray()
 /// * normals: noArray()
 pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	string_arg!(file);
+	extern_container_arg!(file);
 	output_array_arg!(colors);
 	output_array_arg!(normals);
-	unsafe { sys::cv_viz_readCloud_const_StringX_const__OutputArrayX_const__OutputArrayX(file.as_ptr(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+	unsafe { sys::cv_viz_readCloud_const_StringX_const__OutputArrayX_const__OutputArrayX(file.opencv_to_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// ////////////////////////////////////////////////////////////////////////////////////////////
 /// Reads mesh. Only ply format is supported now and no texture load support
 pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
-	string_arg!(file);
-	unsafe { sys::cv_viz_readMesh_const_StringX(file.as_ptr()) }.into_result().map(|ptr| unsafe { crate::viz::Mesh::from_raw(ptr) })
+	extern_container_arg!(file);
+	unsafe { sys::cv_viz_readMesh_const_StringX(file.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
 }
 
 /// ## Parameters
@@ -226,9 +238,9 @@ pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 /// ## C++ default parameters
 /// * tag: "pose"
 pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<bool> {
-	string_arg!(file);
-	string_arg!(tag);
-	unsafe { sys::cv_viz_readPose_const_StringX_Affine3dX_const_StringX(file.as_ptr(), pose, tag.as_ptr()) }.into_result()
+	extern_container_arg!(file);
+	extern_container_arg!(tag);
+	unsafe { sys::cv_viz_readPose_const_StringX_Affine3dX_const_StringX(file.opencv_to_extern(), pose, tag.opencv_to_extern()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and loads poses from sequence of files
@@ -250,9 +262,9 @@ pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<boo
 /// * tag: "pose"
 pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
 	output_array_arg!(traj);
-	string_arg!(files_format);
-	string_arg!(tag);
-	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayX_const_StringX_int_int_const_StringX(traj.as_raw__OutputArray(), files_format.as_ptr(), start, end, tag.as_ptr()) }.into_result()
+	extern_container_arg!(files_format);
+	extern_container_arg!(tag);
+	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayX_const_StringX_int_int_const_StringX(traj.as_raw__OutputArray(), files_format.opencv_to_extern(), start, end, tag.opencv_to_extern()) }.into_result()
 }
 
 /// Unregisters all Viz windows from internal database. After it 'getWindowByName()' will create new windows instead of getting existing from the database.
@@ -273,11 +285,11 @@ pub fn unregister_all_windows() -> Result<()> {
 /// * normals: noArray()
 /// * binary: false
 pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, binary: bool) -> Result<()> {
-	string_arg!(file);
+	extern_container_arg!(file);
 	input_array_arg!(cloud);
 	input_array_arg!(colors);
 	input_array_arg!(normals);
-	unsafe { sys::cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(file.as_ptr(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
+	unsafe { sys::cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(file.opencv_to_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
 }
 
 /// ## Parameters
@@ -288,9 +300,9 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 /// ## C++ default parameters
 /// * tag: "pose"
 pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
-	string_arg!(file);
-	string_arg!(tag);
-	unsafe { sys::cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(file.as_ptr(), &pose, tag.as_ptr()) }.into_result()
+	extern_container_arg!(file);
+	extern_container_arg!(tag);
+	unsafe { sys::cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(file.opencv_to_extern(), &pose, tag.opencv_to_extern()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and writes to a sequence of files with given filename format
@@ -310,9 +322,9 @@ pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
 /// * tag: "pose"
 pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
 	input_array_arg!(traj);
-	string_arg!(files_format);
-	string_arg!(tag);
-	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayX_const_StringX_int_const_StringX(traj.as_raw__InputArray(), files_format.as_ptr(), start, tag.as_ptr()) }.into_result()
+	extern_container_arg!(files_format);
+	extern_container_arg!(tag);
+	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayX_const_StringX_int_const_StringX(traj.as_raw__InputArray(), files_format.opencv_to_extern(), start, tag.opencv_to_extern()) }.into_result()
 }
 
 /// This class wraps intrinsic parameters of a camera.
@@ -375,7 +387,7 @@ pub struct Camera {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Camera }
+opencv_type_boxed! { Camera }
 
 impl Drop for Camera {
 	fn drop(&mut self) {
@@ -407,7 +419,7 @@ impl Camera {
 	/// * window_size: Size of the window. This together with focal length and principal
 	/// point determines the field of view.
 	pub fn new(fx: f64, fy: f64, cx: f64, cy: f64, window_size: core::Size) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Camera_Camera_double_double_double_double_const_SizeX(fx, fy, cx, cy, &window_size) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Camera_Camera_double_double_double_double_const_SizeX(fx, fy, cx, cy, &window_size) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a Camera.
@@ -426,7 +438,7 @@ impl Camera {
 	/// * window_size: Size of the window. Principal point is at the center of the window
 	///            by default.
 	pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(&fov, &window_size) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(&fov, &window_size) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a Camera.
@@ -446,7 +458,7 @@ impl Camera {
 	/// * window_size: Size of the window. This together with intrinsic matrix determines
 	///            the field of view.
 	pub fn new_2(k: core::Matx33d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(&k, &window_size) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(&k, &window_size) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a Camera.
@@ -467,7 +479,7 @@ impl Camera {
 	/// * window_size: Size of the window. This together with projection matrix determines
 	///            the field of view.
 	pub fn new_3(proj: core::Matx44d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(&proj, &window_size) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(&proj, &window_size) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 	/// Creates a Kinect Camera with
@@ -479,7 +491,7 @@ impl Camera {
 	/// * window_size: Size of the window. This together with intrinsic matrix of a Kinect Camera
 	/// determines the field of view.
 	pub fn kinect_camera(window_size: core::Size) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Camera_KinectCamera_const_SizeX(&window_size) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Camera_KinectCamera_const_SizeX(&window_size) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 }
@@ -500,7 +512,7 @@ pub struct Color {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Color }
+opencv_type_boxed! { Color }
 
 impl Drop for Color {
 	fn drop(&mut self) {
@@ -525,160 +537,160 @@ impl Color {
 	/// ///////////////////////////////////////////////////////////////////////////////////////////////////
 	/// cv::viz::Color
 	pub fn default() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_Color() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_Color() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	/// The three channels will have the same value equal to gray.
 	pub fn new(gray: f64) -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_Color_double(gray) }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_Color_double(gray) }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_1(blue: f64, green: f64, red: f64) -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red) }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red) }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_2(color: core::Scalar) -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_Color_const_ScalarX(&color) }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_Color_const_ScalarX(&color) }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn black() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_black() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_black() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn blue() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_blue() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_blue() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn green() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_green() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_green() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn red() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_red() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_red() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn cyan() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_cyan() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_cyan() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn yellow() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_yellow() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_yellow() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn magenta() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_magenta() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_magenta() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn white() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_white() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_white() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn gray() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_gray() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_gray() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn silver() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_silver() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_silver() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn mlab() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_mlab() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_mlab() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn navy() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_navy() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_navy() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn maroon() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_maroon() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_maroon() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn teal() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_teal() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_teal() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn olive() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_olive() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_olive() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn purple() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_purple() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_purple() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn azure() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_azure() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_azure() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn chartreuse() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_chartreuse() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_chartreuse() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn rose() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_rose() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_rose() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn lime() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_lime() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_lime() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn gold() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_gold() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_gold() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn orange() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_orange() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_orange() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn orange_red() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_orange_red() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_orange_red() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn indigo() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_indigo() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_indigo() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn brown() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_brown() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_brown() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn apricot() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_apricot() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_apricot() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn pink() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_pink() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_pink() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn raspberry() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_raspberry() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_raspberry() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn cherry() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_cherry() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_cherry() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn violet() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_violet() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_violet() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn amethyst() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_amethyst() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_amethyst() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn bluberry() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_bluberry() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_bluberry() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn celestial_blue() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_celestial_blue() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_celestial_blue() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn turquoise() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_turquoise() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_turquoise() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 	pub fn not_set() -> Result<crate::viz::Color> {
-		unsafe { sys::cv_viz_Color_not_set() }.into_result().map(|ptr| unsafe { crate::viz::Color::from_raw(ptr) })
+		unsafe { sys::cv_viz_Color_not_set() }.into_result().map(|r| unsafe { crate::viz::Color::opencv_from_extern(r) } )
 	}
 	
 }
@@ -689,36 +701,36 @@ pub trait KeyboardEventTrait {
 	fn as_raw_mut_KeyboardEvent(&mut self) -> *mut c_void;
 
 	fn action(&self) -> crate::viz::KeyboardEvent_Action {
-		unsafe { sys::cv_viz_KeyboardEvent_action_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: action")
+		unsafe { sys::cv_viz_KeyboardEvent_getPropAction_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: action")
 	}
 	
 	fn set_action(&mut self, val: crate::viz::KeyboardEvent_Action) -> () {
-		unsafe { sys::cv_viz_KeyboardEvent_setAction_Action(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_action")
+		unsafe { sys::cv_viz_KeyboardEvent_setPropAction_Action(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_action")
 	}
 	
 	fn symbol(&self) -> String {
-		unsafe { sys::cv_viz_KeyboardEvent_symbol_const(self.as_raw_KeyboardEvent()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: symbol")
+		unsafe { sys::cv_viz_KeyboardEvent_getPropSymbol_const(self.as_raw_KeyboardEvent()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: symbol")
 	}
 	
 	fn set_symbol(&mut self, val: &str) -> () {
-		string_arg_infallible!(val);
-		unsafe { sys::cv_viz_KeyboardEvent_setSymbol_String(self.as_raw_mut_KeyboardEvent(), val.as_ptr() as _) }.into_result().expect("Infallible function failed: set_symbol")
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_viz_KeyboardEvent_setPropSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_symbol")
 	}
 	
 	fn code(&self) -> u8 {
-		unsafe { sys::cv_viz_KeyboardEvent_code_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: code")
+		unsafe { sys::cv_viz_KeyboardEvent_getPropCode_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: code")
 	}
 	
 	fn set_code(&mut self, val: u8) -> () {
-		unsafe { sys::cv_viz_KeyboardEvent_setCode_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_code")
+		unsafe { sys::cv_viz_KeyboardEvent_setPropCode_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_code")
 	}
 	
 	fn modifiers(&self) -> i32 {
-		unsafe { sys::cv_viz_KeyboardEvent_modifiers_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: modifiers")
+		unsafe { sys::cv_viz_KeyboardEvent_getPropModifiers_const(self.as_raw_KeyboardEvent()) }.into_result().expect("Infallible function failed: modifiers")
 	}
 	
 	fn set_modifiers(&mut self, val: i32) -> () {
-		unsafe { sys::cv_viz_KeyboardEvent_setModifiers_int(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_modifiers")
+		unsafe { sys::cv_viz_KeyboardEvent_setPropModifiers_int(self.as_raw_mut_KeyboardEvent(), val) }.into_result().expect("Infallible function failed: set_modifiers")
 	}
 	
 }
@@ -728,7 +740,7 @@ pub struct KeyboardEvent {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { KeyboardEvent }
+opencv_type_boxed! { KeyboardEvent }
 
 impl Drop for KeyboardEvent {
 	fn drop(&mut self) {
@@ -758,8 +770,8 @@ impl KeyboardEvent {
 	/// * code: Code of the key.
 	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
 	pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
-		string_arg!(symbol);
-		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringX_unsigned_char_int(action, symbol.as_ptr(), code, modifiers) }.into_result().map(|ptr| unsafe { crate::viz::KeyboardEvent::from_raw(ptr) })
+		extern_container_arg!(symbol);
+		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringX_unsigned_char_int(action, symbol.opencv_to_extern(), code, modifiers) }.into_result().map(|r| unsafe { crate::viz::KeyboardEvent::opencv_from_extern(r) } )
 	}
 	
 }
@@ -771,60 +783,60 @@ pub trait MeshTrait {
 
 	/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 	fn cloud(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_cloud(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: cloud")
+		unsafe { sys::cv_viz_Mesh_getPropCloud(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: cloud")
 	}
 	
 	/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 	fn set_cloud(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setCloud_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_cloud")
+		unsafe { sys::cv_viz_Mesh_setPropCloud_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_cloud")
 	}
 	
 	/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 	fn colors(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_colors(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: colors")
+		unsafe { sys::cv_viz_Mesh_getPropColors(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: colors")
 	}
 	
 	/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 	fn set_colors(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setColors_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_colors")
+		unsafe { sys::cv_viz_Mesh_setPropColors_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_colors")
 	}
 	
 	/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 	fn normals(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_normals(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: normals")
+		unsafe { sys::cv_viz_Mesh_getPropNormals(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: normals")
 	}
 	
 	/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 	fn set_normals(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setNormals_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_normals")
+		unsafe { sys::cv_viz_Mesh_setPropNormals_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_normals")
 	}
 	
 	/// CV_32SC1 with only 1 row
 	fn polygons(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_polygons(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: polygons")
+		unsafe { sys::cv_viz_Mesh_getPropPolygons(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: polygons")
 	}
 	
 	/// CV_32SC1 with only 1 row
 	fn set_polygons(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setPolygons_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_polygons")
+		unsafe { sys::cv_viz_Mesh_setPropPolygons_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_polygons")
 	}
 	
 	fn texture(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_texture(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: texture")
+		unsafe { sys::cv_viz_Mesh_getPropTexture(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: texture")
 	}
 	
 	fn set_texture(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setTexture_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_texture")
+		unsafe { sys::cv_viz_Mesh_setPropTexture_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_texture")
 	}
 	
 	/// CV_32FC2 or CV_64FC2 with only 1 row
 	fn tcoords(&mut self) -> core::Mat {
-		unsafe { sys::cv_viz_Mesh_tcoords(self.as_raw_mut_Mesh()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: tcoords")
+		unsafe { sys::cv_viz_Mesh_getPropTcoords(self.as_raw_mut_Mesh()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: tcoords")
 	}
 	
 	/// CV_32FC2 or CV_64FC2 with only 1 row
 	fn set_tcoords(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_viz_Mesh_setTcoords_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_tcoords")
+		unsafe { sys::cv_viz_Mesh_setPropTcoords_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_tcoords")
 	}
 	
 }
@@ -834,7 +846,7 @@ pub struct Mesh {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Mesh }
+opencv_type_boxed! { Mesh }
 
 impl Drop for Mesh {
 	fn drop(&mut self) {
@@ -869,8 +881,8 @@ impl Mesh {
 	/// ## C++ default parameters
 	/// * typ: LOAD_PLY
 	pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
-		string_arg!(file);
-		unsafe { sys::cv_viz_Mesh_load_const_StringX_int(file.as_ptr(), typ) }.into_result().map(|ptr| unsafe { crate::viz::Mesh::from_raw(ptr) })
+		extern_container_arg!(file);
+		unsafe { sys::cv_viz_Mesh_load_const_StringX_int(file.opencv_to_extern(), typ) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
 	}
 	
 }
@@ -881,35 +893,35 @@ pub trait MouseEventTrait {
 	fn as_raw_mut_MouseEvent(&mut self) -> *mut c_void;
 
 	fn typ(&self) -> crate::viz::MouseEvent_Type {
-		unsafe { sys::cv_viz_MouseEvent_type_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: typ")
+		unsafe { sys::cv_viz_MouseEvent_getPropType_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: typ")
 	}
 	
 	fn set_type(&mut self, val: crate::viz::MouseEvent_Type) -> () {
-		unsafe { sys::cv_viz_MouseEvent_setType_Type(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_type")
+		unsafe { sys::cv_viz_MouseEvent_setPropType_Type(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_type")
 	}
 	
 	fn button(&self) -> crate::viz::MouseEvent_MouseButton {
-		unsafe { sys::cv_viz_MouseEvent_button_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: button")
+		unsafe { sys::cv_viz_MouseEvent_getPropButton_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: button")
 	}
 	
 	fn set_button(&mut self, val: crate::viz::MouseEvent_MouseButton) -> () {
-		unsafe { sys::cv_viz_MouseEvent_setButton_MouseButton(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_button")
+		unsafe { sys::cv_viz_MouseEvent_setPropButton_MouseButton(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_button")
 	}
 	
 	fn pointer(&self) -> core::Point {
-		unsafe { sys::cv_viz_MouseEvent_pointer_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: pointer")
+		unsafe { sys::cv_viz_MouseEvent_getPropPointer_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: pointer")
 	}
 	
 	fn set_pointer(&mut self, val: core::Point) -> () {
-		unsafe { sys::cv_viz_MouseEvent_setPointer_Point(self.as_raw_mut_MouseEvent(), &val) }.into_result().expect("Infallible function failed: set_pointer")
+		unsafe { sys::cv_viz_MouseEvent_setPropPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pointer")
 	}
 	
 	fn modifiers(&self) -> i32 {
-		unsafe { sys::cv_viz_MouseEvent_modifiers_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: modifiers")
+		unsafe { sys::cv_viz_MouseEvent_getPropModifiers_const(self.as_raw_MouseEvent()) }.into_result().expect("Infallible function failed: modifiers")
 	}
 	
 	fn set_modifiers(&mut self, val: i32) -> () {
-		unsafe { sys::cv_viz_MouseEvent_setModifiers_int(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_modifiers")
+		unsafe { sys::cv_viz_MouseEvent_setPropModifiers_int(self.as_raw_mut_MouseEvent(), val) }.into_result().expect("Infallible function failed: set_modifiers")
 	}
 	
 }
@@ -919,7 +931,7 @@ pub struct MouseEvent {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { MouseEvent }
+opencv_type_boxed! { MouseEvent }
 
 impl Drop for MouseEvent {
 	fn drop(&mut self) {
@@ -951,7 +963,7 @@ impl MouseEvent {
 	/// * pointer: Position of the event.
 	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
 	pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
-		unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeX_const_MouseButtonX_const_PointX_int(&typ, &button, &pointer, modifiers) }.into_result().map(|ptr| unsafe { crate::viz::MouseEvent::from_raw(ptr) })
+		unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeX_const_MouseButtonX_const_PointX_int(&typ, &button, &pointer, modifiers) }.into_result().map(|r| unsafe { crate::viz::MouseEvent::opencv_from_extern(r) } )
 	}
 	
 }
@@ -970,8 +982,8 @@ pub trait Viz3dTrait {
 	/// ## C++ default parameters
 	/// * pose: Affine3d::Identity()
 	fn show_widget(&mut self, id: &str, widget: &crate::viz::Widget, pose: core::Affine3d) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.as_ptr(), widget.as_raw_Widget(), &pose) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), widget.as_raw_Widget(), &pose) }.into_result()
 	}
 	
 	/// Removes a widget from the window.
@@ -979,8 +991,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * id: The id of the widget that will be removed.
 	fn remove_widget(&mut self, id: &str) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringX(self.as_raw_mut_Viz3d(), id.as_ptr()) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringX(self.as_raw_mut_Viz3d(), id.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Retrieves a widget from the window.
@@ -991,8 +1003,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * id: The id of the widget that will be returned.
 	fn get_widget(&self, id: &str) -> Result<crate::viz::Widget> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringX(self.as_raw_Viz3d(), id.as_ptr()) }.into_result().map(|ptr| unsafe { crate::viz::Widget::from_raw(ptr) })
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringX(self.as_raw_Viz3d(), id.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 	/// Removes all widgets from the window.
@@ -1018,8 +1030,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * id: The id of the widget whose pose will be set. @param pose The new pose of the widget.
 	fn set_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.as_ptr(), &pose) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), &pose) }.into_result()
 	}
 	
 	/// Updates pose of a widget in the window by pre-multiplying its current pose.
@@ -1028,8 +1040,8 @@ pub trait Viz3dTrait {
 	/// * id: The id of the widget whose pose will be updated. @param pose The pose that the current
 	/// pose of the widget will be pre-multiplied by.
 	fn update_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.as_ptr(), &pose) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), &pose) }.into_result()
 	}
 	
 	/// Returns the current pose of a widget in the window.
@@ -1037,8 +1049,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * id: The id of the widget whose pose will be returned.
 	fn get_widget_pose(&self, id: &str) -> Result<core::Affine3d> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringX(self.as_raw_Viz3d(), id.as_ptr()) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringX(self.as_raw_Viz3d(), id.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Sets the intrinsic parameters of the viewer using Camera.
@@ -1051,7 +1063,7 @@ pub trait Viz3dTrait {
 	
 	/// Returns a camera object that contains intrinsic parameters of the current viewer.
 	fn get_camera(&self) -> Result<crate::viz::Camera> {
-		unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d()) }.into_result().map(|ptr| unsafe { crate::viz::Camera::from_raw(ptr) })
+		unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d()) }.into_result().map(|r| unsafe { crate::viz::Camera::opencv_from_extern(r) } )
 	}
 	
 	/// Returns the current pose of the viewer.
@@ -1072,8 +1084,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * id: Id of a 3D widget.
 	fn reset_camera_viewpoint(&mut self, id: &str) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringX(self.as_raw_mut_Viz3d(), id.as_ptr()) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringX(self.as_raw_mut_Viz3d(), id.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Resets camera.
@@ -1115,12 +1127,12 @@ pub trait Viz3dTrait {
 	/// Returns the name of the window which has been set in the constructor.
 	/// `Viz - ` is prepended to the name if necessary.
 	fn get_window_name(&self) -> Result<String> {
-		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Returns the Mat screenshot of the current scene.
 	fn get_screenshot(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_viz_Viz3d_getScreenshot_const(self.as_raw_Viz3d()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
+		unsafe { sys::cv_viz_Viz3d_getScreenshot_const(self.as_raw_Viz3d()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// Saves screenshot of the current scene.
@@ -1128,8 +1140,8 @@ pub trait Viz3dTrait {
 	/// ## Parameters
 	/// * file: Name of the file.
 	fn save_screenshot(&mut self, file: &str) -> Result<()> {
-		string_arg!(file);
-		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringX(self.as_raw_mut_Viz3d(), file.as_ptr()) }.into_result()
+		extern_container_arg!(file);
+		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringX(self.as_raw_mut_Viz3d(), file.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Sets the position of the window in the screen.
@@ -1216,7 +1228,7 @@ pub trait Viz3dTrait {
 	/// * ambient_color: Color::black()
 	/// * specular_color: Color::white()
 	fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, mut color: crate::viz::Viz3d_Color, mut diffuse_color: crate::viz::Viz3d_Color, mut ambient_color: crate::viz::Viz3d_Color, mut specular_color: crate::viz::Viz3d_Color) -> Result<()> {
-		unsafe { sys::cv_viz_Viz3d_addLight_Vec3d_Vec3d_Color_Color_Color_Color(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_mut_Color(), diffuse_color.as_raw_mut_Color(), ambient_color.as_raw_mut_Color(), specular_color.as_raw_mut_Color()) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_addLight_Vec3d_Vec3d_Color_Color_Color_Color(self.as_raw_mut_Viz3d(), position.opencv_to_extern(), focal_point.opencv_to_extern(), color.as_raw_mut_Color(), diffuse_color.as_raw_mut_Color(), ambient_color.as_raw_mut_Color(), specular_color.as_raw_mut_Color()) }.into_result()
 	}
 	
 	/// Returns whether the event loop has been stopped.
@@ -1284,8 +1296,8 @@ pub trait Viz3dTrait {
 	/// *   **SHADING_GOURAUD**
 	/// *   **SHADING_PHONG**
 	fn set_rendering_property(&mut self, id: &str, property: i32, value: f64) -> Result<()> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringX_int_double(self.as_raw_mut_Viz3d(), id.as_ptr(), property, value) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringX_int_double(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), property, value) }.into_result()
 	}
 	
 	/// Returns rendering property of a widget.
@@ -1314,8 +1326,8 @@ pub trait Viz3dTrait {
 	/// *   **SHADING_GOURAUD**
 	/// *   **SHADING_PHONG**
 	fn get_rendering_property(&mut self, id: &str, property: i32) -> Result<f64> {
-		string_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringX_int(self.as_raw_mut_Viz3d(), id.as_ptr(), property) }.into_result()
+		extern_container_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringX_int(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), property) }.into_result()
 	}
 	
 	/// Sets geometry representation of the widgets to surface, wireframe or points.
@@ -1342,7 +1354,7 @@ pub struct Viz3d {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Viz3d }
+opencv_type_boxed! { Viz3d }
 
 impl Drop for Viz3d {
 	fn drop(&mut self) {
@@ -1372,12 +1384,12 @@ impl Viz3d {
 	/// ## C++ default parameters
 	/// * window_name: String()
 	pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
-		string_arg!(window_name);
-		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringX(window_name.as_ptr()) }.into_result().map(|ptr| unsafe { crate::viz::Viz3d::from_raw(ptr) })
+		extern_container_arg!(window_name);
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringX(window_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 	}
 	
 	pub fn copy(unnamed: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
-		unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dX(unnamed.as_raw_Viz3d()) }.into_result().map(|ptr| unsafe { crate::viz::Viz3d::from_raw(ptr) })
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dX(unnamed.as_raw_Viz3d()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1394,7 +1406,7 @@ pub struct WArrow {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WArrow }
+opencv_type_boxed! { WArrow }
 
 impl Drop for WArrow {
 	fn drop(&mut self) {
@@ -1441,7 +1453,7 @@ impl WArrow {
 	/// * thickness: 0.03
 	/// * color: Color::white()
 	pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WArrow> {
-		unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dX_const_Point3dX_double_const_ColorX(&pt1, &pt2, thickness, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WArrow::from_raw(ptr) })
+		unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dX_const_Point3dX_double_const_ColorX(&pt1, &pt2, thickness, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WArrow::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1458,7 +1470,7 @@ pub struct WCameraPosition {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCameraPosition }
+opencv_type_boxed! { WCameraPosition }
 
 impl Drop for WCameraPosition {
 	fn drop(&mut self) {
@@ -1497,7 +1509,7 @@ impl WCameraPosition {
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	pub fn new(scale: f64) -> Result<crate::viz::WCameraPosition> {
-		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale) }.into_result().map(|ptr| unsafe { crate::viz::WCameraPosition::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale) }.into_result().map(|r| unsafe { crate::viz::WCameraPosition::opencv_from_extern(r) } )
 	}
 	
 	/// Display the viewing frustum
@@ -1514,7 +1526,7 @@ impl WCameraPosition {
 	/// * scale: 1.0
 	/// * color: Color::white()
 	pub fn new_1(k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(&k, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCameraPosition::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(&k, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCameraPosition::opencv_from_extern(r) } )
 	}
 	
 	/// Display the viewing frustum
@@ -1531,7 +1543,7 @@ impl WCameraPosition {
 	/// * scale: 1.0
 	/// * color: Color::white()
 	pub fn new_2(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(&fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCameraPosition::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(&fov, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCameraPosition::opencv_from_extern(r) } )
 	}
 	
 	/// Display image on the far plane of the viewing frustum
@@ -1552,7 +1564,7 @@ impl WCameraPosition {
 	/// * color: Color::white()
 	pub fn new_3(k: core::Matx33d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		input_array_arg!(image);
-		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(&k, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCameraPosition::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(&k, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCameraPosition::opencv_from_extern(r) } )
 	}
 	
 	///  Display image on the far plane of the viewing frustum
@@ -1573,7 +1585,7 @@ impl WCameraPosition {
 	/// * color: Color::white()
 	pub fn new_4(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		input_array_arg!(image);
-		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_const__InputArrayX_double_const_ColorX(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCameraPosition::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_const__InputArrayX_double_const_ColorX(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCameraPosition::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1590,7 +1602,7 @@ pub struct WCircle {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCircle }
+opencv_type_boxed! { WCircle }
 
 impl Drop for WCircle {
 	fn drop(&mut self) {
@@ -1633,7 +1645,7 @@ impl WCircle {
 	/// * thickness: 0.01
 	/// * color: Color::white()
 	pub fn new(radius: f64, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
-		unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorX(radius, thickness, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCircle::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorX(radius, thickness, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCircle::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs repositioned planar circle.
@@ -1649,7 +1661,7 @@ impl WCircle {
 	/// * thickness: 0.01
 	/// * color: Color::white()
 	pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
-		unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dX_const_Vec3dX_double_const_ColorX(radius, &center, &normal, thickness, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCircle::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dX_const_Vec3dX_double_const_ColorX(radius, &center, &normal, thickness, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCircle::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1672,7 +1684,7 @@ pub struct WCloud {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCloud }
+opencv_type_boxed! { WCloud }
 
 impl Drop for WCloud {
 	fn drop(&mut self) {
@@ -1714,7 +1726,7 @@ impl WCloud {
 	pub fn new(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
-		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WCloud::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a WCloud.
@@ -1728,7 +1740,7 @@ impl WCloud {
 	/// * color: Color::white()
 	pub fn new_1(cloud: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
-		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX(cloud.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX(cloud.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCloud::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a WCloud.
@@ -1742,7 +1754,7 @@ impl WCloud {
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
 		input_array_arg!(normals);
-		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WCloud::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a WCloud.
@@ -1756,7 +1768,7 @@ impl WCloud {
 	pub fn new_3(cloud: &dyn core::ToInputArray, color: &crate::viz::Color, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
 		input_array_arg!(normals);
-		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX_const__InputArrayX(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX_const__InputArrayX(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WCloud::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1814,7 +1826,7 @@ pub struct WCloudCollection {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCloudCollection }
+opencv_type_boxed! { WCloudCollection }
 
 impl Drop for WCloudCollection {
 	fn drop(&mut self) {
@@ -1847,7 +1859,7 @@ impl crate::viz::Widget3DTrait for WCloudCollection {
 
 impl WCloudCollection {
 	pub fn default() -> Result<crate::viz::WCloudCollection> {
-		unsafe { sys::cv_viz_WCloudCollection_WCloudCollection() }.into_result().map(|ptr| unsafe { crate::viz::WCloudCollection::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloudCollection_WCloudCollection() }.into_result().map(|r| unsafe { crate::viz::WCloudCollection::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1864,7 +1876,7 @@ pub struct WCloudNormals {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCloudNormals }
+opencv_type_boxed! { WCloudNormals }
 
 impl Drop for WCloudNormals {
 	fn drop(&mut self) {
@@ -1915,7 +1927,7 @@ impl WCloudNormals {
 	pub fn new(cloud: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
 		input_array_arg!(cloud);
 		input_array_arg!(normals);
-		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayX_const__InputArrayX_int_double_const_ColorX(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCloudNormals::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayX_const__InputArrayX_int_double_const_ColorX(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCloudNormals::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1932,7 +1944,7 @@ pub struct WCone {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCone }
+opencv_type_boxed! { WCone }
 
 impl Drop for WCone {
 	fn drop(&mut self) {
@@ -1976,7 +1988,7 @@ impl WCone {
 	/// * resolution: 6.0
 	/// * color: Color::white()
 	pub fn new(length: f64, radius: f64, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
-		unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorX(length, radius, resolution, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCone::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorX(length, radius, resolution, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCone::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs repositioned planar cone.
@@ -1992,7 +2004,7 @@ impl WCone {
 	/// * resolution: 6.0
 	/// * color: Color::white()
 	pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
-		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dX_const_Point3dX_int_const_ColorX(radius, &center, &tip, resolution, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCone::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dX_const_Point3dX_int_const_ColorX(radius, &center, &tip, resolution, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCone::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2009,7 +2021,7 @@ pub struct WCoordinateSystem {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCoordinateSystem }
+opencv_type_boxed! { WCoordinateSystem }
 
 impl Drop for WCoordinateSystem {
 	fn drop(&mut self) {
@@ -2049,7 +2061,7 @@ impl WCoordinateSystem {
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	pub fn new(scale: f64) -> Result<crate::viz::WCoordinateSystem> {
-		unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale) }.into_result().map(|ptr| unsafe { crate::viz::WCoordinateSystem::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale) }.into_result().map(|r| unsafe { crate::viz::WCoordinateSystem::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2066,7 +2078,7 @@ pub struct WCube {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCube }
+opencv_type_boxed! { WCube }
 
 impl Drop for WCube {
 	fn drop(&mut self) {
@@ -2114,7 +2126,7 @@ impl WCube {
 	/// * wire_frame: true
 	/// * color: Color::white()
 	pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &crate::viz::Color) -> Result<crate::viz::WCube> {
-		unsafe { sys::cv_viz_WCube_WCube_const_Point3dX_const_Point3dX_bool_const_ColorX(&min_point, &max_point, wire_frame, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCube::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCube_WCube_const_Point3dX_const_Point3dX_bool_const_ColorX(&min_point, &max_point, wire_frame, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCube::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2131,7 +2143,7 @@ pub struct WCylinder {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WCylinder }
+opencv_type_boxed! { WCylinder }
 
 impl Drop for WCylinder {
 	fn drop(&mut self) {
@@ -2176,7 +2188,7 @@ impl WCylinder {
 	/// * numsides: 30
 	/// * color: Color::white()
 	pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &crate::viz::Color) -> Result<crate::viz::WCylinder> {
-		unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dX_const_Point3dX_double_int_const_ColorX(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WCylinder::from_raw(ptr) })
+		unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dX_const_Point3dX_double_int_const_ColorX(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCylinder::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2193,7 +2205,7 @@ pub struct WGrid {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WGrid }
+opencv_type_boxed! { WGrid }
 
 impl Drop for WGrid {
 	fn drop(&mut self) {
@@ -2237,7 +2249,7 @@ impl WGrid {
 	/// * cells_spacing: Vec2d::all(1.0)
 	/// * color: Color::white()
 	pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
-		unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iX_const_Vec2dX_const_ColorX(&cells, &cells_spacing, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WGrid::from_raw(ptr) })
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iX_const_Vec2dX_const_ColorX(&cells, &cells_spacing, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WGrid::opencv_from_extern(r) } )
 	}
 	
 	/// Creates repositioned grid
@@ -2247,7 +2259,7 @@ impl WGrid {
 	/// * cells_spacing: Vec2d::all(1.0)
 	/// * color: Color::white()
 	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
-		unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Vec2iX_const_Vec2dX_const_ColorX(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WGrid::from_raw(ptr) })
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Vec2iX_const_Vec2dX_const_ColorX(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WGrid::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2281,7 +2293,7 @@ pub struct WImage3D {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WImage3D }
+opencv_type_boxed! { WImage3D }
 
 impl Drop for WImage3D {
 	fn drop(&mut self) {
@@ -2320,7 +2332,7 @@ impl WImage3D {
 	/// * size: Size of the image.
 	pub fn new(image: &dyn core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
 		input_array_arg!(image);
-		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX(image.as_raw__InputArray(), &size) }.into_result().map(|ptr| unsafe { crate::viz::WImage3D::from_raw(ptr) })
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX(image.as_raw__InputArray(), &size) }.into_result().map(|r| unsafe { crate::viz::WImage3D::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs an WImage3D.
@@ -2333,7 +2345,7 @@ impl WImage3D {
 	/// * up_vector: Determines orientation of the image.
 	pub fn new_1(image: &dyn core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
 		input_array_arg!(image);
-		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(image.as_raw__InputArray(), &size, &center, &normal, &up_vector) }.into_result().map(|ptr| unsafe { crate::viz::WImage3D::from_raw(ptr) })
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(image.as_raw__InputArray(), &size, &center, &normal, &up_vector) }.into_result().map(|r| unsafe { crate::viz::WImage3D::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2359,7 +2371,7 @@ pub struct WImageOverlay {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WImageOverlay }
+opencv_type_boxed! { WImageOverlay }
 
 impl Drop for WImageOverlay {
 	fn drop(&mut self) {
@@ -2398,7 +2410,7 @@ impl WImageOverlay {
 	/// * rect: Image is scaled and positioned based on rect.
 	pub fn new(image: &dyn core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
 		input_array_arg!(image);
-		unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayX_const_RectX(image.as_raw__InputArray(), &rect) }.into_result().map(|ptr| unsafe { crate::viz::WImageOverlay::from_raw(ptr) })
+		unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayX_const_RectX(image.as_raw__InputArray(), &rect) }.into_result().map(|r| unsafe { crate::viz::WImageOverlay::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2415,7 +2427,7 @@ pub struct WLine {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WLine }
+opencv_type_boxed! { WLine }
 
 impl Drop for WLine {
 	fn drop(&mut self) {
@@ -2457,7 +2469,7 @@ impl WLine {
 	/// ## C++ default parameters
 	/// * color: Color::white()
 	pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &crate::viz::Color) -> Result<crate::viz::WLine> {
-		unsafe { sys::cv_viz_WLine_WLine_const_Point3dX_const_Point3dX_const_ColorX(&pt1, &pt2, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WLine::from_raw(ptr) })
+		unsafe { sys::cv_viz_WLine_WLine_const_Point3dX_const_Point3dX_const_ColorX(&pt1, &pt2, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WLine::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2488,7 +2500,7 @@ pub struct WMesh {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WMesh }
+opencv_type_boxed! { WMesh }
 
 impl Drop for WMesh {
 	fn drop(&mut self) {
@@ -2521,7 +2533,7 @@ impl crate::viz::Widget3DTrait for WMesh {
 
 impl WMesh {
 	pub fn new(mesh: &crate::viz::Mesh) -> Result<crate::viz::WMesh> {
-		unsafe { sys::cv_viz_WMesh_WMesh_const_MeshX(mesh.as_raw_Mesh()) }.into_result().map(|ptr| unsafe { crate::viz::WMesh::from_raw(ptr) })
+		unsafe { sys::cv_viz_WMesh_WMesh_const_MeshX(mesh.as_raw_Mesh()) }.into_result().map(|r| unsafe { crate::viz::WMesh::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -2532,7 +2544,7 @@ impl WMesh {
 		input_array_arg!(polygons);
 		input_array_arg!(colors);
 		input_array_arg!(normals);
-		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WMesh::from_raw(ptr) })
+		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WMesh::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2547,7 +2559,7 @@ pub struct WPaintedCloud {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WPaintedCloud }
+opencv_type_boxed! { WPaintedCloud }
 
 impl Drop for WPaintedCloud {
 	fn drop(&mut self) {
@@ -2582,19 +2594,19 @@ impl WPaintedCloud {
 	/// Paint cloud with default gradient between cloud bounds points
 	pub fn new(cloud: &dyn core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX(cloud.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WPaintedCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX(cloud.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WPaintedCloud::opencv_from_extern(r) } )
 	}
 	
 	/// Paint cloud with default gradient between given points
 	pub fn new_1(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX(cloud.as_raw__InputArray(), &p1, &p2) }.into_result().map(|ptr| unsafe { crate::viz::WPaintedCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX(cloud.as_raw__InputArray(), &p1, &p2) }.into_result().map(|r| unsafe { crate::viz::WPaintedCloud::opencv_from_extern(r) } )
 	}
 	
 	/// Paint cloud with gradient specified by given colors between given points
 	pub fn new_2(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX_const_ColorX_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WPaintedCloud::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX_const_ColorX_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WPaintedCloud::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2611,7 +2623,7 @@ pub struct WPlane {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WPlane }
+opencv_type_boxed! { WPlane }
 
 impl Drop for WPlane {
 	fn drop(&mut self) {
@@ -2653,7 +2665,7 @@ impl WPlane {
 	/// * size: Size2d(1.0,1.0)
 	/// * color: Color::white()
 	pub fn new(size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
-		unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dX_const_ColorX(&size, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WPlane::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dX_const_ColorX(&size, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WPlane::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a repositioned plane
@@ -2669,7 +2681,7 @@ impl WPlane {
 	/// * size: Size2d(1.0,1.0)
 	/// * color: Color::white()
 	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
-		unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Size2dX_const_ColorX(&center, &normal, &new_yaxis, &size, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WPlane::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Size2dX_const_ColorX(&center, &normal, &new_yaxis, &size, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WPlane::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2686,7 +2698,7 @@ pub struct WPolyLine {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WPolyLine }
+opencv_type_boxed! { WPolyLine }
 
 impl Drop for WPolyLine {
 	fn drop(&mut self) {
@@ -2721,7 +2733,7 @@ impl WPolyLine {
 	pub fn new(points: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WPolyLine> {
 		input_array_arg!(points);
 		input_array_arg!(colors);
-		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const__InputArrayX(points.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { crate::viz::WPolyLine::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const__InputArrayX(points.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::viz::WPolyLine::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a WPolyLine.
@@ -2734,7 +2746,7 @@ impl WPolyLine {
 	/// * color: Color::white()
 	pub fn new_1(points: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
 		input_array_arg!(points);
-		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const_ColorX(points.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WPolyLine::from_raw(ptr) })
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const_ColorX(points.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WPolyLine::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2751,7 +2763,7 @@ pub struct WSphere {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WSphere }
+opencv_type_boxed! { WSphere }
 
 impl Drop for WSphere {
 	fn drop(&mut self) {
@@ -2795,7 +2807,7 @@ impl WSphere {
 	/// * sphere_resolution: 10
 	/// * color: Color::white()
 	pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WSphere> {
-		unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dX_double_int_const_ColorX(&center, radius, sphere_resolution, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WSphere::from_raw(ptr) })
+		unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dX_double_int_const_ColorX(&center, radius, sphere_resolution, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WSphere::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2810,13 +2822,13 @@ pub trait WTextTrait: crate::viz::Widget2DTrait {
 	/// ## Parameters
 	/// * text: Text content of the widget.
 	fn set_text(&mut self, text: &str) -> Result<()> {
-		string_arg!(text);
-		unsafe { sys::cv_viz_WText_setText_const_StringX(self.as_raw_mut_WText(), text.as_ptr()) }.into_result()
+		extern_container_arg!(text);
+		unsafe { sys::cv_viz_WText_setText_const_StringX(self.as_raw_mut_WText(), text.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Returns the current text content of the widget.
 	fn get_text(&self) -> Result<String> {
-		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2826,7 +2838,7 @@ pub struct WText {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WText }
+opencv_type_boxed! { WText }
 
 impl Drop for WText {
 	fn drop(&mut self) {
@@ -2870,8 +2882,8 @@ impl WText {
 	/// * font_size: 20
 	/// * color: Color::white()
 	pub fn new(text: &str, pos: core::Point, font_size: i32, color: &crate::viz::Color) -> Result<crate::viz::WText> {
-		string_arg!(text);
-		unsafe { sys::cv_viz_WText_WText_const_StringX_const_PointX_int_const_ColorX(text.as_ptr(), &pos, font_size, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WText::from_raw(ptr) })
+		extern_container_arg!(text);
+		unsafe { sys::cv_viz_WText_WText_const_StringX_const_PointX_int_const_ColorX(text.opencv_to_extern(), &pos, font_size, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2886,13 +2898,13 @@ pub trait WText3DTrait: crate::viz::Widget3DTrait {
 	/// ## Parameters
 	/// * text: Text content of the widget.
 	fn set_text(&mut self, text: &str) -> Result<()> {
-		string_arg!(text);
-		unsafe { sys::cv_viz_WText3D_setText_const_StringX(self.as_raw_mut_WText3D(), text.as_ptr()) }.into_result()
+		extern_container_arg!(text);
+		unsafe { sys::cv_viz_WText3D_setText_const_StringX(self.as_raw_mut_WText3D(), text.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Returns the current text content of the widget.
 	fn get_text(&self) -> Result<String> {
-		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2902,7 +2914,7 @@ pub struct WText3D {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WText3D }
+opencv_type_boxed! { WText3D }
 
 impl Drop for WText3D {
 	fn drop(&mut self) {
@@ -2948,8 +2960,8 @@ impl WText3D {
 	/// * face_camera: true
 	/// * color: Color::white()
 	pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &crate::viz::Color) -> Result<crate::viz::WText3D> {
-		string_arg!(text);
-		unsafe { sys::cv_viz_WText3D_WText3D_const_StringX_const_Point3dX_double_bool_const_ColorX(text.as_ptr(), &position, text_scale, face_camera, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WText3D::from_raw(ptr) })
+		extern_container_arg!(text);
+		unsafe { sys::cv_viz_WText3D_WText3D_const_StringX_const_Point3dX_double_bool_const_ColorX(text.opencv_to_extern(), &position, text_scale, face_camera, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText3D::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2966,7 +2978,7 @@ pub struct WTrajectory {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WTrajectory }
+opencv_type_boxed! { WTrajectory }
 
 impl Drop for WTrajectory {
 	fn drop(&mut self) {
@@ -3018,7 +3030,7 @@ impl WTrajectory {
 	/// * color: Color::white()
 	pub fn new(path: &dyn core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
 		input_array_arg!(path);
-		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayX_int_double_const_ColorX(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WTrajectory::from_raw(ptr) })
+		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayX_int_double_const_ColorX(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WTrajectory::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3035,7 +3047,7 @@ pub struct WTrajectoryFrustums {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WTrajectoryFrustums }
+opencv_type_boxed! { WTrajectoryFrustums }
 
 impl Drop for WTrajectoryFrustums {
 	fn drop(&mut self) {
@@ -3082,7 +3094,7 @@ impl WTrajectoryFrustums {
 	/// * color: Color::white()
 	pub fn new(path: &dyn core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
 		input_array_arg!(path);
-		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(path.as_raw__InputArray(), &k, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WTrajectoryFrustums::from_raw(ptr) })
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(path.as_raw__InputArray(), &k, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs a WTrajectoryFrustums.
@@ -3100,7 +3112,7 @@ impl WTrajectoryFrustums {
 	/// * color: Color::white()
 	pub fn new_1(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
 		input_array_arg!(path);
-		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WTrajectoryFrustums::from_raw(ptr) })
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3123,7 +3135,7 @@ pub struct WTrajectorySpheres {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WTrajectorySpheres }
+opencv_type_boxed! { WTrajectorySpheres }
 
 impl Drop for WTrajectorySpheres {
 	fn drop(&mut self) {
@@ -3171,7 +3183,7 @@ impl WTrajectorySpheres {
 	/// * to: Color::white()
 	pub fn new(path: &dyn core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
 		input_array_arg!(path);
-		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayX_double_double_const_ColorX_const_ColorX(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color()) }.into_result().map(|ptr| unsafe { crate::viz::WTrajectorySpheres::from_raw(ptr) })
+		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayX_double_double_const_ColorX_const_ColorX(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WTrajectorySpheres::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3211,7 +3223,7 @@ pub struct WWidgetMerger {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { WWidgetMerger }
+opencv_type_boxed! { WWidgetMerger }
 
 impl Drop for WWidgetMerger {
 	fn drop(&mut self) {
@@ -3244,7 +3256,7 @@ impl crate::viz::Widget3DTrait for WWidgetMerger {
 
 impl WWidgetMerger {
 	pub fn default() -> Result<crate::viz::WWidgetMerger> {
-		unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger() }.into_result().map(|ptr| unsafe { crate::viz::WWidgetMerger::from_raw(ptr) })
+		unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger() }.into_result().map(|r| unsafe { crate::viz::WWidgetMerger::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3319,7 +3331,7 @@ pub struct Widget {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Widget }
+opencv_type_boxed! { Widget }
 
 impl Drop for Widget {
 	fn drop(&mut self) {
@@ -3342,11 +3354,11 @@ impl crate::viz::WidgetTrait for Widget {
 
 impl Widget {
 	pub fn default() -> Result<crate::viz::Widget> {
-		unsafe { sys::cv_viz_Widget_Widget() }.into_result().map(|ptr| unsafe { crate::viz::Widget::from_raw(ptr) })
+		unsafe { sys::cv_viz_Widget_Widget() }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 	pub fn copy(other: &crate::viz::Widget) -> Result<crate::viz::Widget> {
-		unsafe { sys::cv_viz_Widget_Widget_const_WidgetX(other.as_raw_Widget()) }.into_result().map(|ptr| unsafe { crate::viz::Widget::from_raw(ptr) })
+		unsafe { sys::cv_viz_Widget_Widget_const_WidgetX(other.as_raw_Widget()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 	/// Creates a widget from ply file.
@@ -3354,8 +3366,8 @@ impl Widget {
 	/// ## Parameters
 	/// * file_name: Ply file name.
 	pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
-		string_arg!(file_name);
-		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringX(file_name.as_ptr()) }.into_result().map(|ptr| unsafe { crate::viz::Widget::from_raw(ptr) })
+		extern_container_arg!(file_name);
+		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringX(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3380,7 +3392,7 @@ pub struct Widget2D {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Widget2D }
+opencv_type_boxed! { Widget2D }
 
 impl Drop for Widget2D {
 	fn drop(&mut self) {
@@ -3408,7 +3420,7 @@ impl crate::viz::Widget2DTrait for Widget2D {
 
 impl Widget2D {
 	pub fn default() -> Result<crate::viz::Widget2D> {
-		unsafe { sys::cv_viz_Widget2D_Widget2D() }.into_result().map(|ptr| unsafe { crate::viz::Widget2D::from_raw(ptr) })
+		unsafe { sys::cv_viz_Widget2D_Widget2D() }.into_result().map(|r| unsafe { crate::viz::Widget2D::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3462,7 +3474,7 @@ pub struct Widget3D {
 	ptr: *mut c_void
 }
 
-boxed_ptr! { Widget3D }
+opencv_type_boxed! { Widget3D }
 
 impl Drop for Widget3D {
 	fn drop(&mut self) {
@@ -3490,7 +3502,7 @@ impl crate::viz::Widget3DTrait for Widget3D {
 
 impl Widget3D {
 	pub fn default() -> Result<crate::viz::Widget3D> {
-		unsafe { sys::cv_viz_Widget3D_Widget3D() }.into_result().map(|ptr| unsafe { crate::viz::Widget3D::from_raw(ptr) })
+		unsafe { sys::cv_viz_Widget3D_Widget3D() }.into_result().map(|r| unsafe { crate::viz::Widget3D::opencv_from_extern(r) } )
 	}
 	
 }

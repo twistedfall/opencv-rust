@@ -27,6 +27,14 @@ extern "C" cv::BackgroundSubtractorMOG2* cv_PtrOfBackgroundSubtractorMOG2_get_in
 	return instance->get();
 }
 
+extern "C" void cv_PtrOfDenseOpticalFlow_delete(cv::Ptr<cv::DenseOpticalFlow>* instance) {
+	delete instance;
+}
+
+extern "C" cv::DenseOpticalFlow* cv_PtrOfDenseOpticalFlow_get_inner_ptr(cv::Ptr<cv::DenseOpticalFlow>* instance) {
+	return instance->get();
+}
+
 extern "C" void cv_PtrOfDualTVL1OpticalFlow_delete(cv::Ptr<cv::DualTVL1OpticalFlow>* instance) {
 	delete instance;
 }

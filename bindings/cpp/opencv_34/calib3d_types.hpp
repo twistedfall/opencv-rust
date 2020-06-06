@@ -24,6 +24,14 @@ extern "C" cv::StereoBM* cv_PtrOfStereoBM_get_inner_ptr(cv::Ptr<cv::StereoBM>* i
 	return instance->get();
 }
 
+extern "C" void cv_PtrOfStereoMatcher_delete(cv::Ptr<cv::StereoMatcher>* instance) {
+	delete instance;
+}
+
+extern "C" cv::StereoMatcher* cv_PtrOfStereoMatcher_get_inner_ptr(cv::Ptr<cv::StereoMatcher>* instance) {
+	return instance->get();
+}
+
 extern "C" void cv_PtrOfStereoSGBM_delete(cv::Ptr<cv::StereoSGBM>* instance) {
 	delete instance;
 }
