@@ -10,12 +10,14 @@ mod templ;
 mod error;
 mod opencv;
 mod manual;
+mod traits;
 
 pub mod prelude {
 	pub use crate::{
 		core::{DataType, Mat},
 		hub_prelude::*,
 		manual::prelude::*,
+		traits::{Boxed, VectorTrait},
 	};
 }
 
@@ -24,7 +26,7 @@ pub(crate) mod mod_prelude_types {
 
 	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
 
-	pub use crate::core::Boxed;
+	pub use crate::traits::{Boxed, VectorTrait};
 }
 
 pub(crate) mod mod_prelude {

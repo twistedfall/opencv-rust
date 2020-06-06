@@ -10,7 +10,7 @@ vector_extern! { {{inner_rust_full}}, {{rust_extern_const}}, {{rust_extern_mut}}
 }
 {{additional_methods}}
 
-impl<'i> core::VectorTrait<'i> for {{rust_full}} {
+impl<'i> VectorTrait<'i> for {{rust_full}} {
 	type Arg = {{inner_rust_full_arg}};
 
 	fn with_capacity(capacity: size_t) -> Self { Self::with_capacity(capacity) }

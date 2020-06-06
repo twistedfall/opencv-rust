@@ -26,7 +26,7 @@ pub trait Boxed: Sized {
 #[macro_export]
 macro_rules! boxed_ptr {
 	($type: ty) => {
-		impl $crate::core::Boxed for $type {
+		impl $crate::traits::Boxed for $type {
 			#[inline]
 			unsafe fn from_raw(ptr: *mut std::ffi::c_void) -> Self {
 				Self { ptr }

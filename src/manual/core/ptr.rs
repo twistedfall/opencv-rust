@@ -6,7 +6,7 @@ use std::{
 
 pub use ptr_extern::PtrExtern;
 
-use crate::core::Boxed;
+use crate::traits::Boxed;
 
 #[cfg(not(feature = "opencv-32"))]
 mod ptr_f32;

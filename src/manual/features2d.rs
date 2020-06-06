@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use crate::{
-	core::Boxed,
+	traits::Boxed,
 	features2d::ORB,
 	Result,
 	sys,

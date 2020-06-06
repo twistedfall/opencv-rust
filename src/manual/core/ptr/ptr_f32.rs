@@ -1,7 +1,10 @@
 use std::ffi::c_void;
 use std::ops::{Deref, DerefMut};
 
-use crate::core::{Boxed, Ptr};
+use crate::{
+	core::Ptr,
+	traits::Boxed,
+};
 
 impl Ptr<f32> {
 	pub fn new(val: f32) -> Self {

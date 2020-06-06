@@ -1,9 +1,10 @@
 use std::os::raw::c_void;
 
 use crate::{
-	core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait, Boxed},
+	core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait},
 	Result,
 	sys,
+	traits::Boxed,
 };
 
 /// Trait to serve as a replacement for `InputArray` in C++ OpenCV

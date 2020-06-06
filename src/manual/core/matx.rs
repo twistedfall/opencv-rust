@@ -6,11 +6,12 @@ use std::{
 use num_traits::{One, Zero};
 
 use crate::{
-	core::{self, Boxed, ToInputArray, ToInputOutputArray, ToOutputArray},
+	core::{self, ToInputArray, ToInputOutputArray, ToOutputArray},
 	Error,
 	manual::core::sized::*,
 	Result,
 	sys::Result as SysResult,
+	traits::Boxed,
 };
 
 fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {

@@ -1,9 +1,10 @@
 use std::ffi::c_void;
 
 use crate::{
-	core::{_InputArray, Boxed, ToInputArray},
+	core::{_InputArray, ToInputArray},
 	Result,
 	sys,
+	traits::Boxed,
 };
 
 pub use self::{scalar::ValidScalarType, vec::ValidVecType};
