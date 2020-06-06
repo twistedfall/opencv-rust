@@ -163,10 +163,11 @@ impl GeneratedElement for Enum<'_> {
 				})
 			}).collect::<Vec<_>>();
 		ENUM_TPL.interpolate(&hashmap! {
-			"doc_comment" => self.rendered_doc_comment(opencv_version),
-			"debug" => get_debug(self),
-			"rust_local" => self.rust_localname().into_owned(),
-			"consts" => consts.join(""),
+			"doc_comment" => self.rendered_doc_comment(opencv_version).into(),
+			"debug" => get_debug(self).into(),
+			"rust_local" => self.rust_localname(),
+			"rust_full" => self.rust_fullname(),
+			"consts" => consts.join("").into(),
 		})
 	}
 }

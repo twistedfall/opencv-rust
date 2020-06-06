@@ -50,6 +50,8 @@ macro_rules! vec_impl {
 				&mut self.0
 			}
 		}
+
+		opencv_type_simple_generic! { $type, $type_trait }
 	};
 }
 

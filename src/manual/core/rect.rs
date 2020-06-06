@@ -84,6 +84,8 @@ impl<T: ValidRectType> Rect_<T> {
 	}
 }
 
+opencv_type_simple_generic! { Rect_, ValidRectType }
+
 impl<P, R> Add<Point_<P>> for Rect_<R>
 	where
 		P: ValidPointType,

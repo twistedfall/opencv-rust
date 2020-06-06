@@ -6,7 +6,10 @@ use std::{
 
 pub use ptr_extern::PtrExtern;
 
-use crate::traits::Boxed;
+use crate::{
+	Result,
+	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+};
 
 #[cfg(not(feature = "opencv-32"))]
 mod ptr_f32;
@@ -52,6 +55,43 @@ impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.ptr
+	}
+}
+
+impl<T: ?Sized> OpenCVType<'_> for Ptr<T> where Self: PtrExtern {
+	type Owned = Self;
+	type Arg = Self;
+	type ExternReceive = *mut c_void;
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
+	}
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+		Self::from_raw(s)
+	}
+}
+
+impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T> where Self: PtrExtern {
+	type ExternSend = *const c_void;
+	type ExternSendMut = *mut c_void;
+
+	#[inline]
+	fn opencv_to_extern(&self) -> Self::ExternSend {
+		self.as_raw()
+	}
+
+	#[inline]
+	fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut {
+		self.as_raw_mut()
 	}
 }
 

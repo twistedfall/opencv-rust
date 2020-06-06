@@ -47,7 +47,6 @@ macro_rules! vector_extern {
 		$extern_swap: ident,
 		$extern_clear: ident,
 		$extern_get: ident -> $extern_return: ty,
-		ret_map: $($ret_map: tt)*
 		// $extern_push: ident,
 		// $extern_insert: ident,
 		// $extern_set: ident,
@@ -118,7 +117,7 @@ macro_rules! vector_extern {
 				extern "C" { fn $extern_get(instance: $vector_extern_const, index: libc::size_t) -> $extern_return; }
 				$extern_get(self.as_raw(), index)
 					.into_result()
-					$($ret_map)*
+					.map(|s| <$type>::opencv_from_extern(s))
 			}
 		}
 	};

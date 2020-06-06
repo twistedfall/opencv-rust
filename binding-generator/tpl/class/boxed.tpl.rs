@@ -4,7 +4,7 @@ pub struct {{rust_local}} {
 	ptr: {{rust_extern_mut}}
 }
 
-boxed_ptr! { {{rust_local}} }
+opencv_type_boxed! { {{rust_local}} }
 
 impl Drop for {{rust_local}} {
 	fn drop(&mut self) {

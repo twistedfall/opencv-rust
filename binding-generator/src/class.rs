@@ -465,6 +465,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
 				"debug" => get_debug(self).into(),
 				"rust_local" => type_ref.rust_local(),
+				"rust_full" => type_ref.rust_full(),
 				"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
 				"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
 				"fields" => fields.join("").into(),

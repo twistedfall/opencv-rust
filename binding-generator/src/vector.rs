@@ -228,7 +228,6 @@ impl GeneratedElement for Vector<'_, '_> {
 			"pre_call_infallible" => pre_call_infallible.into(),
 			"inner_rust_extern_return" => element_type.rust_extern_return(),
 			"inner_rust_extern_return_wrapper" => element_type.rust_extern_return_wrapper_full(),
-			"ret_map" => element_type.rust_return_map(false),
 		};
 		if element_type.as_typedef().is_some()
 			&& !element_type.is_data_type()

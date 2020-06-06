@@ -24,7 +24,7 @@ pub trait Boxed: Sized {
 }
 
 #[macro_export]
-macro_rules! boxed_ptr {
+macro_rules! opencv_type_boxed {
 	($type: ty) => {
 		impl $crate::traits::Boxed for $type {
 			#[inline]
@@ -47,6 +47,43 @@ macro_rules! boxed_ptr {
 			#[inline]
 			fn as_raw_mut(&mut self) -> *mut std::ffi::c_void {
 				self.ptr
+			}
+		}
+
+		impl $crate::traits::OpenCVType<'_> for $type {
+			type Owned = Self;
+			type Arg = Self;
+			type ExternReceive = *mut std::ffi::c_void;
+			type ExternContainer = Self;
+
+			#[inline]
+			fn opencv_into_extern_container(self) -> $crate::Result<Self::ExternContainer> {
+				Ok(self)
+			}
+
+			#[inline]
+			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+				self
+			}
+
+			#[inline]
+			unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+				Self::from_raw(s)
+			}
+		}
+
+		impl $crate::traits::OpenCVTypeExternContainer for $type {
+			type ExternSend = *const std::ffi::c_void;
+			type ExternSendMut = *mut std::ffi::c_void;
+
+			#[inline]
+			fn opencv_to_extern(&self) -> Self::ExternSend {
+				self.as_raw()
+			}
+
+			#[inline]
+			fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut {
+				self.as_raw_mut()
 			}
 		}
 	};

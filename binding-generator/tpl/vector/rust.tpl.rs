@@ -6,7 +6,6 @@ vector_extern! { {{inner_rust_full}}, {{rust_extern_const}}, {{rust_extern_mut}}
 	cv_{{rust_localalias}}_reserve, cv_{{rust_localalias}}_remove,
 	cv_{{rust_localalias}}_swap, cv_{{rust_localalias}}_clear,
 	cv_{{rust_localalias}}_get -> sys::{{inner_rust_extern_return_wrapper}},
-	ret_map: {{ret_map}}
 }
 {{additional_methods}}
 

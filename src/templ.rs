@@ -1,17 +1,20 @@
 use std::{
-	ffi::{CStr, CString},
+	ffi::CStr,
 	os::raw::c_char,
 };
 
-macro_rules! string_arg {
-	($name: ident) => {
-		let $name = std::ffi::CString::new($name)?;
+macro_rules! extern_container_arg {
+	(nofail mut $name: ident) => {
+		let mut $name = $name.opencv_into_extern_container_nofail();
 	};
-}
-
-macro_rules! string_arg_infallible {
+	(nofail $name: ident) => {
+		let $name = $name.opencv_into_extern_container_nofail();
+	};
+	(mut $name: ident) => {
+		let mut $name = $name.opencv_into_extern_container()?;
+	};
 	($name: ident) => {
-		let $name = $crate::templ::cstring_new_infallible($name);
+		let $name = $name.opencv_into_extern_container()?;
 	};
 }
 
@@ -84,20 +87,6 @@ macro_rules! string_array_arg_mut {
 	($name: ident) => {
 		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<Vec<_>>();
 	};
-}
-
-pub fn cstring_new_infallible(bytes: impl Into<Vec<u8>>) -> CString {
-	match ::std::ffi::CString::new(bytes) {
-		Ok(s) => {
-			s
-		}
-		Err(e) => {
-			let nul_pos = e.nul_position();
-			let mut bytes = e.into_vec();
-			bytes.drain(nul_pos + 1..);
-			unsafe { CString::from_vec_unchecked(bytes) }
-		}
-	}
 }
 
 #[no_mangle]

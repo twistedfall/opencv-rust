@@ -12,3 +12,5 @@ impl<T: ValidMatxType> Default for Affine3<T> {
 		Self { matrix: Matx44::eye() }
 	}
 }
+
+opencv_type_simple_generic! { Affine3, ValidMatxType }

@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 
-pub trait SizedArray<T> {
-	type Storage: AsRef<[T]> + AsMut<[T]>;
+pub trait SizedArray<T>: Copy + Clone {
+	type Storage: AsRef<[T]> + AsMut<[T]> + Copy + Clone;
 
 	const ROWS: usize;
 	const COLS: usize;

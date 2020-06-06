@@ -6,6 +6,8 @@ pub struct {{rust_local}} {
 	{{fields}}
 }
 
+opencv_type_simple! { {{rust_full}} }
+
 {{impl}}
 
 

@@ -6,4 +6,6 @@ pub enum {{rust_local}} {
 	{{consts}}
 }
 
+opencv_type_enum! { {{rust_full}} }
+
 

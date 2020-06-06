@@ -1,11 +1,10 @@
-pub use CV_MAKETYPE as CV_MAKE_TYPE;
-
 pub use affine3::*;
+pub use CV_MAKETYPE as CV_MAKE_TYPE;
 pub use input_output_array::*;
 pub use mat::*;
 pub use matx::*;
-pub use point3::*;
 pub use point::*;
+pub use point3::*;
 pub use ptr::*;
 pub use rect::*;
 pub use size::*;
@@ -29,13 +28,36 @@ macro_rules! valid_types {
 	};
 }
 
+macro_rules! opencv_type_simple_generic {
+	($type: ident, $trait: ident) => {
+		impl<T: $trait> $crate::traits::OpenCVType<'_> for $type<T> {
+			type Owned = Self;
+			type Arg = Self;
+			type ExternReceive = Self;
+			type ExternContainer = Self;
+
+			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
+			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
+			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
+		}
+
+		impl<T: $trait> $crate::traits::OpenCVTypeExternContainer for $type<T> {
+			type ExternSend = *const Self;
+			type ExternSendMut = *mut Self;
+
+			#[inline] fn opencv_to_extern(&self) -> Self::ExternSend { self }
+			#[inline] fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut { self }
+		}
+	};
+}
+
 mod affine3;
 mod input_output_array;
 mod mat;
 mod matx;
 mod point3;
 mod point;
-pub(crate)mod ptr;
+pub(crate) mod ptr;
 mod rect;
 mod size;
 mod sized;

@@ -1267,14 +1267,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 
 	pub fn rust_return_map(&self, is_safe_context: bool) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
-		if self.is_string() {
+		if self.is_string() || self.is_by_ptr() {
 			format!(
-				".map(|s| {unsafety_call}{{ crate::templ::receive_string(s as *mut String) }})",
-				unsafety_call=unsafety_call,
-			).into()
-		} else if self.is_by_ptr() {
-			format!(
-				".map(|ptr| {unsafety_call}{{ {typ}::from_raw(ptr) }})",
+				".map(|r| {unsafety_call}{{ {typ}::opencv_from_extern(r) }} )",
 				unsafety_call=unsafety_call,
 				typ=self.rust_return_func_decl(true),
 			).into()
@@ -1294,10 +1289,19 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		if self.is_string() {
 			return if self.is_output() {
 				format!("string_arg_output_send!(via {name}_via)", name=name)
-			} else if is_function_infallible {
-				format!("string_arg_infallible!({name})", name=name)
 			} else {
-				format!("string_arg!({name})", name=name)
+				let mut flags = vec![];
+				if is_function_infallible {
+					flags.push("nofail")
+				}
+				if !self.is_const() {
+					flags.push("mut")
+				}
+				let mut flags = flags.join(" ");
+				if !flags.is_empty() {
+					flags.push(' ');
+				}
+				format!("extern_container_arg!({flags}{name})", flags=flags, name=name)
 			}
 		} else if self.is_input_array() {
 			return format!("input_array_arg!({name})", name=name);
@@ -1352,14 +1356,16 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			return if self.is_output() {
 				format!("&mut {name}_via", name=name)
 			} else if self.is_const() || is_const {
-				format!("{name}.as_ptr()", name=name)
+				format!("{name}.opencv_to_extern()", name=name)
 			} else {
-				format!("{name}.as_ptr() as _", name=name) // fixme: use as_mut_ptr() when it's stabilized
+				format!("{name}.opencv_to_extern_mut()", name=name)
 			}
 		}
-		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const))
-			|| self.as_simple_class().is_some() {
+		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const)) {
 			return format!("&{name}", name=name);
+		}
+		if self.as_simple_class().is_some() {
+			return format!("{name}.opencv_to_extern()", name=name);
 		}
 		if self.is_by_ptr() {
 			let typ = self.source();

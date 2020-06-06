@@ -11,7 +11,7 @@ use crate::{
 	manual::core::sized::*,
 	Result,
 	sys::Result as SysResult,
-	traits::Boxed,
+	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
 };
 
 fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
@@ -141,6 +141,25 @@ impl<T: ValidMatxType, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for 
 	fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
 		self.get_mut(index).expect("Index out of range")
 	}
+}
+
+impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
+	type Owned = Self;
+	type Arg = Self;
+	type ExternReceive = Self;
+	type ExternContainer = Self;
+
+	#[inline] fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
+	#[inline] fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
+	#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
+}
+
+impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A> {
+	type ExternSend = *const Self;
+	type ExternSendMut = *mut Self;
+
+	#[inline] fn opencv_to_extern(&self) -> Self::ExternSend { self }
+	#[inline] fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut { self }
 }
 
 impl<T: ValidMatxType, A: SizedArray<T>> std::cmp::PartialEq for Matx<T, A> {
