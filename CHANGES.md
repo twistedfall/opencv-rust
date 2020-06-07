@@ -1,3 +1,7 @@
+* 0.40.1
+  * Fix parsing of cmake output during package discovery (fixes #136)
+  * Prefer vcpkg over cmake when building on Windows (fixes #137)
+
 * 0.40.0
   * Optimized dependencies, the crate has now 19 (including transitional) dependencies less.
   * Fixed pre-generated bindings for version 3.4 that got left out in the previous release.
