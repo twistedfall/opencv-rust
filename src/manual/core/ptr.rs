@@ -32,20 +32,24 @@ impl<T: ?Sized> Ptr<T> where Self: PtrExtern {
 }
 
 impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
+	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
 		Self { ptr, _d: PhantomData }
 	}
 
+	#[inline]
 	fn into_raw(self) -> *mut c_void {
 		let out = self.ptr;
 		mem::forget(self);
 		out
 	}
 
+	#[inline]
 	fn as_raw(&self) -> *const c_void {
 		self.ptr
 	}
 
+	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.ptr
 	}

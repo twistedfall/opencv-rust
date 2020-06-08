@@ -894,13 +894,12 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
 		.filter_map(|entry| {
 			let entry = entry.expect("Can't get path for module file");
-			let module: String = entry.file_stem().expect("Can't calculate file stem")
-				.to_string_lossy()
-				.into_owned();
-			if ignore_modules.contains(module.as_str()) {
+			let module = entry.file_stem()
+				.and_then(OsStr::to_str).expect("Can't calculate file stem");
+			if ignore_modules.contains(module) {
 				None
 			} else {
-				Some(module)
+				Some(module.to_string())
 			}
 		})
 		.collect();

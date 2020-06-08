@@ -127,14 +127,14 @@ impl<T: DataType> Mat_<T> {
 	}
 
 	#[inline(always)]
-	pub fn get(&self, i0: i32) -> Result<&T> {
+	pub fn at(&self, i0: i32) -> Result<&T> {
 		match_dims(self, 2)
 			.and_then(|_| match_total(self, i0))
 			.and_then(|_| unsafe { self.at_unchecked(i0) })
 	}
 
 	#[inline(always)]
-	pub fn get_mut(&mut self, i0: i32) -> Result<&mut T> {
+	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
 		match_dims(self, 2)
 			.and_then(|_| match_total(self, i0))?;
 		unsafe { self.at_unchecked_mut(i0) }

@@ -29,7 +29,7 @@ use crate::{
 	Vector,
 };
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Lifetime {
 	number: u8
 }
@@ -59,7 +59,7 @@ pub enum DependentTypeMode {
 	ForReturn(DefinitionLocation),
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Constness {
 	Auto,
 	Const,
@@ -619,14 +619,6 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	pub fn is_void(&self) -> bool {
 		if let Kind::Primitive(_, cpp) = self.canonical().kind() {
 			cpp == "void"
-		} else {
-			false
-		}
-	}
-
-	pub fn is_void_ptr(&self) -> bool {
-		if let Kind::Pointer(inner) = self.canonical().kind() {
-			inner.is_void()
 		} else {
 			false
 		}
@@ -1203,7 +1195,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				unsafety_call=unsafety_call,
 				typ=self.rust_return_func_decl()
 			).into()
-		} else if !self.is_void_ptr() && (self.as_pointer().is_some() || self.as_fixed_array().is_some()) {
+		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.is_const() { "ref" } else { "mut" };
 			format!(
 				".and_then(|x| {unsafety_call}{{ x.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())))",

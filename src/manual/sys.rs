@@ -1,5 +1,8 @@
 #![allow(non_camel_case_types)]
 
+// note to self, you can't use union here to store both result and error code because C++ side doesn't
+// support non-POD types as union fields
+
 use std::{
 	marker::PhantomData,
 	ffi::c_void,

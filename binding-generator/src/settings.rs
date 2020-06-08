@@ -634,6 +634,7 @@ pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| 
 	"CV_MAKETYPE",
 });
 
+// fixme, generalize, make it use constant::ValueKind
 pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"Mat_AUTO_STEP",
 });
