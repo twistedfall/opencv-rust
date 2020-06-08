@@ -441,8 +441,19 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X" => "+_vec",
 
 	// ### text ###
+	"cv_text_BaseOCR_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
 	"cv_text_ERStat_pixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
 	"cv_text_ERStat_setPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+	"cv_text_OCRBeamSearchDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
+	"cv_text_OCRBeamSearchDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+	"cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int" => "+_mask",
+	"cv_text_OCRHMMDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
+	"cv_text_OCRHMMDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+	"cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int" => "+_mask",
+	"cv_text_OCRHolisticWordRecognizer_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
+	"cv_text_OCRTesseract_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+	"cv_text_OCRTesseract_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
+	"cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int" => "+_mask",
 
 	// ### videoio ###
 	"cv_VideoCapture_VideoCapture_const_StringX" => "from_file_default", // 3.2
