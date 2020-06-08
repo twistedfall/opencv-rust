@@ -23,6 +23,7 @@ mod generator {
 		fs::{self, DirEntry, File, OpenOptions},
 		io::{self, BufRead, BufReader, Write},
 		path::{Path, PathBuf},
+		process::Child,
 		sync::Arc,
 		thread,
 		time::Instant,
@@ -69,7 +70,7 @@ mod generator {
 		Ok(target_file)
 	}
 
-	pub fn gen_wrapper(opencv_header_dir: &Path) -> Result<()> {
+	pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> Result<()> {
 		let out_dir_as_str = OUT_DIR.to_str().unwrap();
 		let (rust_hub_dir, cpp_hub_dir) = get_versioned_hub_dirs();
 		let module_dir = rust_hub_dir.join("hub");
@@ -99,47 +100,76 @@ mod generator {
 			unreachable!();
 		};
 
-		let clang = clang::Clang::new().expect("Cannot initialize clang");
-		let clang_stdlib_include_dir = env::var_os("OPENCV_CLANG_STDLIB_PATH")
-			.map(|p| PathBuf::from(p));
-		let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
-		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
-		let start = Instant::now();
-		let build_func = move |module: &str, gen: &binding_generator::Generator| {
-			let bindings_writer = binding_generator::writer::RustBindingWriter::new(
-				&*SRC_CPP_DIR,
-				&*OUT_DIR,
-				&module,
-				version,
-				false,
-			);
-			gen.process_opencv_module(&module, bindings_writer);
-			println!("Generated: {}", module);
-		};
-
+		let clang_stdlib_include_dir = Arc::new(env::var_os("OPENCV_CLANG_STDLIB_PATH")
+			.map(|p| PathBuf::from(p))
+		);
+		let num_jobs = env::var("NUM_JOBS").ok()
+			.and_then(|jobs| jobs.parse().ok())
+			.unwrap_or(2);
+		let job_server = jobserver::Client::new(num_jobs).expect("Can't create job server");
+		let mut join_handles = Vec::with_capacity(modules.len());
+		let start;
 		if cfg!(feature = "clang-runtime") {
-			modules.iter().for_each(|module| build_func(module, &gen));
-		} else {
-			let num_jobs = env::var("NUM_JOBS").ok()
-				.and_then(|jobs| jobs.parse().ok())
-				.unwrap_or(2);
-			let job_server = jobserver::Client::new(num_jobs).expect("Can't create job server");
-			let mut join_handles = Vec::with_capacity(modules.len());
-			let gen = Arc::new(gen);
+			let status = generator_build.expect("Impossible").wait()?;
+			if !status.success() {
+				return Err("Failed to build the bindings generator".into());
+			}
+			let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+			start = Instant::now();
 			modules.iter().for_each(|module| {
 				let token = job_server.acquire().expect("Can't acquire token from job server");
 				let join_handle = thread::spawn({
-					let gen = Arc::clone(&gen);
+					let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
+					let opencv_header_dir = Arc::clone(&opencv_header_dir);
 					move || {
-						build_func(module, &gen);
+						let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
+							.and_then(|p| p.to_str())
+							.unwrap_or("None");
+						let mut bin_generator = std::process::Command::new(OUT_DIR.join("release/binding-generator"));
+						bin_generator.arg(&*opencv_header_dir)
+							.arg(&*SRC_CPP_DIR)
+							.arg(&*OUT_DIR)
+							.arg(&module)
+							.arg(version)
+							.arg(clang_stdlib_include_dir);
+						let res = bin_generator.status().expect("Can't run bindings generator");
+						if !res.success() {
+							panic!("Failed to run the bindings generator");
+						}
+						println!("Generated: {}", module);
 						drop(token); // needed to move the token to the thread
 					}
 				});
 				join_handles.push(join_handle);
 			});
-			for join_handle in join_handles {
-				join_handle.join().expect("Can't join thread");
-			}
+		} else {
+			let clang = clang::Clang::new().expect("Cannot initialize clang");
+			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
+			eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+			let gen = Arc::new(gen);
+			start = Instant::now();
+			modules.iter().for_each(|module| {
+				let token = job_server.acquire().expect("Can't acquire token from job server");
+				let join_handle = thread::spawn({
+					let gen = Arc::clone(&gen);
+					move || {
+						let bindings_writer = binding_generator::writer::RustBindingWriter::new(
+							&*SRC_CPP_DIR,
+							&*OUT_DIR,
+							&module,
+							version,
+							false,
+						);
+						gen.process_opencv_module(&module, bindings_writer);
+						println!("Generated: {}", module);
+						drop(token); // needed to move the token to the thread
+					}
+				});
+				join_handles.push(join_handle);
+			});
+		}
+		for join_handle in join_handles {
+			join_handle.join().expect("Can't join thread");
 		}
 		println!("Total binding generation time: {:?}", start.elapsed());
 
@@ -1017,6 +1047,21 @@ fn main() -> Result<()> {
 	if features != 1 {
 		panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-4");
 	}
+
+	#[cfg(feature = "buildtime-bindgen")]
+	let generator_build = if cfg!(feature = "clang-runtime") { // start building binding generator as early as possible
+		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or("cargo".into()));
+		let mut cargo = Command::new(cargo_bin);
+		// generator script is quite slow in debug mode, so we force it to be built in release mode
+		cargo
+			.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
+			.env("CARGO_TARGET_DIR", &*OUT_DIR);
+		println!("running: {:?}", &cargo);
+		Some(cargo.spawn()?)
+	} else {
+		None
+	};
+
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
 	for &v in ENV_VARS.iter() {
@@ -1075,7 +1120,7 @@ fn main() -> Result<()> {
 	}
 
 	#[cfg(feature = "buildtime-bindgen")]
-	generator::gen_wrapper(&opencv_header_dir)?;
+	generator::gen_wrapper(&opencv_header_dir, generator_build)?;
 	install_wrapper()?;
 	build_wrapper(&opencv_header_dir)?;
 	// -l linker args should be emitted after -l static

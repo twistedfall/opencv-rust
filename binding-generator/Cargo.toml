@@ -9,9 +9,6 @@ edition = "2018"
 
 [lib]
 
-[features]
-clang-runtime = ["clang/runtime", "clang-sys/runtime"]
-
 [dependencies]
 clang = {version = "0.23", features = ["clang_6_0"]}
 clang-sys = {version = "0.28", features = ["clang_6_0"]}

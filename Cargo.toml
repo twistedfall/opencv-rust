@@ -27,7 +27,7 @@ once_cell = "1.0"
 [features]
 default = ["opencv-4"]
 buildtime-bindgen = ["binding-generator", "clang", "jobserver"]
-clang-runtime = ["binding-generator/clang-runtime"]
+clang-runtime = ["clang/runtime"]
 opencv-32 = []
 opencv-34 = []
 opencv-4 = []
