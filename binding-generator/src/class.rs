@@ -43,17 +43,17 @@ pub enum Kind {
 #[derive(Clone)]
 pub struct Class<'tu, 'g> {
 	entity: Entity<'tu>,
-	elaborate_name: Option<String>,
+	custom_fullname: Option<String>,
 	gen_env: & 'g GeneratorEnv < 'tu >,
 }
 
 impl<'tu, 'g> Class<'tu, 'g> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
-		Self { entity, elaborate_name: None, gen_env }
+		Self { entity, custom_fullname: None, gen_env }
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, elaborate_name: Option<String>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
-		Self { entity, elaborate_name, gen_env }
+	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+		Self { entity, custom_fullname: Some(custom_fullname), gen_env }
 	}
 
 	fn kind(&self) -> Kind {
@@ -530,35 +530,24 @@ impl Element for Class<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		if self.elaborate_name.is_some() {
-			let name = self.cpp_fullname();
-			if let Some(idx) = name.rfind("::") {
-				name[..idx].to_string().into()
-			} else {
-				name
-			}
+		if self.custom_fullname.is_some() {
+			self.cpp_fullname().namespace().to_string().into()
 		} else {
 			DefaultElement::cpp_namespace(self)
 		}
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		if self.elaborate_name.is_some() {
-			let name = self.cpp_fullname();
-			const SEP: &str = "::";
-			if let Some(idx) = name.rfind(SEP) {
-				name[idx + SEP.len()..].to_string().into()
-			} else {
-				name
-			}
+		if self.custom_fullname.is_some() {
+			self.cpp_fullname().localname().to_string().into()
 		} else {
 			DefaultElement::cpp_localname(self)
 		}
 	}
 
 	fn cpp_fullname(&self) -> Cow<str> {
-		if let Some(elaborate_name) = &self.elaborate_name {
-			elaborate_name.into()
+		if let Some(custom_fullname) = &self.custom_fullname {
+			custom_fullname.into()
 		} else {
 			DefaultElement::cpp_fullname(self)
 		}

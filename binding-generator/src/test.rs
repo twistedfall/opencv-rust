@@ -455,6 +455,22 @@ fn strip_prefix() {
 }
 
 #[test]
+fn localname() {
+	assert_eq!("test", "namespace::test".localname());
+	assert_eq!("test", "test".localname());
+	assert_eq!("", "".localname());
+	assert_eq!("", "::".localname());
+}
+
+#[test]
+fn namespace() {
+	assert_eq!("namespace", "namespace::test".namespace());
+	assert_eq!("test", "test".namespace());
+	assert_eq!("", "".namespace());
+	assert_eq!("", "::".namespace());
+}
+
+#[test]
 fn test_render_doc_comment() {
 	assert_eq!("test", &render_doc_comment("/** test */", "", "master"));
 	assert_eq!("/// test", &render_doc_comment("//   test", "///", "master"));

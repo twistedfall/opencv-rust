@@ -14,6 +14,7 @@ use crate::{
 	DefaultElement,
 	Element,
 	EntityElement,
+	EntityExt,
 	GeneratedElement,
 	get_debug,
 	StrExt,
@@ -22,16 +23,34 @@ use crate::{
 #[derive(Clone)]
 pub struct Enum<'tu> {
 	entity: Entity<'tu>,
+	custom_fullname: Option<String>,
 }
 
 impl<'tu> Enum<'tu> {
 	pub fn new(entity: Entity<'tu>) -> Self {
-		Self { entity }
+		Self { entity, custom_fullname: None }
+	}
+
+	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String) -> Self {
+		Self { entity, custom_fullname: Some(custom_fullname) }
+	}
+
+	pub fn as_typedefed(&self) -> Option<Entity> {
+		if self.entity.get_kind() == EntityKind::TypedefDecl {
+			let mut child = None;
+			self.entity.walk_children_while(|c| {
+				child = Some(c);
+				false
+			});
+			Some(child.expect("Invalid anonymous typedefed enum"))
+		} else {
+			None
+		}
 	}
 
 	pub fn consts(&self) -> Vec<Const> {
 		let mut out = vec![];
-		self.entity.visit_children(|const_decl, _| {
+		self.as_typedefed().unwrap_or(self.entity).visit_children(|const_decl, _| {
 			if const_decl.get_kind() == EntityKind::EnumConstantDecl {
 				out.push(Const::new(const_decl));
 			}
@@ -65,11 +84,27 @@ impl Element for Enum<'_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		if self.custom_fullname.is_some() {
+			self.cpp_fullname().namespace().to_string().into()
+		} else {
+			DefaultElement::cpp_namespace(self)
+		}
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+		if self.custom_fullname.is_some() {
+			self.cpp_fullname().localname().to_string().into()
+		} else {
+			DefaultElement::cpp_localname(self)
+		}
+	}
+
+	fn cpp_fullname(&self) -> Cow<str> {
+		if let Some(custom_fullname) = &self.custom_fullname {
+			custom_fullname.into()
+		} else {
+			DefaultElement::cpp_fullname(self)
+		}
 	}
 
 	fn rust_module(&self) -> Cow<str> {

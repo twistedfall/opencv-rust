@@ -15,6 +15,7 @@ use crate::{
 	Class,
 	DefinitionLocation,
 	Element,
+	EntityExt,
 	Enum,
 	Field,
 	Function,
@@ -233,7 +234,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					elaborate_name.replace_in_place("const ", "");
 					if let Some(decl) = self.type_ref.get_declaration() {
 						if elaborate_name.starts_with("std::") {
-							return Kind::Class(Class::new_ext(decl, Some(elaborate_name), self.gen_env))
+							return Kind::Class(Class::new_ext(decl, elaborate_name, self.gen_env))
 						}
 					}
 				}
@@ -282,6 +283,22 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 						Kind::Ignored
 					}
 				} else {
+					let mut non_typedef = None;
+					decl.walk_children_while(|child| {
+						match child.get_kind() {
+							EntityKind::StructDecl if child.get_name().is_none() => {
+								non_typedef = Some(Kind::Class(Class::new_ext(child, decl.cpp_fullname().into_owned(), self.gen_env)));
+							}
+							EntityKind::EnumDecl if child.get_name().is_none() => {
+								non_typedef = Some(Kind::Enum(Enum::new_ext(child, decl.cpp_fullname().into_owned())));
+							}
+							_ => {}
+						}
+						false
+					});
+					if let Some(out) = non_typedef {
+						return out;
+					}
 					Kind::Typedef(Typedef::new(decl, self.gen_env))
 				}
 			}

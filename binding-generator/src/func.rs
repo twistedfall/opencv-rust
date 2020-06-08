@@ -720,7 +720,20 @@ impl Element for Func<'_, '_> {
 		}
 		for arg in self.arguments() {
 			out.push('_');
-			out += &arg.type_ref().cpp_safe_id();
+			let type_ref = arg.type_ref();
+			let mut safe_id = type_ref.cpp_safe_id();
+			// workaround for duplicate function definition for
+			// cv_ximgproc_ContourFitting_estimateTransformation_const__InputArray_const__InputArray_const__OutputArray_doubleX_bool
+			// it has 2 definitions, with pointer and with reference
+			if type_ref.as_reference().map_or(false, |inner| inner.is_primitive()) {
+				let safe_id = safe_id.to_mut();
+				if let Some((idx, last_char)) = safe_id.char_indices().rev().next() {
+					if last_char == 'X' {
+						safe_id.replace_range(idx..idx + 'X'.len_utf8(), "R");
+					}
+				}
+			}
+			out += &safe_id;
 		}
 		out.into()
 	}

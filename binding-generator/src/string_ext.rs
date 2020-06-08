@@ -332,6 +332,8 @@ pub trait StrExt {
 	fn trim_start_idx(&self) -> usize;
 	fn trim_end_idx(&self) -> usize;
 	fn strip_str_prefix(&self, prefix: &str) -> Option<&str>;
+	fn localname(&self) -> &str;
+	fn namespace(&self) -> &str;
 }
 
 impl StrExt for str {
@@ -440,6 +442,23 @@ impl StrExt for str {
 			Some(unsafe { self.get_unchecked(prefix.len()..) })
 		} else {
 			None
+		}
+	}
+
+	fn localname(&self) -> &str {
+		const SEP: &str = "::";
+		if let Some(idx) = self.rfind(SEP) {
+			&self[idx + SEP.len()..]
+		} else {
+			self
+		}
+	}
+
+	fn namespace(&self) -> &str {
+		if let Some(idx) = self.rfind("::") {
+			&self[..idx]
+		} else {
+			self
 		}
 	}
 }

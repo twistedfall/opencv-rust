@@ -30,6 +30,7 @@ use crate::{
 	get_definition_text,
 	line_reader,
 	settings,
+	type_ref::Kind as TypeRefKind,
 	Typedef,
 };
 
@@ -198,9 +199,11 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 	fn process_enum(visitor: &mut impl GeneratorVisitor, enum_decl: Entity) {
 		let enm = Enum::new(enum_decl);
 		if !enm.is_excluded() {
-			for cnst in enm.consts() {
-				if !cnst.is_excluded() {
-					visitor.visit_const(cnst);
+			if !enm.as_typedefed().is_some() {
+				for cnst in enm.consts() {
+					if !cnst.is_excluded() {
+						visitor.visit_const(cnst);
+					}
 				}
 			}
 			if enm.rust_leafname() != "unnamed" {
@@ -243,9 +246,19 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 
 	fn process_typedef(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
 		let typedef = Typedef::new(typedef_decl, gen_env);
+		let type_ref = typedef.type_ref();
+		match type_ref.kind() {
+			TypeRefKind::Class(..) => {
+				return Self::process_class(visitor, gen_env, typedef_decl);
+			}
+			TypeRefKind::Enum(..) => {
+				return Self::process_enum(visitor, typedef_decl);
+			}
+			_ => {}
+		}
 		let mut export = gen_env.get_export_config(typedef_decl).is_some()
 			// we need to have a typedef even if it's not exported for e.g. cv::Size
-			|| typedef.type_ref().is_data_type();
+			|| type_ref.is_data_type();
 		export = export || {
 			let underlying_type = typedef.underlying_type_ref();
 			underlying_type.as_function().is_some()
