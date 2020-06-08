@@ -916,10 +916,7 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 		"opencv",
 		"opencv_modules",
 		"optflow",
-		"quality",
 		"rgbd",
-		"saliency",
-		"stereo",
 		"tracking",
 		"ximgproc",
 	].iter().copied());
