@@ -21,6 +21,7 @@
 
 use std::{
 	borrow::Cow,
+	env,
 	fmt,
 	fs::File,
 	io::{BufRead, Read, Seek, SeekFrom},
@@ -28,6 +29,7 @@ use std::{
 
 use clang::Entity;
 use dunce::canonicalize;
+use once_cell::sync::Lazy;
 
 pub use class::Class;
 pub use constant::Const;
@@ -79,6 +81,8 @@ mod vector;
 mod walker;
 pub mod writer;
 
+static EMIT_DEBUG: Lazy<bool> = Lazy::new(|| env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG").map(|v| v == "1").unwrap_or(false));
+
 fn get_definition_text(entity: Entity) -> String {
 	if let Some(range) = entity.get_range() {
 		let loc = range.get_start().get_spelling_location();
@@ -95,7 +99,7 @@ fn get_definition_text(entity: Entity) -> String {
 }
 
 fn get_debug<'tu>(e: &(impl EntityElement<'tu> + fmt::Display)) -> String {
-	if false {
+	if *EMIT_DEBUG {
 		let loc = e.entity()
 			.get_location().expect("Can't get entity location")
 			.get_file_location();
