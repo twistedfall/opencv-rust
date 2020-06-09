@@ -305,6 +305,8 @@ static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_it
 	"viz",
 ].iter().copied()));
 
+static DEBUG_MODULE: &str = "";
+
 static MODULES: OnceCell<Vec<String>> = OnceCell::new();
 
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
@@ -869,8 +871,9 @@ fn get_versioned_hub_dirs() -> (PathBuf, PathBuf) {
 }
 
 fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
-	if MODULES.get().is_some() {
-		return Ok(());
+	if !DEBUG_MODULE.is_empty() {
+		MODULES.set(vec![DEBUG_MODULE.to_string()]).expect("Can't set debug MODULES cache");
+		return Ok(())
 	}
 	let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
 		"core_detect",
