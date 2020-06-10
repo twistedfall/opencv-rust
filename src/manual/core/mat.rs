@@ -1,12 +1,14 @@
 use std::{
+	convert::TryInto,
 	ffi::c_void,
 	fmt,
-	marker::PhantomData,
 	ops::Deref,
 	slice,
 };
 
 use libc::size_t;
+
+pub use mat_::*;
 
 use crate::{
 	core::{
@@ -29,6 +31,8 @@ use crate::{
 	Result,
 	sys,
 };
+
+mod mat_;
 
 /// This sealed trait is implemented for types that are valid to use as Mat elements
 pub trait DataType: Copy + private::Sealed {
@@ -114,41 +118,6 @@ data_type!(core::Rect2i, core::CV_32S, 4);
 data_type!(core::Rect2f, core::CV_32F, 4);
 data_type!(core::Rect2d, core::CV_64F, 4);
 
-/// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
-pub struct Mat_<T> {
-	inner: Mat,
-	_type: PhantomData<T>,
-}
-
-impl<T: DataType> Mat_<T> {
-	pub fn from_mat(s: Mat) -> Result<Self> {
-		match_format::<T>(s.typ()?)
-			.map(|_| Mat_ { inner: s, _type: PhantomData })
-	}
-
-	#[inline(always)]
-	pub fn at(&self, i0: i32) -> Result<&T> {
-		match_dims(self, 2)
-			.and_then(|_| match_total(self, i0))
-			.and_then(|_| unsafe { self.at_unchecked(i0) })
-	}
-
-	#[inline(always)]
-	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
-		match_dims(self, 2)
-			.and_then(|_| match_total(self, i0))?;
-		unsafe { self.at_unchecked_mut(i0) }
-	}
-
-	pub fn into_mat(self) -> Mat {
-		self.inner
-	}
-}
-
-impl<T: DataType> MatTrait for Mat_<T> {
-	fn as_raw_Mat(&self) -> *const c_void { self.inner.as_raw_Mat() }
-	fn as_raw_mut_Mat(&mut self) -> *mut c_void { self.inner.as_raw_mut_Mat() }
-}
 
 #[inline(always)]
 unsafe fn convert_ptr<T>(r: &u8) -> &T {
@@ -263,8 +232,8 @@ impl Mat {
 		Ok(out)
 	}
 
-	pub fn into_typed<T: DataType>(self) -> Result<Mat_<T>> where Self: Sized {
-		Mat_::from_mat(self)
+	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>> where Self: Sized {
+		self.try_into()
 	}
 }
 

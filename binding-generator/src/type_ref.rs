@@ -67,6 +67,61 @@ pub enum Constness {
 	Mut,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum Form {
+	Declaration,
+	Reference(Option<Lifetime>, bool),
+}
+
+impl Form {
+	pub fn is_full(self) -> bool {
+		match self {
+			Form::Declaration => false,
+			Form::Reference(..) => true,
+		}
+	}
+
+	pub fn is_turbo_fish(self) -> bool {
+		match self {
+			Form::Declaration => false,
+			Form::Reference(_, turbo_fish) => turbo_fish,
+		}
+	}
+
+	pub fn recurse(self) -> Self {
+		match self {
+			Form::Declaration => {
+				self
+			},
+			Form::Reference(lt, turbo_fish) => {
+				Form::Reference(lt.map(Lifetime::next), turbo_fish)
+			},
+		}
+	}
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum CppForm<'s> {
+	Declaration,
+	Reference(&'s str, bool),
+}
+
+impl CppForm<'_> {
+	pub fn is_full(self) -> bool {
+		match self {
+			CppForm::Declaration => false,
+			CppForm::Reference(..) => true,
+		}
+	}
+
+	pub fn recurse(self) -> Self {
+		match self {
+			CppForm::Declaration => CppForm::Declaration,
+			CppForm::Reference(_name, extern_types) => CppForm::Reference("", extern_types),
+		}
+	}
+}
+
 impl Constness {
 	pub fn is_const(self, type_ref: &TypeRef) -> bool {
 		match self {
@@ -892,7 +947,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			Kind::SmartPtr(ptr) => {
 				ptr.rust_localalias().into_owned()
 			}
-			Kind::Primitive(..) | Kind::Class(..) | Kind::Enum(..)
+			Kind::Class(cls) => {
+				cls.rust_localname().into_owned()
+			}
+			Kind::Primitive(..) | Kind::Enum(..)
 			| Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..)
 			| Kind::Ignored => {
 				self.rust_local().into_owned()
@@ -934,7 +992,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	fn rust_type_ref(&self, full: bool, lifetime: Option<Lifetime>) -> Cow<str> {
+	fn rust_type_ref(&self, form: Form) -> Cow<str> {
 		if self.is_string() {
 			return if self.is_const() {
 				"String" // todo implement receiving const str's
@@ -947,16 +1005,16 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				rust.into()
 			}
 			Kind::Array(elem, size) => {
-				self.format_as_array(&elem.rust_type_ref(full, lifetime.map(Lifetime::next)), size).into()
+				self.format_as_array(&elem.rust_type_ref(form.recurse()), size).into()
 			}
 			Kind::StdVector(vec) => {
-				vec.rust_name(full).into_owned().into()
+				vec.rust_name(form.is_full()).into_owned().into()
 			}
 			Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_const() => {
 				// const references to simple classes are passed by value for performance
 				// fixme: it kind of works now, but probably it's not the best idea
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
-				inner.rust_type_ref(full, lifetime.map(Lifetime::next)).into_owned().into()
+				inner.rust_type_ref(form.recurse()).into_owned().into()
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
 				if inner.is_void() {
@@ -965,38 +1023,40 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 						cnst=self.rust_const_qual(true),
 					).into()
 				} else {
-					let lt = lifetime.map_or_else(|| "".to_string(), |l| format!("{} ", l));
+					let lt = match form {
+						Form::Reference(Some(lt), ..) => format!("{} ", lt),
+						_ => "".to_string()
+					};
 					format!(
 						"&{lt}{cnst}{typ}",
 						cnst=self.rust_const_qual(false),
 						lt=lt,
-						typ=inner.rust_type_ref(full, lifetime.map(Lifetime::next))
+						typ=inner.rust_type_ref(form.recurse())
 					).into()
 				}
 			}
 			Kind::SmartPtr(ptr) => {
-				ptr.rust_name(full).into_owned().into()
+				ptr.rust_name(form.is_full()).into_owned().into()
 			}
 			Kind::Class(cls) => {
 				format!(
 					"{dyn}{name}{generic}",
-					dyn=if full && cls.is_abstract() { "dyn " } else { "" },
-					name=cls.rust_name(full),
-					generic=self.rust_tpl_decl(full),
+					dyn=if form.is_full() && cls.is_abstract() { "dyn " } else { "" },
+					name=cls.rust_name(form.is_full()),
+					generic=self.rust_tpl_decl(form),
 				).into()
 			}
 			Kind::Enum(enm) => {
-				enm.rust_name(full).into_owned().into()
+				enm.rust_name(form.is_full()).into_owned().into()
 			}
 			Kind::Typedef(decl) => {
-				let mut out: String = decl.rust_name(full).into_owned();
+				let mut out: String = decl.rust_name(form.is_full()).into_owned();
 				let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
 				if lifetime_count >= 1 {
 					if lifetime_count >= 2 {
 						unimplemented!("Support for lifetime count >= 2 is not implemented yet");
 					}
-					if let Some(lt) = lifetime.map(|x| x.to_string()) {
-						out.reserve(lt.len() + 2);
+					if let Form::Reference(Some(lt), _) = form {
 						out.write_fmt(format_args!("<{}>", lt)).expect("Impossible");
 					}
 				}
@@ -1006,7 +1066,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				name.into()
 			}
 			Kind::Function(func) => {
-				func.rust_name(full).into_owned().into()
+				func.rust_name(form.is_full()).into_owned().into()
 			}
 			Kind::Ignored => {
 				"<ignored>".into()
@@ -1015,18 +1075,19 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	pub fn rust_local(&self) -> Cow<str> {
-		self.rust_type_ref(false, None)
+		self.rust_type_ref(Form::Declaration)
 	}
 
 	pub fn rust_full(&self) -> Cow<str> {
-		self.rust_type_ref(true, None)
+		self.rust_type_ref(Form::Reference(None, false))
 	}
 
-	pub fn rust_full_with_lifetimes(&self) -> Cow<str> {
-		self.rust_type_ref(true, Some(Lifetime::default()))
+	pub fn rust_full_ext(&self, lifetimes: bool, turbofish: bool) -> Cow<str> {
+		let lifetimes = if lifetimes { Some(Lifetime::default()) } else { None };
+		self.rust_type_ref(Form::Reference(lifetimes, turbofish))
 	}
 
-	pub fn rust_tpl_decl(&self, full: bool) -> String {
+	fn rust_tpl_decl(&self, form: Form) -> String {
 		let generic_types = self.template_specialization_args();
 		if !generic_types.is_empty() {
 			let mut constant_suffix = String::new();
@@ -1034,7 +1095,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				.filter_map(|t| {
 					match t {
 						TemplateArg::Typename(type_ref) => {
-							Some(type_ref.rust_type_ref(full, None))
+							Some(type_ref.rust_type_ref(form.recurse()))
 						}
 						TemplateArg::Constant(literal) => {
 							constant_suffix += literal;
@@ -1046,7 +1107,8 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					}
 				})
 				.collect::<Vec<_>>();
-			format!("{}<{}>", constant_suffix, generic_types.join(", "))
+			let fish = if form.is_turbo_fish() { "::" } else { "" };
+			format!("{cnst}{fish}<{typ}>", cnst=constant_suffix, fish=fish, typ=generic_types.join(", "))
 		} else {
 			"".to_string()
 		}
@@ -1187,16 +1249,16 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		format!("{mutable}{name}: {typ}", mutable=mutable, name=name, typ=typ)
 	}
 
-	pub fn rust_return_func_decl(&self) -> Cow<str> {
+	pub fn rust_return_func_decl(&self, with_turbofish: bool) -> Cow<str> {
 		if self.is_by_ptr() {
-			self.source().rust_full().into_owned().into()
+			self.source().rust_full_ext(false, with_turbofish).into_owned().into()
 		} else {
-			self.rust_full()
+			self.rust_full_ext(false, with_turbofish)
 		}
 	}
 
 	pub fn rust_return_func_decl_wrapper(&self) -> Cow<str> {
-		format!("Result<{}>", self.rust_return_func_decl()).into()
+		format!("Result<{}>", self.rust_return_func_decl(false)).into()
 	}
 
 	pub fn rust_return_map(&self, is_safe_context: bool) -> Cow<str> {
@@ -1210,7 +1272,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			format!(
 				".map(|ptr| {unsafety_call}{{ {typ}::from_raw(ptr) }})",
 				unsafety_call=unsafety_call,
-				typ=self.rust_return_func_decl()
+				typ=self.rust_return_func_decl(true),
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.is_const() { "ref" } else { "mut" };
@@ -1430,12 +1492,14 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		out.into()
 	}
 
-	fn cpp_type_ref(&self, full: bool, name: &str) -> Cow<str> {
+	fn cpp_type_ref(&self, form: CppForm) -> Cow<str> {
 		let mut out = String::with_capacity(64);
 		let kind = self.kind();
 		if kind.is_constified() {
 			out.push_str(self.cpp_const_qual());
 		}
+		let name = match form { CppForm::Reference(name, _) => name, _ => "" };
+		let extern_types = match form { CppForm::Reference(_, extern_types) => extern_types, _ => true };
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
 		out.push_str(&match self.kind() {
 			Kind::Primitive(_, cpp) => {
@@ -1445,14 +1509,14 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				if let Some(size) = size {
 					format!(
 						"{typ}(*{name})[{size}]",
-						typ=inner.cpp_type_ref(full, ""),
+						typ=inner.cpp_type_ref(form.recurse()),
 						name=name,
 						size=size,
 					)
 				} else {
 					format!(
 						"{typ}*{name}",
-						typ=inner.cpp_type_ref(full, ""),
+						typ=inner.cpp_type_ref(form.recurse()),
 						name=space_name,
 					)
 				}
@@ -1460,46 +1524,48 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			Kind::StdVector(vec) => {
 				format!(
 					"{vec_type}<{elem_type}>{name}",
-					vec_type=vec.cpp_name(full),
-					elem_type=vec.element_type().cpp_type_ref(full, ""),
+					vec_type=vec.cpp_name(form.is_full()),
+					elem_type=vec.element_type().cpp_type_ref(form.recurse()),
 					name=space_name,
 				)
 			}
+			Kind::Reference(inner) if !extern_types => {
+				format!("{typ}&{name}", typ=inner.cpp_type_ref(form.recurse()), name=space_name)
+			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				format!("{typ}*{name}", typ=inner.cpp_type_ref(full, ""), name=space_name)
+				format!("{typ}*{name}", typ=inner.cpp_type_ref(form.recurse()), name=space_name)
 			}
 			Kind::SmartPtr(ptr) => {
 				format!(
 					"{ptr_type}<{inner_type}>{name}",
-					ptr_type=ptr.cpp_name(full),
-					inner_type=ptr.pointee().cpp_type_ref(full, ""),
+					ptr_type=ptr.cpp_name(form.is_full()),
+					inner_type=ptr.pointee().cpp_type_ref(form.recurse()),
 					name=space_name,
 				)
 			}
 			Kind::Class(cls) => {
-				let mut out: String = cls.cpp_name(full).into_owned();
+				let mut out: String = cls.cpp_name(form.is_full()).into_owned();
 				if !self.is_std_string() { // fixme prevents emission of std::string<char>
-					out += &self.cpp_tpl_decl(full);
+					out += &self.cpp_tpl_decl(form);
 				}
 				out + &space_name
-
 			}
 			Kind::Enum(enm) => {
-				enm.cpp_name(full).into_owned() + &space_name
+				enm.cpp_name(form.is_full()).into_owned() + &space_name
 			}
 			Kind::Typedef(tdef) => {
 				let underlying_type = tdef.underlying_type_ref();
 				if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
-					underlying_type.cpp_type_ref(full, "").into_owned() + &space_name
+					underlying_type.cpp_type_ref(form.recurse()).into_owned() + &space_name
 				} else {
-					tdef.cpp_name(full).into_owned() + &space_name
+					tdef.cpp_name(form.is_full()).into_owned() + &space_name
 				}
 			}
 			Kind::Generic(generic_name) => {
 				generic_name + &space_name
 			}
 			Kind::Function(func) => {
-				func.cpp_name(full).into_owned() + &space_name
+				func.cpp_name(form.is_full()).into_owned() + &space_name
 			}
 			Kind::Ignored => {
 				"<ignored>".to_string() + &space_name
@@ -1509,29 +1575,29 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	pub fn cpp_local(&self) -> Cow<str> {
-		self.cpp_local_with_name("")
-	}
-
-	pub fn cpp_local_with_name(&self, name: &str) -> Cow<str> {
-		self.cpp_type_ref(false, name)
+		self.cpp_type_ref(CppForm::Declaration)
 	}
 
 	pub fn cpp_full(&self) -> Cow<str> {
-		self.cpp_full_with_name("")
+		self.cpp_type_ref(CppForm::Reference("", true))
 	}
 
 	pub fn cpp_full_with_name(&self, name: &str) -> Cow<str> {
-		self.cpp_type_ref(true, name)
+		self.cpp_type_ref(CppForm::Reference(name, true))
 	}
 
-	fn cpp_tpl_decl(&self, full: bool) -> String {
+	pub fn cpp_full_native(&self, name: &str) -> Cow<str> {
+		self.cpp_type_ref(CppForm::Reference(name, false))
+	}
+
+	fn cpp_tpl_decl(&self, form: CppForm) -> String {
 		let generic_types = self.template_specialization_args();
 		if !generic_types.is_empty() {
 			let generic_types = generic_types.iter()
 				.filter_map(|t| {
 					match t {
 						TemplateArg::Typename(type_ref) => {
-							Some(type_ref.cpp_type_ref(full, ""))
+							Some(type_ref.cpp_type_ref(form.recurse()))
 						}
 						TemplateArg::Constant(literal) => {
 							Some(literal.into())

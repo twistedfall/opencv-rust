@@ -606,7 +606,7 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		let is_safe = !settings::FUNC_UNSAFE.contains(identifier.as_ref());
 		let return_type = self.return_type();
 		let return_type_func_decl = if is_infallible {
-			return_type.rust_return_func_decl()
+			return_type.rust_return_func_decl(false)
 		} else {
 			return_type.rust_return_func_decl_wrapper()
 		};

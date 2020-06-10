@@ -558,7 +558,11 @@ impl Element for Class<'_, '_> {
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		self.cpp_localname()
+		if self.type_ref().is_string() {
+			"String".into()
+		} else {
+			self.cpp_localname()
+		}
 	}
 
 	fn rust_localname(&self) -> Cow<str> {
