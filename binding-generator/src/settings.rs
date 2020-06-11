@@ -606,6 +606,9 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::dnn::DetectionModel" => ExportConfig::default(),
 	"cv::dnn::Model" => ExportConfig::default(),
 	"cv::dnn::Net" => ExportConfig::default(), // incorrectly marked as simple
+	"cv::linemod::Match" => ExportConfig::default(), // contains String
+	"cv::linemod::Template" => ExportConfig::default(), // contains String
+	"cv::linemod::QuantizedPyramid" => ExportConfig::default(), // missing export in 3.2
 	"cv::ocl::Device" => ExportConfig::default(),
 });
 
@@ -804,6 +807,9 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, &str>> = Lazy::new
 	"detail" => "Detail",
 	"fisheye" => "Fisheye",
 	"superres" => "Superres",
+	"kinfu" => "Kinfu",
+	"dynafu" => "Dynafu",
+	"linemod" => "Linemod",
 });
 
 pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
