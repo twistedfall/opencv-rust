@@ -13,6 +13,7 @@ use once_cell::sync::Lazy;
 
 use crate::{
 	CompiledInterpolation,
+	Const,
 	Constness,
 	DefaultElement,
 	DefinitionLocation,
@@ -210,6 +211,15 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		out
 	}
 
+	pub fn consts(&self) -> Vec<Const<'tu>> {
+		let mut out = Vec::with_capacity(8);
+		self.entity.walk_consts_while(|child| {
+			out.push(Const::new(child));
+			true
+		});
+		out
+	}
+
 	pub fn is_definition(&self) -> bool {
 		let class_loc = self.entity.get_location();
 		let def_loc = self.entity.get_definition().and_then(|d| d.get_location());
@@ -313,6 +323,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 
 		let mut out = String::new();
 
+		let consts = self.consts();
 		let fields = self.fields();
 		let mut methods = if is_simple {
 			vec![]
@@ -335,13 +346,18 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				opencv_version
 			);
 			let dyn_impl = if is_abstract {
+				let consts = consts.iter()
+					.map(|c| c.gen_rust(opencv_version))
+					.join("");
+
 				let methods = Func::rust_generate_funcs(
 					methods.iter().filter(|m| m.as_static_method().is_some()),
 					opencv_version
 				);
-				if !methods.is_empty() {
+				if !methods.is_empty() || !consts.is_empty() {
 					TRAIT_DYN_TPL.interpolate(&hashmap! {
 						"rust_local" => self.rust_trait_localname(),
+						"consts" => consts.into(),
 						"methods" => methods.into(),
 					})
 				} else {
@@ -390,7 +406,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				.collect::<Vec<_>>();
 
 			let fields = if is_simple {
-				let mut out: Vec<_> = self.fields().into_iter()
+				let mut out: Vec<_> = fields.iter()
 					.map(|f| {
 						let type_ref = f.type_ref();
 						let mut typ = type_ref.rust_full();
@@ -440,6 +456,11 @@ impl<'tu, 'g> Class<'tu, 'g> {
 			} else {
 				&BOXED_TPL
 			};
+
+			let consts = consts.iter()
+				.map(|c| c.gen_rust(opencv_version))
+				.join("");
+
 			out += &tpl.interpolate(&hashmap! {
 				"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
 				"debug" => get_debug(self).into(),
@@ -450,6 +471,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				"bases" => bases.join("").into(),
 				"impl" => IMPL_TPL.interpolate(&hashmap! {
 					"rust_local" => self.rust_localname(),
+					"consts" => consts.into(),
 					"methods" => inherent_methods.into(),
 				}).into()
 			});

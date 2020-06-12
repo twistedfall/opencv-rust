@@ -6,12 +6,13 @@ use std::{
 	path::{Path, PathBuf},
 };
 
-use clang::{Entity, EntityKind, EntityVisitResult, Type};
+use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
 
 use crate::{
 	Class,
 	class::Kind as ClassKind,
 	comment,
+	Const,
 	Element,
 	EntityWalker,
 	EntityWalkerVisitor,
@@ -46,13 +47,25 @@ struct DBPopulator<'ge, 'tu> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
-impl DBPopulator<'_, '_> {
+impl<'tu> DBPopulator<'_, 'tu> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.get_comment().unwrap_or_default();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
 			let name = entity.cpp_fullname().into_owned();
 			self.gen_env.func_comments.insert(name, comment::strip_comment_markers(&raw_comment));
 		}
+	}
+
+	fn add_class_constant(&mut self, cnst: Entity<'tu>) {
+		let cnst = Const::new(cnst);
+		let mut full_name = cnst.cpp_fullname().into_owned();
+		self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
+		const SEP: &str = "::";
+		while let Some(idx) = full_name.find(SEP) {
+			full_name.drain(..idx + SEP.len());
+			self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
+		}
+		self.gen_env.class_constants.insert(full_name, cnst);
 	}
 }
 
@@ -83,6 +96,13 @@ impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
 						}
+						EntityKind::VarDecl => {
+							if let Some(StorageClass::Static) = c.get_storage_class() {
+								if c.evaluate().is_some() {
+									self.add_class_constant(c);
+								}
+							}
+						}
 						_ => {}
 					}
 					EntityVisitResult::Continue
@@ -104,6 +124,7 @@ pub struct GeneratorEnv<'tu> {
 	func_comments: HashMap<String, String>,
 	has_descendants_cache: HashSet<String>,
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
+	class_constants: HashMap<String, Const<'tu>>,
 	type_resolve_cache: HashMap<String, Type<'tu>>,
 }
 
@@ -116,6 +137,7 @@ impl<'tu> GeneratorEnv<'tu> {
 			func_comments: HashMap::with_capacity(2048),
 			has_descendants_cache: HashSet::with_capacity(128),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
+			class_constants: HashMap::with_capacity(32),
 			type_resolve_cache: HashMap::with_capacity(32),
 		};
 		let walker = EntityWalker::new(root_entity);
@@ -214,6 +236,10 @@ impl<'tu> GeneratorEnv<'tu> {
 			}
 			None
 		})
+	}
+
+	pub fn resolve_class_constant(&self, constant: &str) -> Option<&Const<'tu>> {
+		self.class_constants.get(constant)
 	}
 
 	pub fn resolve_type(&self, typ: &str) -> Option<Type<'tu>> {

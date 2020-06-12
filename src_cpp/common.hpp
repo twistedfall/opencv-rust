@@ -7,6 +7,8 @@
 #include <opencv2/core.hpp>
 
 #define OCVRS_ONLY_DEPENDENT_TYPES
+// needed to be able to handle commas in the type name in call to OCVRS_CATCH
+#define OCVRS_TYPE(...) __VA_ARGS__
 
 #define CODE_CATCH(return_type, exc_type, code, msg) \
 catch (exc_type& e) { \

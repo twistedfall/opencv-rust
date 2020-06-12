@@ -1098,7 +1098,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 							Some(type_ref.rust_type_ref(form.recurse()))
 						}
 						TemplateArg::Constant(literal) => {
-							constant_suffix += literal;
+							if let Some(cnst) = self.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
+								constant_suffix += &cnst.to_string();
+							} else {
+								constant_suffix += literal;
+							}
 							None
 						}
 						TemplateArg::Unknown => {
@@ -1600,7 +1604,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 							Some(type_ref.cpp_type_ref(form.recurse()))
 						}
 						TemplateArg::Constant(literal) => {
-							Some(literal.into())
+							if let Some(cnst) = self.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
+								Some(cnst.to_string().into())
+							} else {
+								Some(literal.into())
+							}
 						}
 						TemplateArg::Unknown => {
 							None

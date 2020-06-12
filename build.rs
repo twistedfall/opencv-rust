@@ -912,7 +912,6 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 		"gapi",
 		"opencv",
 		"opencv_modules",
-		"optflow",
 	].iter().copied());
 
 	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?

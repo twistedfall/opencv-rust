@@ -100,7 +100,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_Mat_create_const_vector_int_X_int" => "+_nd_vec",
 	"cv_Mat_create_int_const_intX_int" => "+_nd",
 	"cv_Mat_create_int_int_int" => "+_rows_cols",
-	"cv_Mat_data" => "+_mut",
+	"cv_Mat_getPropData" => "+_mut",
 	"cv_Mat_diag_const_MatX" => "+_mat",
 	"cv_Mat_eye_Size_int" => "+_size",
 	"cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags" => "get_umat",
@@ -118,8 +118,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_Mat_reshape_const_int_int_const_intX" => "+_nd",
 	"cv_Mat_resize_size_t_const_ScalarX" => "+_with_default",
 	"cv_Mat_rowRange_const_int_int" => "row_bounds",
-	"cv_Mat_size_const" => "mat_size",
-	"cv_Mat_step_const" => "mat_step",
+	"cv_Mat_getPropSize_const" => "mat_size",
+	"cv_Mat_getPropStep_const" => "mat_step",
 	"cv_Mat_total_const_int_int" => "total_slice",
 	"cv_Mat_type_const" => "typ",
 	"cv_Mat_zeros_Size_int" => "+_size",
@@ -153,8 +153,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_UMat_create_int_const_intX_int_UMatUsageFlags" => "+_nd",
 	"cv_UMat_create_int_int_int_UMatUsageFlags" => "+_rows_cols",
 	"cv_UMat_rowRange_const_int_int" => "row_bounds",
-	"cv_UMat_size_const" => "mat_size",
-	"cv_UMat_step_const" => "mat_step",
+	"cv_UMat_getPropSize_const" => "mat_size",
+	"cv_UMat_getPropStep_const" => "mat_step",
 	"cv_UMat_type_const" => "typ",
 	"cv__InputArray__InputArray_const_MatExprX" => "from_matexpr",
 	"cv__InputArray__InputArray_const_MatX" => "from_mat",
@@ -276,16 +276,16 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_write_FileStorageX_const_StringX_int" => "+_i32",
 
 	"cv_AsyncArray__getImpl_const" => "-",
-	"cv_MatExpr_op_const" => "-", // fixme implement PointerOf types
+	"cv_MatExpr_getPropOp_const" => "-", // fixme implement PointerOf types
 	"cv_Mat_Mat_const_MatX_const_RangeX" => "-", // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
 	"cv_Mat_copySize_const_MatX" => "-", // internal function
 	"cv_Mat_push_back__const_voidX" => "-", // internal method
-	"cv_Mat_setSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
-	"cv_Mat_setStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
+	"cv_Mat_setPropSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
+	"cv_Mat_setPropStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
 	"cv_UMat_UMat_const_UMatX_const_RangeX" => "-", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 	"cv_UMat_copySize_const_UMatX" => "-", // internal function
-	"cv_UMat_setSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
-	"cv_UMat_setStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
+	"cv_UMat_setPropSize_MatSize" => "-", // MatSize and MatStep types prevent assignment
+	"cv_UMat_setPropStep_MatStep" => "-", // MatSize and MatStep types prevent assignment
 	"cv_addImpl_int_const_charX" => "-",
 	"cv_calcCovarMatrix_const_MatX_int_MatX_MatX_int_int" => "-", // duplicate of cv_calcCovarMatrix_const__InputArrayX_const__OutputArrayX_const__InputOutputArrayX_int_int, but with pointers
 	"cv_cv_abs_short" => "-",
@@ -341,7 +341,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_dnn_Layer_finalize_const_vector_MatX_X_vector_Mat_X" => "-", // dup of cv_dnn_Layer_finalize_const_vector_Mat_X_vector_Mat_X
 
 	// ### face ###
-	"cv_face_FacemarkLBF_Params_pupils" => "-", // fixme array of vectors
+	"cv_face_FacemarkLBF_Params_getPropPupils" => "-", // fixme array of vectors
 
 	// ### features2d ###
 	"cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool" => "AGAST",
@@ -418,10 +418,13 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool" => "+_weights",
 	"cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X" => "+_weights", // 3.2 3.4
 	"cv_HOGDescriptor_detect_const_const__InputArrayX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X" => "+_weights", // 4.x
-	"cv_HOGDescriptor_setSvmDetector_vector_float_" => "+_vec",
+	"cv_HOGDescriptor_setPropSvmDetector_vector_float_" => "+_vec",
 	"cv_groupRectangles_vector_Rect_X_vector_int_X_vector_double_X_int_double" => "+_levels",
 	"cv_groupRectangles_vector_Rect_X_vector_int_X_int_double" => "+_weights",
 	"cv_groupRectangles_vector_Rect_X_int_double_vector_int_X_vector_double_X" => "+_levelweights",
+
+	// ### optflow ###
+	"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector" => "-", // support of "operator &" missing
 
 	// ### photo ###
 	"cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_const_vector_float_X_int_int_int" => "+_vec",
@@ -441,8 +444,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### text ###
 	"cv_text_BaseOCR_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
-	"cv_text_ERStat_pixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
-	"cv_text_ERStat_setPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+	"cv_text_ERStat_getPropPixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
+	"cv_text_ERStat_setPropPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
 	"cv_text_OCRBeamSearchDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
 	"cv_text_OCRBeamSearchDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int" => "+_mask",
@@ -593,6 +596,8 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::MercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::TransverseMercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::TermCriteria" => ExportConfig::simple(),
+	"cv::optflow::GPCTrainingParams" => ExportConfig::simple(),
+	"cv::optflow::GPCMatchingParams" => ExportConfig::simple(),
 
 	// override boxed
 	"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
@@ -639,8 +644,8 @@ pub static FUNC_UNSAFE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv_Mat_Mat_Size_int_voidX_size_t",
 	"cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX",
 	"cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX",
-	"cv_Mat_setData_unsigned_charX",
-	"cv_UMatData_setData_unsigned_charX",
+	"cv_Mat_setPropData_unsigned_charX",
+	"cv_UMatData_setPropData_unsigned_charX",
 	// no bounds checking
 	"cv_Mat_ptr_const_const_intX",
 	"cv_Mat_ptr_const_int",

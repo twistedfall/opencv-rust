@@ -658,6 +658,55 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			"ret_map" => ret_map.as_ref(),
 		})
 	}
+
+	pub fn identifier(&self) -> Cow<str> {
+		let mut out: String = if self.as_field_accessor().is_some() {
+			let mut out: String = self.cpp_namespace().into_owned();
+			if !out.is_empty() {
+				out += "::";
+			}
+			let local_name = DefaultElement::cpp_localname(self);
+			let (first_letter, rest) = local_name.split_at(1);
+			if self.as_field_setter().is_some() {
+				out += &format!("setProp{}{}", first_letter.to_uppercase(), rest);
+			} else {
+				out += &format!("getProp{}{}", first_letter.to_uppercase(), rest);
+			}
+			out
+		} else {
+			self.cpp_fullname().into_owned()
+		};
+		out.cleanup_name();
+		if let Some(spec) = self.as_specialized() {
+			for typ in spec.values() {
+				out.push('_');
+				let mut typ = typ.to_string();
+				typ.cleanup_name();
+				out.push_str(&typ);
+			}
+		}
+		if self.is_const() {
+			out += "_const";
+		}
+		for arg in self.arguments() {
+			out.push('_');
+			let type_ref = arg.type_ref();
+			let mut safe_id = type_ref.cpp_safe_id();
+			// workaround for duplicate function definition for
+			// cv_ximgproc_ContourFitting_estimateTransformation_const__InputArray_const__InputArray_const__OutputArray_doubleX_bool
+			// it has 2 definitions, with pointer and with reference
+			if type_ref.as_reference().map_or(false, |inner| inner.is_primitive()) {
+				let safe_id = safe_id.to_mut();
+				if let Some((idx, last_char)) = safe_id.char_indices().rev().next() {
+					if last_char == 'X' {
+						safe_id.replace_range(idx..idx + 'X'.len_utf8(), "R");
+					}
+				}
+			}
+			out += &safe_id;
+		}
+		out.into()
+	}
 }
 
 impl<'tu> EntityElement<'tu> for Func<'tu, '_> {
@@ -703,39 +752,6 @@ impl Element for Func<'_, '_> {
 
 	fn is_public(&self) -> bool {
 		DefaultElement::is_public(self)
-	}
-
-	fn identifier(&self) -> Cow<str> {
-		let mut out: String = DefaultElement::identifier(self).into_owned();
-		if let Some(spec) = self.as_specialized() {
-			for typ in spec.values() {
-				out.push('_');
-				let mut typ = typ.to_string();
-				typ.cleanup_name();
-				out.push_str(&typ);
-			}
-		}
-		if self.is_const() {
-			out += "_const";
-		}
-		for arg in self.arguments() {
-			out.push('_');
-			let type_ref = arg.type_ref();
-			let mut safe_id = type_ref.cpp_safe_id();
-			// workaround for duplicate function definition for
-			// cv_ximgproc_ContourFitting_estimateTransformation_const__InputArray_const__InputArray_const__OutputArray_doubleX_bool
-			// it has 2 definitions, with pointer and with reference
-			if type_ref.as_reference().map_or(false, |inner| inner.is_primitive()) {
-				let safe_id = safe_id.to_mut();
-				if let Some((idx, last_char)) = safe_id.char_indices().rev().next() {
-					if last_char == 'X' {
-						safe_id.replace_range(idx..idx + 'X'.len_utf8(), "R");
-					}
-				}
-			}
-			out += &safe_id;
-		}
-		out.into()
 	}
 
 	fn usr(&self) -> Cow<str> {
@@ -793,7 +809,8 @@ impl Element for Func<'_, '_> {
 			format!("operator {}", self.return_type().cpp_full()).into()
 		} else if self.as_field_setter().is_some() {
 			let name = DefaultElement::cpp_localname(self);
-				format!("set{}{}", name[..1].to_uppercase(), &name[1..]).into()
+			let (first_letter, rest) = name.split_at(1);
+			format!("set{}{}", first_letter.to_uppercase(), rest).into()
 		} else {
 			DefaultElement::cpp_localname(self)
 		}

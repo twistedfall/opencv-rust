@@ -78,6 +78,9 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 						self.update_used_func_identifier(&identifier);
 						self.update_used_func_cpp_fullname(&cpp_fullname);
 					}
+					entity.walk_classes_while(|child| {
+						self.visit_entity(child)
+					});
 				}
 				true
 			}

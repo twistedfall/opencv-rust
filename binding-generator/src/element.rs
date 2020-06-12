@@ -17,7 +17,6 @@ use crate::{
 	reserved_rename,
 	settings,
 	StrExt,
-	StringExt,
 };
 
 pub struct DefaultElement;
@@ -43,12 +42,6 @@ impl DefaultElement {
 	pub fn is_public<'tu>(this: &impl EntityElement<'tu>) -> bool {
 		this.entity().get_accessibility()
 			.map_or(true, |a| Accessibility::Public == a)
-	}
-
-	pub fn identifier(this: &(impl Element + ?Sized)) -> Cow<str> {
-		let mut out: String = this.cpp_fullname().into_owned();
-		out.cleanup_name();
-		out.into()
 	}
 
 	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
@@ -188,7 +181,6 @@ pub trait Element: fmt::Debug {
 	fn update_debug_struct<'dref, 'a, 'b>(&self, struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>) -> &'dref mut fmt::DebugStruct<'a, 'b> {
 		struct_debug.field("cpp_fullname", &self.cpp_fullname())
 			.field("rust_fullname", &self.rust_fullname())
-			.field("identifier", &self.identifier())
 			.field("is_excluded", &self.is_excluded())
 			.field("is_ignored", &self.is_ignored())
 			.field("is_system", &self.is_system())
@@ -208,10 +200,6 @@ pub trait Element: fmt::Debug {
 	fn is_system(&self) -> bool;
 
 	fn is_public(&self) -> bool;
-
-	fn identifier(&self) -> Cow<str> {
-		DefaultElement::identifier(self)
-	}
 
 	fn usr(&self) -> Cow<str>;
 

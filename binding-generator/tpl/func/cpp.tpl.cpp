@@ -6,7 +6,7 @@
 		{{call}}
 		{{post_call_args}}
 		{{return}}
-	} OCVRS_CATCH({{return_wrapper_type}})
+	} OCVRS_CATCH(OCVRS_TYPE({{return_wrapper_type}}))
 }
 {{attributes_end}}
 

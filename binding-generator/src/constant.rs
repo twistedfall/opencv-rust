@@ -118,7 +118,7 @@ pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Const<'tu> {
 	entity: Entity<'tu>,
 }
@@ -242,7 +242,13 @@ impl GeneratedElement for Const<'_> {
 			|| include_str!("../tpl/const/float.tpl.rs").compile_interpolation()
 		);
 
-		let name = self.rust_localname();
+		let parent_is_class = self.entity.get_lexical_parent()
+			.map_or(false, |p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl));
+		let name = if parent_is_class {
+			self.rust_leafname()
+		} else {
+			self.rust_localname()
+		};
 
 		if let Some(value) = self.value() {
 			let tpl = if settings::CONST_TYPE_USIZE.contains(name.as_ref()) {
@@ -273,7 +279,7 @@ impl fmt::Display for Const<'_> {
 	}
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum ValueKind {
 	Integer,
 	UnsignedInteger,
@@ -289,7 +295,11 @@ pub struct Value {
 
 impl fmt::Display for Value {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.value)
+		if self.kind == ValueKind::Float && !self.value.contains('.') {
+			write!(f, "{}.", self.value)
+		} else {
+			write!(f, "{}", self.value)
+		}
 	}
 }
 

@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use clang::{Entity, EntityKind, EntityVisitResult};
+use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
 use crate::{
 	element::{DefaultElement, EntityElement},
@@ -54,6 +54,7 @@ pub trait EntityExt<'tu> {
 	fn walk_classes_while(&self, predicate: impl FnMut(Entity<'tu>) -> bool) -> bool;
 	fn walk_typedefs_while(&self, predicate: impl FnMut(Entity<'tu>) -> bool) -> bool;
 	fn walk_fields_while(&self, predicate: impl FnMut(Entity<'tu>) -> bool) -> bool;
+	fn walk_consts_while(&self, predicate: impl FnMut(Entity<'tu>) -> bool) -> bool;
 	fn walk_methods_while(&self, predicate: impl FnMut(Entity<'tu>) -> bool) -> bool;
 }
 
@@ -123,8 +124,30 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 	fn walk_fields_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| {
 			match child.get_kind() {
-				EntityKind::FieldDecl | EntityKind::VarDecl => {
+				EntityKind::FieldDecl => {
 					predicate(child)
+				}
+				_ => {
+					true
+				}
+			}
+		})
+	}
+
+	fn walk_consts_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
+		self.walk_children_while(|child| {
+			match child.get_kind() {
+				EntityKind::VarDecl => {
+					if let Some(StorageClass::Static) = child.get_storage_class() {
+						if child.evaluate().is_some() {
+							predicate(child)
+						} else {
+							true
+							// panic!("Non-evaluatable constant: {:#?}", child)
+						}
+					} else {
+						panic!("Non-static constant: {:#?}", child)
+					}
 				}
 				_ => {
 					true

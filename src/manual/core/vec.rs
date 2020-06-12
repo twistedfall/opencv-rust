@@ -57,6 +57,7 @@ vec_impl!(Vec3, 3, ValidVecType);
 vec_impl!(Vec4, 4, ValidVecType);
 vec_impl!(Vec6, 6, ValidVecType);
 vec_impl!(Vec8, 8, ValidVecType);
+vec_impl!(Vec18, 18, ValidVecType);
 vec_impl!(Scalar_, 4, ValidScalarType);
 
 impl<T: ValidScalarType> Scalar_<T> {
