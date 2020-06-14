@@ -1,3 +1,3 @@
-mod rust;
+pub use rust_native::RustNativeBindingWriter;
 
-pub use rust::RustBindingWriter;
+mod rust_native;

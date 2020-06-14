@@ -19,7 +19,7 @@ use crate::{
 	Enum,
 	Field,
 	Function,
-	GeneratedElement,
+	DependentType,
 	GeneratorEnv,
 	IteratorExt,
 	ReturnTypeWrapper,
@@ -1445,11 +1445,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
+	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
 		self.dependent_types_with_mode(DependentTypeMode::None)
 	}
 
-	pub fn dependent_types_with_mode(&self, mode: DependentTypeMode) -> Vec<Box<dyn GeneratedElement + 'g>> {
+	pub fn dependent_types_with_mode<D: DependentType<'tu>>(&self, mode: DependentTypeMode) -> Vec<D> {
 		let mut out = vec![];
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
@@ -1461,14 +1461,14 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 						self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>"),
 						self.gen_env,
 					);
-					out.push(Box::new(tref.as_vector().expect("Not possible unless something is terribly broken")));
+					out.push(D::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
 				} else {
-					out.push(Box::new(vec))
+					out.push(D::from_vector(vec))
 				}
 			},
 			Kind::SmartPtr(ptr) => {
 				out = ptr.dependent_types();
-				out.push(Box::new(ptr))
+				out.push(D::from_smart_ptr(ptr))
 			},
 			Kind::Typedef(typedef) => {
 				out = typedef.dependent_types();
@@ -1476,7 +1476,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			_ => {
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					if !self.is_generic() && !self.is_void() {
-						out.push(Box::new(if self.is_string() {
+						out.push(if self.is_string() {
 							let type_ref = TypeRef::new(
 								self.gen_env.resolve_type(&self.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
@@ -1485,10 +1485,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
 								dl @ _ => dl
 							};
-							ReturnTypeWrapper::new(type_ref, self.gen_env, def_location)
+							D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, self.gen_env, def_location))
 						} else {
-							ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location)
-						}) as _);
+							D::from_return_type_wrapper(ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location))
+						});
 					}
 				}
 			}

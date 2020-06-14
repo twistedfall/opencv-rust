@@ -32,7 +32,7 @@ use once_cell::sync::Lazy;
 
 pub use class::Class;
 pub use constant::Const;
-pub use element::{DefaultElement, Element, EntityElement, GeneratedElement, is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
+pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
 pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
@@ -40,7 +40,7 @@ pub use func::{Func, FunctionTypeHint};
 use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
-pub use generator::{Generator, GeneratorVisitor};
+pub use generator::{DependentType, Generator, GeneratorVisitor};
 pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 #[allow(unused)]

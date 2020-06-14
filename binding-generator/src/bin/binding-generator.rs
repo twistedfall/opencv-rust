@@ -7,7 +7,7 @@ use clang::Clang;
 
 use opencv_binding_generator::{
 	Generator,
-	writer::RustBindingWriter,
+	writer::RustNativeBindingWriter,
 };
 
 fn main() {
@@ -25,7 +25,7 @@ fn main() {
 		.map(PathBuf::from);
 	let debug = args.next().map_or(false, |x| x == "1");
 	let clang = Clang::new().expect("Cannot initialize clang");
-	let bindings_writer = RustBindingWriter::new(&src_cpp_dir, &out_dir, module, version, debug);
+	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, version, debug);
 	Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &src_cpp_dir, clang)
 		.process_opencv_module(&module, bindings_writer);
 }

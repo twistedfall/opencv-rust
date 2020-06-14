@@ -5,28 +5,22 @@ use std::{
 };
 
 use clang::{Availability, Entity, EntityKind};
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
 use crate::{
 	Class,
 	comment,
-	CompiledInterpolation,
-	Constness,
 	DefaultElement,
 	DefinitionLocation,
+	DependentType,
 	DependentTypeMode,
 	Element,
 	EntityElement,
 	EntityExt,
 	Field,
 	FieldTypeHint,
-	GeneratedElement,
 	GeneratorEnv,
-	get_debug,
-	IteratorExt,
-	NamePool,
 	reserved_rename,
 	settings::{self, SliceHint},
 	StrExt,
@@ -76,7 +70,7 @@ impl OperatorKind {
 }
 
 #[derive(Debug)]
-enum Kind<'tu, 'g> {
+pub enum Kind<'tu, 'g> {
 	Function,
 	FunctionOperator(OperatorKind),
 	Constructor(Class<'tu, 'g>),
@@ -113,21 +107,19 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		Self { entity, type_hint, name_hint, gen_env }
 	}
 
-	pub fn rust_generate_funcs(fns: impl IntoIterator<Item=&'g Func<'tu, 'g>>, opencv_version: &str) -> String where 'tu: 'g {
-		let fns = fns.into_iter()
-			.filter(|f| !f.is_excluded());
-		Self::rust_disambiguate_names(fns)
-			.map(|(name, func)| func.gen_rust_with_name(&name, opencv_version))
-			.join("")
+	pub fn set_name_hint(&mut self, name_hint: Option<&'g str>) {
+		self.name_hint = name_hint;
 	}
 
-	pub fn rust_disambiguate_names(fns: impl IntoIterator<Item=&'g Func<'tu, 'g>>) -> impl Iterator<Item=(String, &'g Func<'tu, 'g>)> where 'tu: 'g {
-		let args = fns.into_iter();
-		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
-			.into_disambiguator(args, |f| f.rust_leafname())
+	pub fn name_hint(&self) -> Option<&'g str> {
+		self.name_hint
 	}
 
-	fn kind(&self) -> Kind<'tu, 'g> {
+	pub fn type_hint(&self) -> FunctionTypeHint {
+		self.type_hint
+	}
+
+	pub fn kind(&self) -> Kind<'tu, 'g> {
 		const OPERATOR: &str = "operator";
 		match self.entity.get_kind() {
 			EntityKind::FunctionDecl => {
@@ -283,7 +275,7 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		}
 	}
 
-	fn is_infallible(&self) -> bool {
+	pub fn is_infallible(&self) -> bool {
 		self.as_field_accessor().is_some()
 			|| self.gen_env.get_export_config(self.entity).map_or(false, |e| e.no_except)
 	}
@@ -406,7 +398,7 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			.collect()
 	}
 
-	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
+	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
 		self.arguments().into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
@@ -414,249 +406,6 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			.flatten()
 			.chain(self.return_type().dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.collect()
-	}
-
-	fn cpp_call_invoke(&self) -> String {
-		static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{name}}({{args}});".compile_interpolation()
-		);
-
-		static NORMAL_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{ret_type}} = {{doref}}{{name}}{{generic}}({{args}});".compile_interpolation()
-		);
-
-		static FIELD_READ_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{ret_type}} = {{doref}}{{name}};".compile_interpolation()
-		);
-
-		static FIELD_WRITE_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{name}} = {{args}};".compile_interpolation()
-		);
-
-		static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{ret_type}} ret({{args}});".compile_interpolation()
-		);
-
-		static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{ret_type}} ret;".compile_interpolation()
-		);
-
-		static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			"{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation()
-		);
-
-		let call_name = match self.kind() {
-			Kind::Function | Kind::GenericFunction | Kind::StaticMethod(..)
-			| Kind::FunctionOperator(..) => {
-				self.cpp_fullname()
-			}
-			Kind::Constructor(class) => {
-				class.cpp_fullname().into_owned().into()
-			}
-			Kind::FieldAccessor(class) if self.type_hint == FunctionTypeHint::FieldSetter => {
-				class.cpp_method_call_name(DefaultElement::cpp_localname(self).as_ref()).into()
-			}
-			Kind::InstanceMethod(class) | Kind::FieldAccessor(class) | Kind::GenericInstanceMethod(class)
-			| Kind::ConversionMethod(class) | Kind::InstanceOperator(class, ..) => {
-				class.cpp_method_call_name(self.cpp_localname().as_ref()).into()
-			}
-		};
-
-		let mut generic = String::new();
-		if let Some(spec) = self.as_specialized() {
-			generic.reserve(64);
-			generic.push('<');
-			generic.extend_join(spec.values(), ", ");
-			generic.push('>');
-		}
-
-		let args = Field::cpp_disambiguate_names(self.arguments())
-			.map(|(name, arg)| arg.type_ref().cpp_arg_func_call(name).into_owned())
-			.join(", ");
-
-		let return_type = self.return_type();
-		let tpl = if let Some(cls) = self.as_constructor() {
-			if cls.is_by_ptr() {
-				&BOXED_CONSTRUCTOR_TPL
-			} else if args.is_empty() {
-				&CONSTRUCTOR_NO_ARGS_TPL
-			} else {
-				&CONSTRUCTOR_TPL
-			}
-		} else if let Kind::FieldAccessor(..) = self.kind() {
-			if self.type_hint == FunctionTypeHint::FieldSetter {
-				&FIELD_WRITE_TPL
-			} else {
-				&FIELD_READ_TPL
-			}
-		} else if return_type.is_void() {
-			&VOID_TPL
-		} else {
-			&NORMAL_TPL
-		};
-		let ret_type = if self.as_constructor().is_some() {
-			return_type.cpp_full()
-		} else {
-			return_type.cpp_full_with_name("ret")
-		};
-		let doref = if return_type.as_fixed_array().is_some() {
-			"&"
-		} else {
-			""
-		};
-		tpl.interpolate(&hashmap! {
-			"ret_type" => ret_type,
-			"doref" => doref.into(),
-			"name" => call_name,
-			"generic" => generic.into(),
-			"args" => args.into(),
-		})
-	}
-
-	fn cpp_method_return(&self) -> Cow<str> {
-		let return_type = self.return_type();
-		if return_type.is_void() {
-			"return Ok();".into()
-		} else if return_type.is_by_ptr() && !self.as_constructor().is_some() {
-			let out = return_type.source()
-				.as_class()
-				.and_then(|cls| if cls.is_abstract() {
-					Some(Cow::Borrowed("return Ok(ret);"))
-				} else {
-					None
-				});
-			out.unwrap_or_else(|| format!("return Ok(new {typ}(ret));", typ=return_type.cpp_full()).into())
-		} else if return_type.is_cv_string() || return_type.is_std_string() {
-			"return Ok(ocvrs_create_string(ret.c_str()));".into()
-		} else if return_type.is_char_ptr_string() {
-			"return Ok(ocvrs_create_string(ret));".into()
-		} else {
-			"return Ok(ret);".into()
-		}
-	}
-
-	fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
-		if !arg.is_empty() {
-			arg.push(';');
-			args.push(arg);
-		}
-	}
-
-	pub fn gen_rust_with_name(&self, name: &str, opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust.tpl.rs").compile_interpolation()
-		);
-
-		let args = Field::rust_disambiguate_names(self.arguments()).collect::<Vec<_>>();
-		let as_instance_method = self.as_instance_method();
-		let is_method_const = self.is_const();
-		let is_infallible = self.is_infallible();
-		let mut decl_args = Vec::with_capacity(args.len());
-		let mut call_args = Vec::with_capacity(args.len());
-		let mut forward_args = Vec::with_capacity(args.len());
-		let mut pre_call_args = Vec::with_capacity(args.len());
-		let mut post_call_args = Vec::with_capacity(args.len());
-		if let Some(cls) = &as_instance_method {
-			decl_args.push(cls.type_ref().rust_self_func_decl(is_method_const));
-			call_args.push(cls.type_ref().rust_self_func_call(is_method_const));
-		}
-		let mut callback_arg_name: Option<String> = None;
-		for (name, arg) in args {
-			let type_ref = arg.type_ref();
-			if arg.is_user_data() {
-				Self::pre_post_arg_handle(
-					type_ref.rust_userdata_pre_call(&name, callback_arg_name.as_ref().map(|x| x.as_str()).expect("Can't get name of the callback arg")),
-					&mut pre_call_args
-				);
-			} else {
-				if type_ref.as_function().is_some() {
-					callback_arg_name = Some(name.clone());
-				}
-				if !arg.as_slice_len().is_some() {
-					decl_args.push(type_ref.rust_arg_func_decl(&name));
-				}
-				Self::pre_post_arg_handle(type_ref.rust_arg_pre_call(&name, is_infallible), &mut pre_call_args);
-			}
-			if let Some((slice_arg, len_div)) = arg.as_slice_len() {
-				let slice_call = if len_div > 1 {
-					format!("({slice_arg}.len() / {len_div}) as _", slice_arg=slice_arg, len_div=len_div)
-				} else {
-					format!("{slice_arg}.len() as _", slice_arg=slice_arg)
-				};
-				call_args.push(slice_call);
-			} else {
-				call_args.push(type_ref.rust_arg_func_call(&name, false));
-			}
-			forward_args.push(type_ref.rust_arg_forward(&name));
-			Self::pre_post_arg_handle(type_ref.rust_arg_post_call(&name, is_infallible), &mut post_call_args);
-		}
-
-		let doc_comment = self.rendered_doc_comment(opencv_version);
-		let debug = get_debug(self);
-		let visibility = if let Some(cls) = as_instance_method {
-			if cls.is_trait() {
-				""
-			} else {
-				"pub "
-			}
-		} else {
-			"pub "
-		};
-		let identifier = self.identifier();
-		let is_safe = !settings::FUNC_UNSAFE.contains(identifier.as_ref());
-		let return_type = self.return_type();
-		let return_type_func_decl = if is_infallible {
-			return_type.rust_return_func_decl(false)
-		} else {
-			return_type.rust_return_func_decl_wrapper()
-		};
-		let mut prefix = String::new();
-		let mut suffix = if is_infallible {
-			format!(".expect(\"Infallible function failed: {name}\")", name=name)
-		} else {
-			String::new()
-		};
-		if !post_call_args.is_empty() {
-			post_call_args.push("out".into());
-			prefix.push_str("let out = ");
-			suffix.push(';');
-		}
-		let decl_args = decl_args.join(", ");
-		let pre_call_args = pre_call_args.join("\n");
-		let call_args = call_args.join(", ");
-		let forward_args = forward_args.join(", ");
-		let post_call_args = post_call_args.join("\n");
-		let ret_map = return_type.rust_return_map(is_safe);
-		let mut attributes = String::new();
-		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-			attributes = format!("#[cfg({})]", attrs.0);
-		}
-
-		let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
-			tpl
-		} else {
-			&TPL
-		};
-		tpl.interpolate(&hashmap! {
-			"doc_comment" => doc_comment.as_str(),
-			"debug" => &debug,
-			"attributes" => &attributes,
-			"visibility" => &visibility,
-			"unsafety_decl" => if is_safe { "" } else { "unsafe " },
-			"name" => name,
-			"generic_decl" => "",
-			"decl_args" => &decl_args,
-			"rv_rust_full" => return_type_func_decl.as_ref(),
-			"pre_call_args" => &pre_call_args,
-			"prefix" => &prefix,
-			"unsafety_call" => if is_safe { "unsafe " } else { "" },
-			"identifier" => identifier.as_ref(),
-			"call_args" => &call_args,
-			"forward_args" => &forward_args,
-			"suffix" => &suffix,
-			"post_call_args" => &post_call_args,
-			"ret_map" => ret_map.as_ref(),
-		})
 	}
 
 	pub fn identifier(&self) -> Cow<str> {
@@ -906,107 +655,6 @@ impl Element for Func<'_, '_> {
 
 	fn rust_localname(&self) -> Cow<str> {
 		DefaultElement::rust_localname(self)
-	}
-}
-
-impl GeneratedElement for Func<'_, '_> {
-	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
-	}
-
-	fn gen_rust(&self, opencv_version: &str) -> String {
-		let name = if let Some(name_hint) = self.name_hint {
-			name_hint.into()
-		} else {
-			self.rust_leafname()
-		};
-		self.gen_rust_with_name(&name, opencv_version)
-	}
-
-	fn gen_rust_exports(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust_extern.tpl.rs").compile_interpolation()
-		);
-
-		if settings::FUNC_MANUAL.contains_key(self.identifier().as_ref()) {
-			return "".to_string()
-		}
-
-		let identifier = self.identifier();
-		let mut attributes = String::new();
-		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-			attributes = format!("#[cfg({})]", attrs.0);
-		}
-		let mut args = vec![];
-		if let Some(cls) = self.as_instance_method() {
-			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
-		}
-		for arg in self.arguments() {
-			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname(), Constness::Auto))
-		}
-		let return_type = self.return_type();
-		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();
-		TPL.interpolate(&hashmap! {
-			"attributes" => attributes.into(),
-			"debug" => get_debug(self).into(),
-			"identifier" => identifier,
-			"args" => args.join(", ").into(),
-			"return_wrapper_type" => return_wrapper_type,
-		})
-	}
-
-	fn gen_cpp(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/cpp.tpl.cpp").compile_interpolation()
-		);
-
-		if settings::FUNC_MANUAL.contains_key(self.identifier().as_ref()) {
-			return "".to_string()
-		}
-
-		let identifier = self.identifier();
-		let mut attributes_begin = String::new();
-		let mut attributes_end = String::new();
-		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-			attributes_begin = format!("#if {}", attrs.1);
-			attributes_end = "#endif".to_string();
-		}
-		let args = Field::cpp_disambiguate_names(self.arguments()).collect::<Vec<_>>();
-		let mut decl_args = Vec::with_capacity(args.len());
-		let mut pre_call_args = Vec::with_capacity(args.len());
-		let mut post_call_args = Vec::with_capacity(args.len());
-		if let Some(cls) = self.as_instance_method() {
-			decl_args.push(cls.type_ref().cpp_self_func_decl(self.is_const()));
-		}
-		for (name, arg) in args {
-			let type_ref = arg.type_ref();
-			decl_args.push(type_ref.cpp_arg_func_decl(&name));
-			let mut pre_call_arg = type_ref.cpp_arg_pre_call(&name);
-			if !pre_call_arg.is_empty() {
-				pre_call_arg.push(';');
-				pre_call_args.push(pre_call_arg);
-			}
-			let mut post_call_arg = type_ref.cpp_arg_post_call(&name);
-			if !post_call_arg.is_empty() {
-				post_call_arg.push(';');
-				post_call_args.push(post_call_arg);
-			}
-		}
-
-		let return_type = self.return_type();
-
-		TPL.interpolate(&hashmap! {
-			"attributes_begin" => attributes_begin.into(),
-			"debug" => get_debug(self).into(),
-			"return_wrapper_type" => return_type.cpp_extern_return_wrapper_full(),
-			"identifier" => identifier,
-			"decl_args" => decl_args.join(", ").into(),
-			"pre_call_args" => pre_call_args.join("\n").into(),
-			"call" => self.cpp_call_invoke().into(),
-			"post_call_args" => post_call_args.join("\n").into(),
-			"return" => self.cpp_method_return(),
-			"attributes_end" => attributes_end.into(),
-		})
 	}
 }
 

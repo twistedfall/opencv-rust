@@ -115,7 +115,7 @@ mod generator {
 			eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			start = Instant::now();
 			modules.iter().for_each(|module| {
-				let bindings_writer = binding_generator::writer::RustBindingWriter::new(
+				let bindings_writer = binding_generator::writer::RustNativeBindingWriter::new(
 					&*SRC_CPP_DIR,
 					&*OUT_DIR,
 					&module,
@@ -170,7 +170,7 @@ mod generator {
 				let join_handle = thread::spawn({
 					let gen = Arc::clone(&gen);
 					move || {
-						let bindings_writer = binding_generator::writer::RustBindingWriter::new(
+						let bindings_writer = binding_generator::writer::RustNativeBindingWriter::new(
 							&*SRC_CPP_DIR,
 							&*OUT_DIR,
 							&module,

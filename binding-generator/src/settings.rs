@@ -691,16 +691,16 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 ///   keys: "rust_safe", "rust_extern", "cpp", missing key means skip particular implementation
 ///   values: template to use for manual implementation or "~" to use default implementation
 pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|| hashmap! {
-	"cv_Mat_at_int" => include_str!("../tpl/func/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int" => include_str!("../tpl/func/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_int_int" => include_str!("../tpl/func/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int_int" => include_str!("../tpl/func/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_Point" => include_str!("../tpl/func/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_Point" => include_str!("../tpl/func/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_int_int_int" => include_str!("../tpl/func/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int_int_int" => include_str!("../tpl/func/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_const_intX" => include_str!("../tpl/func/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_const_intX" => include_str!("../tpl/func/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
+	"cv_Mat_at_const_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
+	"cv_Mat_at_const_int_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_Point" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
+	"cv_Mat_at_const_Point" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_int_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
+	"cv_Mat_at_const_int_int_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_const_intX" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
+	"cv_Mat_at_const_const_intX" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
 });
 
 pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, &str>>>> = Lazy::new(|| hashmap! {

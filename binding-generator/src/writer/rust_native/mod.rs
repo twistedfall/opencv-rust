@@ -9,6 +9,8 @@ use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
+use element::{DepType, RustNativeGeneratedElement};
+
 use crate::{
 	Class,
 	comment,
@@ -17,7 +19,6 @@ use crate::{
 	Element,
 	Enum,
 	Func,
-	GeneratedElement,
 	GeneratorVisitor,
 	IteratorExt,
 	main_module_from_path,
@@ -27,10 +28,20 @@ use crate::{
 	Typedef,
 };
 
+mod class;
+mod constant;
+mod element;
+mod enumeration;
+mod func;
+mod return_type_wrapper;
+mod smart_ptr;
+mod typedef;
+mod vector;
+
 type Entries = Vec<(String, String)>;
 
 #[derive(Clone, Debug)]
-pub struct RustBindingWriter<'s> {
+pub struct RustNativeBindingWriter<'s> {
 	debug: bool,
 	src_cpp_dir: PathBuf,
 	module: &'s str,
@@ -53,7 +64,7 @@ pub struct RustBindingWriter<'s> {
 	cpp_classes: Entries,
 }
 
-impl<'s> RustBindingWriter<'s> {
+impl<'s> RustNativeBindingWriter<'s> {
 	pub fn new(src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
 		let out_dir = out_dir.into();
 		let debug_path = out_dir.join(format!("{}.log", module));
@@ -103,7 +114,9 @@ impl<'s> RustBindingWriter<'s> {
 	}
 }
 
-impl GeneratorVisitor for RustBindingWriter<'_> {
+impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
+	type D = DepType<'tu>;
+
 	fn wants_file(&mut self, path: &Path) -> bool {
 		module_from_path(path).map_or(false, |m| m == self.module)
 			|| main_module_from_path(path).map_or(false, |m| m == self.module)
@@ -147,7 +160,7 @@ impl GeneratorVisitor for RustBindingWriter<'_> {
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
-	fn visit_dependent_type(&mut self, typ: &dyn GeneratedElement) {
+	fn visit_dependent_type(&mut self, typ: Self::D) {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 		let rust_path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
@@ -187,22 +200,22 @@ fn join<T: AsRef<str>>(v: &mut Vec<(String, T)>) -> String {
 		.join("")
 }
 
-impl Drop for RustBindingWriter<'_> {
+impl Drop for RustNativeBindingWriter<'_> {
 	fn drop(&mut self) {
 		static RUST: Lazy<CompiledInterpolation> = Lazy::new(||
-			include_str!("../../tpl/module/rust.tpl.rs").compile_interpolation()
+			include_str!("tpl/module/rust.tpl.rs").compile_interpolation()
 		);
 
 		static RUST_PRELUDE: Lazy<CompiledInterpolation> = Lazy::new(||
-			include_str!("../../tpl/module/prelude.tpl.rs").compile_interpolation()
+			include_str!("tpl/module/prelude.tpl.rs").compile_interpolation()
 		);
 
 		static RUST_EXTERNS_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-			include_str!("../../tpl/module/externs.tpl.rs").compile_interpolation()
+			include_str!("tpl/module/externs.tpl.rs").compile_interpolation()
 		);
 
 		static CPP: Lazy<CompiledInterpolation> = Lazy::new( ||
-			include_str!("../../tpl/module/cpp.tpl.cpp").compile_interpolation()
+			include_str!("tpl/module/cpp.tpl.cpp").compile_interpolation()
 		);
 
 		let mut rust = join(&mut self.consts);

@@ -246,27 +246,6 @@ pub trait EntityElement<'tu> {
 	fn entity(&self) -> Entity<'tu>;
 }
 
-pub trait GeneratedElement {
-	/// Element order in the output file, lower means earlier
-	fn element_order(&self) -> u8 {
-		50
-	}
-
-	fn element_safe_id(&self) -> String;
-
-	fn gen_rust(&self, _opencv_version: &str) -> String {
-		"".to_string()
-	}
-
-	fn gen_rust_exports(&self) -> String {
-		"".to_string()
-	}
-
-	fn gen_cpp(&self) -> String {
-		"".to_string()
-	}
-}
-
 pub fn is_opencv_path(path: &Path) -> bool {
 	path.components()
 		.rfind(|c| {

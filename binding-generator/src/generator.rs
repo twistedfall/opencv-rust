@@ -25,17 +25,27 @@ use crate::{
 	Enum,
 	Func,
 	FunctionTypeHint,
-	GeneratedElement,
 	GeneratorEnv,
 	get_definition_text,
 	line_reader,
+	return_type_wrapper::ReturnTypeWrapper,
 	settings,
+	smart_ptr::SmartPtr,
 	type_ref::Kind as TypeRefKind,
 	Typedef,
+	vector::Vector,
 };
 
+pub trait DependentType<'tu> {
+	fn from_return_type_wrapper(s: ReturnTypeWrapper<'tu>) -> Self;
+	fn from_vector(s: Vector<'tu>) -> Self;
+	fn from_smart_ptr(s: SmartPtr<'tu>) -> Self;
+}
+
 #[allow(unused)]
-pub trait GeneratorVisitor {
+pub trait GeneratorVisitor<'tu> {
+	type D: DependentType<'tu>;
+
 	fn wants_file(&mut self, path: &Path) -> bool { true }
 
 	fn visit_module_comment(&mut self, comment: String) {}
@@ -44,7 +54,7 @@ pub trait GeneratorVisitor {
 	fn visit_func(&mut self, func: Func) {}
 	fn visit_typedef(&mut self, typedef: Typedef) {}
 	fn visit_class(&mut self, class: Class) {}
-	fn visit_dependent_type(&mut self, typ: &dyn GeneratedElement) {}
+	fn visit_dependent_type(&mut self, typ: Self::D) {}
 }
 
 #[derive(Debug)]
@@ -55,14 +65,14 @@ pub struct Generator {
 	clang: Clang,
 }
 
-struct OpenCVWalker<'tu, V: GeneratorVisitor> {
+struct OpenCVWalker<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> {
 	opencv_include_dir: &'tu Path,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
 	comment_found: bool,
 }
 
-impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V> {
+impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		self.visitor.wants_file(path) || path.ends_with("common.hpp")
 	}
@@ -139,7 +149,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V>
 	}
 }
 
-impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
+impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> OpenCVWalker<'tu, V> {
 	pub fn new(opencv_include_dir: &'tu Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self { opencv_include_dir, visitor, gen_env, comment_found: false }
 	}
@@ -151,13 +161,13 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		}
 	}
 
-	fn process_class(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, class_decl: Entity<'tu>) {
+	fn process_class(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, class_decl: Entity<'tu>) {
 		if gen_env.get_export_config(class_decl).is_some() {
 			let cls = Class::new(class_decl, gen_env);
 			if !cls.is_excluded() {
 				cls.dependent_types().into_iter()
 					.for_each(|dep| {
-						visitor.visit_dependent_type(dep.as_ref());
+						visitor.visit_dependent_type(dep);
 					});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
@@ -196,7 +206,7 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		}
 	}
 
-	fn process_enum(visitor: &mut impl GeneratorVisitor, enum_decl: Entity) {
+	fn process_enum(visitor: &mut V, enum_decl: Entity) {
 		let enm = Enum::new(enum_decl);
 		if !enm.is_excluded() {
 			if !enm.as_typedefed().is_some() {
@@ -212,7 +222,7 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		}
 	}
 
-	fn process_func(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
+	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(export_config) = gen_env.get_export_config(func_decl) {
 			let only_dependent_types = export_config.only_dependent_types;
 			let func = Func::new(func_decl, gen_env);
@@ -234,7 +244,7 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 					let func = Func::new_ext(func_decl, type_hint, Some(name.as_ref()), gen_env);
 					func.dependent_types().into_iter()
 						.for_each(|dep| {
-							visitor.visit_dependent_type(dep.as_ref());
+							visitor.visit_dependent_type(dep);
 						});
 					if !only_dependent_types {
 						visitor.visit_func(func);
@@ -244,7 +254,7 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		}
 	}
 
-	fn process_typedef(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
+	fn process_typedef(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
 		let typedef = Typedef::new(typedef_decl, gen_env);
 		let type_ref = typedef.type_ref();
 		match type_ref.kind() {
@@ -272,14 +282,14 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		if export && !typedef.is_excluded() {
 			typedef.dependent_types().into_iter()
 				.for_each(|dep| {
-					visitor.visit_dependent_type(dep.as_ref())
+					visitor.visit_dependent_type(dep)
 				});
 			visitor.visit_typedef(typedef)
 		}
 	}
 }
 
-impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, V> {
+impl<V: for<'gtu> GeneratorVisitor<'gtu>> Drop for OpenCVWalker<'_, V> {
 	fn drop(&mut self) {
 		if !self.comment_found {
 			// some module level comments like "bioinspired" are not attached to anything and libclang
@@ -365,7 +375,7 @@ impl Generator {
 		entity_processor(root_tu.get_entity());
 	}
 
-	pub fn process_opencv_module(&self, module: &str, visitor: impl GeneratorVisitor) {
+	pub fn process_opencv_module(&self, module: &str, visitor: impl for<'gtu> GeneratorVisitor<'gtu>) {
 		self.process_module(module, |root_entity| {
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCVWalker::new(
