@@ -6,7 +6,6 @@
 // todo add support for arrays in dnn::DictValue
 // todo allow ergonomically combining of enum variants with |
 // todo implement std::pair wrapper
-// todo prevent generation of vector<std::string> in favor of vector<cv::String>>
 // todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
 // todo almost everything from the manual module must be connected to the binding generator, not the main crate
 // todo check that FN_FaceDetector works at all (receiving InputArray, passing as callback)

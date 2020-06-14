@@ -697,10 +697,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			// it has 2 definitions, with pointer and with reference
 			if type_ref.as_reference().map_or(false, |inner| inner.is_primitive()) {
 				let safe_id = safe_id.to_mut();
-				if let Some((idx, last_char)) = safe_id.char_indices().rev().next() {
-					if last_char == 'X' {
-						safe_id.replace_range(idx..idx + 'X'.len_utf8(), "R");
-					}
+				if let Some((idx, last_char @ 'X')) = safe_id.char_indices().last() {
+					safe_id.replace_range(idx..idx + last_char.len_utf8(), "R");
 				}
 			}
 			out += &safe_id;
