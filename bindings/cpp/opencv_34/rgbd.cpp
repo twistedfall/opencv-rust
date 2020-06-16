@@ -3,7 +3,7 @@
 #include "rgbd_types.hpp"
 
 extern "C" {
-	Result_void cv_linemod_colormap_const_MatX_MatX(const cv::Mat* quantized, cv::Mat* dst) {
+	Result_void cv_linemod_colormap_const_MatR_MatR(const cv::Mat* quantized, cv::Mat* dst) {
 		try {
 			cv::linemod::colormap(*quantized, *dst);
 			return Ok();
@@ -24,14 +24,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::linemod::Detector>*>))
 	}
 	
-	Result_void cv_rgbd_depthTo3dSparse_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* depth, const cv::_InputArray* in_K, const cv::_InputArray* in_points, const cv::_OutputArray* points3d) {
+	Result_void cv_rgbd_depthTo3dSparse_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* depth, const cv::_InputArray* in_K, const cv::_InputArray* in_points, const cv::_OutputArray* points3d) {
 		try {
 			cv::rgbd::depthTo3dSparse(*depth, *in_K, *in_points, *points3d);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_rgbd_depthTo3d_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* depth, const cv::_InputArray* K, const cv::_OutputArray* points3d, const cv::_InputArray* mask) {
+	Result_void cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(const cv::_InputArray* depth, const cv::_InputArray* K, const cv::_OutputArray* points3d, const cv::_InputArray* mask) {
 		try {
 			cv::rgbd::depthTo3d(*depth, *K, *points3d, *mask);
 			return Ok();
@@ -80,21 +80,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_rgbd_registerDepth_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_const__OutputArrayX_bool(const cv::_InputArray* unregisteredCameraMatrix, const cv::_InputArray* registeredCameraMatrix, const cv::_InputArray* registeredDistCoeffs, const cv::_InputArray* Rt, const cv::_InputArray* unregisteredDepth, const cv::Size* outputImagePlaneSize, const cv::_OutputArray* registeredDepth, bool depthDilation) {
+	Result_void cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(const cv::_InputArray* unregisteredCameraMatrix, const cv::_InputArray* registeredCameraMatrix, const cv::_InputArray* registeredDistCoeffs, const cv::_InputArray* Rt, const cv::_InputArray* unregisteredDepth, const cv::Size* outputImagePlaneSize, const cv::_OutputArray* registeredDepth, bool depthDilation) {
 		try {
 			cv::rgbd::registerDepth(*unregisteredCameraMatrix, *registeredCameraMatrix, *registeredDistCoeffs, *Rt, *unregisteredDepth, *outputImagePlaneSize, *registeredDepth, depthDilation);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_rgbd_rescaleDepth_const__InputArrayX_int_const__OutputArrayX(const cv::_InputArray* in, int depth, const cv::_OutputArray* out) {
+	Result_void cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR(const cv::_InputArray* in, int depth, const cv::_OutputArray* out) {
 		try {
 			cv::rgbd::rescaleDepth(*in, depth, *out);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_rgbd_warpFrame_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* Rt, const cv::Mat* cameraMatrix, const cv::Mat* distCoeff, const cv::_OutputArray* warpedImage, const cv::_OutputArray* warpedDepth, const cv::_OutputArray* warpedMask) {
+	Result_void cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* Rt, const cv::Mat* cameraMatrix, const cv::Mat* distCoeff, const cv::_OutputArray* warpedImage, const cv::_OutputArray* warpedDepth, const cv::_OutputArray* warpedMask) {
 		try {
 			cv::rgbd::warpFrame(*image, *depth, *mask, *Rt, *cameraMatrix, *distCoeff, *warpedImage, *warpedDepth, *warpedMask);
 			return Ok();
@@ -174,14 +174,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_linemod_ColorGradient_read_const_FileNodeX(cv::linemod::ColorGradient* instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_ColorGradient_read_const_FileNodeR(cv::linemod::ColorGradient* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_ColorGradient_write_const_FileStorageX(const cv::linemod::ColorGradient* instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_ColorGradient_write_const_FileStorageR(const cv::linemod::ColorGradient* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -275,14 +275,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_linemod_DepthNormal_read_const_FileNodeX(cv::linemod::DepthNormal* instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_DepthNormal_read_const_FileNodeR(cv::linemod::DepthNormal* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_DepthNormal_write_const_FileStorageX(const cv::linemod::DepthNormal* instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_DepthNormal_write_const_FileStorageR(const cv::linemod::DepthNormal* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -299,28 +299,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Detector*>))
 	}
 	
-	Result<cv::linemod::Detector*> cv_linemod_Detector_Detector_const_vector_Ptr_Modality__X_const_vector_int_X(const std::vector<cv::Ptr<cv::linemod::Modality>>* modalities, const std::vector<int>* T_pyramid) {
+	Result<cv::linemod::Detector*> cv_linemod_Detector_Detector_const_vector_Ptr_Modality__R_const_vector_int_R(const std::vector<cv::Ptr<cv::linemod::Modality>>* modalities, const std::vector<int>* T_pyramid) {
 		try {
 			cv::linemod::Detector* ret = new cv::linemod::Detector(*modalities, *T_pyramid);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Detector*>))
 	}
 	
-	Result_void cv_linemod_Detector_match_const_const_vector_Mat_X_float_vector_Match_X_const_vector_String_X_const__OutputArrayX_const_vector_Mat_X(const cv::linemod::Detector* instance, const std::vector<cv::Mat>* sources, float threshold, std::vector<cv::linemod::Match>* matches, const std::vector<cv::String>* class_ids, const cv::_OutputArray* quantized_images, const std::vector<cv::Mat>* masks) {
+	Result_void cv_linemod_Detector_match_const_const_vector_Mat_R_float_vector_Match_R_const_vector_String_R_const__OutputArrayR_const_vector_Mat_R(const cv::linemod::Detector* instance, const std::vector<cv::Mat>* sources, float threshold, std::vector<cv::linemod::Match>* matches, const std::vector<cv::String>* class_ids, const cv::_OutputArray* quantized_images, const std::vector<cv::Mat>* masks) {
 		try {
 			instance->match(*sources, threshold, *matches, *class_ids, *quantized_images, *masks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_linemod_Detector_addTemplate_const_vector_Mat_X_const_StringX_const_MatX_RectX(cv::linemod::Detector* instance, const std::vector<cv::Mat>* sources, const char* class_id, const cv::Mat* object_mask, cv::Rect* bounding_box) {
+	Result<int> cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(cv::linemod::Detector* instance, const std::vector<cv::Mat>* sources, const char* class_id, const cv::Mat* object_mask, cv::Rect* bounding_box) {
 		try {
 			int ret = instance->addTemplate(*sources, cv::String(class_id), *object_mask, bounding_box);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_X_const_StringX(cv::linemod::Detector* instance, const std::vector<cv::linemod::Template>* templates, const char* class_id) {
+	Result<int> cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(cv::linemod::Detector* instance, const std::vector<cv::linemod::Template>* templates, const char* class_id) {
 		try {
 			int ret = instance->addSyntheticTemplate(*templates, cv::String(class_id));
 			return Ok(ret);
@@ -348,7 +348,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<std::vector<cv::linemod::Template>*> cv_linemod_Detector_getTemplates_const_const_StringX_int(const cv::linemod::Detector* instance, const char* class_id, int template_id) {
+	Result<std::vector<cv::linemod::Template>*> cv_linemod_Detector_getTemplates_const_const_StringR_int(const cv::linemod::Detector* instance, const char* class_id, int template_id) {
 		try {
 			std::vector<cv::linemod::Template> ret = instance->getTemplates(cv::String(class_id), template_id);
 			return Ok(new std::vector<cv::linemod::Template>(ret));
@@ -362,7 +362,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_linemod_Detector_numTemplates_const_const_StringX(const cv::linemod::Detector* instance, const char* class_id) {
+	Result<int> cv_linemod_Detector_numTemplates_const_const_StringR(const cv::linemod::Detector* instance, const char* class_id) {
 		try {
 			int ret = instance->numTemplates(cv::String(class_id));
 			return Ok(ret);
@@ -383,42 +383,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::String>*>))
 	}
 	
-	Result_void cv_linemod_Detector_read_const_FileNodeX(cv::linemod::Detector* instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_Detector_read_const_FileNodeR(cv::linemod::Detector* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Detector_write_const_FileStorageX(const cv::linemod::Detector* instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_Detector_write_const_FileStorageR(const cv::linemod::Detector* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<void*> cv_linemod_Detector_readClass_const_FileNodeX_const_StringX(cv::linemod::Detector* instance, const cv::FileNode* fn, const char* class_id_override) {
+	Result<void*> cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(cv::linemod::Detector* instance, const cv::FileNode* fn, const char* class_id_override) {
 		try {
 			cv::String ret = instance->readClass(*fn, cv::String(class_id_override));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_linemod_Detector_writeClass_const_const_StringX_FileStorageX(const cv::linemod::Detector* instance, const char* class_id, cv::FileStorage* fs) {
+	Result_void cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(const cv::linemod::Detector* instance, const char* class_id, cv::FileStorage* fs) {
 		try {
 			instance->writeClass(cv::String(class_id), *fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Detector_readClasses_const_vector_String_X_const_StringX(cv::linemod::Detector* instance, const std::vector<cv::String>* class_ids, const char* format) {
+	Result_void cv_linemod_Detector_readClasses_const_vector_String_R_const_StringR(cv::linemod::Detector* instance, const std::vector<cv::String>* class_ids, const char* format) {
 		try {
 			instance->readClasses(*class_ids, cv::String(format));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Detector_writeClasses_const_const_StringX(const cv::linemod::Detector* instance, const char* format) {
+	Result_void cv_linemod_Detector_writeClasses_const_const_StringR(const cv::linemod::Detector* instance, const char* format) {
 		try {
 			instance->writeClasses(cv::String(format));
 			return Ok();
@@ -439,14 +439,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Feature>))
 	}
 	
-	Result_void cv_linemod_Feature_read_const_FileNodeX(cv::linemod::Feature instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_Feature_read_const_FileNodeR(cv::linemod::Feature instance, const cv::FileNode* fn) {
 		try {
 			instance.read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Feature_write_const_FileStorageX(const cv::linemod::Feature instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_Feature_write_const_FileStorageR(const cv::linemod::Feature instance, cv::FileStorage* fs) {
 		try {
 			instance.write(*fs);
 			return Ok();
@@ -533,14 +533,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Match*>))
 	}
 	
-	Result<cv::linemod::Match*> cv_linemod_Match_Match_int_int_float_const_StringX_int(int x, int y, float similarity, const char* class_id, int template_id) {
+	Result<cv::linemod::Match*> cv_linemod_Match_Match_int_int_float_const_StringR_int(int x, int y, float similarity, const char* class_id, int template_id) {
 		try {
 			cv::linemod::Match* ret = new cv::linemod::Match(x, y, similarity, cv::String(class_id), template_id);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Match*>))
 	}
 	
-	Result<cv::Ptr<cv::linemod::QuantizedPyramid>*> cv_linemod_Modality_process_const_const_MatX_const_MatX(const cv::linemod::Modality* instance, const cv::Mat* src, const cv::Mat* mask) {
+	Result<cv::Ptr<cv::linemod::QuantizedPyramid>*> cv_linemod_Modality_process_const_const_MatR_const_MatR(const cv::linemod::Modality* instance, const cv::Mat* src, const cv::Mat* mask) {
 		try {
 			cv::Ptr<cv::linemod::QuantizedPyramid> ret = instance->process(*src, *mask);
 			return Ok(new cv::Ptr<cv::linemod::QuantizedPyramid>(ret));
@@ -554,42 +554,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_linemod_Modality_read_const_FileNodeX(cv::linemod::Modality* instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_Modality_read_const_FileNodeR(cv::linemod::Modality* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Modality_write_const_FileStorageX(const cv::linemod::Modality* instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_Modality_write_const_FileStorageR(const cv::linemod::Modality* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::linemod::Modality>*> cv_linemod_Modality_create_const_StringX(const char* modality_type) {
+	Result<cv::Ptr<cv::linemod::Modality>*> cv_linemod_Modality_create_const_StringR(const char* modality_type) {
 		try {
 			cv::Ptr<cv::linemod::Modality> ret = cv::linemod::Modality::create(cv::String(modality_type));
 			return Ok(new cv::Ptr<cv::linemod::Modality>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::linemod::Modality>*>))
 	}
 	
-	Result<cv::Ptr<cv::linemod::Modality>*> cv_linemod_Modality_create_const_FileNodeX(const cv::FileNode* fn) {
+	Result<cv::Ptr<cv::linemod::Modality>*> cv_linemod_Modality_create_const_FileNodeR(const cv::FileNode* fn) {
 		try {
 			cv::Ptr<cv::linemod::Modality> ret = cv::linemod::Modality::create(*fn);
 			return Ok(new cv::Ptr<cv::linemod::Modality>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::linemod::Modality>*>))
 	}
 	
-	Result_void cv_linemod_QuantizedPyramid_quantize_const_MatX(const cv::linemod::QuantizedPyramid* instance, cv::Mat* dst) {
+	Result_void cv_linemod_QuantizedPyramid_quantize_const_MatR(const cv::linemod::QuantizedPyramid* instance, cv::Mat* dst) {
 		try {
 			instance->quantize(*dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateX(const cv::linemod::QuantizedPyramid* instance, cv::linemod::Template* templ) {
+	Result<bool> cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(const cv::linemod::QuantizedPyramid* instance, cv::linemod::Template* templ) {
 		try {
 			bool ret = instance->extractTemplate(*templ);
 			return Ok(ret);
@@ -662,14 +662,14 @@ extern "C" {
 	void cv_Linemod_Template_delete(cv::linemod::Template* instance) {
 		delete instance;
 	}
-	Result_void cv_linemod_Template_read_const_FileNodeX(cv::linemod::Template* instance, const cv::FileNode* fn) {
+	Result_void cv_linemod_Template_read_const_FileNodeR(cv::linemod::Template* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_linemod_Template_write_const_FileStorageX(const cv::linemod::Template* instance, cv::FileStorage* fs) {
+	Result_void cv_linemod_Template_write_const_FileStorageR(const cv::linemod::Template* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -759,21 +759,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::ICPOdometry*>))
 	}
 	
-	Result<cv::rgbd::ICPOdometry*> cv_rgbd_ICPOdometry_ICPOdometry_const_MatX_float_float_float_float_const_vector_int_X_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, int transformType) {
+	Result<cv::rgbd::ICPOdometry*> cv_rgbd_ICPOdometry_ICPOdometry_const_MatR_float_float_float_float_const_vector_int_R_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, int transformType) {
 		try {
 			cv::rgbd::ICPOdometry* ret = new cv::rgbd::ICPOdometry(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, maxPointsPart, *iterCounts, transformType);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::ICPOdometry*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::ICPOdometry>*> cv_rgbd_ICPOdometry_create_const_MatX_float_float_float_float_const_vector_int_X_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, int transformType) {
+	Result<cv::Ptr<cv::rgbd::ICPOdometry>*> cv_rgbd_ICPOdometry_create_const_MatR_float_float_float_float_const_vector_int_R_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, int transformType) {
 		try {
 			cv::Ptr<cv::rgbd::ICPOdometry> ret = cv::rgbd::ICPOdometry::create(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, maxPointsPart, *iterCounts, transformType);
 			return Ok(new cv::Ptr<cv::rgbd::ICPOdometry>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::rgbd::ICPOdometry>*>))
 	}
 	
-	Result<cv::Size> cv_rgbd_ICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(const cv::rgbd::ICPOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
+	Result<cv::Size> cv_rgbd_ICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::ICPOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
 			return Ok(ret);
@@ -787,7 +787,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_ICPOdometry_setCameraMatrix_const_MatX(cv::rgbd::ICPOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_ICPOdometry_setCameraMatrix_const_MatR(cv::rgbd::ICPOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setCameraMatrix(*val);
 			return Ok();
@@ -843,7 +843,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_ICPOdometry_setIterationCounts_const_MatX(cv::rgbd::ICPOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_ICPOdometry_setIterationCounts_const_MatR(cv::rgbd::ICPOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setIterationCounts(*val);
 			return Ok();
@@ -955,28 +955,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result<bool> cv_rgbd_Odometry_compute_const_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const__OutputArrayX_const_MatX(const cv::rgbd::Odometry* instance, const cv::Mat* srcImage, const cv::Mat* srcDepth, const cv::Mat* srcMask, const cv::Mat* dstImage, const cv::Mat* dstDepth, const cv::Mat* dstMask, const cv::_OutputArray* Rt, const cv::Mat* initRt) {
+	Result<bool> cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const_MatR(const cv::rgbd::Odometry* instance, const cv::Mat* srcImage, const cv::Mat* srcDepth, const cv::Mat* srcMask, const cv::Mat* dstImage, const cv::Mat* dstDepth, const cv::Mat* dstMask, const cv::_OutputArray* Rt, const cv::Mat* initRt) {
 		try {
 			bool ret = instance->compute(*srcImage, *srcDepth, *srcMask, *dstImage, *dstDepth, *dstMask, *Rt, *initRt);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_X_Ptr_OdometryFrame_X_const__OutputArrayX_const_MatX(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* srcFrame, cv::Ptr<cv::rgbd::OdometryFrame>* dstFrame, const cv::_OutputArray* Rt, const cv::Mat* initRt) {
+	Result<bool> cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_R_Ptr_OdometryFrame_R_const__OutputArrayR_const_MatR(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* srcFrame, cv::Ptr<cv::rgbd::OdometryFrame>* dstFrame, const cv::_OutputArray* Rt, const cv::Mat* initRt) {
 		try {
 			bool ret = instance->compute(*srcFrame, *dstFrame, *Rt, *initRt);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::Size> cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
+	Result<cv::Size> cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::Odometry>*> cv_rgbd_Odometry_create_const_StringX(const char* odometryType) {
+	Result<cv::Ptr<cv::rgbd::Odometry>*> cv_rgbd_Odometry_create_const_StringR(const char* odometryType) {
 		try {
 			cv::Ptr<cv::rgbd::Odometry> ret = cv::rgbd::Odometry::create(cv::String(odometryType));
 			return Ok(new cv::Ptr<cv::rgbd::Odometry>(ret));
@@ -990,7 +990,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_Odometry_setCameraMatrix_const_MatX(cv::rgbd::Odometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_Odometry_setCameraMatrix_const_MatR(cv::rgbd::Odometry* instance, const cv::Mat* val) {
 		try {
 			instance->setCameraMatrix(*val);
 			return Ok();
@@ -1147,14 +1147,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::OdometryFrame*>))
 	}
 	
-	Result<cv::rgbd::OdometryFrame*> cv_rgbd_OdometryFrame_OdometryFrame_const_MatX_const_MatX_const_MatX_const_MatX_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
+	Result<cv::rgbd::OdometryFrame*> cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::rgbd::OdometryFrame* ret = new cv::rgbd::OdometryFrame(*image, *depth, *mask, *normals, ID);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::OdometryFrame*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::OdometryFrame>*> cv_rgbd_OdometryFrame_create_const_MatX_const_MatX_const_MatX_const_MatX_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
+	Result<cv::Ptr<cv::rgbd::OdometryFrame>*> cv_rgbd_OdometryFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::Ptr<cv::rgbd::OdometryFrame> ret = cv::rgbd::OdometryFrame::create(*image, *depth, *mask, *normals, ID);
 			return Ok(new cv::Ptr<cv::rgbd::OdometryFrame>(ret));
@@ -1255,14 +1255,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdFrame*>))
 	}
 	
-	Result<cv::rgbd::RgbdFrame*> cv_rgbd_RgbdFrame_RgbdFrame_const_MatX_const_MatX_const_MatX_const_MatX_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
+	Result<cv::rgbd::RgbdFrame*> cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::rgbd::RgbdFrame* ret = new cv::rgbd::RgbdFrame(*image, *depth, *mask, *normals, ID);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdFrame*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::RgbdFrame>*> cv_rgbd_RgbdFrame_create_const_MatX_const_MatX_const_MatX_const_MatX_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
+	Result<cv::Ptr<cv::rgbd::RgbdFrame>*> cv_rgbd_RgbdFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::Ptr<cv::rgbd::RgbdFrame> ret = cv::rgbd::RgbdFrame::create(*image, *depth, *mask, *normals, ID);
 			return Ok(new cv::Ptr<cv::rgbd::RgbdFrame>(ret));
@@ -1286,21 +1286,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdICPOdometry*>))
 	}
 	
-	Result<cv::rgbd::RgbdICPOdometry*> cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatX_float_float_float_float_const_vector_int_X_const_vector_float_X_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, int transformType) {
+	Result<cv::rgbd::RgbdICPOdometry*> cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR_float_float_float_float_const_vector_int_R_const_vector_float_R_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, int transformType) {
 		try {
 			cv::rgbd::RgbdICPOdometry* ret = new cv::rgbd::RgbdICPOdometry(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, maxPointsPart, *iterCounts, *minGradientMagnitudes, transformType);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdICPOdometry*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::RgbdICPOdometry>*> cv_rgbd_RgbdICPOdometry_create_const_MatX_float_float_float_float_const_vector_int_X_const_vector_float_X_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, int transformType) {
+	Result<cv::Ptr<cv::rgbd::RgbdICPOdometry>*> cv_rgbd_RgbdICPOdometry_create_const_MatR_float_float_float_float_const_vector_int_R_const_vector_float_R_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, float maxPointsPart, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, int transformType) {
 		try {
 			cv::Ptr<cv::rgbd::RgbdICPOdometry> ret = cv::rgbd::RgbdICPOdometry::create(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, maxPointsPart, *iterCounts, *minGradientMagnitudes, transformType);
 			return Ok(new cv::Ptr<cv::rgbd::RgbdICPOdometry>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::rgbd::RgbdICPOdometry>*>))
 	}
 	
-	Result<cv::Size> cv_rgbd_RgbdICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(const cv::rgbd::RgbdICPOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
+	Result<cv::Size> cv_rgbd_RgbdICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::RgbdICPOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
 			return Ok(ret);
@@ -1314,7 +1314,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdICPOdometry_setCameraMatrix_const_MatX(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdICPOdometry_setCameraMatrix_const_MatR(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setCameraMatrix(*val);
 			return Ok();
@@ -1384,7 +1384,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdICPOdometry_setIterationCounts_const_MatX(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdICPOdometry_setIterationCounts_const_MatR(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setIterationCounts(*val);
 			return Ok();
@@ -1398,7 +1398,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdICPOdometry_setMinGradientMagnitudes_const_MatX(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdICPOdometry_setMinGradientMagnitudes_const_MatR(cv::rgbd::RgbdICPOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setMinGradientMagnitudes(*val);
 			return Ok();
@@ -1464,14 +1464,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdNormals*>))
 	}
 	
-	Result<cv::rgbd::RgbdNormals*> cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayX_int_int(int rows, int cols, int depth, const cv::_InputArray* K, int window_size, int method) {
+	Result<cv::rgbd::RgbdNormals*> cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR_int_int(int rows, int cols, int depth, const cv::_InputArray* K, int window_size, int method) {
 		try {
 			cv::rgbd::RgbdNormals* ret = new cv::rgbd::RgbdNormals(rows, cols, depth, *K, window_size, method);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdNormals*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::RgbdNormals>*> cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayX_int_int(int rows, int cols, int depth, const cv::_InputArray* K, int window_size, int method) {
+	Result<cv::Ptr<cv::rgbd::RgbdNormals>*> cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR_int_int(int rows, int cols, int depth, const cv::_InputArray* K, int window_size, int method) {
 		try {
 			cv::Ptr<cv::rgbd::RgbdNormals> ret = cv::rgbd::RgbdNormals::create(rows, cols, depth, *K, window_size, method);
 			return Ok(new cv::Ptr<cv::rgbd::RgbdNormals>(ret));
@@ -1548,7 +1548,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdNormals_setK_const_MatX(cv::rgbd::RgbdNormals* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdNormals_setK_const_MatR(cv::rgbd::RgbdNormals* instance, const cv::Mat* val) {
 		try {
 			instance->setK(*val);
 			return Ok();
@@ -1579,21 +1579,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdOdometry*>))
 	}
 	
-	Result<cv::rgbd::RgbdOdometry*> cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatX_float_float_float_const_vector_int_X_const_vector_float_X_float_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, float maxPointsPart, int transformType) {
+	Result<cv::rgbd::RgbdOdometry*> cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, float maxPointsPart, int transformType) {
 		try {
 			cv::rgbd::RgbdOdometry* ret = new cv::rgbd::RgbdOdometry(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, *iterCounts, *minGradientMagnitudes, maxPointsPart, transformType);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdOdometry*>))
 	}
 	
-	Result<cv::Ptr<cv::rgbd::RgbdOdometry>*> cv_rgbd_RgbdOdometry_create_const_MatX_float_float_float_const_vector_int_X_const_vector_float_X_float_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, float maxPointsPart, int transformType) {
+	Result<cv::Ptr<cv::rgbd::RgbdOdometry>*> cv_rgbd_RgbdOdometry_create_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, float maxPointsPart, int transformType) {
 		try {
 			cv::Ptr<cv::rgbd::RgbdOdometry> ret = cv::rgbd::RgbdOdometry::create(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, *iterCounts, *minGradientMagnitudes, maxPointsPart, transformType);
 			return Ok(new cv::Ptr<cv::rgbd::RgbdOdometry>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::rgbd::RgbdOdometry>*>))
 	}
 	
-	Result<cv::Size> cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(const cv::rgbd::RgbdOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
+	Result<cv::Size> cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::RgbdOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
 			return Ok(ret);
@@ -1607,7 +1607,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdOdometry_setCameraMatrix_const_MatX(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdOdometry_setCameraMatrix_const_MatR(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setCameraMatrix(*val);
 			return Ok();
@@ -1663,7 +1663,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdOdometry_setIterationCounts_const_MatX(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdOdometry_setIterationCounts_const_MatR(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setIterationCounts(*val);
 			return Ok();
@@ -1677,7 +1677,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_rgbd_RgbdOdometry_setMinGradientMagnitudes_const_MatX(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
+	Result_void cv_rgbd_RgbdOdometry_setMinGradientMagnitudes_const_MatR(cv::rgbd::RgbdOdometry* instance, const cv::Mat* val) {
 		try {
 			instance->setMinGradientMagnitudes(*val);
 			return Ok();

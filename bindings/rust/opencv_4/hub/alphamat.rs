@@ -15,5 +15,5 @@ pub fn info_flow(image: &dyn core::ToInputArray, tmap: &dyn core::ToInputArray, 
 	input_array_arg!(image);
 	input_array_arg!(tmap);
 	output_array_arg!(result);
-	unsafe { sys::cv_alphamat_infoFlow_const__InputArrayX_const__InputArrayX_const__OutputArrayX(image.as_raw__InputArray(), tmap.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_alphamat_infoFlow_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), tmap.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
 }

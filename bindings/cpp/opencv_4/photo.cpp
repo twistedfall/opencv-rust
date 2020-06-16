@@ -3,7 +3,7 @@
 #include "photo_types.hpp"
 
 extern "C" {
-	Result_void cv_colorChange_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float_float(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float red_mul, float green_mul, float blue_mul) {
+	Result_void cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_float(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float red_mul, float green_mul, float blue_mul) {
 		try {
 			cv::colorChange(*src, *mask, *dst, red_mul, green_mul, blue_mul);
 			return Ok();
@@ -80,154 +80,154 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::Tonemap>*>))
 	}
 	
-	Result_void cv_decolor_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* grayscale, const cv::_OutputArray* color_boost) {
+	Result_void cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* src, const cv::_OutputArray* grayscale, const cv::_OutputArray* color_boost) {
 		try {
 			cv::decolor(*src, *grayscale, *color_boost);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_denoise_TVL1_const_vector_Mat_X_MatX_double_int(const std::vector<cv::Mat>* observations, cv::Mat* result, double lambda, int niters) {
+	Result_void cv_denoise_TVL1_const_vector_Mat_R_MatR_double_int(const std::vector<cv::Mat>* observations, cv::Mat* result, double lambda, int niters) {
 		try {
 			cv::denoise_TVL1(*observations, *result, lambda, niters);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detailEnhance_const__InputArrayX_const__OutputArrayX_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float sigma_s, float sigma_r) {
+	Result_void cv_detailEnhance_const__InputArrayR_const__OutputArrayR_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float sigma_s, float sigma_r) {
 		try {
 			cv::detailEnhance(*src, *dst, sigma_s, sigma_r);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_edgePreservingFilter_const__InputArrayX_const__OutputArrayX_int_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags, float sigma_s, float sigma_r) {
+	Result_void cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags, float sigma_s, float sigma_r) {
 		try {
 			cv::edgePreservingFilter(*src, *dst, flags, sigma_s, sigma_r);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoisingColoredMulti_const__InputArrayX_const__OutputArrayX_int_int_float_float_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, float h, float hColor, int templateWindowSize, int searchWindowSize) {
+	Result_void cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int_float_float_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, float h, float hColor, int templateWindowSize, int searchWindowSize) {
 		try {
 			cv::fastNlMeansDenoisingColoredMulti(*srcImgs, *dst, imgToDenoiseIndex, temporalWindowSize, h, hColor, templateWindowSize, searchWindowSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoisingColored_const__InputArrayX_const__OutputArrayX_float_float_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, float hColor, int templateWindowSize, int searchWindowSize) {
+	Result_void cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, float hColor, int templateWindowSize, int searchWindowSize) {
 		try {
 			cv::fastNlMeansDenoisingColored(*src, *dst, h, hColor, templateWindowSize, searchWindowSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_const_vector_float_X_int_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, const std::vector<float>* h, int templateWindowSize, int searchWindowSize, int normType) {
+	Result_void cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, const std::vector<float>* h, int templateWindowSize, int searchWindowSize, int normType) {
 		try {
 			cv::fastNlMeansDenoisingMulti(*srcImgs, *dst, imgToDenoiseIndex, temporalWindowSize, *h, templateWindowSize, searchWindowSize, normType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_float_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, float h, int templateWindowSize, int searchWindowSize) {
+	Result_void cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_float_int_int(const cv::_InputArray* srcImgs, const cv::_OutputArray* dst, int imgToDenoiseIndex, int temporalWindowSize, float h, int templateWindowSize, int searchWindowSize) {
 		try {
 			cv::fastNlMeansDenoisingMulti(*srcImgs, *dst, imgToDenoiseIndex, temporalWindowSize, h, templateWindowSize, searchWindowSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoising_const__InputArrayX_const__OutputArrayX_const_vector_float_X_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, const std::vector<float>* h, int templateWindowSize, int searchWindowSize, int normType) {
+	Result_void cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, const std::vector<float>* h, int templateWindowSize, int searchWindowSize, int normType) {
 		try {
 			cv::fastNlMeansDenoising(*src, *dst, *h, templateWindowSize, searchWindowSize, normType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_fastNlMeansDenoising_const__InputArrayX_const__OutputArrayX_float_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int templateWindowSize, int searchWindowSize) {
+	Result_void cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int templateWindowSize, int searchWindowSize) {
 		try {
 			cv::fastNlMeansDenoising(*src, *dst, h, templateWindowSize, searchWindowSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_illuminationChange_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float alpha, float beta) {
+	Result_void cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float alpha, float beta) {
 		try {
 			cv::illuminationChange(*src, *mask, *dst, alpha, beta);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_inpaint_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(const cv::_InputArray* src, const cv::_InputArray* inpaintMask, const cv::_OutputArray* dst, double inpaintRadius, int flags) {
+	Result_void cv_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(const cv::_InputArray* src, const cv::_InputArray* inpaintMask, const cv::_OutputArray* dst, double inpaintRadius, int flags) {
 		try {
 			cv::inpaint(*src, *inpaintMask, *dst, inpaintRadius, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_pencilSketch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_float_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst1, const cv::_OutputArray* dst2, float sigma_s, float sigma_r, float shade_factor) {
+	Result_void cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_float_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst1, const cv::_OutputArray* dst2, float sigma_s, float sigma_r, float shade_factor) {
 		try {
 			cv::pencilSketch(*src, *dst1, *dst2, sigma_s, sigma_r, shade_factor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_InputArray* mask, const cv::Point* p, const cv::_OutputArray* blend, int flags) {
+	Result_void cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_InputArray* mask, const cv::Point* p, const cv::_OutputArray* blend, int flags) {
 		try {
 			cv::seamlessClone(*src, *dst, *mask, *p, *blend, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_stylization_const__InputArrayX_const__OutputArrayX_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float sigma_s, float sigma_r) {
+	Result_void cv_stylization_const__InputArrayR_const__OutputArrayR_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float sigma_s, float sigma_r) {
 		try {
 			cv::stylization(*src, *dst, sigma_s, sigma_r);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_textureFlattening_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float_int(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float low_threshold, float high_threshold, int kernel_size) {
+	Result_void cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_int(const cv::_InputArray* src, const cv::_InputArray* mask, const cv::_OutputArray* dst, float low_threshold, float high_threshold, int kernel_size) {
 		try {
 			cv::textureFlattening(*src, *mask, *dst, low_threshold, high_threshold, kernel_size);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_AlignExposures_process_const__InputArrayX_vector_Mat_X_const__InputArrayX_const__InputArrayX(cv::AlignExposures* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_AlignExposures_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(cv::AlignExposures* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_AlignMTB_process_const__InputArrayX_vector_Mat_X_const__InputArrayX_const__InputArrayX(cv::AlignMTB* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_AlignMTB_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(cv::AlignMTB* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_AlignMTB_process_const__InputArrayX_vector_Mat_X(cv::AlignMTB* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst) {
+	Result_void cv_AlignMTB_process_const__InputArrayR_vector_Mat_R(cv::AlignMTB* instance, const cv::_InputArray* src, std::vector<cv::Mat>* dst) {
 		try {
 			instance->process(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Point> cv_AlignMTB_calculateShift_const__InputArrayX_const__InputArrayX(cv::AlignMTB* instance, const cv::_InputArray* img0, const cv::_InputArray* img1) {
+	Result<cv::Point> cv_AlignMTB_calculateShift_const__InputArrayR_const__InputArrayR(cv::AlignMTB* instance, const cv::_InputArray* img0, const cv::_InputArray* img1) {
 		try {
 			cv::Point ret = instance->calculateShift(*img0, *img1);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result_void cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(cv::AlignMTB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::Point* shift) {
+	Result_void cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(cv::AlignMTB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::Point* shift) {
 		try {
 			instance->shiftMat(*src, *dst, *shift);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_AlignMTB_computeBitmaps_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(cv::AlignMTB* instance, const cv::_InputArray* img, const cv::_OutputArray* tb, const cv::_OutputArray* eb) {
+	Result_void cv_AlignMTB_computeBitmaps_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::AlignMTB* instance, const cv::_InputArray* img, const cv::_OutputArray* tb, const cv::_OutputArray* eb) {
 		try {
 			instance->computeBitmaps(*img, *tb, *eb);
 			return Ok();
@@ -276,7 +276,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CalibrateCRF_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::CalibrateCRF* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
+	Result_void cv_CalibrateCRF_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(cv::CalibrateCRF* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
 		try {
 			instance->process(*src, *dst, *times);
 			return Ok();
@@ -360,35 +360,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_MergeDebevec_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(cv::MergeDebevec* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(cv::MergeDebevec* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeDebevec_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::MergeDebevec* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
+	Result_void cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(cv::MergeDebevec* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
 		try {
 			instance->process(*src, *dst, *times);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeExposures_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(cv::MergeExposures* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_MergeExposures_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(cv::MergeExposures* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeMertens_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(cv::MergeMertens* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(cv::MergeMertens* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeMertens_process_const__InputArrayX_const__OutputArrayX(cv::MergeMertens* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR(cv::MergeMertens* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->process(*src, *dst);
 			return Ok();
@@ -437,21 +437,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeRobertson_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(cv::MergeRobertson* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
+	Result_void cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(cv::MergeRobertson* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times, const cv::_InputArray* response) {
 		try {
 			instance->process(*src, *dst, *times, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_MergeRobertson_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::MergeRobertson* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
+	Result_void cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(cv::MergeRobertson* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* times) {
 		try {
 			instance->process(*src, *dst, *times);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Tonemap_process_const__InputArrayX_const__OutputArrayX(cv::Tonemap* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_Tonemap_process_const__InputArrayR_const__OutputArrayR(cv::Tonemap* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->process(*src, *dst);
 			return Ok();

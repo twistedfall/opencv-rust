@@ -71,9 +71,9 @@ pub const BLOCK_MEAN_HASH_MODE_1: i32 = 1;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum BlockMeanHashMode {
 	/// use fewer block and generate 16*16/8 uchar hash value
-	BLOCK_MEAN_HASH_MODE_0 = 0 as isize,
+	BLOCK_MEAN_HASH_MODE_0 = 0,
 	/// use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
-	BLOCK_MEAN_HASH_MODE_1 = 1 as isize,
+	BLOCK_MEAN_HASH_MODE_1 = 1,
 }
 
 opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
@@ -85,7 +85,7 @@ opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
 pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_averageHash_const__InputArrayX_const__OutputArrayX(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_img_hash_averageHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes block mean hash of the input image
@@ -99,7 +99,7 @@ pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn cor
 pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, mode: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayX_const__OutputArrayX_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), mode) }.into_result()
+	unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), mode) }.into_result()
 }
 
 /// Computes color moment hash of the input, the algorithm
@@ -112,7 +112,7 @@ pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn 
 pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayX_const__OutputArrayX(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes average hash value of the input image
@@ -130,7 +130,7 @@ pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dy
 pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, alpha: f32, scale: f32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayX_const__OutputArrayX_float_float(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), alpha, scale) }.into_result()
+	unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR_float_float(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), alpha, scale) }.into_result()
 }
 
 /// Computes pHash value of the input image
@@ -141,7 +141,7 @@ pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut d
 pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_pHash_const__InputArrayX_const__OutputArrayX(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_img_hash_pHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes radial variance hash of the input image
@@ -158,7 +158,7 @@ pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToO
 pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, sigma: f64, num_of_angle_line: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayX_const__OutputArrayX_double_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), sigma, num_of_angle_line) }.into_result()
+	unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR_double_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), sigma, num_of_angle_line) }.into_result()
 }
 
 /// Computes average hash value of the input image
@@ -189,25 +189,25 @@ impl Drop for AverageHash {
 }
 
 impl AverageHash {
-	pub fn as_raw_AverageHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_AverageHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for AverageHash {}
 
 impl core::AlgorithmTrait for AverageHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::AverageHashTrait for AverageHash {
-	fn as_raw_AverageHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_AverageHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for AverageHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl AverageHash {
@@ -254,25 +254,25 @@ impl Drop for BlockMeanHash {
 }
 
 impl BlockMeanHash {
-	pub fn as_raw_BlockMeanHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_BlockMeanHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for BlockMeanHash {}
 
 impl core::AlgorithmTrait for BlockMeanHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::BlockMeanHashTrait for BlockMeanHash {
-	fn as_raw_BlockMeanHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_BlockMeanHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for BlockMeanHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BlockMeanHash {
@@ -310,25 +310,25 @@ impl Drop for ColorMomentHash {
 }
 
 impl ColorMomentHash {
-	pub fn as_raw_ColorMomentHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_ColorMomentHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ColorMomentHash {}
 
 impl core::AlgorithmTrait for ColorMomentHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ColorMomentHashTrait for ColorMomentHash {
-	fn as_raw_ColorMomentHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ColorMomentHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for ColorMomentHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ColorMomentHash {
@@ -350,7 +350,7 @@ pub trait ImgHashBaseTrait: core::AlgorithmTrait {
 	fn compute(&mut self, input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(input_arr);
 		output_array_arg!(output_arr);
-		unsafe { sys::cv_img_hash_ImgHashBase_compute_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_ImgHashBase(), input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_img_hash_ImgHashBase_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ImgHashBase(), input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Compare the hash value between inOne and inTwo
@@ -363,7 +363,7 @@ pub trait ImgHashBaseTrait: core::AlgorithmTrait {
 	fn compare(&self, hash_one: &dyn core::ToInputArray, hash_two: &dyn core::ToInputArray) -> Result<f64> {
 		input_array_arg!(hash_one);
 		input_array_arg!(hash_two);
-		unsafe { sys::cv_img_hash_ImgHashBase_compare_const_const__InputArrayX_const__InputArrayX(self.as_raw_ImgHashBase(), hash_one.as_raw__InputArray(), hash_two.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(self.as_raw_ImgHashBase(), hash_one.as_raw__InputArray(), hash_two.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -383,20 +383,20 @@ impl Drop for ImgHashBase {
 }
 
 impl ImgHashBase {
-	pub fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ImgHashBase {}
 
 impl core::AlgorithmTrait for ImgHashBase {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for ImgHashBase {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ImgHashBase {
@@ -446,25 +446,25 @@ impl Drop for MarrHildrethHash {
 }
 
 impl MarrHildrethHash {
-	pub fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for MarrHildrethHash {}
 
 impl core::AlgorithmTrait for MarrHildrethHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for MarrHildrethHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::MarrHildrethHashTrait for MarrHildrethHash {
-	fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MarrHildrethHash {
@@ -511,25 +511,25 @@ impl Drop for PHash {
 }
 
 impl PHash {
-	pub fn as_raw_PHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_PHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for PHash {}
 
 impl core::AlgorithmTrait for PHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for PHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::PHashTrait for PHash {
-	fn as_raw_PHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_PHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PHash {
@@ -571,7 +571,7 @@ pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait {
 	}
 	
 	fn get_pix_per_line(&mut self, input: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatX(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatR(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn get_projection(&mut self) -> Result<core::Mat> {
@@ -597,25 +597,25 @@ impl Drop for RadialVarianceHash {
 }
 
 impl RadialVarianceHash {
-	pub fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for RadialVarianceHash {}
 
 impl core::AlgorithmTrait for RadialVarianceHash {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::ImgHashBaseTrait for RadialVarianceHash {
-	fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::img_hash::RadialVarianceHashTrait for RadialVarianceHash {
-	fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl RadialVarianceHash {

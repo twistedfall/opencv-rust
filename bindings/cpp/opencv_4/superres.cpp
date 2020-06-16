@@ -17,14 +17,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::superres::FrameSource>*>))
 	}
 	
-	Result<cv::Ptr<cv::superres::FrameSource>*> cv_superres_createFrameSource_Video_CUDA_const_StringX(const char* fileName) {
+	Result<cv::Ptr<cv::superres::FrameSource>*> cv_superres_createFrameSource_Video_CUDA_const_StringR(const char* fileName) {
 		try {
 			cv::Ptr<cv::superres::FrameSource> ret = cv::superres::createFrameSource_Video_CUDA(std::string(fileName));
 			return Ok(new cv::Ptr<cv::superres::FrameSource>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::superres::FrameSource>*>))
 	}
 	
-	Result<cv::Ptr<cv::superres::FrameSource>*> cv_superres_createFrameSource_Video_const_StringX(const char* fileName) {
+	Result<cv::Ptr<cv::superres::FrameSource>*> cv_superres_createFrameSource_Video_const_StringR(const char* fileName) {
 		try {
 			cv::Ptr<cv::superres::FrameSource> ret = cv::superres::createFrameSource_Video(std::string(fileName));
 			return Ok(new cv::Ptr<cv::superres::FrameSource>(ret));
@@ -171,7 +171,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_superres_DenseOpticalFlowExt_calc_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(cv::superres::DenseOpticalFlowExt* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_OutputArray* flow1, const cv::_OutputArray* flow2) {
+	Result_void cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::superres::DenseOpticalFlowExt* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_OutputArray* flow1, const cv::_OutputArray* flow2) {
 		try {
 			instance->calc(*frame0, *frame1, *flow1, *flow2);
 			return Ok();
@@ -395,7 +395,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_superres_FrameSource_nextFrame_const__OutputArrayX(cv::superres::FrameSource* instance, const cv::_OutputArray* frame) {
+	Result_void cv_superres_FrameSource_nextFrame_const__OutputArrayR(cv::superres::FrameSource* instance, const cv::_OutputArray* frame) {
 		try {
 			instance->nextFrame(*frame);
 			return Ok();
@@ -451,14 +451,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_X(cv::superres::SuperResolution* instance, const cv::Ptr<cv::superres::FrameSource>* frameSource) {
+	Result_void cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_R(cv::superres::SuperResolution* instance, const cv::Ptr<cv::superres::FrameSource>* frameSource) {
 		try {
 			instance->setInput(*frameSource);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_superres_SuperResolution_nextFrame_const__OutputArrayX(cv::superres::SuperResolution* instance, const cv::_OutputArray* frame) {
+	Result_void cv_superres_SuperResolution_nextFrame_const__OutputArrayR(cv::superres::SuperResolution* instance, const cv::_OutputArray* frame) {
 		try {
 			instance->nextFrame(*frame);
 			return Ok();
@@ -612,7 +612,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::superres::DenseOpticalFlowExt>*>))
 	}
 	
-	Result_void cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_X(cv::superres::SuperResolution* instance, const cv::Ptr<cv::superres::DenseOpticalFlowExt>* val) {
+	Result_void cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(cv::superres::SuperResolution* instance, const cv::Ptr<cv::superres::DenseOpticalFlowExt>* val) {
 		try {
 			instance->setOpticalFlow(*val);
 			return Ok();

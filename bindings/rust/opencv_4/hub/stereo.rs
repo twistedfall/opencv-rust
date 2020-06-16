@@ -20,12 +20,12 @@ pub const CV_STAR_KERNEL: i32 = 6;
 /// Implementation of a census transform which is taking into account just the some pixels from the census kernel thus allowing for larger block sizes
 /// *
 pub fn census_transform(image1: &core::Mat, image2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_censusTransform_const_MatX_const_MatX_int_MatX_MatX_int(image1.as_raw_Mat(), image2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
+	unsafe { sys::cv_stereo_censusTransform_const_MatR_const_MatR_int_MatR_MatR_int(image1.as_raw_Mat(), image2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
 }
 
 /// single image census transform
 pub fn census_transform_1(image1: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_censusTransform_const_MatX_int_MatX_int(image1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
+	unsafe { sys::cv_stereo_censusTransform_const_MatR_int_MatR_int(image1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
 }
 
 /// STANDARD_MCT - Modified census which is memorizing for each pixel 2 bits and includes a tolerance to the pixel comparison
@@ -37,7 +37,7 @@ pub fn census_transform_1(image1: &core::Mat, kernel_size: i32, dist1: &mut core
 /// * integral_image1: Mat()
 /// * integral_image2: Mat()
 pub fn modified_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32, t: i32, integral_image1: &core::Mat, integral_image2: &core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatX_const_MatX_int_MatX_MatX_int_int_const_MatX_const_MatX(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, t, integral_image1.as_raw_Mat(), integral_image2.as_raw_Mat()) }.into_result()
+	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_const_MatR_int_MatR_MatR_int_int_const_MatR_const_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, t, integral_image1.as_raw_Mat(), integral_image2.as_raw_Mat()) }.into_result()
 }
 
 /// single version of modified census transform descriptor
@@ -46,29 +46,29 @@ pub fn modified_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size
 /// * t: 0
 /// * integral_image: Mat()
 pub fn modified_census_transform_1(img1: &core::Mat, kernel_size: i32, dist: &mut core::Mat, typ: i32, t: i32, integral_image: &core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatX_int_MatX_int_int_const_MatX(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat(), typ, t, integral_image.as_raw_Mat()) }.into_result()
+	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_int_MatR_int_int_const_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat(), typ, t, integral_image.as_raw_Mat()) }.into_result()
 }
 
 /// in a 9x9 kernel only certain positions are choosen
 pub fn star_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_starCensusTransform_const_MatX_const_MatX_int_MatX_MatX(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat()) }.into_result()
+	unsafe { sys::cv_stereo_starCensusTransform_const_MatR_const_MatR_int_MatR_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat()) }.into_result()
 }
 
 /// single image version of star kernel
 pub fn star_census_transform_1(img1: &core::Mat, kernel_size: i32, dist: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_starCensusTransform_const_MatX_int_MatX(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat()) }.into_result()
+	unsafe { sys::cv_stereo_starCensusTransform_const_MatR_int_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat()) }.into_result()
 }
 
 /// The classical center symetric census
 /// A modified version of cs census which is comparing a pixel with its correspondent after the center
 /// *
 pub fn symetric_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatX_const_MatX_int_MatX_MatX_int(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
+	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_const_MatR_int_MatR_MatR_int(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
 }
 
 /// single version of census transform
 pub fn symetric_census_transform_1(img1: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatX_int_MatX_int(img1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
+	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_int_MatR_int(img1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
 }
 
 /// \addtogroup stereo
@@ -117,15 +117,15 @@ impl Drop for Match {
 }
 
 impl Match {
-	pub fn as_raw_Match(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Match(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Match {}
 
 impl crate::stereo::MatchTrait for Match {
-	fn as_raw_Match(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Match(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Match {
@@ -271,15 +271,15 @@ impl Drop for PropagationParameters {
 }
 
 impl PropagationParameters {
-	pub fn as_raw_PropagationParameters(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_PropagationParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_PropagationParameters(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_PropagationParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for PropagationParameters {}
 
 impl crate::stereo::PropagationParametersTrait for PropagationParameters {
-	fn as_raw_PropagationParameters(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_PropagationParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_PropagationParameters(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PropagationParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PropagationParameters {
@@ -362,7 +362,7 @@ pub trait QuasiDenseStereo {
 	/// 
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
 	fn get_sparse_matches(&mut self, s_matches: &mut core::Vector::<crate::stereo::Match>) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_Match_X(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatch()) }.into_result()
+		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_Match_R(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatch()) }.into_result()
 	}
 	
 	/// Get The dense corresponding points.
@@ -373,7 +373,7 @@ pub trait QuasiDenseStereo {
 	/// 
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
 	fn get_dense_matches(&mut self, dense_matches: &mut core::Vector::<crate::stereo::Match>) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_Match_X(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatch()) }.into_result()
+		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_Match_R(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatch()) }.into_result()
 	}
 	
 	/// Main process of the algorithm. This method computes the sparse seeds and then densifies them.
@@ -390,7 +390,7 @@ pub trait QuasiDenseStereo {
 	/// sparseMatching
 	/// quasiDenseMatching
 	fn process(&mut self, img_left: &core::Mat, img_right: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_process_const_MatX_const_MatX(self.as_raw_mut_QuasiDenseStereo(), img_left.as_raw_Mat(), img_right.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_stereo_QuasiDenseStereo_process_const_MatR_const_MatR(self.as_raw_mut_QuasiDenseStereo(), img_left.as_raw_Mat(), img_right.as_raw_Mat()) }.into_result()
 	}
 	
 	/// Specify pixel coordinates in the left image and get its corresponding location in the right image.

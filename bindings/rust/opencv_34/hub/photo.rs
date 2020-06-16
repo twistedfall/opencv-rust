@@ -72,7 +72,7 @@ pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray,
 	input_array_arg!(src);
 	input_array_arg!(mask);
 	output_array_arg!(dst);
-	unsafe { sys::cv_colorChange_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul) }.into_result()
+	unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul) }.into_result()
 }
 
 /// Creates AlignMTB object
@@ -226,7 +226,7 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 	input_array_arg!(src);
 	output_array_arg!(grayscale);
 	output_array_arg!(color_boost);
-	unsafe { sys::cv_decolor_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(src.as_raw__InputArray(), grayscale.as_raw__OutputArray(), color_boost.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), grayscale.as_raw__OutputArray(), color_boost.as_raw__OutputArray()) }.into_result()
 }
 
 /// Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
@@ -271,7 +271,7 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 /// * lambda: 1.0
 /// * niters: 30
 pub fn denoise_tvl1(observations: &core::Vector::<core::Mat>, result: &mut core::Mat, lambda: f64, niters: i32) -> Result<()> {
-	unsafe { sys::cv_denoise_TVL1_const_vector_Mat_X_MatX_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters) }.into_result()
+	unsafe { sys::cv_denoise_TVL1_const_vector_Mat_R_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters) }.into_result()
 }
 
 /// This filter enhances the details of a particular image.
@@ -288,7 +288,7 @@ pub fn denoise_tvl1(observations: &core::Vector::<core::Mat>, result: &mut core:
 pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_detailEnhance_const__InputArrayX_const__OutputArrayX_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
+	unsafe { sys::cv_detailEnhance_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
 }
 
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
@@ -308,7 +308,7 @@ pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_edgePreservingFilter_const__InputArrayX_const__OutputArrayX_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r) }.into_result()
+	unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoisingMulti function for colored images sequences
@@ -343,7 +343,7 @@ pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::
 pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayX_const__OutputArrayX_int_int_float_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int_float_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for colored images
@@ -373,7 +373,7 @@ pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, 
 pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayX_const__OutputArrayX_float_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, h_color, template_window_size, search_window_size) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, h_color, template_window_size, search_window_size) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
@@ -409,7 +409,7 @@ pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut d
 pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector::<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_const_vector_float_X_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
@@ -443,7 +443,7 @@ pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst:
 pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayX_const__OutputArrayX_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size) }.into_result()
 }
 
 /// Perform image denoising using Non-local Means Denoising algorithm
@@ -478,7 +478,7 @@ pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mu
 pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: &core::Vector::<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayX_const__OutputArrayX_const_vector_float_X_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type) }.into_result()
 }
 
 /// Perform image denoising using Non-local Means Denoising algorithm
@@ -509,7 +509,7 @@ pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn c
 pub fn fast_nl_means_denoising(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayX_const__OutputArrayX_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size) }.into_result()
+	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size) }.into_result()
 }
 
 /// Applying an appropriate non-linear transformation to the gradient field inside the selection and
@@ -531,7 +531,7 @@ pub fn illumination_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInpu
 	input_array_arg!(src);
 	input_array_arg!(mask);
 	output_array_arg!(dst);
-	unsafe { sys::cv_illuminationChange_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()
+	unsafe { sys::cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()
 }
 
 /// Restores the selected region in an image using the region neighborhood.
@@ -559,7 +559,7 @@ pub fn inpaint(src: &dyn core::ToInputArray, inpaint_mask: &dyn core::ToInputArr
 	input_array_arg!(src);
 	input_array_arg!(inpaint_mask);
 	output_array_arg!(dst);
-	unsafe { sys::cv_inpaint_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(src.as_raw__InputArray(), inpaint_mask.as_raw__InputArray(), dst.as_raw__OutputArray(), inpaint_radius, flags) }.into_result()
+	unsafe { sys::cv_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src.as_raw__InputArray(), inpaint_mask.as_raw__InputArray(), dst.as_raw__OutputArray(), inpaint_radius, flags) }.into_result()
 }
 
 /// @example samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp
@@ -583,7 +583,7 @@ pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutput
 	input_array_arg!(src);
 	output_array_arg!(dst1);
 	output_array_arg!(dst2);
-	unsafe { sys::cv_pencilSketch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_float_float_float(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), sigma_s, sigma_r, shade_factor) }.into_result()
+	unsafe { sys::cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), sigma_s, sigma_r, shade_factor) }.into_result()
 }
 
 /// @example samples/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp
@@ -607,7 +607,7 @@ pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray
 	input_array_arg!(dst);
 	input_array_arg!(mask);
 	output_array_arg!(blend);
-	unsafe { sys::cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_to_extern(), blend.as_raw__OutputArray(), flags) }.into_result()
+	unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_to_extern(), blend.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Stylization aims to produce digital imagery with a wide variety of effects not focused on
@@ -626,7 +626,7 @@ pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray
 pub fn stylization(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_stylization_const__InputArrayX_const__OutputArrayX_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
+	unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
 }
 
 /// By retaining only the gradients at edge locations, before integrating with the Poisson solver, one
@@ -654,7 +654,7 @@ pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInput
 	input_array_arg!(src);
 	input_array_arg!(mask);
 	output_array_arg!(dst);
-	unsafe { sys::cv_textureFlattening_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size) }.into_result()
+	unsafe { sys::cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size) }.into_result()
 }
 
 /// The base class for algorithms that align images of the same scene with different exposures
@@ -674,7 +674,7 @@ pub trait AlignExposures: core::AlgorithmTrait {
 		input_array_arg!(src);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_AlignExposures_process_const__InputArrayX_vector_Mat_X_const__InputArrayX_const__InputArrayX(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_AlignExposures_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -695,7 +695,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 		input_array_arg!(src);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_AlignMTB_process_const__InputArrayX_vector_Mat_X_const__InputArrayX_const__InputArrayX(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Short version of process, that doesn't take extra arguments.
@@ -705,7 +705,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	/// * dst: vector of aligned images
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector::<core::Mat>) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_AlignMTB_process_const__InputArrayX_vector_Mat_X(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vector_Mat_R(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	/// Calculates shift between two images, i. e. how to shift the second image to correspond it with the
@@ -717,7 +717,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	fn calculate_shift(&mut self, img0: &dyn core::ToInputArray, img1: &dyn core::ToInputArray) -> Result<core::Point> {
 		input_array_arg!(img0);
 		input_array_arg!(img1);
-		unsafe { sys::cv_AlignMTB_calculateShift_const__InputArrayX_const__InputArrayX(self.as_raw_mut_AlignMTB(), img0.as_raw__InputArray(), img1.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_AlignMTB_calculateShift_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), img0.as_raw__InputArray(), img1.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Helper function, that shift Mat filling new regions with zeros.
@@ -729,7 +729,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Computes median threshold and exclude bitmaps of given image.
@@ -742,7 +742,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 		input_array_arg!(img);
 		output_array_arg!(tb);
 		output_array_arg!(eb);
-		unsafe { sys::cv_AlignMTB_computeBitmaps_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_AlignMTB_computeBitmaps_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn get_max_bits(&self) -> Result<i32> {
@@ -786,7 +786,7 @@ pub trait CalibrateCRF: core::AlgorithmTrait {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(times);
-		unsafe { sys::cv_CalibrateCRF_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_mut_CalibrateCRF(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_CalibrateCRF_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_CalibrateCRF(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -869,14 +869,14 @@ pub trait MergeDebevec: crate::photo::MergeExposures {
 		output_array_arg!(dst);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_MergeDebevec_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(times);
-		unsafe { sys::cv_MergeDebevec_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -899,7 +899,7 @@ pub trait MergeExposures: core::AlgorithmTrait {
 		output_array_arg!(dst);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_MergeExposures_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_MergeExposures(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeExposures_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeExposures(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -923,7 +923,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
 		output_array_arg!(dst);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_MergeMertens_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Short version of process, that doesn't take extra arguments.
@@ -934,7 +934,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_MergeMertens_process_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn get_contrast_weight(&self) -> Result<f32> {
@@ -976,14 +976,14 @@ pub trait MergeRobertson: crate::photo::MergeExposures {
 		output_array_arg!(dst);
 		input_array_arg!(times);
 		input_array_arg!(response);
-		unsafe { sys::cv_MergeRobertson_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(times);
-		unsafe { sys::cv_MergeRobertson_process_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -1001,7 +1001,7 @@ pub trait Tonemap: core::AlgorithmTrait {
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_Tonemap_process_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_Tonemap_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn get_gamma(&self) -> Result<f32> {

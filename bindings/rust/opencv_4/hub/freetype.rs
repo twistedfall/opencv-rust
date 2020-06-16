@@ -67,7 +67,7 @@ pub trait FreeType2: core::AlgorithmTrait {
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		extern_container_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayX_const_StringX_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_height, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
+		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_height, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
 	}
 	
 	/// Calculates the width and height of a text string.
@@ -129,7 +129,7 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// cv::putText
 	fn get_text_size(&mut self, text: &str, font_height: i32, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringX_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_to_extern(), font_height, thickness, base_line) }.into_result()
+		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_to_extern(), font_height, thickness, base_line) }.into_result()
 	}
 	
 }

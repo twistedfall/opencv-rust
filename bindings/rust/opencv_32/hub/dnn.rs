@@ -16,9 +16,9 @@ pub mod prelude {
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Blob_AllocFlag {
-	ALLOC_MAT = 1 as isize,
-	ALLOC_UMAT = 2 as isize,
-	ALLOC_BOTH = 3 as isize,
+	ALLOC_MAT = 1,
+	ALLOC_UMAT = 2,
+	ALLOC_BOTH = 3,
 }
 
 opencv_type_enum! { crate::dnn::Blob_AllocFlag }
@@ -26,10 +26,10 @@ opencv_type_enum! { crate::dnn::Blob_AllocFlag }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Blob_DataState {
-	UNINITIALIZED = 0 as isize,
-	HEAD_AT_MAT = 1 as isize,
-	HEAD_AT_UMAT = 2 as isize,
-	SYNCED = 3 as isize,
+	UNINITIALIZED = 0,
+	HEAD_AT_MAT = 1,
+	HEAD_AT_UMAT = 2,
+	SYNCED = 3,
 }
 
 opencv_type_enum! { crate::dnn::Blob_DataState }
@@ -37,9 +37,9 @@ opencv_type_enum! { crate::dnn::Blob_DataState }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum EltwiseLayer_EltwiseOp {
-	PROD = 0 as isize,
-	SUM = 1 as isize,
-	MAX = 2 as isize,
+	PROD = 0,
+	SUM = 1,
+	MAX = 2,
 }
 
 opencv_type_enum! { crate::dnn::EltwiseLayer_EltwiseOp }
@@ -47,8 +47,8 @@ opencv_type_enum! { crate::dnn::EltwiseLayer_EltwiseOp }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum LRNLayer_Type {
-	CHANNEL_NRM = 0 as isize,
-	SPATIAL_NRM = 1 as isize,
+	CHANNEL_NRM = 0,
+	SPATIAL_NRM = 1,
 }
 
 opencv_type_enum! { crate::dnn::LRNLayer_Type }
@@ -56,9 +56,9 @@ opencv_type_enum! { crate::dnn::LRNLayer_Type }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PoolingLayer_Type {
-	MAX = 0 as isize,
-	AVE = 1 as isize,
-	STOCHASTIC = 2 as isize,
+	MAX = 0,
+	AVE = 1,
+	STOCHASTIC = 2,
 }
 
 opencv_type_enum! { crate::dnn::PoolingLayer_Type }
@@ -80,7 +80,7 @@ pub type Shape = crate::dnn::BlobShape;
 pub fn create_caffe_importer(prototxt: &str, caffe_model: &str) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
 	extern_container_arg!(prototxt);
 	extern_container_arg!(caffe_model);
-	unsafe { sys::cv_dnn_createCaffeImporter_const_StringX_const_StringX(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_createCaffeImporter_const_StringR_const_StringR(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Creates the importer of <a href="http://www.tensorflow.org">TensorFlow</a> framework network.
@@ -90,7 +90,7 @@ pub fn create_caffe_importer(prototxt: &str, caffe_model: &str) -> Result<core::
 /// Pointer to the created importer, NULL in failure cases.
 pub fn create_tensorflow_importer(model: &str) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
 	extern_container_arg!(model);
-	unsafe { sys::cv_dnn_createTensorflowImporter_const_StringX(model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_createTensorflowImporter_const_StringR(model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Creates the importer of <a href="http://torch.ch">Torch7</a> framework network.
@@ -125,7 +125,7 @@ pub fn create_tensorflow_importer(model: &str) -> Result<core::Ptr::<dyn crate::
 /// * is_binary: true
 pub fn create_torch_importer(filename: &str, is_binary: bool) -> Result<core::Ptr::<dyn crate::dnn::Importer>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_dnn_createTorchImporter_const_StringX_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_createTorchImporter_const_StringR_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Importer>::opencv_from_extern(r) } )
 }
 
 /// Initialize dnn module and built-in layers.
@@ -144,7 +144,7 @@ pub fn init_module() -> Result<()> {
 pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::dnn::Net> {
 	extern_container_arg!(prototxt);
 	extern_container_arg!(caffe_model);
-	unsafe { sys::cv_dnn_readNetFromCaffe_const_StringX_const_StringX(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_readNetFromCaffe_const_StringR_const_StringR(prototxt.opencv_to_extern(), caffe_model.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
 }
 
 /// Loads blob which was serialized as torch.Tensor object of Torch7 framework.
@@ -154,7 +154,7 @@ pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::d
 /// * is_binary: true
 pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<crate::dnn::Blob> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_dnn_readTorchBlob_const_StringX_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_readTorchBlob_const_StringR_bool(filename.opencv_to_extern(), is_binary) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 }
 
 pub trait AbsLayer: crate::dnn::Layer {
@@ -242,7 +242,7 @@ pub trait BlobTrait {
 	/// * dst_cn: -1
 	fn batch_from_images(&mut self, image: &dyn core::ToInputArray, dst_cn: i32) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_dnn_Blob_batchFromImages_const__InputArrayX_int(self.as_raw_mut_Blob(), image.as_raw__InputArray(), dst_cn) }.into_result()
+		unsafe { sys::cv_dnn_Blob_batchFromImages_const__InputArrayR_int(self.as_raw_mut_Blob(), image.as_raw__InputArray(), dst_cn) }.into_result()
 	}
 	
 	/// Creates blob with specified @p shape and @p type.
@@ -251,14 +251,14 @@ pub trait BlobTrait {
 	/// * typ: CV_32F
 	/// * alloc_flags: ALLOC_MAT
 	fn create(&mut self, shape: &crate::dnn::BlobShape, typ: i32, alloc_flags: i32) -> Result<()> {
-		unsafe { sys::cv_dnn_Blob_create_const_BlobShapeX_int_int(self.as_raw_mut_Blob(), shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result()
+		unsafe { sys::cv_dnn_Blob_create_const_BlobShapeR_int_int(self.as_raw_mut_Blob(), shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result()
 	}
 	
 	/// Creates blob from Mat or UMat without copying the data.
 	/// @details If in is Mat then Mat data is populated, otherwise - UMat.
 	fn fill(&mut self, in_: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(in_);
-		unsafe { sys::cv_dnn_Blob_fill_const__InputArrayX(self.as_raw_mut_Blob(), in_.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_dnn_Blob_fill_const__InputArrayR(self.as_raw_mut_Blob(), in_.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Creates blob from user data.
@@ -267,7 +267,7 @@ pub trait BlobTrait {
 	/// ## C++ default parameters
 	/// * deep_copy: true
 	fn fill_1(&mut self, shape: &crate::dnn::BlobShape, typ: i32, data: *mut c_void, deep_copy: bool) -> Result<()> {
-		unsafe { sys::cv_dnn_Blob_fill_const_BlobShapeX_int_voidX_bool(self.as_raw_mut_Blob(), shape.as_raw_BlobShape(), typ, data, deep_copy) }.into_result()
+		unsafe { sys::cv_dnn_Blob_fill_const_BlobShapeR_int_voidX_bool(self.as_raw_mut_Blob(), shape.as_raw_BlobShape(), typ, data, deep_copy) }.into_result()
 	}
 	
 	/// Sets @p value to the last used data (if @p allocFlags = -1).
@@ -277,7 +277,7 @@ pub trait BlobTrait {
 	/// * alloc_flags: -1
 	fn set_to(&mut self, value: &dyn core::ToInputArray, alloc_flags: i32) -> Result<()> {
 		input_array_arg!(value);
-		unsafe { sys::cv_dnn_Blob_setTo_const__InputArrayX_int(self.as_raw_mut_Blob(), value.as_raw__InputArray(), alloc_flags) }.into_result()
+		unsafe { sys::cv_dnn_Blob_setTo_const__InputArrayR_int(self.as_raw_mut_Blob(), value.as_raw__InputArray(), alloc_flags) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -363,7 +363,7 @@ pub trait BlobTrait {
 	
 	/// Checks equality of two blobs shapes.
 	fn equal_shape(&self, other: &crate::dnn::Blob) -> Result<bool> {
-		unsafe { sys::cv_dnn_Blob_equalShape_const_const_BlobX(self.as_raw_Blob(), other.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_Blob_equalShape_const_const_BlobR(self.as_raw_Blob(), other.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns slice of first two dimensions.
@@ -450,21 +450,21 @@ pub trait BlobTrait {
 	/// ## Returns
 	/// *this
 	fn share_from(&mut self, blob: &crate::dnn::Blob) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_shareFrom_const_BlobX(self.as_raw_mut_Blob(), blob.as_raw_Blob()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_shareFrom_const_BlobR(self.as_raw_mut_Blob(), blob.as_raw_Blob()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Changes shape of the blob without copying the data.
 	/// ## Returns
 	/// *this
 	fn reshape(&mut self, shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_reshape_const_BlobShapeX(self.as_raw_mut_Blob(), shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_reshape_const_BlobShapeR(self.as_raw_mut_Blob(), shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Changes shape of the blob without copying the data.
 	/// ## Returns
 	/// shallow copy of original blob with new shape.
 	fn reshaped(&self, new_shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_reshaped_const_const_BlobShapeX(self.as_raw_Blob(), new_shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_reshaped_const_const_BlobShapeR(self.as_raw_Blob(), new_shape.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	fn typ(&self) -> Result<i32> {
@@ -499,15 +499,15 @@ impl Drop for Blob {
 }
 
 impl Blob {
-	pub fn as_raw_Blob(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Blob(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Blob(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Blob(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Blob {}
 
 impl crate::dnn::BlobTrait for Blob {
-	fn as_raw_Blob(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Blob(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Blob(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Blob(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Blob {
@@ -521,13 +521,13 @@ impl Blob {
 	/// * typ: CV_32F
 	/// * alloc_flags: ALLOC_MAT
 	pub fn new(shape: &crate::dnn::BlobShape, typ: i32, alloc_flags: i32) -> Result<crate::dnn::Blob> {
-		unsafe { sys::cv_dnn_Blob_Blob_const_BlobShapeX_int_int(shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_Blob_const_BlobShapeR_int_int(shape.as_raw_BlobShape(), typ, alloc_flags) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs Blob from existing Mat or UMat.
 	pub fn new_1(data: &dyn core::ToInputArray) -> Result<crate::dnn::Blob> {
 		input_array_arg!(data);
-		unsafe { sys::cv_dnn_Blob_Blob_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_Blob_const__InputArrayR(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 	/// Constructs 4-dimensional blob (so-called batch) from image or array of images.
@@ -539,7 +539,7 @@ impl Blob {
 	/// * dst_cn: -1
 	pub fn from_images(image: &dyn core::ToInputArray, dst_cn: i32) -> Result<crate::dnn::Blob> {
 		input_array_arg!(image);
-		unsafe { sys::cv_dnn_Blob_fromImages_const__InputArrayX_int(image.as_raw__InputArray(), dst_cn) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Blob_fromImages_const__InputArrayR_int(image.as_raw__InputArray(), dst_cn) }.into_result().map(|r| unsafe { crate::dnn::Blob::opencv_from_extern(r) } )
 	}
 	
 }
@@ -627,11 +627,11 @@ pub trait BlobShapeTrait {
 	}
 	
 	fn equal(&self, other: &crate::dnn::BlobShape) -> Result<bool> {
-		unsafe { sys::cv_dnn_BlobShape_equal_const_const_BlobShapeX(self.as_raw_BlobShape(), other.as_raw_BlobShape()) }.into_result()
+		unsafe { sys::cv_dnn_BlobShape_equal_const_const_BlobShapeR(self.as_raw_BlobShape(), other.as_raw_BlobShape()) }.into_result()
 	}
 	
 	fn add(&self, r: &crate::dnn::BlobShape) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_operatorA_const_const_BlobShapeX(self.as_raw_BlobShape(), r.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_BlobShape_operatorA_const_const_BlobShapeR(self.as_raw_BlobShape(), r.as_raw_BlobShape()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	fn is_empty(&self) -> Result<bool> {
@@ -655,15 +655,15 @@ impl Drop for BlobShape {
 }
 
 impl BlobShape {
-	pub fn as_raw_BlobShape(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_BlobShape(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_BlobShape(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_BlobShape(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for BlobShape {}
 
 impl crate::dnn::BlobShapeTrait for BlobShape {
-	fn as_raw_BlobShape(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_BlobShape(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_BlobShape(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BlobShape(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BlobShape {
@@ -693,7 +693,7 @@ impl BlobShape {
 	}
 	
 	pub fn new_5(sizes: &core::Vector::<i32>) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_BlobShape_const_vector_int_X(sizes.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_BlobShape_BlobShape_const_vector_int_R(sizes.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	/// Creates n-dim shape and fill its by @p fill
@@ -705,11 +705,11 @@ impl BlobShape {
 	}
 	
 	pub fn like(m: &core::Mat) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_like_const_MatX(m.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_BlobShape_like_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn like_1(m: &core::UMat) -> Result<crate::dnn::BlobShape> {
-		unsafe { sys::cv_dnn_BlobShape_like_const_UMatX(m.as_raw_UMat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_BlobShape_like_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { crate::dnn::BlobShape::opencv_from_extern(r) } )
 	}
 	
 	pub fn empty() -> Result<crate::dnn::BlobShape> {
@@ -781,7 +781,7 @@ pub trait CropLayer: crate::dnn::Layer {
 
 impl dyn CropLayer + '_ {
 	pub fn create(start_axis: i32, offset: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::CropLayer>> {
-		unsafe { sys::cv_dnn_CropLayer_create_int_const_vector_int_X(start_axis, offset.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::CropLayer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_CropLayer_create_int_const_vector_int_R(start_axis, offset.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::CropLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -810,44 +810,44 @@ pub trait DictTrait {
 	/// Checks a presence of the @p key in the dictionary.
 	fn has(&self, key: &str) -> Result<bool> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_dnn_Dict_has_const_const_StringX(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_dnn_Dict_has_const_const_StringR(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result()
 	}
 	
 	/// If the @p key in the dictionary then returns pointer to its value, else returns NULL.
 	unsafe fn ptr_mut(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
 		extern_container_arg!(key);
-		{ sys::cv_dnn_Dict_ptr_const_StringX(self.as_raw_mut_Dict(), key.opencv_to_extern()) }.into_result().map(|r| { crate::dnn::DictValue::opencv_from_extern(r) } )
+		{ sys::cv_dnn_Dict_ptr_const_StringR(self.as_raw_mut_Dict(), key.opencv_to_extern()) }.into_result().map(|r| { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// If the @p key in the dictionary then returns its value, else an error will be generated.
 	fn get(&self, key: &str) -> Result<crate::dnn::DictValue> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_dnn_Dict_get_const_const_StringX(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Dict_get_const_const_StringR(self.as_raw_Dict(), key.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_str(&mut self, key: &str, value: &str) -> Result<String> {
 		extern_container_arg!(key);
 		extern_container_arg!(value);
-		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringR_const_StringR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set(&mut self, key: &str, value: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_cv_dnn_DictValue_const_StringX_const_DictValueX(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Dict_set_cv_dnn_DictValue_const_StringR_const_DictValueR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_f64(&mut self, key: &str, value: &f64) -> Result<f64> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_double_const_StringX_const_doubleR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_dnn_Dict_set_double_const_StringR_const_doubleR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
 	fn set_i64(&mut self, key: &str, value: &i64) -> Result<i64> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_dnn_Dict_set_int64_t_const_StringX_const_int64_tR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR(self.as_raw_mut_Dict(), key.opencv_to_extern(), value) }.into_result()
 	}
 	
 }
@@ -867,15 +867,15 @@ impl Drop for Dict {
 }
 
 impl Dict {
-	pub fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Dict {}
 
 impl crate::dnn::DictTrait for Dict {
-	fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Dict {
@@ -945,20 +945,20 @@ impl Drop for DictValue {
 }
 
 impl DictValue {
-	pub fn as_raw_DictValue(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DictValue(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DictValue(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DictValue(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DictValue {}
 
 impl crate::dnn::DictValueTrait for DictValue {
-	fn as_raw_DictValue(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DictValue(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DictValue(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DictValue(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DictValue {
 	pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
-		unsafe { sys::cv_dnn_DictValue_DictValue_const_DictValueX(r.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_DictValue_DictValue_const_DictValueR(r.as_raw_DictValue()) }.into_result().map(|r| unsafe { crate::dnn::DictValue::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -994,7 +994,7 @@ pub trait EltwiseLayer: crate::dnn::Layer {
 
 impl dyn EltwiseLayer + '_ {
 	pub fn create(op: crate::dnn::EltwiseLayer_EltwiseOp, coeffs: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::EltwiseLayer>> {
-		unsafe { sys::cv_dnn_EltwiseLayer_create_EltwiseOp_const_vector_int_X(op, coeffs.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::EltwiseLayer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_EltwiseLayer_create_EltwiseOp_const_vector_int_R(op, coeffs.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::EltwiseLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1135,7 +1135,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	/// * Wx: is matrix defining how current input is transformed to internal gates (i.e. according to abovemtioned notation is @f$ W_x @f$)
 	/// * b: is bias vector (i.e. according to abovemtioned notation is @f$ b @f$)
 	fn set_weights(&mut self, wh: &crate::dnn::Blob, wx: &crate::dnn::Blob, b: &crate::dnn::Blob) -> Result<()> {
-		unsafe { sys::cv_dnn_LSTMLayer_setWeights_const_BlobX_const_BlobX_const_BlobX(self.as_raw_mut_LSTMLayer(), wh.as_raw_Blob(), wx.as_raw_Blob(), b.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_LSTMLayer_setWeights_const_BlobR_const_BlobR_const_BlobR(self.as_raw_mut_LSTMLayer(), wh.as_raw_Blob(), wx.as_raw_Blob(), b.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Specifies shape of output blob which will be [[`T`], `N`] + @p outTailShape.
@@ -1145,13 +1145,13 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	/// ## C++ default parameters
 	/// * out_tail_shape: BlobShape::empty()
 	fn set_out_shape(&mut self, out_tail_shape: &crate::dnn::BlobShape) -> Result<()> {
-		unsafe { sys::cv_dnn_LSTMLayer_setOutShape_const_BlobShapeX(self.as_raw_mut_LSTMLayer(), out_tail_shape.as_raw_BlobShape()) }.into_result()
+		unsafe { sys::cv_dnn_LSTMLayer_setOutShape_const_BlobShapeR(self.as_raw_mut_LSTMLayer(), out_tail_shape.as_raw_BlobShape()) }.into_result()
 	}
 	
 	/// Set @f$ h_{t-1} @f$ value that will be used in next forward() calls.
 	/// @details By-default @f$ h_{t-1} @f$ is inited by zeros and updated after each forward() call.
 	fn set_h(&mut self, h: &crate::dnn::Blob) -> Result<()> {
-		unsafe { sys::cv_dnn_LSTMLayer_setH_const_BlobX(self.as_raw_mut_LSTMLayer(), h.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_LSTMLayer_setH_const_BlobR(self.as_raw_mut_LSTMLayer(), h.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns current @f$ h_{t-1} @f$ value (deep copy).
@@ -1162,7 +1162,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	/// Set @f$ c_{t-1} @f$ value that will be used in next forward() calls.
 	/// @details By-default @f$ c_{t-1} @f$ is inited by zeros and updated after each forward() call.
 	fn set_c(&mut self, c: &crate::dnn::Blob) -> Result<()> {
-		unsafe { sys::cv_dnn_LSTMLayer_setC_const_BlobX(self.as_raw_mut_LSTMLayer(), c.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_LSTMLayer_setC_const_BlobR(self.as_raw_mut_LSTMLayer(), c.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns current @f$ c_{t-1} @f$ value (deep copy).
@@ -1204,7 +1204,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
 	/// If setUseTimstampsDim() is set to fase then @p input[0] should contain single timestamp, its shape should has form [`N`, `[data dims]`] with at least one dimension.
 	/// (i.e. @f$ x_{t}^{stream} @f$ is stored inside @p input[0][stream, ...]).
 	fn forward(&mut self, input: &mut core::Vector::<crate::dnn::Blob>, output: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_LSTMLayer_forward_vector_BlobX_X_vector_Blob_X(self.as_raw_mut_LSTMLayer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_LSTMLayer_forward_vector_BlobX_R_vector_Blob_R(self.as_raw_mut_LSTMLayer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
@@ -1275,7 +1275,7 @@ pub trait Layer {
 	/// If this method is called first time then @p output vector consists from empty blobs and its size determined by number of output connections.
 	/// This method can be called multiple times if size of any @p input blob was changed.
 	fn allocate(&mut self, input: &core::Vector::<crate::dnn::Blob>, output: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_allocate_const_vector_BlobX_X_vector_Blob_X(self.as_raw_mut_Layer(), input.as_raw_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_allocate_const_vector_BlobX_R_vector_Blob_R(self.as_raw_mut_Layer(), input.as_raw_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	/// Given the @p input blobs, computes the output @p blobs.
@@ -1283,7 +1283,7 @@ pub trait Layer {
 	/// * input: the input blobs.
 	/// * output:[out] allocated output blobs, which will store results of the computation.
 	fn forward(&mut self, input: &mut core::Vector::<crate::dnn::Blob>, output: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_forward_vector_BlobX_X_vector_Blob_X(self.as_raw_mut_Layer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_forward_vector_BlobX_R_vector_Blob_R(self.as_raw_mut_Layer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	/// Allocates internal buffers and output blobs with respect to the shape of inputs.
@@ -1297,7 +1297,7 @@ pub trait Layer {
 	/// 
 	/// ## Overloaded parameters
 	fn allocate_1(&mut self, inputs: &core::Vector::<crate::dnn::Blob>, outputs: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_X_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_R_vector_Blob_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	/// Allocates internal buffers and output blobs with respect to the shape of inputs.
@@ -1311,7 +1311,7 @@ pub trait Layer {
 	/// 
 	/// ## Overloaded parameters
 	fn allocate_2(&mut self, inputs: &core::Vector::<crate::dnn::Blob>) -> Result<core::Vector::<crate::dnn::Blob>> {
-		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob()) }.into_result().map(|r| unsafe { core::Vector::<crate::dnn::Blob>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_Layer_allocate_const_vector_Blob_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob()) }.into_result().map(|r| unsafe { core::Vector::<crate::dnn::Blob>::opencv_from_extern(r) } )
 	}
 	
 	/// Given the @p input blobs, computes the output @p blobs.
@@ -1321,12 +1321,12 @@ pub trait Layer {
 	/// 
 	/// ## Overloaded parameters
 	fn forward_1(&mut self, inputs: &core::Vector::<crate::dnn::Blob>, outputs: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_forward_const_vector_Blob_X_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_forward_const_vector_Blob_R_vector_Blob_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	/// Allocates layer and computes output.
 	fn run(&mut self, inputs: &core::Vector::<crate::dnn::Blob>, outputs: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_run_const_vector_Blob_X_vector_Blob_X(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_run_const_vector_Blob_R_vector_Blob_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 	/// Returns index of input blob into the input array.
@@ -1349,7 +1349,7 @@ pub trait Layer {
 	}
 	
 	fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
-		unsafe { sys::cv_dnn_Layer_setParamsFrom_const_LayerParamsX(self.as_raw_mut_Layer(), params.as_raw_LayerParams()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_setParamsFrom_const_LayerParamsR(self.as_raw_mut_Layer(), params.as_raw_LayerParams()) }.into_result()
 	}
 	
 }
@@ -1376,28 +1376,28 @@ impl Drop for LayerFactory {
 }
 
 impl LayerFactory {
-	pub fn as_raw_LayerFactory(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_LayerFactory(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_LayerFactory(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_LayerFactory(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LayerFactory {}
 
 impl crate::dnn::LayerFactoryTrait for LayerFactory {
-	fn as_raw_LayerFactory(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_LayerFactory(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_LayerFactory(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_LayerFactory(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LayerFactory {
 	/// Registers the layer class with typename @p type and specified @p constructor.
 	pub fn register_layer(typ: &str, constructor: crate::dnn::LayerFactory_Constuctor) -> Result<()> {
 		extern_container_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_registerLayer_const_StringX_Constuctor(typ.opencv_to_extern(), constructor) }.into_result()
+		unsafe { sys::cv_dnn_LayerFactory_registerLayer_const_StringR_Constuctor(typ.opencv_to_extern(), constructor) }.into_result()
 	}
 	
 	/// Unregisters registered layer with specified type name.
 	pub fn unregister_layer(typ: &str) -> Result<()> {
 		extern_container_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_const_StringX(typ.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_const_StringR(typ.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Creates instance of registered layer.
@@ -1406,7 +1406,7 @@ impl LayerFactory {
 	/// * params: parameters which will be used for layer initialization.
 	pub fn create_layer_instance(typ: &str, params: &mut crate::dnn::LayerParams) -> Result<core::Ptr::<dyn crate::dnn::Layer>> {
 		extern_container_arg!(typ);
-		unsafe { sys::cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Layer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_LayerFactory_createLayerInstance_const_StringR_LayerParamsR(typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::Layer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1471,20 +1471,20 @@ impl Drop for LayerParams {
 }
 
 impl LayerParams {
-	pub fn as_raw_LayerParams(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_LayerParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_LayerParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_LayerParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LayerParams {}
 
 impl crate::dnn::DictTrait for LayerParams {
-	fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Dict(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Dict(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::dnn::LayerParamsTrait for LayerParams {
-	fn as_raw_LayerParams(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_LayerParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_LayerParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_LayerParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LayerParams {
@@ -1558,7 +1558,7 @@ pub trait NetTrait {
 	fn add_layer(&mut self, name: &str, typ: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
 		extern_container_arg!(name);
 		extern_container_arg!(typ);
-		unsafe { sys::cv_dnn_Net_addLayer_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
+		unsafe { sys::cv_dnn_Net_addLayer_const_StringR_const_StringR_LayerParamsR(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
 	}
 	
 	/// Adds new layer and connects its first input to the first output of previously added layer.
@@ -1567,7 +1567,7 @@ pub trait NetTrait {
 	fn add_layer_to_prev(&mut self, name: &str, typ: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
 		extern_container_arg!(name);
 		extern_container_arg!(typ);
-		unsafe { sys::cv_dnn_Net_addLayerToPrev_const_StringX_const_StringX_LayerParamsX(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
+		unsafe { sys::cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_LayerParamsR(self.as_raw_mut_Net(), name.opencv_to_extern(), typ.opencv_to_extern(), params.as_raw_mut_LayerParams()) }.into_result()
 	}
 	
 	/// Converts string name of the layer to the integer identifier.
@@ -1575,7 +1575,7 @@ pub trait NetTrait {
 	/// id of the layer, or -1 if the layer wasn't found.
 	fn get_layer_id(&mut self, layer: &str) -> Result<i32> {
 		extern_container_arg!(layer);
-		unsafe { sys::cv_dnn_Net_getLayerId_const_StringX(self.as_raw_mut_Net(), layer.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_dnn_Net_getLayerId_const_StringR(self.as_raw_mut_Net(), layer.opencv_to_extern()) }.into_result()
 	}
 	
 	fn get_layer_names(&self) -> Result<core::Vector::<String>> {
@@ -1628,7 +1628,7 @@ pub trait NetTrait {
 	/// In fact, this layer provides the only way to pass user data into the network.
 	/// As any other layer, this layer can label its outputs and this function provides an easy way to do this.
 	fn set_net_inputs(&mut self, input_blob_names: &core::Vector::<String>) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_setNetInputs_const_vector_String_X(self.as_raw_mut_Net(), input_blob_names.as_raw_VectorOfString()) }.into_result()
+		unsafe { sys::cv_dnn_Net_setNetInputs_const_vector_String_R(self.as_raw_mut_Net(), input_blob_names.as_raw_VectorOfString()) }.into_result()
 	}
 	
 	/// Initializes and allocates all layers.
@@ -1654,7 +1654,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn forward_2(&mut self, start_layers: &core::Vector::<crate::dnn::Net_LayerId>, to_layers: &core::Vector::<crate::dnn::Net_LayerId>) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_forward_const_vector_LayerId_X_const_vector_LayerId_X(self.as_raw_mut_Net(), start_layers.as_raw_VectorOfNet_LayerId(), to_layers.as_raw_VectorOfNet_LayerId()) }.into_result()
+		unsafe { sys::cv_dnn_Net_forward_const_vector_LayerId_R_const_vector_LayerId_R(self.as_raw_mut_Net(), start_layers.as_raw_VectorOfNet_LayerId(), to_layers.as_raw_VectorOfNet_LayerId()) }.into_result()
 	}
 	
 	/// Optimized forward.
@@ -1670,7 +1670,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn forward_opt_1(&mut self, to_layers: &core::Vector::<crate::dnn::Net_LayerId>) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_forwardOpt_const_vector_LayerId_X(self.as_raw_mut_Net(), to_layers.as_raw_VectorOfNet_LayerId()) }.into_result()
+		unsafe { sys::cv_dnn_Net_forwardOpt_const_vector_LayerId_R(self.as_raw_mut_Net(), to_layers.as_raw_VectorOfNet_LayerId()) }.into_result()
 	}
 	
 	/// Sets the new value for the layer output blob
@@ -1684,7 +1684,7 @@ pub trait NetTrait {
 	/// because network reshaping is not implemented yet.
 	fn set_blob(&mut self, output_name: &str, blob: &crate::dnn::Blob) -> Result<()> {
 		extern_container_arg!(mut output_name);
-		unsafe { sys::cv_dnn_Net_setBlob_String_const_BlobX(self.as_raw_mut_Net(), output_name.opencv_to_extern_mut(), blob.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_Net_setBlob_String_const_BlobR(self.as_raw_mut_Net(), output_name.opencv_to_extern_mut(), blob.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns the layer output blob.
@@ -1708,7 +1708,7 @@ pub trait NetTrait {
 	/// Note: If shape of the new blob differs from the previous shape,
 	/// then the following forward pass may fail.
 	fn set_param(&mut self, mut layer: crate::dnn::Net_LayerId, num_param: i32, blob: &crate::dnn::Blob) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_setParam_LayerId_int_const_BlobX(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param, blob.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_Net_setParam_LayerId_int_const_BlobR(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param, blob.as_raw_Blob()) }.into_result()
 	}
 	
 	/// Returns parameter blob of the layer.
@@ -1749,15 +1749,15 @@ impl Drop for Net {
 }
 
 impl Net {
-	pub fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Net {}
 
 impl crate::dnn::NetTrait for Net {
-	fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Net {
@@ -1831,7 +1831,7 @@ impl dyn PoolingLayer + '_ {
 	/// * pad_mode: ""
 	pub fn create(typ: i32, kernel: core::Size, stride: core::Size, pad: core::Size, pad_mode: &str) -> Result<core::Ptr::<dyn crate::dnn::PoolingLayer>> {
 		extern_container_arg!(pad_mode);
-		unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringX(typ, kernel.opencv_to_extern(), stride.opencv_to_extern(), pad.opencv_to_extern(), pad_mode.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringR(typ, kernel.opencv_to_extern(), stride.opencv_to_extern(), pad.opencv_to_extern(), pad_mode.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::PoolingLayer>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -1901,7 +1901,7 @@ pub trait RNNLayer: crate::dnn::Layer {
 	/// * Who: is @f$ W_{xo} @f$ matrix
 	/// * bo: is @f$ b_{o}  @f$ vector
 	fn set_weights(&mut self, wxh: &crate::dnn::Blob, bh: &crate::dnn::Blob, whh: &crate::dnn::Blob, who: &crate::dnn::Blob, bo: &crate::dnn::Blob) -> Result<()> {
-		unsafe { sys::cv_dnn_RNNLayer_setWeights_const_BlobX_const_BlobX_const_BlobX_const_BlobX_const_BlobX(self.as_raw_mut_RNNLayer(), wxh.as_raw_Blob(), bh.as_raw_Blob(), whh.as_raw_Blob(), who.as_raw_Blob(), bo.as_raw_Blob()) }.into_result()
+		unsafe { sys::cv_dnn_RNNLayer_setWeights_const_BlobR_const_BlobR_const_BlobR_const_BlobR_const_BlobR(self.as_raw_mut_RNNLayer(), wxh.as_raw_Blob(), bh.as_raw_Blob(), whh.as_raw_Blob(), who.as_raw_Blob(), bo.as_raw_Blob()) }.into_result()
 	}
 	
 	/// If this flag is set to true then layer will produce @f$ h_t @f$ as second output.
@@ -1925,7 +1925,7 @@ pub trait RNNLayer: crate::dnn::Layer {
 	/// 
 	/// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Blob with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
 	fn forward(&mut self, input: &mut core::Vector::<crate::dnn::Blob>, output: &mut core::Vector::<crate::dnn::Blob>) -> Result<()> {
-		unsafe { sys::cv_dnn_RNNLayer_forward_vector_BlobX_X_vector_Blob_X(self.as_raw_mut_RNNLayer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
+		unsafe { sys::cv_dnn_RNNLayer_forward_vector_BlobX_R_vector_Blob_R(self.as_raw_mut_RNNLayer(), input.as_raw_mut_VectorOfBlob(), output.as_raw_mut_VectorOfBlob()) }.into_result()
 	}
 	
 }
@@ -1986,7 +1986,7 @@ impl dyn ReshapeLayer + '_ {
 	/// * applying_range: Range::all()
 	/// * enable_reordering: false
 	pub fn create(new_shape: &crate::dnn::BlobShape, mut applying_range: core::Range, enable_reordering: bool) -> Result<core::Ptr::<dyn crate::dnn::ReshapeLayer>> {
-		unsafe { sys::cv_dnn_ReshapeLayer_create_const_BlobShapeX_Range_bool(new_shape.as_raw_BlobShape(), applying_range.as_raw_mut_Range(), enable_reordering) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ReshapeLayer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_ReshapeLayer_create_const_BlobShapeR_Range_bool(new_shape.as_raw_BlobShape(), applying_range.as_raw_mut_Range(), enable_reordering) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ReshapeLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2030,7 +2030,7 @@ impl dyn SliceLayer + '_ {
 	}
 	
 	pub fn create_1(axis: i32, slice_indices: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::dnn::SliceLayer>> {
-		unsafe { sys::cv_dnn_SliceLayer_create_int_const_vector_int_X(axis, slice_indices.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn_SliceLayer_create_int_const_vector_int_R(axis, slice_indices.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::SliceLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2104,25 +2104,25 @@ impl Drop for _Range {
 }
 
 impl _Range {
-	pub fn as_raw__Range(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut__Range(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw__Range(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut__Range(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for _Range {}
 
 impl core::RangeTrait for _Range {
-	fn as_raw_Range(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Range(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Range(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Range(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::dnn::_RangeTrait for _Range {
-	fn as_raw__Range(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut__Range(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw__Range(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut__Range(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl _Range {
 	pub fn new(r: &core::Range) -> Result<crate::dnn::_Range> {
-		unsafe { sys::cv_dnn__Range__Range_const_RangeX(r.as_raw_Range()) }.into_result().map(|r| unsafe { crate::dnn::_Range::opencv_from_extern(r) } )
+		unsafe { sys::cv_dnn__Range__Range_const_RangeR(r.as_raw_Range()) }.into_result().map(|r| unsafe { crate::dnn::_Range::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters

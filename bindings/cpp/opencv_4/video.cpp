@@ -3,35 +3,35 @@
 #include "video_types.hpp"
 
 extern "C" {
-	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
+	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
 		try {
 			cv::RotatedRect ret = cv::CamShift(*probImage, *window, *criteria);
 			return Ok(new cv::RotatedRect(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::RotatedRect*>))
 	}
 	
-	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayX_const__OutputArrayX_Size_int_bool_int_int_bool(const cv::_InputArray* img, const cv::_OutputArray* pyramid, const cv::Size* winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
+	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(const cv::_InputArray* img, const cv::_OutputArray* pyramid, const cv::Size* winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
 		try {
 			int ret = cv::buildOpticalFlowPyramid(*img, *pyramid, *winSize, maxLevel, withDerivatives, pyrBorder, derivBorder, tryReuseInputImage);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_calcOpticalFlowFarneback_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_double_int_int_int_int_double_int(const cv::_InputArray* prev, const cv::_InputArray* next, const cv::_InputOutputArray* flow, double pyr_scale, int levels, int winsize, int iterations, int poly_n, double poly_sigma, int flags) {
+	Result_void cv_calcOpticalFlowFarneback_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_double_int_int_int_int_double_int(const cv::_InputArray* prev, const cv::_InputArray* next, const cv::_InputOutputArray* flow, double pyr_scale, int levels, int winsize, int iterations, int poly_n, double poly_sigma, int flags) {
 		try {
 			cv::calcOpticalFlowFarneback(*prev, *next, *flow, pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, const cv::Size* winSize, int maxLevel, const cv::TermCriteria* criteria, int flags, double minEigThreshold) {
+	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, const cv::Size* winSize, int maxLevel, const cv::TermCriteria* criteria, int flags, double minEigThreshold) {
 		try {
 			cv::calcOpticalFlowPyrLK(*prevImg, *nextImg, *prevPts, *nextPts, *status, *err, *winSize, maxLevel, *criteria, flags, minEigThreshold);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_computeECC_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputArray* inputMask) {
+	Result<double> cv_computeECC_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputArray* inputMask) {
 		try {
 			double ret = cv::computeECC(*templateImage, *inputImage, *inputMask);
 			return Ok(ret);
@@ -52,56 +52,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BackgroundSubtractorMOG2>*>))
 	}
 	
-	Result<cv::Mat*> cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool(const cv::_InputArray* src, const cv::_InputArray* dst, bool fullAffine) {
+	Result<cv::Mat*> cv_estimateRigidTransform_const__InputArrayR_const__InputArrayR_bool(const cv::_InputArray* src, const cv::_InputArray* dst, bool fullAffine) {
 		try {
 			cv::Mat ret = cv::estimateRigidTransform(*src, *dst, fullAffine);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
+	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
+	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask, gaussFiltSize);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<int> cv_meanShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
+	Result<int> cv_meanShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
 		try {
 			int ret = cv::meanShift(*probImage, *window, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<cv::Mat*> cv_readOpticalFlow_const_StringX(const char* path) {
+	Result<cv::Mat*> cv_readOpticalFlow_const_StringR(const char* path) {
 		try {
 			cv::Mat ret = cv::readOpticalFlow(std::string(path));
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<bool> cv_writeOpticalFlow_const_StringX_const__InputArrayX(const char* path, const cv::_InputArray* flow) {
+	Result<bool> cv_writeOpticalFlow_const_StringR_const__InputArrayR(const char* path, const cv::_InputArray* flow) {
 		try {
 			bool ret = cv::writeOpticalFlow(std::string(path), *flow);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_BackgroundSubtractor_apply_const__InputArrayX_const__OutputArrayX_double(cv::BackgroundSubtractor* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
+	Result_void cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR_double(cv::BackgroundSubtractor* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
 		try {
 			instance->apply(*image, *fgmask, learningRate);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BackgroundSubtractor_getBackgroundImage_const_const__OutputArrayX(const cv::BackgroundSubtractor* instance, const cv::_OutputArray* backgroundImage) {
+	Result_void cv_BackgroundSubtractor_getBackgroundImage_const_const__OutputArrayR(const cv::BackgroundSubtractor* instance, const cv::_OutputArray* backgroundImage) {
 		try {
 			instance->getBackgroundImage(*backgroundImage);
 			return Ok();
@@ -374,7 +374,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BackgroundSubtractorMOG2_apply_const__InputArrayX_const__OutputArrayX_double(cv::BackgroundSubtractorMOG2* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
+	Result_void cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double(cv::BackgroundSubtractorMOG2* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
 		try {
 			instance->apply(*image, *fgmask, learningRate);
 			return Ok();
@@ -528,7 +528,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DISOpticalFlow>*>))
 	}
 	
-	Result_void cv_DenseOpticalFlow_calc_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX(cv::DenseOpticalFlow* instance, const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow) {
+	Result_void cv_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(cv::DenseOpticalFlow* instance, const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow) {
 		try {
 			instance->calc(*I0, *I1, *flow);
 			return Ok();
@@ -895,21 +895,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_KalmanFilter_predict_const_MatX(cv::KalmanFilter* instance, const cv::Mat* control) {
+	Result<cv::Mat*> cv_KalmanFilter_predict_const_MatR(cv::KalmanFilter* instance, const cv::Mat* control) {
 		try {
 			cv::Mat ret = instance->predict(*control);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_KalmanFilter_correct_const_MatX(cv::KalmanFilter* instance, const cv::Mat* measurement) {
+	Result<cv::Mat*> cv_KalmanFilter_correct_const_MatR(cv::KalmanFilter* instance, const cv::Mat* measurement) {
 		try {
 			cv::Mat ret = instance->correct(*measurement);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_SparseOpticalFlow_calc_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::SparseOpticalFlow* instance, const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err) {
+	Result_void cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::SparseOpticalFlow* instance, const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err) {
 		try {
 			instance->calc(*prevImg, *nextImg, *prevPts, *nextPts, *status, *err);
 			return Ok();
@@ -951,7 +951,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteriaX(cv::SparsePyrLKOpticalFlow* instance, cv::TermCriteria* crit) {
+	Result_void cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteriaR(cv::SparsePyrLKOpticalFlow* instance, cv::TermCriteria* crit) {
 		try {
 			instance->setTermCriteria(*crit);
 			return Ok();
@@ -993,7 +993,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*>))
 	}
 	
-	Result_void cv_VariationalRefinement_calcUV_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX(cv::VariationalRefinement* instance, const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow_u, const cv::_InputOutputArray* flow_v) {
+	Result_void cv_VariationalRefinement_calcUV_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(cv::VariationalRefinement* instance, const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow_u, const cv::_InputOutputArray* flow_v) {
 		try {
 			instance->calcUV(*I0, *I1, *flow_u, *flow_v);
 			return Ok();

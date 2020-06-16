@@ -3,14 +3,14 @@
 #include "ml_types.hpp"
 
 extern "C" {
-	Result_void cv_ml_createConcentricSpheresTestSet_int_int_int_const__OutputArrayX_const__OutputArrayX(int nsamples, int nfeatures, int nclasses, const cv::_OutputArray* samples, const cv::_OutputArray* responses) {
+	Result_void cv_ml_createConcentricSpheresTestSet_int_int_int_const__OutputArrayR_const__OutputArrayR(int nsamples, int nfeatures, int nclasses, const cv::_OutputArray* samples, const cv::_OutputArray* responses) {
 		try {
 			cv::ml::createConcentricSpheresTestSet(nsamples, nfeatures, nclasses, *samples, *responses);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ml_randMVNormal_const__InputArrayX_const__InputArrayX_int_const__OutputArrayX(const cv::_InputArray* mean, const cv::_InputArray* cov, int nsamples, const cv::_OutputArray* samples) {
+	Result_void cv_ml_randMVNormal_const__InputArrayR_const__InputArrayR_int_const__OutputArrayR(const cv::_InputArray* mean, const cv::_InputArray* cov, int nsamples, const cv::_OutputArray* samples) {
 		try {
 			cv::ml::randMVNormal(*mean, *cov, nsamples, *samples);
 			return Ok();
@@ -38,7 +38,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ml_ANN_MLP_setLayerSizes_const__InputArrayX(cv::ml::ANN_MLP* instance, const cv::_InputArray* _layer_sizes) {
+	Result_void cv_ml_ANN_MLP_setLayerSizes_const__InputArrayR(cv::ml::ANN_MLP* instance, const cv::_InputArray* _layer_sizes) {
 		try {
 			instance->setLayerSizes(*_layer_sizes);
 			return Ok();
@@ -220,7 +220,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGX(cv::ml::ANN_MLP* instance, const cv::RNG* rng) {
+	Result_void cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGR(cv::ml::ANN_MLP* instance, const cv::RNG* rng) {
 		try {
 			instance->setAnnealEnergyRNG(*rng);
 			return Ok();
@@ -241,7 +241,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::ANN_MLP>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::ANN_MLP>*> cv_ml_ANN_MLP_load_const_StringX(const char* filepath) {
+	Result<cv::Ptr<cv::ml::ANN_MLP>*> cv_ml_ANN_MLP_load_const_StringR(const char* filepath) {
 		try {
 			cv::Ptr<cv::ml::ANN_MLP> ret = cv::ml::ANN_MLP::load(std::string(filepath));
 			return Ok(new cv::Ptr<cv::ml::ANN_MLP>(ret));
@@ -297,7 +297,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::Boost>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::Boost>*> cv_ml_Boost_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::Boost>*> cv_ml_Boost_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::Boost> ret = cv::ml::Boost::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::Boost>(ret));
@@ -423,7 +423,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_DTrees_setPriors_const_MatX(cv::ml::DTrees* instance, const cv::Mat* val) {
+	Result_void cv_ml_DTrees_setPriors_const_MatR(cv::ml::DTrees* instance, const cv::Mat* val) {
 		try {
 			instance->setPriors(*val);
 			return Ok();
@@ -465,7 +465,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::DTrees>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::DTrees>*> cv_ml_DTrees_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::DTrees>*> cv_ml_DTrees_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::DTrees> ret = cv::ml::DTrees::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::DTrees>(ret));
@@ -709,7 +709,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_EM_setTermCriteria_const_TermCriteriaX(cv::ml::EM* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_EM_setTermCriteria_const_TermCriteriaR(cv::ml::EM* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -730,42 +730,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_EM_getCovs_const_vector_Mat_X(const cv::ml::EM* instance, std::vector<cv::Mat>* covs) {
+	Result_void cv_ml_EM_getCovs_const_vector_Mat_R(const cv::ml::EM* instance, std::vector<cv::Mat>* covs) {
 		try {
 			instance->getCovs(*covs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<float> cv_ml_EM_predict_const_const__InputArrayX_const__OutputArrayX_int(const cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
+	Result<float> cv_ml_EM_predict_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			float ret = instance->predict(*samples, *results, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result<cv::Vec2d> cv_ml_EM_predict2_const_const__InputArrayX_const__OutputArrayX(const cv::ml::EM* instance, const cv::_InputArray* sample, const cv::_OutputArray* probs) {
+	Result<cv::Vec2d> cv_ml_EM_predict2_const_const__InputArrayR_const__OutputArrayR(const cv::ml::EM* instance, const cv::_InputArray* sample, const cv::_OutputArray* probs) {
 		try {
 			cv::Vec2d ret = instance->predict2(*sample, *probs);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec2d>))
 	}
 	
-	Result<bool> cv_ml_EM_trainEM_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
+	Result<bool> cv_ml_EM_trainEM_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainEM(*samples, *logLikelihoods, *labels, *probs);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ml_EM_trainE_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* means0, const cv::_InputArray* covs0, const cv::_InputArray* weights0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
+	Result<bool> cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* means0, const cv::_InputArray* covs0, const cv::_InputArray* weights0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainE(*samples, *means0, *covs0, *weights0, *logLikelihoods, *labels, *probs);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ml_EM_trainM_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* probs0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
+	Result<bool> cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* probs0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainM(*samples, *probs0, *logLikelihoods, *labels, *probs);
 			return Ok(ret);
@@ -779,7 +779,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::EM>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::EM>*> cv_ml_EM_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::EM>*> cv_ml_EM_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::EM> ret = cv::ml::EM::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::EM>(ret));
@@ -842,7 +842,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<float> cv_ml_KNearest_findNearest_const_const__InputArrayX_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::ml::KNearest* instance, const cv::_InputArray* samples, int k, const cv::_OutputArray* results, const cv::_OutputArray* neighborResponses, const cv::_OutputArray* dist) {
+	Result<float> cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::ml::KNearest* instance, const cv::_InputArray* samples, int k, const cv::_OutputArray* results, const cv::_OutputArray* neighborResponses, const cv::_OutputArray* dist) {
 		try {
 			float ret = instance->findNearest(*samples, k, *results, *neighborResponses, *dist);
 			return Ok(ret);
@@ -856,7 +856,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::KNearest>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::KNearest>*> cv_ml_KNearest_load_const_StringX(const char* filepath) {
+	Result<cv::Ptr<cv::ml::KNearest>*> cv_ml_KNearest_load_const_StringR(const char* filepath) {
 		try {
 			cv::Ptr<cv::ml::KNearest> ret = cv::ml::KNearest::load(std::string(filepath));
 			return Ok(new cv::Ptr<cv::ml::KNearest>(ret));
@@ -947,7 +947,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<float> cv_ml_LogisticRegression_predict_const_const__InputArrayX_const__OutputArrayX_int(const cv::ml::LogisticRegression* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
+	Result<float> cv_ml_LogisticRegression_predict_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::LogisticRegression* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			float ret = instance->predict(*samples, *results, flags);
 			return Ok(ret);
@@ -968,14 +968,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::LogisticRegression>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::LogisticRegression>*> cv_ml_LogisticRegression_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::LogisticRegression>*> cv_ml_LogisticRegression_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::LogisticRegression> ret = cv::ml::LogisticRegression::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::LogisticRegression>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::LogisticRegression>*>))
 	}
 	
-	Result<float> cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int(const cv::ml::NormalBayesClassifier* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* outputProbs, int flags) {
+	Result<float> cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(const cv::ml::NormalBayesClassifier* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* outputProbs, int flags) {
 		try {
 			float ret = instance->predictProb(*inputs, *outputs, *outputProbs, flags);
 			return Ok(ret);
@@ -989,7 +989,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::NormalBayesClassifier>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::NormalBayesClassifier>*> cv_ml_NormalBayesClassifier_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::NormalBayesClassifier>*> cv_ml_NormalBayesClassifier_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::NormalBayesClassifier> ret = cv::ml::NormalBayesClassifier::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::NormalBayesClassifier>(ret));
@@ -1097,7 +1097,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_RTrees_setTermCriteria_const_TermCriteriaX(cv::ml::RTrees* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_RTrees_setTermCriteria_const_TermCriteriaR(cv::ml::RTrees* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -1111,7 +1111,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_RTrees_getVotes_const_const__InputArrayX_const__OutputArrayX_int(const cv::ml::RTrees* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
+	Result_void cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::RTrees* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			instance->getVotes(*samples, *results, flags);
 			return Ok();
@@ -1125,7 +1125,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::RTrees>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::RTrees>*> cv_ml_RTrees_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::RTrees>*> cv_ml_RTrees_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::RTrees> ret = cv::ml::RTrees::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::RTrees>(ret));
@@ -1237,7 +1237,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_SVM_setClassWeights_const_MatX(cv::ml::SVM* instance, const cv::Mat* val) {
+	Result_void cv_ml_SVM_setClassWeights_const_MatR(cv::ml::SVM* instance, const cv::Mat* val) {
 		try {
 			instance->setClassWeights(*val);
 			return Ok();
@@ -1251,7 +1251,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_SVM_setTermCriteria_const_TermCriteriaX(cv::ml::SVM* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_SVM_setTermCriteria_const_TermCriteriaR(cv::ml::SVM* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -1272,21 +1272,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ml_SVM_setCustomKernel_const_Ptr_Kernel_X(cv::ml::SVM* instance, const cv::Ptr<cv::ml::SVM::Kernel>* _kernel) {
+	Result_void cv_ml_SVM_setCustomKernel_const_Ptr_Kernel_R(cv::ml::SVM* instance, const cv::Ptr<cv::ml::SVM::Kernel>* _kernel) {
 		try {
 			instance->setCustomKernel(*_kernel);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_ml_SVM_trainAuto_const_Ptr_TrainData_X_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(cv::ml::SVM* instance, const cv::Ptr<cv::ml::TrainData>* data, int kFold, cv::ml::ParamGrid* Cgrid, cv::ml::ParamGrid* gammaGrid, cv::ml::ParamGrid* pGrid, cv::ml::ParamGrid* nuGrid, cv::ml::ParamGrid* coeffGrid, cv::ml::ParamGrid* degreeGrid, bool balanced) {
+	Result<bool> cv_ml_SVM_trainAuto_const_Ptr_TrainData_R_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(cv::ml::SVM* instance, const cv::Ptr<cv::ml::TrainData>* data, int kFold, cv::ml::ParamGrid* Cgrid, cv::ml::ParamGrid* gammaGrid, cv::ml::ParamGrid* pGrid, cv::ml::ParamGrid* nuGrid, cv::ml::ParamGrid* coeffGrid, cv::ml::ParamGrid* degreeGrid, bool balanced) {
 		try {
 			bool ret = instance->trainAuto(*data, kFold, *Cgrid, *gammaGrid, *pGrid, *nuGrid, *coeffGrid, *degreeGrid, balanced);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ml_SVM_trainAuto_const__InputArrayX_int_const__InputArrayX_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool(cv::ml::SVM* instance, const cv::_InputArray* samples, int layout, const cv::_InputArray* responses, int kFold, cv::Ptr<cv::ml::ParamGrid>* Cgrid, cv::Ptr<cv::ml::ParamGrid>* gammaGrid, cv::Ptr<cv::ml::ParamGrid>* pGrid, cv::Ptr<cv::ml::ParamGrid>* nuGrid, cv::Ptr<cv::ml::ParamGrid>* coeffGrid, cv::Ptr<cv::ml::ParamGrid>* degreeGrid, bool balanced) {
+	Result<bool> cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool(cv::ml::SVM* instance, const cv::_InputArray* samples, int layout, const cv::_InputArray* responses, int kFold, cv::Ptr<cv::ml::ParamGrid>* Cgrid, cv::Ptr<cv::ml::ParamGrid>* gammaGrid, cv::Ptr<cv::ml::ParamGrid>* pGrid, cv::Ptr<cv::ml::ParamGrid>* nuGrid, cv::Ptr<cv::ml::ParamGrid>* coeffGrid, cv::Ptr<cv::ml::ParamGrid>* degreeGrid, bool balanced) {
 		try {
 			bool ret = instance->trainAuto(*samples, layout, *responses, kFold, *Cgrid, *gammaGrid, *pGrid, *nuGrid, *coeffGrid, *degreeGrid, balanced);
 			return Ok(ret);
@@ -1307,7 +1307,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<double> cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayX_const__OutputArrayX(const cv::ml::SVM* instance, int i, const cv::_OutputArray* alpha, const cv::_OutputArray* svidx) {
+	Result<double> cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayR_const__OutputArrayR(const cv::ml::SVM* instance, int i, const cv::_OutputArray* alpha, const cv::_OutputArray* svidx) {
 		try {
 			double ret = instance->getDecisionFunction(i, *alpha, *svidx);
 			return Ok(ret);
@@ -1335,7 +1335,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::SVM>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::SVM>*> cv_ml_SVM_load_const_StringX(const char* filepath) {
+	Result<cv::Ptr<cv::ml::SVM>*> cv_ml_SVM_load_const_StringR(const char* filepath) {
 		try {
 			cv::Ptr<cv::ml::SVM> ret = cv::ml::SVM::load(std::string(filepath));
 			return Ok(new cv::Ptr<cv::ml::SVM>(ret));
@@ -1377,7 +1377,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::SVMSGD>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::SVMSGD>*> cv_ml_SVMSGD_load_const_StringX_const_StringX(const char* filepath, const char* nodeName) {
+	Result<cv::Ptr<cv::ml::SVMSGD>*> cv_ml_SVMSGD_load_const_StringR_const_StringR(const char* filepath, const char* nodeName) {
 		try {
 			cv::Ptr<cv::ml::SVMSGD> ret = cv::ml::SVMSGD::load(std::string(filepath), std::string(nodeName));
 			return Ok(new cv::Ptr<cv::ml::SVMSGD>(ret));
@@ -1468,7 +1468,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaX(cv::ml::SVMSGD* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaR(cv::ml::SVMSGD* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -1503,28 +1503,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ml_StatModel_train_const_Ptr_TrainData_X_int(cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* trainData, int flags) {
+	Result<bool> cv_ml_StatModel_train_const_Ptr_TrainData_R_int(cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* trainData, int flags) {
 		try {
 			bool ret = instance->train(*trainData, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ml_StatModel_train_const__InputArrayX_int_const__InputArrayX(cv::ml::StatModel* instance, const cv::_InputArray* samples, int layout, const cv::_InputArray* responses) {
+	Result<bool> cv_ml_StatModel_train_const__InputArrayR_int_const__InputArrayR(cv::ml::StatModel* instance, const cv::_InputArray* samples, int layout, const cv::_InputArray* responses) {
 		try {
 			bool ret = instance->train(*samples, layout, *responses);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<float> cv_ml_StatModel_calcError_const_const_Ptr_TrainData_X_bool_const__OutputArrayX(const cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* data, bool test, const cv::_OutputArray* resp) {
+	Result<float> cv_ml_StatModel_calcError_const_const_Ptr_TrainData_R_bool_const__OutputArrayR(const cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* data, bool test, const cv::_OutputArray* resp) {
 		try {
 			float ret = instance->calcError(*data, test, *resp);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result<float> cv_ml_StatModel_predict_const_const__InputArrayX_const__OutputArrayX_int(const cv::ml::StatModel* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
+	Result<float> cv_ml_StatModel_predict_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::StatModel* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			float ret = instance->predict(*samples, *results, flags);
 			return Ok(ret);
@@ -1580,7 +1580,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ml_TrainData_getSample_const_const__InputArrayX_int_floatX(const cv::ml::TrainData* instance, const cv::_InputArray* varIdx, int sidx, float* buf) {
+	Result_void cv_ml_TrainData_getSample_const_const__InputArrayR_int_floatX(const cv::ml::TrainData* instance, const cv::_InputArray* varIdx, int sidx, float* buf) {
 		try {
 			instance->getSample(*varIdx, sidx, buf);
 			return Ok();
@@ -1713,14 +1713,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_TrainData_getValues_const_int_const__InputArrayX_floatX(const cv::ml::TrainData* instance, int vi, const cv::_InputArray* sidx, float* values) {
+	Result_void cv_ml_TrainData_getValues_const_int_const__InputArrayR_floatX(const cv::ml::TrainData* instance, int vi, const cv::_InputArray* sidx, float* values) {
 		try {
 			instance->getValues(vi, *sidx, values);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayX_intX(const cv::ml::TrainData* instance, int vi, const cv::_InputArray* sidx, int* values) {
+	Result_void cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayR_intX(const cv::ml::TrainData* instance, int vi, const cv::_InputArray* sidx, int* values) {
 		try {
 			instance->getNormCatValues(vi, *sidx, values);
 			return Ok();
@@ -1790,35 +1790,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_ml_TrainData_getNames_const_vector_String_X(const cv::ml::TrainData* instance, std::vector<cv::String>* names) {
+	Result_void cv_ml_TrainData_getNames_const_vector_String_R(const cv::ml::TrainData* instance, std::vector<cv::String>* names) {
 		try {
 			instance->getNames(*names);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_ml_TrainData_getSubVector_const_MatX_const_MatX(const cv::Mat* vec, const cv::Mat* idx) {
+	Result<cv::Mat*> cv_ml_TrainData_getSubVector_const_MatR_const_MatR(const cv::Mat* vec, const cv::Mat* idx) {
 		try {
 			cv::Mat ret = cv::ml::TrainData::getSubVector(*vec, *idx);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_ml_TrainData_getSubMatrix_const_MatX_const_MatX_int(const cv::Mat* matrix, const cv::Mat* idx, int layout) {
+	Result<cv::Mat*> cv_ml_TrainData_getSubMatrix_const_MatR_const_MatR_int(const cv::Mat* matrix, const cv::Mat* idx, int layout) {
 		try {
 			cv::Mat ret = cv::ml::TrainData::getSubMatrix(*matrix, *idx, layout);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::TrainData>*> cv_ml_TrainData_loadFromCSV_const_StringX_int_int_int_const_StringX_char_char(const char* filename, int headerLineCount, int responseStartIdx, int responseEndIdx, const char* varTypeSpec, char delimiter, char missch) {
+	Result<cv::Ptr<cv::ml::TrainData>*> cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(const char* filename, int headerLineCount, int responseStartIdx, int responseEndIdx, const char* varTypeSpec, char delimiter, char missch) {
 		try {
 			cv::Ptr<cv::ml::TrainData> ret = cv::ml::TrainData::loadFromCSV(std::string(filename), headerLineCount, responseStartIdx, responseEndIdx, std::string(varTypeSpec), delimiter, missch);
 			return Ok(new cv::Ptr<cv::ml::TrainData>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ml::TrainData>*>))
 	}
 	
-	Result<cv::Ptr<cv::ml::TrainData>*> cv_ml_TrainData_create_const__InputArrayX_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* samples, int layout, const cv::_InputArray* responses, const cv::_InputArray* varIdx, const cv::_InputArray* sampleIdx, const cv::_InputArray* sampleWeights, const cv::_InputArray* varType) {
+	Result<cv::Ptr<cv::ml::TrainData>*> cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* samples, int layout, const cv::_InputArray* responses, const cv::_InputArray* varIdx, const cv::_InputArray* sampleIdx, const cv::_InputArray* sampleWeights, const cv::_InputArray* varType) {
 		try {
 			cv::Ptr<cv::ml::TrainData> ret = cv::ml::TrainData::create(*samples, layout, *responses, *varIdx, *sampleIdx, *sampleWeights, *varType);
 			return Ok(new cv::Ptr<cv::ml::TrainData>(ret));

@@ -2,119 +2,119 @@
 #include "aruco_types.hpp"
 
 extern "C" {
-	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::_InputArray* counter, const cv::Ptr<cv::aruco::Board>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* stdDeviationsIntrinsics, const cv::_OutputArray* stdDeviationsExtrinsics, const cv::_OutputArray* perViewErrors, int flags, const cv::TermCriteria* criteria) {
+	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_Ptr_Board_R_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::_InputArray* counter, const cv::Ptr<cv::aruco::Board>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* stdDeviationsIntrinsics, const cv::_OutputArray* stdDeviationsExtrinsics, const cv::_OutputArray* perViewErrors, int flags, const cv::TermCriteria* criteria) {
 		try {
 			double ret = cv::aruco::calibrateCameraAruco(*corners, *ids, *counter, *board, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, *stdDeviationsIntrinsics, *stdDeviationsExtrinsics, *perViewErrors, flags, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::_InputArray* counter, const cv::Ptr<cv::aruco::Board>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
+	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_Ptr_Board_R_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::_InputArray* counter, const cv::Ptr<cv::aruco::Board>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
 		try {
 			double ret = cv::aruco::calibrateCameraAruco(*corners, *ids, *counter, *board, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, flags, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* stdDeviationsIntrinsics, const cv::_OutputArray* stdDeviationsExtrinsics, const cv::_OutputArray* perViewErrors, int flags, const cv::TermCriteria* criteria) {
+	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_Ptr_CharucoBoard_R_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* stdDeviationsIntrinsics, const cv::_OutputArray* stdDeviationsExtrinsics, const cv::_OutputArray* perViewErrors, int flags, const cv::TermCriteria* criteria) {
 		try {
 			double ret = cv::aruco::calibrateCameraCharuco(*charucoCorners, *charucoIds, *board, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, *stdDeviationsIntrinsics, *stdDeviationsExtrinsics, *perViewErrors, flags, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
+	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_Ptr_CharucoBoard_R_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
 		try {
 			double ret = cv::aruco::calibrateCameraCharuco(*charucoCorners, *charucoIds, *board, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, flags, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_aruco_detectCharucoDiamond_const__InputArrayX_const__InputArrayX_const__InputArrayX_float_const__OutputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* image, const cv::_InputArray* markerCorners, const cv::_InputArray* markerIds, float squareMarkerLengthRate, const cv::_OutputArray* diamondCorners, const cv::_OutputArray* diamondIds, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs) {
+	Result_void cv_aruco_detectCharucoDiamond_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* image, const cv::_InputArray* markerCorners, const cv::_InputArray* markerIds, float squareMarkerLengthRate, const cv::_OutputArray* diamondCorners, const cv::_OutputArray* diamondIds, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs) {
 		try {
 			cv::aruco::detectCharucoDiamond(*image, *markerCorners, *markerIds, squareMarkerLengthRate, *diamondCorners, *diamondIds, *cameraMatrix, *distCoeffs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_detectMarkers_const__InputArrayX_const_Ptr_Dictionary_X_const__OutputArrayX_const__OutputArrayX_const_Ptr_DetectorParameters_X_const__OutputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* image, const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::_OutputArray* corners, const cv::_OutputArray* ids, const cv::Ptr<cv::aruco::DetectorParameters>* parameters, const cv::_OutputArray* rejectedImgPoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeff) {
+	Result_void cv_aruco_detectMarkers_const__InputArrayR_const_Ptr_Dictionary_R_const__OutputArrayR_const__OutputArrayR_const_Ptr_DetectorParameters_R_const__OutputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* image, const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::_OutputArray* corners, const cv::_OutputArray* ids, const cv::Ptr<cv::aruco::DetectorParameters>* parameters, const cv::_OutputArray* rejectedImgPoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeff) {
 		try {
 			cv::aruco::detectMarkers(*image, *dictionary, *corners, *ids, *parameters, *rejectedImgPoints, *cameraMatrix, *distCoeff);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawAxis_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_float(const cv::_InputOutputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_InputArray* rvec, const cv::_InputArray* tvec, float length) {
+	Result_void cv_aruco_drawAxis_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float(const cv::_InputOutputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_InputArray* rvec, const cv::_InputArray* tvec, float length) {
 		try {
 			cv::aruco::drawAxis(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, length);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawCharucoDiamond_const_Ptr_Dictionary_X_Vec4i_int_int_const__OutputArrayX_int_int(const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::Vec4i* ids, int squareLength, int markerLength, const cv::_OutputArray* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_drawCharucoDiamond_const_Ptr_Dictionary_R_Vec4i_int_int_const__OutputArrayR_int_int(const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::Vec4i* ids, int squareLength, int markerLength, const cv::_OutputArray* img, int marginSize, int borderBits) {
 		try {
 			cv::aruco::drawCharucoDiamond(*dictionary, *ids, squareLength, markerLength, *img, marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Scalar* cornerColor) {
+	Result_void cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Scalar* cornerColor) {
 		try {
 			cv::aruco::drawDetectedCornersCharuco(*image, *charucoCorners, *charucoIds, *cornerColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawDetectedDiamonds_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* diamondCorners, const cv::_InputArray* diamondIds, const cv::Scalar* borderColor) {
+	Result_void cv_aruco_drawDetectedDiamonds_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* diamondCorners, const cv::_InputArray* diamondIds, const cv::Scalar* borderColor) {
 		try {
 			cv::aruco::drawDetectedDiamonds(*image, *diamondCorners, *diamondIds, *borderColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawDetectedMarkers_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::Scalar* borderColor) {
+	Result_void cv_aruco_drawDetectedMarkers_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::Scalar* borderColor) {
 		try {
 			cv::aruco::drawDetectedMarkers(*image, *corners, *ids, *borderColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawMarker_const_Ptr_Dictionary_X_int_int_const__OutputArrayX_int(const cv::Ptr<cv::aruco::Dictionary>* dictionary, int id, int sidePixels, const cv::_OutputArray* img, int borderBits) {
+	Result_void cv_aruco_drawMarker_const_Ptr_Dictionary_R_int_int_const__OutputArrayR_int(const cv::Ptr<cv::aruco::Dictionary>* dictionary, int id, int sidePixels, const cv::_OutputArray* img, int borderBits) {
 		try {
 			cv::aruco::drawMarker(*dictionary, id, sidePixels, *img, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_aruco_drawPlanarBoard_const_Ptr_Board_X_Size_const__OutputArrayX_int_int(const cv::Ptr<cv::aruco::Board>* board, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_drawPlanarBoard_const_Ptr_Board_R_Size_const__OutputArrayR_int_int(const cv::Ptr<cv::aruco::Board>* board, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
 		try {
 			cv::aruco::drawPlanarBoard(*board, *outSize, *img, marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_aruco_estimatePoseBoard_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::Ptr<cv::aruco::Board>* board, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess) {
+	Result<int> cv_aruco_estimatePoseBoard_const__InputArrayR_const__InputArrayR_const_Ptr_Board_R_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(const cv::_InputArray* corners, const cv::_InputArray* ids, const cv::Ptr<cv::aruco::Board>* board, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess) {
 		try {
 			int ret = cv::aruco::estimatePoseBoard(*corners, *ids, *board, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<bool> cv_aruco_estimatePoseCharucoBoard_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess) {
+	Result<bool> cv_aruco_estimatePoseCharucoBoard_const__InputArrayR_const__InputArrayR_const_Ptr_CharucoBoard_R_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(const cv::_InputArray* charucoCorners, const cv::_InputArray* charucoIds, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess) {
 		try {
 			bool ret = cv::aruco::estimatePoseCharucoBoard(*charucoCorners, *charucoIds, *board, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_aruco_estimatePoseSingleMarkers_const__InputArrayX_float_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* corners, float markerLength, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* _objPoints) {
+	Result_void cv_aruco_estimatePoseSingleMarkers_const__InputArrayR_float_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* corners, float markerLength, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, const cv::_OutputArray* _objPoints) {
 		try {
 			cv::aruco::estimatePoseSingleMarkers(*corners, markerLength, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, *_objPoints);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::aruco::Dictionary>*> cv_aruco_generateCustomDictionary_int_int_const_Ptr_Dictionary_X_int(int nMarkers, int markerSize, const cv::Ptr<cv::aruco::Dictionary>* baseDictionary, int randomSeed) {
+	Result<cv::Ptr<cv::aruco::Dictionary>*> cv_aruco_generateCustomDictionary_int_int_const_Ptr_Dictionary_R_int(int nMarkers, int markerSize, const cv::Ptr<cv::aruco::Dictionary>* baseDictionary, int randomSeed) {
 		try {
 			cv::Ptr<cv::aruco::Dictionary> ret = cv::aruco::generateCustomDictionary(nMarkers, markerSize, *baseDictionary, randomSeed);
 			return Ok(new cv::Ptr<cv::aruco::Dictionary>(ret));
@@ -128,7 +128,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::aruco::Dictionary>*>))
 	}
 	
-	Result_void cv_aruco_getBoardObjectAndImagePoints_const_Ptr_Board_X_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::Ptr<cv::aruco::Board>* board, const cv::_InputArray* detectedCorners, const cv::_InputArray* detectedIds, const cv::_OutputArray* objPoints, const cv::_OutputArray* imgPoints) {
+	Result_void cv_aruco_getBoardObjectAndImagePoints_const_Ptr_Board_R_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::Ptr<cv::aruco::Board>* board, const cv::_InputArray* detectedCorners, const cv::_InputArray* detectedIds, const cv::_OutputArray* objPoints, const cv::_OutputArray* imgPoints) {
 		try {
 			cv::aruco::getBoardObjectAndImagePoints(*board, *detectedCorners, *detectedIds, *objPoints, *imgPoints);
 			return Ok();
@@ -149,14 +149,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::aruco::Dictionary>*>))
 	}
 	
-	Result<int> cv_aruco_interpolateCornersCharuco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_const__OutputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_int(const cv::_InputArray* markerCorners, const cv::_InputArray* markerIds, const cv::_InputArray* image, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::_OutputArray* charucoCorners, const cv::_OutputArray* charucoIds, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, int minMarkers) {
+	Result<int> cv_aruco_interpolateCornersCharuco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_Ptr_CharucoBoard_R_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(const cv::_InputArray* markerCorners, const cv::_InputArray* markerIds, const cv::_InputArray* image, const cv::Ptr<cv::aruco::CharucoBoard>* board, const cv::_OutputArray* charucoCorners, const cv::_OutputArray* charucoIds, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, int minMarkers) {
 		try {
 			int ret = cv::aruco::interpolateCornersCharuco(*markerCorners, *markerIds, *image, *board, *charucoCorners, *charucoIds, *cameraMatrix, *distCoeffs, minMarkers);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_aruco_refineDetectedMarkers_const__InputArrayX_const_Ptr_Board_X_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_float_float_bool_const__OutputArrayX_const_Ptr_DetectorParameters_X(const cv::_InputArray* image, const cv::Ptr<cv::aruco::Board>* board, const cv::_InputOutputArray* detectedCorners, const cv::_InputOutputArray* detectedIds, const cv::_InputOutputArray* rejectedCorners, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, float minRepDistance, float errorCorrectionRate, bool checkAllOrders, const cv::_OutputArray* recoveredIdxs, const cv::Ptr<cv::aruco::DetectorParameters>* parameters) {
+	Result_void cv_aruco_refineDetectedMarkers_const__InputArrayR_const_Ptr_Board_R_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_float_float_bool_const__OutputArrayR_const_Ptr_DetectorParameters_R(const cv::_InputArray* image, const cv::Ptr<cv::aruco::Board>* board, const cv::_InputOutputArray* detectedCorners, const cv::_InputOutputArray* detectedIds, const cv::_InputOutputArray* rejectedCorners, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, float minRepDistance, float errorCorrectionRate, bool checkAllOrders, const cv::_OutputArray* recoveredIdxs, const cv::Ptr<cv::aruco::DetectorParameters>* parameters) {
 		try {
 			cv::aruco::refineDetectedMarkers(*image, *board, *detectedCorners, *detectedIds, *rejectedCorners, *cameraMatrix, *distCoeffs, minRepDistance, errorCorrectionRate, checkAllOrders, *recoveredIdxs, *parameters);
 			return Ok();
@@ -208,7 +208,7 @@ extern "C" {
 	void cv_Board_delete(cv::aruco::Board* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::aruco::Board>*> cv_aruco_Board_create_const__InputArrayX_const_Ptr_Dictionary_X_const__InputArrayX(const cv::_InputArray* objPoints, const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::_InputArray* ids) {
+	Result<cv::Ptr<cv::aruco::Board>*> cv_aruco_Board_create_const__InputArrayR_const_Ptr_Dictionary_R_const__InputArrayR(const cv::_InputArray* objPoints, const cv::Ptr<cv::aruco::Dictionary>* dictionary, const cv::_InputArray* ids) {
 		try {
 			cv::Ptr<cv::aruco::Board> ret = cv::aruco::Board::create(*objPoints, *dictionary, *ids);
 			return Ok(new cv::Ptr<cv::aruco::Board>(ret));
@@ -260,14 +260,14 @@ extern "C" {
 	void cv_CharucoBoard_delete(cv::aruco::CharucoBoard* instance) {
 		delete instance;
 	}
-	Result_void cv_aruco_CharucoBoard_draw_Size_const__OutputArrayX_int_int(cv::aruco::CharucoBoard* instance, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_CharucoBoard_draw_Size_const__OutputArrayR_int_int(cv::aruco::CharucoBoard* instance, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
 		try {
 			instance->draw(*outSize, *img, marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::aruco::CharucoBoard>*> cv_aruco_CharucoBoard_create_int_int_float_float_const_Ptr_Dictionary_X(int squaresX, int squaresY, float squareLength, float markerLength, const cv::Ptr<cv::aruco::Dictionary>* dictionary) {
+	Result<cv::Ptr<cv::aruco::CharucoBoard>*> cv_aruco_CharucoBoard_create_int_int_float_float_const_Ptr_Dictionary_R(int squaresX, int squaresY, float squareLength, float markerLength, const cv::Ptr<cv::aruco::Dictionary>* dictionary) {
 		try {
 			cv::Ptr<cv::aruco::CharucoBoard> ret = cv::aruco::CharucoBoard::create(squaresX, squaresY, squareLength, markerLength, *dictionary);
 			return Ok(new cv::Ptr<cv::aruco::CharucoBoard>(ret));
@@ -763,14 +763,14 @@ extern "C" {
 	void cv_Dictionary_delete(cv::aruco::Dictionary* instance) {
 		delete instance;
 	}
-	Result<cv::aruco::Dictionary*> cv_aruco_Dictionary_Dictionary_const_MatX_int_int(const cv::Mat* _bytesList, int _markerSize, int _maxcorr) {
+	Result<cv::aruco::Dictionary*> cv_aruco_Dictionary_Dictionary_const_MatR_int_int(const cv::Mat* _bytesList, int _markerSize, int _maxcorr) {
 		try {
 			cv::aruco::Dictionary* ret = new cv::aruco::Dictionary(*_bytesList, _markerSize, _maxcorr);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::aruco::Dictionary*>))
 	}
 	
-	Result<cv::aruco::Dictionary*> cv_aruco_Dictionary_Dictionary_const_Ptr_Dictionary_X(const cv::Ptr<cv::aruco::Dictionary>* _dictionary) {
+	Result<cv::aruco::Dictionary*> cv_aruco_Dictionary_Dictionary_const_Ptr_Dictionary_R(const cv::Ptr<cv::aruco::Dictionary>* _dictionary) {
 		try {
 			cv::aruco::Dictionary* ret = new cv::aruco::Dictionary(*_dictionary);
 			return Ok(ret);
@@ -784,7 +784,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::aruco::Dictionary>*>))
 	}
 	
-	Result<cv::Ptr<cv::aruco::Dictionary>*> cv_aruco_Dictionary_create_int_int_const_Ptr_Dictionary_X_int(int nMarkers, int markerSize, const cv::Ptr<cv::aruco::Dictionary>* baseDictionary, int randomSeed) {
+	Result<cv::Ptr<cv::aruco::Dictionary>*> cv_aruco_Dictionary_create_int_int_const_Ptr_Dictionary_R_int(int nMarkers, int markerSize, const cv::Ptr<cv::aruco::Dictionary>* baseDictionary, int randomSeed) {
 		try {
 			cv::Ptr<cv::aruco::Dictionary> ret = cv::aruco::Dictionary::create(nMarkers, markerSize, *baseDictionary, randomSeed);
 			return Ok(new cv::Ptr<cv::aruco::Dictionary>(ret));
@@ -798,35 +798,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::aruco::Dictionary>*>))
 	}
 	
-	Result<bool> cv_aruco_Dictionary_identify_const_const_MatX_intR_intR_double(const cv::aruco::Dictionary* instance, const cv::Mat* onlyBits, int* idx, int* rotation, double maxCorrectionRate) {
+	Result<bool> cv_aruco_Dictionary_identify_const_const_MatR_intR_intR_double(const cv::aruco::Dictionary* instance, const cv::Mat* onlyBits, int* idx, int* rotation, double maxCorrectionRate) {
 		try {
 			bool ret = instance->identify(*onlyBits, *idx, *rotation, maxCorrectionRate);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<int> cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayX_int_bool(const cv::aruco::Dictionary* instance, const cv::_InputArray* bits, int id, bool allRotations) {
+	Result<int> cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int_bool(const cv::aruco::Dictionary* instance, const cv::_InputArray* bits, int id, bool allRotations) {
 		try {
 			int ret = instance->getDistanceToId(*bits, id, allRotations);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_aruco_Dictionary_drawMarker_const_int_int_const__OutputArrayX_int(const cv::aruco::Dictionary* instance, int id, int sidePixels, const cv::_OutputArray* _img, int borderBits) {
+	Result_void cv_aruco_Dictionary_drawMarker_const_int_int_const__OutputArrayR_int(const cv::aruco::Dictionary* instance, int id, int sidePixels, const cv::_OutputArray* _img, int borderBits) {
 		try {
 			instance->drawMarker(id, sidePixels, *_img, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_aruco_Dictionary_getByteListFromBits_const_MatX(const cv::Mat* bits) {
+	Result<cv::Mat*> cv_aruco_Dictionary_getByteListFromBits_const_MatR(const cv::Mat* bits) {
 		try {
 			cv::Mat ret = cv::aruco::Dictionary::getByteListFromBits(*bits);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_aruco_Dictionary_getBitsFromByteList_const_MatX_int(const cv::Mat* byteList, int markerSize) {
+	Result<cv::Mat*> cv_aruco_Dictionary_getBitsFromByteList_const_MatR_int(const cv::Mat* byteList, int markerSize) {
 		try {
 			cv::Mat ret = cv::aruco::Dictionary::getBitsFromByteList(*byteList, markerSize);
 			return Ok(new cv::Mat(ret));
@@ -836,14 +836,14 @@ extern "C" {
 	void cv_GridBoard_delete(cv::aruco::GridBoard* instance) {
 		delete instance;
 	}
-	Result_void cv_aruco_GridBoard_draw_Size_const__OutputArrayX_int_int(cv::aruco::GridBoard* instance, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_GridBoard_draw_Size_const__OutputArrayR_int_int(cv::aruco::GridBoard* instance, const cv::Size* outSize, const cv::_OutputArray* img, int marginSize, int borderBits) {
 		try {
 			instance->draw(*outSize, *img, marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::aruco::GridBoard>*> cv_aruco_GridBoard_create_int_int_float_float_const_Ptr_Dictionary_X_int(int markersX, int markersY, float markerLength, float markerSeparation, const cv::Ptr<cv::aruco::Dictionary>* dictionary, int firstMarker) {
+	Result<cv::Ptr<cv::aruco::GridBoard>*> cv_aruco_GridBoard_create_int_int_float_float_const_Ptr_Dictionary_R_int(int markersX, int markersY, float markerLength, float markerSeparation, const cv::Ptr<cv::aruco::Dictionary>* dictionary, int firstMarker) {
 		try {
 			cv::Ptr<cv::aruco::GridBoard> ret = cv::aruco::GridBoard::create(markersX, markersY, markerLength, markerSeparation, *dictionary, firstMarker);
 			return Ok(new cv::Ptr<cv::aruco::GridBoard>(ret));

@@ -277,9 +277,9 @@ pub const TrackerSamplerCS_MODE_POSITIVE: i32 = 1;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum CvFeatureParams_FeatureType {
-	HAAR = 0 as isize,
-	LBP = 1 as isize,
-	HOG = 2 as isize,
+	HAAR = 0,
+	LBP = 1,
+	HOG = 2,
 }
 
 opencv_type_enum! { crate::tracking::CvFeatureParams_FeatureType }
@@ -291,9 +291,9 @@ opencv_type_enum! { crate::tracking::CvFeatureParams_FeatureType }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TrackerKCF_MODE {
-	GRAY = 1 as isize,
-	CN = 2 as isize,
-	CUSTOM = 4 as isize,
+	GRAY = 1,
+	CN = 2,
+	CUSTOM = 4,
 }
 
 opencv_type_enum! { crate::tracking::TrackerKCF_MODE }
@@ -317,17 +317,17 @@ pub trait ClfMilBoostTrait {
 	/// ## C++ default parameters
 	/// * parameters: ClfMilBoost::Params()
 	fn init(&mut self, parameters: &crate::tracking::ClfMilBoost_Params) -> Result<()> {
-		unsafe { sys::cv_ClfMilBoost_init_const_ParamsX(self.as_raw_mut_ClfMilBoost(), parameters.as_raw_ClfMilBoost_Params()) }.into_result()
+		unsafe { sys::cv_ClfMilBoost_init_const_ParamsR(self.as_raw_mut_ClfMilBoost(), parameters.as_raw_ClfMilBoost_Params()) }.into_result()
 	}
 	
 	fn update(&mut self, posx: &core::Mat, negx: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_ClfMilBoost_update_const_MatX_const_MatX(self.as_raw_mut_ClfMilBoost(), posx.as_raw_Mat(), negx.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_ClfMilBoost_update_const_MatR_const_MatR(self.as_raw_mut_ClfMilBoost(), posx.as_raw_Mat(), negx.as_raw_Mat()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * log_r: true
 	fn classify(&mut self, x: &core::Mat, log_r: bool) -> Result<core::Vector::<f32>> {
-		unsafe { sys::cv_ClfMilBoost_classify_const_MatX_bool(self.as_raw_mut_ClfMilBoost(), x.as_raw_Mat(), log_r) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ClfMilBoost_classify_const_MatR_bool(self.as_raw_mut_ClfMilBoost(), x.as_raw_Mat(), log_r) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
 	}
 	
 	fn sigmoid(&mut self, x: f32) -> Result<f32> {
@@ -350,15 +350,15 @@ impl Drop for ClfMilBoost {
 }
 
 impl ClfMilBoost {
-	pub fn as_raw_ClfMilBoost(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_ClfMilBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_ClfMilBoost(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ClfMilBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ClfMilBoost {}
 
 impl crate::tracking::ClfMilBoostTrait for ClfMilBoost {
-	fn as_raw_ClfMilBoost(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ClfMilBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ClfMilBoost(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ClfMilBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ClfMilBoost {
@@ -412,15 +412,15 @@ impl Drop for ClfMilBoost_Params {
 }
 
 impl ClfMilBoost_Params {
-	pub fn as_raw_ClfMilBoost_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_ClfMilBoost_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_ClfMilBoost_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ClfMilBoost_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ClfMilBoost_Params {}
 
 impl crate::tracking::ClfMilBoost_ParamsTrait for ClfMilBoost_Params {
-	fn as_raw_ClfMilBoost_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ClfMilBoost_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ClfMilBoost_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ClfMilBoost_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ClfMilBoost_Params {
@@ -459,15 +459,15 @@ pub trait CvFeatureParamsTrait {
 	}
 	
 	fn init(&mut self, fp: &crate::tracking::CvFeatureParams) -> Result<()> {
-		unsafe { sys::cv_CvFeatureParams_init_const_CvFeatureParamsX(self.as_raw_mut_CvFeatureParams(), fp.as_raw_CvFeatureParams()) }.into_result()
+		unsafe { sys::cv_CvFeatureParams_init_const_CvFeatureParamsR(self.as_raw_mut_CvFeatureParams(), fp.as_raw_CvFeatureParams()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_CvFeatureParams_write_const_FileStorageX(self.as_raw_CvFeatureParams(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_CvFeatureParams_write_const_FileStorageR(self.as_raw_CvFeatureParams(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	fn read(&mut self, node: &core::FileNode) -> Result<bool> {
-		unsafe { sys::cv_CvFeatureParams_read_const_FileNodeX(self.as_raw_mut_CvFeatureParams(), node.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_CvFeatureParams_read_const_FileNodeR(self.as_raw_mut_CvFeatureParams(), node.as_raw_FileNode()) }.into_result()
 	}
 	
 }
@@ -486,15 +486,15 @@ impl Drop for CvFeatureParams {
 }
 
 impl CvFeatureParams {
-	pub fn as_raw_CvFeatureParams(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_CvFeatureParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CvFeatureParams {}
 
 impl crate::tracking::CvFeatureParamsTrait for CvFeatureParams {
-	fn as_raw_CvFeatureParams(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_CvFeatureParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CvFeatureParams {
@@ -522,16 +522,16 @@ pub trait CvHaarEvaluatorTrait {
 	/// * cls_label: 0
 	/// * idx: 1
 	fn set_image(&mut self, img: &core::Mat, cls_label: u8, idx: i32) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_setImage_const_MatX_unsigned_char_int(self.as_raw_mut_CvHaarEvaluator(), img.as_raw_Mat(), cls_label, idx) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_setImage_const_MatR_unsigned_char_int(self.as_raw_mut_CvHaarEvaluator(), img.as_raw_Mat(), cls_label, idx) }.into_result()
 	}
 	
 	fn write_features(&self, fs: &mut core::FileStorage, feature_map: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_writeFeatures_const_FileStorageX_const_MatX(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage(), feature_map.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_writeFeatures_const_FileStorageR_const_MatR(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage(), feature_map.as_raw_Mat()) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
 	fn write_feature(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_writeFeature_const_FileStorageX(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_writeFeature_const_FileStorageR(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -581,15 +581,15 @@ impl Drop for CvHaarEvaluator {
 }
 
 impl CvHaarEvaluator {
-	pub fn as_raw_CvHaarEvaluator(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_CvHaarEvaluator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_CvHaarEvaluator(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CvHaarEvaluator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CvHaarEvaluator {}
 
 impl crate::tracking::CvHaarEvaluatorTrait for CvHaarEvaluator {
-	fn as_raw_CvHaarEvaluator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_CvHaarEvaluator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_CvHaarEvaluator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CvHaarEvaluator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CvHaarEvaluator {
@@ -601,7 +601,7 @@ pub trait CvHaarEvaluator_FeatureHaarTrait {
 
 	#[cfg(not(target_os = "windows"))]
 	fn eval(&self, image: &core::Mat, roi: core::Rect, result: &mut f32) -> Result<bool> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatX_Rect_floatX(self.as_raw_CvHaarEvaluator_FeatureHaar(), image.as_raw_Mat(), roi.opencv_to_extern(), result) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(self.as_raw_CvHaarEvaluator_FeatureHaar(), image.as_raw_Mat(), roi.opencv_to_extern(), result) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -649,15 +649,15 @@ impl Drop for CvHaarEvaluator_FeatureHaar {
 }
 
 impl CvHaarEvaluator_FeatureHaar {
-	pub fn as_raw_CvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_CvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_CvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CvHaarEvaluator_FeatureHaar {}
 
 impl crate::tracking::CvHaarEvaluator_FeatureHaarTrait for CvHaarEvaluator_FeatureHaar {
-	fn as_raw_CvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_CvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_CvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CvHaarEvaluator_FeatureHaar {
@@ -685,7 +685,7 @@ pub trait MultiTrackerTrait: core::AlgorithmTrait {
 	/// * boundingBox: a rectangle represents ROI of the tracked object
 	fn add(&mut self, mut new_tracker: core::Ptr::<dyn crate::tracking::Tracker>, image: &dyn core::ToInputArray, bounding_box: core::Rect2d) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_add_Ptr_Tracker__const__InputArrayX_const_Rect2dX(self.as_raw_mut_MultiTracker(), new_tracker.as_raw_mut_PtrOfTracker(), image.as_raw__InputArray(), &bounding_box) }.into_result()
+		unsafe { sys::cv_MultiTracker_add_Ptr_Tracker__const__InputArrayR_const_Rect2dR(self.as_raw_mut_MultiTracker(), new_tracker.as_raw_mut_PtrOfTracker(), image.as_raw__InputArray(), &bounding_box) }.into_result()
 	}
 	
 	/// \brief Add a set of objects to be tracked.
@@ -695,7 +695,7 @@ pub trait MultiTrackerTrait: core::AlgorithmTrait {
 	/// * boundingBox: list of the tracked objects
 	fn add_1(&mut self, mut new_trackers: core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>>, image: &dyn core::ToInputArray, mut bounding_box: core::Vector::<core::Rect2d>) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_add_vector_Ptr_Tracker___const__InputArrayX_vector_Rect2d_(self.as_raw_mut_MultiTracker(), new_trackers.as_raw_mut_VectorOfPtrOfTracker(), image.as_raw__InputArray(), bounding_box.as_raw_mut_VectorOfRect2d()) }.into_result()
+		unsafe { sys::cv_MultiTracker_add_vector_Ptr_Tracker___const__InputArrayR_vector_Rect2d_(self.as_raw_mut_MultiTracker(), new_trackers.as_raw_mut_VectorOfPtrOfTracker(), image.as_raw__InputArray(), bounding_box.as_raw_mut_VectorOfRect2d()) }.into_result()
 	}
 	
 	/// \brief Update the current tracking status.
@@ -704,7 +704,7 @@ pub trait MultiTrackerTrait: core::AlgorithmTrait {
 	/// * image: input image
 	fn update(&mut self, image: &dyn core::ToInputArray) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_update_const__InputArrayX(self.as_raw_mut_MultiTracker(), image.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MultiTracker_update_const__InputArrayR(self.as_raw_mut_MultiTracker(), image.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// \brief Update the current tracking status.
@@ -713,7 +713,7 @@ pub trait MultiTrackerTrait: core::AlgorithmTrait {
 	/// * boundingBox: the tracking result, represent a list of ROIs of the tracked objects.
 	fn update_1(&mut self, image: &dyn core::ToInputArray, bounding_box: &mut core::Vector::<core::Rect2d>) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_update_const__InputArrayX_vector_Rect2d_X(self.as_raw_mut_MultiTracker(), image.as_raw__InputArray(), bounding_box.as_raw_mut_VectorOfRect2d()) }.into_result()
+		unsafe { sys::cv_MultiTracker_update_const__InputArrayR_vector_Rect2d_R(self.as_raw_mut_MultiTracker(), image.as_raw__InputArray(), bounding_box.as_raw_mut_VectorOfRect2d()) }.into_result()
 	}
 	
 	/// \brief Returns a reference to a storage for the tracked objects, each object corresponds to one tracker algorithm
@@ -742,20 +742,20 @@ impl Drop for MultiTracker {
 }
 
 impl MultiTracker {
-	pub fn as_raw_MultiTracker(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_MultiTracker(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for MultiTracker {}
 
 impl core::AlgorithmTrait for MultiTracker {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::MultiTrackerTrait for MultiTracker {
-	fn as_raw_MultiTracker(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_MultiTracker(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MultiTracker {
@@ -802,7 +802,7 @@ pub trait MultiTrackerTLDTrait: crate::tracking::MultiTracker_AltTrait {
 	/// missing from the frame (say, out of sight)
 	fn update_opt(&mut self, image: &dyn core::ToInputArray) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTrackerTLD_update_opt_const__InputArrayX(self.as_raw_mut_MultiTrackerTLD(), image.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MultiTrackerTLD_update_opt_const__InputArrayR(self.as_raw_mut_MultiTrackerTLD(), image.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -835,20 +835,20 @@ impl Drop for MultiTrackerTLD {
 }
 
 impl MultiTrackerTLD {
-	pub fn as_raw_MultiTrackerTLD(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_MultiTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_MultiTrackerTLD(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_MultiTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for MultiTrackerTLD {}
 
 impl crate::tracking::MultiTrackerTLDTrait for MultiTrackerTLD {
-	fn as_raw_MultiTrackerTLD(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_MultiTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_MultiTrackerTLD(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MultiTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::MultiTracker_AltTrait for MultiTrackerTLD {
-	fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MultiTrackerTLD {
@@ -911,7 +911,7 @@ pub trait MultiTracker_AltTrait {
 	/// True if new target initialization went succesfully, false otherwise
 	fn add_target(&mut self, image: &dyn core::ToInputArray, bounding_box: core::Rect2d, mut tracker_algorithm: core::Ptr::<dyn crate::tracking::Tracker>) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_Alt_addTarget_const__InputArrayX_const_Rect2dX_Ptr_Tracker_(self.as_raw_mut_MultiTracker_Alt(), image.as_raw__InputArray(), &bounding_box, tracker_algorithm.as_raw_mut_PtrOfTracker()) }.into_result()
+		unsafe { sys::cv_MultiTracker_Alt_addTarget_const__InputArrayR_const_Rect2dR_Ptr_Tracker_(self.as_raw_mut_MultiTracker_Alt(), image.as_raw__InputArray(), &bounding_box, tracker_algorithm.as_raw_mut_PtrOfTracker()) }.into_result()
 	}
 	
 	/// Update all trackers from the tracking-list, find a new most likely bounding boxes for the targets
@@ -924,7 +924,7 @@ pub trait MultiTracker_AltTrait {
 	/// missing from the frame (say, out of sight)
 	fn update(&mut self, image: &dyn core::ToInputArray) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_MultiTracker_Alt_update_const__InputArrayX(self.as_raw_mut_MultiTracker_Alt(), image.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_MultiTracker_Alt_update_const__InputArrayR(self.as_raw_mut_MultiTracker_Alt(), image.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -946,15 +946,15 @@ impl Drop for MultiTracker_Alt {
 }
 
 impl MultiTracker_Alt {
-	pub fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for MultiTracker_Alt {}
 
 impl crate::tracking::MultiTracker_AltTrait for MultiTracker_Alt {
-	fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_MultiTracker_Alt(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MultiTracker_Alt(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MultiTracker_Alt {
@@ -979,7 +979,7 @@ pub trait Tracker: core::AlgorithmTrait {
 	/// True if initialization went succesfully, false otherwise
 	fn init(&mut self, image: &dyn core::ToInputArray, bounding_box: core::Rect2d) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_Tracker_init_const__InputArrayX_const_Rect2dX(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box) }.into_result()
+		unsafe { sys::cv_Tracker_init_const__InputArrayR_const_Rect2dR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box) }.into_result()
 	}
 	
 	/// Update the tracker, find the new most likely bounding box for the target
@@ -994,15 +994,15 @@ pub trait Tracker: core::AlgorithmTrait {
 	/// missing from the frame (say, out of sight)
 	fn update(&mut self, image: &dyn core::ToInputArray, bounding_box: &mut core::Rect2d) -> Result<bool> {
 		input_array_arg!(image);
-		unsafe { sys::cv_Tracker_update_const__InputArrayX_Rect2dX(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box) }.into_result()
+		unsafe { sys::cv_Tracker_update_const__InputArrayR_Rect2dR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box) }.into_result()
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_Tracker_read_const_FileNodeX(self.as_raw_mut_Tracker(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_Tracker_read_const_FileNodeR(self.as_raw_mut_Tracker(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_Tracker_write_const_FileStorageX(self.as_raw_Tracker(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_Tracker_write_const_FileStorageR(self.as_raw_Tracker(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1023,7 +1023,7 @@ impl dyn TrackerBoosting + '_ {
 	/// ## Parameters
 	/// * parameters: BOOSTING parameters TrackerBoosting::Params
 	pub fn create(parameters: &crate::tracking::TrackerBoosting_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerBoosting>> {
-		unsafe { sys::cv_TrackerBoosting_create_const_ParamsX(parameters.as_raw_TrackerBoosting_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerBoosting>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerBoosting_create_const_ParamsR(parameters.as_raw_TrackerBoosting_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerBoosting>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerBoosting>> {
@@ -1087,12 +1087,12 @@ pub trait TrackerBoosting_ParamsTrait {
 	
 	/// \brief Read parameters from a file
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerBoosting_Params_read_const_FileNodeX(self.as_raw_mut_TrackerBoosting_Params(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerBoosting_Params_read_const_FileNodeR(self.as_raw_mut_TrackerBoosting_Params(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	/// \brief Write parameters to a file
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerBoosting_Params_write_const_FileStorageX(self.as_raw_TrackerBoosting_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerBoosting_Params_write_const_FileStorageR(self.as_raw_TrackerBoosting_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1111,15 +1111,15 @@ impl Drop for TrackerBoosting_Params {
 }
 
 impl TrackerBoosting_Params {
-	pub fn as_raw_TrackerBoosting_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerBoosting_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerBoosting_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerBoosting_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerBoosting_Params {}
 
 impl crate::tracking::TrackerBoosting_ParamsTrait for TrackerBoosting_Params {
-	fn as_raw_TrackerBoosting_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerBoosting_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerBoosting_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerBoosting_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerBoosting_Params {
@@ -1139,7 +1139,7 @@ pub trait TrackerCSRT: crate::tracking::Tracker {
 
 	fn set_initial_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(mask);
-		unsafe { sys::cv_TrackerCSRT_setInitialMask_const__InputArrayX(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -1149,7 +1149,7 @@ impl dyn TrackerCSRT + '_ {
 	/// ## Parameters
 	/// * parameters: CSRT parameters TrackerCSRT::Params
 	pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerCSRT>> {
-		unsafe { sys::cv_TrackerCSRT_create_const_ParamsX(parameters.as_raw_TrackerCSRT_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerCSRT>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerCSRT>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerCSRT>> {
@@ -1384,12 +1384,12 @@ pub trait TrackerCSRT_ParamsTrait {
 	
 	/// \brief Read parameters from a file
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerCSRT_Params_read_const_FileNodeX(self.as_raw_mut_TrackerCSRT_Params(), unnamed.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerCSRT_Params_read_const_FileNodeR(self.as_raw_mut_TrackerCSRT_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}
 	
 	/// \brief Write parameters to a file
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerCSRT_Params_write_const_FileStorageX(self.as_raw_TrackerCSRT_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerCSRT_Params_write_const_FileStorageR(self.as_raw_TrackerCSRT_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1408,15 +1408,15 @@ impl Drop for TrackerCSRT_Params {
 }
 
 impl TrackerCSRT_Params {
-	pub fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerCSRT_Params {}
 
 impl crate::tracking::TrackerCSRT_ParamsTrait for TrackerCSRT_Params {
-	fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerCSRT_Params {
@@ -1437,7 +1437,7 @@ pub trait TrackerFeature {
 	/// * images: The images
 	/// * response: The output response
 	fn compute(&mut self, images: &core::Vector::<core::Mat>, response: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_TrackerFeature_compute_const_vector_Mat_X_MatX(self.as_raw_mut_TrackerFeature(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerFeature_compute_const_vector_Mat_R_MatR(self.as_raw_mut_TrackerFeature(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
 	}
 	
 	/// Identify most effective features
@@ -1448,7 +1448,7 @@ pub trait TrackerFeature {
 	/// 
 	/// Note: This method modifies the response parameter
 	fn selection(&mut self, response: &mut core::Mat, npoints: i32) -> Result<()> {
-		unsafe { sys::cv_TrackerFeature_selection_MatX_int(self.as_raw_mut_TrackerFeature(), response.as_raw_mut_Mat(), npoints) }.into_result()
+		unsafe { sys::cv_TrackerFeature_selection_MatR_int(self.as_raw_mut_TrackerFeature(), response.as_raw_mut_Mat(), npoints) }.into_result()
 	}
 	
 	/// Get the name of the specific TrackerFeature
@@ -1474,7 +1474,7 @@ impl dyn TrackerFeature + '_ {
 	/// *   "FEATURE2D" -- All types of Feature2D
 	pub fn create(tracker_feature_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerFeature>> {
 		extern_container_arg!(tracker_feature_type);
-		unsafe { sys::cv_TrackerFeature_create_const_StringX(tracker_feature_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerFeature>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerFeature_create_const_StringR(tracker_feature_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerFeature>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1484,7 +1484,7 @@ pub trait TrackerFeatureFeature2dTrait: crate::tracking::TrackerFeature {
 	fn as_raw_mut_TrackerFeatureFeature2d(&mut self) -> *mut c_void;
 
 	fn selection(&mut self, response: &mut core::Mat, npoints: i32) -> Result<()> {
-		unsafe { sys::cv_TrackerFeatureFeature2d_selection_MatX_int(self.as_raw_mut_TrackerFeatureFeature2d(), response.as_raw_mut_Mat(), npoints) }.into_result()
+		unsafe { sys::cv_TrackerFeatureFeature2d_selection_MatR_int(self.as_raw_mut_TrackerFeatureFeature2d(), response.as_raw_mut_Mat(), npoints) }.into_result()
 	}
 	
 }
@@ -1504,20 +1504,20 @@ impl Drop for TrackerFeatureFeature2d {
 }
 
 impl TrackerFeatureFeature2d {
-	pub fn as_raw_TrackerFeatureFeature2d(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureFeature2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureFeature2d(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureFeature2d(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureFeature2d {}
 
 impl crate::tracking::TrackerFeature for TrackerFeatureFeature2d {
-	fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerFeatureFeature2dTrait for TrackerFeatureFeature2d {
-	fn as_raw_TrackerFeatureFeature2d(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureFeature2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureFeature2d(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureFeature2d(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureFeature2d {
@@ -1545,7 +1545,7 @@ pub trait TrackerFeatureHAARTrait: crate::tracking::TrackerFeature {
 	/// * images: The images
 	/// * response: Collection of response for the specific TrackerFeature
 	fn extract_selected(&mut self, sel_features: core::Vector::<i32>, images: &core::Vector::<core::Mat>, response: &mut core::Mat) -> Result<bool> {
-		unsafe { sys::cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_X_MatX(self.as_raw_mut_TrackerFeatureHAAR(), sel_features.as_raw_VectorOfi32(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_R_MatR(self.as_raw_mut_TrackerFeatureHAAR(), sel_features.as_raw_VectorOfi32(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
 	}
 	
 	/// Identify most effective features
@@ -1556,7 +1556,7 @@ pub trait TrackerFeatureHAARTrait: crate::tracking::TrackerFeature {
 	/// 
 	/// Note: This method modifies the response parameter
 	fn selection(&mut self, response: &mut core::Mat, npoints: i32) -> Result<()> {
-		unsafe { sys::cv_TrackerFeatureHAAR_selection_MatX_int(self.as_raw_mut_TrackerFeatureHAAR(), response.as_raw_mut_Mat(), npoints) }.into_result()
+		unsafe { sys::cv_TrackerFeatureHAAR_selection_MatR_int(self.as_raw_mut_TrackerFeatureHAAR(), response.as_raw_mut_Mat(), npoints) }.into_result()
 	}
 	
 	/// Swap the feature in position source with the feature in position target
@@ -1572,7 +1572,7 @@ pub trait TrackerFeatureHAARTrait: crate::tracking::TrackerFeature {
 	/// * id: The position
 	/// * feature: The feature
 	fn swap_feature_1(&mut self, id: i32, feature: &mut crate::tracking::CvHaarEvaluator_FeatureHaar) -> Result<bool> {
-		unsafe { sys::cv_TrackerFeatureHAAR_swapFeature_int_FeatureHaarX(self.as_raw_mut_TrackerFeatureHAAR(), id, feature.as_raw_mut_CvHaarEvaluator_FeatureHaar()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureHAAR_swapFeature_int_FeatureHaarR(self.as_raw_mut_TrackerFeatureHAAR(), id, feature.as_raw_mut_CvHaarEvaluator_FeatureHaar()) }.into_result()
 	}
 	
 	/// Get the feature in position id
@@ -1601,20 +1601,20 @@ impl Drop for TrackerFeatureHAAR {
 }
 
 impl TrackerFeatureHAAR {
-	pub fn as_raw_TrackerFeatureHAAR(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureHAAR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureHAAR(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureHAAR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureHAAR {}
 
 impl crate::tracking::TrackerFeature for TrackerFeatureHAAR {
-	fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerFeatureHAARTrait for TrackerFeatureHAAR {
-	fn as_raw_TrackerFeatureHAAR(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureHAAR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureHAAR(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureHAAR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureHAAR {
@@ -1625,7 +1625,7 @@ impl TrackerFeatureHAAR {
 	/// ## C++ default parameters
 	/// * parameters: TrackerFeatureHAAR::Params()
 	pub fn new(parameters: &crate::tracking::TrackerFeatureHAAR_Params) -> Result<crate::tracking::TrackerFeatureHAAR> {
-		unsafe { sys::cv_TrackerFeatureHAAR_TrackerFeatureHAAR_const_ParamsX(parameters.as_raw_TrackerFeatureHAAR_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerFeatureHAAR::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerFeatureHAAR_TrackerFeatureHAAR_const_ParamsR(parameters.as_raw_TrackerFeatureHAAR_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerFeatureHAAR::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1680,15 +1680,15 @@ impl Drop for TrackerFeatureHAAR_Params {
 }
 
 impl TrackerFeatureHAAR_Params {
-	pub fn as_raw_TrackerFeatureHAAR_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureHAAR_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureHAAR_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureHAAR_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureHAAR_Params {}
 
 impl crate::tracking::TrackerFeatureHAAR_ParamsTrait for TrackerFeatureHAAR_Params {
-	fn as_raw_TrackerFeatureHAAR_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureHAAR_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureHAAR_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureHAAR_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureHAAR_Params {
@@ -1704,7 +1704,7 @@ pub trait TrackerFeatureHOGTrait: crate::tracking::TrackerFeature {
 	fn as_raw_mut_TrackerFeatureHOG(&mut self) -> *mut c_void;
 
 	fn selection(&mut self, response: &mut core::Mat, npoints: i32) -> Result<()> {
-		unsafe { sys::cv_TrackerFeatureHOG_selection_MatX_int(self.as_raw_mut_TrackerFeatureHOG(), response.as_raw_mut_Mat(), npoints) }.into_result()
+		unsafe { sys::cv_TrackerFeatureHOG_selection_MatR_int(self.as_raw_mut_TrackerFeatureHOG(), response.as_raw_mut_Mat(), npoints) }.into_result()
 	}
 	
 }
@@ -1724,20 +1724,20 @@ impl Drop for TrackerFeatureHOG {
 }
 
 impl TrackerFeatureHOG {
-	pub fn as_raw_TrackerFeatureHOG(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureHOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureHOG(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureHOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureHOG {}
 
 impl crate::tracking::TrackerFeature for TrackerFeatureHOG {
-	fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerFeatureHOGTrait for TrackerFeatureHOG {
-	fn as_raw_TrackerFeatureHOG(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureHOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureHOG(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureHOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureHOG {
@@ -1753,7 +1753,7 @@ pub trait TrackerFeatureLBPTrait: crate::tracking::TrackerFeature {
 	fn as_raw_mut_TrackerFeatureLBP(&mut self) -> *mut c_void;
 
 	fn selection(&mut self, response: &mut core::Mat, npoints: i32) -> Result<()> {
-		unsafe { sys::cv_TrackerFeatureLBP_selection_MatX_int(self.as_raw_mut_TrackerFeatureLBP(), response.as_raw_mut_Mat(), npoints) }.into_result()
+		unsafe { sys::cv_TrackerFeatureLBP_selection_MatR_int(self.as_raw_mut_TrackerFeatureLBP(), response.as_raw_mut_Mat(), npoints) }.into_result()
 	}
 	
 }
@@ -1773,20 +1773,20 @@ impl Drop for TrackerFeatureLBP {
 }
 
 impl TrackerFeatureLBP {
-	pub fn as_raw_TrackerFeatureLBP(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureLBP(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureLBP(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureLBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureLBP {}
 
 impl crate::tracking::TrackerFeature for TrackerFeatureLBP {
-	fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerFeatureLBPTrait for TrackerFeatureLBP {
-	fn as_raw_TrackerFeatureLBP(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureLBP(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureLBP(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureLBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureLBP {
@@ -1813,7 +1813,7 @@ pub trait TrackerFeatureSetTrait {
 	/// ## Parameters
 	/// * images: The input images
 	fn extraction(&mut self, images: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_TrackerFeatureSet_extraction_const_vector_Mat_X(self.as_raw_mut_TrackerFeatureSet(), images.as_raw_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureSet_extraction_const_vector_Mat_R(self.as_raw_mut_TrackerFeatureSet(), images.as_raw_VectorOfMat()) }.into_result()
 	}
 	
 	/// Identify most effective features for all feature types (optional)
@@ -1890,7 +1890,7 @@ pub trait TrackerFeatureSetTrait {
 	/// 
 	/// * feature: The TrackerFeature class
 	fn add_tracker_feature_1(&mut self, feature: &mut core::Ptr::<dyn crate::tracking::TrackerFeature>) -> Result<bool> {
-		unsafe { sys::cv_TrackerFeatureSet_addTrackerFeature_Ptr_TrackerFeature_X(self.as_raw_mut_TrackerFeatureSet(), feature.as_raw_mut_PtrOfTrackerFeature()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureSet_addTrackerFeature_Ptr_TrackerFeature_R(self.as_raw_mut_TrackerFeatureSet(), feature.as_raw_mut_PtrOfTrackerFeature()) }.into_result()
 	}
 	
 	/// Get the responses
@@ -1926,15 +1926,15 @@ impl Drop for TrackerFeatureSet {
 }
 
 impl TrackerFeatureSet {
-	pub fn as_raw_TrackerFeatureSet(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerFeatureSet(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerFeatureSet(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerFeatureSet(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerFeatureSet {}
 
 impl crate::tracking::TrackerFeatureSetTrait for TrackerFeatureSet {
-	fn as_raw_TrackerFeatureSet(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerFeatureSet(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerFeatureSet(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerFeatureSet(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerFeatureSet {
@@ -1969,7 +1969,7 @@ impl dyn TrackerGOTURN + '_ {
 	/// ## Parameters
 	/// * parameters: GOTURN parameters TrackerGOTURN::Params
 	pub fn create(parameters: &crate::tracking::TrackerGOTURN_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerGOTURN>> {
-		unsafe { sys::cv_TrackerGOTURN_create_const_ParamsX(parameters.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerGOTURN>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerGOTURN>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerGOTURN>> {
@@ -1982,11 +1982,11 @@ pub trait TrackerGOTURN_ParamsTrait {
 	fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void;
 
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerGOTURN_Params_read_const_FileNodeX(self.as_raw_mut_TrackerGOTURN_Params(), unnamed.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerGOTURN_Params_read_const_FileNodeR(self.as_raw_mut_TrackerGOTURN_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerGOTURN_Params_write_const_FileStorageX(self.as_raw_TrackerGOTURN_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerGOTURN_Params_write_const_FileStorageR(self.as_raw_TrackerGOTURN_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -2005,15 +2005,15 @@ impl Drop for TrackerGOTURN_Params {
 }
 
 impl TrackerGOTURN_Params {
-	pub fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerGOTURN_Params {}
 
 impl crate::tracking::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
-	fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerGOTURN_Params {
@@ -2037,7 +2037,7 @@ pub trait TrackerKCF: crate::tracking::Tracker {
 	/// ## C++ default parameters
 	/// * pca_func: false
 	fn set_feature_extractor(&mut self, unnamed: Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>, pca_func: bool) -> Result<()> {
-		unsafe { sys::cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_Mat__bool(self.as_raw_mut_TrackerKCF(), unnamed, pca_func) }.into_result()
+		unsafe { sys::cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_MatR__bool(self.as_raw_mut_TrackerKCF(), unnamed, pca_func) }.into_result()
 	}
 	
 }
@@ -2047,7 +2047,7 @@ impl dyn TrackerKCF + '_ {
 	/// ## Parameters
 	/// * parameters: KCF parameters TrackerKCF::Params
 	pub fn create(parameters: &crate::tracking::TrackerKCF_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerKCF>> {
-		unsafe { sys::cv_TrackerKCF_create_const_ParamsX(parameters.as_raw_TrackerKCF_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerKCF>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerKCF_create_const_ParamsR(parameters.as_raw_TrackerKCF_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerKCF>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerKCF>> {
@@ -2201,12 +2201,12 @@ pub trait TrackerKCF_ParamsTrait {
 	
 	/// \brief Read parameters from a file
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerKCF_Params_read_const_FileNodeX(self.as_raw_mut_TrackerKCF_Params(), unnamed.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerKCF_Params_read_const_FileNodeR(self.as_raw_mut_TrackerKCF_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}
 	
 	/// \brief Write parameters to a file
 	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerKCF_Params_write_const_FileStorageX(self.as_raw_TrackerKCF_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerKCF_Params_write_const_FileStorageR(self.as_raw_TrackerKCF_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -2225,15 +2225,15 @@ impl Drop for TrackerKCF_Params {
 }
 
 impl TrackerKCF_Params {
-	pub fn as_raw_TrackerKCF_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerKCF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerKCF_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerKCF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerKCF_Params {}
 
 impl crate::tracking::TrackerKCF_ParamsTrait for TrackerKCF_Params {
-	fn as_raw_TrackerKCF_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerKCF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerKCF_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerKCF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerKCF_Params {
@@ -2262,7 +2262,7 @@ impl dyn TrackerMIL + '_ {
 	/// ## Parameters
 	/// * parameters: MIL parameters TrackerMIL::Params
 	pub fn create(parameters: &crate::tracking::TrackerMIL_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerMIL>> {
-		unsafe { sys::cv_TrackerMIL_create_const_ParamsX(parameters.as_raw_TrackerMIL_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerMIL>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerMIL_create_const_ParamsR(parameters.as_raw_TrackerMIL_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerMIL>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerMIL>> {
@@ -2345,11 +2345,11 @@ pub trait TrackerMIL_ParamsTrait {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerMIL_Params_read_const_FileNodeX(self.as_raw_mut_TrackerMIL_Params(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerMIL_Params_read_const_FileNodeR(self.as_raw_mut_TrackerMIL_Params(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerMIL_Params_write_const_FileStorageX(self.as_raw_TrackerMIL_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerMIL_Params_write_const_FileStorageR(self.as_raw_TrackerMIL_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -2368,15 +2368,15 @@ impl Drop for TrackerMIL_Params {
 }
 
 impl TrackerMIL_Params {
-	pub fn as_raw_TrackerMIL_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerMIL_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerMIL_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerMIL_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerMIL_Params {}
 
 impl crate::tracking::TrackerMIL_ParamsTrait for TrackerMIL_Params {
-	fn as_raw_TrackerMIL_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerMIL_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerMIL_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerMIL_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerMIL_Params {
@@ -2424,7 +2424,7 @@ impl dyn TrackerMedianFlow + '_ {
 	/// ## Parameters
 	/// * parameters: Median Flow parameters TrackerMedianFlow::Params
 	pub fn create(parameters: &crate::tracking::TrackerMedianFlow_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerMedianFlow>> {
-		unsafe { sys::cv_TrackerMedianFlow_create_const_ParamsX(parameters.as_raw_TrackerMedianFlow_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerMedianFlow>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerMedianFlow_create_const_ParamsR(parameters.as_raw_TrackerMedianFlow_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerMedianFlow>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerMedianFlow>> {
@@ -2499,11 +2499,11 @@ pub trait TrackerMedianFlow_ParamsTrait {
 	}
 	
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerMedianFlow_Params_read_const_FileNodeX(self.as_raw_mut_TrackerMedianFlow_Params(), unnamed.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerMedianFlow_Params_read_const_FileNodeR(self.as_raw_mut_TrackerMedianFlow_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerMedianFlow_Params_write_const_FileStorageX(self.as_raw_TrackerMedianFlow_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerMedianFlow_Params_write_const_FileStorageR(self.as_raw_TrackerMedianFlow_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -2522,15 +2522,15 @@ impl Drop for TrackerMedianFlow_Params {
 }
 
 impl TrackerMedianFlow_Params {
-	pub fn as_raw_TrackerMedianFlow_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerMedianFlow_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerMedianFlow_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerMedianFlow_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerMedianFlow_Params {}
 
 impl crate::tracking::TrackerMedianFlow_ParamsTrait for TrackerMedianFlow_Params {
-	fn as_raw_TrackerMedianFlow_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerMedianFlow_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerMedianFlow_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerMedianFlow_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerMedianFlow_Params {
@@ -2565,7 +2565,7 @@ pub trait TrackerModel {
 	/// ## Parameters
 	/// * responses: Features extracted from TrackerFeatureSet
 	fn model_estimation(&mut self, responses: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_TrackerModel_modelEstimation_const_vector_Mat_X(self.as_raw_mut_TrackerModel(), responses.as_raw_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerModel_modelEstimation_const_vector_Mat_R(self.as_raw_mut_TrackerModel(), responses.as_raw_VectorOfMat()) }.into_result()
 	}
 	
 	/// Update the model
@@ -2584,7 +2584,7 @@ pub trait TrackerModel {
 	/// ## Parameters
 	/// * lastTargetState: The current TrackerTargetState
 	fn set_last_target_state(&mut self, last_target_state: &core::Ptr::<crate::tracking::TrackerTargetState>) -> Result<()> {
-		unsafe { sys::cv_TrackerModel_setLastTargetState_const_Ptr_TrackerTargetState_X(self.as_raw_mut_TrackerModel(), last_target_state.as_raw_PtrOfTrackerTargetState()) }.into_result()
+		unsafe { sys::cv_TrackerModel_setLastTargetState_const_Ptr_TrackerTargetState_R(self.as_raw_mut_TrackerModel(), last_target_state.as_raw_PtrOfTrackerTargetState()) }.into_result()
 	}
 	
 	/// Get the last TrackerTargetState from Trajectory
@@ -2615,7 +2615,7 @@ pub trait TrackerSamplerTrait {
 	/// * image: The current frame
 	/// * boundingBox: The bounding box from which regions can be calculated
 	fn sampling(&mut self, image: &core::Mat, bounding_box: core::Rect) -> Result<()> {
-		unsafe { sys::cv_TrackerSampler_sampling_const_MatX_Rect(self.as_raw_mut_TrackerSampler(), image.as_raw_Mat(), bounding_box.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_TrackerSampler_sampling_const_MatR_Rect(self.as_raw_mut_TrackerSampler(), image.as_raw_Mat(), bounding_box.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
@@ -2679,7 +2679,7 @@ pub trait TrackerSamplerTrait {
 	/// 
 	/// * sampler: The TrackerSamplerAlgorithm
 	fn add_tracker_sampler_algorithm_1(&mut self, sampler: &mut core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>) -> Result<bool> {
-		unsafe { sys::cv_TrackerSampler_addTrackerSamplerAlgorithm_Ptr_TrackerSamplerAlgorithm_X(self.as_raw_mut_TrackerSampler(), sampler.as_raw_mut_PtrOfTrackerSamplerAlgorithm()) }.into_result()
+		unsafe { sys::cv_TrackerSampler_addTrackerSamplerAlgorithm_Ptr_TrackerSamplerAlgorithm_R(self.as_raw_mut_TrackerSampler(), sampler.as_raw_mut_PtrOfTrackerSamplerAlgorithm()) }.into_result()
 	}
 	
 }
@@ -2705,15 +2705,15 @@ impl Drop for TrackerSampler {
 }
 
 impl TrackerSampler {
-	pub fn as_raw_TrackerSampler(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSampler(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSampler(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSampler(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSampler {}
 
 impl crate::tracking::TrackerSamplerTrait for TrackerSampler {
-	fn as_raw_TrackerSampler(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSampler(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSampler(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSampler(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSampler {
@@ -2740,7 +2740,7 @@ pub trait TrackerSamplerAlgorithm {
 	/// 
 	/// * sample: The computed samples [AAM](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 	fn sampling(&mut self, image: &core::Mat, bounding_box: core::Rect, sample: &mut core::Vector::<core::Mat>) -> Result<bool> {
-		unsafe { sys::cv_TrackerSamplerAlgorithm_sampling_const_MatX_Rect_vector_Mat_X(self.as_raw_mut_TrackerSamplerAlgorithm(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerAlgorithm(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	/// Get the name of the specific TrackerSamplerAlgorithm
@@ -2761,7 +2761,7 @@ impl dyn TrackerSamplerAlgorithm + '_ {
 	/// *   "CS" -- Current State
 	pub fn create(tracker_sampler_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>> {
 		extern_container_arg!(tracker_sampler_type);
-		unsafe { sys::cv_TrackerSamplerAlgorithm_create_const_StringX(tracker_sampler_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerSamplerAlgorithm_create_const_StringR(tracker_sampler_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2784,7 +2784,7 @@ pub trait TrackerSamplerCSTrait: crate::tracking::TrackerSamplerAlgorithm {
 	}
 	
 	fn sampling_impl(&mut self, image: &core::Mat, bounding_box: core::Rect, sample: &mut core::Vector::<core::Mat>) -> Result<bool> {
-		unsafe { sys::cv_TrackerSamplerCS_samplingImpl_const_MatX_Rect_vector_Mat_X(self.as_raw_mut_TrackerSamplerCS(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerCS(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	fn get_roi(&self) -> Result<core::Rect> {
@@ -2808,20 +2808,20 @@ impl Drop for TrackerSamplerCS {
 }
 
 impl TrackerSamplerCS {
-	pub fn as_raw_TrackerSamplerCS(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerCS(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerCS(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerCS(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerCS {}
 
 impl crate::tracking::TrackerSamplerAlgorithm for TrackerSamplerCS {
-	fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerSamplerCSTrait for TrackerSamplerCS {
-	fn as_raw_TrackerSamplerCS(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerCS(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerCS(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerCS(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerCS {
@@ -2832,7 +2832,7 @@ impl TrackerSamplerCS {
 	/// ## C++ default parameters
 	/// * parameters: TrackerSamplerCS::Params()
 	pub fn new(parameters: &crate::tracking::TrackerSamplerCS_Params) -> Result<crate::tracking::TrackerSamplerCS> {
-		unsafe { sys::cv_TrackerSamplerCS_TrackerSamplerCS_const_ParamsX(parameters.as_raw_TrackerSamplerCS_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerCS::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerSamplerCS_TrackerSamplerCS_const_ParamsR(parameters.as_raw_TrackerSamplerCS_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerCS::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2877,15 +2877,15 @@ impl Drop for TrackerSamplerCS_Params {
 }
 
 impl TrackerSamplerCS_Params {
-	pub fn as_raw_TrackerSamplerCS_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerCS_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerCS_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerCS_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerCS_Params {}
 
 impl crate::tracking::TrackerSamplerCS_ParamsTrait for TrackerSamplerCS_Params {
-	fn as_raw_TrackerSamplerCS_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerCS_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerCS_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerCS_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerCS_Params {
@@ -2932,20 +2932,20 @@ impl Drop for TrackerSamplerCSC {
 }
 
 impl TrackerSamplerCSC {
-	pub fn as_raw_TrackerSamplerCSC(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerCSC(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerCSC(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerCSC(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerCSC {}
 
 impl crate::tracking::TrackerSamplerAlgorithm for TrackerSamplerCSC {
-	fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerSamplerCSCTrait for TrackerSamplerCSC {
-	fn as_raw_TrackerSamplerCSC(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerCSC(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerCSC(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerCSC(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerCSC {
@@ -2956,7 +2956,7 @@ impl TrackerSamplerCSC {
 	/// ## C++ default parameters
 	/// * parameters: TrackerSamplerCSC::Params()
 	pub fn new(parameters: &crate::tracking::TrackerSamplerCSC_Params) -> Result<crate::tracking::TrackerSamplerCSC> {
-		unsafe { sys::cv_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsX(parameters.as_raw_TrackerSamplerCSC_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerCSC::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsR(parameters.as_raw_TrackerSamplerCSC_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerCSC::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3041,15 +3041,15 @@ impl Drop for TrackerSamplerCSC_Params {
 }
 
 impl TrackerSamplerCSC_Params {
-	pub fn as_raw_TrackerSamplerCSC_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerCSC_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerCSC_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerCSC_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerCSC_Params {}
 
 impl crate::tracking::TrackerSamplerCSC_ParamsTrait for TrackerSamplerCSC_Params {
-	fn as_raw_TrackerSamplerCSC_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerCSC_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerCSC_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerCSC_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerCSC_Params {
@@ -3111,20 +3111,20 @@ impl Drop for TrackerSamplerPF {
 }
 
 impl TrackerSamplerPF {
-	pub fn as_raw_TrackerSamplerPF(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerPF(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerPF(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerPF(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerPF {}
 
 impl crate::tracking::TrackerSamplerAlgorithm for TrackerSamplerPF {
-	fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerSamplerPFTrait for TrackerSamplerPF {
-	fn as_raw_TrackerSamplerPF(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerPF(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerPF(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerPF(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerPF {
@@ -3136,7 +3136,7 @@ impl TrackerSamplerPF {
 	/// ## C++ default parameters
 	/// * parameters: TrackerSamplerPF::Params()
 	pub fn new(chosen_rect: &core::Mat, parameters: &crate::tracking::TrackerSamplerPF_Params) -> Result<crate::tracking::TrackerSamplerPF> {
-		unsafe { sys::cv_TrackerSamplerPF_TrackerSamplerPF_const_MatX_const_ParamsX(chosen_rect.as_raw_Mat(), parameters.as_raw_TrackerSamplerPF_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerPF::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerSamplerPF_TrackerSamplerPF_const_MatR_const_ParamsR(chosen_rect.as_raw_Mat(), parameters.as_raw_TrackerSamplerPF_Params()) }.into_result().map(|r| unsafe { crate::tracking::TrackerSamplerPF::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3211,15 +3211,15 @@ impl Drop for TrackerSamplerPF_Params {
 }
 
 impl TrackerSamplerPF_Params {
-	pub fn as_raw_TrackerSamplerPF_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerSamplerPF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerSamplerPF_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerSamplerPF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerSamplerPF_Params {}
 
 impl crate::tracking::TrackerSamplerPF_ParamsTrait for TrackerSamplerPF_Params {
-	fn as_raw_TrackerSamplerPF_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerSamplerPF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerSamplerPF_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerSamplerPF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerSamplerPF_Params {
@@ -3259,7 +3259,7 @@ impl dyn TrackerStateEstimator + '_ {
 	/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
 	pub fn create(tracke_state_estimator_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerStateEstimator>> {
 		extern_container_arg!(tracke_state_estimator_type);
-		unsafe { sys::cv_TrackerStateEstimator_create_const_StringX(tracke_state_estimator_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerStateEstimator>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimator_create_const_StringR(tracke_state_estimator_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerStateEstimator>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3277,7 +3277,7 @@ pub trait TrackerStateEstimatorAdaBoostingTrait: crate::tracking::TrackerStateEs
 	/// ## Parameters
 	/// * ROI: the sampling ROI
 	fn set_sample_roi(&mut self, roi: core::Rect) -> Result<()> {
-		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_setSampleROI_const_RectX(self.as_raw_mut_TrackerStateEstimatorAdaBoosting(), &roi) }.into_result()
+		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_setSampleROI_const_RectR(self.as_raw_mut_TrackerStateEstimatorAdaBoosting(), &roi) }.into_result()
 	}
 	
 	/// Get the list of the selected weak classifiers for the classification step
@@ -3312,20 +3312,20 @@ impl Drop for TrackerStateEstimatorAdaBoosting {
 }
 
 impl TrackerStateEstimatorAdaBoosting {
-	pub fn as_raw_TrackerStateEstimatorAdaBoosting(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerStateEstimatorAdaBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerStateEstimatorAdaBoosting(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerStateEstimatorAdaBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerStateEstimatorAdaBoosting {}
 
 impl crate::tracking::TrackerStateEstimator for TrackerStateEstimatorAdaBoosting {
-	fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerStateEstimatorAdaBoostingTrait for TrackerStateEstimatorAdaBoosting {
-	fn as_raw_TrackerStateEstimatorAdaBoosting(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimatorAdaBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimatorAdaBoosting(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimatorAdaBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerStateEstimatorAdaBoosting {
@@ -3337,7 +3337,7 @@ impl TrackerStateEstimatorAdaBoosting {
 	/// * patchSize: tracking rect
 	/// * ROI: initial ROI
 	pub fn new(num_classifer: i32, init_iterations: i32, n_features: i32, patch_size: core::Size, roi: core::Rect) -> Result<crate::tracking::TrackerStateEstimatorAdaBoosting> {
-		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectX(num_classifer, init_iterations, n_features, patch_size.opencv_to_extern(), &roi) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(num_classifer, init_iterations, n_features, patch_size.opencv_to_extern(), &roi) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3352,7 +3352,7 @@ pub trait TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetStateTrait: c
 	/// ## Parameters
 	/// * responses: The features extracted
 	fn set_target_responses(&mut self, responses: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_setTargetResponses_const_MatX(self.as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(), responses.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_setTargetResponses_const_MatR(self.as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(), responses.as_raw_Mat()) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -3392,20 +3392,20 @@ impl Drop for TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
 }
 
 impl TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
-	pub fn as_raw_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {}
 
 impl crate::tracking::TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetStateTrait for TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
-	fn as_raw_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerTargetStateTrait for TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
-	fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
@@ -3417,7 +3417,7 @@ impl TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
 	/// \param foreground label for target or background
 	/// \param responses list of features
 	pub fn new(position: core::Point2f, width: i32, height: i32, foreground: bool, responses: &core::Mat) -> Result<crate::tracking::TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState> {
-		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fX_int_int_bool_const_MatX(&position, width, height, foreground, responses.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fR_int_int_bool_const_MatR(&position, width, height, foreground, responses.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3444,20 +3444,20 @@ impl Drop for TrackerStateEstimatorMILBoosting {
 }
 
 impl TrackerStateEstimatorMILBoosting {
-	pub fn as_raw_TrackerStateEstimatorMILBoosting(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerStateEstimatorMILBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerStateEstimatorMILBoosting(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerStateEstimatorMILBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerStateEstimatorMILBoosting {}
 
 impl crate::tracking::TrackerStateEstimator for TrackerStateEstimatorMILBoosting {
-	fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerStateEstimatorMILBoostingTrait for TrackerStateEstimatorMILBoosting {
-	fn as_raw_TrackerStateEstimatorMILBoosting(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimatorMILBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimatorMILBoosting(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimatorMILBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerStateEstimatorMILBoosting {
@@ -3491,7 +3491,7 @@ pub trait TrackerStateEstimatorMILBoosting_TrackerMILTargetStateTrait: crate::tr
 	/// ## Parameters
 	/// * features: The features extracted
 	fn set_features(&mut self, features: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setFeatures_const_MatX(self.as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(), features.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setFeatures_const_MatR(self.as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(), features.as_raw_Mat()) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -3523,20 +3523,20 @@ impl Drop for TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
 }
 
 impl TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
-	pub fn as_raw_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerStateEstimatorMILBoosting_TrackerMILTargetState {}
 
 impl crate::tracking::TrackerStateEstimatorMILBoosting_TrackerMILTargetStateTrait for TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
-	fn as_raw_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimatorMILBoosting_TrackerMILTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerTargetStateTrait for TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
-	fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
@@ -3548,7 +3548,7 @@ impl TrackerStateEstimatorMILBoosting_TrackerMILTargetState {
 	/// \param foreground label for target or background
 	/// \param features features extracted
 	pub fn new(position: core::Point2f, width: i32, height: i32, foreground: bool, features: &core::Mat) -> Result<crate::tracking::TrackerStateEstimatorMILBoosting_TrackerMILTargetState> {
-		unsafe { sys::cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_TrackerMILTargetState_const_Point2fX_int_int_bool_const_MatX(&position, width, height, foreground, features.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorMILBoosting_TrackerMILTargetState::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_TrackerMILTargetState_const_Point2fR_int_int_bool_const_MatR(&position, width, height, foreground, features.as_raw_Mat()) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorMILBoosting_TrackerMILTargetState::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3575,20 +3575,20 @@ impl Drop for TrackerStateEstimatorSVM {
 }
 
 impl TrackerStateEstimatorSVM {
-	pub fn as_raw_TrackerStateEstimatorSVM(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerStateEstimatorSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerStateEstimatorSVM(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerStateEstimatorSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerStateEstimatorSVM {}
 
 impl crate::tracking::TrackerStateEstimator for TrackerStateEstimatorSVM {
-	fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::tracking::TrackerStateEstimatorSVMTrait for TrackerStateEstimatorSVM {
-	fn as_raw_TrackerStateEstimatorSVM(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerStateEstimatorSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerStateEstimatorSVM(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerStateEstimatorSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerStateEstimatorSVM {
@@ -3621,7 +3621,7 @@ impl dyn TrackerTLD + '_ {
 	/// ## Parameters
 	/// * parameters: TLD parameters TrackerTLD::Params
 	pub fn create(parameters: &crate::tracking::TrackerTLD_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerTLD>> {
-		unsafe { sys::cv_TrackerTLD_create_const_ParamsX(parameters.as_raw_TrackerTLD_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerTLD>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerTLD_create_const_ParamsR(parameters.as_raw_TrackerTLD_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerTLD>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_1() -> Result<core::Ptr::<dyn crate::tracking::TrackerTLD>> {
@@ -3634,11 +3634,11 @@ pub trait TrackerTLD_ParamsTrait {
 	fn as_raw_mut_TrackerTLD_Params(&mut self) -> *mut c_void;
 
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_TrackerTLD_Params_read_const_FileNodeX(self.as_raw_mut_TrackerTLD_Params(), unnamed.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_TrackerTLD_Params_read_const_FileNodeR(self.as_raw_mut_TrackerTLD_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_TrackerTLD_Params_write_const_FileStorageX(self.as_raw_TrackerTLD_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_TrackerTLD_Params_write_const_FileStorageR(self.as_raw_TrackerTLD_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -3657,15 +3657,15 @@ impl Drop for TrackerTLD_Params {
 }
 
 impl TrackerTLD_Params {
-	pub fn as_raw_TrackerTLD_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerTLD_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerTLD_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerTLD_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerTLD_Params {}
 
 impl crate::tracking::TrackerTLD_ParamsTrait for TrackerTLD_Params {
-	fn as_raw_TrackerTLD_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerTLD_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerTLD_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerTLD_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerTLD_Params {
@@ -3694,7 +3694,7 @@ pub trait TrackerTargetStateTrait {
 	/// \brief Set the position
 	/// \param position The position
 	fn set_target_position(&mut self, position: core::Point2f) -> Result<()> {
-		unsafe { sys::cv_TrackerTargetState_setTargetPosition_const_Point2fX(self.as_raw_mut_TrackerTargetState(), &position) }.into_result()
+		unsafe { sys::cv_TrackerTargetState_setTargetPosition_const_Point2fR(self.as_raw_mut_TrackerTargetState(), &position) }.into_result()
 	}
 	
 	/// \brief Get the width of the target
@@ -3743,15 +3743,15 @@ impl Drop for TrackerTargetState {
 }
 
 impl TrackerTargetState {
-	pub fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for TrackerTargetState {}
 
 impl crate::tracking::TrackerTargetStateTrait for TrackerTargetState {
-	fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TrackerTargetState {

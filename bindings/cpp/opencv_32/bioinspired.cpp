@@ -65,7 +65,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_setup_FileStorageX_bool(cv::bioinspired::Retina* instance, cv::FileStorage* fs, bool applyDefaultSetupOnFailure) {
+	Result_void cv_bioinspired_Retina_setup_FileStorageR_bool(cv::bioinspired::Retina* instance, cv::FileStorage* fs, bool applyDefaultSetupOnFailure) {
 		try {
 			instance->setup(*fs, applyDefaultSetupOnFailure);
 			return Ok();
@@ -100,7 +100,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_write_const_FileStorageX(const cv::bioinspired::Retina* instance, cv::FileStorage* fs) {
+	Result_void cv_bioinspired_Retina_write_const_FileStorageR(const cv::bioinspired::Retina* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -121,42 +121,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_run_const__InputArrayX(cv::bioinspired::Retina* instance, const cv::_InputArray* inputImage) {
+	Result_void cv_bioinspired_Retina_run_const__InputArrayR(cv::bioinspired::Retina* instance, const cv::_InputArray* inputImage) {
 		try {
 			instance->run(*inputImage);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_applyFastToneMapping_const__InputArrayX_const__OutputArrayX(cv::bioinspired::Retina* instance, const cv::_InputArray* inputImage, const cv::_OutputArray* outputToneMappedImage) {
+	Result_void cv_bioinspired_Retina_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(cv::bioinspired::Retina* instance, const cv::_InputArray* inputImage, const cv::_OutputArray* outputToneMappedImage) {
 		try {
 			instance->applyFastToneMapping(*inputImage, *outputToneMappedImage);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_getParvo_const__OutputArrayX(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_parvo) {
+	Result_void cv_bioinspired_Retina_getParvo_const__OutputArrayR(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_parvo) {
 		try {
 			instance->getParvo(*retinaOutput_parvo);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_getParvoRAW_const__OutputArrayX(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_parvo) {
+	Result_void cv_bioinspired_Retina_getParvoRAW_const__OutputArrayR(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_parvo) {
 		try {
 			instance->getParvoRAW(*retinaOutput_parvo);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_getMagno_const__OutputArrayX(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_magno) {
+	Result_void cv_bioinspired_Retina_getMagno_const__OutputArrayR(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_magno) {
 		try {
 			instance->getMagno(*retinaOutput_magno);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayX(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_magno) {
+	Result_void cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayR(cv::bioinspired::Retina* instance, const cv::_OutputArray* retinaOutput_magno) {
 		try {
 			instance->getMagnoRAW(*retinaOutput_magno);
 			return Ok();
@@ -205,7 +205,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayX_const__OutputArrayX(cv::bioinspired::RetinaFastToneMapping* instance, const cv::_InputArray* inputImage, const cv::_OutputArray* outputToneMappedImage) {
+	Result_void cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(cv::bioinspired::RetinaFastToneMapping* instance, const cv::_InputArray* inputImage, const cv::_OutputArray* outputToneMappedImage) {
 		try {
 			instance->applyFastToneMapping(*inputImage, *outputToneMappedImage);
 			return Ok();
@@ -285,7 +285,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageX_bool(cv::bioinspired::TransientAreasSegmentationModule* instance, cv::FileStorage* fs, bool applyDefaultSetupOnFailure) {
+	Result_void cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageR_bool(cv::bioinspired::TransientAreasSegmentationModule* instance, cv::FileStorage* fs, bool applyDefaultSetupOnFailure) {
 		try {
 			instance->setup(*fs, applyDefaultSetupOnFailure);
 			return Ok();
@@ -320,21 +320,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageX(const cv::bioinspired::TransientAreasSegmentationModule* instance, cv::FileStorage* fs) {
+	Result_void cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageR(const cv::bioinspired::TransientAreasSegmentationModule* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayX_int(cv::bioinspired::TransientAreasSegmentationModule* instance, const cv::_InputArray* inputToSegment, int channelIndex) {
+	Result_void cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR_int(cv::bioinspired::TransientAreasSegmentationModule* instance, const cv::_InputArray* inputToSegment, int channelIndex) {
 		try {
 			instance->run(*inputToSegment, channelIndex);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_const__OutputArrayX(cv::bioinspired::TransientAreasSegmentationModule* instance, const cv::_OutputArray* transientAreas) {
+	Result_void cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_const__OutputArrayR(cv::bioinspired::TransientAreasSegmentationModule* instance, const cv::_OutputArray* transientAreas) {
 		try {
 			instance->getSegmentationPicture(*transientAreas);
 			return Ok();

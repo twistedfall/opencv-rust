@@ -839,12 +839,12 @@ pub const WARP_POLAR_LOG: i32 = 256;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum AdaptiveThresholdTypes {
 	/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a mean of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%0A%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) minus C
-	ADAPTIVE_THRESH_MEAN_C = 0 as isize,
+	ADAPTIVE_THRESH_MEAN_C = 0,
 	/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is a weighted sum (cross-correlation with a Gaussian
 	/// window) of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%20%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29)
 	/// minus C . The default sigma (standard deviation) is used for the specified blockSize . See
 	/// #getGaussianKernel
-	ADAPTIVE_THRESH_GAUSSIAN_C = 1 as isize,
+	ADAPTIVE_THRESH_GAUSSIAN_C = 1,
 }
 
 opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
@@ -857,137 +857,137 @@ opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ColorConversionCodes {
 	/// add alpha channel to RGB or BGR image
-	COLOR_BGR2BGRA = 0 as isize,
+	COLOR_BGR2BGRA = 0,
 	// COLOR_RGB2RGBA = 0 as isize, // duplicate discriminant
 	/// remove alpha channel from RGB or BGR image
-	COLOR_BGRA2BGR = 1 as isize,
+	COLOR_BGRA2BGR = 1,
 	// COLOR_RGBA2RGB = 1 as isize, // duplicate discriminant
 	/// convert between RGB and BGR color spaces (with or without alpha channel)
-	COLOR_BGR2RGBA = 2 as isize,
+	COLOR_BGR2RGBA = 2,
 	// COLOR_RGB2BGRA = 2 as isize, // duplicate discriminant
-	COLOR_RGBA2BGR = 3 as isize,
+	COLOR_RGBA2BGR = 3,
 	// COLOR_BGRA2RGB = 3 as isize, // duplicate discriminant
-	COLOR_BGR2RGB = 4 as isize,
+	COLOR_BGR2RGB = 4,
 	// COLOR_RGB2BGR = 4 as isize, // duplicate discriminant
-	COLOR_BGRA2RGBA = 5 as isize,
+	COLOR_BGRA2RGBA = 5,
 	// COLOR_RGBA2BGRA = 5 as isize, // duplicate discriminant
 	/// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
-	COLOR_BGR2GRAY = 6 as isize,
-	COLOR_RGB2GRAY = 7 as isize,
-	COLOR_GRAY2BGR = 8 as isize,
+	COLOR_BGR2GRAY = 6,
+	COLOR_RGB2GRAY = 7,
+	COLOR_GRAY2BGR = 8,
 	// COLOR_GRAY2RGB = 8 as isize, // duplicate discriminant
-	COLOR_GRAY2BGRA = 9 as isize,
+	COLOR_GRAY2BGRA = 9,
 	// COLOR_GRAY2RGBA = 9 as isize, // duplicate discriminant
-	COLOR_BGRA2GRAY = 10 as isize,
-	COLOR_RGBA2GRAY = 11 as isize,
+	COLOR_BGRA2GRAY = 10,
+	COLOR_RGBA2GRAY = 11,
 	/// convert between RGB/BGR and BGR565 (16-bit images)
-	COLOR_BGR2BGR565 = 12 as isize,
-	COLOR_RGB2BGR565 = 13 as isize,
-	COLOR_BGR5652BGR = 14 as isize,
-	COLOR_BGR5652RGB = 15 as isize,
-	COLOR_BGRA2BGR565 = 16 as isize,
-	COLOR_RGBA2BGR565 = 17 as isize,
-	COLOR_BGR5652BGRA = 18 as isize,
-	COLOR_BGR5652RGBA = 19 as isize,
+	COLOR_BGR2BGR565 = 12,
+	COLOR_RGB2BGR565 = 13,
+	COLOR_BGR5652BGR = 14,
+	COLOR_BGR5652RGB = 15,
+	COLOR_BGRA2BGR565 = 16,
+	COLOR_RGBA2BGR565 = 17,
+	COLOR_BGR5652BGRA = 18,
+	COLOR_BGR5652RGBA = 19,
 	/// convert between grayscale to BGR565 (16-bit images)
-	COLOR_GRAY2BGR565 = 20 as isize,
-	COLOR_BGR5652GRAY = 21 as isize,
+	COLOR_GRAY2BGR565 = 20,
+	COLOR_BGR5652GRAY = 21,
 	/// convert between RGB/BGR and BGR555 (16-bit images)
-	COLOR_BGR2BGR555 = 22 as isize,
-	COLOR_RGB2BGR555 = 23 as isize,
-	COLOR_BGR5552BGR = 24 as isize,
-	COLOR_BGR5552RGB = 25 as isize,
-	COLOR_BGRA2BGR555 = 26 as isize,
-	COLOR_RGBA2BGR555 = 27 as isize,
-	COLOR_BGR5552BGRA = 28 as isize,
-	COLOR_BGR5552RGBA = 29 as isize,
+	COLOR_BGR2BGR555 = 22,
+	COLOR_RGB2BGR555 = 23,
+	COLOR_BGR5552BGR = 24,
+	COLOR_BGR5552RGB = 25,
+	COLOR_BGRA2BGR555 = 26,
+	COLOR_RGBA2BGR555 = 27,
+	COLOR_BGR5552BGRA = 28,
+	COLOR_BGR5552RGBA = 29,
 	/// convert between grayscale and BGR555 (16-bit images)
-	COLOR_GRAY2BGR555 = 30 as isize,
-	COLOR_BGR5552GRAY = 31 as isize,
+	COLOR_GRAY2BGR555 = 30,
+	COLOR_BGR5552GRAY = 31,
 	/// convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
-	COLOR_BGR2XYZ = 32 as isize,
-	COLOR_RGB2XYZ = 33 as isize,
-	COLOR_XYZ2BGR = 34 as isize,
-	COLOR_XYZ2RGB = 35 as isize,
+	COLOR_BGR2XYZ = 32,
+	COLOR_RGB2XYZ = 33,
+	COLOR_XYZ2BGR = 34,
+	COLOR_XYZ2RGB = 35,
 	/// convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
-	COLOR_BGR2YCrCb = 36 as isize,
-	COLOR_RGB2YCrCb = 37 as isize,
-	COLOR_YCrCb2BGR = 38 as isize,
-	COLOR_YCrCb2RGB = 39 as isize,
+	COLOR_BGR2YCrCb = 36,
+	COLOR_RGB2YCrCb = 37,
+	COLOR_YCrCb2BGR = 38,
+	COLOR_YCrCb2RGB = 39,
 	/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
-	COLOR_BGR2HSV = 40 as isize,
-	COLOR_RGB2HSV = 41 as isize,
+	COLOR_BGR2HSV = 40,
+	COLOR_RGB2HSV = 41,
 	/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
-	COLOR_BGR2Lab = 44 as isize,
-	COLOR_RGB2Lab = 45 as isize,
+	COLOR_BGR2Lab = 44,
+	COLOR_RGB2Lab = 45,
 	/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
-	COLOR_BGR2Luv = 50 as isize,
-	COLOR_RGB2Luv = 51 as isize,
+	COLOR_BGR2Luv = 50,
+	COLOR_RGB2Luv = 51,
 	/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
-	COLOR_BGR2HLS = 52 as isize,
-	COLOR_RGB2HLS = 53 as isize,
+	COLOR_BGR2HLS = 52,
+	COLOR_RGB2HLS = 53,
 	/// backward conversions to RGB/BGR
-	COLOR_HSV2BGR = 54 as isize,
-	COLOR_HSV2RGB = 55 as isize,
-	COLOR_Lab2BGR = 56 as isize,
-	COLOR_Lab2RGB = 57 as isize,
-	COLOR_Luv2BGR = 58 as isize,
-	COLOR_Luv2RGB = 59 as isize,
-	COLOR_HLS2BGR = 60 as isize,
-	COLOR_HLS2RGB = 61 as isize,
-	COLOR_BGR2HSV_FULL = 66 as isize,
-	COLOR_RGB2HSV_FULL = 67 as isize,
-	COLOR_BGR2HLS_FULL = 68 as isize,
-	COLOR_RGB2HLS_FULL = 69 as isize,
-	COLOR_HSV2BGR_FULL = 70 as isize,
-	COLOR_HSV2RGB_FULL = 71 as isize,
-	COLOR_HLS2BGR_FULL = 72 as isize,
-	COLOR_HLS2RGB_FULL = 73 as isize,
-	COLOR_LBGR2Lab = 74 as isize,
-	COLOR_LRGB2Lab = 75 as isize,
-	COLOR_LBGR2Luv = 76 as isize,
-	COLOR_LRGB2Luv = 77 as isize,
-	COLOR_Lab2LBGR = 78 as isize,
-	COLOR_Lab2LRGB = 79 as isize,
-	COLOR_Luv2LBGR = 80 as isize,
-	COLOR_Luv2LRGB = 81 as isize,
+	COLOR_HSV2BGR = 54,
+	COLOR_HSV2RGB = 55,
+	COLOR_Lab2BGR = 56,
+	COLOR_Lab2RGB = 57,
+	COLOR_Luv2BGR = 58,
+	COLOR_Luv2RGB = 59,
+	COLOR_HLS2BGR = 60,
+	COLOR_HLS2RGB = 61,
+	COLOR_BGR2HSV_FULL = 66,
+	COLOR_RGB2HSV_FULL = 67,
+	COLOR_BGR2HLS_FULL = 68,
+	COLOR_RGB2HLS_FULL = 69,
+	COLOR_HSV2BGR_FULL = 70,
+	COLOR_HSV2RGB_FULL = 71,
+	COLOR_HLS2BGR_FULL = 72,
+	COLOR_HLS2RGB_FULL = 73,
+	COLOR_LBGR2Lab = 74,
+	COLOR_LRGB2Lab = 75,
+	COLOR_LBGR2Luv = 76,
+	COLOR_LRGB2Luv = 77,
+	COLOR_Lab2LBGR = 78,
+	COLOR_Lab2LRGB = 79,
+	COLOR_Luv2LBGR = 80,
+	COLOR_Luv2LRGB = 81,
 	/// convert between RGB/BGR and YUV
-	COLOR_BGR2YUV = 82 as isize,
-	COLOR_RGB2YUV = 83 as isize,
-	COLOR_YUV2BGR = 84 as isize,
-	COLOR_YUV2RGB = 85 as isize,
+	COLOR_BGR2YUV = 82,
+	COLOR_RGB2YUV = 83,
+	COLOR_YUV2BGR = 84,
+	COLOR_YUV2RGB = 85,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGB_NV12 = 90 as isize,
+	COLOR_YUV2RGB_NV12 = 90,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGR_NV12 = 91 as isize,
+	COLOR_YUV2BGR_NV12 = 91,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGB_NV21 = 92 as isize,
+	COLOR_YUV2RGB_NV21 = 92,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGR_NV21 = 93 as isize,
+	COLOR_YUV2BGR_NV21 = 93,
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420sp2RGB = 92 as isize, // duplicate discriminant
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420sp2BGR = 93 as isize, // duplicate discriminant
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGBA_NV12 = 94 as isize,
+	COLOR_YUV2RGBA_NV12 = 94,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGRA_NV12 = 95 as isize,
+	COLOR_YUV2BGRA_NV12 = 95,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGBA_NV21 = 96 as isize,
+	COLOR_YUV2RGBA_NV21 = 96,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGRA_NV21 = 97 as isize,
+	COLOR_YUV2BGRA_NV21 = 97,
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420sp2RGBA = 96 as isize, // duplicate discriminant
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420sp2BGRA = 97 as isize, // duplicate discriminant
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGB_YV12 = 98 as isize,
+	COLOR_YUV2RGB_YV12 = 98,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGR_YV12 = 99 as isize,
+	COLOR_YUV2BGR_YV12 = 99,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGB_IYUV = 100 as isize,
+	COLOR_YUV2RGB_IYUV = 100,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGR_IYUV = 101 as isize,
+	COLOR_YUV2BGR_IYUV = 101,
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV2RGB_I420 = 100 as isize, // duplicate discriminant
 	// YUV 4:2:0 family to RGB
@@ -997,13 +997,13 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420p2BGR = 99 as isize, // duplicate discriminant
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGBA_YV12 = 102 as isize,
+	COLOR_YUV2RGBA_YV12 = 102,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGRA_YV12 = 103 as isize,
+	COLOR_YUV2BGRA_YV12 = 103,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2RGBA_IYUV = 104 as isize,
+	COLOR_YUV2RGBA_IYUV = 104,
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2BGRA_IYUV = 105 as isize,
+	COLOR_YUV2BGRA_IYUV = 105,
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV2RGBA_I420 = 104 as isize, // duplicate discriminant
 	// YUV 4:2:0 family to RGB
@@ -1013,7 +1013,7 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420p2BGRA = 103 as isize, // duplicate discriminant
 	/// YUV 4:2:0 family to RGB
-	COLOR_YUV2GRAY_420 = 106 as isize,
+	COLOR_YUV2GRAY_420 = 106,
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV2GRAY_NV21 = 106 as isize, // duplicate discriminant
 	// YUV 4:2:0 family to RGB
@@ -1029,9 +1029,9 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:0 family to RGB
 	// COLOR_YUV420p2GRAY = 106 as isize, // duplicate discriminant
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGB_UYVY = 107 as isize,
+	COLOR_YUV2RGB_UYVY = 107,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGR_UYVY = 108 as isize,
+	COLOR_YUV2BGR_UYVY = 108,
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2RGB_Y422 = 107 as isize, // duplicate discriminant
 	// YUV 4:2:2 family to RGB
@@ -1041,9 +1041,9 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2BGR_UYNV = 108 as isize, // duplicate discriminant
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGBA_UYVY = 111 as isize,
+	COLOR_YUV2RGBA_UYVY = 111,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGRA_UYVY = 112 as isize,
+	COLOR_YUV2BGRA_UYVY = 112,
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2RGBA_Y422 = 111 as isize, // duplicate discriminant
 	// YUV 4:2:2 family to RGB
@@ -1053,13 +1053,13 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2BGRA_UYNV = 112 as isize, // duplicate discriminant
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGB_YUY2 = 115 as isize,
+	COLOR_YUV2RGB_YUY2 = 115,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGR_YUY2 = 116 as isize,
+	COLOR_YUV2BGR_YUY2 = 116,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGB_YVYU = 117 as isize,
+	COLOR_YUV2RGB_YVYU = 117,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGR_YVYU = 118 as isize,
+	COLOR_YUV2BGR_YVYU = 118,
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2RGB_YUYV = 115 as isize, // duplicate discriminant
 	// YUV 4:2:2 family to RGB
@@ -1069,13 +1069,13 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2BGR_YUNV = 116 as isize, // duplicate discriminant
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGBA_YUY2 = 119 as isize,
+	COLOR_YUV2RGBA_YUY2 = 119,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGRA_YUY2 = 120 as isize,
+	COLOR_YUV2BGRA_YUY2 = 120,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2RGBA_YVYU = 121 as isize,
+	COLOR_YUV2RGBA_YVYU = 121,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2BGRA_YVYU = 122 as isize,
+	COLOR_YUV2BGRA_YVYU = 122,
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2RGBA_YUYV = 119 as isize, // duplicate discriminant
 	// YUV 4:2:2 family to RGB
@@ -1085,9 +1085,9 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2BGRA_YUNV = 120 as isize, // duplicate discriminant
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2GRAY_UYVY = 123 as isize,
+	COLOR_YUV2GRAY_UYVY = 123,
 	/// YUV 4:2:2 family to RGB
-	COLOR_YUV2GRAY_YUY2 = 124 as isize,
+	COLOR_YUV2GRAY_YUY2 = 124,
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2GRAY_Y422 = 123 as isize, // duplicate discriminant
 	// YUV 4:2:2 family to RGB
@@ -1099,41 +1099,41 @@ pub enum ColorConversionCodes {
 	// YUV 4:2:2 family to RGB
 	// COLOR_YUV2GRAY_YUNV = 124 as isize, // duplicate discriminant
 	/// alpha premultiplication
-	COLOR_RGBA2mRGBA = 125 as isize,
+	COLOR_RGBA2mRGBA = 125,
 	/// alpha premultiplication
-	COLOR_mRGBA2RGBA = 126 as isize,
+	COLOR_mRGBA2RGBA = 126,
 	/// RGB to YUV 4:2:0 family
-	COLOR_RGB2YUV_I420 = 127 as isize,
+	COLOR_RGB2YUV_I420 = 127,
 	/// RGB to YUV 4:2:0 family
-	COLOR_BGR2YUV_I420 = 128 as isize,
+	COLOR_BGR2YUV_I420 = 128,
 	// RGB to YUV 4:2:0 family
 	// COLOR_RGB2YUV_IYUV = 127 as isize, // duplicate discriminant
 	// RGB to YUV 4:2:0 family
 	// COLOR_BGR2YUV_IYUV = 128 as isize, // duplicate discriminant
 	/// RGB to YUV 4:2:0 family
-	COLOR_RGBA2YUV_I420 = 129 as isize,
+	COLOR_RGBA2YUV_I420 = 129,
 	/// RGB to YUV 4:2:0 family
-	COLOR_BGRA2YUV_I420 = 130 as isize,
+	COLOR_BGRA2YUV_I420 = 130,
 	// RGB to YUV 4:2:0 family
 	// COLOR_RGBA2YUV_IYUV = 129 as isize, // duplicate discriminant
 	// RGB to YUV 4:2:0 family
 	// COLOR_BGRA2YUV_IYUV = 130 as isize, // duplicate discriminant
 	/// RGB to YUV 4:2:0 family
-	COLOR_RGB2YUV_YV12 = 131 as isize,
+	COLOR_RGB2YUV_YV12 = 131,
 	/// RGB to YUV 4:2:0 family
-	COLOR_BGR2YUV_YV12 = 132 as isize,
+	COLOR_BGR2YUV_YV12 = 132,
 	/// RGB to YUV 4:2:0 family
-	COLOR_RGBA2YUV_YV12 = 133 as isize,
+	COLOR_RGBA2YUV_YV12 = 133,
 	/// RGB to YUV 4:2:0 family
-	COLOR_BGRA2YUV_YV12 = 134 as isize,
+	COLOR_BGRA2YUV_YV12 = 134,
 	/// Demosaicing
-	COLOR_BayerBG2BGR = 46 as isize,
+	COLOR_BayerBG2BGR = 46,
 	/// Demosaicing
-	COLOR_BayerGB2BGR = 47 as isize,
+	COLOR_BayerGB2BGR = 47,
 	/// Demosaicing
-	COLOR_BayerRG2BGR = 48 as isize,
+	COLOR_BayerRG2BGR = 48,
 	/// Demosaicing
-	COLOR_BayerGR2BGR = 49 as isize,
+	COLOR_BayerGR2BGR = 49,
 	// Demosaicing
 	// COLOR_BayerBG2RGB = 48 as isize, // duplicate discriminant
 	// Demosaicing
@@ -1143,21 +1143,21 @@ pub enum ColorConversionCodes {
 	// Demosaicing
 	// COLOR_BayerGR2RGB = 47 as isize, // duplicate discriminant
 	/// Demosaicing
-	COLOR_BayerBG2GRAY = 86 as isize,
+	COLOR_BayerBG2GRAY = 86,
 	/// Demosaicing
-	COLOR_BayerGB2GRAY = 87 as isize,
+	COLOR_BayerGB2GRAY = 87,
 	/// Demosaicing
-	COLOR_BayerRG2GRAY = 88 as isize,
+	COLOR_BayerRG2GRAY = 88,
 	/// Demosaicing
-	COLOR_BayerGR2GRAY = 89 as isize,
+	COLOR_BayerGR2GRAY = 89,
 	/// Demosaicing using Variable Number of Gradients
-	COLOR_BayerBG2BGR_VNG = 62 as isize,
+	COLOR_BayerBG2BGR_VNG = 62,
 	/// Demosaicing using Variable Number of Gradients
-	COLOR_BayerGB2BGR_VNG = 63 as isize,
+	COLOR_BayerGB2BGR_VNG = 63,
 	/// Demosaicing using Variable Number of Gradients
-	COLOR_BayerRG2BGR_VNG = 64 as isize,
+	COLOR_BayerRG2BGR_VNG = 64,
 	/// Demosaicing using Variable Number of Gradients
-	COLOR_BayerGR2BGR_VNG = 65 as isize,
+	COLOR_BayerGR2BGR_VNG = 65,
 	// Demosaicing using Variable Number of Gradients
 	// COLOR_BayerBG2RGB_VNG = 64 as isize, // duplicate discriminant
 	// Demosaicing using Variable Number of Gradients
@@ -1167,13 +1167,13 @@ pub enum ColorConversionCodes {
 	// Demosaicing using Variable Number of Gradients
 	// COLOR_BayerGR2RGB_VNG = 63 as isize, // duplicate discriminant
 	/// Edge-Aware Demosaicing
-	COLOR_BayerBG2BGR_EA = 135 as isize,
+	COLOR_BayerBG2BGR_EA = 135,
 	/// Edge-Aware Demosaicing
-	COLOR_BayerGB2BGR_EA = 136 as isize,
+	COLOR_BayerGB2BGR_EA = 136,
 	/// Edge-Aware Demosaicing
-	COLOR_BayerRG2BGR_EA = 137 as isize,
+	COLOR_BayerRG2BGR_EA = 137,
 	/// Edge-Aware Demosaicing
-	COLOR_BayerGR2BGR_EA = 138 as isize,
+	COLOR_BayerGR2BGR_EA = 138,
 	// Edge-Aware Demosaicing
 	// COLOR_BayerBG2RGB_EA = 137 as isize, // duplicate discriminant
 	// Edge-Aware Demosaicing
@@ -1183,13 +1183,13 @@ pub enum ColorConversionCodes {
 	// Edge-Aware Demosaicing
 	// COLOR_BayerGR2RGB_EA = 136 as isize, // duplicate discriminant
 	/// Demosaicing with alpha channel
-	COLOR_BayerBG2BGRA = 139 as isize,
+	COLOR_BayerBG2BGRA = 139,
 	/// Demosaicing with alpha channel
-	COLOR_BayerGB2BGRA = 140 as isize,
+	COLOR_BayerGB2BGRA = 140,
 	/// Demosaicing with alpha channel
-	COLOR_BayerRG2BGRA = 141 as isize,
+	COLOR_BayerRG2BGRA = 141,
 	/// Demosaicing with alpha channel
-	COLOR_BayerGR2BGRA = 142 as isize,
+	COLOR_BayerGR2BGRA = 142,
 	// Demosaicing with alpha channel
 	// COLOR_BayerBG2RGBA = 141 as isize, // duplicate discriminant
 	// Demosaicing with alpha channel
@@ -1199,7 +1199,7 @@ pub enum ColorConversionCodes {
 	// Demosaicing with alpha channel
 	// COLOR_BayerGR2RGBA = 140 as isize, // duplicate discriminant
 	/// Demosaicing with alpha channel
-	COLOR_COLORCVT_MAX = 143 as isize,
+	COLOR_COLORCVT_MAX = 143,
 }
 
 opencv_type_enum! { crate::imgproc::ColorConversionCodes }
@@ -1209,47 +1209,47 @@ opencv_type_enum! { crate::imgproc::ColorConversionCodes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ColormapTypes {
 	/// ![autumn](https://docs.opencv.org/3.4.10/colorscale_autumn.jpg)
-	COLORMAP_AUTUMN = 0 as isize,
+	COLORMAP_AUTUMN = 0,
 	/// ![bone](https://docs.opencv.org/3.4.10/colorscale_bone.jpg)
-	COLORMAP_BONE = 1 as isize,
+	COLORMAP_BONE = 1,
 	/// ![jet](https://docs.opencv.org/3.4.10/colorscale_jet.jpg)
-	COLORMAP_JET = 2 as isize,
+	COLORMAP_JET = 2,
 	/// ![winter](https://docs.opencv.org/3.4.10/colorscale_winter.jpg)
-	COLORMAP_WINTER = 3 as isize,
+	COLORMAP_WINTER = 3,
 	/// ![rainbow](https://docs.opencv.org/3.4.10/colorscale_rainbow.jpg)
-	COLORMAP_RAINBOW = 4 as isize,
+	COLORMAP_RAINBOW = 4,
 	/// ![ocean](https://docs.opencv.org/3.4.10/colorscale_ocean.jpg)
-	COLORMAP_OCEAN = 5 as isize,
+	COLORMAP_OCEAN = 5,
 	/// ![summer](https://docs.opencv.org/3.4.10/colorscale_summer.jpg)
-	COLORMAP_SUMMER = 6 as isize,
+	COLORMAP_SUMMER = 6,
 	/// ![spring](https://docs.opencv.org/3.4.10/colorscale_spring.jpg)
-	COLORMAP_SPRING = 7 as isize,
+	COLORMAP_SPRING = 7,
 	/// ![cool](https://docs.opencv.org/3.4.10/colorscale_cool.jpg)
-	COLORMAP_COOL = 8 as isize,
+	COLORMAP_COOL = 8,
 	/// ![HSV](https://docs.opencv.org/3.4.10/colorscale_hsv.jpg)
-	COLORMAP_HSV = 9 as isize,
+	COLORMAP_HSV = 9,
 	/// ![pink](https://docs.opencv.org/3.4.10/colorscale_pink.jpg)
-	COLORMAP_PINK = 10 as isize,
+	COLORMAP_PINK = 10,
 	/// ![hot](https://docs.opencv.org/3.4.10/colorscale_hot.jpg)
-	COLORMAP_HOT = 11 as isize,
+	COLORMAP_HOT = 11,
 	/// ![parula](https://docs.opencv.org/3.4.10/colorscale_parula.jpg)
-	COLORMAP_PARULA = 12 as isize,
+	COLORMAP_PARULA = 12,
 	/// ![magma](https://docs.opencv.org/3.4.10/colorscale_magma.jpg)
-	COLORMAP_MAGMA = 13 as isize,
+	COLORMAP_MAGMA = 13,
 	/// ![inferno](https://docs.opencv.org/3.4.10/colorscale_inferno.jpg)
-	COLORMAP_INFERNO = 14 as isize,
+	COLORMAP_INFERNO = 14,
 	/// ![plasma](https://docs.opencv.org/3.4.10/colorscale_plasma.jpg)
-	COLORMAP_PLASMA = 15 as isize,
+	COLORMAP_PLASMA = 15,
 	/// ![viridis](https://docs.opencv.org/3.4.10/colorscale_viridis.jpg)
-	COLORMAP_VIRIDIS = 16 as isize,
+	COLORMAP_VIRIDIS = 16,
 	/// ![cividis](https://docs.opencv.org/3.4.10/colorscale_cividis.jpg)
-	COLORMAP_CIVIDIS = 17 as isize,
+	COLORMAP_CIVIDIS = 17,
 	/// ![twilight](https://docs.opencv.org/3.4.10/colorscale_twilight.jpg)
-	COLORMAP_TWILIGHT = 18 as isize,
+	COLORMAP_TWILIGHT = 18,
 	/// ![twilight shifted](https://docs.opencv.org/3.4.10/colorscale_twilight_shifted.jpg)
-	COLORMAP_TWILIGHT_SHIFTED = 19 as isize,
+	COLORMAP_TWILIGHT_SHIFTED = 19,
 	/// ![turbo](https://docs.opencv.org/3.4.10/colorscale_turbo.jpg)
-	COLORMAP_TURBO = 20 as isize,
+	COLORMAP_TURBO = 20,
 }
 
 opencv_type_enum! { crate::imgproc::ColormapTypes }
@@ -1259,11 +1259,11 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
 	/// SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-	CCL_WU = 0 as isize,
+	CCL_WU = 0,
 	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-	CCL_DEFAULT = -1 as isize,
+	CCL_DEFAULT = -1,
 	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-	CCL_GRANA = 1 as isize,
+	CCL_GRANA = 1,
 }
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
@@ -1274,18 +1274,18 @@ opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
 pub enum ConnectedComponentsTypes {
 	/// The leftmost (x) coordinate which is the inclusive start of the bounding
 	/// box in the horizontal direction.
-	CC_STAT_LEFT = 0 as isize,
+	CC_STAT_LEFT = 0,
 	/// The topmost (y) coordinate which is the inclusive start of the bounding
 	/// box in the vertical direction.
-	CC_STAT_TOP = 1 as isize,
+	CC_STAT_TOP = 1,
 	/// The horizontal size of the bounding box
-	CC_STAT_WIDTH = 2 as isize,
+	CC_STAT_WIDTH = 2,
 	/// The vertical size of the bounding box
-	CC_STAT_HEIGHT = 3 as isize,
+	CC_STAT_HEIGHT = 3,
 	/// The total area (in pixels) of the connected component
-	CC_STAT_AREA = 4 as isize,
+	CC_STAT_AREA = 4,
 	/// Max enumeration value. Used internally only for memory allocation
-	CC_STAT_MAX = 5 as isize,
+	CC_STAT_MAX = 5,
 }
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsTypes }
@@ -1297,14 +1297,14 @@ pub enum ContourApproximationModes {
 	/// stores absolutely all the contour points. That is, any 2 subsequent points (x1,y1) and
 	/// (x2,y2) of the contour will be either horizontal, vertical or diagonal neighbors, that is,
 	/// max(abs(x1-x2),abs(y2-y1))==1.
-	CHAIN_APPROX_NONE = 1 as isize,
+	CHAIN_APPROX_NONE = 1,
 	/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 	/// For example, an up-right rectangular contour is encoded with 4 points.
-	CHAIN_APPROX_SIMPLE = 2 as isize,
+	CHAIN_APPROX_SIMPLE = 2,
 	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_TehChin89)
-	CHAIN_APPROX_TC89_L1 = 3 as isize,
+	CHAIN_APPROX_TC89_L1 = 3,
 	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_TehChin89)
-	CHAIN_APPROX_TC89_KCOS = 4 as isize,
+	CHAIN_APPROX_TC89_KCOS = 4,
 }
 
 opencv_type_enum! { crate::imgproc::ContourApproximationModes }
@@ -1315,9 +1315,9 @@ opencv_type_enum! { crate::imgproc::ContourApproximationModes }
 pub enum DistanceTransformLabelTypes {
 	/// each connected component of zeros in src (as well as all the non-zero pixels closest to the
 	/// connected component) will be assigned the same label
-	DIST_LABEL_CCOMP = 0 as isize,
+	DIST_LABEL_CCOMP = 0,
 	/// each zero pixel (and all the non-zero pixels closest to it) gets its own label.
-	DIST_LABEL_PIXEL = 1 as isize,
+	DIST_LABEL_PIXEL = 1,
 }
 
 opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes }
@@ -1327,10 +1327,10 @@ opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DistanceTransformMasks {
 	/// mask=3
-	DIST_MASK_3 = 3 as isize,
+	DIST_MASK_3 = 3,
 	/// mask=5
-	DIST_MASK_5 = 5 as isize,
-	DIST_MASK_PRECISE = 0 as isize,
+	DIST_MASK_5 = 5,
+	DIST_MASK_PRECISE = 0,
 }
 
 opencv_type_enum! { crate::imgproc::DistanceTransformMasks }
@@ -1342,21 +1342,21 @@ opencv_type_enum! { crate::imgproc::DistanceTransformMasks }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DistanceTypes {
 	/// User defined distance
-	DIST_USER = -1 as isize,
+	DIST_USER = -1,
 	/// distance = |x1-x2| + |y1-y2|
-	DIST_L1 = 1 as isize,
+	DIST_L1 = 1,
 	/// the simple euclidean distance
-	DIST_L2 = 2 as isize,
+	DIST_L2 = 2,
 	/// distance = max(|x1-x2|,|y1-y2|)
-	DIST_C = 3 as isize,
+	DIST_C = 3,
 	/// L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
-	DIST_L12 = 4 as isize,
+	DIST_L12 = 4,
 	/// distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
-	DIST_FAIR = 5 as isize,
+	DIST_FAIR = 5,
 	/// distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
-	DIST_WELSCH = 6 as isize,
+	DIST_WELSCH = 6,
 	/// distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
-	DIST_HUBER = 7 as isize,
+	DIST_HUBER = 7,
 }
 
 opencv_type_enum! { crate::imgproc::DistanceTypes }
@@ -1367,11 +1367,11 @@ opencv_type_enum! { crate::imgproc::DistanceTypes }
 pub enum FloodFillFlags {
 	/// If set, the difference between the current pixel and seed pixel is considered. Otherwise,
 	/// the difference between neighbor pixels is considered (that is, the range is floating).
-	FLOODFILL_FIXED_RANGE = 65536 as isize,
+	FLOODFILL_FIXED_RANGE = 65536,
 	/// If set, the function does not change the image ( newVal is ignored), and only fills the
 	/// mask with the value specified in bits 8-16 of flags as described above. This option only make
 	/// sense in function variants that have the mask parameter.
-	FLOODFILL_MASK_ONLY = 131072 as isize,
+	FLOODFILL_MASK_ONLY = 131072,
 }
 
 opencv_type_enum! { crate::imgproc::FloodFillFlags }
@@ -1381,13 +1381,13 @@ opencv_type_enum! { crate::imgproc::FloodFillFlags }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum GrabCutClasses {
 	/// an obvious background pixels
-	GC_BGD = 0 as isize,
+	GC_BGD = 0,
 	/// an obvious foreground (object) pixel
-	GC_FGD = 1 as isize,
+	GC_FGD = 1,
 	/// a possible background pixel
-	GC_PR_BGD = 2 as isize,
+	GC_PR_BGD = 2,
 	/// a possible foreground pixel
-	GC_PR_FGD = 3 as isize,
+	GC_PR_FGD = 3,
 }
 
 opencv_type_enum! { crate::imgproc::GrabCutClasses }
@@ -1398,15 +1398,15 @@ opencv_type_enum! { crate::imgproc::GrabCutClasses }
 pub enum GrabCutModes {
 	/// The function initializes the state and the mask using the provided rectangle. After that it
 	/// runs iterCount iterations of the algorithm.
-	GC_INIT_WITH_RECT = 0 as isize,
+	GC_INIT_WITH_RECT = 0,
 	/// The function initializes the state using the provided mask. Note that GC_INIT_WITH_RECT
 	/// and GC_INIT_WITH_MASK can be combined. Then, all the pixels outside of the ROI are
 	/// automatically initialized with GC_BGD .
-	GC_INIT_WITH_MASK = 1 as isize,
+	GC_INIT_WITH_MASK = 1,
 	/// The value means that the algorithm should just resume.
-	GC_EVAL = 2 as isize,
+	GC_EVAL = 2,
 	/// The value means that the algorithm should just run the grabCut algorithm (a single iteration) with the fixed model
-	GC_EVAL_FREEZE_MODEL = 3 as isize,
+	GC_EVAL_FREEZE_MODEL = 3,
 }
 
 opencv_type_enum! { crate::imgproc::GrabCutModes }
@@ -1421,26 +1421,26 @@ pub enum HistCompMethods {
 	/// where
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbar%7BH%5Fk%7D%20%3D%20%20%5Cfrac%7B1%7D%7BN%7D%20%5Csum%20%5FJ%20H%5Fk%28J%29)
 	/// and ![inline formula](https://latex.codecogs.com/png.latex?N) is a total number of histogram bins.
-	HISTCMP_CORREL = 0 as isize,
+	HISTCMP_CORREL = 0,
 	/// Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%7D)
-	HISTCMP_CHISQR = 1 as isize,
+	HISTCMP_CHISQR = 1,
 	/// Intersection
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Csum%20%5FI%20%20%5Cmin%20%28H%5F1%28I%29%2C%20H%5F2%28I%29%29)
-	HISTCMP_INTERSECT = 2 as isize,
+	HISTCMP_INTERSECT = 2,
 	/// Bhattacharyya distance
 	/// (In fact, OpenCV computes Hellinger distance, which is related to Bhattacharyya coefficient.)
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Csqrt%7B1%20%2D%20%5Cfrac%7B1%7D%7B%5Csqrt%7B%5Cbar%7BH%5F1%7D%20%5Cbar%7BH%5F2%7D%20N%5E2%7D%7D%20%5Csum%5FI%20%5Csqrt%7BH%5F1%28I%29%20%5Ccdot%20H%5F2%28I%29%7D%7D)
-	HISTCMP_BHATTACHARYYA = 3 as isize,
+	HISTCMP_BHATTACHARYYA = 3,
 	// Synonym for HISTCMP_BHATTACHARYYA
 	// HISTCMP_HELLINGER = 3 as isize, // duplicate discriminant
 	/// Alternative Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
 	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Puzicha1997)
-	HISTCMP_CHISQR_ALT = 4 as isize,
+	HISTCMP_CHISQR_ALT = 4,
 	/// Kullback-Leibler divergence
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
-	HISTCMP_KL_DIV = 5 as isize,
+	HISTCMP_KL_DIV = 5,
 }
 
 opencv_type_enum! { crate::imgproc::HistCompMethods }
@@ -1453,17 +1453,17 @@ pub enum HoughModes {
 	/// numbers ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%29) , where ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) is a distance between (0,0) point and the line,
 	/// and ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta) is the angle between x-axis and the normal to the line. Thus, the matrix must
 	/// be (the created sequence will be) of CV_32FC2 type
-	HOUGH_STANDARD = 0 as isize,
+	HOUGH_STANDARD = 0,
 	/// probabilistic Hough transform (more efficient in case if the picture contains a few long
 	/// linear segments). It returns line segments rather than the whole line. Each segment is
 	/// represented by starting and ending points, and the matrix must be (the created sequence will
 	/// be) of the CV_32SC4 type.
-	HOUGH_PROBABILISTIC = 1 as isize,
+	HOUGH_PROBABILISTIC = 1,
 	/// multi-scale variant of the classical Hough transform. The lines are encoded the same way as
 	/// HOUGH_STANDARD.
-	HOUGH_MULTI_SCALE = 2 as isize,
+	HOUGH_MULTI_SCALE = 2,
 	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Yuen90)
-	HOUGH_GRADIENT = 3 as isize,
+	HOUGH_GRADIENT = 3,
 }
 
 opencv_type_enum! { crate::imgproc::HoughModes }
@@ -1473,30 +1473,30 @@ opencv_type_enum! { crate::imgproc::HoughModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum InterpolationFlags {
 	/// nearest neighbor interpolation
-	INTER_NEAREST = 0 as isize,
+	INTER_NEAREST = 0,
 	/// bilinear interpolation
-	INTER_LINEAR = 1 as isize,
+	INTER_LINEAR = 1,
 	/// bicubic interpolation
-	INTER_CUBIC = 2 as isize,
+	INTER_CUBIC = 2,
 	/// resampling using pixel area relation. It may be a preferred method for image decimation, as
 	/// it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST
 	/// method.
-	INTER_AREA = 3 as isize,
+	INTER_AREA = 3,
 	/// Lanczos interpolation over 8x8 neighborhood
-	INTER_LANCZOS4 = 4 as isize,
+	INTER_LANCZOS4 = 4,
 	/// Bit exact bilinear interpolation
-	INTER_LINEAR_EXACT = 5 as isize,
+	INTER_LINEAR_EXACT = 5,
 	/// mask for interpolation codes
-	INTER_MAX = 7 as isize,
+	INTER_MAX = 7,
 	/// flag, fills all of the destination image pixels. If some of them correspond to outliers in the
 	/// source image, they are set to zero
-	WARP_FILL_OUTLIERS = 8 as isize,
+	WARP_FILL_OUTLIERS = 8,
 	/// flag, inverse transformation
 	/// 
 	/// For example, #linearPolar or #logPolar transforms:
 	/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
 	/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
-	WARP_INVERSE_MAP = 16 as isize,
+	WARP_INVERSE_MAP = 16,
 }
 
 opencv_type_enum! { crate::imgproc::InterpolationFlags }
@@ -1504,10 +1504,10 @@ opencv_type_enum! { crate::imgproc::InterpolationFlags }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum InterpolationMasks {
-	INTER_BITS = 5 as isize,
-	INTER_BITS2 = 10 as isize,
-	INTER_TAB_SIZE = 32 as isize,
-	INTER_TAB_SIZE2 = 1024 as isize,
+	INTER_BITS = 5,
+	INTER_BITS2 = 10,
+	INTER_TAB_SIZE = 32,
+	INTER_TAB_SIZE2 = 1024,
 }
 
 opencv_type_enum! { crate::imgproc::InterpolationMasks }
@@ -1517,12 +1517,12 @@ opencv_type_enum! { crate::imgproc::InterpolationMasks }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum LineSegmentDetectorModes {
 	/// No refinement applied
-	LSD_REFINE_NONE = 0 as isize,
+	LSD_REFINE_NONE = 0,
 	/// Standard refinement is applied. E.g. breaking arches into smaller straighter line approximations.
-	LSD_REFINE_STD = 1 as isize,
+	LSD_REFINE_STD = 1,
 	/// Advanced refinement. Number of false alarms is calculated, lines are
 	/// refined through increase of precision, decrement in size, etc.
-	LSD_REFINE_ADV = 2 as isize,
+	LSD_REFINE_ADV = 2,
 }
 
 opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes }
@@ -1532,19 +1532,19 @@ opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MarkerTypes {
 	/// A crosshair marker shape
-	MARKER_CROSS = 0 as isize,
+	MARKER_CROSS = 0,
 	/// A 45 degree tilted crosshair marker shape
-	MARKER_TILTED_CROSS = 1 as isize,
+	MARKER_TILTED_CROSS = 1,
 	/// A star marker shape, combination of cross and tilted cross
-	MARKER_STAR = 2 as isize,
+	MARKER_STAR = 2,
 	/// A diamond marker shape
-	MARKER_DIAMOND = 3 as isize,
+	MARKER_DIAMOND = 3,
 	/// A square marker shape
-	MARKER_SQUARE = 4 as isize,
+	MARKER_SQUARE = 4,
 	/// An upwards pointing triangle marker shape
-	MARKER_TRIANGLE_UP = 5 as isize,
+	MARKER_TRIANGLE_UP = 5,
 	/// A downwards pointing triangle marker shape
-	MARKER_TRIANGLE_DOWN = 6 as isize,
+	MARKER_TRIANGLE_DOWN = 6,
 }
 
 opencv_type_enum! { crate::imgproc::MarkerTypes }
@@ -1554,13 +1554,13 @@ opencv_type_enum! { crate::imgproc::MarkerTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MorphShapes {
 	/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
-	MORPH_RECT = 0 as isize,
+	MORPH_RECT = 0,
 	/// a cross-shaped structuring element:
 	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%20%5Cfork%7B1%7D%7Bif%20i%3D%5Ctexttt%7Banchor%2Ey%7D%20or%20j%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7B0%7D%7Botherwise%7D)
-	MORPH_CROSS = 1 as isize,
+	MORPH_CROSS = 1,
 	/// an elliptic structuring element, that is, a filled ellipse inscribed
 	/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
-	MORPH_ELLIPSE = 2 as isize,
+	MORPH_ELLIPSE = 2,
 }
 
 opencv_type_enum! { crate::imgproc::MorphShapes }
@@ -1570,27 +1570,27 @@ opencv_type_enum! { crate::imgproc::MorphShapes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MorphTypes {
 	/// see #erode
-	MORPH_ERODE = 0 as isize,
+	MORPH_ERODE = 0,
 	/// see #dilate
-	MORPH_DILATE = 1 as isize,
+	MORPH_DILATE = 1,
 	/// an opening operation
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
-	MORPH_OPEN = 2 as isize,
+	MORPH_OPEN = 2,
 	/// a closing operation
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
-	MORPH_CLOSE = 3 as isize,
+	MORPH_CLOSE = 3,
 	/// a morphological gradient
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bmorph%5C%5Fgrad%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
-	MORPH_GRADIENT = 4 as isize,
+	MORPH_GRADIENT = 4,
 	/// "top hat"
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Btophat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
-	MORPH_TOPHAT = 5 as isize,
+	MORPH_TOPHAT = 5,
 	/// "black hat"
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bblackhat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Ctexttt%7Bsrc%7D)
-	MORPH_BLACKHAT = 6 as isize,
+	MORPH_BLACKHAT = 6,
 	/// "hit or miss"
 	/// .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
-	MORPH_HITMISS = 7 as isize,
+	MORPH_HITMISS = 7,
 }
 
 opencv_type_enum! { crate::imgproc::MorphTypes }
@@ -1600,11 +1600,11 @@ opencv_type_enum! { crate::imgproc::MorphTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RectanglesIntersectTypes {
 	/// No intersection
-	INTERSECT_NONE = 0 as isize,
+	INTERSECT_NONE = 0,
 	/// There is a partial intersection
-	INTERSECT_PARTIAL = 1 as isize,
+	INTERSECT_PARTIAL = 1,
 	/// One of the rectangle is fully enclosed in the other
-	INTERSECT_FULL = 2 as isize,
+	INTERSECT_FULL = 2,
 }
 
 opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes }
@@ -1615,17 +1615,17 @@ opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes }
 pub enum RetrievalModes {
 	/// retrieves only the extreme outer contours. It sets `hierarchy[i][2]=hierarchy[i][3]=-1` for
 	/// all the contours.
-	RETR_EXTERNAL = 0 as isize,
+	RETR_EXTERNAL = 0,
 	/// retrieves all of the contours without establishing any hierarchical relationships.
-	RETR_LIST = 1 as isize,
+	RETR_LIST = 1,
 	/// retrieves all of the contours and organizes them into a two-level hierarchy. At the top
 	/// level, there are external boundaries of the components. At the second level, there are
 	/// boundaries of the holes. If there is another contour inside a hole of a connected component, it
 	/// is still put at the top level.
-	RETR_CCOMP = 2 as isize,
+	RETR_CCOMP = 2,
 	/// retrieves all of the contours and reconstructs a full hierarchy of nested contours.
-	RETR_TREE = 3 as isize,
-	RETR_FLOODFILL = 4 as isize,
+	RETR_TREE = 3,
+	RETR_FLOODFILL = 4,
 }
 
 opencv_type_enum! { crate::imgproc::RetrievalModes }
@@ -1641,11 +1641,11 @@ opencv_type_enum! { crate::imgproc::RetrievalModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ShapeMatchModes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?I%5F1%28A%2CB%29%20%3D%20%20%5Csum%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cleft%20%7C%20%20%5Cfrac%7B1%7D%7Bm%5EA%5Fi%7D%20%2D%20%20%5Cfrac%7B1%7D%7Bm%5EB%5Fi%7D%20%5Cright%20%7C)
-	CONTOURS_MATCH_I1 = 1 as isize,
+	CONTOURS_MATCH_I1 = 1,
 	/// ![block formula](https://latex.codecogs.com/png.latex?I%5F2%28A%2CB%29%20%3D%20%20%5Csum%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cleft%20%7C%20m%5EA%5Fi%20%2D%20m%5EB%5Fi%20%20%5Cright%20%7C)
-	CONTOURS_MATCH_I2 = 2 as isize,
+	CONTOURS_MATCH_I2 = 2,
 	/// ![block formula](https://latex.codecogs.com/png.latex?I%5F3%28A%2CB%29%20%3D%20%20%5Cmax%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cfrac%7B%20%5Cleft%7C%20m%5EA%5Fi%20%2D%20m%5EB%5Fi%20%5Cright%7C%20%7D%7B%20%5Cleft%7C%20m%5EA%5Fi%20%5Cright%7C%20%7D)
-	CONTOURS_MATCH_I3 = 3 as isize,
+	CONTOURS_MATCH_I3 = 3,
 }
 
 opencv_type_enum! { crate::imgproc::ShapeMatchModes }
@@ -1655,19 +1655,19 @@ opencv_type_enum! { crate::imgproc::ShapeMatchModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TemplateMatchModes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
-	TM_SQDIFF = 0 as isize,
+	TM_SQDIFF = 0,
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
-	TM_SQDIFF_NORMED = 1 as isize,
+	TM_SQDIFF_NORMED = 1,
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
-	TM_CCORR = 2 as isize,
+	TM_CCORR = 2,
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
-	TM_CCORR_NORMED = 3 as isize,
+	TM_CCORR_NORMED = 3,
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
 	/// where
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DT%28x%27%2Cy%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20T%28x%27%27%2Cy%27%27%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DI%28x%2Bx%27%2Cy%2By%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Cend%7Barray%7D)
-	TM_CCOEFF = 4 as isize,
+	TM_CCOEFF = 4,
 	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%20%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%20%7D)
-	TM_CCOEFF_NORMED = 5 as isize,
+	TM_CCOEFF_NORMED = 5,
 }
 
 opencv_type_enum! { crate::imgproc::TemplateMatchModes }
@@ -1678,20 +1678,20 @@ opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ThresholdTypes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bmaxval%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
-	THRESH_BINARY = 0 as isize,
+	THRESH_BINARY = 0,
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bmaxval%7D%7D%7Botherwise%7D)
-	THRESH_BINARY_INV = 1 as isize,
+	THRESH_BINARY_INV = 1,
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bthreshold%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Botherwise%7D)
-	THRESH_TRUNC = 2 as isize,
+	THRESH_TRUNC = 2,
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
-	THRESH_TOZERO = 3 as isize,
+	THRESH_TOZERO = 3,
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Botherwise%7D)
-	THRESH_TOZERO_INV = 4 as isize,
-	THRESH_MASK = 7 as isize,
+	THRESH_TOZERO_INV = 4,
+	THRESH_MASK = 7,
 	/// flag, use Otsu algorithm to choose the optimal threshold value
-	THRESH_OTSU = 8 as isize,
+	THRESH_OTSU = 8,
 	/// flag, use Triangle algorithm to choose the optimal threshold value
-	THRESH_TRIANGLE = 16 as isize,
+	THRESH_TRIANGLE = 16,
 }
 
 opencv_type_enum! { crate::imgproc::ThresholdTypes }
@@ -1700,8 +1700,8 @@ opencv_type_enum! { crate::imgproc::ThresholdTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UndistortTypes {
-	PROJ_SPHERICAL_ORTHO = 0 as isize,
-	PROJ_SPHERICAL_EQRECT = 1 as isize,
+	PROJ_SPHERICAL_ORTHO = 0,
+	PROJ_SPHERICAL_EQRECT = 1,
 }
 
 opencv_type_enum! { crate::imgproc::UndistortTypes }
@@ -1713,9 +1713,9 @@ opencv_type_enum! { crate::imgproc::UndistortTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WarpPolarMode {
 	/// Remaps an image to/from polar space.
-	WARP_POLAR_LINEAR = 0 as isize,
+	WARP_POLAR_LINEAR = 0,
 	/// Remaps an image to/from semilog-polar space.
-	WARP_POLAR_LOG = 256 as isize,
+	WARP_POLAR_LOG = 256,
 }
 
 opencv_type_enum! { crate::imgproc::WarpPolarMode }
@@ -1741,7 +1741,7 @@ pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray
 	input_array_arg!(dx);
 	input_array_arg!(dy);
 	output_array_arg!(edges);
-	unsafe { sys::cv_Canny_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_double_bool(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, l2gradient) }.into_result()
+	unsafe { sys::cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, l2gradient) }.into_result()
 }
 
 /// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Canny86) .
@@ -1768,7 +1768,7 @@ pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray
 pub fn canny(image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(edges);
-	unsafe { sys::cv_Canny_const__InputArrayX_const__OutputArrayX_double_double_int_bool(image.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, aperture_size, l2gradient) }.into_result()
+	unsafe { sys::cv_Canny_const__InputArrayR_const__OutputArrayR_double_double_int_bool(image.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, aperture_size, l2gradient) }.into_result()
 }
 
 /// Computes the "minimal work" distance between two weighted point configurations.
@@ -1815,7 +1815,7 @@ pub fn emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputAr
 	input_array_arg!(signature2);
 	input_array_arg!(cost);
 	output_array_arg!(flow);
-	unsafe { sys::cv_EMD_const__InputArrayX_const__InputArrayX_int_const__InputArrayX_floatX_const__OutputArrayX(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound, flow.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_EMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_floatX_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound, flow.as_raw__OutputArray()) }.into_result()
 }
 
 /// Blurs an image using a Gaussian filter.
@@ -1845,7 +1845,7 @@ pub fn emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputAr
 pub fn gaussian_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_GaussianBlur_const__InputArrayX_const__OutputArrayX_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), sigma_x, sigma_y, border_type) }.into_result()
+	unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), sigma_x, sigma_y, border_type) }.into_result()
 }
 
 /// Finds circles in a grayscale image using the Hough transform.
@@ -1892,7 +1892,7 @@ pub fn gaussian_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToOutputArray, method: i32, dp: f64, min_dist: f64, param1: f64, param2: f64, min_radius: i32, max_radius: i32) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(circles);
-	unsafe { sys::cv_HoughCircles_const__InputArrayX_const__OutputArrayX_int_double_double_double_double_int_int(image.as_raw__InputArray(), circles.as_raw__OutputArray(), method, dp, min_dist, param1, param2, min_radius, max_radius) }.into_result()
+	unsafe { sys::cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double_double_double_int_int(image.as_raw__InputArray(), circles.as_raw__OutputArray(), method, dp, min_dist, param1, param2, min_radius, max_radius) }.into_result()
 }
 
 /// Finds line segments in a binary image using the probabilistic Hough transform.
@@ -1930,7 +1930,7 @@ pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToO
 pub fn hough_lines_p(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, rho: f64, theta: f64, threshold: i32, min_line_length: f64, max_line_gap: f64) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(lines);
-	unsafe { sys::cv_HoughLinesP_const__InputArrayX_const__OutputArrayX_double_double_int_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, min_line_length, max_line_gap) }.into_result()
+	unsafe { sys::cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, min_line_length, max_line_gap) }.into_result()
 }
 
 /// Finds lines in a set of points using the standard Hough transform.
@@ -1953,7 +1953,7 @@ pub fn hough_lines_p(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOut
 pub fn hough_lines_point_set(_point: &dyn core::ToInputArray, _lines: &mut dyn core::ToOutputArray, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64) -> Result<()> {
 	input_array_arg!(_point);
 	output_array_arg!(_lines);
-	unsafe { sys::cv_HoughLinesPointSet_const__InputArrayX_const__OutputArrayX_int_int_double_double_double_double_double_double(_point.as_raw__InputArray(), _lines.as_raw__OutputArray(), lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step) }.into_result()
+	unsafe { sys::cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(_point.as_raw__InputArray(), _lines.as_raw__OutputArray(), lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step) }.into_result()
 }
 
 /// Finds lines in a binary image using the standard Hough transform.
@@ -1991,7 +1991,7 @@ pub fn hough_lines_point_set(_point: &dyn core::ToInputArray, _lines: &mut dyn c
 pub fn hough_lines(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(lines);
-	unsafe { sys::cv_HoughLines_const__InputArrayX_const__OutputArrayX_double_double_int_double_double_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta) }.into_result()
+	unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta) }.into_result()
 }
 
 /// Calculates seven Hu invariants.
@@ -2017,7 +2017,7 @@ pub fn hough_lines(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutpu
 /// ## Overloaded parameters
 pub fn hu_moments_1(m: core::Moments, hu: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(hu);
-	unsafe { sys::cv_HuMoments_const_MomentsX_const__OutputArrayX(&m, hu.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_HuMoments_const_MomentsR_const__OutputArrayR(&m, hu.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates seven Hu invariants.
@@ -2040,7 +2040,7 @@ pub fn hu_moments_1(m: core::Moments, hu: &mut dyn core::ToOutputArray) -> Resul
 /// ## See also
 /// matchShapes
 pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
-	unsafe { sys::cv_HuMoments_const_MomentsX_double_X__7_(&moments, hu) }.into_result()
+	unsafe { sys::cv_HuMoments_const_MomentsR_double_X__7_(&moments, hu) }.into_result()
 }
 
 /// Calculates the Laplacian of an image.
@@ -2076,7 +2076,7 @@ pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
 pub fn laplacian(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_Laplacian_const__InputArrayX_const__OutputArrayX_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize, scale, delta, border_type) }.into_result()
+	unsafe { sys::cv_Laplacian_const__InputArrayR_const__OutputArrayR_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize, scale, delta, border_type) }.into_result()
 }
 
 /// Calculates the first x- or y- image derivative using Scharr operator.
@@ -2110,7 +2110,7 @@ pub fn laplacian(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn scharr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, dx: i32, dy: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_Scharr_const__InputArrayX_const__OutputArrayX_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, scale, delta, border_type) }.into_result()
+	unsafe { sys::cv_Scharr_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, scale, delta, border_type) }.into_result()
 }
 
 /// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
@@ -2165,7 +2165,7 @@ pub fn scharr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 pub fn sobel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, dx: i32, dy: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_Sobel_const__InputArrayX_const__OutputArrayX_int_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ksize, scale, delta, border_type) }.into_result()
+	unsafe { sys::cv_Sobel_const__InputArrayR_const__OutputArrayR_int_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ksize, scale, delta, border_type) }.into_result()
 }
 
 /// Adds the per-element product of two input images to the accumulator image.
@@ -2192,7 +2192,7 @@ pub fn accumulate_product(src1: &dyn core::ToInputArray, src2: &dyn core::ToInpu
 	input_array_arg!(src2);
 	input_output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_accumulateProduct_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputArrayX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_accumulateProduct_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Adds the square of a source image to the accumulator image.
@@ -2218,7 +2218,7 @@ pub fn accumulate_square(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInp
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_accumulateSquare_const__InputArrayX_const__InputOutputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_accumulateSquare_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Updates a running average.
@@ -2246,7 +2246,7 @@ pub fn accumulate_weighted(src: &dyn core::ToInputArray, dst: &mut dyn core::ToI
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_accumulateWeighted_const__InputArrayX_const__InputOutputArrayX_double_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_accumulateWeighted_const__InputArrayR_const__InputOutputArrayR_double_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Adds an image to the accumulator image.
@@ -2273,7 +2273,7 @@ pub fn accumulate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutpu
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_accumulate_const__InputArrayX_const__InputOutputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_accumulate_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Applies an adaptive threshold to an array.
@@ -2304,7 +2304,7 @@ pub fn accumulate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutpu
 pub fn adaptive_threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, max_value: f64, adaptive_method: i32, threshold_type: i32, block_size: i32, c: f64) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_adaptiveThreshold_const__InputArrayX_const__OutputArrayX_double_int_int_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), max_value, adaptive_method, threshold_type, block_size, c) }.into_result()
+	unsafe { sys::cv_adaptiveThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), max_value, adaptive_method, threshold_type, block_size, c) }.into_result()
 }
 
 /// Applies a user colormap on a given image.
@@ -2317,7 +2317,7 @@ pub fn apply_color_map_user(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(user_color);
-	unsafe { sys::cv_applyColorMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), user_color.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), user_color.as_raw__InputArray()) }.into_result()
 }
 
 /// Applies a GNU Octave/MATLAB equivalent colormap on a given image.
@@ -2329,7 +2329,7 @@ pub fn apply_color_map_user(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 pub fn apply_color_map(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, colormap: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_applyColorMap_const__InputArrayX_const__OutputArrayX_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), colormap) }.into_result()
+	unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), colormap) }.into_result()
 }
 
 /// Approximates a polygonal curve(s) with the specified precision.
@@ -2348,7 +2348,7 @@ pub fn apply_color_map(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 pub fn approx_poly_dp(curve: &dyn core::ToInputArray, approx_curve: &mut dyn core::ToOutputArray, epsilon: f64, closed: bool) -> Result<()> {
 	input_array_arg!(curve);
 	output_array_arg!(approx_curve);
-	unsafe { sys::cv_approxPolyDP_const__InputArrayX_const__OutputArrayX_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed) }.into_result()
+	unsafe { sys::cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed) }.into_result()
 }
 
 /// Calculates a contour perimeter or a curve length.
@@ -2360,7 +2360,7 @@ pub fn approx_poly_dp(curve: &dyn core::ToInputArray, approx_curve: &mut dyn cor
 /// * closed: Flag indicating whether the curve is closed or not.
 pub fn arc_length(curve: &dyn core::ToInputArray, closed: bool) -> Result<f64> {
 	input_array_arg!(curve);
-	unsafe { sys::cv_arcLength_const__InputArrayX_bool(curve.as_raw__InputArray(), closed) }.into_result()
+	unsafe { sys::cv_arcLength_const__InputArrayR_bool(curve.as_raw__InputArray(), closed) }.into_result()
 }
 
 /// Draws a arrow segment pointing from the first point to the second one.
@@ -2384,7 +2384,7 @@ pub fn arc_length(curve: &dyn core::ToInputArray, closed: bool) -> Result<f64> {
 /// * tip_length: 0.1
 pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32, tip_length: f64) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_arrowedLine_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int_double(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift, tip_length) }.into_result()
+	unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift, tip_length) }.into_result()
 }
 
 /// Applies the bilateral filter to an image.
@@ -2421,7 +2421,7 @@ pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt
 pub fn bilateral_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d: i32, sigma_color: f64, sigma_space: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_bilateralFilter_const__InputArrayX_const__OutputArrayX_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, border_type) }.into_result()
+	unsafe { sys::cv_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, border_type) }.into_result()
 }
 
 /// Performs linear blending of two images:
@@ -2438,7 +2438,7 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 	input_array_arg!(weights1);
 	input_array_arg!(weights2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_blendLinear_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_blendLinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Blurs an image using the normalized box filter.
@@ -2467,7 +2467,7 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 pub fn blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, anchor: core::Point, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_blur_const__InputArrayX_const__OutputArrayX_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), anchor.opencv_to_extern(), border_type) }.into_result()
+	unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), anchor.opencv_to_extern(), border_type) }.into_result()
 }
 
 /// Calculates the up-right bounding rectangle of a point set or non-zero pixels of gray-scale image.
@@ -2479,7 +2479,7 @@ pub fn blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksi
 /// * array: Input gray-scale image or 2D point set, stored in std::vector or Mat.
 pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
 	input_array_arg!(array);
-	unsafe { sys::cv_boundingRect_const__InputArrayX(array.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_boundingRect_const__InputArrayR(array.as_raw__InputArray()) }.into_result()
 }
 
 /// Blurs an image using the box filter.
@@ -2515,7 +2515,7 @@ pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
 pub fn box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_boxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
+	unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
 }
 
 /// Finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
@@ -2529,7 +2529,7 @@ pub fn box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// * points: The output array of four vertices of rectangles.
 pub fn box_points(mut box_: core::RotatedRect, points: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(points);
-	unsafe { sys::cv_boxPoints_RotatedRect_const__OutputArrayX(box_.as_raw_mut_RotatedRect(), points.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_boxPoints_RotatedRect_const__OutputArrayR(box_.as_raw_mut_RotatedRect(), points.as_raw__OutputArray()) }.into_result()
 }
 
 /// Constructs the Gaussian pyramid for an image.
@@ -2549,7 +2549,7 @@ pub fn box_points(mut box_: core::RotatedRect, points: &mut dyn core::ToOutputAr
 pub fn build_pyramid(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, maxlevel: i32, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_buildPyramid_const__InputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), maxlevel, border_type) }.into_result()
+	unsafe { sys::cv_buildPyramid_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), maxlevel, border_type) }.into_result()
 }
 
 /// Calculates the back projection of a histogram.
@@ -2597,7 +2597,7 @@ pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vecto
 	input_array_arg!(images);
 	input_array_arg!(hist);
 	output_array_arg!(dst);
-	unsafe { sys::cv_calcBackProject_const__InputArrayX_const_vector_int_X_const__InputArrayX_const__OutputArrayX_const_vector_float_X_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale) }.into_result()
+	unsafe { sys::cv_calcBackProject_const__InputArrayR_const_vector_int_R_const__InputArrayR_const__OutputArrayR_const_vector_float_R_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale) }.into_result()
 }
 
 /// Calculates a histogram of a set of arrays.
@@ -2642,7 +2642,7 @@ pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector::<i32>
 	input_array_arg!(images);
 	input_array_arg!(mask);
 	output_array_arg!(hist);
-	unsafe { sys::cv_calcHist_const__InputArrayX_const_vector_int_X_const__InputArrayX_const__OutputArrayX_const_vector_int_X_const_vector_float_X_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate) }.into_result()
+	unsafe { sys::cv_calcHist_const__InputArrayR_const_vector_int_R_const__InputArrayR_const__OutputArrayR_const_vector_int_R_const_vector_float_R_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate) }.into_result()
 }
 
 /// Draws a circle.
@@ -2664,7 +2664,7 @@ pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector::<i32>
 /// * shift: 0
 pub fn circle(img: &mut dyn core::ToInputOutputArray, center: core::Point, radius: i32, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_circle_const__InputOutputArrayX_Point_int_const_ScalarX_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), radius, &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), radius, &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2683,7 +2683,7 @@ pub fn circle(img: &mut dyn core::ToInputOutputArray, center: core::Point, radiu
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Rect_PointX_PointX(img_rect.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Rect_PointR_PointR(img_rect.opencv_to_extern(), pt1, pt2) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2702,7 +2702,7 @@ pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Po
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: &mut core::Point2l) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Size2l_Point2lX_Point2lX(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Size2l_Point2lR_Point2lR(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2715,7 +2715,7 @@ pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: 
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Size_PointX_PointX(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Size_PointR_PointR(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
 }
 
 /// Compares two histograms.
@@ -2736,7 +2736,7 @@ pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut cor
 /// 
 /// ## Overloaded parameters
 pub fn compare_hist_1(h1: &core::SparseMat, h2: &core::SparseMat, method: i32) -> Result<f64> {
-	unsafe { sys::cv_compareHist_const_SparseMatX_const_SparseMatX_int(h1.as_raw_SparseMat(), h2.as_raw_SparseMat(), method) }.into_result()
+	unsafe { sys::cv_compareHist_const_SparseMatR_const_SparseMatR_int(h1.as_raw_SparseMat(), h2.as_raw_SparseMat(), method) }.into_result()
 }
 
 /// Compares two histograms.
@@ -2757,7 +2757,7 @@ pub fn compare_hist_1(h1: &core::SparseMat, h2: &core::SparseMat, method: i32) -
 pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, method: i32) -> Result<f64> {
 	input_array_arg!(h1);
 	input_array_arg!(h2);
-	unsafe { sys::cv_compareHist_const__InputArrayX_const__InputArrayX_int(h1.as_raw__InputArray(), h2.as_raw__InputArray(), method) }.into_result()
+	unsafe { sys::cv_compareHist_const__InputArrayR_const__InputArrayR_int(h1.as_raw__InputArray(), h2.as_raw__InputArray(), method) }.into_result()
 }
 
 /// computes the connected components labeled image of boolean image and also produces a statistics output for each label
@@ -2803,7 +2803,7 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 	output_array_arg!(labels);
 	output_array_arg!(stats);
 	output_array_arg!(centroids);
-	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype) }.into_result()
+	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype) }.into_result()
 }
 
 /// computes the connected components labeled image of boolean image and also produces a statistics output for each label
@@ -2833,7 +2833,7 @@ pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputA
 	output_array_arg!(labels);
 	output_array_arg!(stats);
 	output_array_arg!(centroids);
-	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ccltype) }.into_result()
+	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ccltype) }.into_result()
 }
 
 /// computes the connected components labeled image of boolean image
@@ -2868,7 +2868,7 @@ pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputA
 pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32) -> Result<i32> {
 	input_array_arg!(image);
 	output_array_arg!(labels);
-	unsafe { sys::cv_connectedComponents_const__InputArrayX_const__OutputArrayX_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype) }.into_result()
+	unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype) }.into_result()
 }
 
 /// computes the connected components labeled image of boolean image
@@ -2891,7 +2891,7 @@ pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn cor
 pub fn connected_components_with_algorithm(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32, ccltype: i32) -> Result<i32> {
 	input_array_arg!(image);
 	output_array_arg!(labels);
-	unsafe { sys::cv_connectedComponents_const__InputArrayX_const__OutputArrayX_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ccltype) }.into_result()
+	unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ccltype) }.into_result()
 }
 
 /// Calculates a contour area.
@@ -2930,7 +2930,7 @@ pub fn connected_components_with_algorithm(image: &dyn core::ToInputArray, label
 /// * oriented: false
 pub fn contour_area(contour: &dyn core::ToInputArray, oriented: bool) -> Result<f64> {
 	input_array_arg!(contour);
-	unsafe { sys::cv_contourArea_const__InputArrayX_bool(contour.as_raw__InputArray(), oriented) }.into_result()
+	unsafe { sys::cv_contourArea_const__InputArrayR_bool(contour.as_raw__InputArray(), oriented) }.into_result()
 }
 
 /// Converts image transformation maps from one representation to another.
@@ -2971,7 +2971,7 @@ pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray
 	input_array_arg!(map2);
 	output_array_arg!(dstmap1);
 	output_array_arg!(dstmap2);
-	unsafe { sys::cv_convertMaps_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_bool(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, nninterpolation) }.into_result()
+	unsafe { sys::cv_convertMaps_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_bool(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, nninterpolation) }.into_result()
 }
 
 /// Finds the convex hull of a point set.
@@ -3009,7 +3009,7 @@ pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray
 pub fn convex_hull(points: &dyn core::ToInputArray, hull: &mut dyn core::ToOutputArray, clockwise: bool, return_points: bool) -> Result<()> {
 	input_array_arg!(points);
 	output_array_arg!(hull);
-	unsafe { sys::cv_convexHull_const__InputArrayX_const__OutputArrayX_bool_bool(points.as_raw__InputArray(), hull.as_raw__OutputArray(), clockwise, return_points) }.into_result()
+	unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR_bool_bool(points.as_raw__InputArray(), hull.as_raw__OutputArray(), clockwise, return_points) }.into_result()
 }
 
 /// Finds the convexity defects of a contour.
@@ -3033,7 +3033,7 @@ pub fn convexity_defects(contour: &dyn core::ToInputArray, convexhull: &dyn core
 	input_array_arg!(contour);
 	input_array_arg!(convexhull);
 	output_array_arg!(convexity_defects);
-	unsafe { sys::cv_convexityDefects_const__InputArrayX_const__InputArrayX_const__OutputArrayX(contour.as_raw__InputArray(), convexhull.as_raw__InputArray(), convexity_defects.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_convexityDefects_const__InputArrayR_const__InputArrayR_const__OutputArrayR(contour.as_raw__InputArray(), convexhull.as_raw__InputArray(), convexity_defects.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates eigenvalues and eigenvectors of image blocks for corner detection.
@@ -3068,7 +3068,7 @@ pub fn convexity_defects(contour: &dyn core::ToInputArray, convexhull: &dyn core
 pub fn corner_eigen_vals_and_vecs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cornerEigenValsAndVecs_const__InputArrayX_const__OutputArrayX_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type) }.into_result()
+	unsafe { sys::cv_cornerEigenValsAndVecs_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type) }.into_result()
 }
 
 /// Harris corner detector.
@@ -3096,7 +3096,7 @@ pub fn corner_eigen_vals_and_vecs(src: &dyn core::ToInputArray, dst: &mut dyn co
 pub fn corner_harris(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cornerHarris_const__InputArrayX_const__OutputArrayX_int_int_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, k, border_type) }.into_result()
+	unsafe { sys::cv_cornerHarris_const__InputArrayR_const__OutputArrayR_int_int_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, k, border_type) }.into_result()
 }
 
 /// Calculates the minimal eigenvalue of gradient matrices for corner detection.
@@ -3119,7 +3119,7 @@ pub fn corner_harris(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cornerMinEigenVal_const__InputArrayX_const__OutputArrayX_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type) }.into_result()
+	unsafe { sys::cv_cornerMinEigenVal_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type) }.into_result()
 }
 
 /// Refines the corner locations.
@@ -3165,7 +3165,7 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 pub fn corner_sub_pix(image: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, win_size: core::Size, zero_zone: core::Size, criteria: core::TermCriteria) -> Result<()> {
 	input_array_arg!(image);
 	input_output_array_arg!(corners);
-	unsafe { sys::cv_cornerSubPix_const__InputArrayX_const__InputOutputArrayX_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), win_size.opencv_to_extern(), zero_zone.opencv_to_extern(), criteria.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_cornerSubPix_const__InputArrayR_const__InputOutputArrayR_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), win_size.opencv_to_extern(), zero_zone.opencv_to_extern(), criteria.opencv_to_extern()) }.into_result()
 }
 
 /// Creates a smart pointer to a cv::CLAHE class and initializes it.
@@ -3210,7 +3210,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc:
 /// * type: Created array type
 pub fn create_hanning_window(dst: &mut dyn core::ToOutputArray, win_size: core::Size, typ: i32) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_createHanningWindow_const__OutputArrayX_Size_int(dst.as_raw__OutputArray(), win_size.opencv_to_extern(), typ) }.into_result()
+	unsafe { sys::cv_createHanningWindow_const__OutputArrayR_Size_int(dst.as_raw__OutputArray(), win_size.opencv_to_extern(), typ) }.into_result()
 }
 
 /// Creates a smart pointer to a LineSegmentDetector object and initializes it.
@@ -3267,7 +3267,7 @@ pub fn cvt_color_two_plane(src1: &dyn core::ToInputArray, src2: &dyn core::ToInp
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code) }.into_result()
+	unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code) }.into_result()
 }
 
 /// Converts an image from one color space to another.
@@ -3318,7 +3318,7 @@ pub fn cvt_color_two_plane(src1: &dyn core::ToInputArray, src2: &dyn core::ToInp
 pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dst_cn: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cvtColor_const__InputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn) }.into_result()
+	unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn) }.into_result()
 }
 
 /// main function for all demosaicing processes
@@ -3357,7 +3357,7 @@ pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dst_cn: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_demosaicing_const__InputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn) }.into_result()
+	unsafe { sys::cv_demosaicing_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn) }.into_result()
 }
 
 /// Dilates an image by using a specific structuring element.
@@ -3392,7 +3392,7 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_dilate_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// Calculates the distance to the closest zero pixel for each pixel of the source image.
@@ -3454,7 +3454,7 @@ pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dy
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	output_array_arg!(labels);
-	unsafe { sys::cv_distanceTransform_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), labels.as_raw__OutputArray(), distance_type, mask_size, label_type) }.into_result()
+	unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), labels.as_raw__OutputArray(), distance_type, mask_size, label_type) }.into_result()
 }
 
 /// Calculates the distance to the closest zero pixel for each pixel of the source image.
@@ -3527,7 +3527,7 @@ pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dy
 pub fn distance_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, distance_type: i32, mask_size: i32, dst_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_distanceTransform_const__InputArrayX_const__OutputArrayX_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, dst_type) }.into_result()
+	unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, dst_type) }.into_result()
 }
 
 /// Draws contours outlines or filled contours.
@@ -3570,7 +3570,7 @@ pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn co
 	input_output_array_arg!(image);
 	input_array_arg!(contours);
 	input_array_arg!(hierarchy);
-	unsafe { sys::cv_drawContours_const__InputOutputArrayX_const__InputArrayX_int_const_ScalarX_int_int_const__InputArrayX_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, offset.opencv_to_extern()) }.into_result()
 }
 
 /// Draws a marker on a predefined position in an image.
@@ -3593,7 +3593,7 @@ pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn co
 /// * thickness: 1
 /// * line_type: 8
 pub fn draw_marker(img: &mut core::Mat, position: core::Point, color: core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result<()> {
-	unsafe { sys::cv_drawMarker_MatX_Point_const_ScalarX_int_int_int_int(img.as_raw_mut_Mat(), position.opencv_to_extern(), &color, marker_type, marker_size, thickness, line_type) }.into_result()
+	unsafe { sys::cv_drawMarker_MatR_Point_const_ScalarR_int_int_int_int(img.as_raw_mut_Mat(), position.opencv_to_extern(), &color, marker_type, marker_size, thickness, line_type) }.into_result()
 }
 
 /// Approximates an elliptic arc with a polyline.
@@ -3621,7 +3621,7 @@ pub fn draw_marker(img: &mut core::Mat, position: core::Point, color: core::Scal
 /// * delta: Angle between the subsequent polyline vertices. It defines the approximation accuracy.
 /// * pts: Output vector of polyline vertices.
 pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point2d>) -> Result<()> {
-	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_X(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d()) }.into_result()
+	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d()) }.into_result()
 }
 
 /// Approximates an elliptic arc with a polyline.
@@ -3639,7 +3639,7 @@ pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32,
 /// accuracy.
 /// * pts: Output vector of polyline vertices.
 pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point>) -> Result<()> {
-	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_X(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint()) }.into_result()
+	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint()) }.into_result()
 }
 
 /// Draws a simple or thick elliptic arc or fills an ellipse sector.
@@ -3674,7 +3674,7 @@ pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_sta
 /// * shift: 0
 pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes: core::Size, angle: f64, start_angle: f64, end_angle: f64, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_ellipse_const__InputOutputArrayX_Point_Size_double_double_double_const_ScalarX_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), axes.opencv_to_extern(), angle, start_angle, end_angle, &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), axes.opencv_to_extern(), angle, start_angle, end_angle, &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Draws a simple or thick elliptic arc or fills an ellipse sector.
@@ -3718,7 +3718,7 @@ pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes
 /// * line_type: LINE_8
 pub fn ellipse_rotated_rect(img: &mut dyn core::ToInputOutputArray, box_: &core::RotatedRect, color: core::Scalar, thickness: i32, line_type: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_ellipse_const__InputOutputArrayX_const_RotatedRectX_const_ScalarX_int_int(img.as_raw__InputOutputArray(), box_.as_raw_RotatedRect(), &color, thickness, line_type) }.into_result()
+	unsafe { sys::cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), box_.as_raw_RotatedRect(), &color, thickness, line_type) }.into_result()
 }
 
 /// Equalizes the histogram of a grayscale image.
@@ -3739,7 +3739,7 @@ pub fn ellipse_rotated_rect(img: &mut dyn core::ToInputOutputArray, box_: &core:
 pub fn equalize_hist(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_equalizeHist_const__InputArrayX_const__OutputArrayX(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_equalizeHist_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Erodes an image by using a specific structuring element.
@@ -3775,7 +3775,7 @@ pub fn erode(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ke
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_erode_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// Fills a convex polygon.
@@ -3798,7 +3798,7 @@ pub fn erode(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ke
 pub fn fill_convex_poly(img: &mut dyn core::ToInputOutputArray, points: &dyn core::ToInputArray, color: core::Scalar, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
 	input_array_arg!(points);
-	unsafe { sys::cv_fillConvexPoly_const__InputOutputArrayX_const__InputArrayX_const_ScalarX_int_int(img.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, line_type, shift) }.into_result()
+	unsafe { sys::cv_fillConvexPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, line_type, shift) }.into_result()
 }
 
 /// Fills the area bounded by one or more polygons.
@@ -3822,7 +3822,7 @@ pub fn fill_convex_poly(img: &mut dyn core::ToInputOutputArray, points: &dyn cor
 pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInputArray, color: core::Scalar, line_type: i32, shift: i32, offset: core::Point) -> Result<()> {
 	input_output_array_arg!(img);
 	input_array_arg!(pts);
-	unsafe { sys::cv_fillPoly_const__InputOutputArrayX_const__InputArrayX_const_ScalarX_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, offset.opencv_to_extern()) }.into_result()
 }
 
 /// Convolves an image with the kernel.
@@ -3865,7 +3865,7 @@ pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_filter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
+	unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
 }
 
 /// Finds contours in a binary image.
@@ -3901,7 +3901,7 @@ pub fn find_contours_with_hierarchy(image: &mut dyn core::ToInputOutputArray, co
 	input_output_array_arg!(image);
 	output_array_arg!(contours);
 	output_array_arg!(hierarchy);
-	unsafe { sys::cv_findContours_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
 }
 
 /// Finds contours in a binary image.
@@ -3938,7 +3938,7 @@ pub fn find_contours_with_hierarchy(image: &mut dyn core::ToInputOutputArray, co
 pub fn find_contours(image: &mut dyn core::ToInputOutputArray, contours: &mut dyn core::ToOutputArray, mode: i32, method: i32, offset: core::Point) -> Result<()> {
 	input_output_array_arg!(image);
 	output_array_arg!(contours);
-	unsafe { sys::cv_findContours_const__InputOutputArrayX_const__OutputArrayX_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -3978,7 +3978,7 @@ pub fn find_contours(image: &mut dyn core::ToInputOutputArray, contours: &mut dy
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
 	input_array_arg!(points);
-	unsafe { sys::cv_fitEllipseAMS_const__InputArrayX(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+	unsafe { sys::cv_fitEllipseAMS_const__InputArrayR(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -4025,7 +4025,7 @@ pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedR
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
 	input_array_arg!(points);
-	unsafe { sys::cv_fitEllipseDirect_const__InputArrayX(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+	unsafe { sys::cv_fitEllipseDirect_const__InputArrayR(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -4040,7 +4040,7 @@ pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::Rotat
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
 	input_array_arg!(points);
-	unsafe { sys::cv_fitEllipse_const__InputArrayX(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+	unsafe { sys::cv_fitEllipse_const__InputArrayR(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Fits a line to a 2D or 3D point set.
@@ -4080,7 +4080,7 @@ pub fn fit_ellipse(points: &dyn core::ToInputArray) -> Result<core::RotatedRect>
 pub fn fit_line(points: &dyn core::ToInputArray, line: &mut dyn core::ToOutputArray, dist_type: i32, param: f64, reps: f64, aeps: f64) -> Result<()> {
 	input_array_arg!(points);
 	output_array_arg!(line);
-	unsafe { sys::cv_fitLine_const__InputArrayX_const__OutputArrayX_int_double_double_double(points.as_raw__InputArray(), line.as_raw__OutputArray(), dist_type, param, reps, aeps) }.into_result()
+	unsafe { sys::cv_fitLine_const__InputArrayR_const__OutputArrayR_int_double_double_double(points.as_raw__InputArray(), line.as_raw__OutputArray(), dist_type, param, reps, aeps) }.into_result()
 }
 
 /// Fills a connected component with the given color.
@@ -4168,7 +4168,7 @@ pub fn fit_line(points: &dyn core::ToInputArray, line: &mut dyn core::ToOutputAr
 /// * flags: 4
 pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 	input_output_array_arg!(image);
-	unsafe { sys::cv_floodFill_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
+	unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
 }
 
 /// Fills a connected component with the given color.
@@ -4252,7 +4252,7 @@ pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Po
 pub fn flood_fill_mask(image: &mut dyn core::ToInputOutputArray, mask: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 	input_output_array_arg!(image);
 	input_output_array_arg!(mask);
-	unsafe { sys::cv_floodFill_const__InputOutputArrayX_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
+	unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
 }
 
 /// Calculates an affine transform from three pairs of the corresponding points.
@@ -4277,7 +4277,7 @@ pub fn get_affine_transform_slice(src: &[core::Point2f], dst: &[core::Point2f]) 
 pub fn get_affine_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray) -> Result<core::Mat> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
-	unsafe { sys::cv_getAffineTransform_const__InputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getAffineTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Returns the default new camera matrix.
@@ -4308,7 +4308,7 @@ pub fn get_affine_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInpu
 /// * center_principal_point: false
 pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
-	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_to_extern(), center_principal_point) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_to_extern(), center_principal_point) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Returns filter coefficients for computing spatial image derivatives.
@@ -4336,7 +4336,7 @@ pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, img
 pub fn get_deriv_kernels(kx: &mut dyn core::ToOutputArray, ky: &mut dyn core::ToOutputArray, dx: i32, dy: i32, ksize: i32, normalize: bool, ktype: i32) -> Result<()> {
 	output_array_arg!(kx);
 	output_array_arg!(ky);
-	unsafe { sys::cv_getDerivKernels_const__OutputArrayX_const__OutputArrayX_int_int_int_bool_int(kx.as_raw__OutputArray(), ky.as_raw__OutputArray(), dx, dy, ksize, normalize, ktype) }.into_result()
+	unsafe { sys::cv_getDerivKernels_const__OutputArrayR_const__OutputArrayR_int_int_int_bool_int(kx.as_raw__OutputArray(), ky.as_raw__OutputArray(), dx, dy, ksize, normalize, ktype) }.into_result()
 }
 
 /// Calculates the font-specific size to use to achieve a given height in pixels.
@@ -4426,7 +4426,7 @@ pub fn get_perspective_transform_slice(src: &[core::Point2f], dst: &[core::Point
 pub fn get_perspective_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray) -> Result<core::Mat> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
-	unsafe { sys::cv_getPerspectiveTransform_const__InputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
@@ -4455,7 +4455,7 @@ pub fn get_perspective_transform(src: &dyn core::ToInputArray, dst: &dyn core::T
 pub fn get_rect_sub_pix(image: &dyn core::ToInputArray, patch_size: core::Size, center: core::Point2f, patch: &mut dyn core::ToOutputArray, patch_type: i32) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(patch);
-	unsafe { sys::cv_getRectSubPix_const__InputArrayX_Size_Point2f_const__OutputArrayX_int(image.as_raw__InputArray(), patch_size.opencv_to_extern(), center.opencv_to_extern(), patch.as_raw__OutputArray(), patch_type) }.into_result()
+	unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR_int(image.as_raw__InputArray(), patch_size.opencv_to_extern(), center.opencv_to_extern(), patch.as_raw__OutputArray(), patch_type) }.into_result()
 }
 
 /// Calculates an affine matrix of 2D rotation.
@@ -4550,7 +4550,7 @@ pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Poin
 /// putText
 pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
 	extern_container_arg!(text);
-	unsafe { sys::cv_getTextSize_const_StringX_int_double_int_intX(text.opencv_to_extern(), font_face, font_scale, thickness, base_line) }.into_result()
+	unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_to_extern(), font_face, font_scale, thickness, base_line) }.into_result()
 }
 
 /// Determines strong corners on an image.
@@ -4607,7 +4607,7 @@ pub fn good_features_to_track(image: &dyn core::ToInputArray, corners: &mut dyn 
 	input_array_arg!(image);
 	output_array_arg!(corners);
 	input_array_arg!(mask);
-	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayX_const__OutputArrayX_int_double_double_const__InputArrayX_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, use_harris_detector, k) }.into_result()
+	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, use_harris_detector, k) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -4617,7 +4617,7 @@ pub fn good_features_to_track_with_gradient(image: &dyn core::ToInputArray, corn
 	input_array_arg!(image);
 	output_array_arg!(corners);
 	input_array_arg!(mask);
-	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayX_const__OutputArrayX_int_double_double_const__InputArrayX_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, use_harris_detector, k) }.into_result()
+	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, use_harris_detector, k) }.into_result()
 }
 
 /// Runs the GrabCut algorithm.
@@ -4646,7 +4646,7 @@ pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutput
 	input_output_array_arg!(mask);
 	input_output_array_arg!(bgd_model);
 	input_output_array_arg!(fgd_model);
-	unsafe { sys::cv_grabCut_const__InputArrayX_const__InputOutputArrayX_Rect_const__InputOutputArrayX_const__InputOutputArrayX_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), rect.opencv_to_extern(), bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode) }.into_result()
+	unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), rect.opencv_to_extern(), bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode) }.into_result()
 }
 
 /// Computes the undistortion and rectification transformation map.
@@ -4699,7 +4699,7 @@ pub fn init_undistort_rectify_map(camera_matrix: &dyn core::ToInputArray, dist_c
 	input_array_arg!(new_camera_matrix);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_int_const__OutputArrayX_const__OutputArrayX(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_to_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_to_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()
 }
 
 /// initializes maps for #remap for wide-angle
@@ -4712,7 +4712,7 @@ pub fn init_wide_angle_proj_map(camera_matrix: &dyn core::ToInputArray, dist_coe
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayX_const__InputArrayX_Size_int_int_const__OutputArrayX_const__OutputArrayX_int_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_to_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha) }.into_result()
+	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_int_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_to_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha) }.into_result()
 }
 
 /// Calculates the integral of an image.
@@ -4758,7 +4758,7 @@ pub fn integral3(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 	output_array_arg!(sum);
 	output_array_arg!(sqsum);
 	output_array_arg!(tilted);
-	unsafe { sys::cv_integral_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), tilted.as_raw__OutputArray(), sdepth, sqdepth) }.into_result()
+	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), tilted.as_raw__OutputArray(), sdepth, sqdepth) }.into_result()
 }
 
 /// Calculates the integral of an image.
@@ -4805,7 +4805,7 @@ pub fn integral2(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(sum);
 	output_array_arg!(sqsum);
-	unsafe { sys::cv_integral_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), sdepth, sqdepth) }.into_result()
+	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), sdepth, sqdepth) }.into_result()
 }
 
 /// Calculates the integral of an image.
@@ -4850,7 +4850,7 @@ pub fn integral2(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, sdepth: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(sum);
-	unsafe { sys::cv_integral_const__InputArrayX_const__OutputArrayX_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sdepth) }.into_result()
+	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sdepth) }.into_result()
 }
 
 /// Finds intersection of two convex polygons
@@ -4875,7 +4875,7 @@ pub fn intersect_convex_convex(_p1: &dyn core::ToInputArray, _p2: &dyn core::ToI
 	input_array_arg!(_p1);
 	input_array_arg!(_p2);
 	output_array_arg!(_p12);
-	unsafe { sys::cv_intersectConvexConvex_const__InputArrayX_const__InputArrayX_const__OutputArrayX_bool(_p1.as_raw__InputArray(), _p2.as_raw__InputArray(), _p12.as_raw__OutputArray(), handle_nested) }.into_result()
+	unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(_p1.as_raw__InputArray(), _p2.as_raw__InputArray(), _p12.as_raw__OutputArray(), handle_nested) }.into_result()
 }
 
 /// Inverts an affine transformation.
@@ -4892,7 +4892,7 @@ pub fn intersect_convex_convex(_p1: &dyn core::ToInputArray, _p2: &dyn core::ToI
 pub fn invert_affine_transform(m: &dyn core::ToInputArray, i_m: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(m);
 	output_array_arg!(i_m);
-	unsafe { sys::cv_invertAffineTransform_const__InputArrayX_const__OutputArrayX(m.as_raw__InputArray(), i_m.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_invertAffineTransform_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), i_m.as_raw__OutputArray()) }.into_result()
 }
 
 /// Tests a contour convexity.
@@ -4904,7 +4904,7 @@ pub fn invert_affine_transform(m: &dyn core::ToInputArray, i_m: &mut dyn core::T
 /// * contour: Input vector of 2D points, stored in std::vector\<\> or Mat
 pub fn is_contour_convex(contour: &dyn core::ToInputArray) -> Result<bool> {
 	input_array_arg!(contour);
-	unsafe { sys::cv_isContourConvex_const__InputArrayX(contour.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_isContourConvex_const__InputArrayR(contour.as_raw__InputArray()) }.into_result()
 }
 
 /// Draws a line segment connecting two points.
@@ -4929,7 +4929,7 @@ pub fn is_contour_convex(contour: &dyn core::ToInputArray) -> Result<bool> {
 /// * shift: 0
 pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_line_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Remaps an image to polar coordinates space.
@@ -4966,7 +4966,7 @@ pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core:
 pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_linearPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), max_radius, flags) }.into_result()
+	unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), max_radius, flags) }.into_result()
 }
 
 /// Remaps an image to semilog-polar coordinates space.
@@ -5004,7 +5004,7 @@ pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 pub fn log_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, m: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_logPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), m, flags) }.into_result()
+	unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), m, flags) }.into_result()
 }
 
 /// Compares two shapes.
@@ -5019,7 +5019,7 @@ pub fn log_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn match_shapes(contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray, method: i32, parameter: f64) -> Result<f64> {
 	input_array_arg!(contour1);
 	input_array_arg!(contour2);
-	unsafe { sys::cv_matchShapes_const__InputArrayX_const__InputArrayX_int_double(contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), method, parameter) }.into_result()
+	unsafe { sys::cv_matchShapes_const__InputArrayR_const__InputArrayR_int_double(contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), method, parameter) }.into_result()
 }
 
 /// Compares a template against overlapped image regions.
@@ -5053,7 +5053,7 @@ pub fn match_template(image: &dyn core::ToInputArray, templ: &dyn core::ToInputA
 	input_array_arg!(templ);
 	output_array_arg!(result);
 	input_array_arg!(mask);
-	unsafe { sys::cv_matchTemplate_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX(image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), method, mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_matchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), method, mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Blurs an image using the median filter.
@@ -5074,7 +5074,7 @@ pub fn match_template(image: &dyn core::ToInputArray, templ: &dyn core::ToInputA
 pub fn median_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_medianBlur_const__InputArrayX_const__OutputArrayX_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize) }.into_result()
+	unsafe { sys::cv_medianBlur_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize) }.into_result()
 }
 
 /// Finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -5087,7 +5087,7 @@ pub fn median_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
 pub fn min_area_rect(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
 	input_array_arg!(points);
-	unsafe { sys::cv_minAreaRect_const__InputArrayX(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+	unsafe { sys::cv_minAreaRect_const__InputArrayR(points.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Finds a circle of the minimum area enclosing a 2D point set.
@@ -5100,7 +5100,7 @@ pub fn min_area_rect(points: &dyn core::ToInputArray) -> Result<core::RotatedRec
 /// * radius: Output radius of the circle.
 pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::Point2f, radius: &mut f32) -> Result<()> {
 	input_array_arg!(points);
-	unsafe { sys::cv_minEnclosingCircle_const__InputArrayX_Point2fX_floatR(points.as_raw__InputArray(), center, radius) }.into_result()
+	unsafe { sys::cv_minEnclosingCircle_const__InputArrayR_Point2fR_floatR(points.as_raw__InputArray(), center, radius) }.into_result()
 }
 
 /// Finds a triangle of minimum area enclosing a 2D point set and returns its area.
@@ -5125,7 +5125,7 @@ pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::
 pub fn min_enclosing_triangle(points: &dyn core::ToInputArray, triangle: &mut dyn core::ToOutputArray) -> Result<f64> {
 	input_array_arg!(points);
 	output_array_arg!(triangle);
-	unsafe { sys::cv_minEnclosingTriangle_const__InputArrayX_const__OutputArrayX(points.as_raw__InputArray(), triangle.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_minEnclosingTriangle_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), triangle.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates all of the moments up to the third order of a polygon or rasterized shape.
@@ -5151,7 +5151,7 @@ pub fn min_enclosing_triangle(points: &dyn core::ToInputArray, triangle: &mut dy
 /// * binary_image: false
 pub fn moments(array: &dyn core::ToInputArray, binary_image: bool) -> Result<core::Moments> {
 	input_array_arg!(array);
-	unsafe { sys::cv_moments_const__InputArrayX_bool(array.as_raw__InputArray(), binary_image) }.into_result()
+	unsafe { sys::cv_moments_const__InputArrayR_bool(array.as_raw__InputArray(), binary_image) }.into_result()
 }
 
 /// returns "magic" border value for erosion and dilation. It is automatically transformed to Scalar::all(-DBL_MAX) for dilation.
@@ -5195,7 +5195,7 @@ pub fn morphology_ex(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_morphologyEx_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// The function is used to detect translational shifts that occur between two images.
@@ -5242,7 +5242,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	input_array_arg!(window);
-	unsafe { sys::cv_phaseCorrelate_const__InputArrayX_const__InputArrayX_const__InputArrayX_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response) }.into_result()
+	unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response) }.into_result()
 }
 
 /// Performs a point-in-contour test.
@@ -5263,7 +5263,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 /// nearest contour edge. Otherwise, the function only checks if the point is inside a contour or not.
 pub fn point_polygon_test(contour: &dyn core::ToInputArray, pt: core::Point2f, measure_dist: bool) -> Result<f64> {
 	input_array_arg!(contour);
-	unsafe { sys::cv_pointPolygonTest_const__InputArrayX_Point2f_bool(contour.as_raw__InputArray(), pt.opencv_to_extern(), measure_dist) }.into_result()
+	unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), pt.opencv_to_extern(), measure_dist) }.into_result()
 }
 
 /// Draws several polygonal curves.
@@ -5287,7 +5287,7 @@ pub fn point_polygon_test(contour: &dyn core::ToInputArray, pt: core::Point2f, m
 pub fn polylines(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInputArray, is_closed: bool, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
 	input_array_arg!(pts);
-	unsafe { sys::cv_polylines_const__InputOutputArrayX_const__InputArrayX_bool_const_ScalarX_int_int_int(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), is_closed, &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_polylines_const__InputOutputArrayR_const__InputArrayR_bool_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), is_closed, &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Calculates a feature map for corner detection.
@@ -5320,7 +5320,7 @@ pub fn polylines(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 pub fn pre_corner_detect(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: i32, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_preCornerDetect_const__InputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, border_type) }.into_result()
+	unsafe { sys::cv_preCornerDetect_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, border_type) }.into_result()
 }
 
 /// Draws a text string.
@@ -5348,7 +5348,7 @@ pub fn pre_corner_detect(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 pub fn put_text(img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_face: i32, font_scale: f64, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 	input_output_array_arg!(img);
 	extern_container_arg!(text);
-	unsafe { sys::cv_putText_const__InputOutputArrayX_const_StringX_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_face, font_scale, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
+	unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_face, font_scale, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
 }
 
 /// Blurs an image and downsamples it.
@@ -5377,7 +5377,7 @@ pub fn put_text(img: &mut dyn core::ToInputOutputArray, text: &str, org: core::P
 pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dstsize: core::Size, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_pyrDown_const__InputArrayX_const__OutputArrayX_const_SizeX_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type) }.into_result()
+	unsafe { sys::cv_pyrDown_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type) }.into_result()
 }
 
 /// Performs initial step of meanshift segmentation of an image.
@@ -5423,7 +5423,7 @@ pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 pub fn pyr_mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: f64, sr: f64, max_level: i32, termcrit: core::TermCriteria) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayX_const__OutputArrayX_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, termcrit.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, termcrit.opencv_to_extern()) }.into_result()
 }
 
 /// Upsamples an image and then blurs it.
@@ -5450,7 +5450,7 @@ pub fn pyr_mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core
 pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dstsize: core::Size, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_pyrUp_const__InputArrayX_const__OutputArrayX_const_SizeX_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type) }.into_result()
+	unsafe { sys::cv_pyrUp_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type) }.into_result()
 }
 
 /// Draws a simple, thick, or filled up-right rectangle.
@@ -5479,7 +5479,7 @@ pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * line_type: LINE_8
 /// * shift: 0
 pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	unsafe { sys::cv_rectangle_MatX_Rect_const_ScalarX_int_int_int(img.as_raw_mut_Mat(), rec.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_rectangle_MatR_Rect_const_ScalarR_int_int_int(img.as_raw_mut_Mat(), rec.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Draws a simple, thick, or filled up-right rectangle.
@@ -5503,7 +5503,7 @@ pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thic
 /// * shift: 0
 pub fn rectangle_points(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_rectangle_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Applies a generic geometrical transformation to an image.
@@ -5548,7 +5548,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ma
 	output_array_arg!(dst);
 	input_array_arg!(map1);
 	input_array_arg!(map2);
-	unsafe { sys::cv_remap_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value) }.into_result()
+	unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value) }.into_result()
 }
 
 /// Resizes an image.
@@ -5595,7 +5595,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ma
 pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, fx: f64, fy: f64, interpolation: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_resize_const__InputArrayX_const__OutputArrayX_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), fx, fy, interpolation) }.into_result()
+	unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), fx, fy, interpolation) }.into_result()
 }
 
 /// Finds out if there is any intersection between two rotated rectangles.
@@ -5616,7 +5616,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// One of #RectanglesIntersectTypes
 pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::RotatedRect, intersecting_region: &mut dyn core::ToOutputArray) -> Result<i32> {
 	output_array_arg!(intersecting_region);
-	unsafe { sys::cv_rotatedRectangleIntersection_const_RotatedRectX_const_RotatedRectX_const__OutputArrayX(rect1.as_raw_RotatedRect(), rect2.as_raw_RotatedRect(), intersecting_region.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rotatedRectangleIntersection_const_RotatedRectR_const_RotatedRectR_const__OutputArrayR(rect1.as_raw_RotatedRect(), rect2.as_raw_RotatedRect(), intersecting_region.as_raw__OutputArray()) }.into_result()
 }
 
 /// Applies a separable linear filter to an image.
@@ -5647,7 +5647,7 @@ pub fn sep_filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 	output_array_arg!(dst);
 	input_array_arg!(kernel_x);
 	input_array_arg!(kernel_y);
-	unsafe { sys::cv_sepFilter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_const__InputArrayX_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
+	unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
 }
 
 /// Calculates the first order image derivative in both x and y using a Sobel operator
@@ -5677,7 +5677,7 @@ pub fn spatial_gradient(src: &dyn core::ToInputArray, dx: &mut dyn core::ToOutpu
 	input_array_arg!(src);
 	output_array_arg!(dx);
 	output_array_arg!(dy);
-	unsafe { sys::cv_spatialGradient_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_int(src.as_raw__InputArray(), dx.as_raw__OutputArray(), dy.as_raw__OutputArray(), ksize, border_type) }.into_result()
+	unsafe { sys::cv_spatialGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dx.as_raw__OutputArray(), dy.as_raw__OutputArray(), ksize, border_type) }.into_result()
 }
 
 /// Calculates the normalized sum of squares of the pixel values overlapping the filter.
@@ -5707,7 +5707,7 @@ pub fn spatial_gradient(src: &dyn core::ToInputArray, dx: &mut dyn core::ToOutpu
 pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_sqrBoxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
+	unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
 }
 
 /// Applies a fixed-level threshold to each array element.
@@ -5739,7 +5739,7 @@ pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, thresh: f64, maxval: f64, typ: i32) -> Result<f64> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_threshold_const__InputArrayX_const__OutputArrayX_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ) }.into_result()
+	unsafe { sys::cv_threshold_const__InputArrayR_const__OutputArrayR_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ) }.into_result()
 }
 
 /// Computes the ideal point coordinates from the observed point coordinates.
@@ -5781,7 +5781,7 @@ pub fn undistort_points(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	unsafe { sys::cv_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes the ideal point coordinates from the observed point coordinates.
@@ -5824,7 +5824,7 @@ pub fn undistort_points_iter(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	unsafe { sys::cv_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_to_extern()) }.into_result()
 }
 
 /// Transforms an image to compensate for lens distortion.
@@ -5864,7 +5864,7 @@ pub fn undistort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(new_camera_matrix);
-	unsafe { sys::cv_undistort_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray()) }.into_result()
 }
 
 /// Applies an affine transformation to an image.
@@ -5900,7 +5900,7 @@ pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_warpAffine_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
+	unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
 }
 
 /// Applies a perspective transformation to an image.
@@ -5933,7 +5933,7 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_warpPerspective_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
+	unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
 }
 
 /// \brief Remaps an image to polar or semilog-polar coordinates space
@@ -6003,7 +6003,7 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_warpPolar_const__InputArrayX_const__OutputArrayX_Size_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), center.opencv_to_extern(), max_radius, flags) }.into_result()
+	unsafe { sys::cv_warpPolar_const__InputArrayR_const__OutputArrayR_Size_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), center.opencv_to_extern(), max_radius, flags) }.into_result()
 }
 
 /// Performs a marker-based image segmentation using the watershed algorithm.
@@ -6036,7 +6036,7 @@ pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInputOutputArray) -> Result<()> {
 	input_array_arg!(image);
 	input_output_array_arg!(markers);
-	unsafe { sys::cv_watershed_const__InputArrayX_const__InputOutputArrayX(image.as_raw__InputArray(), markers.as_raw__InputOutputArray()) }.into_result()
+	unsafe { sys::cv_watershed_const__InputArrayR_const__InputOutputArrayR(image.as_raw__InputArray(), markers.as_raw__InputOutputArray()) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -6048,7 +6048,7 @@ pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInput
 	input_array_arg!(signature2);
 	input_array_arg!(cost);
 	output_array_arg!(flow);
-	unsafe { sys::cv_wrapperEMD_const__InputArrayX_const__InputArrayX_int_const__InputArrayX_Ptr_float__const__OutputArrayX(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_Ptr_float__const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray()) }.into_result()
 }
 
 /// Base class for Contrast Limited Adaptive Histogram Equalization.
@@ -6064,7 +6064,7 @@ pub trait CLAHE: core::AlgorithmTrait {
 	fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_CLAHE_apply_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_CLAHE_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Sets threshold for contrast limiting.
@@ -6111,7 +6111,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 	/// * templ_center: Point(-1,-1)
 	fn set_template(&mut self, templ: &dyn core::ToInputArray, templ_center: core::Point) -> Result<()> {
 		input_array_arg!(templ);
-		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayX_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -6120,7 +6120,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		input_array_arg!(edges);
 		input_array_arg!(dx);
 		input_array_arg!(dy);
-		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
 	}
 	
 	/// find template on image
@@ -6131,7 +6131,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		input_array_arg!(image);
 		output_array_arg!(positions);
 		output_array_arg!(votes);
-		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_GeneralizedHough(), image.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), image.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -6142,7 +6142,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		input_array_arg!(dy);
 		output_array_arg!(positions);
 		output_array_arg!(votes);
-		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Canny low threshold.
@@ -6506,15 +6506,15 @@ impl Drop for LineIterator {
 }
 
 impl LineIterator {
-	pub fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LineIterator {}
 
 impl crate::imgproc::LineIteratorTrait for LineIterator {
-	fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LineIterator {
@@ -6531,7 +6531,7 @@ impl LineIterator {
 	/// * connectivity: 8
 	/// * left_to_right: false
 	pub fn new(img: &core::Mat, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-		unsafe { sys::cv_LineIterator_LineIterator_const_MatX_Point_Point_int_bool(img.as_raw_Mat(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
+		unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
 	}
 	
 }
@@ -6577,7 +6577,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait {
 		output_array_arg!(width);
 		output_array_arg!(prec);
 		output_array_arg!(nfa);
-		unsafe { sys::cv_LineSegmentDetector_detect_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_LineSegmentDetector(), _image.as_raw__InputArray(), _lines.as_raw__OutputArray(), width.as_raw__OutputArray(), prec.as_raw__OutputArray(), nfa.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_LineSegmentDetector(), _image.as_raw__InputArray(), _lines.as_raw__OutputArray(), width.as_raw__OutputArray(), prec.as_raw__OutputArray(), nfa.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Draws the line segments on a given image.
@@ -6588,7 +6588,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait {
 	fn draw_segments(&mut self, _image: &mut dyn core::ToInputOutputArray, lines: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(_image);
 		input_array_arg!(lines);
-		unsafe { sys::cv_LineSegmentDetector_drawSegments_const__InputOutputArrayX_const__InputArrayX(self.as_raw_mut_LineSegmentDetector(), _image.as_raw__InputOutputArray(), lines.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_LineSegmentDetector(), _image.as_raw__InputOutputArray(), lines.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Draws two groups of lines in blue and red, counting the non overlapping (mismatching) pixels.
@@ -6606,7 +6606,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait {
 		input_array_arg!(lines1);
 		input_array_arg!(lines2);
 		input_output_array_arg!(_image);
-		unsafe { sys::cv_LineSegmentDetector_compareSegments_const_SizeX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX(self.as_raw_mut_LineSegmentDetector(), &size, lines1.as_raw__InputArray(), lines2.as_raw__InputArray(), _image.as_raw__InputOutputArray()) }.into_result()
+		unsafe { sys::cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_LineSegmentDetector(), &size, lines1.as_raw__InputArray(), lines2.as_raw__InputArray(), _image.as_raw__InputOutputArray()) }.into_result()
 	}
 	
 }
@@ -6647,7 +6647,7 @@ pub trait Subdiv2DTrait {
 	/// The function inserts a vector of points into a subdivision and modifies the subdivision topology
 	/// appropriately.
 	fn insert_multiple(&mut self, ptvec: &core::Vector::<core::Point2f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_insert_const_vector_Point2f_X(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_insert_const_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f()) }.into_result()
 	}
 	
 	/// Returns the location of a point within a Delaunay triangulation.
@@ -6703,7 +6703,7 @@ pub trait Subdiv2DTrait {
 	/// The function gives each edge as a 4 numbers vector, where each two are one of the edge
 	/// vertices. i.e. org_x = v[0], org_y = v[1], dst_x = v[2], dst_y = v[3].
 	fn get_edge_list(&self, edge_list: &mut core::Vector::<core::Vec4f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_getEdgeList_const_vector_Vec4f_X(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_getEdgeList_const_vector_Vec4f_R(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f()) }.into_result()
 	}
 	
 	/// Returns a list of the leading edge ID connected to each triangle.
@@ -6713,7 +6713,7 @@ pub trait Subdiv2DTrait {
 	/// 
 	/// The function gives one edge ID for each triangle.
 	fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector::<i32>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vector_int_X(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vector_int_R(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32()) }.into_result()
 	}
 	
 	/// Returns a list of all triangles.
@@ -6724,7 +6724,7 @@ pub trait Subdiv2DTrait {
 	/// The function gives each triangle as a 6 numbers vector, where each two are one of the triangle
 	/// vertices. i.e. p1_x = v[0], p1_y = v[1], p2_x = v[2], p2_y = v[3], p3_x = v[4], p3_y = v[5].
 	fn get_triangle_list(&self, triangle_list: &mut core::Vector::<core::Vec6f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_getTriangleList_const_vector_Vec6f_X(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_getTriangleList_const_vector_Vec6f_R(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f()) }.into_result()
 	}
 	
 	/// Returns a list of all Voronoi facets.
@@ -6734,7 +6734,7 @@ pub trait Subdiv2DTrait {
 	/// * facetList: Output vector of the Voronoi facets.
 	/// * facetCenters: Output vector of the Voronoi facets center points.
 	fn get_voronoi_facet_list(&mut self, idx: &core::Vector::<i32>, facet_list: &mut core::Vector::<core::Vector::<core::Point2f>>, facet_centers: &mut core::Vector::<core::Point2f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vector_int_X_vector_vector_Point2f__X_vector_Point2f_X(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vector_int_R_vector_vector_Point2f__R_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f()) }.into_result()
 	}
 	
 	/// Returns vertex location from vertex ID.
@@ -6853,15 +6853,15 @@ impl Drop for Subdiv2D {
 }
 
 impl Subdiv2D {
-	pub fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Subdiv2D {}
 
 impl crate::imgproc::Subdiv2DTrait for Subdiv2D {
-	fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Subdiv2D {

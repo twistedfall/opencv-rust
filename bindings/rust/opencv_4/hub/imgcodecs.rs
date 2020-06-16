@@ -94,31 +94,31 @@ pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImreadModes {
 	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
-	IMREAD_UNCHANGED = -1 as isize,
+	IMREAD_UNCHANGED = -1,
 	/// If set, always convert image to the single channel grayscale image (codec internal conversion).
-	IMREAD_GRAYSCALE = 0 as isize,
+	IMREAD_GRAYSCALE = 0,
 	/// If set, always convert image to the 3 channel BGR color image.
-	IMREAD_COLOR = 1 as isize,
+	IMREAD_COLOR = 1,
 	/// If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
-	IMREAD_ANYDEPTH = 2 as isize,
+	IMREAD_ANYDEPTH = 2,
 	/// If set, the image is read in any possible color format.
-	IMREAD_ANYCOLOR = 4 as isize,
+	IMREAD_ANYCOLOR = 4,
 	/// If set, use the gdal driver for loading the image.
-	IMREAD_LOAD_GDAL = 8 as isize,
+	IMREAD_LOAD_GDAL = 8,
 	/// If set, always convert image to the single channel grayscale image and the image size reduced 1/2.
-	IMREAD_REDUCED_GRAYSCALE_2 = 16 as isize,
+	IMREAD_REDUCED_GRAYSCALE_2 = 16,
 	/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/2.
-	IMREAD_REDUCED_COLOR_2 = 17 as isize,
+	IMREAD_REDUCED_COLOR_2 = 17,
 	/// If set, always convert image to the single channel grayscale image and the image size reduced 1/4.
-	IMREAD_REDUCED_GRAYSCALE_4 = 32 as isize,
+	IMREAD_REDUCED_GRAYSCALE_4 = 32,
 	/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/4.
-	IMREAD_REDUCED_COLOR_4 = 33 as isize,
+	IMREAD_REDUCED_COLOR_4 = 33,
 	/// If set, always convert image to the single channel grayscale image and the image size reduced 1/8.
-	IMREAD_REDUCED_GRAYSCALE_8 = 64 as isize,
+	IMREAD_REDUCED_GRAYSCALE_8 = 64,
 	/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/8.
-	IMREAD_REDUCED_COLOR_8 = 65 as isize,
+	IMREAD_REDUCED_COLOR_8 = 65,
 	/// If set, do not rotate the image according to EXIF's orientation flag.
-	IMREAD_IGNORE_ORIENTATION = 128 as isize,
+	IMREAD_IGNORE_ORIENTATION = 128,
 }
 
 opencv_type_enum! { crate::imgcodecs::ImreadModes }
@@ -127,9 +127,9 @@ opencv_type_enum! { crate::imgcodecs::ImreadModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwriteEXRTypeFlags {
 	/// store as HALF (FP16)
-	IMWRITE_EXR_TYPE_HALF = 1 as isize,
+	IMWRITE_EXR_TYPE_HALF = 1,
 	/// store as FP32 (default)
-	IMWRITE_EXR_TYPE_FLOAT = 2 as isize,
+	IMWRITE_EXR_TYPE_FLOAT = 2,
 }
 
 opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags }
@@ -139,41 +139,41 @@ opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwriteFlags {
 	/// For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
-	IMWRITE_JPEG_QUALITY = 1 as isize,
+	IMWRITE_JPEG_QUALITY = 1,
 	/// Enable JPEG features, 0 or 1, default is False.
-	IMWRITE_JPEG_PROGRESSIVE = 2 as isize,
+	IMWRITE_JPEG_PROGRESSIVE = 2,
 	/// Enable JPEG features, 0 or 1, default is False.
-	IMWRITE_JPEG_OPTIMIZE = 3 as isize,
+	IMWRITE_JPEG_OPTIMIZE = 3,
 	/// JPEG restart interval, 0 - 65535, default is 0 - no restart.
-	IMWRITE_JPEG_RST_INTERVAL = 4 as isize,
+	IMWRITE_JPEG_RST_INTERVAL = 4,
 	/// Separate luma quality level, 0 - 100, default is 0 - don't use.
-	IMWRITE_JPEG_LUMA_QUALITY = 5 as isize,
+	IMWRITE_JPEG_LUMA_QUALITY = 5,
 	/// Separate chroma quality level, 0 - 100, default is 0 - don't use.
-	IMWRITE_JPEG_CHROMA_QUALITY = 6 as isize,
+	IMWRITE_JPEG_CHROMA_QUALITY = 6,
 	/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
-	IMWRITE_PNG_COMPRESSION = 16 as isize,
+	IMWRITE_PNG_COMPRESSION = 16,
 	/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
-	IMWRITE_PNG_STRATEGY = 17 as isize,
+	IMWRITE_PNG_STRATEGY = 17,
 	/// Binary level PNG, 0 or 1, default is 0.
-	IMWRITE_PNG_BILEVEL = 18 as isize,
+	IMWRITE_PNG_BILEVEL = 18,
 	/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
-	IMWRITE_PXM_BINARY = 32 as isize,
+	IMWRITE_PXM_BINARY = 32,
 	/// override EXR storage type (FLOAT (FP32) is default)
-	IMWRITE_EXR_TYPE = 48 as isize,
+	IMWRITE_EXR_TYPE = 48,
 	/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
-	IMWRITE_WEBP_QUALITY = 64 as isize,
+	IMWRITE_WEBP_QUALITY = 64,
 	/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
-	IMWRITE_PAM_TUPLETYPE = 128 as isize,
+	IMWRITE_PAM_TUPLETYPE = 128,
 	/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
-	IMWRITE_TIFF_RESUNIT = 256 as isize,
+	IMWRITE_TIFF_RESUNIT = 256,
 	/// For TIFF, use to specify the X direction DPI
-	IMWRITE_TIFF_XDPI = 257 as isize,
+	IMWRITE_TIFF_XDPI = 257,
 	/// For TIFF, use to specify the Y direction DPI
-	IMWRITE_TIFF_YDPI = 258 as isize,
+	IMWRITE_TIFF_YDPI = 258,
 	/// For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
-	IMWRITE_TIFF_COMPRESSION = 259 as isize,
+	IMWRITE_TIFF_COMPRESSION = 259,
 	/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
-	IMWRITE_JPEG2000_COMPRESSION_X1000 = 272 as isize,
+	IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,
 }
 
 opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
@@ -182,12 +182,12 @@ opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwritePAMFlags {
-	IMWRITE_PAM_FORMAT_NULL = 0 as isize,
-	IMWRITE_PAM_FORMAT_BLACKANDWHITE = 1 as isize,
-	IMWRITE_PAM_FORMAT_GRAYSCALE = 2 as isize,
-	IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA = 3 as isize,
-	IMWRITE_PAM_FORMAT_RGB = 4 as isize,
-	IMWRITE_PAM_FORMAT_RGB_ALPHA = 5 as isize,
+	IMWRITE_PAM_FORMAT_NULL = 0,
+	IMWRITE_PAM_FORMAT_BLACKANDWHITE = 1,
+	IMWRITE_PAM_FORMAT_GRAYSCALE = 2,
+	IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA = 3,
+	IMWRITE_PAM_FORMAT_RGB = 4,
+	IMWRITE_PAM_FORMAT_RGB_ALPHA = 5,
 }
 
 opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
@@ -203,15 +203,15 @@ opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwritePNGFlags {
 	/// Use this value for normal data.
-	IMWRITE_PNG_STRATEGY_DEFAULT = 0 as isize,
+	IMWRITE_PNG_STRATEGY_DEFAULT = 0,
 	/// Use this value for data produced by a filter (or predictor).Filtered data consists mostly of small values with a somewhat random distribution. In this case, the compression algorithm is tuned to compress them better.
-	IMWRITE_PNG_STRATEGY_FILTERED = 1 as isize,
+	IMWRITE_PNG_STRATEGY_FILTERED = 1,
 	/// Use this value to force Huffman encoding only (no string match).
-	IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2 as isize,
+	IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2,
 	/// Use this value to limit match distances to one (run-length encoding).
-	IMWRITE_PNG_STRATEGY_RLE = 3 as isize,
+	IMWRITE_PNG_STRATEGY_RLE = 3,
 	/// Using this value prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
-	IMWRITE_PNG_STRATEGY_FIXED = 4 as isize,
+	IMWRITE_PNG_STRATEGY_FIXED = 4,
 }
 
 opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
@@ -222,7 +222,7 @@ opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
 /// * filename: File name of the image
 pub fn have_image_reader(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_haveImageReader_const_StringX(filename.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_to_extern()) }.into_result()
 }
 
 /// Returns true if an image with the specified filename can be encoded by OpenCV
@@ -231,7 +231,7 @@ pub fn have_image_reader(filename: &str) -> Result<bool> {
 /// * filename: File name of the image
 pub fn have_image_writer(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_haveImageWriter_const_StringX(filename.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_to_extern()) }.into_result()
 }
 
 /// Reads an image from a buffer in memory.
@@ -248,7 +248,7 @@ pub fn have_image_writer(filename: &str) -> Result<bool> {
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	unsafe { sys::cv_imdecode_const__InputArrayX_int(buf.as_raw__InputArray(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Reads an image from a buffer in memory.
@@ -272,7 +272,7 @@ pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 /// reallocations when the function is called repeatedly for images of the same size.
 pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	unsafe { sys::cv_imdecode_const__InputArrayX_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Encodes an image into a memory buffer.
@@ -291,7 +291,7 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector::<u8>, params: &core::Vector::<i32>) -> Result<bool> {
 	extern_container_arg!(ext);
 	input_array_arg!(img);
-	unsafe { sys::cv_imencode_const_StringX_const__InputArrayX_vector_unsigned_char_X_const_vector_int_X(ext.opencv_to_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_to_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
 }
 
 /// Loads an image from a file.
@@ -351,7 +351,7 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector:
 /// * flags: IMREAD_COLOR
 pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_imread_const_StringX_int(filename.opencv_to_extern(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_imread_const_StringR_int(filename.opencv_to_extern(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Loads a multi-page image from a file.
@@ -368,7 +368,7 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// * flags: IMREAD_ANYCOLOR
 pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_imreadmulti_const_StringX_vector_Mat_X_int(filename.opencv_to_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
+	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_to_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
 }
 
 /// Saves an image to a specified file.
@@ -403,5 +403,5 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector::<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
-	unsafe { sys::cv_imwrite_const_StringX_const__InputArrayX_const_vector_int_X(filename.opencv_to_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_to_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
 }

@@ -3,7 +3,7 @@
 #include "structured_light_types.hpp"
 
 extern "C" {
-	Result<cv::Ptr<cv::structured_light::GrayCodePattern>*> cv_structured_light_GrayCodePattern_create_const_ParamsX(const cv::structured_light::GrayCodePattern::Params* parameters) {
+	Result<cv::Ptr<cv::structured_light::GrayCodePattern>*> cv_structured_light_GrayCodePattern_create_const_ParamsR(const cv::structured_light::GrayCodePattern::Params* parameters) {
 		try {
 			cv::Ptr<cv::structured_light::GrayCodePattern> ret = cv::structured_light::GrayCodePattern::create(*parameters);
 			return Ok(new cv::Ptr<cv::structured_light::GrayCodePattern>(ret));
@@ -38,14 +38,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_const__InputOutputArrayX_const__InputOutputArrayX(const cv::structured_light::GrayCodePattern* instance, const cv::_InputOutputArray* blackImage, const cv::_InputOutputArray* whiteImage) {
+	Result_void cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_const__InputOutputArrayR_const__InputOutputArrayR(const cv::structured_light::GrayCodePattern* instance, const cv::_InputOutputArray* blackImage, const cv::_InputOutputArray* whiteImage) {
 		try {
 			instance->getImagesForShadowMasks(*blackImage, *whiteImage);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayX_int_int_PointX(const cv::structured_light::GrayCodePattern* instance, const cv::_InputArray* patternImages, int x, int y, cv::Point* projPix) {
+	Result<bool> cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayR_int_int_PointR(const cv::structured_light::GrayCodePattern* instance, const cv::_InputArray* patternImages, int x, int y, cv::Point* projPix) {
 		try {
 			bool ret = instance->getProjPixel(*patternImages, x, y, *projPix);
 			return Ok(ret);
@@ -97,28 +97,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::structured_light::SinusoidalPattern>*>))
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* patternImages, const cv::_OutputArray* wrappedPhaseMap, const cv::_OutputArray* shadowMask, const cv::_InputArray* fundamental) {
+	Result_void cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* patternImages, const cv::_OutputArray* wrappedPhaseMap, const cv::_OutputArray* shadowMask, const cv::_InputArray* fundamental) {
 		try {
 			instance->computePhaseMap(*patternImages, *wrappedPhaseMap, *shadowMask, *fundamental);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_Size_const__InputArrayX(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* wrappedPhaseMap, const cv::_OutputArray* unwrappedPhaseMap, const cv::Size* camSize, const cv::_InputArray* shadowMask) {
+	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* wrappedPhaseMap, const cv::_OutputArray* unwrappedPhaseMap, const cv::Size* camSize, const cv::_InputArray* shadowMask) {
 		try {
 			instance->unwrapPhaseMap(*wrappedPhaseMap, *unwrappedPhaseMap, *camSize, *shadowMask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_findProCamMatches_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* projUnwrappedPhaseMap, const cv::_InputArray* camUnwrappedPhaseMap, const cv::_OutputArray* matches) {
+	Result_void cv_structured_light_SinusoidalPattern_findProCamMatches_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* projUnwrappedPhaseMap, const cv::_InputArray* camUnwrappedPhaseMap, const cv::_OutputArray* matches) {
 		try {
 			instance->findProCamMatches(*projUnwrappedPhaseMap, *camUnwrappedPhaseMap, *matches);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_computeDataModulationTerm_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* patternImages, const cv::_OutputArray* dataModulationTerm, const cv::_InputArray* shadowMask) {
+	Result_void cv_structured_light_SinusoidalPattern_computeDataModulationTerm_const__InputArrayR_const__OutputArrayR_const__InputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* patternImages, const cv::_OutputArray* dataModulationTerm, const cv::_InputArray* shadowMask) {
 		try {
 			instance->computeDataModulationTerm(*patternImages, *dataModulationTerm, *shadowMask);
 			return Ok();
@@ -261,14 +261,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::structured_light::SinusoidalPattern::Params*>))
 	}
 	
-	Result<bool> cv_structured_light_StructuredLightPattern_generate_const__OutputArrayX(cv::structured_light::StructuredLightPattern* instance, const cv::_OutputArray* patternImages) {
+	Result<bool> cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(cv::structured_light::StructuredLightPattern* instance, const cv::_OutputArray* patternImages) {
 		try {
 			bool ret = instance->generate(*patternImages);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__X_const__OutputArrayX_const__InputArrayX_const__InputArrayX_int(const cv::structured_light::StructuredLightPattern* instance, const std::vector<std::vector<cv::Mat>>* patternImages, const cv::_OutputArray* disparityMap, const cv::_InputArray* blackImages, const cv::_InputArray* whiteImages, int flags) {
+	Result<bool> cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__R_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(const cv::structured_light::StructuredLightPattern* instance, const std::vector<std::vector<cv::Mat>>* patternImages, const cv::_OutputArray* disparityMap, const cv::_InputArray* blackImages, const cv::_InputArray* whiteImages, int flags) {
 		try {
 			bool ret = instance->decode(*patternImages, *disparityMap, *blackImages, *whiteImages, flags);
 			return Ok(ret);

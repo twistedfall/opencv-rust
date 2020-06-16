@@ -3,63 +3,63 @@
 #include "viz_types.hpp"
 
 extern "C" {
-	Result_void cv_viz_computeNormals_const_MeshX_const__OutputArrayX(const cv::viz::Mesh* mesh, const cv::_OutputArray* normals) {
+	Result_void cv_viz_computeNormals_const_MeshR_const__OutputArrayR(const cv::viz::Mesh* mesh, const cv::_OutputArray* normals) {
 		try {
 			cv::viz::computeNormals(*mesh, *normals);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::viz::Viz3d*> cv_viz_getWindowByName_const_StringX(const char* window_name) {
+	Result<cv::viz::Viz3d*> cv_viz_getWindowByName_const_StringR(const char* window_name) {
 		try {
 			cv::viz::Viz3d ret = cv::viz::getWindowByName(cv::String(window_name));
 			return Ok(new cv::viz::Viz3d(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Viz3d*>))
 	}
 	
-	Result<cv::viz::Viz3d*> cv_viz_imshow_const_StringX_const__InputArrayX_const_SizeX(const char* window_name, const cv::_InputArray* image, const cv::Size* window_size) {
+	Result<cv::viz::Viz3d*> cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(const char* window_name, const cv::_InputArray* image, const cv::Size* window_size) {
 		try {
 			cv::viz::Viz3d ret = cv::viz::imshow(cv::String(window_name), *image, *window_size);
 			return Ok(new cv::viz::Viz3d(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Viz3d*>))
 	}
 	
-	Result<cv::Affine3d> cv_viz_makeCameraPose_const_Vec3dX_const_Vec3dX_const_Vec3dX(const cv::Vec3d* position, const cv::Vec3d* focal_point, const cv::Vec3d* y_dir) {
+	Result<cv::Affine3d> cv_viz_makeCameraPose_const_Vec3dR_const_Vec3dR_const_Vec3dR(const cv::Vec3d* position, const cv::Vec3d* focal_point, const cv::Vec3d* y_dir) {
 		try {
 			cv::Affine3d ret = cv::viz::makeCameraPose(*position, *focal_point, *y_dir);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
 	}
 	
-	Result<cv::Affine3d> cv_viz_makeTransformToGlobal_const_Vec3dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(const cv::Vec3d* axis_x, const cv::Vec3d* axis_y, const cv::Vec3d* axis_z, const cv::Vec3d* origin) {
+	Result<cv::Affine3d> cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(const cv::Vec3d* axis_x, const cv::Vec3d* axis_y, const cv::Vec3d* axis_z, const cv::Vec3d* origin) {
 		try {
 			cv::Affine3d ret = cv::viz::makeTransformToGlobal(*axis_x, *axis_y, *axis_z, *origin);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
 	}
 	
-	Result<cv::Mat*> cv_viz_readCloud_const_StringX_const__OutputArrayX_const__OutputArrayX(const char* file, const cv::_OutputArray* colors, const cv::_OutputArray* normals) {
+	Result<cv::Mat*> cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(const char* file, const cv::_OutputArray* colors, const cv::_OutputArray* normals) {
 		try {
 			cv::Mat ret = cv::viz::readCloud(cv::String(file), *colors, *normals);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::viz::Mesh*> cv_viz_readMesh_const_StringX(const char* file) {
+	Result<cv::viz::Mesh*> cv_viz_readMesh_const_StringR(const char* file) {
 		try {
 			cv::viz::Mesh ret = cv::viz::readMesh(cv::String(file));
 			return Ok(new cv::viz::Mesh(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Mesh*>))
 	}
 	
-	Result<bool> cv_viz_readPose_const_StringX_Affine3dX_const_StringX(const char* file, cv::Affine3d* pose, const char* tag) {
+	Result<bool> cv_viz_readPose_const_StringR_Affine3dR_const_StringR(const char* file, cv::Affine3d* pose, const char* tag) {
 		try {
 			bool ret = cv::viz::readPose(cv::String(file), *pose, cv::String(tag));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_viz_readTrajectory_const__OutputArrayX_const_StringX_int_int_const_StringX(const cv::_OutputArray* traj, const char* files_format, int start, int end, const char* tag) {
+	Result_void cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(const cv::_OutputArray* traj, const char* files_format, int start, int end, const char* tag) {
 		try {
 			cv::viz::readTrajectory(*traj, cv::String(files_format), start, end, cv::String(tag));
 			return Ok();
@@ -73,21 +73,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(const char* file, const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::_InputArray* normals, bool binary) {
+	Result_void cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(const char* file, const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::_InputArray* normals, bool binary) {
 		try {
 			cv::viz::writeCloud(cv::String(file), *cloud, *colors, *normals, binary);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(const char* file, const cv::Affine3d* pose, const char* tag) {
+	Result_void cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(const char* file, const cv::Affine3d* pose, const char* tag) {
 		try {
 			cv::viz::writePose(cv::String(file), *pose, cv::String(tag));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_writeTrajectory_const__InputArrayX_const_StringX_int_const_StringX(const cv::_InputArray* traj, const char* files_format, int start, const char* tag) {
+	Result_void cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(const cv::_InputArray* traj, const char* files_format, int start, const char* tag) {
 		try {
 			cv::viz::writeTrajectory(*traj, cv::String(files_format), start, cv::String(tag));
 			return Ok();
@@ -97,28 +97,28 @@ extern "C" {
 	void cv_Camera_delete(cv::viz::Camera* instance) {
 		delete instance;
 	}
-	Result<cv::viz::Camera*> cv_viz_Camera_Camera_double_double_double_double_const_SizeX(double fx, double fy, double cx, double cy, const cv::Size* window_size) {
+	Result<cv::viz::Camera*> cv_viz_Camera_Camera_double_double_double_double_const_SizeR(double fx, double fy, double cx, double cy, const cv::Size* window_size) {
 		try {
 			cv::viz::Camera* ret = new cv::viz::Camera(fx, fy, cx, cy, *window_size);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Camera*>))
 	}
 	
-	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(const cv::Vec2d* fov, const cv::Size* window_size) {
+	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Vec2dR_const_SizeR(const cv::Vec2d* fov, const cv::Size* window_size) {
 		try {
 			cv::viz::Camera* ret = new cv::viz::Camera(*fov, *window_size);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Camera*>))
 	}
 	
-	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(const cv::Matx33d* K, const cv::Size* window_size) {
+	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Matx33dR_const_SizeR(const cv::Matx33d* K, const cv::Size* window_size) {
 		try {
 			cv::viz::Camera* ret = new cv::viz::Camera(*K, *window_size);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Camera*>))
 	}
 	
-	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(const cv::Matx44d* proj, const cv::Size* window_size) {
+	Result<cv::viz::Camera*> cv_viz_Camera_Camera_const_Matx44dR_const_SizeR(const cv::Matx44d* proj, const cv::Size* window_size) {
 		try {
 			cv::viz::Camera* ret = new cv::viz::Camera(*proj, *window_size);
 			return Ok(ret);
@@ -132,7 +132,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec2d>))
 	}
 	
-	Result_void cv_viz_Camera_setClip_const_Vec2dX(cv::viz::Camera* instance, const cv::Vec2d* clip) {
+	Result_void cv_viz_Camera_setClip_const_Vec2dR(cv::viz::Camera* instance, const cv::Vec2d* clip) {
 		try {
 			instance->setClip(*clip);
 			return Ok();
@@ -146,7 +146,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_viz_Camera_setWindowSize_const_SizeX(cv::viz::Camera* instance, const cv::Size* window_size) {
+	Result_void cv_viz_Camera_setWindowSize_const_SizeR(cv::viz::Camera* instance, const cv::Size* window_size) {
 		try {
 			instance->setWindowSize(*window_size);
 			return Ok();
@@ -160,7 +160,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec2d>))
 	}
 	
-	Result_void cv_viz_Camera_setFov_const_Vec2dX(cv::viz::Camera* instance, const cv::Vec2d* fov) {
+	Result_void cv_viz_Camera_setFov_const_Vec2dR(cv::viz::Camera* instance, const cv::Vec2d* fov) {
 		try {
 			instance->setFov(*fov);
 			return Ok();
@@ -181,14 +181,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec2d>))
 	}
 	
-	Result_void cv_viz_Camera_computeProjectionMatrix_const_Matx44dX(const cv::viz::Camera* instance, cv::Matx44d* proj) {
+	Result_void cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(const cv::viz::Camera* instance, cv::Matx44d* proj) {
 		try {
 			instance->computeProjectionMatrix(*proj);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::viz::Camera*> cv_viz_Camera_KinectCamera_const_SizeX(const cv::Size* window_size) {
+	Result<cv::viz::Camera*> cv_viz_Camera_KinectCamera_const_SizeR(const cv::Size* window_size) {
 		try {
 			cv::viz::Camera ret = cv::viz::Camera::KinectCamera(*window_size);
 			return Ok(new cv::viz::Camera(ret));
@@ -219,7 +219,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Color*>))
 	}
 	
-	Result<cv::viz::Color*> cv_viz_Color_Color_const_ScalarX(const cv::Scalar* color) {
+	Result<cv::viz::Color*> cv_viz_Color_Color_const_ScalarR(const cv::Scalar* color) {
 		try {
 			cv::viz::Color* ret = new cv::viz::Color(*color);
 			return Ok(ret);
@@ -537,7 +537,7 @@ extern "C" {
 	void cv_KeyboardEvent_delete(cv::viz::KeyboardEvent* instance) {
 		delete instance;
 	}
-	Result<cv::viz::KeyboardEvent*> cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringX_unsigned_char_int(cv::viz::KeyboardEvent::Action action, const char* symbol, unsigned char code, int modifiers) {
+	Result<cv::viz::KeyboardEvent*> cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(cv::viz::KeyboardEvent::Action action, const char* symbol, unsigned char code, int modifiers) {
 		try {
 			cv::viz::KeyboardEvent* ret = new cv::viz::KeyboardEvent(action, cv::String(symbol), code, modifiers);
 			return Ok(ret);
@@ -631,7 +631,7 @@ extern "C" {
 	void cv_Mesh_delete(cv::viz::Mesh* instance) {
 		delete instance;
 	}
-	Result<cv::viz::Mesh*> cv_viz_Mesh_load_const_StringX_int(const char* file, int type) {
+	Result<cv::viz::Mesh*> cv_viz_Mesh_load_const_StringR_int(const char* file, int type) {
 		try {
 			cv::viz::Mesh ret = cv::viz::Mesh::load(cv::String(file), type);
 			return Ok(new cv::viz::Mesh(ret));
@@ -697,7 +697,7 @@ extern "C" {
 	void cv_MouseEvent_delete(cv::viz::MouseEvent* instance) {
 		delete instance;
 	}
-	Result<cv::viz::MouseEvent*> cv_viz_MouseEvent_MouseEvent_const_TypeX_const_MouseButtonX_const_PointX_int(const cv::viz::MouseEvent::Type* type, const cv::viz::MouseEvent::MouseButton* button, const cv::Point* pointer, int modifiers) {
+	Result<cv::viz::MouseEvent*> cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(const cv::viz::MouseEvent::Type* type, const cv::viz::MouseEvent::MouseButton* button, const cv::Point* pointer, int modifiers) {
 		try {
 			cv::viz::MouseEvent* ret = new cv::viz::MouseEvent(*type, *button, *pointer, modifiers);
 			return Ok(ret);
@@ -707,35 +707,35 @@ extern "C" {
 	void cv_Viz3d_delete(cv::viz::Viz3d* instance) {
 		delete instance;
 	}
-	Result<cv::viz::Viz3d*> cv_viz_Viz3d_Viz3d_const_StringX(const char* window_name) {
+	Result<cv::viz::Viz3d*> cv_viz_Viz3d_Viz3d_const_StringR(const char* window_name) {
 		try {
 			cv::viz::Viz3d* ret = new cv::viz::Viz3d(cv::String(window_name));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Viz3d*>))
 	}
 	
-	Result<cv::viz::Viz3d*> cv_viz_Viz3d_Viz3d_const_Viz3dX(const cv::viz::Viz3d* unnamed) {
+	Result<cv::viz::Viz3d*> cv_viz_Viz3d_Viz3d_const_Viz3dR(const cv::viz::Viz3d* unnamed) {
 		try {
 			cv::viz::Viz3d* ret = new cv::viz::Viz3d(*unnamed);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Viz3d*>))
 	}
 	
-	Result_void cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(cv::viz::Viz3d* instance, const char* id, const cv::viz::Widget* widget, const cv::Affine3d* pose) {
+	Result_void cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(cv::viz::Viz3d* instance, const char* id, const cv::viz::Widget* widget, const cv::Affine3d* pose) {
 		try {
 			instance->showWidget(cv::String(id), *widget, *pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_removeWidget_const_StringX(cv::viz::Viz3d* instance, const char* id) {
+	Result_void cv_viz_Viz3d_removeWidget_const_StringR(cv::viz::Viz3d* instance, const char* id) {
 		try {
 			instance->removeWidget(cv::String(id));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::viz::Widget*> cv_viz_Viz3d_getWidget_const_const_StringX(const cv::viz::Viz3d* instance, const char* id) {
+	Result<cv::viz::Widget*> cv_viz_Viz3d_getWidget_const_const_StringR(const cv::viz::Viz3d* instance, const char* id) {
 		try {
 			cv::viz::Widget ret = instance->getWidget(cv::String(id));
 			return Ok(new cv::viz::Widget(ret));
@@ -749,35 +749,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_showImage_const__InputArrayX_const_SizeX(cv::viz::Viz3d* instance, const cv::_InputArray* image, const cv::Size* window_size) {
+	Result_void cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(cv::viz::Viz3d* instance, const cv::_InputArray* image, const cv::Size* window_size) {
 		try {
 			instance->showImage(*image, *window_size);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(cv::viz::Viz3d* instance, const char* id, const cv::Affine3d* pose) {
+	Result_void cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(cv::viz::Viz3d* instance, const char* id, const cv::Affine3d* pose) {
 		try {
 			instance->setWidgetPose(cv::String(id), *pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(cv::viz::Viz3d* instance, const char* id, const cv::Affine3d* pose) {
+	Result_void cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(cv::viz::Viz3d* instance, const char* id, const cv::Affine3d* pose) {
 		try {
 			instance->updateWidgetPose(cv::String(id), *pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Affine3d> cv_viz_Viz3d_getWidgetPose_const_const_StringX(const cv::viz::Viz3d* instance, const char* id) {
+	Result<cv::Affine3d> cv_viz_Viz3d_getWidgetPose_const_const_StringR(const cv::viz::Viz3d* instance, const char* id) {
 		try {
 			cv::Affine3d ret = instance->getWidgetPose(cv::String(id));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
 	}
 	
-	Result_void cv_viz_Viz3d_setCamera_const_CameraX(cv::viz::Viz3d* instance, const cv::viz::Camera* camera) {
+	Result_void cv_viz_Viz3d_setCamera_const_CameraR(cv::viz::Viz3d* instance, const cv::viz::Camera* camera) {
 		try {
 			instance->setCamera(*camera);
 			return Ok();
@@ -798,14 +798,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
 	}
 	
-	Result_void cv_viz_Viz3d_setViewerPose_const_Affine3dX(cv::viz::Viz3d* instance, const cv::Affine3d* pose) {
+	Result_void cv_viz_Viz3d_setViewerPose_const_Affine3dR(cv::viz::Viz3d* instance, const cv::Affine3d* pose) {
 		try {
 			instance->setViewerPose(*pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_resetCameraViewpoint_const_StringX(cv::viz::Viz3d* instance, const char* id) {
+	Result_void cv_viz_Viz3d_resetCameraViewpoint_const_StringR(cv::viz::Viz3d* instance, const char* id) {
 		try {
 			instance->resetCameraViewpoint(cv::String(id));
 			return Ok();
@@ -819,14 +819,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dX_Point3dX(cv::viz::Viz3d* instance, const cv::Point3d* pt, cv::Point3d* window_coord) {
+	Result_void cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dR_Point3dR(cv::viz::Viz3d* instance, const cv::Point3d* pt, cv::Point3d* window_coord) {
 		try {
 			instance->convertToWindowCoordinates(*pt, *window_coord);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_converTo3DRay_const_Point3dX_Point3dX_Vec3dX(cv::viz::Viz3d* instance, const cv::Point3d* window_coord, cv::Point3d* origin, cv::Vec3d* direction) {
+	Result_void cv_viz_Viz3d_converTo3DRay_const_Point3dR_Point3dR_Vec3dR(cv::viz::Viz3d* instance, const cv::Point3d* window_coord, cv::Point3d* origin, cv::Vec3d* direction) {
 		try {
 			instance->converTo3DRay(*window_coord, *origin, *direction);
 			return Ok();
@@ -840,7 +840,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_viz_Viz3d_setWindowSize_const_SizeX(cv::viz::Viz3d* instance, const cv::Size* window_size) {
+	Result_void cv_viz_Viz3d_setWindowSize_const_SizeR(cv::viz::Viz3d* instance, const cv::Size* window_size) {
 		try {
 			instance->setWindowSize(*window_size);
 			return Ok();
@@ -861,14 +861,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_viz_Viz3d_saveScreenshot_const_StringX(cv::viz::Viz3d* instance, const char* file) {
+	Result_void cv_viz_Viz3d_saveScreenshot_const_StringR(cv::viz::Viz3d* instance, const char* file) {
 		try {
 			instance->saveScreenshot(cv::String(file));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_setWindowPosition_const_PointX(cv::viz::Viz3d* instance, const cv::Point* window_position) {
+	Result_void cv_viz_Viz3d_setWindowPosition_const_PointR(cv::viz::Viz3d* instance, const cv::Point* window_position) {
 		try {
 			instance->setWindowPosition(*window_position);
 			return Ok();
@@ -882,14 +882,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_setBackgroundColor_const_ColorX_const_ColorX(cv::viz::Viz3d* instance, const cv::viz::Viz3d::Color* color, const cv::viz::Viz3d::Color* color2) {
+	Result_void cv_viz_Viz3d_setBackgroundColor_const_ColorR_const_ColorR(cv::viz::Viz3d* instance, const cv::viz::Viz3d::Color* color, const cv::viz::Viz3d::Color* color2) {
 		try {
 			instance->setBackgroundColor(*color, *color2);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_setBackgroundTexture_const__InputArrayX(cv::viz::Viz3d* instance, const cv::_InputArray* image) {
+	Result_void cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(cv::viz::Viz3d* instance, const cv::_InputArray* image) {
 		try {
 			instance->setBackgroundTexture(*image);
 			return Ok();
@@ -966,14 +966,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Viz3d_setRenderingProperty_const_StringX_int_double(cv::viz::Viz3d* instance, const char* id, int property, double value) {
+	Result_void cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(cv::viz::Viz3d* instance, const char* id, int property, double value) {
 		try {
 			instance->setRenderingProperty(cv::String(id), property, value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_viz_Viz3d_getRenderingProperty_const_StringX_int(cv::viz::Viz3d* instance, const char* id, int property) {
+	Result<double> cv_viz_Viz3d_getRenderingProperty_const_StringR_int(cv::viz::Viz3d* instance, const char* id, int property) {
 		try {
 			double ret = instance->getRenderingProperty(cv::String(id), property);
 			return Ok(ret);
@@ -997,7 +997,7 @@ extern "C" {
 	void cv_WArrow_delete(cv::viz::WArrow* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WArrow*> cv_viz_WArrow_WArrow_const_Point3dX_const_Point3dX_double_const_ColorX(const cv::Point3d* pt1, const cv::Point3d* pt2, double thickness, const cv::viz::Color* color) {
+	Result<cv::viz::WArrow*> cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR_double_const_ColorR(const cv::Point3d* pt1, const cv::Point3d* pt2, double thickness, const cv::viz::Color* color) {
 		try {
 			cv::viz::WArrow* ret = new cv::viz::WArrow(*pt1, *pt2, thickness, *color);
 			return Ok(ret);
@@ -1014,28 +1014,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCameraPosition*>))
 	}
 	
-	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(const cv::Matx33d* K, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_double_const_ColorR(const cv::Matx33d* K, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*K, scale, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCameraPosition*>))
 	}
 	
-	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(const cv::Vec2d* fov, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(const cv::Vec2d* fov, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*fov, scale, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCameraPosition*>))
 	}
 	
-	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(const cv::Matx33d* K, const cv::_InputArray* image, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(const cv::Matx33d* K, const cv::_InputArray* image, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*K, *image, scale, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCameraPosition*>))
 	}
 	
-	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_const__InputArrayX_double_const_ColorX(const cv::Vec2d* fov, const cv::_InputArray* image, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WCameraPosition*> cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(const cv::Vec2d* fov, const cv::_InputArray* image, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*fov, *image, scale, *color);
 			return Ok(ret);
@@ -1045,14 +1045,14 @@ extern "C" {
 	void cv_WCircle_delete(cv::viz::WCircle* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCircle*> cv_viz_WCircle_WCircle_double_double_const_ColorX(double radius, double thickness, const cv::viz::Color* color) {
+	Result<cv::viz::WCircle*> cv_viz_WCircle_WCircle_double_double_const_ColorR(double radius, double thickness, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCircle* ret = new cv::viz::WCircle(radius, thickness, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCircle*>))
 	}
 	
-	Result<cv::viz::WCircle*> cv_viz_WCircle_WCircle_double_const_Point3dX_const_Vec3dX_double_const_ColorX(double radius, const cv::Point3d* center, const cv::Vec3d* normal, double thickness, const cv::viz::Color* color) {
+	Result<cv::viz::WCircle*> cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(double radius, const cv::Point3d* center, const cv::Vec3d* normal, double thickness, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCircle* ret = new cv::viz::WCircle(radius, *center, *normal, thickness, *color);
 			return Ok(ret);
@@ -1062,28 +1062,28 @@ extern "C" {
 	void cv_WCloud_delete(cv::viz::WCloud* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX(const cv::_InputArray* cloud, const cv::_InputArray* colors) {
+	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(const cv::_InputArray* cloud, const cv::_InputArray* colors) {
 		try {
 			cv::viz::WCloud* ret = new cv::viz::WCloud(*cloud, *colors);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCloud*>))
 	}
 	
-	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX(const cv::_InputArray* cloud, const cv::viz::Color* color) {
+	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(const cv::_InputArray* cloud, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCloud* ret = new cv::viz::WCloud(*cloud, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCloud*>))
 	}
 	
-	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::_InputArray* normals) {
+	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::_InputArray* normals) {
 		try {
 			cv::viz::WCloud* ret = new cv::viz::WCloud(*cloud, *colors, *normals);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCloud*>))
 	}
 	
-	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX_const__InputArrayX(const cv::_InputArray* cloud, const cv::viz::Color* color, const cv::_InputArray* normals) {
+	Result<cv::viz::WCloud*> cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(const cv::_InputArray* cloud, const cv::viz::Color* color, const cv::_InputArray* normals) {
 		try {
 			cv::viz::WCloud* ret = new cv::viz::WCloud(*cloud, *color, *normals);
 			return Ok(ret);
@@ -1100,14 +1100,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCloudCollection*>))
 	}
 	
-	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayX_const__InputArrayX_const_Affine3dX(cv::viz::WCloudCollection* instance, const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::Affine3d* pose) {
+	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(cv::viz::WCloudCollection* instance, const cv::_InputArray* cloud, const cv::_InputArray* colors, const cv::Affine3d* pose) {
 		try {
 			instance->addCloud(*cloud, *colors, *pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayX_const_ColorX_const_Affine3dX(cv::viz::WCloudCollection* instance, const cv::_InputArray* cloud, const cv::viz::Color* color, const cv::Affine3d* pose) {
+	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(cv::viz::WCloudCollection* instance, const cv::_InputArray* cloud, const cv::viz::Color* color, const cv::Affine3d* pose) {
 		try {
 			instance->addCloud(*cloud, *color, *pose);
 			return Ok();
@@ -1124,7 +1124,7 @@ extern "C" {
 	void cv_WCloudNormals_delete(cv::viz::WCloudNormals* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCloudNormals*> cv_viz_WCloudNormals_WCloudNormals_const__InputArrayX_const__InputArrayX_int_double_const_ColorX(const cv::_InputArray* cloud, const cv::_InputArray* normals, int level, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WCloudNormals*> cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(const cv::_InputArray* cloud, const cv::_InputArray* normals, int level, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCloudNormals* ret = new cv::viz::WCloudNormals(*cloud, *normals, level, scale, *color);
 			return Ok(ret);
@@ -1134,14 +1134,14 @@ extern "C" {
 	void cv_WCone_delete(cv::viz::WCone* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCone*> cv_viz_WCone_WCone_double_double_int_const_ColorX(double length, double radius, int resolution, const cv::viz::Color* color) {
+	Result<cv::viz::WCone*> cv_viz_WCone_WCone_double_double_int_const_ColorR(double length, double radius, int resolution, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCone* ret = new cv::viz::WCone(length, radius, resolution, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WCone*>))
 	}
 	
-	Result<cv::viz::WCone*> cv_viz_WCone_WCone_double_const_Point3dX_const_Point3dX_int_const_ColorX(double radius, const cv::Point3d* center, const cv::Point3d* tip, int resolution, const cv::viz::Color* color) {
+	Result<cv::viz::WCone*> cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(double radius, const cv::Point3d* center, const cv::Point3d* tip, int resolution, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCone* ret = new cv::viz::WCone(radius, *center, *tip, resolution, *color);
 			return Ok(ret);
@@ -1161,7 +1161,7 @@ extern "C" {
 	void cv_WCube_delete(cv::viz::WCube* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCube*> cv_viz_WCube_WCube_const_Point3dX_const_Point3dX_bool_const_ColorX(const cv::Point3d* min_point, const cv::Point3d* max_point, bool wire_frame, const cv::viz::Color* color) {
+	Result<cv::viz::WCube*> cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(const cv::Point3d* min_point, const cv::Point3d* max_point, bool wire_frame, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCube* ret = new cv::viz::WCube(*min_point, *max_point, wire_frame, *color);
 			return Ok(ret);
@@ -1171,7 +1171,7 @@ extern "C" {
 	void cv_WCylinder_delete(cv::viz::WCylinder* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WCylinder*> cv_viz_WCylinder_WCylinder_const_Point3dX_const_Point3dX_double_int_const_ColorX(const cv::Point3d* axis_point1, const cv::Point3d* axis_point2, double radius, int numsides, const cv::viz::Color* color) {
+	Result<cv::viz::WCylinder*> cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double_int_const_ColorR(const cv::Point3d* axis_point1, const cv::Point3d* axis_point2, double radius, int numsides, const cv::viz::Color* color) {
 		try {
 			cv::viz::WCylinder* ret = new cv::viz::WCylinder(*axis_point1, *axis_point2, radius, numsides, *color);
 			return Ok(ret);
@@ -1181,14 +1181,14 @@ extern "C" {
 	void cv_WGrid_delete(cv::viz::WGrid* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WGrid*> cv_viz_WGrid_WGrid_const_Vec2iX_const_Vec2dX_const_ColorX(const cv::Vec2i* cells, const cv::Vec2d* cells_spacing, const cv::viz::Color* color) {
+	Result<cv::viz::WGrid*> cv_viz_WGrid_WGrid_const_Vec2iR_const_Vec2dR_const_ColorR(const cv::Vec2i* cells, const cv::Vec2d* cells_spacing, const cv::viz::Color* color) {
 		try {
 			cv::viz::WGrid* ret = new cv::viz::WGrid(*cells, *cells_spacing, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WGrid*>))
 	}
 	
-	Result<cv::viz::WGrid*> cv_viz_WGrid_WGrid_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Vec2iX_const_Vec2dX_const_ColorX(const cv::Point3d* center, const cv::Vec3d* normal, const cv::Vec3d* new_yaxis, const cv::Vec2i* cells, const cv::Vec2d* cells_spacing, const cv::viz::Color* color) {
+	Result<cv::viz::WGrid*> cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(const cv::Point3d* center, const cv::Vec3d* normal, const cv::Vec3d* new_yaxis, const cv::Vec2i* cells, const cv::Vec2d* cells_spacing, const cv::viz::Color* color) {
 		try {
 			cv::viz::WGrid* ret = new cv::viz::WGrid(*center, *normal, *new_yaxis, *cells, *cells_spacing, *color);
 			return Ok(ret);
@@ -1198,28 +1198,28 @@ extern "C" {
 	void cv_WImage3D_delete(cv::viz::WImage3D* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WImage3D*> cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX(const cv::_InputArray* image, const cv::Size2d* size) {
+	Result<cv::viz::WImage3D*> cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(const cv::_InputArray* image, const cv::Size2d* size) {
 		try {
 			cv::viz::WImage3D* ret = new cv::viz::WImage3D(*image, *size);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WImage3D*>))
 	}
 	
-	Result<cv::viz::WImage3D*> cv_viz_WImage3D_WImage3D_const__InputArrayX_const_Size2dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(const cv::_InputArray* image, const cv::Size2d* size, const cv::Vec3d* center, const cv::Vec3d* normal, const cv::Vec3d* up_vector) {
+	Result<cv::viz::WImage3D*> cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(const cv::_InputArray* image, const cv::Size2d* size, const cv::Vec3d* center, const cv::Vec3d* normal, const cv::Vec3d* up_vector) {
 		try {
 			cv::viz::WImage3D* ret = new cv::viz::WImage3D(*image, *size, *center, *normal, *up_vector);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WImage3D*>))
 	}
 	
-	Result_void cv_viz_WImage3D_setImage_const__InputArrayX(cv::viz::WImage3D* instance, const cv::_InputArray* image) {
+	Result_void cv_viz_WImage3D_setImage_const__InputArrayR(cv::viz::WImage3D* instance, const cv::_InputArray* image) {
 		try {
 			instance->setImage(*image);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_WImage3D_setSize_const_SizeX(cv::viz::WImage3D* instance, const cv::Size* size) {
+	Result_void cv_viz_WImage3D_setSize_const_SizeR(cv::viz::WImage3D* instance, const cv::Size* size) {
 		try {
 			instance->setSize(*size);
 			return Ok();
@@ -1229,14 +1229,14 @@ extern "C" {
 	void cv_WImageOverlay_delete(cv::viz::WImageOverlay* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WImageOverlay*> cv_viz_WImageOverlay_WImageOverlay_const__InputArrayX_const_RectX(const cv::_InputArray* image, const cv::Rect* rect) {
+	Result<cv::viz::WImageOverlay*> cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(const cv::_InputArray* image, const cv::Rect* rect) {
 		try {
 			cv::viz::WImageOverlay* ret = new cv::viz::WImageOverlay(*image, *rect);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WImageOverlay*>))
 	}
 	
-	Result_void cv_viz_WImageOverlay_setImage_const__InputArrayX(cv::viz::WImageOverlay* instance, const cv::_InputArray* image) {
+	Result_void cv_viz_WImageOverlay_setImage_const__InputArrayR(cv::viz::WImageOverlay* instance, const cv::_InputArray* image) {
 		try {
 			instance->setImage(*image);
 			return Ok();
@@ -1246,7 +1246,7 @@ extern "C" {
 	void cv_WLine_delete(cv::viz::WLine* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WLine*> cv_viz_WLine_WLine_const_Point3dX_const_Point3dX_const_ColorX(const cv::Point3d* pt1, const cv::Point3d* pt2, const cv::viz::Color* color) {
+	Result<cv::viz::WLine*> cv_viz_WLine_WLine_const_Point3dR_const_Point3dR_const_ColorR(const cv::Point3d* pt1, const cv::Point3d* pt2, const cv::viz::Color* color) {
 		try {
 			cv::viz::WLine* ret = new cv::viz::WLine(*pt1, *pt2, *color);
 			return Ok(ret);
@@ -1256,14 +1256,14 @@ extern "C" {
 	void cv_WMesh_delete(cv::viz::WMesh* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WMesh*> cv_viz_WMesh_WMesh_const_MeshX(const cv::viz::Mesh* mesh) {
+	Result<cv::viz::WMesh*> cv_viz_WMesh_WMesh_const_MeshR(const cv::viz::Mesh* mesh) {
 		try {
 			cv::viz::WMesh* ret = new cv::viz::WMesh(*mesh);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WMesh*>))
 	}
 	
-	Result<cv::viz::WMesh*> cv_viz_WMesh_WMesh_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* cloud, const cv::_InputArray* polygons, const cv::_InputArray* colors, const cv::_InputArray* normals) {
+	Result<cv::viz::WMesh*> cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* cloud, const cv::_InputArray* polygons, const cv::_InputArray* colors, const cv::_InputArray* normals) {
 		try {
 			cv::viz::WMesh* ret = new cv::viz::WMesh(*cloud, *polygons, *colors, *normals);
 			return Ok(ret);
@@ -1273,21 +1273,21 @@ extern "C" {
 	void cv_WPaintedCloud_delete(cv::viz::WPaintedCloud* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX(const cv::_InputArray* cloud) {
+	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(const cv::_InputArray* cloud) {
 		try {
 			cv::viz::WPaintedCloud* ret = new cv::viz::WPaintedCloud(*cloud);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WPaintedCloud*>))
 	}
 	
-	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2) {
+	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2) {
 		try {
 			cv::viz::WPaintedCloud* ret = new cv::viz::WPaintedCloud(*cloud, *p1, *p2);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WPaintedCloud*>))
 	}
 	
-	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX_const_ColorX_Color(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2, const cv::viz::Color* c1, const cv::viz::Color* c2) {
+	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_Color(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2, const cv::viz::Color* c1, const cv::viz::Color* c2) {
 		try {
 			cv::viz::WPaintedCloud* ret = new cv::viz::WPaintedCloud(*cloud, *p1, *p2, *c1, *c2);
 			return Ok(ret);
@@ -1297,14 +1297,14 @@ extern "C" {
 	void cv_WPlane_delete(cv::viz::WPlane* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WPlane*> cv_viz_WPlane_WPlane_const_Size2dX_const_ColorX(const cv::Size2d* size, const cv::viz::Color* color) {
+	Result<cv::viz::WPlane*> cv_viz_WPlane_WPlane_const_Size2dR_const_ColorR(const cv::Size2d* size, const cv::viz::Color* color) {
 		try {
 			cv::viz::WPlane* ret = new cv::viz::WPlane(*size, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WPlane*>))
 	}
 	
-	Result<cv::viz::WPlane*> cv_viz_WPlane_WPlane_const_Point3dX_const_Vec3dX_const_Vec3dX_const_Size2dX_const_ColorX(const cv::Point3d* center, const cv::Vec3d* normal, const cv::Vec3d* new_yaxis, const cv::Size2d* size, const cv::viz::Color* color) {
+	Result<cv::viz::WPlane*> cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(const cv::Point3d* center, const cv::Vec3d* normal, const cv::Vec3d* new_yaxis, const cv::Size2d* size, const cv::viz::Color* color) {
 		try {
 			cv::viz::WPlane* ret = new cv::viz::WPlane(*center, *normal, *new_yaxis, *size, *color);
 			return Ok(ret);
@@ -1314,14 +1314,14 @@ extern "C" {
 	void cv_WPolyLine_delete(cv::viz::WPolyLine* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WPolyLine*> cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const__InputArrayX(const cv::_InputArray* points, const cv::_InputArray* colors) {
+	Result<cv::viz::WPolyLine*> cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(const cv::_InputArray* points, const cv::_InputArray* colors) {
 		try {
 			cv::viz::WPolyLine* ret = new cv::viz::WPolyLine(*points, *colors);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WPolyLine*>))
 	}
 	
-	Result<cv::viz::WPolyLine*> cv_viz_WPolyLine_WPolyLine_const__InputArrayX_const_ColorX(const cv::_InputArray* points, const cv::viz::Color* color) {
+	Result<cv::viz::WPolyLine*> cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(const cv::_InputArray* points, const cv::viz::Color* color) {
 		try {
 			cv::viz::WPolyLine* ret = new cv::viz::WPolyLine(*points, *color);
 			return Ok(ret);
@@ -1331,7 +1331,7 @@ extern "C" {
 	void cv_WSphere_delete(cv::viz::WSphere* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WSphere*> cv_viz_WSphere_WSphere_const_Point3dX_double_int_const_ColorX(const cv::Point3d* center, double radius, int sphere_resolution, const cv::viz::Color* color) {
+	Result<cv::viz::WSphere*> cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(const cv::Point3d* center, double radius, int sphere_resolution, const cv::viz::Color* color) {
 		try {
 			cv::viz::WSphere* ret = new cv::viz::WSphere(*center, radius, sphere_resolution, *color);
 			return Ok(ret);
@@ -1341,14 +1341,14 @@ extern "C" {
 	void cv_WText_delete(cv::viz::WText* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WText*> cv_viz_WText_WText_const_StringX_const_PointX_int_const_ColorX(const char* text, const cv::Point* pos, int font_size, const cv::viz::Color* color) {
+	Result<cv::viz::WText*> cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(const char* text, const cv::Point* pos, int font_size, const cv::viz::Color* color) {
 		try {
 			cv::viz::WText* ret = new cv::viz::WText(cv::String(text), *pos, font_size, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WText*>))
 	}
 	
-	Result_void cv_viz_WText_setText_const_StringX(cv::viz::WText* instance, const char* text) {
+	Result_void cv_viz_WText_setText_const_StringR(cv::viz::WText* instance, const char* text) {
 		try {
 			instance->setText(cv::String(text));
 			return Ok();
@@ -1365,14 +1365,14 @@ extern "C" {
 	void cv_WText3D_delete(cv::viz::WText3D* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WText3D*> cv_viz_WText3D_WText3D_const_StringX_const_Point3dX_double_bool_const_ColorX(const char* text, const cv::Point3d* position, double text_scale, bool face_camera, const cv::viz::Color* color) {
+	Result<cv::viz::WText3D*> cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(const char* text, const cv::Point3d* position, double text_scale, bool face_camera, const cv::viz::Color* color) {
 		try {
 			cv::viz::WText3D* ret = new cv::viz::WText3D(cv::String(text), *position, text_scale, face_camera, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WText3D*>))
 	}
 	
-	Result_void cv_viz_WText3D_setText_const_StringX(cv::viz::WText3D* instance, const char* text) {
+	Result_void cv_viz_WText3D_setText_const_StringR(cv::viz::WText3D* instance, const char* text) {
 		try {
 			instance->setText(cv::String(text));
 			return Ok();
@@ -1389,7 +1389,7 @@ extern "C" {
 	void cv_WTrajectory_delete(cv::viz::WTrajectory* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WTrajectory*> cv_viz_WTrajectory_WTrajectory_const__InputArrayX_int_double_const_ColorX(const cv::_InputArray* path, int display_mode, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WTrajectory*> cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(const cv::_InputArray* path, int display_mode, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WTrajectory* ret = new cv::viz::WTrajectory(*path, display_mode, scale, *color);
 			return Ok(ret);
@@ -1399,14 +1399,14 @@ extern "C" {
 	void cv_WTrajectoryFrustums_delete(cv::viz::WTrajectoryFrustums* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WTrajectoryFrustums*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(const cv::_InputArray* path, const cv::Matx33d* K, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WTrajectoryFrustums*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(const cv::_InputArray* path, const cv::Matx33d* K, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WTrajectoryFrustums* ret = new cv::viz::WTrajectoryFrustums(*path, *K, scale, *color);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WTrajectoryFrustums*>))
 	}
 	
-	Result<cv::viz::WTrajectoryFrustums*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(const cv::_InputArray* path, const cv::Vec2d* fov, double scale, const cv::viz::Color* color) {
+	Result<cv::viz::WTrajectoryFrustums*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(const cv::_InputArray* path, const cv::Vec2d* fov, double scale, const cv::viz::Color* color) {
 		try {
 			cv::viz::WTrajectoryFrustums* ret = new cv::viz::WTrajectoryFrustums(*path, *fov, scale, *color);
 			return Ok(ret);
@@ -1416,7 +1416,7 @@ extern "C" {
 	void cv_WTrajectorySpheres_delete(cv::viz::WTrajectorySpheres* instance) {
 		delete instance;
 	}
-	Result<cv::viz::WTrajectorySpheres*> cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayX_double_double_const_ColorX_const_ColorX(const cv::_InputArray* path, double line_length, double radius, const cv::viz::Color* from, const cv::viz::Color* to) {
+	Result<cv::viz::WTrajectorySpheres*> cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(const cv::_InputArray* path, double line_length, double radius, const cv::viz::Color* from, const cv::viz::Color* to) {
 		try {
 			cv::viz::WTrajectorySpheres* ret = new cv::viz::WTrajectorySpheres(*path, line_length, radius, *from, *to);
 			return Ok(ret);
@@ -1433,7 +1433,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::WWidgetMerger*>))
 	}
 	
-	Result_void cv_viz_WWidgetMerger_addWidget_const_Widget3DX_const_Affine3dX(cv::viz::WWidgetMerger* instance, const cv::viz::Widget3D* widget, const cv::Affine3d* pose) {
+	Result_void cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(cv::viz::WWidgetMerger* instance, const cv::viz::Widget3D* widget, const cv::Affine3d* pose) {
 		try {
 			instance->addWidget(*widget, *pose);
 			return Ok();
@@ -1457,14 +1457,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Widget*>))
 	}
 	
-	Result<cv::viz::Widget*> cv_viz_Widget_Widget_const_WidgetX(const cv::viz::Widget* other) {
+	Result<cv::viz::Widget*> cv_viz_Widget_Widget_const_WidgetR(const cv::viz::Widget* other) {
 		try {
 			cv::viz::Widget* ret = new cv::viz::Widget(*other);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Widget*>))
 	}
 	
-	Result<cv::viz::Widget*> cv_viz_Widget_fromPlyFile_const_StringX(const char* file_name) {
+	Result<cv::viz::Widget*> cv_viz_Widget_fromPlyFile_const_StringR(const char* file_name) {
 		try {
 			cv::viz::Widget ret = cv::viz::Widget::fromPlyFile(cv::String(file_name));
 			return Ok(new cv::viz::Widget(ret));
@@ -1495,7 +1495,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Widget2D*>))
 	}
 	
-	Result_void cv_viz_Widget2D_setColor_const_ColorX(cv::viz::Widget2D* instance, const cv::viz::Color* color) {
+	Result_void cv_viz_Widget2D_setColor_const_ColorR(cv::viz::Widget2D* instance, const cv::viz::Color* color) {
 		try {
 			instance->setColor(*color);
 			return Ok();
@@ -1512,14 +1512,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Widget3D*>))
 	}
 	
-	Result_void cv_viz_Widget3D_setPose_const_Affine3dX(cv::viz::Widget3D* instance, const cv::Affine3d* pose) {
+	Result_void cv_viz_Widget3D_setPose_const_Affine3dR(cv::viz::Widget3D* instance, const cv::Affine3d* pose) {
 		try {
 			instance->setPose(*pose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Widget3D_updatePose_const_Affine3dX(cv::viz::Widget3D* instance, const cv::Affine3d* pose) {
+	Result_void cv_viz_Widget3D_updatePose_const_Affine3dR(cv::viz::Widget3D* instance, const cv::Affine3d* pose) {
 		try {
 			instance->updatePose(*pose);
 			return Ok();
@@ -1533,14 +1533,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
 	}
 	
-	Result_void cv_viz_Widget3D_applyTransform_const_Affine3dX(cv::viz::Widget3D* instance, const cv::Affine3d* transform) {
+	Result_void cv_viz_Widget3D_applyTransform_const_Affine3dR(cv::viz::Widget3D* instance, const cv::Affine3d* transform) {
 		try {
 			instance->applyTransform(*transform);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_viz_Widget3D_setColor_const_ColorX(cv::viz::Widget3D* instance, const cv::viz::Color* color) {
+	Result_void cv_viz_Widget3D_setColor_const_ColorR(cv::viz::Widget3D* instance, const cv::viz::Color* color) {
 		try {
 			instance->setColor(*color);
 			return Ok();

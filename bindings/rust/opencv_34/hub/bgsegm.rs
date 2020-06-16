@@ -10,8 +10,8 @@ pub const LSBP_CAMERA_MOTION_COMPENSATION_NONE: i32 = 0;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum LSBPCameraMotionCompensation {
-	LSBP_CAMERA_MOTION_COMPENSATION_NONE = 0 as isize,
-	LSBP_CAMERA_MOTION_COMPENSATION_LK = 1 as isize,
+	LSBP_CAMERA_MOTION_COMPENSATION_NONE = 0,
+	LSBP_CAMERA_MOTION_COMPENSATION_LK = 1,
 }
 
 opencv_type_enum! { crate::bgsegm::LSBPCameraMotionCompensation }
@@ -152,7 +152,7 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>> {
 	input_array_arg!(background);
 	input_array_arg!(object);
-	unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(r) } )
+	unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(r) } )
 }
 
 /// Background subtraction based on counting.
@@ -170,12 +170,12 @@ pub trait BackgroundSubtractorCNT: crate::video::BackgroundSubtractor {
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(fgmask);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayX_const__OutputArrayX_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
 	}
 	
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(background_image);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayX(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Returns number of frames with same pixel color to consider stable.
@@ -352,12 +352,12 @@ pub trait BackgroundSubtractorGSOC: crate::video::BackgroundSubtractor {
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(fgmask);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayX_const__OutputArrayX_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
 	}
 	
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(background_image);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayX(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -372,12 +372,12 @@ pub trait BackgroundSubtractorLSBP: crate::video::BackgroundSubtractor {
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(fgmask);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayX_const__OutputArrayX_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
 	}
 	
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(background_image);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayX(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -404,31 +404,31 @@ impl Drop for BackgroundSubtractorLSBPDesc {
 }
 
 impl BackgroundSubtractorLSBPDesc {
-	pub fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for BackgroundSubtractorLSBPDesc {}
 
 impl crate::bgsegm::BackgroundSubtractorLSBPDescTrait for BackgroundSubtractorLSBPDesc {
-	fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BackgroundSubtractorLSBPDesc {
 	pub fn calc_local_svd_values(local_svd_values: &mut dyn core::ToOutputArray, frame: &core::Mat) -> Result<()> {
 		output_array_arg!(local_svd_values);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayX_const_MatX(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat()) }.into_result()
 	}
 	
 	pub fn compute_from_local_svd_values(desc: &mut dyn core::ToOutputArray, local_svd_values: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
 		output_array_arg!(desc);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayX_const_MatX_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points) }.into_result()
 	}
 	
 	pub fn compute(desc: &mut dyn core::ToOutputArray, frame: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
 		output_array_arg!(desc);
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayX_const_MatX_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points) }.into_result()
 	}
 	
 }
@@ -490,7 +490,7 @@ pub trait SyntheticSequenceGeneratorTrait: core::AlgorithmTrait {
 	fn get_next_frame(&mut self, frame: &mut dyn core::ToOutputArray, gt_mask: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
 		output_array_arg!(gt_mask);
-		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_SyntheticSequenceGenerator(), frame.as_raw__OutputArray(), gt_mask.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SyntheticSequenceGenerator(), frame.as_raw__OutputArray(), gt_mask.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -513,20 +513,20 @@ impl Drop for SyntheticSequenceGenerator {
 }
 
 impl SyntheticSequenceGenerator {
-	pub fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for SyntheticSequenceGenerator {}
 
 impl core::AlgorithmTrait for SyntheticSequenceGenerator {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::bgsegm::SyntheticSequenceGeneratorTrait for SyntheticSequenceGenerator {
-	fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SyntheticSequenceGenerator {
@@ -542,7 +542,7 @@ impl SyntheticSequenceGenerator {
 	pub fn new(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
 		input_array_arg!(background);
 		input_array_arg!(object);
-		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { crate::bgsegm::SyntheticSequenceGenerator::opencv_from_extern(r) } )
+		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|r| unsafe { crate::bgsegm::SyntheticSequenceGenerator::opencv_from_extern(r) } )
 	}
 	
 }

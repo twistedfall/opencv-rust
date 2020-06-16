@@ -3,21 +3,21 @@
 #include "xphoto_types.hpp"
 
 extern "C" {
-	Result_void cv_xphoto_applyChannelGains_const__InputArrayX_const__OutputArrayX_float_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float gainB, float gainG, float gainR) {
+	Result_void cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float gainB, float gainG, float gainR) {
 		try {
 			cv::xphoto::applyChannelGains(*src, *dst, gainB, gainG, gainR);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_InputOutputArray* dstStep1, const cv::_OutputArray* dstStep2, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
+	Result_void cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_InputOutputArray* dstStep1, const cv::_OutputArray* dstStep2, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
 		try {
 			cv::xphoto::bm3dDenoising(*src, *dstStep1, *dstStep2, h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
+	Result_void cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
 		try {
 			cv::xphoto::bm3dDenoising(*src, *dst, h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
 			return Ok();
@@ -31,7 +31,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xphoto::GrayworldWB>*>))
 	}
 	
-	Result<cv::Ptr<cv::xphoto::LearningBasedWB>*> cv_xphoto_createLearningBasedWB_const_StringX(const char* path_to_model) {
+	Result<cv::Ptr<cv::xphoto::LearningBasedWB>*> cv_xphoto_createLearningBasedWB_const_StringR(const char* path_to_model) {
 		try {
 			cv::Ptr<cv::xphoto::LearningBasedWB> ret = cv::xphoto::createLearningBasedWB(std::string(path_to_model));
 			return Ok(new cv::Ptr<cv::xphoto::LearningBasedWB>(ret));
@@ -52,28 +52,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xphoto::TonemapDurand>*>))
 	}
 	
-	Result_void cv_xphoto_dctDenoising_const_MatX_MatX_double_int(const cv::Mat* src, cv::Mat* dst, double sigma, int psize) {
+	Result_void cv_xphoto_dctDenoising_const_MatR_MatR_double_int(const cv::Mat* src, cv::Mat* dst, double sigma, int psize) {
 		try {
 			cv::xphoto::dctDenoising(*src, *dst, sigma, psize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(const cv::Mat* src, const cv::Mat* mask, cv::Mat* dst, int algorithmType) {
+	Result_void cv_xphoto_inpaint_const_MatR_const_MatR_MatR_int(const cv::Mat* src, const cv::Mat* mask, cv::Mat* dst, int algorithmType) {
 		try {
 			cv::xphoto::inpaint(*src, *mask, *dst, algorithmType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_oilPainting_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int size, int dynRatio) {
+	Result_void cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int size, int dynRatio) {
 		try {
 			cv::xphoto::oilPainting(*src, *dst, size, dynRatio);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_oilPainting_const__InputArrayX_const__OutputArrayX_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int size, int dynRatio, int code) {
+	Result_void cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int size, int dynRatio, int code) {
 		try {
 			cv::xphoto::oilPainting(*src, *dst, size, dynRatio, code);
 			return Ok();
@@ -94,7 +94,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(cv::xphoto::LearningBasedWB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayR_const__OutputArrayR(cv::xphoto::LearningBasedWB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->extractSimpleFeatures(*src, *dst);
 			return Ok();
@@ -269,7 +269,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(cv::xphoto::WhiteBalancer* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(cv::xphoto::WhiteBalancer* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->balanceWhite(*src, *dst);
 			return Ok();

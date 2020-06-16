@@ -3,119 +3,119 @@
 #include "ximgproc_types.hpp"
 
 extern "C" {
-	Result_void cv_ximgproc_BrightEdges_MatX_MatX_int_int_int(cv::Mat* _original, cv::Mat* _edgeview, int contrast, int shortrange, int longrange) {
+	Result_void cv_ximgproc_BrightEdges_MatR_MatR_int_int_int(cv::Mat* _original, cv::Mat* _edgeview, int contrast, int shortrange, int longrange) {
 		try {
 			cv::ximgproc::BrightEdges(*_original, *_edgeview, contrast, shortrange, longrange);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_FastHoughTransform_const__InputArrayX_const__OutputArrayX_int_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int dstMatDepth, int angleRange, int op, int makeSkew) {
+	Result_void cv_ximgproc_FastHoughTransform_const__InputArrayR_const__OutputArrayR_int_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int dstMatDepth, int angleRange, int op, int makeSkew) {
 		try {
 			cv::ximgproc::FastHoughTransform(*src, *dst, dstMatDepth, angleRange, op, makeSkew);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_GradientDericheX_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* op, const cv::_OutputArray* dst, double alpha, double omega) {
+	Result_void cv_ximgproc_GradientDericheX_const__InputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* op, const cv::_OutputArray* dst, double alpha, double omega) {
 		try {
 			cv::ximgproc::GradientDericheX(*op, *dst, alpha, omega);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_GradientDericheY_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* op, const cv::_OutputArray* dst, double alpha, double omega) {
+	Result_void cv_ximgproc_GradientDericheY_const__InputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* op, const cv::_OutputArray* dst, double alpha, double omega) {
 		try {
 			cv::ximgproc::GradientDericheY(*op, *dst, alpha, omega);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_GradientPaillouX_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* op, const cv::_OutputArray* _dst, double alpha, double omega) {
+	Result_void cv_ximgproc_GradientPaillouX_const__InputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* op, const cv::_OutputArray* _dst, double alpha, double omega) {
 		try {
 			cv::ximgproc::GradientPaillouX(*op, *_dst, alpha, omega);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_GradientPaillouY_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* op, const cv::_OutputArray* _dst, double alpha, double omega) {
+	Result_void cv_ximgproc_GradientPaillouY_const__InputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* op, const cv::_OutputArray* _dst, double alpha, double omega) {
 		try {
 			cv::ximgproc::GradientPaillouY(*op, *_dst, alpha, omega);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Vec4i> cv_ximgproc_HoughPoint2Line_const_PointX_const__InputArrayX_int_int_int(const cv::Point* houghPoint, const cv::_InputArray* srcImgInfo, int angleRange, int makeSkew, int rules) {
+	Result<cv::Vec4i> cv_ximgproc_HoughPoint2Line_const_PointR_const__InputArrayR_int_int_int(const cv::Point* houghPoint, const cv::_InputArray* srcImgInfo, int angleRange, int makeSkew, int rules) {
 		try {
 			cv::Vec4i ret = cv::ximgproc::HoughPoint2Line(*houghPoint, *srcImgInfo, angleRange, makeSkew, rules);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec4i>))
 	}
 	
-	Result<cv::Matx23d> cv_ximgproc_PeiLinNormalization_const__InputArrayX(const cv::_InputArray* I) {
+	Result<cv::Matx23d> cv_ximgproc_PeiLinNormalization_const__InputArrayR(const cv::_InputArray* I) {
 		try {
 			cv::Matx23d ret = cv::ximgproc::PeiLinNormalization(*I);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Matx23d>))
 	}
 	
-	Result_void cv_ximgproc_PeiLinNormalization_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* I, const cv::_OutputArray* T) {
+	Result_void cv_ximgproc_PeiLinNormalization_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* I, const cv::_OutputArray* T) {
 		try {
 			cv::ximgproc::PeiLinNormalization(*I, *T);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_amFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_double_bool(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, double sigma_s, double sigma_r, bool adjust_outliers) {
+	Result_void cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, double sigma_s, double sigma_r, bool adjust_outliers) {
 		try {
 			cv::ximgproc::amFilter(*joint, *src, *dst, sigma_s, sigma_r, adjust_outliers);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_anisotropicDiffusion_const__InputArrayX_const__OutputArrayX_float_float_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float alpha, float K, int niters) {
+	Result_void cv_ximgproc_anisotropicDiffusion_const__InputArrayR_const__OutputArrayR_float_float_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float alpha, float K, int niters) {
 		try {
 			cv::ximgproc::anisotropicDiffusion(*src, *dst, alpha, K, niters);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_bilateralTextureFilter_const__InputArrayX_const__OutputArrayX_int_int_double_double(const cv::_InputArray* src, const cv::_OutputArray* dst, int fr, int numIter, double sigmaAlpha, double sigmaAvg) {
+	Result_void cv_ximgproc_bilateralTextureFilter_const__InputArrayR_const__OutputArrayR_int_int_double_double(const cv::_InputArray* src, const cv::_OutputArray* dst, int fr, int numIter, double sigmaAlpha, double sigmaAvg) {
 		try {
 			cv::ximgproc::bilateralTextureFilter(*src, *dst, fr, numIter, sigmaAlpha, sigmaAvg);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_colorMatchTemplate_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* img, const cv::_InputArray* templ, const cv::_OutputArray* result) {
+	Result_void cv_ximgproc_colorMatchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* img, const cv::_InputArray* templ, const cv::_OutputArray* result) {
 		try {
 			cv::ximgproc::colorMatchTemplate(*img, *templ, *result);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_ximgproc_computeBadPixelPercent_const__InputArrayX_const__InputArrayX_Rect_int(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI, int thresh) {
+	Result<double> cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI, int thresh) {
 		try {
 			double ret = cv::ximgproc::computeBadPixelPercent(*GT, *src, *ROI, thresh);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_ximgproc_computeMSE_const__InputArrayX_const__InputArrayX_Rect(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI) {
+	Result<double> cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI) {
 		try {
 			double ret = cv::ximgproc::computeMSE(*GT, *src, *ROI);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_ximgproc_contourSampling_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* out, int nbElt) {
+	Result_void cv_ximgproc_contourSampling_const__InputArrayR_const__OutputArrayR_int(const cv::_InputArray* src, const cv::_OutputArray* out, int nbElt) {
 		try {
 			cv::ximgproc::contourSampling(*src, *out, nbElt);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_covarianceEstimation_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int windowRows, int windowCols) {
+	Result_void cv_ximgproc_covarianceEstimation_const__InputArrayR_const__OutputArrayR_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int windowRows, int windowCols) {
 		try {
 			cv::ximgproc::covarianceEstimation(*src, *dst, windowRows, windowCols);
 			return Ok();
@@ -136,7 +136,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::ContourFitting>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::DTFilter>*> cv_ximgproc_createDTFilter_const__InputArrayX_double_double_int_int(const cv::_InputArray* guide, double sigmaSpatial, double sigmaColor, int mode, int numIters) {
+	Result<cv::Ptr<cv::ximgproc::DTFilter>*> cv_ximgproc_createDTFilter_const__InputArrayR_double_double_int_int(const cv::_InputArray* guide, double sigmaSpatial, double sigmaColor, int mode, int numIters) {
 		try {
 			cv::Ptr<cv::ximgproc::DTFilter> ret = cv::ximgproc::createDTFilter(*guide, sigmaSpatial, sigmaColor, mode, numIters);
 			return Ok(new cv::Ptr<cv::ximgproc::DTFilter>(ret));
@@ -171,14 +171,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::EdgeBoxes>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>*> cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayX_double_double_double_double_int_double(const cv::_InputArray* guide, double sigma_spatial, double sigma_luma, double sigma_chroma, double lambda, int num_iter, double max_tol) {
+	Result<cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>*> cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double_double_int_double(const cv::_InputArray* guide, double sigma_spatial, double sigma_luma, double sigma_chroma, double lambda, int num_iter, double max_tol) {
 		try {
 			cv::Ptr<cv::ximgproc::FastBilateralSolverFilter> ret = cv::ximgproc::createFastBilateralSolverFilter(*guide, sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol);
 			return Ok(new cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>*> cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayX_double_double_double_int(const cv::_InputArray* guide, double lambda, double sigma_color, double lambda_attenuation, int num_iter) {
+	Result<cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>*> cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double_double_int(const cv::_InputArray* guide, double lambda, double sigma_color, double lambda_attenuation, int num_iter) {
 		try {
 			cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter> ret = cv::ximgproc::createFastGlobalSmootherFilter(*guide, lambda, sigma_color, lambda_attenuation, num_iter);
 			return Ok(new cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>(ret));
@@ -192,14 +192,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::FastLineDetector>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::GuidedFilter>*> cv_ximgproc_createGuidedFilter_const__InputArrayX_int_double(const cv::_InputArray* guide, int radius, double eps) {
+	Result<cv::Ptr<cv::ximgproc::GuidedFilter>*> cv_ximgproc_createGuidedFilter_const__InputArrayR_int_double(const cv::_InputArray* guide, int radius, double eps) {
 		try {
 			cv::Ptr<cv::ximgproc::GuidedFilter> ret = cv::ximgproc::createGuidedFilter(*guide, radius, eps);
 			return Ok(new cv::Ptr<cv::ximgproc::GuidedFilter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::GuidedFilter>*>))
 	}
 	
-	Result_void cv_ximgproc_createQuaternionImage_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* img, const cv::_OutputArray* qimg) {
+	Result_void cv_ximgproc_createQuaternionImage_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* img, const cv::_OutputArray* qimg) {
 		try {
 			cv::ximgproc::createQuaternionImage(*img, *qimg);
 			return Ok();
@@ -227,14 +227,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::StereoMatcher>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::StructuredEdgeDetection>*> cv_ximgproc_createStructuredEdgeDetection_const_StringX_Ptr_RFFeatureGetter_(const char* model, const cv::Ptr<cv::ximgproc::RFFeatureGetter>* howToGetFeatures) {
+	Result<cv::Ptr<cv::ximgproc::StructuredEdgeDetection>*> cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(const char* model, const cv::Ptr<cv::ximgproc::RFFeatureGetter>* howToGetFeatures) {
 		try {
 			cv::Ptr<cv::ximgproc::StructuredEdgeDetection> ret = cv::ximgproc::createStructuredEdgeDetection(std::string(model), *howToGetFeatures);
 			return Ok(new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::StructuredEdgeDetection>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::SuperpixelLSC>*> cv_ximgproc_createSuperpixelLSC_const__InputArrayX_int_float(const cv::_InputArray* image, int region_size, float ratio) {
+	Result<cv::Ptr<cv::ximgproc::SuperpixelLSC>*> cv_ximgproc_createSuperpixelLSC_const__InputArrayR_int_float(const cv::_InputArray* image, int region_size, float ratio) {
 		try {
 			cv::Ptr<cv::ximgproc::SuperpixelLSC> ret = cv::ximgproc::createSuperpixelLSC(*image, region_size, ratio);
 			return Ok(new cv::Ptr<cv::ximgproc::SuperpixelLSC>(ret));
@@ -248,133 +248,133 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::SuperpixelSEEDS>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::SuperpixelSLIC>*> cv_ximgproc_createSuperpixelSLIC_const__InputArrayX_int_int_float(const cv::_InputArray* image, int algorithm, int region_size, float ruler) {
+	Result<cv::Ptr<cv::ximgproc::SuperpixelSLIC>*> cv_ximgproc_createSuperpixelSLIC_const__InputArrayR_int_int_float(const cv::_InputArray* image, int algorithm, int region_size, float ruler) {
 		try {
 			cv::Ptr<cv::ximgproc::SuperpixelSLIC> ret = cv::ximgproc::createSuperpixelSLIC(*image, algorithm, region_size, ruler);
 			return Ok(new cv::Ptr<cv::ximgproc::SuperpixelSLIC>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::SuperpixelSLIC>*>))
 	}
 	
-	Result_void cv_ximgproc_dtFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_double_int_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, double sigmaSpatial, double sigmaColor, int mode, int numIters) {
+	Result_void cv_ximgproc_dtFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_int_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, double sigmaSpatial, double sigmaColor, int mode, int numIters) {
 		try {
 			cv::ximgproc::dtFilter(*guide, *src, *dst, sigmaSpatial, sigmaColor, mode, numIters);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_edgePreservingFilter_const__InputArrayX_const__OutputArrayX_int_double(const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double threshold) {
+	Result_void cv_ximgproc_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_double(const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double threshold) {
 		try {
 			cv::ximgproc::edgePreservingFilter(*src, *dst, d, threshold);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_fastBilateralSolverFilter_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_double_double_double_int_double(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_InputArray* confidence, const cv::_OutputArray* dst, double sigma_spatial, double sigma_luma, double sigma_chroma, double lambda, int num_iter, double max_tol) {
+	Result_void cv_ximgproc_fastBilateralSolverFilter_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_double_double_int_double(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_InputArray* confidence, const cv::_OutputArray* dst, double sigma_spatial, double sigma_luma, double sigma_chroma, double lambda, int num_iter, double max_tol) {
 		try {
 			cv::ximgproc::fastBilateralSolverFilter(*guide, *src, *confidence, *dst, sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_fastGlobalSmootherFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_double_double_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, double lambda, double sigma_color, double lambda_attenuation, int num_iter) {
+	Result_void cv_ximgproc_fastGlobalSmootherFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_double_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, double lambda, double sigma_color, double lambda_attenuation, int num_iter) {
 		try {
 			cv::ximgproc::fastGlobalSmootherFilter(*guide, *src, *dst, lambda, sigma_color, lambda_attenuation, num_iter);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_fourierDescriptor_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int nbElt, int nbFD) {
+	Result_void cv_ximgproc_fourierDescriptor_const__InputArrayR_const__OutputArrayR_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int nbElt, int nbFD) {
 		try {
 			cv::ximgproc::fourierDescriptor(*src, *dst, nbElt, nbFD);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_getDisparityVis_const__InputArrayX_const__OutputArrayX_double(const cv::_InputArray* src, const cv::_OutputArray* dst, double scale) {
+	Result_void cv_ximgproc_getDisparityVis_const__InputArrayR_const__OutputArrayR_double(const cv::_InputArray* src, const cv::_OutputArray* dst, double scale) {
 		try {
 			cv::ximgproc::getDisparityVis(*src, *dst, scale);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_guidedFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, int radius, double eps, int dDepth) {
+	Result_void cv_ximgproc_guidedFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_int(const cv::_InputArray* guide, const cv::_InputArray* src, const cv::_OutputArray* dst, int radius, double eps, int dDepth) {
 		try {
 			cv::ximgproc::guidedFilter(*guide, *src, *dst, radius, eps, dDepth);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_jointBilateralFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double_int(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double sigmaColor, double sigmaSpace, int borderType) {
+	Result_void cv_ximgproc_jointBilateralFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double_int(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double sigmaColor, double sigmaSpace, int borderType) {
 		try {
 			cv::ximgproc::jointBilateralFilter(*joint, *src, *dst, d, sigmaColor, sigmaSpace, borderType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_l0Smooth_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* src, const cv::_OutputArray* dst, double lambda, double kappa) {
+	Result_void cv_ximgproc_l0Smooth_const__InputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* src, const cv::_OutputArray* dst, double lambda, double kappa) {
 		try {
 			cv::ximgproc::l0Smooth(*src, *dst, lambda, kappa);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_niBlackThreshold_const__InputArrayX_const__OutputArrayX_double_int_int_double_int(const cv::_InputArray* _src, const cv::_OutputArray* _dst, double maxValue, int type, int blockSize, double k, int binarizationMethod) {
+	Result_void cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double_int(const cv::_InputArray* _src, const cv::_OutputArray* _dst, double maxValue, int type, int blockSize, double k, int binarizationMethod) {
 		try {
 			cv::ximgproc::niBlackThreshold(*_src, *_dst, maxValue, type, blockSize, k, binarizationMethod);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_qconj_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* qimg, const cv::_OutputArray* qcimg) {
+	Result_void cv_ximgproc_qconj_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* qimg, const cv::_OutputArray* qcimg) {
 		try {
 			cv::ximgproc::qconj(*qimg, *qcimg);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_qdft_const__InputArrayX_const__OutputArrayX_int_bool(const cv::_InputArray* img, const cv::_OutputArray* qimg, int flags, bool sideLeft) {
+	Result_void cv_ximgproc_qdft_const__InputArrayR_const__OutputArrayR_int_bool(const cv::_InputArray* img, const cv::_OutputArray* qimg, int flags, bool sideLeft) {
 		try {
 			cv::ximgproc::qdft(*img, *qimg, flags, sideLeft);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_qmultiply_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
+	Result_void cv_ximgproc_qmultiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
 			cv::ximgproc::qmultiply(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_qunitary_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* qimg, const cv::_OutputArray* qnimg) {
+	Result_void cv_ximgproc_qunitary_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* qimg, const cv::_OutputArray* qnimg) {
 		try {
 			cv::ximgproc::qunitary(*qimg, *qnimg);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_ximgproc_readGT_String_const__OutputArrayX(char* src_path, const cv::_OutputArray* dst) {
+	Result<int> cv_ximgproc_readGT_String_const__OutputArrayR(char* src_path, const cv::_OutputArray* dst) {
 		try {
 			int ret = cv::ximgproc::readGT(std::string(src_path), *dst);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ximgproc_rl_createRLEImage_vector_Point3i_X_const__OutputArrayX_Size(std::vector<cv::Point3i>* runs, const cv::_OutputArray* res, const cv::Size* size) {
+	Result_void cv_ximgproc_rl_createRLEImage_vector_Point3i_R_const__OutputArrayR_Size(std::vector<cv::Point3i>* runs, const cv::_OutputArray* res, const cv::Size* size) {
 		try {
 			cv::ximgproc::rl::createRLEImage(*runs, *res, *size);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_rl_dilate_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, const cv::_InputArray* rlKernel, const cv::Point* anchor) {
+	Result_void cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, const cv::_InputArray* rlKernel, const cv::Point* anchor) {
 		try {
 			cv::ximgproc::rl::dilate(*rlSrc, *rlDest, *rlKernel, *anchor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_rl_erode_const__InputArrayX_const__OutputArrayX_const__InputArrayX_bool_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, const cv::_InputArray* rlKernel, bool bBoundaryOn, const cv::Point* anchor) {
+	Result_void cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, const cv::_InputArray* rlKernel, bool bBoundaryOn, const cv::Point* anchor) {
 		try {
 			cv::ximgproc::rl::erode(*rlSrc, *rlDest, *rlKernel, bBoundaryOn, *anchor);
 			return Ok();
@@ -388,35 +388,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<bool> cv_ximgproc_rl_isRLMorphologyPossible_const__InputArrayX(const cv::_InputArray* rlStructuringElement) {
+	Result<bool> cv_ximgproc_rl_isRLMorphologyPossible_const__InputArrayR(const cv::_InputArray* rlStructuringElement) {
 		try {
 			bool ret = cv::ximgproc::rl::isRLMorphologyPossible(*rlStructuringElement);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_ximgproc_rl_morphologyEx_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_bool_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, int op, const cv::_InputArray* rlKernel, bool bBoundaryOnForErosion, const cv::Point* anchor) {
+	Result_void cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_bool_Point(const cv::_InputArray* rlSrc, const cv::_OutputArray* rlDest, int op, const cv::_InputArray* rlKernel, bool bBoundaryOnForErosion, const cv::Point* anchor) {
 		try {
 			cv::ximgproc::rl::morphologyEx(*rlSrc, *rlDest, op, *rlKernel, bBoundaryOnForErosion, *anchor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_rl_paint_const__InputOutputArrayX_const__InputArrayX_const_ScalarX(const cv::_InputOutputArray* image, const cv::_InputArray* rlSrc, const cv::Scalar* value) {
+	Result_void cv_ximgproc_rl_paint_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(const cv::_InputOutputArray* image, const cv::_InputArray* rlSrc, const cv::Scalar* value) {
 		try {
 			cv::ximgproc::rl::paint(*image, *rlSrc, *value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_rl_threshold_const__InputArrayX_const__OutputArrayX_double_int(const cv::_InputArray* src, const cv::_OutputArray* rlDest, double thresh, int type) {
+	Result_void cv_ximgproc_rl_threshold_const__InputArrayR_const__OutputArrayR_double_int(const cv::_InputArray* src, const cv::_OutputArray* rlDest, double thresh, int type) {
 		try {
 			cv::ximgproc::rl::threshold(*src, *rlDest, thresh, type);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_rollingGuidanceFilter_const__InputArrayX_const__OutputArrayX_int_double_double_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double sigmaColor, double sigmaSpace, int numOfIter, int borderType) {
+	Result_void cv_ximgproc_rollingGuidanceFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int d, double sigmaColor, double sigmaSpace, int numOfIter, int borderType) {
 		try {
 			cv::ximgproc::rollingGuidanceFilter(*src, *dst, d, sigmaColor, sigmaSpace, numOfIter, borderType);
 			return Ok();
@@ -500,28 +500,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture>*>))
 	}
 	
-	Result_void cv_ximgproc_thinning_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int thinningType) {
+	Result_void cv_ximgproc_thinning_const__InputArrayR_const__OutputArrayR_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int thinningType) {
 		try {
 			cv::ximgproc::thinning(*src, *dst, thinningType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_transformFD_const__InputArrayX_const__InputArrayX_const__OutputArrayX_bool(const cv::_InputArray* src, const cv::_InputArray* t, const cv::_OutputArray* dst, bool fdContour) {
+	Result_void cv_ximgproc_transformFD_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(const cv::_InputArray* src, const cv::_InputArray* t, const cv::_OutputArray* dst, bool fdContour) {
 		try {
 			cv::ximgproc::transformFD(*src, *t, *dst, fdContour);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_weightedMedianFilter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_int_const__InputArrayX(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, int r, double sigma, int weightType, const cv::_InputArray* mask) {
+	Result_void cv_ximgproc_weightedMedianFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_int_const__InputArrayR(const cv::_InputArray* joint, const cv::_InputArray* src, const cv::_OutputArray* dst, int r, double sigma, int weightType, const cv::_InputArray* mask) {
 		try {
 			cv::ximgproc::weightedMedianFilter(*joint, *src, *dst, r, sigma, weightType, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_AdaptiveManifoldFilter_filter_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::ximgproc::AdaptiveManifoldFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* joint) {
+	Result_void cv_ximgproc_AdaptiveManifoldFilter_filter_const__InputArrayR_const__OutputArrayR_const__InputArrayR(cv::ximgproc::AdaptiveManifoldFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* joint) {
 		try {
 			instance->filter(*src, *dst, *joint);
 			return Ok();
@@ -636,14 +636,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ximgproc::ContourFitting*>))
 	}
 	
-	Result_void cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayX_const__InputArrayX_const__OutputArrayX_doubleX_bool(cv::ximgproc::ContourFitting* instance, const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_OutputArray* alphaPhiST, double* dist, bool fdContour) {
+	Result_void cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleX_bool(cv::ximgproc::ContourFitting* instance, const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_OutputArray* alphaPhiST, double* dist, bool fdContour) {
 		try {
 			instance->estimateTransformation(*src, *dst, *alphaPhiST, dist, fdContour);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayX_const__InputArrayX_const__OutputArrayX_doubleR_bool(cv::ximgproc::ContourFitting* instance, const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_OutputArray* alphaPhiST, double* dist, bool fdContour) {
+	Result_void cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleR_bool(cv::ximgproc::ContourFitting* instance, const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_OutputArray* alphaPhiST, double* dist, bool fdContour) {
 		try {
 			instance->estimateTransformation(*src, *dst, *alphaPhiST, *dist, fdContour);
 			return Ok();
@@ -678,14 +678,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ximgproc_DTFilter_filter_const__InputArrayX_const__OutputArrayX_int(cv::ximgproc::DTFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, int dDepth) {
+	Result_void cv_ximgproc_DTFilter_filter_const__InputArrayR_const__OutputArrayR_int(cv::ximgproc::DTFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, int dDepth) {
 		try {
 			instance->filter(*src, *dst, dDepth);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_DisparityFilter_filter_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Rect_const__InputArrayX(cv::ximgproc::DisparityFilter* instance, const cv::_InputArray* disparity_map_left, const cv::_InputArray* left_view, const cv::_OutputArray* filtered_disparity_map, const cv::_InputArray* disparity_map_right, const cv::Rect* ROI, const cv::_InputArray* right_view) {
+	Result_void cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(cv::ximgproc::DisparityFilter* instance, const cv::_InputArray* disparity_map_left, const cv::_InputArray* left_view, const cv::_OutputArray* filtered_disparity_map, const cv::_InputArray* disparity_map_right, const cv::Rect* ROI, const cv::_InputArray* right_view) {
 		try {
 			instance->filter(*disparity_map_left, *left_view, *filtered_disparity_map, *disparity_map_right, *ROI, *right_view);
 			return Ok();
@@ -762,7 +762,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_ximgproc_EdgeAwareInterpolator_setCostMap_const_MatX(cv::ximgproc::EdgeAwareInterpolator* instance, const cv::Mat* _costMap) {
+	Result_void cv_ximgproc_EdgeAwareInterpolator_setCostMap_const_MatR(cv::ximgproc::EdgeAwareInterpolator* instance, const cv::Mat* _costMap) {
 		try {
 			instance->setCostMap(*_costMap);
 			return Ok();
@@ -853,7 +853,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayX_const__InputArrayX_vector_Rect_X_const__OutputArrayX(cv::ximgproc::EdgeBoxes* instance, const cv::_InputArray* edge_map, const cv::_InputArray* orientation_map, std::vector<cv::Rect>* boxes, const cv::_OutputArray* scores) {
+	Result_void cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vector_Rect_R_const__OutputArrayR(cv::ximgproc::EdgeBoxes* instance, const cv::_InputArray* edge_map, const cv::_InputArray* orientation_map, std::vector<cv::Rect>* boxes, const cv::_OutputArray* scores) {
 		try {
 			instance->getBoundingBoxes(*edge_map, *orientation_map, *boxes, *scores);
 			return Ok();
@@ -1028,42 +1028,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_FastBilateralSolverFilter_filter_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::ximgproc::FastBilateralSolverFilter* instance, const cv::_InputArray* src, const cv::_InputArray* confidence, const cv::_OutputArray* dst) {
+	Result_void cv_ximgproc_FastBilateralSolverFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::ximgproc::FastBilateralSolverFilter* instance, const cv::_InputArray* src, const cv::_InputArray* confidence, const cv::_OutputArray* dst) {
 		try {
 			instance->filter(*src, *confidence, *dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_FastGlobalSmootherFilter_filter_const__InputArrayX_const__OutputArrayX(cv::ximgproc::FastGlobalSmootherFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_ximgproc_FastGlobalSmootherFilter_filter_const__InputArrayR_const__OutputArrayR(cv::ximgproc::FastGlobalSmootherFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->filter(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_FastLineDetector_detect_const__InputArrayX_const__OutputArrayX(cv::ximgproc::FastLineDetector* instance, const cv::_InputArray* _image, const cv::_OutputArray* _lines) {
+	Result_void cv_ximgproc_FastLineDetector_detect_const__InputArrayR_const__OutputArrayR(cv::ximgproc::FastLineDetector* instance, const cv::_InputArray* _image, const cv::_OutputArray* _lines) {
 		try {
 			instance->detect(*_image, *_lines);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayX_const__InputArrayX_bool(cv::ximgproc::FastLineDetector* instance, const cv::_InputOutputArray* _image, const cv::_InputArray* lines, bool draw_arrow) {
+	Result_void cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR_bool(cv::ximgproc::FastLineDetector* instance, const cv::_InputOutputArray* _image, const cv::_InputArray* lines, bool draw_arrow) {
 		try {
 			instance->drawSegments(*_image, *lines, draw_arrow);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_GuidedFilter_filter_const__InputArrayX_const__OutputArrayX_int(cv::ximgproc::GuidedFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, int dDepth) {
+	Result_void cv_ximgproc_GuidedFilter_filter_const__InputArrayR_const__OutputArrayR_int(cv::ximgproc::GuidedFilter* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, int dDepth) {
 		try {
 			instance->filter(*src, *dst, dDepth);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatX_MatX_int_int_int_int_int(const cv::ximgproc::RFFeatureGetter* instance, const cv::Mat* src, cv::Mat* features, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
+	Result_void cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_int_int_int_int_int(const cv::ximgproc::RFFeatureGetter* instance, const cv::Mat* src, cv::Mat* features, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
 		try {
 			instance->getFeatures(*src, *features, gnrmRad, gsmthRad, shrink, outNum, gradNum);
 			return Ok();
@@ -1084,7 +1084,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ximgproc_RICInterpolator_setCostMap_const_MatX(cv::ximgproc::RICInterpolator* instance, const cv::Mat* costMap) {
+	Result_void cv_ximgproc_RICInterpolator_setCostMap_const_MatR(cv::ximgproc::RICInterpolator* instance, const cv::Mat* costMap) {
 		try {
 			instance->setCostMap(*costMap);
 			return Ok();
@@ -1266,35 +1266,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::RidgeDetectionFilter>*>))
 	}
 	
-	Result_void cv_ximgproc_RidgeDetectionFilter_getRidgeFilteredImage_const__InputArrayX_const__OutputArrayX(cv::ximgproc::RidgeDetectionFilter* instance, const cv::_InputArray* _img, const cv::_OutputArray* out) {
+	Result_void cv_ximgproc_RidgeDetectionFilter_getRidgeFilteredImage_const__InputArrayR_const__OutputArrayR(cv::ximgproc::RidgeDetectionFilter* instance, const cv::_InputArray* _img, const cv::_OutputArray* out) {
 		try {
 			instance->getRidgeFilteredImage(*_img, *out);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SparseMatchInterpolator_interpolate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::ximgproc::SparseMatchInterpolator* instance, const cv::_InputArray* from_image, const cv::_InputArray* from_points, const cv::_InputArray* to_image, const cv::_InputArray* to_points, const cv::_OutputArray* dense_flow) {
+	Result_void cv_ximgproc_SparseMatchInterpolator_interpolate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::ximgproc::SparseMatchInterpolator* instance, const cv::_InputArray* from_image, const cv::_InputArray* from_points, const cv::_InputArray* to_image, const cv::_InputArray* to_points, const cv::_OutputArray* dense_flow) {
 		try {
 			instance->interpolate(*from_image, *from_points, *to_image, *to_points, *dense_flow);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_StructuredEdgeDetection_detectEdges_const_const__InputArrayX_const__OutputArrayX(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* _src, const cv::_OutputArray* _dst) {
+	Result_void cv_ximgproc_StructuredEdgeDetection_detectEdges_const_const__InputArrayR_const__OutputArrayR(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* _src, const cv::_OutputArray* _dst) {
 		try {
 			instance->detectEdges(*_src, *_dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_StructuredEdgeDetection_computeOrientation_const_const__InputArrayX_const__OutputArrayX(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* _src, const cv::_OutputArray* _dst) {
+	Result_void cv_ximgproc_StructuredEdgeDetection_computeOrientation_const_const__InputArrayR_const__OutputArrayR(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* _src, const cv::_OutputArray* _dst) {
 		try {
 			instance->computeOrientation(*_src, *_dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_StructuredEdgeDetection_edgesNms_const_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int_float_bool(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* edge_image, const cv::_InputArray* orientation_image, const cv::_OutputArray* _dst, int r, int s, float m, bool isParallel) {
+	Result_void cv_ximgproc_StructuredEdgeDetection_edgesNms_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool(const cv::ximgproc::StructuredEdgeDetection* instance, const cv::_InputArray* edge_image, const cv::_InputArray* orientation_image, const cv::_OutputArray* _dst, int r, int s, float m, bool isParallel) {
 		try {
 			instance->edgesNms(*edge_image, *orientation_image, *_dst, r, s, m, isParallel);
 			return Ok();
@@ -1315,14 +1315,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelLSC_getLabels_const_const__OutputArrayX(const cv::ximgproc::SuperpixelLSC* instance, const cv::_OutputArray* labels_out) {
+	Result_void cv_ximgproc_SuperpixelLSC_getLabels_const_const__OutputArrayR(const cv::ximgproc::SuperpixelLSC* instance, const cv::_OutputArray* labels_out) {
 		try {
 			instance->getLabels(*labels_out);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayX_bool(const cv::ximgproc::SuperpixelLSC* instance, const cv::_OutputArray* image, bool thick_line) {
+	Result_void cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayR_bool(const cv::ximgproc::SuperpixelLSC* instance, const cv::_OutputArray* image, bool thick_line) {
 		try {
 			instance->getLabelContourMask(*image, thick_line);
 			return Ok();
@@ -1343,21 +1343,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayX_int(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_InputArray* img, int num_iterations) {
+	Result_void cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayR_int(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_InputArray* img, int num_iterations) {
 		try {
 			instance->iterate(*img, num_iterations);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelSEEDS_getLabels_const__OutputArrayX(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_OutputArray* labels_out) {
+	Result_void cv_ximgproc_SuperpixelSEEDS_getLabels_const__OutputArrayR(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_OutputArray* labels_out) {
 		try {
 			instance->getLabels(*labels_out);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelSEEDS_getLabelContourMask_const__OutputArrayX_bool(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_OutputArray* image, bool thick_line) {
+	Result_void cv_ximgproc_SuperpixelSEEDS_getLabelContourMask_const__OutputArrayR_bool(cv::ximgproc::SuperpixelSEEDS* instance, const cv::_OutputArray* image, bool thick_line) {
 		try {
 			instance->getLabelContourMask(*image, thick_line);
 			return Ok();
@@ -1378,14 +1378,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelSLIC_getLabels_const_const__OutputArrayX(const cv::ximgproc::SuperpixelSLIC* instance, const cv::_OutputArray* labels_out) {
+	Result_void cv_ximgproc_SuperpixelSLIC_getLabels_const_const__OutputArrayR(const cv::ximgproc::SuperpixelSLIC* instance, const cv::_OutputArray* labels_out) {
 		try {
 			instance->getLabels(*labels_out);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayX_bool(const cv::ximgproc::SuperpixelSLIC* instance, const cv::_OutputArray* image, bool thick_line) {
+	Result_void cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayR_bool(const cv::ximgproc::SuperpixelSLIC* instance, const cv::_OutputArray* image, bool thick_line) {
 		try {
 			instance->getLabelContourMask(*image, thick_line);
 			return Ok();
@@ -1399,7 +1399,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_segmentation_GraphSegmentation_processImage_const__InputArrayX_const__OutputArrayX(cv::ximgproc::segmentation::GraphSegmentation* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
+	Result_void cv_ximgproc_segmentation_GraphSegmentation_processImage_const__InputArrayR_const__OutputArrayR(cv::ximgproc::segmentation::GraphSegmentation* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
 			instance->processImage(*src, *dst);
 			return Ok();
@@ -1448,7 +1448,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_setBaseImage_const__InputArrayX(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, const cv::_InputArray* img) {
+	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_setBaseImage_const__InputArrayR(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, const cv::_InputArray* img) {
 		try {
 			instance->setBaseImage(*img);
 			return Ok();
@@ -1476,7 +1476,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_addImage_const__InputArrayX(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, const cv::_InputArray* img) {
+	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_addImage_const__InputArrayR(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, const cv::_InputArray* img) {
 		try {
 			instance->addImage(*img);
 			return Ok();
@@ -1518,14 +1518,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vector_Rect_X(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, std::vector<cv::Rect>* rects) {
+	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vector_Rect_R(cv::ximgproc::segmentation::SelectiveSearchSegmentation* instance, std::vector<cv::Rect>* rects) {
 		try {
 			instance->process(*rects);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_setImage_const__InputArrayX_const__InputArrayX_const__InputArrayX_int(cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* instance, const cv::_InputArray* img, const cv::_InputArray* regions, const cv::_InputArray* sizes, int image_id) {
+	Result_void cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_setImage_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* instance, const cv::_InputArray* img, const cv::_InputArray* regions, const cv::_InputArray* sizes, int image_id) {
 		try {
 			instance->setImage(*img, *regions, *sizes, image_id);
 			return Ok();

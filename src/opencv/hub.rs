@@ -11,6 +11,26 @@ pub mod calib3d;
 pub mod ccalib;
 pub mod core;
 #[cfg(feature = "contrib")]
+pub mod cudaarithm;
+#[cfg(feature = "contrib")]
+pub mod cudabgsegm;
+#[cfg(feature = "contrib")]
+pub mod cudacodec;
+#[cfg(feature = "contrib")]
+pub mod cudafeatures2d;
+#[cfg(feature = "contrib")]
+pub mod cudafilters;
+#[cfg(feature = "contrib")]
+pub mod cudaimgproc;
+#[cfg(feature = "contrib")]
+pub mod cudaobjdetect;
+#[cfg(feature = "contrib")]
+pub mod cudaoptflow;
+#[cfg(feature = "contrib")]
+pub mod cudastereo;
+#[cfg(feature = "contrib")]
+pub mod cudawarping;
+#[cfg(feature = "contrib")]
 pub mod cvv;
 pub mod dnn;
 pub mod dnn_superres;
@@ -100,6 +120,26 @@ pub mod hub_prelude {
 	#[cfg(feature = "contrib")]
 	pub use super::ccalib::prelude::*;
 	pub use super::core::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudaarithm::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudabgsegm::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudacodec::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudafeatures2d::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudafilters::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudaimgproc::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudaobjdetect::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudaoptflow::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudastereo::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::cudawarping::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::cvv::prelude::*;
 	pub use super::dnn::prelude::*;

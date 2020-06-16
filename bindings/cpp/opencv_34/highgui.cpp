@@ -3,28 +3,28 @@
 #include "highgui_types.hpp"
 
 extern "C" {
-	Result_void cv_addText_const_MatX_const_StringX_Point_const_QtFontX(const cv::Mat* img, const char* text, const cv::Point* org, const cv::QtFont* font) {
+	Result_void cv_addText_const_MatR_const_StringR_Point_const_QtFontR(const cv::Mat* img, const char* text, const cv::Point* org, const cv::QtFont* font) {
 		try {
 			cv::addText(*img, cv::String(text), *org, *font);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(const cv::Mat* img, const char* text, const cv::Point* org, const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
+	Result_void cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(const cv::Mat* img, const char* text, const cv::Point* org, const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
 		try {
 			cv::addText(*img, cv::String(text), *org, cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(const char* bar_name, cv::ButtonCallback on_change, void* userdata, int type, bool initial_button_state) {
+	Result<int> cv_createButton_const_StringR_ButtonCallback_voidX_int_bool(const char* bar_name, cv::ButtonCallback on_change, void* userdata, int type, bool initial_button_state) {
 		try {
 			int ret = cv::createButton(cv::String(bar_name), on_change, userdata, type, initial_button_state);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(const char* trackbarname, const char* winname, int* value, int count, cv::TrackbarCallback onChange, void* userdata) {
+	Result<int> cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(const char* trackbarname, const char* winname, int* value, int count, cv::TrackbarCallback onChange, void* userdata) {
 		try {
 			int ret = cv::createTrackbar(cv::String(trackbarname), cv::String(winname), value, count, onChange, userdata);
 			return Ok(ret);
@@ -38,28 +38,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_destroyWindow_const_StringX(const char* winname) {
+	Result_void cv_destroyWindow_const_StringR(const char* winname) {
 		try {
 			cv::destroyWindow(cv::String(winname));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_displayOverlay_const_StringX_const_StringX_int(const char* winname, const char* text, int delayms) {
+	Result_void cv_displayOverlay_const_StringR_const_StringR_int(const char* winname, const char* text, int delayms) {
 		try {
 			cv::displayOverlay(cv::String(winname), cv::String(text), delayms);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_displayStatusBar_const_StringX_const_StringX_int(const char* winname, const char* text, int delayms) {
+	Result_void cv_displayStatusBar_const_StringR_const_StringR_int(const char* winname, const char* text, int delayms) {
 		try {
 			cv::displayStatusBar(cv::String(winname), cv::String(text), delayms);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::QtFont*> cv_fontQt_const_StringX_int_Scalar_int_int_int(const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
+	Result<cv::QtFont*> cv_fontQt_const_StringR_int_Scalar_int_int_int(const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
 		try {
 			cv::QtFont ret = cv::fontQt(cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok(new cv::QtFont(ret));
@@ -73,147 +73,147 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_getTrackbarPos_const_StringX_const_StringX(const char* trackbarname, const char* winname) {
+	Result<int> cv_getTrackbarPos_const_StringR_const_StringR(const char* trackbarname, const char* winname) {
 		try {
 			int ret = cv::getTrackbarPos(cv::String(trackbarname), cv::String(winname));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<cv::Rect> cv_getWindowImageRect_const_StringX(const char* winname) {
+	Result<cv::Rect> cv_getWindowImageRect_const_StringR(const char* winname) {
 		try {
 			cv::Rect ret = cv::getWindowImageRect(cv::String(winname));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<double> cv_getWindowProperty_const_StringX_int(const char* winname, int prop_id) {
+	Result<double> cv_getWindowProperty_const_StringR_int(const char* winname, int prop_id) {
 		try {
 			double ret = cv::getWindowProperty(cv::String(winname), prop_id);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_imshow_const_StringX_const__InputArrayX(const char* winname, const cv::_InputArray* mat) {
+	Result_void cv_imshow_const_StringR_const__InputArrayR(const char* winname, const cv::_InputArray* mat) {
 		try {
 			cv::imshow(cv::String(winname), *mat);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_loadWindowParameters_const_StringX(const char* windowName) {
+	Result_void cv_loadWindowParameters_const_StringR(const char* windowName) {
 		try {
 			cv::loadWindowParameters(cv::String(windowName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_moveWindow_const_StringX_int_int(const char* winname, int x, int y) {
+	Result_void cv_moveWindow_const_StringR_int_int(const char* winname, int x, int y) {
 		try {
 			cv::moveWindow(cv::String(winname), x, y);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_namedWindow_const_StringX_int(const char* winname, int flags) {
+	Result_void cv_namedWindow_const_StringR_int(const char* winname, int flags) {
 		try {
 			cv::namedWindow(cv::String(winname), flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_resizeWindow_const_StringX_const_SizeX(const char* winname, const cv::Size* size) {
+	Result_void cv_resizeWindow_const_StringR_const_SizeR(const char* winname, const cv::Size* size) {
 		try {
 			cv::resizeWindow(cv::String(winname), *size);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_resizeWindow_const_StringX_int_int(const char* winname, int width, int height) {
+	Result_void cv_resizeWindow_const_StringR_int_int(const char* winname, int width, int height) {
 		try {
 			cv::resizeWindow(cv::String(winname), width, height);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_saveWindowParameters_const_StringX(const char* windowName) {
+	Result_void cv_saveWindowParameters_const_StringR(const char* windowName) {
 		try {
 			cv::saveWindowParameters(cv::String(windowName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Rect> cv_selectROI_const_StringX_const__InputArrayX_bool_bool(const char* windowName, const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
+	Result<cv::Rect> cv_selectROI_const_StringR_const__InputArrayR_bool_bool(const char* windowName, const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
 		try {
 			cv::Rect ret = cv::selectROI(cv::String(windowName), *img, showCrosshair, fromCenter);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<cv::Rect> cv_selectROI_const__InputArrayX_bool_bool(const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
+	Result<cv::Rect> cv_selectROI_const__InputArrayR_bool_bool(const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
 		try {
 			cv::Rect ret = cv::selectROI(*img, showCrosshair, fromCenter);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_selectROIs_const_StringX_const__InputArrayX_vector_Rect_X_bool_bool(const char* windowName, const cv::_InputArray* img, std::vector<cv::Rect>* boundingBoxes, bool showCrosshair, bool fromCenter) {
+	Result_void cv_selectROIs_const_StringR_const__InputArrayR_vector_Rect_R_bool_bool(const char* windowName, const cv::_InputArray* img, std::vector<cv::Rect>* boundingBoxes, bool showCrosshair, bool fromCenter) {
 		try {
 			cv::selectROIs(cv::String(windowName), *img, *boundingBoxes, showCrosshair, fromCenter);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setMouseCallback_const_StringX_MouseCallback_voidX(const char* winname, cv::MouseCallback onMouse, void* userdata) {
+	Result_void cv_setMouseCallback_const_StringR_MouseCallback_voidX(const char* winname, cv::MouseCallback onMouse, void* userdata) {
 		try {
 			cv::setMouseCallback(cv::String(winname), onMouse, userdata);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setOpenGlContext_const_StringX(const char* winname) {
+	Result_void cv_setOpenGlContext_const_StringR(const char* winname) {
 		try {
 			cv::setOpenGlContext(cv::String(winname));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(const char* winname, cv::OpenGlDrawCallback onOpenGlDraw, void* userdata) {
+	Result_void cv_setOpenGlDrawCallback_const_StringR_OpenGlDrawCallback_voidX(const char* winname, cv::OpenGlDrawCallback onOpenGlDraw, void* userdata) {
 		try {
 			cv::setOpenGlDrawCallback(cv::String(winname), onOpenGlDraw, userdata);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setTrackbarMax_const_StringX_const_StringX_int(const char* trackbarname, const char* winname, int maxval) {
+	Result_void cv_setTrackbarMax_const_StringR_const_StringR_int(const char* trackbarname, const char* winname, int maxval) {
 		try {
 			cv::setTrackbarMax(cv::String(trackbarname), cv::String(winname), maxval);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setTrackbarMin_const_StringX_const_StringX_int(const char* trackbarname, const char* winname, int minval) {
+	Result_void cv_setTrackbarMin_const_StringR_const_StringR_int(const char* trackbarname, const char* winname, int minval) {
 		try {
 			cv::setTrackbarMin(cv::String(trackbarname), cv::String(winname), minval);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setTrackbarPos_const_StringX_const_StringX_int(const char* trackbarname, const char* winname, int pos) {
+	Result_void cv_setTrackbarPos_const_StringR_const_StringR_int(const char* trackbarname, const char* winname, int pos) {
 		try {
 			cv::setTrackbarPos(cv::String(trackbarname), cv::String(winname), pos);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setWindowProperty_const_StringX_int_double(const char* winname, int prop_id, double prop_value) {
+	Result_void cv_setWindowProperty_const_StringR_int_double(const char* winname, int prop_id, double prop_value) {
 		try {
 			cv::setWindowProperty(cv::String(winname), prop_id, prop_value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_setWindowTitle_const_StringX_const_StringX(const char* winname, const char* title) {
+	Result_void cv_setWindowTitle_const_StringR_const_StringR(const char* winname, const char* title) {
 		try {
 			cv::setWindowTitle(cv::String(winname), cv::String(title));
 			return Ok();
@@ -241,7 +241,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_updateWindow_const_StringX(const char* winname) {
+	Result_void cv_updateWindow_const_StringR(const char* winname) {
 		try {
 			cv::updateWindow(cv::String(winname));
 			return Ok();

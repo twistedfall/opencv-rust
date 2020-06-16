@@ -23,56 +23,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::Facemark>*>))
 	}
 	
-	Result_void cv_face_drawFacemarks_const__InputOutputArrayX_const__InputArrayX_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* points, const cv::Scalar* color) {
+	Result_void cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* points, const cv::Scalar* color) {
 		try {
 			cv::face::drawFacemarks(*image, *points, *color);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_face_getFacesHAAR_const__InputArrayX_const__OutputArrayX_const_StringX(const cv::_InputArray* image, const cv::_OutputArray* faces, const char* face_cascade_name) {
+	Result<bool> cv_face_getFacesHAAR_const__InputArrayR_const__OutputArrayR_const_StringR(const cv::_InputArray* image, const cv::_OutputArray* faces, const char* face_cascade_name) {
 		try {
 			bool ret = cv::face::getFacesHAAR(*image, *faces, std::string(face_cascade_name));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_getFaces_const__InputArrayX_const__OutputArrayX_CParamsX(const cv::_InputArray* image, const cv::_OutputArray* faces, cv::face::CParams* params) {
+	Result<bool> cv_face_getFaces_const__InputArrayR_const__OutputArrayR_CParamsX(const cv::_InputArray* image, const cv::_OutputArray* faces, cv::face::CParams* params) {
 		try {
 			bool ret = cv::face::getFaces(*image, *faces, params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_loadDatasetList_String_String_vector_String_X_vector_String_X(char* imageList, char* annotationList, std::vector<cv::String>* images, std::vector<cv::String>* annotations) {
+	Result<bool> cv_face_loadDatasetList_String_String_vector_String_R_vector_String_R(char* imageList, char* annotationList, std::vector<cv::String>* images, std::vector<cv::String>* annotations) {
 		try {
 			bool ret = cv::face::loadDatasetList(std::string(imageList), std::string(annotationList), *images, *annotations);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_loadFacePoints_String_const__OutputArrayX_float(char* filename, const cv::_OutputArray* points, float offset) {
+	Result<bool> cv_face_loadFacePoints_String_const__OutputArrayR_float(char* filename, const cv::_OutputArray* points, float offset) {
 		try {
 			bool ret = cv::face::loadFacePoints(std::string(filename), *points, offset);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_loadTrainingData_String_String_vector_String_X_const__OutputArrayX_float(char* imageList, char* groundTruth, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, float offset) {
+	Result<bool> cv_face_loadTrainingData_String_String_vector_String_R_const__OutputArrayR_float(char* imageList, char* groundTruth, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, float offset) {
 		try {
 			bool ret = cv::face::loadTrainingData(std::string(imageList), std::string(groundTruth), *images, *facePoints, offset);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_loadTrainingData_String_vector_String_X_const__OutputArrayX_char_float(char* filename, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, char delim, float offset) {
+	Result<bool> cv_face_loadTrainingData_String_vector_String_R_const__OutputArrayR_char_float(char* filename, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, char delim, float offset) {
 		try {
 			bool ret = cv::face::loadTrainingData(std::string(filename), *images, *facePoints, delim, offset);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_loadTrainingData_vector_String__vector_vector_Point2f__X_vector_String_X(std::vector<cv::String>* filename, std::vector<std::vector<cv::Point2f>>* trainlandmarks, std::vector<cv::String>* trainimages) {
+	Result<bool> cv_face_loadTrainingData_vector_String__vector_vector_Point2f__R_vector_String_R(std::vector<cv::String>* filename, std::vector<std::vector<cv::Point2f>>* trainlandmarks, std::vector<cv::String>* trainimages) {
 		try {
 			bool ret = cv::face::loadTrainingData(*filename, *trainlandmarks, *trainimages);
 			return Ok(ret);
@@ -93,7 +93,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_face_BIF_compute_const_const__InputArrayX_const__OutputArrayX(const cv::face::BIF* instance, const cv::_InputArray* image, const cv::_OutputArray* features) {
+	Result_void cv_face_BIF_compute_const_const__InputArrayR_const__OutputArrayR(const cv::face::BIF* instance, const cv::_InputArray* image, const cv::_OutputArray* features) {
 		try {
 			instance->compute(*image, *features);
 			return Ok();
@@ -170,14 +170,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_face_BasicFaceRecognizer_read_const_FileNodeX(cv::face::BasicFaceRecognizer* instance, const cv::FileNode* fn) {
+	Result_void cv_face_BasicFaceRecognizer_read_const_FileNodeR(cv::face::BasicFaceRecognizer* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_BasicFaceRecognizer_write_const_FileStorageX(const cv::face::BasicFaceRecognizer* instance, cv::FileStorage* fs) {
+	Result_void cv_face_BasicFaceRecognizer_write_const_FileStorageR(const cv::face::BasicFaceRecognizer* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -292,63 +292,63 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::EigenFaceRecognizer>*>))
 	}
 	
-	Result_void cv_face_FaceRecognizer_train_const__InputArrayX_const__InputArrayX(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
+	Result_void cv_face_FaceRecognizer_train_const__InputArrayR_const__InputArrayR(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
 		try {
 			instance->train(*src, *labels);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_update_const__InputArrayX_const__InputArrayX(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
+	Result_void cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
 		try {
 			instance->update(*src, *labels);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayX(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
+	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
 		try {
 			int ret = instance->predict(*src);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayX_intR_doubleR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, int* label, double* confidence) {
+	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, int* label, double* confidence) {
 		try {
 			instance->predict(*src, *label, *confidence);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayX_Ptr_PredictCollector_(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, cv::Ptr<cv::face::PredictCollector>* collector) {
+	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, cv::Ptr<cv::face::PredictCollector>* collector) {
 		try {
 			instance->predict(*src, *collector);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_write_const_const_StringX(const cv::face::FaceRecognizer* instance, const char* filename) {
+	Result_void cv_face_FaceRecognizer_write_const_const_StringR(const cv::face::FaceRecognizer* instance, const char* filename) {
 		try {
 			instance->write(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_read_const_StringX(cv::face::FaceRecognizer* instance, const char* filename) {
+	Result_void cv_face_FaceRecognizer_read_const_StringR(cv::face::FaceRecognizer* instance, const char* filename) {
 		try {
 			instance->read(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_write_const_FileStorageX(const cv::face::FaceRecognizer* instance, cv::FileStorage* fs) {
+	Result_void cv_face_FaceRecognizer_write_const_FileStorageR(const cv::face::FaceRecognizer* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_read_const_FileNodeX(cv::face::FaceRecognizer* instance, const cv::FileNode* fn) {
+	Result_void cv_face_FaceRecognizer_read_const_FileNodeR(cv::face::FaceRecognizer* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
@@ -362,7 +362,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_face_FaceRecognizer_setLabelInfo_int_const_StringX(cv::face::FaceRecognizer* instance, int label, const char* strInfo) {
+	Result_void cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(cv::face::FaceRecognizer* instance, int label, const char* strInfo) {
 		try {
 			instance->setLabelInfo(label, std::string(strInfo));
 			return Ok();
@@ -376,7 +376,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<std::vector<int>*> cv_face_FaceRecognizer_getLabelsByString_const_const_StringX(const cv::face::FaceRecognizer* instance, const char* str) {
+	Result<std::vector<int>*> cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(const cv::face::FaceRecognizer* instance, const char* str) {
 		try {
 			std::vector<int> ret = instance->getLabelsByString(std::string(str));
 			return Ok(new std::vector<int>(ret));
@@ -404,21 +404,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_face_Facemark_fit_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::face::Facemark* instance, const cv::_InputArray* image, const cv::_InputArray* faces, const cv::_OutputArray* landmarks) {
+	Result<bool> cv_face_Facemark_fit_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::face::Facemark* instance, const cv::_InputArray* image, const cv::_InputArray* faces, const cv::_OutputArray* landmarks) {
 		try {
 			bool ret = instance->fit(*image, *faces, *landmarks);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_FacemarkAAM_fitConfig_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const_vector_Config_X(cv::face::FacemarkAAM* instance, const cv::_InputArray* image, const cv::_InputArray* roi, const cv::_OutputArray* _landmarks, const std::vector<cv::face::FacemarkAAM::Config>* runtime_params) {
+	Result<bool> cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vector_Config_R(cv::face::FacemarkAAM* instance, const cv::_InputArray* image, const cv::_InputArray* roi, const cv::_OutputArray* _landmarks, const std::vector<cv::face::FacemarkAAM::Config>* runtime_params) {
 		try {
 			bool ret = instance->fitConfig(*image, *roi, *_landmarks, *runtime_params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::Ptr<cv::face::FacemarkAAM>*> cv_face_FacemarkAAM_create_const_ParamsX(const cv::face::FacemarkAAM::Params* parameters) {
+	Result<cv::Ptr<cv::face::FacemarkAAM>*> cv_face_FacemarkAAM_create_const_ParamsR(const cv::face::FacemarkAAM::Params* parameters) {
 		try {
 			cv::Ptr<cv::face::FacemarkAAM> ret = cv::face::FacemarkAAM::create(*parameters);
 			return Ok(new cv::Ptr<cv::face::FacemarkAAM>(ret));
@@ -888,42 +888,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkAAM::Params*>))
 	}
 	
-	Result_void cv_face_FacemarkAAM_Params_read_const_FileNodeX(cv::face::FacemarkAAM::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_face_FacemarkAAM_Params_read_const_FileNodeR(cv::face::FacemarkAAM::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FacemarkAAM_Params_write_const_FileStorageX(const cv::face::FacemarkAAM::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_face_FacemarkAAM_Params_write_const_FileStorageR(const cv::face::FacemarkAAM::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::face::FacemarkKazemi>*> cv_face_FacemarkKazemi_create_const_ParamsX(const cv::face::FacemarkKazemi::Params* parameters) {
+	Result<cv::Ptr<cv::face::FacemarkKazemi>*> cv_face_FacemarkKazemi_create_const_ParamsR(const cv::face::FacemarkKazemi::Params* parameters) {
 		try {
 			cv::Ptr<cv::face::FacemarkKazemi> ret = cv::face::FacemarkKazemi::create(*parameters);
 			return Ok(new cv::Ptr<cv::face::FacemarkKazemi>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::FacemarkKazemi>*>))
 	}
 	
-	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_X_vector_vector_Point2f__X_string_Size_string(cv::face::FacemarkKazemi* instance, std::vector<cv::Mat>* images, std::vector<std::vector<cv::Point2f>>* landmarks, char* configfile, const cv::Size* scale, char* modelFilename) {
+	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_R_vector_vector_Point2f__R_string_Size_string(cv::face::FacemarkKazemi* instance, std::vector<cv::Mat>* images, std::vector<std::vector<cv::Point2f>>* landmarks, char* configfile, const cv::Size* scale, char* modelFilename) {
 		try {
 			bool ret = instance->training(*images, *landmarks, std::string(configfile), *scale, std::string(modelFilename));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArray__const_cv__OutputArray__voidX__voidX(cv::face::FacemarkKazemi* instance, bool (*f)(const cv::_InputArray&, const cv::_OutputArray&, void*), void* userData) {
+	Result<bool> cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArrayR__const_cv__OutputArrayR__voidX__voidX(cv::face::FacemarkKazemi* instance, bool (*f)(const cv::_InputArray&, const cv::_OutputArray&, void*), void* userData) {
 		try {
 			bool ret = instance->setFaceDetector(f, userData);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_FacemarkKazemi_getFaces_const__InputArrayX_const__OutputArrayX(cv::face::FacemarkKazemi* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
+	Result<bool> cv_face_FacemarkKazemi_getFaces_const__InputArrayR_const__OutputArrayR(cv::face::FacemarkKazemi* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
 		try {
 			bool ret = instance->getFaces(*image, *faces);
 			return Ok(ret);
@@ -1066,7 +1066,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkKazemi::Params*>))
 	}
 	
-	Result<cv::Ptr<cv::face::FacemarkLBF>*> cv_face_FacemarkLBF_create_const_ParamsX(const cv::face::FacemarkLBF::Params* parameters) {
+	Result<cv::Ptr<cv::face::FacemarkLBF>*> cv_face_FacemarkLBF_create_const_ParamsR(const cv::face::FacemarkLBF::Params* parameters) {
 		try {
 			cv::Ptr<cv::face::FacemarkLBF> ret = cv::face::FacemarkLBF::create(*parameters);
 			return Ok(new cv::Ptr<cv::face::FacemarkLBF>(ret));
@@ -1293,21 +1293,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkLBF::Params*>))
 	}
 	
-	Result_void cv_face_FacemarkLBF_Params_read_const_FileNodeX(cv::face::FacemarkLBF::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_face_FacemarkLBF_Params_read_const_FileNodeR(cv::face::FacemarkLBF::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FacemarkLBF_Params_write_const_FileStorageX(const cv::face::FacemarkLBF::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_face_FacemarkLBF_Params_write_const_FileStorageR(const cv::face::FacemarkLBF::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_face_FacemarkTrain_addTrainingSample_const__InputArrayX_const__InputArrayX(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_InputArray* landmarks) {
+	Result<bool> cv_face_FacemarkTrain_addTrainingSample_const__InputArrayR_const__InputArrayR(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_InputArray* landmarks) {
 		try {
 			bool ret = instance->addTrainingSample(*image, *landmarks);
 			return Ok(ret);
@@ -1328,7 +1328,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_face_FacemarkTrain_getFaces_const__InputArrayX_const__OutputArrayX(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
+	Result<bool> cv_face_FacemarkTrain_getFaces_const__InputArrayR_const__OutputArrayR(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
 		try {
 			bool ret = instance->getFaces(*image, *faces);
 			return Ok(ret);
@@ -1440,28 +1440,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::LBPHFaceRecognizer>*>))
 	}
 	
-	Result_void cv_face_MACE_salt_const_StringX(cv::face::MACE* instance, const char* passphrase) {
+	Result_void cv_face_MACE_salt_const_StringR(cv::face::MACE* instance, const char* passphrase) {
 		try {
 			instance->salt(std::string(passphrase));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_MACE_train_const__InputArrayX(cv::face::MACE* instance, const cv::_InputArray* images) {
+	Result_void cv_face_MACE_train_const__InputArrayR(cv::face::MACE* instance, const cv::_InputArray* images) {
 		try {
 			instance->train(*images);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_face_MACE_same_const_const__InputArrayX(const cv::face::MACE* instance, const cv::_InputArray* query) {
+	Result<bool> cv_face_MACE_same_const_const__InputArrayR(const cv::face::MACE* instance, const cv::_InputArray* query) {
 		try {
 			bool ret = instance->same(*query);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::Ptr<cv::face::MACE>*> cv_face_MACE_load_const_StringX_const_StringX(const char* filename, const char* objname) {
+	Result<cv::Ptr<cv::face::MACE>*> cv_face_MACE_load_const_StringR_const_StringR(const char* filename, const char* objname) {
 		try {
 			cv::Ptr<cv::face::MACE> ret = cv::face::MACE::load(std::string(filename), std::string(objname));
 			return Ok(new cv::Ptr<cv::face::MACE>(ret));

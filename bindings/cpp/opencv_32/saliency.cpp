@@ -20,7 +20,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::saliency::MotionSaliencyBinWangApr2014>*>))
 	}
 	
-	Result<bool> cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayX_const__OutputArrayX(cv::saliency::MotionSaliencyBinWangApr2014* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
+	Result<bool> cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::MotionSaliencyBinWangApr2014* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
 			return Ok(ret);
@@ -86,7 +86,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::saliency::ObjectnessBING>*>))
 	}
 	
-	Result<bool> cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayX_const__OutputArrayX(cv::saliency::ObjectnessBING* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
+	Result<bool> cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::ObjectnessBING* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
 			return Ok(ret);
@@ -114,14 +114,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<float>*>))
 	}
 	
-	Result_void cv_saliency_ObjectnessBING_setTrainingPath_const_StringX(cv::saliency::ObjectnessBING* instance, const char* trainingPath) {
+	Result_void cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(cv::saliency::ObjectnessBING* instance, const char* trainingPath) {
 		try {
 			instance->setTrainingPath(cv::String(trainingPath));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_saliency_ObjectnessBING_setBBResDir_const_StringX(cv::saliency::ObjectnessBING* instance, const char* resultsDir) {
+	Result_void cv_saliency_ObjectnessBING_setBBResDir_const_StringR(cv::saliency::ObjectnessBING* instance, const char* resultsDir) {
 		try {
 			instance->setBBResDir(cv::String(resultsDir));
 			return Ok();
@@ -170,14 +170,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::saliency::Saliency>*> cv_saliency_Saliency_create_const_StringX(const char* saliencyType) {
+	Result<cv::Ptr<cv::saliency::Saliency>*> cv_saliency_Saliency_create_const_StringR(const char* saliencyType) {
 		try {
 			cv::Ptr<cv::saliency::Saliency> ret = cv::saliency::Saliency::create(cv::String(saliencyType));
 			return Ok(new cv::Ptr<cv::saliency::Saliency>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::saliency::Saliency>*>))
 	}
 	
-	Result<bool> cv_saliency_Saliency_computeSaliency_const__InputArrayX_const__OutputArrayX(cv::saliency::Saliency* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
+	Result<bool> cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::Saliency* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
 			return Ok(ret);
@@ -191,7 +191,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<bool> cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayX_const__OutputArrayX(cv::saliency::StaticSaliency* instance, const cv::_InputArray* _saliencyMap, const cv::_OutputArray* _binaryMap) {
+	Result<bool> cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliency* instance, const cv::_InputArray* _saliencyMap, const cv::_OutputArray* _binaryMap) {
 		try {
 			bool ret = instance->computeBinaryMap(*_saliencyMap, *_binaryMap);
 			return Ok(ret);
@@ -215,7 +215,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::saliency::StaticSaliencyFineGrained>*>))
 	}
 	
-	Result<bool> cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayX_const__OutputArrayX(cv::saliency::StaticSaliencyFineGrained* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
+	Result<bool> cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliencyFineGrained* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
 			return Ok(ret);
@@ -239,21 +239,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::saliency::StaticSaliencySpectralResidual>*>))
 	}
 	
-	Result<bool> cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayX_const__OutputArrayX(cv::saliency::StaticSaliencySpectralResidual* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
+	Result<bool> cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliencySpectralResidual* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeX(cv::saliency::StaticSaliencySpectralResidual* instance, const cv::FileNode* fn) {
+	Result_void cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(cv::saliency::StaticSaliencySpectralResidual* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageX(const cv::saliency::StaticSaliencySpectralResidual* instance, cv::FileStorage* fs) {
+	Result_void cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(const cv::saliency::StaticSaliencySpectralResidual* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();

@@ -17,7 +17,7 @@ pub const Odometry_TRANSLATION: i32 = 2;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DepthCleaner_DEPTH_CLEANER_METHOD {
-	DEPTH_CLEANER_NIL = 0 as isize,
+	DEPTH_CLEANER_NIL = 0,
 }
 
 opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
@@ -25,9 +25,9 @@ opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RgbdNormals_RGBD_NORMALS_METHOD {
-	RGBD_NORMALS_METHOD_FALS = 0 as isize,
-	RGBD_NORMALS_METHOD_LINEMOD = 1 as isize,
-	RGBD_NORMALS_METHOD_SRI = 2 as isize,
+	RGBD_NORMALS_METHOD_FALS = 0,
+	RGBD_NORMALS_METHOD_LINEMOD = 1,
+	RGBD_NORMALS_METHOD_SRI = 2,
 }
 
 opencv_type_enum! { crate::rgbd::RgbdNormals_RGBD_NORMALS_METHOD }
@@ -35,7 +35,7 @@ opencv_type_enum! { crate::rgbd::RgbdNormals_RGBD_NORMALS_METHOD }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RgbdPlane_RGBD_PLANE_METHOD {
-	RGBD_PLANE_METHOD_DEFAULT = 0 as isize,
+	RGBD_PLANE_METHOD_DEFAULT = 0,
 }
 
 opencv_type_enum! { crate::rgbd::RgbdPlane_RGBD_PLANE_METHOD }
@@ -65,7 +65,7 @@ pub fn depth_to3d_sparse(depth: &dyn core::ToInputArray, in_k: &dyn core::ToInpu
 	input_array_arg!(in_k);
 	input_array_arg!(in_points);
 	output_array_arg!(points3d);
-	unsafe { sys::cv_rgbd_depthTo3dSparse_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(depth.as_raw__InputArray(), in_k.as_raw__InputArray(), in_points.as_raw__InputArray(), points3d.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rgbd_depthTo3dSparse_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), in_k.as_raw__InputArray(), in_points.as_raw__InputArray(), points3d.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts a depth image to an organized set of 3d points.
@@ -85,7 +85,7 @@ pub fn depth_to3d(depth: &dyn core::ToInputArray, k: &dyn core::ToInputArray, po
 	input_array_arg!(k);
 	output_array_arg!(points3d);
 	input_array_arg!(mask);
-	unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 pub fn is_valid_depth_1(depth: &f64) -> Result<bool> {
@@ -144,7 +144,7 @@ pub fn register_depth(unregistered_camera_matrix: &dyn core::ToInputArray, regis
 	input_array_arg!(rt);
 	input_array_arg!(unregistered_depth);
 	output_array_arg!(registered_depth);
-	unsafe { sys::cv_rgbd_registerDepth_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_const__OutputArrayX_bool(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), depth_dilation) }.into_result()
+	unsafe { sys::cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), depth_dilation) }.into_result()
 }
 
 /// If the input image is of type CV_16UC1 (like the Kinect one), the image is converted to floats, divided
@@ -158,7 +158,7 @@ pub fn register_depth(unregistered_camera_matrix: &dyn core::ToInputArray, regis
 pub fn rescale_depth(in_: &dyn core::ToInputArray, depth: i32, out: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(in_);
 	output_array_arg!(out);
-	unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayX_int_const__OutputArrayX(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray()) }.into_result()
 }
 
 /// Warp the image: compute 3d points from the depth, transform them using given transformation,
@@ -179,7 +179,7 @@ pub fn rescale_depth(in_: &dyn core::ToInputArray, depth: i32, out: &mut dyn cor
 /// * warped_depth: 0
 /// * warped_mask: 0
 pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &core::Mat, camera_matrix: &core::Mat, dist_coeff: &core::Mat, warped_image: &mut core::Mat, warped_depth: &mut core::Mat, warped_mask: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_rgbd_warpFrame_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_MatX_MatX_MatX(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw_mut_Mat(), warped_depth.as_raw_mut_Mat(), warped_mask.as_raw_mut_Mat()) }.into_result()
+	unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_MatR_MatX_MatX(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw_mut_Mat(), warped_depth.as_raw_mut_Mat(), warped_mask.as_raw_mut_Mat()) }.into_result()
 }
 
 /// \brief Modality that computes quantized gradient orientations from a color image.
@@ -216,11 +216,11 @@ pub trait Linemod_ColorGradientTrait: crate::rgbd::Linemod_Modality {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_ColorGradient_read_const_FileNodeX(self.as_raw_mut_Linemod_ColorGradient(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_ColorGradient_read_const_FileNodeR(self.as_raw_mut_Linemod_ColorGradient(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_ColorGradient_write_const_FileStorageX(self.as_raw_Linemod_ColorGradient(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_ColorGradient_write_const_FileStorageR(self.as_raw_Linemod_ColorGradient(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -240,20 +240,20 @@ impl Drop for Linemod_ColorGradient {
 }
 
 impl Linemod_ColorGradient {
-	pub fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_ColorGradient {}
 
 impl crate::rgbd::Linemod_ColorGradientTrait for Linemod_ColorGradient {
-	fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::Linemod_Modality for Linemod_ColorGradient {
-	fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_ColorGradient {
@@ -316,11 +316,11 @@ pub trait Linemod_DepthNormalTrait: crate::rgbd::Linemod_Modality {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_DepthNormal_read_const_FileNodeX(self.as_raw_mut_Linemod_DepthNormal(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_DepthNormal_read_const_FileNodeR(self.as_raw_mut_Linemod_DepthNormal(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_DepthNormal_write_const_FileStorageX(self.as_raw_Linemod_DepthNormal(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_DepthNormal_write_const_FileStorageR(self.as_raw_Linemod_DepthNormal(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -340,20 +340,20 @@ impl Drop for Linemod_DepthNormal {
 }
 
 impl Linemod_DepthNormal {
-	pub fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_DepthNormal {}
 
 impl crate::rgbd::Linemod_DepthNormalTrait for Linemod_DepthNormal {
-	fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::Linemod_Modality for Linemod_DepthNormal {
-	fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_DepthNormal {
@@ -402,7 +402,7 @@ pub trait Linemod_DetectorTrait {
 	/// * masks: std::vector<Mat>()
 	fn match_(&self, sources: &core::Vector::<core::Mat>, threshold: f32, matches: &mut core::Vector::<crate::rgbd::Linemod_Match>, class_ids: &core::Vector::<String>, quantized_images: &mut dyn core::ToOutputArray, masks: &core::Vector::<core::Mat>) -> Result<()> {
 		output_array_arg!(quantized_images);
-		unsafe { sys::cv_linemod_Detector_match_const_const_vector_Mat_X_float_vector_Match_X_const_vector_String_X_const__OutputArrayX_const_vector_Mat_X(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_match_const_const_vector_Mat_R_float_vector_Match_R_const_vector_String_R_const__OutputArrayR_const_vector_Mat_R(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat()) }.into_result()
 	}
 	
 	/// \brief Add new object template.
@@ -418,13 +418,13 @@ pub trait Linemod_DetectorTrait {
 	/// * bounding_box: NULL
 	fn add_template(&mut self, sources: &core::Vector::<core::Mat>, class_id: &str, object_mask: &core::Mat, bounding_box: &mut core::Rect) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_addTemplate_const_vector_Mat_X_const_StringX_const_MatX_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_to_extern(), object_mask.as_raw_Mat(), bounding_box) }.into_result()
+		unsafe { sys::cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_to_extern(), object_mask.as_raw_Mat(), bounding_box) }.into_result()
 	}
 	
 	/// \brief Add a new object template computed by external means.
 	fn add_synthetic_template(&mut self, templates: &core::Vector::<crate::rgbd::Linemod_Template>, class_id: &str) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_X_const_StringX(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_to_extern()) }.into_result()
 	}
 	
 	/// \brief Get the modalities used by this detector.
@@ -451,7 +451,7 @@ pub trait Linemod_DetectorTrait {
 	/// (L0, L1), the order is (GradientL0, NormalL0, GradientL1, NormalL1).
 	fn get_templates(&self, class_id: &str, template_id: i32) -> Result<core::Vector::<crate::rgbd::Linemod_Template>> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringX_int(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { core::Vector::<crate::rgbd::Linemod_Template>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { core::Vector::<crate::rgbd::Linemod_Template>::opencv_from_extern(r) } )
 	}
 	
 	fn num_templates(&self) -> Result<i32> {
@@ -460,7 +460,7 @@ pub trait Linemod_DetectorTrait {
 	
 	fn num_templates_1(&self, class_id: &str) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringX(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern()) }.into_result()
 	}
 	
 	fn num_classes(&self) -> Result<i32> {
@@ -472,37 +472,37 @@ pub trait Linemod_DetectorTrait {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_Detector_read_const_FileNodeX(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_read_const_FileNodeR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_Detector_write_const_FileStorageX(self.as_raw_Linemod_Detector(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_write_const_FileStorageR(self.as_raw_Linemod_Detector(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * class_id_override: ""
 	fn read_class(&mut self, fn_: &core::FileNode, class_id_override: &str) -> Result<String> {
 		extern_container_arg!(class_id_override);
-		unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeX_const_StringX(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	fn write_class(&self, class_id: &str, fs: &mut core::FileStorage) -> Result<()> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringX_FileStorageX(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * format: "templates_%s.yml.gz"
 	fn read_classes(&mut self, class_ids: &core::Vector::<String>, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_linemod_Detector_readClasses_const_vector_String_X_const_StringX(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_readClasses_const_vector_String_R_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_to_extern()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * format: "templates_%s.yml.gz"
 	fn write_classes(&self, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringX(self.as_raw_Linemod_Detector(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_Linemod_Detector(), format.opencv_to_extern()) }.into_result()
 	}
 	
 }
@@ -523,15 +523,15 @@ impl Drop for Linemod_Detector {
 }
 
 impl Linemod_Detector {
-	pub fn as_raw_Linemod_Detector(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_Detector(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_Detector {}
 
 impl crate::rgbd::Linemod_DetectorTrait for Linemod_Detector {
-	fn as_raw_Linemod_Detector(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Detector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_Detector {
@@ -546,7 +546,7 @@ impl Linemod_Detector {
 	/// \param T_pyramid        Value of the sampling step T at each pyramid level. The
 	///                         number of pyramid levels is T_pyramid.size().
 	pub fn new(modalities: &core::Vector::<core::Ptr::<dyn crate::rgbd::Linemod_Modality>>, t_pyramid: &core::Vector::<i32>) -> Result<crate::rgbd::Linemod_Detector> {
-		unsafe { sys::cv_linemod_Detector_Detector_const_vector_Ptr_Modality__X_const_vector_int_X(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Detector::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Detector_Detector_const_vector_Ptr_Modality__R_const_vector_int_R(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Detector::opencv_from_extern(r) } )
 	}
 	
 }
@@ -587,11 +587,11 @@ pub trait Linemod_FeatureTrait {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_Feature_read_const_FileNodeX(self.as_raw_mut_Linemod_Feature(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_Feature_read_const_FileNodeR(self.as_raw_mut_Linemod_Feature(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_Feature_write_const_FileStorageX(self.as_raw_Linemod_Feature(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Feature_write_const_FileStorageR(self.as_raw_Linemod_Feature(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -611,15 +611,15 @@ impl Drop for Linemod_Feature {
 }
 
 impl Linemod_Feature {
-	pub fn as_raw_Linemod_Feature(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_Feature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_Feature(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_Feature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_Feature {}
 
 impl crate::rgbd::Linemod_FeatureTrait for Linemod_Feature {
-	fn as_raw_Linemod_Feature(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Feature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Feature(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Feature(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_Feature {
@@ -696,15 +696,15 @@ impl Drop for Linemod_Match {
 }
 
 impl Linemod_Match {
-	pub fn as_raw_Linemod_Match(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_Match(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_Match {}
 
 impl crate::rgbd::Linemod_MatchTrait for Linemod_Match {
-	fn as_raw_Linemod_Match(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Match(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_Match {
@@ -714,7 +714,7 @@ impl Linemod_Match {
 	
 	pub fn new(x: i32, y: i32, similarity: f32, class_id: &str, template_id: i32) -> Result<crate::rgbd::Linemod_Match> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringX_int(x, y, similarity, class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringR_int(x, y, similarity, class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(r) } )
 	}
 	
 }
@@ -735,7 +735,7 @@ pub trait Linemod_Modality {
 	/// ## C++ default parameters
 	/// * mask: Mat()
 	fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>> {
-		unsafe { sys::cv_linemod_Modality_process_const_const_MatX_const_MatX(self.as_raw_Linemod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_Linemod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>::opencv_from_extern(r) } )
 	}
 	
 	fn name(&self) -> Result<String> {
@@ -743,11 +743,11 @@ pub trait Linemod_Modality {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_Modality_read_const_FileNodeX(self.as_raw_mut_Linemod_Modality(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_Modality_read_const_FileNodeR(self.as_raw_mut_Linemod_Modality(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_Modality_write_const_FileStorageX(self.as_raw_Linemod_Modality(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Modality_write_const_FileStorageR(self.as_raw_Linemod_Modality(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -760,12 +760,12 @@ impl dyn Linemod_Modality + '_ {
 	/// - "DepthNormal"
 	pub fn create(modality_type: &str) -> Result<core::Ptr::<dyn crate::rgbd::Linemod_Modality>> {
 		extern_container_arg!(modality_type);
-		unsafe { sys::cv_linemod_Modality_create_const_StringX(modality_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
 	}
 	
 	/// \brief Load a modality from file.
 	pub fn create_1(fn_: &core::FileNode) -> Result<core::Ptr::<dyn crate::rgbd::Linemod_Modality>> {
-		unsafe { sys::cv_linemod_Modality_create_const_FileNodeX(fn_.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Modality_create_const_FileNodeR(fn_.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -779,14 +779,14 @@ pub trait Linemod_QuantizedPyramid {
 	/// \param[out] dst The destination 8-bit image. For each pixel at most one bit is set,
 	///                representing its classification.
 	fn quantize(&self, dst: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_linemod_QuantizedPyramid_quantize_const_MatX(self.as_raw_Linemod_QuantizedPyramid(), dst.as_raw_mut_Mat()) }.into_result()
+		unsafe { sys::cv_linemod_QuantizedPyramid_quantize_const_MatR(self.as_raw_Linemod_QuantizedPyramid(), dst.as_raw_mut_Mat()) }.into_result()
 	}
 	
 	/// \brief Extract most discriminant features at current pyramid level to form a new template.
 	/// 
 	/// \param[out] templ The new template.
 	fn extract_template(&self, templ: &mut crate::rgbd::Linemod_Template) -> Result<bool> {
-		unsafe { sys::cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateX(self.as_raw_Linemod_QuantizedPyramid(), templ.as_raw_mut_Linemod_Template()) }.into_result()
+		unsafe { sys::cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(self.as_raw_Linemod_QuantizedPyramid(), templ.as_raw_mut_Linemod_Template()) }.into_result()
 	}
 	
 	/// \brief Go to the next pyramid level.
@@ -835,11 +835,11 @@ pub trait Linemod_TemplateTrait {
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_Template_read_const_FileNodeX(self.as_raw_mut_Linemod_Template(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_Template_read_const_FileNodeR(self.as_raw_mut_Linemod_Template(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_Template_write_const_FileStorageX(self.as_raw_Linemod_Template(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Template_write_const_FileStorageR(self.as_raw_Linemod_Template(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -858,15 +858,15 @@ impl Drop for Linemod_Template {
 }
 
 impl Linemod_Template {
-	pub fn as_raw_Linemod_Template(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_Linemod_Template(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Linemod_Template {}
 
 impl crate::rgbd::Linemod_TemplateTrait for Linemod_Template {
-	fn as_raw_Linemod_Template(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Linemod_Template(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_Template {
@@ -924,20 +924,20 @@ impl Drop for DepthCleaner {
 }
 
 impl DepthCleaner {
-	pub fn as_raw_DepthCleaner(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DepthCleaner(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DepthCleaner {}
 
 impl core::AlgorithmTrait for DepthCleaner {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::DepthCleanerTrait for DepthCleaner {
-	fn as_raw_DepthCleaner(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DepthCleaner(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DepthCleaner {
@@ -987,7 +987,7 @@ pub trait Odometry: core::AlgorithmTrait {
 	/// ## C++ default parameters
 	/// * init_rt: Mat()
 	fn compute(&self, src_image: &core::Mat, src_depth: &core::Mat, src_mask: &core::Mat, dst_image: &core::Mat, dst_depth: &core::Mat, dst_mask: &core::Mat, rt: &mut core::Mat, init_rt: &core::Mat) -> Result<bool> {
-		unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_MatX_const_MatX(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw_mut_Mat(), init_rt.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_MatR_const_MatR(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw_mut_Mat(), init_rt.as_raw_Mat()) }.into_result()
 	}
 	
 	/// One more method to compute a transformation from the source frame to the destination one.
@@ -996,7 +996,7 @@ pub trait Odometry: core::AlgorithmTrait {
 	/// ## C++ default parameters
 	/// * init_rt: Mat()
 	fn compute_1(&self, src_frame: &mut core::Ptr::<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr::<crate::rgbd::OdometryFrame>, rt: &mut core::Mat, init_rt: &core::Mat) -> Result<bool> {
-		unsafe { sys::cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_X_Ptr_OdometryFrame_X_MatX_const_MatX(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw_mut_Mat(), init_rt.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_R_Ptr_OdometryFrame_R_MatR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw_mut_Mat(), init_rt.as_raw_Mat()) }.into_result()
 	}
 	
 	/// Prepare a cache for the frame. The function checks the precomputed/passed data (throws the error if this data
@@ -1006,7 +1006,7 @@ pub trait Odometry: core::AlgorithmTrait {
 	/// * frame: The odometry which will process the frame.
 	/// * cacheType: The cache type: CACHE_SRC, CACHE_DST or CACHE_ALL.
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr::<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
-		unsafe { sys::cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(self.as_raw_Odometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type) }.into_result()
+		unsafe { sys::cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_Odometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type) }.into_result()
 	}
 	
 	/// ## See also
@@ -1018,7 +1018,7 @@ pub trait Odometry: core::AlgorithmTrait {
 	/// ## See also
 	/// setCameraMatrix getCameraMatrix
 	fn set_camera_matrix(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_rgbd_Odometry_setCameraMatrix_const_MatX(self.as_raw_mut_Odometry(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_Odometry_setCameraMatrix_const_MatR(self.as_raw_mut_Odometry(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	/// ## See also
@@ -1062,7 +1062,7 @@ impl dyn Odometry + '_ {
 	
 	pub fn create(odometry_type: &str) -> Result<core::Ptr::<dyn crate::rgbd::Odometry>> {
 		extern_container_arg!(odometry_type);
-		unsafe { sys::cv_rgbd_Odometry_create_const_StringX(odometry_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Odometry>::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_Odometry_create_const_StringR(odometry_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Odometry>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1172,20 +1172,20 @@ impl Drop for OdometryFrame {
 }
 
 impl OdometryFrame {
-	pub fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OdometryFrame {}
 
 impl crate::rgbd::OdometryFrameTrait for OdometryFrame {
-	fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::RgbdFrameTrait for OdometryFrame {
-	fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OdometryFrame {
@@ -1198,7 +1198,7 @@ impl OdometryFrame {
 	/// * normals: Mat()
 	/// * id: -1
 	pub fn new(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, normals: &core::Mat, id: i32) -> Result<crate::rgbd::OdometryFrame> {
-		unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame_const_MatX_const_MatX_const_MatX_const_MatX_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id) }.into_result().map(|r| unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id) }.into_result().map(|r| unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1269,15 +1269,15 @@ impl Drop for RgbdFrame {
 }
 
 impl RgbdFrame {
-	pub fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for RgbdFrame {}
 
 impl crate::rgbd::RgbdFrameTrait for RgbdFrame {
-	fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl RgbdFrame {
@@ -1290,7 +1290,7 @@ impl RgbdFrame {
 	/// * normals: Mat()
 	/// * id: -1
 	pub fn new(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, normals: &core::Mat, id: i32) -> Result<crate::rgbd::RgbdFrame> {
-		unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame_const_MatX_const_MatX_const_MatX_const_MatX_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id) }.into_result().map(|r| unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id) }.into_result().map(|r| unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1351,7 +1351,7 @@ pub trait RgbdNormalsTrait: core::AlgorithmTrait {
 	}
 	
 	fn set_k(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_rgbd_RgbdNormals_setK_const_MatX(self.as_raw_mut_RgbdNormals(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_RgbdNormals_setK_const_MatR(self.as_raw_mut_RgbdNormals(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	fn get_method(&self) -> Result<i32> {
@@ -1387,20 +1387,20 @@ impl Drop for RgbdNormals {
 }
 
 impl RgbdNormals {
-	pub fn as_raw_RgbdNormals(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_RgbdNormals(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for RgbdNormals {}
 
 impl core::AlgorithmTrait for RgbdNormals {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::RgbdNormalsTrait for RgbdNormals {
-	fn as_raw_RgbdNormals(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RgbdNormals(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl RgbdNormals {
@@ -1422,7 +1422,7 @@ impl RgbdNormals {
 	/// * method: RGBD_NORMALS_METHOD_FALS
 	pub fn new(rows: i32, cols: i32, depth: i32, k: &dyn core::ToInputArray, window_size: i32, method: i32) -> Result<crate::rgbd::RgbdNormals> {
 		input_array_arg!(k);
-		unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayX_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method) }.into_result().map(|r| unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method) }.into_result().map(|r| unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1434,7 +1434,7 @@ pub trait RgbdOdometryTrait: crate::rgbd::Odometry {
 	fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void;
 
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr::<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
-		unsafe { sys::cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_X_int(self.as_raw_RgbdOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type) }.into_result()
+		unsafe { sys::cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_RgbdOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type) }.into_result()
 	}
 	
 	fn get_camera_matrix(&self) -> Result<core::Mat> {
@@ -1442,7 +1442,7 @@ pub trait RgbdOdometryTrait: crate::rgbd::Odometry {
 	}
 	
 	fn set_camera_matrix(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_rgbd_RgbdOdometry_setCameraMatrix_const_MatX(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_RgbdOdometry_setCameraMatrix_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	fn get_min_depth(&self) -> Result<f64> {
@@ -1474,7 +1474,7 @@ pub trait RgbdOdometryTrait: crate::rgbd::Odometry {
 	}
 	
 	fn set_iteration_counts(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_rgbd_RgbdOdometry_setIterationCounts_const_MatX(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_RgbdOdometry_setIterationCounts_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	fn get_min_gradient_magnitudes(&self) -> Result<core::Mat> {
@@ -1482,7 +1482,7 @@ pub trait RgbdOdometryTrait: crate::rgbd::Odometry {
 	}
 	
 	fn set_min_gradient_magnitudes(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_rgbd_RgbdOdometry_setMinGradientMagnitudes_const_MatX(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_rgbd_RgbdOdometry_setMinGradientMagnitudes_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	fn get_max_points_part(&self) -> Result<f64> {
@@ -1535,25 +1535,25 @@ impl Drop for RgbdOdometry {
 }
 
 impl RgbdOdometry {
-	pub fn as_raw_RgbdOdometry(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_RgbdOdometry(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for RgbdOdometry {}
 
 impl core::AlgorithmTrait for RgbdOdometry {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::Odometry for RgbdOdometry {
-	fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::RgbdOdometryTrait for RgbdOdometry {
-	fn as_raw_RgbdOdometry(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RgbdOdometry(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl RgbdOdometry {
@@ -1583,7 +1583,7 @@ impl RgbdOdometry {
 	/// * max_points_part: DEFAULT_MAX_POINTS_PART()
 	/// * transform_type: RIGID_BODY_MOTION
 	pub fn new(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector::<i32>, min_gradient_magnitudes: &core::Vector::<f32>, max_points_part: f32, transform_type: i32) -> Result<crate::rgbd::RgbdOdometry> {
-		unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatX_float_float_float_const_vector_int_X_const_vector_float_X_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type) }.into_result().map(|r| unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type) }.into_result().map(|r| unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1666,20 +1666,20 @@ impl Drop for RgbdPlane {
 }
 
 impl RgbdPlane {
-	pub fn as_raw_RgbdPlane(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_RgbdPlane(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for RgbdPlane {}
 
 impl core::AlgorithmTrait for RgbdPlane {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::rgbd::RgbdPlaneTrait for RgbdPlane {
-	fn as_raw_RgbdPlane(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_RgbdPlane(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl RgbdPlane {

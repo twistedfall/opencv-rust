@@ -3,21 +3,21 @@
 #include "xfeatures2d_types.hpp"
 
 extern "C" {
-	Result_void cv_xfeatures2d_FASTForPointSet_const__InputArrayX_vector_KeyPoint_X_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::FastFeatureDetector::DetectorType type) {
+	Result_void cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::FastFeatureDetector::DetectorType type) {
 		try {
 			cv::xfeatures2d::FASTForPointSet(*image, *keypoints, threshold, nonmaxSuppression, type);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_matchGMS_const_SizeX_const_SizeX_const_vector_KeyPoint_X_const_vector_KeyPoint_X_const_vector_DMatch_X_vector_DMatch_X_bool_bool_double(const cv::Size* size1, const cv::Size* size2, const std::vector<cv::KeyPoint>* keypoints1, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<cv::DMatch>* matches1to2, std::vector<cv::DMatch>* matchesGMS, bool withRotation, bool withScale, double thresholdFactor) {
+	Result_void cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_DMatch_R_vector_DMatch_R_bool_bool_double(const cv::Size* size1, const cv::Size* size2, const std::vector<cv::KeyPoint>* keypoints1, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<cv::DMatch>* matches1to2, std::vector<cv::DMatch>* matchesGMS, bool withRotation, bool withScale, double thresholdFactor) {
 		try {
 			cv::xfeatures2d::matchGMS(*size1, *size2, *keypoints1, *keypoints2, *matches1to2, *matchesGMS, withRotation, withScale, thresholdFactor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_matchLOGOS_const_vector_KeyPoint_X_const_vector_KeyPoint_X_const_vector_int_X_const_vector_int_X_vector_DMatch_X(const std::vector<cv::KeyPoint>* keypoints1, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<int>* nn1, const std::vector<int>* nn2, std::vector<cv::DMatch>* matches1to2) {
+	Result_void cv_xfeatures2d_matchLOGOS_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_int_R_const_vector_int_R_vector_DMatch_R(const std::vector<cv::KeyPoint>* keypoints1, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<int>* nn1, const std::vector<int>* nn2, std::vector<cv::DMatch>* matches1to2) {
 		try {
 			cv::xfeatures2d::matchLOGOS(*keypoints1, *keypoints2, *nn1, *nn2, *matches1to2);
 			return Ok();
@@ -38,14 +38,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*>))
 	}
 	
-	Result_void cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayX_vector_Elliptic_KeyPoint_X_const__InputArrayX(cv::xfeatures2d::AffineFeature2D* instance, const cv::_InputArray* image, std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* keypoints, const cv::_InputArray* mask) {
+	Result_void cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__InputArrayR(cv::xfeatures2d::AffineFeature2D* instance, const cv::_InputArray* image, std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* keypoints, const cv::_InputArray* mask) {
 		try {
 			instance->detect(*image, *keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayX_const__InputArrayX_vector_Elliptic_KeyPoint_X_const__OutputArrayX_bool(cv::xfeatures2d::AffineFeature2D* instance, const cv::_InputArray* image, const cv::_InputArray* mask, std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* keypoints, const cv::_OutputArray* descriptors, bool useProvidedKeypoints) {
+	Result_void cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__OutputArrayR_bool(cv::xfeatures2d::AffineFeature2D* instance, const cv::_InputArray* image, const cv::_InputArray* mask, std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* keypoints, const cv::_OutputArray* descriptors, bool useProvidedKeypoints) {
 		try {
 			instance->detectAndCompute(*image, *mask, *keypoints, *descriptors, useProvidedKeypoints);
 			return Ok();
@@ -97,35 +97,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>*>))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::DAISY>*> cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayX_bool_bool(float radius, int q_radius, int q_theta, int q_hist, cv::xfeatures2d::DAISY::NormalizationType norm, const cv::_InputArray* H, bool interpolation, bool use_orientation) {
+	Result<cv::Ptr<cv::xfeatures2d::DAISY>*> cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayR_bool_bool(float radius, int q_radius, int q_theta, int q_hist, cv::xfeatures2d::DAISY::NormalizationType norm, const cv::_InputArray* H, bool interpolation, bool use_orientation) {
 		try {
 			cv::Ptr<cv::xfeatures2d::DAISY> ret = cv::xfeatures2d::DAISY::create(radius, q_radius, q_theta, q_hist, norm, *H, interpolation, use_orientation);
 			return Ok(new cv::Ptr<cv::xfeatures2d::DAISY>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::DAISY>*>))
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*image, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_OutputArray* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_vector_KeyPoint__R_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*images, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, const cv::Rect* roi, const cv::_OutputArray* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, const cv::Rect* roi, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*image, *roi, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_const__OutputArrayX(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, const cv::_OutputArray* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*image, *descriptors);
 			return Ok();
@@ -222,7 +222,7 @@ extern "C" {
 	void cv_FREAK_delete(cv::xfeatures2d::FREAK* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::xfeatures2d::FREAK>*> cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_X(bool orientationNormalized, bool scaleNormalized, float patternScale, int nOctaves, const std::vector<int>* selectedPairs) {
+	Result<cv::Ptr<cv::xfeatures2d::FREAK>*> cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_R(bool orientationNormalized, bool scaleNormalized, float patternScale, int nOctaves, const std::vector<int>* selectedPairs) {
 		try {
 			cv::Ptr<cv::xfeatures2d::FREAK> ret = cv::xfeatures2d::FREAK::create(orientationNormalized, scaleNormalized, patternScale, nOctaves, *selectedPairs);
 			return Ok(new cv::Ptr<cv::xfeatures2d::FREAK>(ret));
@@ -276,42 +276,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*>))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_int(const std::vector<cv::Point2f>* initSamplingPoints, int initSeedCount) {
+	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_int(const std::vector<cv::Point2f>* initSamplingPoints, int initSeedCount) {
 		try {
 			cv::Ptr<cv::xfeatures2d::PCTSignatures> ret = cv::xfeatures2d::PCTSignatures::create(*initSamplingPoints, initSeedCount);
 			return Ok(new cv::Ptr<cv::xfeatures2d::PCTSignatures>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*>))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_const_vector_int_X(const std::vector<cv::Point2f>* initSamplingPoints, const std::vector<int>* initClusterSeedIndexes) {
+	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_vector_int_R(const std::vector<cv::Point2f>* initSamplingPoints, const std::vector<int>* initClusterSeedIndexes) {
 		try {
 			cv::Ptr<cv::xfeatures2d::PCTSignatures> ret = cv::xfeatures2d::PCTSignatures::create(*initSamplingPoints, *initClusterSeedIndexes);
 			return Ok(new cv::Ptr<cv::xfeatures2d::PCTSignatures>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*>))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayX_const__OutputArrayX(const cv::xfeatures2d::PCTSignatures* instance, const cv::_InputArray* image, const cv::_OutputArray* signature) {
+	Result_void cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayR_const__OutputArrayR(const cv::xfeatures2d::PCTSignatures* instance, const cv::_InputArray* image, const cv::_OutputArray* signature) {
 		try {
 			instance->computeSignature(*image, *signature);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_X_vector_Mat_X(const cv::xfeatures2d::PCTSignatures* instance, const std::vector<cv::Mat>* images, std::vector<cv::Mat>* signatures) {
+	Result_void cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_R_vector_Mat_R(const cv::xfeatures2d::PCTSignatures* instance, const std::vector<cv::Mat>* images, std::vector<cv::Mat>* signatures) {
 		try {
 			instance->computeSignatures(*images, *signatures);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayX_const__InputArrayX_const__OutputArrayX_float_int(const cv::_InputArray* source, const cv::_InputArray* signature, const cv::_OutputArray* result, float radiusToShorterSideRatio, int borderThickness) {
+	Result_void cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_int(const cv::_InputArray* source, const cv::_InputArray* signature, const cv::_OutputArray* result, float radiusToShorterSideRatio, int borderThickness) {
 		try {
 			cv::xfeatures2d::PCTSignatures::drawSignature(*source, *signature, *result, radiusToShorterSideRatio, borderThickness);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_X_int_int(std::vector<cv::Point2f>* initPoints, int count, int pointDistribution) {
+	Result_void cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_int_int(std::vector<cv::Point2f>* initPoints, int count, int pointDistribution) {
 		try {
 			cv::xfeatures2d::PCTSignatures::generateInitPoints(*initPoints, count, pointDistribution);
 			return Ok();
@@ -465,7 +465,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_X(cv::xfeatures2d::PCTSignatures* instance, const std::vector<float>* weights) {
+	Result_void cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_R(cv::xfeatures2d::PCTSignatures* instance, const std::vector<float>* weights) {
 		try {
 			instance->setWeights(*weights);
 			return Ok();
@@ -479,7 +479,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_X(cv::xfeatures2d::PCTSignatures* instance, const std::vector<float>* translations) {
+	Result_void cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_R(cv::xfeatures2d::PCTSignatures* instance, const std::vector<float>* translations) {
 		try {
 			instance->setTranslations(*translations);
 			return Ok();
@@ -605,14 +605,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*>))
 	}
 	
-	Result<float> cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayX_const__InputArrayX(const cv::xfeatures2d::PCTSignaturesSQFD* instance, const cv::_InputArray* _signature0, const cv::_InputArray* _signature1) {
+	Result<float> cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(const cv::xfeatures2d::PCTSignaturesSQFD* instance, const cv::_InputArray* _signature0, const cv::_InputArray* _signature1) {
 		try {
 			float ret = instance->computeQuadraticFormDistance(*_signature0, *_signature1);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatX_const_vector_Mat_X_vector_float_X(const cv::xfeatures2d::PCTSignaturesSQFD* instance, const cv::Mat* sourceSignature, const std::vector<cv::Mat>* imageSignatures, std::vector<float>* distances) {
+	Result_void cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatR_const_vector_Mat_R_vector_float_R(const cv::xfeatures2d::PCTSignaturesSQFD* instance, const cv::Mat* sourceSignature, const std::vector<cv::Mat>* imageSignatures, std::vector<float>* distances) {
 		try {
 			instance->computeQuadraticFormDistances(*sourceSignature, *imageSignatures, *distances);
 			return Ok();

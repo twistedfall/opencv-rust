@@ -44,7 +44,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_face_BIF_compute_const_const__InputArrayX_const__OutputArrayX(const cv::face::BIF* instance, const cv::_InputArray* image, const cv::_OutputArray* features) {
+	Result_void cv_face_BIF_compute_const_const__InputArrayR_const__OutputArrayR(const cv::face::BIF* instance, const cv::_InputArray* image, const cv::_OutputArray* features) {
 		try {
 			instance->compute(*image, *features);
 			return Ok();
@@ -114,70 +114,70 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_face_FaceRecognizer_train_const__InputArrayX_const__InputArrayX(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
+	Result_void cv_face_FaceRecognizer_train_const__InputArrayR_const__InputArrayR(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
 		try {
 			instance->train(*src, *labels);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_update_const__InputArrayX_const__InputArrayX(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
+	Result_void cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(cv::face::FaceRecognizer* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
 		try {
 			instance->update(*src, *labels);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayX(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
+	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
 		try {
 			int ret = instance->predict(*src);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayX_intR_doubleR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, int* label, double* confidence) {
+	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, int* label, double* confidence) {
 		try {
 			instance->predict(*src, *label, *confidence);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayX_Ptr_PredictCollector_(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, cv::Ptr<cv::face::PredictCollector>* collector) {
+	Result_void cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src, cv::Ptr<cv::face::PredictCollector>* collector) {
 		try {
 			instance->predict(*src, *collector);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_save_const_const_StringX(const cv::face::FaceRecognizer* instance, const char* filename) {
+	Result_void cv_face_FaceRecognizer_save_const_const_StringR(const cv::face::FaceRecognizer* instance, const char* filename) {
 		try {
 			instance->save(cv::String(filename));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_load_const_StringX(cv::face::FaceRecognizer* instance, const char* filename) {
+	Result_void cv_face_FaceRecognizer_load_const_StringR(cv::face::FaceRecognizer* instance, const char* filename) {
 		try {
 			instance->load(cv::String(filename));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_save_const_FileStorageX(const cv::face::FaceRecognizer* instance, cv::FileStorage* fs) {
+	Result_void cv_face_FaceRecognizer_save_const_FileStorageR(const cv::face::FaceRecognizer* instance, cv::FileStorage* fs) {
 		try {
 			instance->save(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_load_const_FileStorageX(cv::face::FaceRecognizer* instance, const cv::FileStorage* fs) {
+	Result_void cv_face_FaceRecognizer_load_const_FileStorageR(cv::face::FaceRecognizer* instance, const cv::FileStorage* fs) {
 		try {
 			instance->load(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_face_FaceRecognizer_setLabelInfo_int_const_StringX(cv::face::FaceRecognizer* instance, int label, const char* strInfo) {
+	Result_void cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(cv::face::FaceRecognizer* instance, int label, const char* strInfo) {
 		try {
 			instance->setLabelInfo(label, cv::String(strInfo));
 			return Ok();
@@ -191,7 +191,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<std::vector<int>*> cv_face_FaceRecognizer_getLabelsByString_const_const_StringX(const cv::face::FaceRecognizer* instance, const char* str) {
+	Result<std::vector<int>*> cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(const cv::face::FaceRecognizer* instance, const char* str) {
 		try {
 			std::vector<int> ret = instance->getLabelsByString(cv::String(str));
 			return Ok(new std::vector<int>(ret));

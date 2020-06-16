@@ -3,7 +3,7 @@
 #include "shape_types.hpp"
 
 extern "C" {
-	Result<float> cv_EMDL1_const__InputArrayX_const__InputArrayX(const cv::_InputArray* signature1, const cv::_InputArray* signature2) {
+	Result<float> cv_EMDL1_const__InputArrayR_const__InputArrayR(const cv::_InputArray* signature1, const cv::_InputArray* signature2) {
 		try {
 			float ret = cv::EMDL1(*signature1, *signature2);
 			return Ok(ret);
@@ -52,7 +52,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::HistogramCostExtractor>*>))
 	}
 	
-	Result<cv::Ptr<cv::ShapeContextDistanceExtractor>*> cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_X_const_Ptr_ShapeTransformer_X(int nAngularBins, int nRadialBins, float innerRadius, float outerRadius, int iterations, const cv::Ptr<cv::HistogramCostExtractor>* comparer, const cv::Ptr<cv::ShapeTransformer>* transformer) {
+	Result<cv::Ptr<cv::ShapeContextDistanceExtractor>*> cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_R_const_Ptr_ShapeTransformer_R(int nAngularBins, int nRadialBins, float innerRadius, float outerRadius, int iterations, const cv::Ptr<cv::HistogramCostExtractor>* comparer, const cv::Ptr<cv::ShapeTransformer>* transformer) {
 		try {
 			cv::Ptr<cv::ShapeContextDistanceExtractor> ret = cv::createShapeContextDistanceExtractor(nAngularBins, nRadialBins, innerRadius, outerRadius, iterations, *comparer, *transformer);
 			return Ok(new cv::Ptr<cv::ShapeContextDistanceExtractor>(ret));
@@ -122,7 +122,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::HistogramCostExtractor* instance, const cv::_InputArray* descriptors1, const cv::_InputArray* descriptors2, const cv::_OutputArray* costMatrix) {
+	Result_void cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::HistogramCostExtractor* instance, const cv::_InputArray* descriptors1, const cv::_InputArray* descriptors2, const cv::_OutputArray* costMatrix) {
 		try {
 			instance->buildCostMatrix(*descriptors1, *descriptors2, *costMatrix);
 			return Ok();
@@ -283,14 +283,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_ShapeContextDistanceExtractor_setImages_const__InputArrayX_const__InputArrayX(cv::ShapeContextDistanceExtractor* instance, const cv::_InputArray* image1, const cv::_InputArray* image2) {
+	Result_void cv_ShapeContextDistanceExtractor_setImages_const__InputArrayR_const__InputArrayR(cv::ShapeContextDistanceExtractor* instance, const cv::_InputArray* image1, const cv::_InputArray* image2) {
 		try {
 			instance->setImages(*image1, *image2);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayX_const__OutputArrayX(const cv::ShapeContextDistanceExtractor* instance, const cv::_OutputArray* image1, const cv::_OutputArray* image2) {
+	Result_void cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayR_const__OutputArrayR(const cv::ShapeContextDistanceExtractor* instance, const cv::_OutputArray* image1, const cv::_OutputArray* image2) {
 		try {
 			instance->getImages(*image1, *image2);
 			return Ok();
@@ -353,28 +353,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ShapeTransformer>*>))
 	}
 	
-	Result<float> cv_ShapeDistanceExtractor_computeDistance_const__InputArrayX_const__InputArrayX(cv::ShapeDistanceExtractor* instance, const cv::_InputArray* contour1, const cv::_InputArray* contour2) {
+	Result<float> cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(cv::ShapeDistanceExtractor* instance, const cv::_InputArray* contour1, const cv::_InputArray* contour2) {
 		try {
 			float ret = instance->computeDistance(*contour1, *contour2);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_ShapeTransformer_estimateTransformation_const__InputArrayX_const__InputArrayX_vector_DMatch_X(cv::ShapeTransformer* instance, const cv::_InputArray* transformingShape, const cv::_InputArray* targetShape, std::vector<cv::DMatch>* matches) {
+	Result_void cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vector_DMatch_R(cv::ShapeTransformer* instance, const cv::_InputArray* transformingShape, const cv::_InputArray* targetShape, std::vector<cv::DMatch>* matches) {
 		try {
 			instance->estimateTransformation(*transformingShape, *targetShape, *matches);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<float> cv_ShapeTransformer_applyTransformation_const__InputArrayX_const__OutputArrayX(cv::ShapeTransformer* instance, const cv::_InputArray* input, const cv::_OutputArray* output) {
+	Result<float> cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(cv::ShapeTransformer* instance, const cv::_InputArray* input, const cv::_OutputArray* output) {
 		try {
 			float ret = instance->applyTransformation(*input, *output);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_ShapeTransformer_warpImage_const_const__InputArrayX_const__OutputArrayX_int_int_const_ScalarX(const cv::ShapeTransformer* instance, const cv::_InputArray* transformingImage, const cv::_OutputArray* output, int flags, int borderMode, const cv::Scalar* borderValue) {
+	Result_void cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR_int_int_const_ScalarR(const cv::ShapeTransformer* instance, const cv::_InputArray* transformingImage, const cv::_OutputArray* output, int flags, int borderMode, const cv::Scalar* borderValue) {
 		try {
 			instance->warpImage(*transformingImage, *output, flags, borderMode, *borderValue);
 			return Ok();

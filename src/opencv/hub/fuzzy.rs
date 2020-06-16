@@ -38,7 +38,7 @@ pub const SINUS: i32 = 2;
 pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_FT02D_FL_process_const__InputArrayX_int_const__OutputArrayX(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT02D_FL_process_const__InputArrayR_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray()) }.into_result()
 }
 
 /// Sligtly less accurate version of ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom computation optimized for higher speed. The methods counts with linear basic function.
@@ -51,7 +51,7 @@ pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &
 pub fn ft02_d_fl_process_float(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_FT02D_FL_process_float_const__InputArrayX_int_const__OutputArrayX(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT02D_FL_process_float_const__InputArrayR_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes components of the array using direct ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform.
@@ -70,7 +70,7 @@ pub fn ft02_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 	input_array_arg!(kernel);
 	output_array_arg!(components);
 	input_array_arg!(mask);
-	unsafe { sys::cv_ft_FT02D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT02D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom.
@@ -86,7 +86,7 @@ pub fn ft02_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 	input_array_arg!(components);
 	input_array_arg!(kernel);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_FT02D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height) }.into_result()
+	unsafe { sys::cv_ft_FT02D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height) }.into_result()
 }
 
 /// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom at once and return state.
@@ -105,7 +105,7 @@ pub fn ft02_d_iteration(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToIn
 	output_array_arg!(output);
 	input_array_arg!(mask);
 	output_array_arg!(mask_output);
-	unsafe { sys::cv_ft_FT02D_iteration_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__OutputArrayX_bool(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), mask_output.as_raw__OutputArray(), first_stop) }.into_result()
+	unsafe { sys::cv_ft_FT02D_iteration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__OutputArrayR_bool(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), mask_output.as_raw__OutputArray(), first_stop) }.into_result()
 }
 
 /// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom at once.
@@ -124,7 +124,7 @@ pub fn ft02_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 	input_array_arg!(kernel);
 	output_array_arg!(output);
 	input_array_arg!(mask);
-	unsafe { sys::cv_ft_FT02D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT02D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes components of the array using direct ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
@@ -138,7 +138,7 @@ pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
 	output_array_arg!(components);
-	unsafe { sys::cv_ft_FT12D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT12D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray()) }.into_result()
 }
 
 /// Creates horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform computation.
@@ -150,7 +150,7 @@ pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// The function creates helper horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(matrix);
-	unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayX_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Creates vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform computation.
@@ -162,7 +162,7 @@ pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn cor
 /// The function creates helper vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(matrix);
-	unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayX_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Computes inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom.
@@ -178,7 +178,7 @@ pub fn ft12_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 	input_array_arg!(components);
 	input_array_arg!(kernel);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_FT12D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height) }.into_result()
+	unsafe { sys::cv_ft_FT12D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height) }.into_result()
 }
 
 /// Computes elements of ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform components.
@@ -203,7 +203,7 @@ pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 	output_array_arg!(c01);
 	output_array_arg!(components);
 	input_array_arg!(mask);
-	unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom at once.
@@ -226,7 +226,7 @@ pub fn ft12_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 	input_array_arg!(kernel);
 	output_array_arg!(output);
 	input_array_arg!(mask);
-	unsafe { sys::cv_ft_FT12D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_ft_FT12D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Creates kernel from basic functions.
@@ -241,7 +241,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 	input_array_arg!(a);
 	input_array_arg!(b);
 	output_array_arg!(kernel);
-	unsafe { sys::cv_ft_createKernel_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Creates kernel from general functions.
@@ -255,7 +255,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 /// The function creates kernel from predefined functions.
 pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(kernel);
-	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayX_int(function, radius, kernel.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_int(function, radius, kernel.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Image filtering
@@ -269,7 +269,7 @@ pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, o
 	input_array_arg!(image);
 	input_array_arg!(kernel);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_filter_const__InputArrayX_const__InputArrayX_const__OutputArrayX(image.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ft_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray()) }.into_result()
 }
 
 /// Image inpainting
@@ -294,5 +294,5 @@ pub fn inpaint(image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, ou
 	input_array_arg!(image);
 	input_array_arg!(mask);
 	output_array_arg!(output);
-	unsafe { sys::cv_ft_inpaint_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int_int(image.as_raw__InputArray(), mask.as_raw__InputArray(), output.as_raw__OutputArray(), radius, function, algorithm) }.into_result()
+	unsafe { sys::cv_ft_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), mask.as_raw__InputArray(), output.as_raw__OutputArray(), radius, function, algorithm) }.into_result()
 }

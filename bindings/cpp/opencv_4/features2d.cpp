@@ -3,77 +3,77 @@
 #include "features2d_types.hpp"
 
 extern "C" {
-	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
+	Result_void cv_AGAST_const__InputArrayR_vector_KeyPoint_R_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
 		try {
 			cv::AGAST(*image, *keypoints, threshold, nonmaxSuppression);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::AgastFeatureDetector::DetectorType type) {
+	Result_void cv_AGAST_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::AgastFeatureDetector::DetectorType type) {
 		try {
 			cv::AGAST(*image, *keypoints, threshold, nonmaxSuppression, type);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
+	Result_void cv_FAST_const__InputArrayR_vector_KeyPoint_R_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
 		try {
 			cv::FAST(*image, *keypoints, threshold, nonmaxSuppression);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::FastFeatureDetector::DetectorType type) {
+	Result_void cv_FAST_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, cv::FastFeatureDetector::DetectorType type) {
 		try {
 			cv::FAST(*image, *keypoints, threshold, nonmaxSuppression, type);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_computeRecallPrecisionCurve_const_vector_vector_DMatch__X_const_vector_vector_unsigned_char__X_vector_Point2f_X(const std::vector<std::vector<cv::DMatch>>* matches1to2, const std::vector<std::vector<unsigned char>>* correctMatches1to2Mask, std::vector<cv::Point2f>* recallPrecisionCurve) {
+	Result_void cv_computeRecallPrecisionCurve_const_vector_vector_DMatch__R_const_vector_vector_unsigned_char__R_vector_Point2f_R(const std::vector<std::vector<cv::DMatch>>* matches1to2, const std::vector<std::vector<unsigned char>>* correctMatches1to2Mask, std::vector<cv::Point2f>* recallPrecisionCurve) {
 		try {
 			cv::computeRecallPrecisionCurve(*matches1to2, *correctMatches1to2Mask, *recallPrecisionCurve);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_drawKeypoints_const__InputArrayX_const_vector_KeyPoint_X_const__InputOutputArrayX_const_ScalarX_DrawMatchesFlags(const cv::_InputArray* image, const std::vector<cv::KeyPoint>* keypoints, const cv::_InputOutputArray* outImage, const cv::Scalar* color, cv::DrawMatchesFlags flags) {
+	Result_void cv_drawKeypoints_const__InputArrayR_const_vector_KeyPoint_R_const__InputOutputArrayR_const_ScalarR_DrawMatchesFlags(const cv::_InputArray* image, const std::vector<cv::KeyPoint>* keypoints, const cv::_InputOutputArray* outImage, const cv::Scalar* color, cv::DrawMatchesFlags flags) {
 		try {
 			cv::drawKeypoints(*image, *keypoints, *outImage, *color, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_DMatch_X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_char_X_DrawMatchesFlags(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<cv::DMatch>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<char>* matchesMask, cv::DrawMatchesFlags flags) {
+	Result_void cv_drawMatches_const__InputArrayR_const_vector_KeyPoint_R_const__InputArrayR_const_vector_KeyPoint_R_const_vector_DMatch_R_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vector_char_R_DrawMatchesFlags(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<cv::DMatch>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<char>* matchesMask, cv::DrawMatchesFlags flags) {
 		try {
 			cv::drawMatches(*img1, *keypoints1, *img2, *keypoints2, *matches1to2, *outImg, *matchColor, *singlePointColor, *matchesMask, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_vector_DMatch__X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_vector_char__X_DrawMatchesFlags(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<std::vector<cv::DMatch>>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<std::vector<char>>* matchesMask, cv::DrawMatchesFlags flags) {
+	Result_void cv_drawMatches_const__InputArrayR_const_vector_KeyPoint_R_const__InputArrayR_const_vector_KeyPoint_R_const_vector_vector_DMatch__R_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vector_vector_char__R_DrawMatchesFlags(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<std::vector<cv::DMatch>>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<std::vector<char>>* matchesMask, cv::DrawMatchesFlags flags) {
 		try {
 			cv::drawMatches(*img1, *keypoints1, *img2, *keypoints2, *matches1to2, *outImg, *matchColor, *singlePointColor, *matchesMask, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_evaluateFeatureDetector_const_MatX_const_MatX_const_MatX_vector_KeyPoint_X_vector_KeyPoint_X_floatR_intR_const_Ptr_Feature2D_X(const cv::Mat* img1, const cv::Mat* img2, const cv::Mat* H1to2, std::vector<cv::KeyPoint>* keypoints1, std::vector<cv::KeyPoint>* keypoints2, float* repeatability, int* correspCount, const cv::Ptr<cv::Feature2D>* fdetector) {
+	Result_void cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vector_KeyPoint_X_vector_KeyPoint_X_floatR_intR_const_Ptr_Feature2D_R(const cv::Mat* img1, const cv::Mat* img2, const cv::Mat* H1to2, std::vector<cv::KeyPoint>* keypoints1, std::vector<cv::KeyPoint>* keypoints2, float* repeatability, int* correspCount, const cv::Ptr<cv::Feature2D>* fdetector) {
 		try {
 			cv::evaluateFeatureDetector(*img1, *img2, *H1to2, keypoints1, keypoints2, *repeatability, *correspCount, *fdetector);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_getNearestPoint_const_vector_Point2f_X_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
+	Result<int> cv_getNearestPoint_const_vector_Point2f_R_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
 			int ret = cv::getNearestPoint(*recallPrecisionCurve, l_precision);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<float> cv_getRecall_const_vector_Point2f_X_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
+	Result<float> cv_getRecall_const_vector_Point2f_R_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
 			float ret = cv::getRecall(*recallPrecisionCurve, l_precision);
 			return Ok(ret);
@@ -282,21 +282,21 @@ extern "C" {
 	void cv_BOWImgDescriptorExtractor_delete(cv::BOWImgDescriptorExtractor* instance) {
 		delete instance;
 	}
-	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_Feature2D_X_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::Feature2D>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
+	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_Feature2D_R_const_Ptr_DescriptorMatcher_R(const cv::Ptr<cv::Feature2D>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
 			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dextractor, *dmatcher);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BOWImgDescriptorExtractor*>))
 	}
 	
-	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
+	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorMatcher_R(const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
 			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dmatcher);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BOWImgDescriptorExtractor*>))
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_setVocabulary_const_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* vocabulary) {
+	Result_void cv_BOWImgDescriptorExtractor_setVocabulary_const_MatR(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* vocabulary) {
 		try {
 			instance->setVocabulary(*vocabulary);
 			return Ok();
@@ -310,21 +310,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_vector_vector_int__X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters, cv::Mat* descriptors) {
+	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR_vector_vector_int__X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters, cv::Mat* descriptors) {
 		try {
 			instance->compute(*image, *keypoints, *imgDescriptor, pointIdxsOfClusters, descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_const__OutputArrayX_vector_vector_int__X(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* keypointDescriptors, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters) {
+	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR_vector_vector_int__X(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* keypointDescriptors, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters) {
 		try {
 			instance->compute(*keypointDescriptors, *imgDescriptor, pointIdxsOfClusters);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute2_const_MatX_vector_KeyPoint_X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* image, std::vector<cv::KeyPoint>* keypoints, cv::Mat* imgDescriptor) {
+	Result_void cv_BOWImgDescriptorExtractor_compute2_const_MatR_vector_KeyPoint_R_MatR(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* image, std::vector<cv::KeyPoint>* keypoints, cv::Mat* imgDescriptor) {
 		try {
 			instance->compute2(*image, *keypoints, *imgDescriptor);
 			return Ok();
@@ -348,7 +348,7 @@ extern "C" {
 	void cv_BOWKMeansTrainer_delete(cv::BOWKMeansTrainer* instance) {
 		delete instance;
 	}
-	Result<cv::BOWKMeansTrainer*> cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaX_int_int(int clusterCount, const cv::TermCriteria* termcrit, int attempts, int flags) {
+	Result<cv::BOWKMeansTrainer*> cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaR_int_int(int clusterCount, const cv::TermCriteria* termcrit, int attempts, int flags) {
 		try {
 			cv::BOWKMeansTrainer* ret = new cv::BOWKMeansTrainer(clusterCount, *termcrit, attempts, flags);
 			return Ok(ret);
@@ -362,14 +362,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_BOWKMeansTrainer_cluster_const_const_MatX(const cv::BOWKMeansTrainer* instance, const cv::Mat* descriptors) {
+	Result<cv::Mat*> cv_BOWKMeansTrainer_cluster_const_const_MatR(const cv::BOWKMeansTrainer* instance, const cv::Mat* descriptors) {
 		try {
 			cv::Mat ret = instance->cluster(*descriptors);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_BOWTrainer_add_const_MatX(cv::BOWTrainer* instance, const cv::Mat* descriptors) {
+	Result_void cv_BOWTrainer_add_const_MatR(cv::BOWTrainer* instance, const cv::Mat* descriptors) {
 		try {
 			instance->add(*descriptors);
 			return Ok();
@@ -404,7 +404,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_BOWTrainer_cluster_const_const_MatX(const cv::BOWTrainer* instance, const cv::Mat* descriptors) {
+	Result<cv::Mat*> cv_BOWTrainer_cluster_const_const_MatR(const cv::BOWTrainer* instance, const cv::Mat* descriptors) {
 		try {
 			cv::Mat ret = instance->cluster(*descriptors);
 			return Ok(new cv::Mat(ret));
@@ -421,14 +421,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BRISK>*>))
 	}
 	
-	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X(const std::vector<float>* radiusList, const std::vector<int>* numberList, float dMax, float dMin, const std::vector<int>* indexChange) {
+	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_const_vector_float_R_const_vector_int_R_float_float_const_vector_int_R(const std::vector<float>* radiusList, const std::vector<int>* numberList, float dMax, float dMin, const std::vector<int>* indexChange) {
 		try {
 			cv::Ptr<cv::BRISK> ret = cv::BRISK::create(*radiusList, *numberList, dMax, dMin, *indexChange);
 			return Ok(new cv::Ptr<cv::BRISK>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BRISK>*>))
 	}
 	
-	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_int_int_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X(int thresh, int octaves, const std::vector<float>* radiusList, const std::vector<int>* numberList, float dMax, float dMin, const std::vector<int>* indexChange) {
+	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_int_int_const_vector_float_R_const_vector_int_R_float_float_const_vector_int_R(int thresh, int octaves, const std::vector<float>* radiusList, const std::vector<int>* numberList, float dMax, float dMin, const std::vector<int>* indexChange) {
 		try {
 			cv::Ptr<cv::BRISK> ret = cv::BRISK::create(thresh, octaves, *radiusList, *numberList, dMax, dMin, *indexChange);
 			return Ok(new cv::Ptr<cv::BRISK>(ret));
@@ -470,7 +470,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_DescriptorMatcher_add_const__InputArrayX(cv::DescriptorMatcher* instance, const cv::_InputArray* descriptors) {
+	Result_void cv_DescriptorMatcher_add_const__InputArrayR(cv::DescriptorMatcher* instance, const cv::_InputArray* descriptors) {
 		try {
 			instance->add(*descriptors);
 			return Ok();
@@ -512,70 +512,70 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_match_const_const__InputArrayX_const__InputArrayX_vector_DMatch_X_const__InputArrayX(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* mask) {
+	Result_void cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vector_DMatch_R_const__InputArrayR(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* mask) {
 		try {
 			instance->match(*queryDescriptors, *trainDescriptors, *matches, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_knnMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* mask, bool compactResult) {
+	Result_void cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vector_vector_DMatch__R_int_const__InputArrayR_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* mask, bool compactResult) {
 		try {
 			instance->knnMatch(*queryDescriptors, *trainDescriptors, *matches, k, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_radiusMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* mask, bool compactResult) {
+	Result_void cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vector_vector_DMatch__R_float_const__InputArrayR_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* mask, bool compactResult) {
 		try {
 			instance->radiusMatch(*queryDescriptors, *trainDescriptors, *matches, maxDistance, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_match_const__InputArrayX_vector_DMatch_X_const__InputArrayX(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* masks) {
+	Result_void cv_DescriptorMatcher_match_const__InputArrayR_vector_DMatch_R_const__InputArrayR(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* masks) {
 		try {
 			instance->match(*queryDescriptors, *matches, *masks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_knnMatch_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* masks, bool compactResult) {
+	Result_void cv_DescriptorMatcher_knnMatch_const__InputArrayR_vector_vector_DMatch__R_int_const__InputArrayR_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* masks, bool compactResult) {
 		try {
 			instance->knnMatch(*queryDescriptors, *matches, k, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_radiusMatch_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* masks, bool compactResult) {
+	Result_void cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vector_vector_DMatch__R_float_const__InputArrayR_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* masks, bool compactResult) {
 		try {
 			instance->radiusMatch(*queryDescriptors, *matches, maxDistance, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_write_const_const_StringX(const cv::DescriptorMatcher* instance, const char* fileName) {
+	Result_void cv_DescriptorMatcher_write_const_const_StringR(const cv::DescriptorMatcher* instance, const char* fileName) {
 		try {
 			instance->write(std::string(fileName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_read_const_StringX(cv::DescriptorMatcher* instance, const char* fileName) {
+	Result_void cv_DescriptorMatcher_read_const_StringR(cv::DescriptorMatcher* instance, const char* fileName) {
 		try {
 			instance->read(std::string(fileName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_read_const_FileNodeX(cv::DescriptorMatcher* instance, const cv::FileNode* unnamed) {
+	Result_void cv_DescriptorMatcher_read_const_FileNodeR(cv::DescriptorMatcher* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DescriptorMatcher_write_const_FileStorageX(const cv::DescriptorMatcher* instance, cv::FileStorage* unnamed) {
+	Result_void cv_DescriptorMatcher_write_const_FileStorageR(const cv::DescriptorMatcher* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
@@ -589,21 +589,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DescriptorMatcher>*>))
 	}
 	
-	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_const_StringX(const char* descriptorMatcherType) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_const_StringR(const char* descriptorMatcherType) {
 		try {
 			cv::Ptr<cv::DescriptorMatcher> ret = cv::DescriptorMatcher::create(std::string(descriptorMatcherType));
 			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DescriptorMatcher>*>))
 	}
 	
-	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_const_MatcherTypeX(const cv::DescriptorMatcher::MatcherType* matcherType) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_const_MatcherTypeR(const cv::DescriptorMatcher::MatcherType* matcherType) {
 		try {
 			cv::Ptr<cv::DescriptorMatcher> ret = cv::DescriptorMatcher::create(*matcherType);
 			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DescriptorMatcher>*>))
 	}
 	
-	Result_void cv_DescriptorMatcher_write_const_const_Ptr_FileStorage_X_const_StringX(const cv::DescriptorMatcher* instance, const cv::Ptr<cv::FileStorage>* fs, const char* name) {
+	Result_void cv_DescriptorMatcher_write_const_const_Ptr_FileStorage_R_const_StringR(const cv::DescriptorMatcher* instance, const cv::Ptr<cv::FileStorage>* fs, const char* name) {
 		try {
 			instance->write(*fs, std::string(name));
 			return Ok();
@@ -669,35 +669,35 @@ extern "C" {
 	void cv_Feature2D_delete(cv::Feature2D* instance) {
 		delete instance;
 	}
-	Result_void cv_Feature2D_detect_const__InputArrayX_vector_KeyPoint_X_const__InputArrayX(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_InputArray* mask) {
+	Result_void cv_Feature2D_detect_const__InputArrayR_vector_KeyPoint_R_const__InputArrayR(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_InputArray* mask) {
 		try {
 			instance->detect(*image, *keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_detect_const__InputArrayX_vector_vector_KeyPoint__X_const__InputArrayX(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_InputArray* masks) {
+	Result_void cv_Feature2D_detect_const__InputArrayR_vector_vector_KeyPoint__R_const__InputArrayR(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_InputArray* masks) {
 		try {
 			instance->detect(*images, *keypoints, *masks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors) {
+	Result_void cv_Feature2D_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*image, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_OutputArray* descriptors) {
+	Result_void cv_Feature2D_compute_const__InputArrayR_vector_vector_KeyPoint__R_const__OutputArrayR(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*images, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_detectAndCompute_const__InputArrayX_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_bool(cv::Feature2D* instance, const cv::_InputArray* image, const cv::_InputArray* mask, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors, bool useProvidedKeypoints) {
+	Result_void cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR_bool(cv::Feature2D* instance, const cv::_InputArray* image, const cv::_InputArray* mask, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors, bool useProvidedKeypoints) {
 		try {
 			instance->detectAndCompute(*image, *mask, *keypoints, *descriptors, useProvidedKeypoints);
 			return Ok();
@@ -725,28 +725,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_Feature2D_write_const_const_StringX(const cv::Feature2D* instance, const char* fileName) {
+	Result_void cv_Feature2D_write_const_const_StringR(const cv::Feature2D* instance, const char* fileName) {
 		try {
 			instance->write(std::string(fileName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_read_const_StringX(cv::Feature2D* instance, const char* fileName) {
+	Result_void cv_Feature2D_read_const_StringR(cv::Feature2D* instance, const char* fileName) {
 		try {
 			instance->read(std::string(fileName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_write_const_FileStorageX(const cv::Feature2D* instance, cv::FileStorage* unnamed) {
+	Result_void cv_Feature2D_write_const_FileStorageR(const cv::Feature2D* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Feature2D_read_const_FileNodeX(cv::Feature2D* instance, const cv::FileNode* unnamed) {
+	Result_void cv_Feature2D_read_const_FileNodeR(cv::Feature2D* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
@@ -767,7 +767,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_Feature2D_write_const_const_Ptr_FileStorage_X_const_StringX(const cv::Feature2D* instance, const cv::Ptr<cv::FileStorage>* fs, const char* name) {
+	Result_void cv_Feature2D_write_const_const_Ptr_FileStorage_R_const_StringR(const cv::Feature2D* instance, const cv::Ptr<cv::FileStorage>* fs, const char* name) {
 		try {
 			instance->write(*fs, std::string(name));
 			return Ok();
@@ -777,14 +777,14 @@ extern "C" {
 	void cv_FlannBasedMatcher_delete(cv::FlannBasedMatcher* instance) {
 		delete instance;
 	}
-	Result<cv::FlannBasedMatcher*> cv_FlannBasedMatcher_FlannBasedMatcher_const_Ptr_IndexParams_X_const_Ptr_SearchParams_X(const cv::Ptr<cv::flann::IndexParams>* indexParams, const cv::Ptr<cv::flann::SearchParams>* searchParams) {
+	Result<cv::FlannBasedMatcher*> cv_FlannBasedMatcher_FlannBasedMatcher_const_Ptr_IndexParams_R_const_Ptr_SearchParams_R(const cv::Ptr<cv::flann::IndexParams>* indexParams, const cv::Ptr<cv::flann::SearchParams>* searchParams) {
 		try {
 			cv::FlannBasedMatcher* ret = new cv::FlannBasedMatcher(*indexParams, *searchParams);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::FlannBasedMatcher*>))
 	}
 	
-	Result_void cv_FlannBasedMatcher_add_const__InputArrayX(cv::FlannBasedMatcher* instance, const cv::_InputArray* descriptors) {
+	Result_void cv_FlannBasedMatcher_add_const__InputArrayR(cv::FlannBasedMatcher* instance, const cv::_InputArray* descriptors) {
 		try {
 			instance->add(*descriptors);
 			return Ok();
@@ -798,14 +798,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_FlannBasedMatcher_read_const_FileNodeX(cv::FlannBasedMatcher* instance, const cv::FileNode* unnamed) {
+	Result_void cv_FlannBasedMatcher_read_const_FileNodeR(cv::FlannBasedMatcher* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_FlannBasedMatcher_write_const_FileStorageX(const cv::FlannBasedMatcher* instance, cv::FileStorage* unnamed) {
+	Result_void cv_FlannBasedMatcher_write_const_FileStorageR(const cv::FlannBasedMatcher* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
@@ -1053,42 +1053,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KeyPointsFilter*>))
 	}
 	
-	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_X_Size_int(std::vector<cv::KeyPoint>* keypoints, const cv::Size* imageSize, int borderSize) {
+	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_R_Size_int(std::vector<cv::KeyPoint>* keypoints, const cv::Size* imageSize, int borderSize) {
 		try {
 			cv::KeyPointsFilter::runByImageBorder(*keypoints, *imageSize, borderSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_KeyPointsFilter_runByKeypointSize_vector_KeyPoint_X_float_float(std::vector<cv::KeyPoint>* keypoints, float minSize, float maxSize) {
+	Result_void cv_KeyPointsFilter_runByKeypointSize_vector_KeyPoint_R_float_float(std::vector<cv::KeyPoint>* keypoints, float minSize, float maxSize) {
 		try {
 			cv::KeyPointsFilter::runByKeypointSize(*keypoints, minSize, maxSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_KeyPointsFilter_runByPixelsMask_vector_KeyPoint_X_const_MatX(std::vector<cv::KeyPoint>* keypoints, const cv::Mat* mask) {
+	Result_void cv_KeyPointsFilter_runByPixelsMask_vector_KeyPoint_R_const_MatR(std::vector<cv::KeyPoint>* keypoints, const cv::Mat* mask) {
 		try {
 			cv::KeyPointsFilter::runByPixelsMask(*keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_KeyPointsFilter_removeDuplicated_vector_KeyPoint_X(std::vector<cv::KeyPoint>* keypoints) {
+	Result_void cv_KeyPointsFilter_removeDuplicated_vector_KeyPoint_R(std::vector<cv::KeyPoint>* keypoints) {
 		try {
 			cv::KeyPointsFilter::removeDuplicated(*keypoints);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_KeyPointsFilter_removeDuplicatedSorted_vector_KeyPoint_X(std::vector<cv::KeyPoint>* keypoints) {
+	Result_void cv_KeyPointsFilter_removeDuplicatedSorted_vector_KeyPoint_R(std::vector<cv::KeyPoint>* keypoints) {
 		try {
 			cv::KeyPointsFilter::removeDuplicatedSorted(*keypoints);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_KeyPointsFilter_retainBest_vector_KeyPoint_X_int(std::vector<cv::KeyPoint>* keypoints, int npoints) {
+	Result_void cv_KeyPointsFilter_retainBest_vector_KeyPoint_R_int(std::vector<cv::KeyPoint>* keypoints, int npoints) {
 		try {
 			cv::KeyPointsFilter::retainBest(*keypoints, npoints);
 			return Ok();
@@ -1102,7 +1102,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::MSER>*>))
 	}
 	
-	Result_void cv_MSER_detectRegions_const__InputArrayX_vector_vector_Point__X_vector_Rect_X(cv::MSER* instance, const cv::_InputArray* image, std::vector<std::vector<cv::Point>>* msers, std::vector<cv::Rect>* bboxes) {
+	Result_void cv_MSER_detectRegions_const__InputArrayR_vector_vector_Point__R_vector_Rect_R(cv::MSER* instance, const cv::_InputArray* image, std::vector<std::vector<cv::Point>>* msers, std::vector<cv::Rect>* bboxes) {
 		try {
 			instance->detectRegions(*image, *msers, *bboxes);
 			return Ok();
@@ -1315,7 +1315,7 @@ extern "C" {
 	void cv_SimpleBlobDetector_delete(cv::SimpleBlobDetector* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::SimpleBlobDetector>*> cv_SimpleBlobDetector_create_const_ParamsX(const cv::SimpleBlobDetector::Params* parameters) {
+	Result<cv::Ptr<cv::SimpleBlobDetector>*> cv_SimpleBlobDetector_create_const_ParamsR(const cv::SimpleBlobDetector::Params* parameters) {
 		try {
 			cv::Ptr<cv::SimpleBlobDetector> ret = cv::SimpleBlobDetector::create(*parameters);
 			return Ok(new cv::Ptr<cv::SimpleBlobDetector>(ret));
@@ -1336,14 +1336,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::SimpleBlobDetector::Params>))
 	}
 	
-	Result_void cv_SimpleBlobDetector_Params_read_const_FileNodeX(cv::SimpleBlobDetector::Params instance, const cv::FileNode* fn) {
+	Result_void cv_SimpleBlobDetector_Params_read_const_FileNodeR(cv::SimpleBlobDetector::Params instance, const cv::FileNode* fn) {
 		try {
 			instance.read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_SimpleBlobDetector_Params_write_const_FileStorageX(const cv::SimpleBlobDetector::Params instance, cv::FileStorage* fs) {
+	Result_void cv_SimpleBlobDetector_Params_write_const_FileStorageR(const cv::SimpleBlobDetector::Params instance, cv::FileStorage* fs) {
 		try {
 			instance.write(*fs);
 			return Ok();

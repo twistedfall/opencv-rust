@@ -78,10 +78,10 @@ pub const HOGDescriptor_L2Hys: i32 = 0;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DetectionBasedTracker_ObjectStatus {
-	DETECTED_NOT_SHOWN_YET = 0 as isize,
-	DETECTED = 1 as isize,
-	DETECTED_TEMPORARY_LOST = 2 as isize,
-	WRONG_OBJECT = 3 as isize,
+	DETECTED_NOT_SHOWN_YET = 0,
+	DETECTED = 1,
+	DETECTED_TEMPORARY_LOST = 2,
+	WRONG_OBJECT = 3,
 }
 
 opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus }
@@ -104,7 +104,7 @@ pub fn decode_qr_code(in_: &dyn core::ToInputArray, points: &dyn core::ToInputAr
 	input_array_arg!(points);
 	string_arg_output_send!(via decoded_info_via);
 	output_array_arg!(straight_qrcode);
-	let out = unsafe { sys::cv_decodeQRCode_const__InputArrayX_const__InputArrayX_stringX_const__OutputArrayX(in_.as_raw__InputArray(), points.as_raw__InputArray(), &mut decoded_info_via, straight_qrcode.as_raw__OutputArray()) }.into_result();
+	let out = unsafe { sys::cv_decodeQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(in_.as_raw__InputArray(), points.as_raw__InputArray(), &mut decoded_info_via, straight_qrcode.as_raw__OutputArray()) }.into_result();
 	string_arg_output_receive!(out, decoded_info_via => decoded_info);
 	out
 }
@@ -121,14 +121,14 @@ pub fn decode_qr_code(in_: &dyn core::ToInputArray, points: &dyn core::ToInputAr
 /// * eps_y: 0.1
 pub fn detect_qr_code(in_: &dyn core::ToInputArray, points: &mut core::Vector::<core::Point>, eps_x: f64, eps_y: f64) -> Result<bool> {
 	input_array_arg!(in_);
-	unsafe { sys::cv_detectQRCode_const__InputArrayX_vector_Point_X_double_double(in_.as_raw__InputArray(), points.as_raw_mut_VectorOfPoint(), eps_x, eps_y) }.into_result()
+	unsafe { sys::cv_detectQRCode_const__InputArrayR_vector_Point_R_double_double(in_.as_raw__InputArray(), points.as_raw_mut_VectorOfPoint(), eps_x, eps_y) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * detect_threshold: 0.0
 /// * win_det_size: Size(64,128)
 pub fn group_rectangles_meanshift(rect_list: &mut core::Vector::<core::Rect>, found_weights: &mut core::Vector::<f64>, found_scales: &mut core::Vector::<f64>, detect_threshold: f64, win_det_size: core::Size) -> Result<()> {
-	unsafe { sys::cv_groupRectangles_meanshift_vector_Rect_X_vector_double_X_vector_double_X_double_Size(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), detect_threshold, win_det_size.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_groupRectangles_meanshift_vector_Rect_R_vector_double_R_vector_double_R_double_Size(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), detect_threshold, win_det_size.opencv_to_extern()) }.into_result()
 }
 
 /// Groups the object candidate rectangles.
@@ -150,7 +150,7 @@ pub fn group_rectangles_meanshift(rect_list: &mut core::Vector::<core::Rect>, fo
 /// ## C++ default parameters
 /// * eps: 0.2
 pub fn group_rectangles(rect_list: &mut core::Vector::<core::Rect>, group_threshold: i32, eps: f64) -> Result<()> {
-	unsafe { sys::cv_groupRectangles_vector_Rect_X_int_double(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps) }.into_result()
+	unsafe { sys::cv_groupRectangles_vector_Rect_R_int_double(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps) }.into_result()
 }
 
 /// Groups the object candidate rectangles.
@@ -171,7 +171,7 @@ pub fn group_rectangles(rect_list: &mut core::Vector::<core::Rect>, group_thresh
 /// 
 /// ## Overloaded parameters
 pub fn group_rectangles_levelweights(rect_list: &mut core::Vector::<core::Rect>, group_threshold: i32, eps: f64, weights: &mut core::Vector::<i32>, level_weights: &mut core::Vector::<f64>) -> Result<()> {
-	unsafe { sys::cv_groupRectangles_vector_Rect_X_int_double_vector_int_X_vector_double_X(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps, weights.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64()) }.into_result()
+	unsafe { sys::cv_groupRectangles_vector_Rect_R_int_double_vector_int_X_vector_double_X(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps, weights.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64()) }.into_result()
 }
 
 /// Groups the object candidate rectangles.
@@ -195,7 +195,7 @@ pub fn group_rectangles_levelweights(rect_list: &mut core::Vector::<core::Rect>,
 /// ## C++ default parameters
 /// * eps: 0.2
 pub fn group_rectangles_weights(rect_list: &mut core::Vector::<core::Rect>, weights: &mut core::Vector::<i32>, group_threshold: i32, eps: f64) -> Result<()> {
-	unsafe { sys::cv_groupRectangles_vector_Rect_X_vector_int_X_int_double(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, eps) }.into_result()
+	unsafe { sys::cv_groupRectangles_vector_Rect_R_vector_int_R_int_double(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, eps) }.into_result()
 }
 
 /// Groups the object candidate rectangles.
@@ -219,7 +219,7 @@ pub fn group_rectangles_weights(rect_list: &mut core::Vector::<core::Rect>, weig
 /// ## C++ default parameters
 /// * eps: 0.2
 pub fn group_rectangles_levels(rect_list: &mut core::Vector::<core::Rect>, reject_levels: &mut core::Vector::<i32>, level_weights: &mut core::Vector::<f64>, group_threshold: i32, eps: f64) -> Result<()> {
-	unsafe { sys::cv_groupRectangles_vector_Rect_X_vector_int_X_vector_double_X_int_double(rect_list.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), group_threshold, eps) }.into_result()
+	unsafe { sys::cv_groupRectangles_vector_Rect_R_vector_int_R_vector_double_R_int_double(rect_list.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), group_threshold, eps) }.into_result()
 }
 
 pub trait BaseCascadeClassifier: core::AlgorithmTrait {
@@ -232,22 +232,22 @@ pub trait BaseCascadeClassifier: core::AlgorithmTrait {
 	
 	fn load(&mut self, filename: &str) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_BaseCascadeClassifier_load_const_StringX(self.as_raw_mut_BaseCascadeClassifier(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_load_const_StringR(self.as_raw_mut_BaseCascadeClassifier(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
 	}
 	
 	fn detect_multi_scale_num(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, num_detections: &mut core::Vector::<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
 	}
 	
 	fn detect_multi_scale_levels(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, reject_levels: &mut core::Vector::<i32>, level_weights: &mut core::Vector::<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern(), output_reject_levels) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_vector_double_R_double_int_int_Size_Size_bool(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern(), output_reject_levels) }.into_result()
 	}
 	
 	fn is_old_format_cascade(&self) -> Result<bool> {
@@ -267,7 +267,7 @@ pub trait BaseCascadeClassifier: core::AlgorithmTrait {
 	}
 	
 	fn set_mask_generator(&mut self, mask_generator: &core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
-		unsafe { sys::cv_BaseCascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_X(self.as_raw_mut_BaseCascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator()) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_R(self.as_raw_mut_BaseCascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator()) }.into_result()
 	}
 	
 	fn get_mask_generator(&mut self) -> Result<core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
@@ -281,11 +281,11 @@ pub trait BaseCascadeClassifier_MaskGenerator {
 	fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void;
 
 	fn generate_mask(&mut self, src: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_const_MatX(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_const_MatR(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn initialize_mask(&mut self, unnamed: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_initializeMask_const_MatX(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), unnamed.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_initializeMask_const_MatR(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), unnamed.as_raw_Mat()) }.into_result()
 	}
 	
 }
@@ -320,7 +320,7 @@ pub trait CascadeClassifierTrait {
 	/// traincascade application.
 	fn load(&mut self, filename: &str) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_CascadeClassifier_load_const_StringX(self.as_raw_mut_CascadeClassifier(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_load_const_StringR(self.as_raw_mut_CascadeClassifier(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Reads a classifier from a FileStorage node.
@@ -328,7 +328,7 @@ pub trait CascadeClassifierTrait {
 	/// 
 	/// Note: The file may contain a new cascade classifier (trained traincascade application) only.
 	fn read(&mut self, node: &core::FileNode) -> Result<bool> {
-		unsafe { sys::cv_CascadeClassifier_read_const_FileNodeX(self.as_raw_mut_CascadeClassifier(), node.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_read_const_FileNodeR(self.as_raw_mut_CascadeClassifier(), node.as_raw_FileNode()) }.into_result()
 	}
 	
 	/// Detects objects of different sizes in the input image. The detected objects are returned as a list
@@ -361,7 +361,7 @@ pub trait CascadeClassifierTrait {
 	/// * max_size: Size()
 	fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Detects objects of different sizes in the input image. The detected objects are returned as a list
@@ -410,7 +410,7 @@ pub trait CascadeClassifierTrait {
 	/// * max_size: Size()
 	fn detect_multi_scale2(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, num_detections: &mut core::Vector::<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Detects objects of different sizes in the input image. The detected objects are returned as a list
@@ -463,7 +463,7 @@ pub trait CascadeClassifierTrait {
 	/// * output_reject_levels: false
 	fn detect_multi_scale3(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector::<core::Rect>, reject_levels: &mut core::Vector::<i32>, level_weights: &mut core::Vector::<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern(), output_reject_levels) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_vector_double_R_double_int_int_Size_Size_bool(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_to_extern(), max_size.opencv_to_extern(), output_reject_levels) }.into_result()
 	}
 	
 	fn is_old_format_cascade(&self) -> Result<bool> {
@@ -483,7 +483,7 @@ pub trait CascadeClassifierTrait {
 	}
 	
 	fn set_mask_generator(&mut self, mask_generator: &core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
-		unsafe { sys::cv_CascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_X(self.as_raw_mut_CascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_R(self.as_raw_mut_CascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator()) }.into_result()
 	}
 	
 	fn get_mask_generator(&mut self) -> Result<core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
@@ -511,15 +511,15 @@ impl Drop for CascadeClassifier {
 }
 
 impl CascadeClassifier {
-	pub fn as_raw_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CascadeClassifier {}
 
 impl crate::objdetect::CascadeClassifierTrait for CascadeClassifier {
-	fn as_raw_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CascadeClassifier {
@@ -533,13 +533,13 @@ impl CascadeClassifier {
 	/// * filename: Name of the file from which the classifier is loaded.
 	pub fn new(filename: &str) -> Result<crate::objdetect::CascadeClassifier> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_CascadeClassifier_CascadeClassifier_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(r) } )
+		unsafe { sys::cv_CascadeClassifier_CascadeClassifier_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(r) } )
 	}
 	
 	pub fn convert(oldcascade: &str, newcascade: &str) -> Result<bool> {
 		extern_container_arg!(oldcascade);
 		extern_container_arg!(newcascade);
-		unsafe { sys::cv_CascadeClassifier_convert_const_StringX_const_StringX(oldcascade.opencv_to_extern(), newcascade.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CascadeClassifier_convert_const_StringR_const_StringR(oldcascade.opencv_to_extern(), newcascade.opencv_to_extern()) }.into_result()
 	}
 	
 }
@@ -561,11 +561,11 @@ pub trait DetectionBasedTrackerTrait {
 	}
 	
 	fn process(&mut self, image_gray: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_process_const_MatX(self.as_raw_mut_DetectionBasedTracker(), image_gray.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_process_const_MatR(self.as_raw_mut_DetectionBasedTracker(), image_gray.as_raw_Mat()) }.into_result()
 	}
 	
 	fn set_parameters(&mut self, params: &crate::objdetect::DetectionBasedTracker_Parameters) -> Result<bool> {
-		unsafe { sys::cv_DetectionBasedTracker_setParameters_const_ParametersX(self.as_raw_mut_DetectionBasedTracker(), params.as_raw_DetectionBasedTracker_Parameters()) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_setParameters_const_ParametersR(self.as_raw_mut_DetectionBasedTracker(), params.as_raw_DetectionBasedTracker_Parameters()) }.into_result()
 	}
 	
 	fn get_parameters(&self) -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
@@ -573,15 +573,15 @@ pub trait DetectionBasedTrackerTrait {
 	}
 	
 	fn get_objects(&self, result: &mut core::Vector::<core::Rect>) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vector_Rect_X(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfRect()) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vector_Rect_R(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfRect()) }.into_result()
 	}
 	
 	fn get_objects_1(&self, result: &mut core::Vector::<crate::objdetect::DetectionBasedTracker_ExtObject>) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vector_ExtObject_X(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject()) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vector_ExtObject_R(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject()) }.into_result()
 	}
 	
 	fn add_object(&mut self, location: core::Rect) -> Result<i32> {
-		unsafe { sys::cv_DetectionBasedTracker_addObject_const_RectX(self.as_raw_mut_DetectionBasedTracker(), &location) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_addObject_const_RectR(self.as_raw_mut_DetectionBasedTracker(), &location) }.into_result()
 	}
 	
 }
@@ -600,20 +600,20 @@ impl Drop for DetectionBasedTracker {
 }
 
 impl DetectionBasedTracker {
-	pub fn as_raw_DetectionBasedTracker(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DetectionBasedTracker(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DetectionBasedTracker {}
 
 impl crate::objdetect::DetectionBasedTrackerTrait for DetectionBasedTracker {
-	fn as_raw_DetectionBasedTracker(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DetectionBasedTracker(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionBasedTracker {
 	pub fn new(mut main_detector: core::Ptr::<dyn crate::objdetect::DetectionBasedTracker_IDetector>, mut tracking_detector: core::Ptr::<dyn crate::objdetect::DetectionBasedTracker_IDetector>, params: &crate::objdetect::DetectionBasedTracker_Parameters) -> Result<crate::objdetect::DetectionBasedTracker> {
-		unsafe { sys::cv_DetectionBasedTracker_DetectionBasedTracker_Ptr_IDetector__Ptr_IDetector__const_ParametersX(main_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), tracking_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), params.as_raw_DetectionBasedTracker_Parameters()) }.into_result().map(|r| unsafe { crate::objdetect::DetectionBasedTracker::opencv_from_extern(r) } )
+		unsafe { sys::cv_DetectionBasedTracker_DetectionBasedTracker_Ptr_IDetector__Ptr_IDetector__const_ParametersR(main_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), tracking_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), params.as_raw_DetectionBasedTracker_Parameters()) }.into_result().map(|r| unsafe { crate::objdetect::DetectionBasedTracker::opencv_from_extern(r) } )
 	}
 	
 }
@@ -662,15 +662,15 @@ impl Drop for DetectionBasedTracker_ExtObject {
 }
 
 impl DetectionBasedTracker_ExtObject {
-	pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DetectionBasedTracker_ExtObject {}
 
 impl crate::objdetect::DetectionBasedTracker_ExtObjectTrait for DetectionBasedTracker_ExtObject {
-	fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionBasedTracker_ExtObject {
@@ -685,15 +685,15 @@ pub trait DetectionBasedTracker_IDetector {
 	fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void;
 
 	fn detect(&mut self, image: &core::Mat, objects: &mut core::Vector::<core::Rect>) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_const_MatX_vector_Rect_X(self.as_raw_mut_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_mut_VectorOfRect()) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_const_MatR_vector_Rect_R(self.as_raw_mut_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_mut_VectorOfRect()) }.into_result()
 	}
 	
 	fn set_min_object_size(&mut self, min: core::Size) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_IDetector_setMinObjectSize_const_SizeX(self.as_raw_mut_DetectionBasedTracker_IDetector(), &min) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_IDetector_setMinObjectSize_const_SizeR(self.as_raw_mut_DetectionBasedTracker_IDetector(), &min) }.into_result()
 	}
 	
 	fn set_max_object_size(&mut self, max: core::Size) -> Result<()> {
-		unsafe { sys::cv_DetectionBasedTracker_IDetector_setMaxObjectSize_const_SizeX(self.as_raw_mut_DetectionBasedTracker_IDetector(), &max) }.into_result()
+		unsafe { sys::cv_DetectionBasedTracker_IDetector_setMaxObjectSize_const_SizeR(self.as_raw_mut_DetectionBasedTracker_IDetector(), &max) }.into_result()
 	}
 	
 	fn get_min_object_size(&self) -> Result<core::Size> {
@@ -758,15 +758,15 @@ impl Drop for DetectionBasedTracker_Parameters {
 }
 
 impl DetectionBasedTracker_Parameters {
-	pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DetectionBasedTracker_Parameters {}
 
 impl crate::objdetect::DetectionBasedTracker_ParametersTrait for DetectionBasedTracker_Parameters {
-	fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionBasedTracker_Parameters {
@@ -828,15 +828,15 @@ impl Drop for DetectionROI {
 }
 
 impl DetectionROI {
-	pub fn as_raw_DetectionROI(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DetectionROI(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DetectionROI {}
 
 impl crate::objdetect::DetectionROITrait for DetectionROI {
-	fn as_raw_DetectionROI(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DetectionROI(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionROI {
@@ -1033,14 +1033,14 @@ pub trait HOGDescriptorTrait {
 	/// * _svmdetector: coefficients for the linear SVM classifier.
 	fn set_svm_detector(&mut self, _svmdetector: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(_svmdetector);
-		unsafe { sys::cv_HOGDescriptor_setSVMDetector_const__InputArrayX(self.as_raw_mut_HOGDescriptor(), _svmdetector.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOGDescriptor(), _svmdetector.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Reads HOGDescriptor parameters from a file node.
 	/// ## Parameters
 	/// * fn: File node
 	fn read(&mut self, fn_: &mut core::FileNode) -> Result<bool> {
-		unsafe { sys::cv_HOGDescriptor_read_FileNodeX(self.as_raw_mut_HOGDescriptor(), fn_.as_raw_mut_FileNode()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_read_FileNodeR(self.as_raw_mut_HOGDescriptor(), fn_.as_raw_mut_FileNode()) }.into_result()
 	}
 	
 	/// Stores HOGDescriptor parameters in a file storage.
@@ -1049,7 +1049,7 @@ pub trait HOGDescriptorTrait {
 	/// * objname: Object name
 	fn write(&self, fs: &mut core::FileStorage, objname: &str) -> Result<()> {
 		extern_container_arg!(objname);
-		unsafe { sys::cv_HOGDescriptor_write_const_FileStorageX_const_StringX(self.as_raw_HOGDescriptor(), fs.as_raw_mut_FileStorage(), objname.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_write_const_FileStorageR_const_StringR(self.as_raw_HOGDescriptor(), fs.as_raw_mut_FileStorage(), objname.opencv_to_extern()) }.into_result()
 	}
 	
 	/// loads coefficients for the linear SVM classifier from a file
@@ -1062,7 +1062,7 @@ pub trait HOGDescriptorTrait {
 	fn load(&mut self, filename: &str, objname: &str) -> Result<bool> {
 		extern_container_arg!(filename);
 		extern_container_arg!(objname);
-		unsafe { sys::cv_HOGDescriptor_load_const_StringX_const_StringX(self.as_raw_mut_HOGDescriptor(), filename.opencv_to_extern(), objname.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_load_const_StringR_const_StringR(self.as_raw_mut_HOGDescriptor(), filename.opencv_to_extern(), objname.opencv_to_extern()) }.into_result()
 	}
 	
 	/// saves coefficients for the linear SVM classifier to a file
@@ -1075,14 +1075,14 @@ pub trait HOGDescriptorTrait {
 	fn save(&self, filename: &str, objname: &str) -> Result<()> {
 		extern_container_arg!(filename);
 		extern_container_arg!(objname);
-		unsafe { sys::cv_HOGDescriptor_save_const_const_StringX_const_StringX(self.as_raw_HOGDescriptor(), filename.opencv_to_extern(), objname.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_save_const_const_StringR_const_StringR(self.as_raw_HOGDescriptor(), filename.opencv_to_extern(), objname.opencv_to_extern()) }.into_result()
 	}
 	
 	/// clones the HOGDescriptor
 	/// ## Parameters
 	/// * c: cloned HOGDescriptor
 	fn copy_to(&self, c: &mut crate::objdetect::HOGDescriptor) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_copyTo_const_HOGDescriptorX(self.as_raw_HOGDescriptor(), c.as_raw_mut_HOGDescriptor()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_copyTo_const_HOGDescriptorR(self.as_raw_HOGDescriptor(), c.as_raw_mut_HOGDescriptor()) }.into_result()
 	}
 	
 	/// @example samples/cpp/train_HOG.cpp
@@ -1101,7 +1101,7 @@ pub trait HOGDescriptorTrait {
 	/// * locations: std::vector<Point>()
 	fn compute(&self, img: &dyn core::ToInputArray, descriptors: &mut core::Vector::<f32>, win_stride: core::Size, padding: core::Size, locations: &core::Vector::<core::Point>) -> Result<()> {
 		input_array_arg!(img);
-		unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayX_vector_float_X_Size_Size_const_vector_Point_X(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), win_stride.opencv_to_extern(), padding.opencv_to_extern(), locations.as_raw_VectorOfPoint()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayR_vector_float_R_Size_Size_const_vector_Point_R(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), win_stride.opencv_to_extern(), padding.opencv_to_extern(), locations.as_raw_VectorOfPoint()) }.into_result()
 	}
 	
 	/// Performs object detection without a multi-scale window.
@@ -1122,7 +1122,7 @@ pub trait HOGDescriptorTrait {
 	/// * padding: Size()
 	/// * search_locations: std::vector<Point>()
 	fn detect_weights(&self, img: &core::Mat, found_locations: &mut core::Vector::<core::Point>, weights: &mut core::Vector::<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector::<core::Point>) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), search_locations.as_raw_VectorOfPoint()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detect_const_const_MatR_vector_Point_R_vector_double_R_double_Size_Size_const_vector_Point_R(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), search_locations.as_raw_VectorOfPoint()) }.into_result()
 	}
 	
 	/// Performs object detection without a multi-scale window.
@@ -1142,7 +1142,7 @@ pub trait HOGDescriptorTrait {
 	/// * padding: Size()
 	/// * search_locations: std::vector<Point>()
 	fn detect(&self, img: &core::Mat, found_locations: &mut core::Vector::<core::Point>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector::<core::Point>) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_double_Size_Size_const_vector_Point_X(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfPoint(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), search_locations.as_raw_VectorOfPoint()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detect_const_const_MatR_vector_Point_R_double_Size_Size_const_vector_Point_R(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfPoint(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), search_locations.as_raw_VectorOfPoint()) }.into_result()
 	}
 	
 	/// Detects objects of different sizes in the input image. The detected objects are returned as a list
@@ -1169,7 +1169,7 @@ pub trait HOGDescriptorTrait {
 	/// * use_meanshift_grouping: false
 	fn detect_multi_scale_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector::<core::Rect>, found_weights: &mut core::Vector::<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
 		input_array_arg!(img);
-		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), scale, final_threshold, use_meanshift_grouping) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_vector_double_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), scale, final_threshold, use_meanshift_grouping) }.into_result()
 	}
 	
 	/// Detects objects of different sizes in the input image. The detected objects are returned as a list
@@ -1195,7 +1195,7 @@ pub trait HOGDescriptorTrait {
 	/// * use_meanshift_grouping: false
 	fn detect_multi_scale(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector::<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
 		input_array_arg!(img);
-		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), scale, final_threshold, use_meanshift_grouping) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern(), scale, final_threshold, use_meanshift_grouping) }.into_result()
 	}
 	
 	///  Computes gradients and quantized gradient orientations.
@@ -1210,7 +1210,7 @@ pub trait HOGDescriptorTrait {
 	/// * padding_tl: Size()
 	/// * padding_br: Size()
 	fn compute_gradient(&self, img: &core::Mat, grad: &mut core::Mat, angle_ofs: &mut core::Mat, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_computeGradient_const_const_MatX_MatX_MatX_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), grad.as_raw_mut_Mat(), angle_ofs.as_raw_mut_Mat(), padding_tl.opencv_to_extern(), padding_br.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_computeGradient_const_const_MatR_MatR_MatR_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), grad.as_raw_mut_Mat(), angle_ofs.as_raw_mut_Mat(), padding_tl.opencv_to_extern(), padding_br.opencv_to_extern()) }.into_result()
 	}
 	
 	/// evaluate specified ROI and return confidence value for each location
@@ -1230,7 +1230,7 @@ pub trait HOGDescriptorTrait {
 	/// * win_stride: Size()
 	/// * padding: Size()
 	fn detect_roi(&self, img: &core::Mat, locations: &core::Vector::<core::Point>, found_locations: &mut core::Vector::<core::Point>, confidences: &mut core::Vector::<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_detectROI_const_const_MatX_const_vector_Point_X_vector_Point_X_vector_double_X_double_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detectROI_const_const_MatR_const_vector_Point_R_vector_Point_R_vector_double_R_double_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_to_extern(), padding.opencv_to_extern()) }.into_result()
 	}
 	
 	/// evaluate specified ROI and return confidence value for each location in multiple scales
@@ -1246,7 +1246,7 @@ pub trait HOGDescriptorTrait {
 	/// * hit_threshold: 0
 	/// * group_threshold: 0
 	fn detect_multi_scale_roi(&self, img: &core::Mat, found_locations: &mut core::Vector::<core::Rect>, locations: &mut core::Vector::<crate::objdetect::DetectionROI>, hit_threshold: f64, group_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const_MatX_vector_Rect_X_vector_DetectionROI_X_double_int(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), hit_threshold, group_threshold) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const_MatR_vector_Rect_R_vector_DetectionROI_R_double_int(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), hit_threshold, group_threshold) }.into_result()
 	}
 	
 	/// read/parse Dalal's alt model file
@@ -1264,7 +1264,7 @@ pub trait HOGDescriptorTrait {
 	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
 	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
 	fn group_rectangles(&self, rect_list: &mut core::Vector::<core::Rect>, weights: &mut core::Vector::<f64>, group_threshold: i32, eps: f64) -> Result<()> {
-		unsafe { sys::cv_HOGDescriptor_groupRectangles_const_vector_Rect_X_vector_double_X_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOff64(), group_threshold, eps) }.into_result()
+		unsafe { sys::cv_HOGDescriptor_groupRectangles_const_vector_Rect_R_vector_double_R_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOff64(), group_threshold, eps) }.into_result()
 	}
 	
 }
@@ -1298,15 +1298,15 @@ impl Drop for HOGDescriptor {
 }
 
 impl HOGDescriptor {
-	pub fn as_raw_HOGDescriptor(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_HOGDescriptor(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for HOGDescriptor {}
 
 impl crate::objdetect::HOGDescriptorTrait for HOGDescriptor {
-	fn as_raw_HOGDescriptor(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_HOGDescriptor(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl HOGDescriptor {
@@ -1359,7 +1359,7 @@ impl HOGDescriptor {
 	/// * filename: the file name containing  HOGDescriptor properties and coefficients of the trained classifier
 	pub fn new_from_file(filename: &str) -> Result<crate::objdetect::HOGDescriptor> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(r) } )
+		unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(r) } )
 	}
 	
 	/// Creates the HOG descriptor and detector with default params.
@@ -1371,7 +1371,7 @@ impl HOGDescriptor {
 	/// ## Parameters
 	/// * d: the HOGDescriptor which cloned to create a new one.
 	pub fn copy(d: &crate::objdetect::HOGDescriptor) -> Result<crate::objdetect::HOGDescriptor> {
-		unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_HOGDescriptorX(d.as_raw_HOGDescriptor()) }.into_result().map(|r| unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(r) } )
+		unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_HOGDescriptorR(d.as_raw_HOGDescriptor()) }.into_result().map(|r| unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(r) } )
 	}
 	
 	/// Returns coefficients of the classifier trained for people detection (for 64x128 windows).
@@ -1415,7 +1415,7 @@ pub trait QRCodeDetectorTrait {
 	fn detect(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(img);
 		output_array_arg!(points);
-		unsafe { sys::cv_QRCodeDetector_detect_const_const__InputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Decodes QR code in image once it's found by the detect() method.
@@ -1432,7 +1432,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Both detects and decodes QR code
@@ -1449,7 +1449,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Detects QR codes in image and returns the vector of the quadrangles containing the codes.
@@ -1459,7 +1459,7 @@ pub trait QRCodeDetectorTrait {
 	fn detect_multi(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(img);
 		output_array_arg!(points);
-		unsafe { sys::cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Decodes QR codes in image once it's found by the detect() method.
@@ -1475,7 +1475,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_String_X_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_String_R_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Both detects and decodes QR codes
@@ -1492,7 +1492,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_String_X_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_String_R_const__OutputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -1501,7 +1501,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_string_R_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -1511,7 +1511,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -1530,15 +1530,15 @@ impl Drop for QRCodeDetector {
 }
 
 impl QRCodeDetector {
-	pub fn as_raw_QRCodeDetector(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QRCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QRCodeDetector(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QRCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QRCodeDetector {}
 
 impl crate::objdetect::QRCodeDetectorTrait for QRCodeDetector {
-	fn as_raw_QRCodeDetector(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QRCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QRCodeDetector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QRCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QRCodeDetector {
@@ -1580,15 +1580,15 @@ impl Drop for SimilarRects {
 }
 
 impl SimilarRects {
-	pub fn as_raw_SimilarRects(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_SimilarRects(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for SimilarRects {}
 
 impl crate::objdetect::SimilarRectsTrait for SimilarRects {
-	fn as_raw_SimilarRects(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_SimilarRects(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SimilarRects {

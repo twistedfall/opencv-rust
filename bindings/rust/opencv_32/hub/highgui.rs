@@ -211,17 +211,17 @@ pub const WND_PROP_VISIBLE: i32 = 4;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MouseEventFlags {
 	/// indicates that the left mouse button is down.
-	EVENT_FLAG_LBUTTON = 1 as isize,
+	EVENT_FLAG_LBUTTON = 1,
 	/// indicates that the right mouse button is down.
-	EVENT_FLAG_RBUTTON = 2 as isize,
+	EVENT_FLAG_RBUTTON = 2,
 	/// indicates that the middle mouse button is down.
-	EVENT_FLAG_MBUTTON = 4 as isize,
+	EVENT_FLAG_MBUTTON = 4,
 	/// indicates that CTRL Key is pressed.
-	EVENT_FLAG_CTRLKEY = 8 as isize,
+	EVENT_FLAG_CTRLKEY = 8,
 	/// indicates that SHIFT Key is pressed.
-	EVENT_FLAG_SHIFTKEY = 16 as isize,
+	EVENT_FLAG_SHIFTKEY = 16,
 	/// indicates that ALT Key is pressed.
-	EVENT_FLAG_ALTKEY = 32 as isize,
+	EVENT_FLAG_ALTKEY = 32,
 }
 
 opencv_type_enum! { crate::highgui::MouseEventFlags }
@@ -231,29 +231,29 @@ opencv_type_enum! { crate::highgui::MouseEventFlags }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum MouseEventTypes {
 	/// indicates that the mouse pointer has moved over the window.
-	EVENT_MOUSEMOVE = 0 as isize,
+	EVENT_MOUSEMOVE = 0,
 	/// indicates that the left mouse button is pressed.
-	EVENT_LBUTTONDOWN = 1 as isize,
+	EVENT_LBUTTONDOWN = 1,
 	/// indicates that the right mouse button is pressed.
-	EVENT_RBUTTONDOWN = 2 as isize,
+	EVENT_RBUTTONDOWN = 2,
 	/// indicates that the middle mouse button is pressed.
-	EVENT_MBUTTONDOWN = 3 as isize,
+	EVENT_MBUTTONDOWN = 3,
 	/// indicates that left mouse button is released.
-	EVENT_LBUTTONUP = 4 as isize,
+	EVENT_LBUTTONUP = 4,
 	/// indicates that right mouse button is released.
-	EVENT_RBUTTONUP = 5 as isize,
+	EVENT_RBUTTONUP = 5,
 	/// indicates that middle mouse button is released.
-	EVENT_MBUTTONUP = 6 as isize,
+	EVENT_MBUTTONUP = 6,
 	/// indicates that left mouse button is double clicked.
-	EVENT_LBUTTONDBLCLK = 7 as isize,
+	EVENT_LBUTTONDBLCLK = 7,
 	/// indicates that right mouse button is double clicked.
-	EVENT_RBUTTONDBLCLK = 8 as isize,
+	EVENT_RBUTTONDBLCLK = 8,
 	/// indicates that middle mouse button is double clicked.
-	EVENT_MBUTTONDBLCLK = 9 as isize,
+	EVENT_MBUTTONDBLCLK = 9,
 	/// positive and negative values mean forward and backward scrolling, respectively.
-	EVENT_MOUSEWHEEL = 10 as isize,
+	EVENT_MOUSEWHEEL = 10,
 	/// positive and negative values mean right and left scrolling, respectively.
-	EVENT_MOUSEHWHEEL = 11 as isize,
+	EVENT_MOUSEHWHEEL = 11,
 }
 
 opencv_type_enum! { crate::highgui::MouseEventTypes }
@@ -263,13 +263,13 @@ opencv_type_enum! { crate::highgui::MouseEventTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum QtButtonTypes {
 	/// Push button.
-	QT_PUSH_BUTTON = 0 as isize,
+	QT_PUSH_BUTTON = 0,
 	/// Checkbox button.
-	QT_CHECKBOX = 1 as isize,
+	QT_CHECKBOX = 1,
 	/// Radiobox button.
-	QT_RADIOBOX = 2 as isize,
+	QT_RADIOBOX = 2,
 	/// Button should create a new buttonbar
-	QT_NEW_BUTTONBAR = 1024 as isize,
+	QT_NEW_BUTTONBAR = 1024,
 }
 
 opencv_type_enum! { crate::highgui::QtButtonTypes }
@@ -279,11 +279,11 @@ opencv_type_enum! { crate::highgui::QtButtonTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum QtFontStyles {
 	/// Normal font.
-	QT_STYLE_NORMAL = 0 as isize,
+	QT_STYLE_NORMAL = 0,
 	/// Italic font.
-	QT_STYLE_ITALIC = 1 as isize,
+	QT_STYLE_ITALIC = 1,
 	/// Oblique font.
-	QT_STYLE_OBLIQUE = 2 as isize,
+	QT_STYLE_OBLIQUE = 2,
 }
 
 opencv_type_enum! { crate::highgui::QtFontStyles }
@@ -293,15 +293,15 @@ opencv_type_enum! { crate::highgui::QtFontStyles }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum QtFontWeights {
 	/// Weight of 25
-	QT_FONT_LIGHT = 25 as isize,
+	QT_FONT_LIGHT = 25,
 	/// Weight of 50
-	QT_FONT_NORMAL = 50 as isize,
+	QT_FONT_NORMAL = 50,
 	/// Weight of 63
-	QT_FONT_DEMIBOLD = 63 as isize,
+	QT_FONT_DEMIBOLD = 63,
 	/// Weight of 75
-	QT_FONT_BOLD = 75 as isize,
+	QT_FONT_BOLD = 75,
 	/// Weight of 87
-	QT_FONT_BLACK = 87 as isize,
+	QT_FONT_BLACK = 87,
 }
 
 opencv_type_enum! { crate::highgui::QtFontWeights }
@@ -311,21 +311,21 @@ opencv_type_enum! { crate::highgui::QtFontWeights }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WindowFlags {
 	/// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
-	WINDOW_NORMAL = 0 as isize,
+	WINDOW_NORMAL = 0,
 	/// the user cannot resize the window, the size is constrainted by the image displayed.
-	WINDOW_AUTOSIZE = 1 as isize,
+	WINDOW_AUTOSIZE = 1,
 	/// window with opengl support.
-	WINDOW_OPENGL = 4096 as isize,
+	WINDOW_OPENGL = 4096,
 	// change the window to fullscreen.
 	// WINDOW_FULLSCREEN = 1 as isize, // duplicate discriminant
 	/// the image expends as much as it can (no ratio constraint).
-	WINDOW_FREERATIO = 256 as isize,
+	WINDOW_FREERATIO = 256,
 	// the ratio of the image is respected.
 	// WINDOW_KEEPRATIO = 0 as isize, // duplicate discriminant
 	// status bar and tool bar
 	// WINDOW_GUI_EXPANDED = 0 as isize, // duplicate discriminant
 	/// old fashious way
-	WINDOW_GUI_NORMAL = 16 as isize,
+	WINDOW_GUI_NORMAL = 16,
 }
 
 opencv_type_enum! { crate::highgui::WindowFlags }
@@ -335,15 +335,15 @@ opencv_type_enum! { crate::highgui::WindowFlags }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WindowPropertyFlags {
 	/// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
-	WND_PROP_FULLSCREEN = 0 as isize,
+	WND_PROP_FULLSCREEN = 0,
 	/// autosize property      (can be WINDOW_NORMAL or WINDOW_AUTOSIZE).
-	WND_PROP_AUTOSIZE = 1 as isize,
+	WND_PROP_AUTOSIZE = 1,
 	/// window's aspect ration (can be set to WINDOW_FREERATIO or WINDOW_KEEPRATIO).
-	WND_PROP_ASPECT_RATIO = 2 as isize,
+	WND_PROP_ASPECT_RATIO = 2,
 	/// opengl support.
-	WND_PROP_OPENGL = 3 as isize,
+	WND_PROP_OPENGL = 3,
 	/// checks whether the window exists and is visible
-	WND_PROP_VISIBLE = 4 as isize,
+	WND_PROP_VISIBLE = 4,
 }
 
 opencv_type_enum! { crate::highgui::WindowPropertyFlags }
@@ -382,7 +382,7 @@ pub type TrackbarCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'sta
 /// * font: Font to use to draw a text.
 pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::highgui::QtFont) -> Result<()> {
 	extern_container_arg!(text);
-	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_QtFontX(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), font.as_raw_QtFont()) }.into_result()
+	unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_QtFontR(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), font.as_raw_QtFont()) }.into_result()
 }
 
 /// Draws a text on the image.
@@ -409,7 +409,7 @@ pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::hig
 pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
 	extern_container_arg!(text);
 	extern_container_arg!(name_font);
-	unsafe { sys::cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result()
+	unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_to_extern(), org.opencv_to_extern(), name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result()
 }
 
 /// Attaches a button to the control panel.
@@ -448,7 +448,7 @@ pub fn create_button(bar_name: &str, on_change: crate::highgui::ButtonCallback, 
 	extern_container_arg!(bar_name);
 	callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(state: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_change);
-	unsafe { sys::cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name.opencv_to_extern(), on_change_trampoline, userdata, typ, initial_button_state) }.into_result()
+	unsafe { sys::cv_createButton_const_StringR_ButtonCallback_voidX_int_bool(bar_name.opencv_to_extern(), on_change_trampoline, userdata, typ, initial_button_state) }.into_result()
 }
 
 /// Creates a trackbar and attaches it to the specified window.
@@ -487,7 +487,7 @@ pub fn create_trackbar(trackbarname: &str, winname: &str, value: &mut i32, count
 	extern_container_arg!(winname);
 	callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(pos: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_change);
-	unsafe { sys::cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), value, count, on_change_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), value, count, on_change_trampoline, userdata) }.into_result()
 }
 
 /// Destroys all of the HighGUI windows.
@@ -505,7 +505,7 @@ pub fn destroy_all_windows() -> Result<()> {
 /// * winname: Name of the window to be destroyed.
 pub fn destroy_window(winname: &str) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_destroyWindow_const_StringX(winname.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_destroyWindow_const_StringR(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Displays a text on a window image as an overlay for a specified duration.
@@ -526,7 +526,7 @@ pub fn destroy_window(winname: &str) -> Result<()> {
 pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
 	extern_container_arg!(winname);
 	extern_container_arg!(text);
-	unsafe { sys::cv_displayOverlay_const_StringX_const_StringX_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
+	unsafe { sys::cv_displayOverlay_const_StringR_const_StringR_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
 }
 
 /// Displays a text on the window statusbar during the specified period of time.
@@ -547,7 +547,7 @@ pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
 pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()> {
 	extern_container_arg!(winname);
 	extern_container_arg!(text);
-	unsafe { sys::cv_displayStatusBar_const_StringX_const_StringX_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
+	unsafe { sys::cv_displayStatusBar_const_StringR_const_StringR_int(winname.opencv_to_extern(), text.opencv_to_extern(), delayms) }.into_result()
 }
 
 /// Creates the font to draw a text on an image.
@@ -580,7 +580,7 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 /// * spacing: 0
 pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
 	extern_container_arg!(name_font);
-	unsafe { sys::cv_fontQt_const_StringX_int_Scalar_int_int_int(name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result().map(|r| unsafe { crate::highgui::QtFont::opencv_from_extern(r) } )
+	unsafe { sys::cv_fontQt_const_StringR_int_Scalar_int_int_int(name_font.opencv_to_extern(), point_size, color.opencv_to_extern(), weight, style, spacing) }.into_result().map(|r| unsafe { crate::highgui::QtFont::opencv_from_extern(r) } )
 }
 
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
@@ -624,7 +624,7 @@ pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
 	extern_container_arg!(trackbarname);
 	extern_container_arg!(winname);
-	unsafe { sys::cv_getTrackbarPos_const_StringX_const_StringX(trackbarname.opencv_to_extern(), winname.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_getTrackbarPos_const_StringR_const_StringR(trackbarname.opencv_to_extern(), winname.opencv_to_extern()) }.into_result()
 }
 
 /// Provides parameters of a window.
@@ -638,7 +638,7 @@ pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
 /// setWindowProperty
 pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_getWindowProperty_const_StringX_int(winname.opencv_to_extern(), prop_id) }.into_result()
+	unsafe { sys::cv_getWindowProperty_const_StringR_int(winname.opencv_to_extern(), prop_id) }.into_result()
 }
 
 /// Displays an image in the specified window.
@@ -680,7 +680,7 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(winname);
 	input_array_arg!(mat);
-	unsafe { sys::cv_imshow_const_StringX_const__InputArrayX(winname.opencv_to_extern(), mat.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_imshow_const_StringR_const__InputArrayR(winname.opencv_to_extern(), mat.as_raw__InputArray()) }.into_result()
 }
 
 /// Loads parameters of the specified window.
@@ -692,7 +692,7 @@ pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
 /// * windowName: Name of the window.
 pub fn load_window_parameters(window_name: &str) -> Result<()> {
 	extern_container_arg!(window_name);
-	unsafe { sys::cv_loadWindowParameters_const_StringX(window_name.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_loadWindowParameters_const_StringR(window_name.opencv_to_extern()) }.into_result()
 }
 
 /// Moves window to the specified position
@@ -703,7 +703,7 @@ pub fn load_window_parameters(window_name: &str) -> Result<()> {
 /// * y: The new y-coordinate of the window.
 pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_moveWindow_const_StringX_int_int(winname.opencv_to_extern(), x, y) }.into_result()
+	unsafe { sys::cv_moveWindow_const_StringR_int_int(winname.opencv_to_extern(), x, y) }.into_result()
 }
 
 /// Creates a window.
@@ -738,7 +738,7 @@ pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 /// * flags: WINDOW_AUTOSIZE
 pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_namedWindow_const_StringX_int(winname.opencv_to_extern(), flags) }.into_result()
+	unsafe { sys::cv_namedWindow_const_StringR_int(winname.opencv_to_extern(), flags) }.into_result()
 }
 
 /// Resizes window to the specified size
@@ -755,7 +755,7 @@ pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 /// * height: The new window height.
 pub fn resize_window(winname: &str, width: i32, height: i32) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_resizeWindow_const_StringX_int_int(winname.opencv_to_extern(), width, height) }.into_result()
+	unsafe { sys::cv_resizeWindow_const_StringR_int_int(winname.opencv_to_extern(), width, height) }.into_result()
 }
 
 /// Saves parameters of the specified window.
@@ -767,7 +767,7 @@ pub fn resize_window(winname: &str, width: i32, height: i32) -> Result<()> {
 /// * windowName: Name of the window.
 pub fn save_window_parameters(window_name: &str) -> Result<()> {
 	extern_container_arg!(window_name);
-	unsafe { sys::cv_saveWindowParameters_const_StringX(window_name.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_saveWindowParameters_const_StringR(window_name.opencv_to_extern()) }.into_result()
 }
 
 /// Sets mouse handler for the specified window
@@ -785,7 +785,7 @@ pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback
 	extern_container_arg!(winname);
 	callback_arg!(on_mouse_trampoline(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_mouse(event: i32, x: i32, y: i32, flags: i32) -> ());
 	userdata_arg!(userdata in callbacks => on_mouse);
-	unsafe { sys::cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname.opencv_to_extern(), on_mouse_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_setMouseCallback_const_StringR_MouseCallback_voidX(winname.opencv_to_extern(), on_mouse_trampoline, userdata) }.into_result()
 }
 
 /// Sets the specified window as current OpenGL context.
@@ -794,7 +794,7 @@ pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback
 /// * winname: Name of the window.
 pub fn set_opengl_context(winname: &str) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_setOpenGlContext_const_StringX(winname.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_setOpenGlContext_const_StringR(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Sets a callback function to be called to draw on top of displayed image.
@@ -845,7 +845,7 @@ pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::O
 	extern_container_arg!(winname);
 	callback_arg!(on_opengl_draw_trampoline(userdata: *mut c_void) -> () => userdata in callbacks => on_opengl_draw() -> ());
 	userdata_arg!(userdata in callbacks => on_opengl_draw);
-	unsafe { sys::cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname.opencv_to_extern(), on_opengl_draw_trampoline, userdata) }.into_result()
+	unsafe { sys::cv_setOpenGlDrawCallback_const_StringR_OpenGlDrawCallback_voidX(winname.opencv_to_extern(), on_opengl_draw_trampoline, userdata) }.into_result()
 }
 
 /// Sets the trackbar maximum position.
@@ -865,7 +865,7 @@ pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::O
 pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Result<()> {
 	extern_container_arg!(trackbarname);
 	extern_container_arg!(winname);
-	unsafe { sys::cv_setTrackbarMax_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), maxval) }.into_result()
+	unsafe { sys::cv_setTrackbarMax_const_StringR_const_StringR_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), maxval) }.into_result()
 }
 
 /// Sets the trackbar minimum position.
@@ -885,7 +885,7 @@ pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Resul
 pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Result<()> {
 	extern_container_arg!(trackbarname);
 	extern_container_arg!(winname);
-	unsafe { sys::cv_setTrackbarMin_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), minval) }.into_result()
+	unsafe { sys::cv_setTrackbarMin_const_StringR_const_StringR_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), minval) }.into_result()
 }
 
 /// Sets the trackbar position.
@@ -905,7 +905,7 @@ pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Resul
 pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<()> {
 	extern_container_arg!(trackbarname);
 	extern_container_arg!(winname);
-	unsafe { sys::cv_setTrackbarPos_const_StringX_const_StringX_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), pos) }.into_result()
+	unsafe { sys::cv_setTrackbarPos_const_StringR_const_StringR_int(trackbarname.opencv_to_extern(), winname.opencv_to_extern(), pos) }.into_result()
 }
 
 /// Changes parameters of a window dynamically.
@@ -918,7 +918,7 @@ pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<(
 /// * prop_value: New value of the window property. The supported flags are: (cv::WindowFlags)
 pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_setWindowProperty_const_StringX_int_double(winname.opencv_to_extern(), prop_id, prop_value) }.into_result()
+	unsafe { sys::cv_setWindowProperty_const_StringR_int_double(winname.opencv_to_extern(), prop_id, prop_value) }.into_result()
 }
 
 /// Updates window title
@@ -928,7 +928,7 @@ pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Resu
 pub fn set_window_title(winname: &str, title: &str) -> Result<()> {
 	extern_container_arg!(winname);
 	extern_container_arg!(title);
-	unsafe { sys::cv_setWindowTitle_const_StringX_const_StringX(winname.opencv_to_extern(), title.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_setWindowTitle_const_StringR_const_StringR(winname.opencv_to_extern(), title.opencv_to_extern()) }.into_result()
 }
 
 pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: &mut [&str]) -> Result<i32> {
@@ -950,7 +950,7 @@ pub fn stop_loop() -> Result<()> {
 /// * winname: Name of the window.
 pub fn update_window(winname: &str) -> Result<()> {
 	extern_container_arg!(winname);
-	unsafe { sys::cv_updateWindow_const_StringX(winname.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_updateWindow_const_StringR(winname.opencv_to_extern()) }.into_result()
 }
 
 /// Similar to #waitKey, but returns full key code.
@@ -1112,15 +1112,15 @@ impl Drop for QtFont {
 }
 
 impl QtFont {
-	pub fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QtFont {}
 
 impl crate::highgui::QtFontTrait for QtFont {
-	fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QtFont {

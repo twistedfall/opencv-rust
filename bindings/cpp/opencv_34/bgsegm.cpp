@@ -38,21 +38,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::bgsegm::BackgroundSubtractorMOG>*>))
 	}
 	
-	Result<cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator>*> cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(const cv::_InputArray* background, const cv::_InputArray* object, double amplitude, double wavelength, double wavespeed, double objspeed) {
+	Result<cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator>*> cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(const cv::_InputArray* background, const cv::_InputArray* object, double amplitude, double wavelength, double wavespeed, double objspeed) {
 		try {
 			cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator> ret = cv::bgsegm::createSyntheticSequenceGenerator(*background, *object, amplitude, wavelength, wavespeed, objspeed);
 			return Ok(new cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator>*>))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayX_const__OutputArrayX_double(cv::bgsegm::BackgroundSubtractorCNT* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
+	Result_void cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(cv::bgsegm::BackgroundSubtractorCNT* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
 		try {
 			instance->apply(*image, *fgmask, learningRate);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayX(const cv::bgsegm::BackgroundSubtractorCNT* instance, const cv::_OutputArray* backgroundImage) {
+	Result_void cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(const cv::bgsegm::BackgroundSubtractorCNT* instance, const cv::_OutputArray* backgroundImage) {
 		try {
 			instance->getBackgroundImage(*backgroundImage);
 			return Ok();
@@ -255,28 +255,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayX_const__OutputArrayX_double(cv::bgsegm::BackgroundSubtractorGSOC* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
+	Result_void cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(cv::bgsegm::BackgroundSubtractorGSOC* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
 		try {
 			instance->apply(*image, *fgmask, learningRate);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayX(const cv::bgsegm::BackgroundSubtractorGSOC* instance, const cv::_OutputArray* backgroundImage) {
+	Result_void cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(const cv::bgsegm::BackgroundSubtractorGSOC* instance, const cv::_OutputArray* backgroundImage) {
 		try {
 			instance->getBackgroundImage(*backgroundImage);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayX_const__OutputArrayX_double(cv::bgsegm::BackgroundSubtractorLSBP* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
+	Result_void cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR_double(cv::bgsegm::BackgroundSubtractorLSBP* instance, const cv::_InputArray* image, const cv::_OutputArray* fgmask, double learningRate) {
 		try {
 			instance->apply(*image, *fgmask, learningRate);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayX(const cv::bgsegm::BackgroundSubtractorLSBP* instance, const cv::_OutputArray* backgroundImage) {
+	Result_void cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(const cv::bgsegm::BackgroundSubtractorLSBP* instance, const cv::_OutputArray* backgroundImage) {
 		try {
 			instance->getBackgroundImage(*backgroundImage);
 			return Ok();
@@ -286,21 +286,21 @@ extern "C" {
 	void cv_BackgroundSubtractorLSBPDesc_delete(cv::bgsegm::BackgroundSubtractorLSBPDesc* instance) {
 		delete instance;
 	}
-	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayX_const_MatX(const cv::_OutputArray* localSVDValues, const cv::Mat* frame) {
+	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(const cv::_OutputArray* localSVDValues, const cv::Mat* frame) {
 		try {
 			cv::bgsegm::BackgroundSubtractorLSBPDesc::calcLocalSVDValues(*localSVDValues, *frame);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayX_const_MatX_const_Point2iX(const cv::_OutputArray* desc, const cv::Mat* localSVDValues, const cv::Point2i* LSBPSamplePoints) {
+	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(const cv::_OutputArray* desc, const cv::Mat* localSVDValues, const cv::Point2i* LSBPSamplePoints) {
 		try {
 			cv::bgsegm::BackgroundSubtractorLSBPDesc::computeFromLocalSVDValues(*desc, *localSVDValues, LSBPSamplePoints);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayX_const_MatX_const_Point2iX(const cv::_OutputArray* desc, const cv::Mat* frame, const cv::Point2i* LSBPSamplePoints) {
+	Result_void cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(const cv::_OutputArray* desc, const cv::Mat* frame, const cv::Point2i* LSBPSamplePoints) {
 		try {
 			cv::bgsegm::BackgroundSubtractorLSBPDesc::compute(*desc, *frame, LSBPSamplePoints);
 			return Ok();
@@ -366,14 +366,14 @@ extern "C" {
 	void cv_SyntheticSequenceGenerator_delete(cv::bgsegm::SyntheticSequenceGenerator* instance) {
 		delete instance;
 	}
-	Result<cv::bgsegm::SyntheticSequenceGenerator*> cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayX_const__InputArrayX_double_double_double_double(const cv::_InputArray* background, const cv::_InputArray* object, double amplitude, double wavelength, double wavespeed, double objspeed) {
+	Result<cv::bgsegm::SyntheticSequenceGenerator*> cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(const cv::_InputArray* background, const cv::_InputArray* object, double amplitude, double wavelength, double wavespeed, double objspeed) {
 		try {
 			cv::bgsegm::SyntheticSequenceGenerator* ret = new cv::bgsegm::SyntheticSequenceGenerator(*background, *object, amplitude, wavelength, wavespeed, objspeed);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::bgsegm::SyntheticSequenceGenerator*>))
 	}
 	
-	Result_void cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayX_const__OutputArrayX(cv::bgsegm::SyntheticSequenceGenerator* instance, const cv::_OutputArray* frame, const cv::_OutputArray* gtMask) {
+	Result_void cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(cv::bgsegm::SyntheticSequenceGenerator* instance, const cv::_OutputArray* frame, const cv::_OutputArray* gtMask) {
 		try {
 			instance->getNextFrame(*frame, *gtMask);
 			return Ok();

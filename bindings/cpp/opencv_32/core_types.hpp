@@ -1,5 +1,6 @@
 template struct Result<bool>;
 template struct Result<char>;
+template struct Result<const cv::MatOp*>;
 template struct Result<const cv::Mat**>;
 template struct Result<const cv::SparseMat**>;
 template struct Result<const cv::SparseMat::Node**>;
@@ -65,10 +66,19 @@ template struct Result<cv::Vec<float, 3>>;
 template struct Result<cv::Vec<float, 4>>;
 template struct Result<cv::Vec<float, 6>>;
 template struct Result<cv::Vec<int, 2>>;
+template struct Result<cv::Vec<int, 3>>;
 template struct Result<cv::Vec<int, 4>>;
 template struct Result<cv::_InputArray*>;
 template struct Result<cv::_InputOutputArray*>;
 template struct Result<cv::_OutputArray*>;
+template struct Result<cv::cuda::DeviceInfo*>;
+template struct Result<cv::cuda::DeviceInfo::ComputeMode>;
+template struct Result<cv::cuda::Event*>;
+template struct Result<cv::cuda::GpuMat*>;
+template struct Result<cv::cuda::GpuMat::Allocator*>;
+template struct Result<cv::cuda::HostMem*>;
+template struct Result<cv::cuda::HostMem::AllocType>;
+template struct Result<cv::cuda::Stream*>;
 template struct Result<cv::instr::FLAGS>;
 template struct Result<cv::instr::IMPL>;
 template struct Result<cv::instr::NodeData*>;
@@ -108,6 +118,7 @@ template struct Result<std::vector<cv::Rect_<int>>*>;
 template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<cv::UMat>*>;
 template struct Result<std::vector<cv::Vec<int, 2>>*>;
+template struct Result<std::vector<cv::cuda::GpuMat>*>;
 template struct Result<std::vector<cv::ocl::PlatformInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
@@ -222,6 +233,66 @@ extern "C" {
 		return instance->data();
 	}
 	
+}
+
+
+extern "C" {
+	void cv_VectorOfGpuMat_delete(std::vector<cv::cuda::GpuMat>* instance) {
+		delete instance;
+	}
+
+	std::vector<cv::cuda::GpuMat>* cv_VectorOfGpuMat_new() {
+		return new std::vector<cv::cuda::GpuMat>();
+	}
+
+	size_t cv_VectorOfGpuMat_len(const std::vector<cv::cuda::GpuMat>* instance) {
+		return instance->size();
+	}
+
+	bool cv_VectorOfGpuMat_is_empty(const std::vector<cv::cuda::GpuMat>* instance) {
+		return instance->empty();
+	}
+
+	size_t cv_VectorOfGpuMat_capacity(const std::vector<cv::cuda::GpuMat>* instance) {
+		return instance->capacity();
+	}
+
+	void cv_VectorOfGpuMat_shrink_to_fit(std::vector<cv::cuda::GpuMat>* instance) {
+		instance->shrink_to_fit();
+	}
+
+	void cv_VectorOfGpuMat_reserve(std::vector<cv::cuda::GpuMat>* instance, size_t additional) {
+		instance->reserve(instance->size() + additional);
+	}
+
+	void cv_VectorOfGpuMat_remove(std::vector<cv::cuda::GpuMat>* instance, size_t index) {
+		instance->erase(instance->begin() + index);
+	}
+
+	void cv_VectorOfGpuMat_swap(std::vector<cv::cuda::GpuMat>* instance, size_t index1, size_t index2) {
+		std::swap((*instance)[index1], (*instance)[index2]);
+	}
+
+	void cv_VectorOfGpuMat_clear(std::vector<cv::cuda::GpuMat>* instance) {
+		instance->clear();
+	}
+
+	void cv_VectorOfGpuMat_push(std::vector<cv::cuda::GpuMat>* instance, cv::cuda::GpuMat* val) {
+		instance->push_back(*val);
+	}
+
+	void cv_VectorOfGpuMat_insert(std::vector<cv::cuda::GpuMat>* instance, size_t index, cv::cuda::GpuMat* val) {
+		instance->insert(instance->begin() + index, *val);
+	}
+
+	Result<cv::cuda::GpuMat*> cv_VectorOfGpuMat_get(const std::vector<cv::cuda::GpuMat>* instance, size_t index) {
+		return Ok<cv::cuda::GpuMat*>(new cv::cuda::GpuMat((*instance)[index]));
+	}
+
+	void cv_VectorOfGpuMat_set(std::vector<cv::cuda::GpuMat>* instance, size_t index, cv::cuda::GpuMat* val) {
+		(*instance)[index] = *val;
+	}
+
 }
 
 

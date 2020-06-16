@@ -101,14 +101,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<cv::Mat*> cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayX_bool(cv::hfs::HfsSegment* instance, const cv::_InputArray* src, bool ifDraw) {
+	Result<cv::Mat*> cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(cv::hfs::HfsSegment* instance, const cv::_InputArray* src, bool ifDraw) {
 		try {
 			cv::Mat ret = instance->performSegmentGpu(*src, ifDraw);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayX_bool(cv::hfs::HfsSegment* instance, const cv::_InputArray* src, bool ifDraw) {
+	Result<cv::Mat*> cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(cv::hfs::HfsSegment* instance, const cv::_InputArray* src, bool ifDraw) {
 		try {
 			cv::Mat ret = instance->performSegmentCpu(*src, ifDraw);
 			return Ok(new cv::Mat(ret));

@@ -2,56 +2,56 @@
 #include "ccalib_types.hpp"
 
 extern "C" {
-	Result<double> cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* size, const cv::_InputOutputArray* K, const cv::_InputOutputArray* xi, const cv::_InputOutputArray* D, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
+	Result<double> cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* size, const cv::_InputOutputArray* K, const cv::_InputOutputArray* xi, const cv::_InputOutputArray* D, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
 		try {
 			double ret = cv::omnidir::calibrate(*objectPoints, *imagePoints, *size, *K, *xi, *D, *rvecs, *tvecs, flags, *criteria, *idx);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R, const cv::_InputArray* P, const cv::Size* size, int mltype, const cv::_OutputArray* map1, const cv::_OutputArray* map2, int flags) {
+	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR_int(const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R, const cv::_InputArray* P, const cv::Size* size, int mltype, const cv::_OutputArray* map1, const cv::_OutputArray* map2, int flags) {
 		try {
 			cv::omnidir::initUndistortRectifyMap(*K, *D, *xi, *R, *P, *size, mltype, *map1, *map2, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* objectPoints, const cv::_OutputArray* imagePoints, const cv::_InputArray* rvec, const cv::_InputArray* tvec, const cv::_InputArray* K, double xi, const cv::_InputArray* D, const cv::_OutputArray* jacobian) {
+	Result_void cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* objectPoints, const cv::_OutputArray* imagePoints, const cv::_InputArray* rvec, const cv::_InputArray* tvec, const cv::_InputArray* K, double xi, const cv::_InputArray* D, const cv::_OutputArray* jacobian) {
 		try {
 			cv::omnidir::projectPoints(*objectPoints, *imagePoints, *rvec, *tvec, *K, xi, *D, *jacobian);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_omnidir_stereoCalibrate_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const_SizeX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(const cv::_InputOutputArray* objectPoints, const cv::_InputOutputArray* imagePoints1, const cv::_InputOutputArray* imagePoints2, const cv::Size* imageSize1, const cv::Size* imageSize2, const cv::_InputOutputArray* K1, const cv::_InputOutputArray* xi1, const cv::_InputOutputArray* D1, const cv::_InputOutputArray* K2, const cv::_InputOutputArray* xi2, const cv::_InputOutputArray* D2, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, const cv::_OutputArray* rvecsL, const cv::_OutputArray* tvecsL, int flags, const cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
+	Result<double> cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(const cv::_InputOutputArray* objectPoints, const cv::_InputOutputArray* imagePoints1, const cv::_InputOutputArray* imagePoints2, const cv::Size* imageSize1, const cv::Size* imageSize2, const cv::_InputOutputArray* K1, const cv::_InputOutputArray* xi1, const cv::_InputOutputArray* D1, const cv::_InputOutputArray* K2, const cv::_InputOutputArray* xi2, const cv::_InputOutputArray* D2, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, const cv::_OutputArray* rvecsL, const cv::_OutputArray* tvecsL, int flags, const cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
 		try {
 			double ret = cv::omnidir::stereoCalibrate(*objectPoints, *imagePoints1, *imagePoints2, *imageSize1, *imageSize2, *K1, *xi1, *D1, *K2, *xi2, *D2, *rvec, *tvec, *rvecsL, *tvecsL, flags, *criteria, *idx);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_omnidir_stereoReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* image1, const cv::_InputArray* image2, const cv::_InputArray* K1, const cv::_InputArray* D1, const cv::_InputArray* xi1, const cv::_InputArray* K2, const cv::_InputArray* D2, const cv::_InputArray* xi2, const cv::_InputArray* R, const cv::_InputArray* T, int flag, int numDisparities, int SADWindowSize, const cv::_OutputArray* disparity, const cv::_OutputArray* image1Rec, const cv::_OutputArray* image2Rec, const cv::Size* newSize, const cv::_InputArray* Knew, const cv::_OutputArray* pointCloud, int pointType) {
+	Result_void cv_omnidir_stereoReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_int(const cv::_InputArray* image1, const cv::_InputArray* image2, const cv::_InputArray* K1, const cv::_InputArray* D1, const cv::_InputArray* xi1, const cv::_InputArray* K2, const cv::_InputArray* D2, const cv::_InputArray* xi2, const cv::_InputArray* R, const cv::_InputArray* T, int flag, int numDisparities, int SADWindowSize, const cv::_OutputArray* disparity, const cv::_OutputArray* image1Rec, const cv::_OutputArray* image2Rec, const cv::Size* newSize, const cv::_InputArray* Knew, const cv::_OutputArray* pointCloud, int pointType) {
 		try {
 			cv::omnidir::stereoReconstruct(*image1, *image2, *K1, *D1, *xi1, *K2, *D2, *xi2, *R, *T, flag, numDisparities, SADWindowSize, *disparity, *image1Rec, *image2Rec, *newSize, *Knew, *pointCloud, pointType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_omnidir_stereoRectify_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* R1, const cv::_OutputArray* R2) {
+	Result_void cv_omnidir_stereoRectify_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* R1, const cv::_OutputArray* R2) {
 		try {
 			cv::omnidir::stereoRectify(*R, *T, *R1, *R2);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_omnidir_undistortImage_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_const__InputArrayX_const_SizeX_const__InputArrayX(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, int flags, const cv::_InputArray* Knew, const cv::Size* new_size, const cv::_InputArray* R) {
+	Result_void cv_omnidir_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_const_SizeR_const__InputArrayR(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, int flags, const cv::_InputArray* Knew, const cv::Size* new_size, const cv::_InputArray* R) {
 		try {
 			cv::omnidir::undistortImage(*distorted, *undistorted, *K, *D, *xi, flags, *Knew, *new_size, *R);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_omnidir_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R) {
+	Result_void cv_omnidir_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R) {
 		try {
 			cv::omnidir::undistortPoints(*distorted, *undistorted, *K, *D, *xi, *R);
 			return Ok();
@@ -68,14 +68,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ccalib::CustomPattern*>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayX_Size2f_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_InputArray* pattern, const cv::Size2f* boardSize, const cv::_OutputArray* output) {
+	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayR_Size2f_const__OutputArrayR(cv::ccalib::CustomPattern* instance, const cv::_InputArray* pattern, const cv::Size2f* boardSize, const cv::_OutputArray* output) {
 		try {
 			bool ret = instance->create(*pattern, *boardSize, *output);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findPattern_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_double_bool_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_OutputArray* matched_features, const cv::_OutputArray* pattern_points, double ratio, double proj_error, bool refine_position, const cv::_OutputArray* out, const cv::_OutputArray* H, const cv::_OutputArray* pattern_corners) {
+	Result<bool> cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double_bool_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_OutputArray* matched_features, const cv::_OutputArray* pattern_points, double ratio, double proj_error, bool refine_position, const cv::_OutputArray* out, const cv::_OutputArray* H, const cv::_OutputArray* pattern_corners) {
 		try {
 			bool ret = instance->findPattern(*image, *matched_features, *pattern_points, ratio, proj_error, refine_position, *out, *H, *pattern_corners);
 			return Ok(ret);
@@ -89,7 +89,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_ccalib_CustomPattern_getPatternPoints_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_OutputArray* original_points) {
+	Result_void cv_ccalib_CustomPattern_getPatternPoints_const__OutputArrayR(cv::ccalib::CustomPattern* instance, const cv::_OutputArray* original_points) {
 		try {
 			instance->getPatternPoints(*original_points);
 			return Ok();
@@ -145,42 +145,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DescriptorMatcher>*>))
 	}
 	
-	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
+	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, const cv::TermCriteria* criteria) {
 		try {
 			double ret = instance->calibrate(*objectPoints, *imagePoints, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, flags, *criteria);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
 		try {
 			bool ret = instance->findRt(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
 		try {
 			bool ret = instance->findRt(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_int_const__OutputArrayR_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
 		try {
 			bool ret = instance->findRtRANSAC(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *inliers, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_int_const__OutputArrayR_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
 		try {
 			bool ret = instance->findRtRANSAC(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *inliers, flags);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_int(cv::ccalib::CustomPattern* instance, const cv::_InputOutputArray* image, const cv::_InputArray* tvec, const cv::_InputArray* rvec, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, double axis_length, int axis_width) {
+	Result_void cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_int(cv::ccalib::CustomPattern* instance, const cv::_InputOutputArray* image, const cv::_InputArray* tvec, const cv::_InputArray* rvec, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, double axis_length, int axis_width) {
 		try {
 			instance->drawOrientation(*image, *tvec, *rvec, *cameraMatrix, *distCoeffs, axis_length, axis_width);
 			return Ok();
@@ -190,7 +190,7 @@ extern "C" {
 	void cv_MultiCameraCalibration_delete(cv::multicalib::MultiCameraCalibration* instance) {
 		delete instance;
 	}
-	Result<cv::multicalib::MultiCameraCalibration*> cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringX_float_float_int_int_int_int_TermCriteria_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(int cameraType, int nCameras, const char* fileName, float patternWidth, float patternHeight, int verbose, int showExtration, int nMiniMatches, int flags, const cv::TermCriteria* criteria, cv::Ptr<cv::Feature2D>* detector, cv::Ptr<cv::Feature2D>* descriptor, cv::Ptr<cv::DescriptorMatcher>* matcher) {
+	Result<cv::multicalib::MultiCameraCalibration*> cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(int cameraType, int nCameras, const char* fileName, float patternWidth, float patternHeight, int verbose, int showExtration, int nMiniMatches, int flags, const cv::TermCriteria* criteria, cv::Ptr<cv::Feature2D>* detector, cv::Ptr<cv::Feature2D>* descriptor, cv::Ptr<cv::DescriptorMatcher>* matcher) {
 		try {
 			cv::multicalib::MultiCameraCalibration* ret = new cv::multicalib::MultiCameraCalibration(cameraType, nCameras, std::string(fileName), patternWidth, patternHeight, verbose, showExtration, nMiniMatches, flags, *criteria, *detector, *descriptor, *matcher);
 			return Ok(ret);
@@ -225,7 +225,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_writeParameters_const_stringX(cv::multicalib::MultiCameraCalibration* instance, const char* filename) {
+	Result_void cv_multicalib_MultiCameraCalibration_writeParameters_const_stringR(cv::multicalib::MultiCameraCalibration* instance, const char* filename) {
 		try {
 			instance->writeParameters(std::string(filename));
 			return Ok();

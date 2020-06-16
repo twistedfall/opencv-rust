@@ -47,14 +47,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
 	}
 	
-	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_const_StringX(const char* filename) {
+	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_const_StringR(const char* filename) {
 		try {
 			cv::VideoCapture* ret = new cv::VideoCapture(cv::String(filename));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
 	}
 	
-	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_const_StringX_int(const char* filename, int apiPreference) {
+	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_const_StringR_int(const char* filename, int apiPreference) {
 		try {
 			cv::VideoCapture* ret = new cv::VideoCapture(cv::String(filename), apiPreference);
 			return Ok(ret);
@@ -75,7 +75,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
 	}
 	
-	Result<bool> cv_VideoCapture_open_const_StringX(cv::VideoCapture* instance, const char* filename) {
+	Result<bool> cv_VideoCapture_open_const_StringR(cv::VideoCapture* instance, const char* filename) {
 		try {
 			bool ret = instance->open(cv::String(filename));
 			return Ok(ret);
@@ -117,14 +117,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_VideoCapture_retrieve_const__OutputArrayX_int(cv::VideoCapture* instance, const cv::_OutputArray* image, int flag) {
+	Result<bool> cv_VideoCapture_retrieve_const__OutputArrayR_int(cv::VideoCapture* instance, const cv::_OutputArray* image, int flag) {
 		try {
 			bool ret = instance->retrieve(*image, flag);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_VideoCapture_read_const__OutputArrayX(cv::VideoCapture* instance, const cv::_OutputArray* image) {
+	Result<bool> cv_VideoCapture_read_const__OutputArrayR(cv::VideoCapture* instance, const cv::_OutputArray* image) {
 		try {
 			bool ret = instance->read(*image);
 			return Ok(ret);
@@ -145,7 +145,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<bool> cv_VideoCapture_open_const_StringX_int(cv::VideoCapture* instance, const char* filename, int apiPreference) {
+	Result<bool> cv_VideoCapture_open_const_StringR_int(cv::VideoCapture* instance, const char* filename, int apiPreference) {
 		try {
 			bool ret = instance->open(cv::String(filename), apiPreference);
 			return Ok(ret);
@@ -169,28 +169,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
 	}
 	
-	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
+	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), fourcc, fps, *frameSize, isColor);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
 	}
 	
-	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringX_int_int_double_Size_bool(const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
+	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), apiPreference, fourcc, fps, *frameSize, isColor);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
 	}
 	
-	Result<bool> cv_VideoWriter_open_const_StringX_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
+	Result<bool> cv_VideoWriter_open_const_StringR_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			bool ret = instance->open(cv::String(filename), fourcc, fps, *frameSize, isColor);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_VideoWriter_open_const_StringX_int_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
+	Result<bool> cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			bool ret = instance->open(cv::String(filename), apiPreference, fourcc, fps, *frameSize, isColor);
 			return Ok(ret);
@@ -211,7 +211,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_VideoWriter_write_const_MatX(cv::VideoWriter* instance, const cv::Mat* image) {
+	Result_void cv_VideoWriter_write_const_MatR(cv::VideoWriter* instance, const cv::Mat* image) {
 		try {
 			instance->write(*image);
 			return Ok();

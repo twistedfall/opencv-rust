@@ -39,7 +39,7 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
 	/// * reliabilityMap: Image where the reliability map is stored.
 	fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(reliability_map);
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -53,7 +53,7 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// ## C++ default parameters
 	/// * parameters: HistogramPhaseUnwrapping::Params()
 	pub fn create(parameters: &crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(parameters.as_raw_HistogramPhaseUnwrapping_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -133,15 +133,15 @@ impl Drop for HistogramPhaseUnwrapping_Params {
 }
 
 impl HistogramPhaseUnwrapping_Params {
-	pub fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_HistogramPhaseUnwrapping_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_HistogramPhaseUnwrapping_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for HistogramPhaseUnwrapping_Params {}
 
 impl crate::phase_unwrapping::HistogramPhaseUnwrapping_ParamsTrait for HistogramPhaseUnwrapping_Params {
-	fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_HistogramPhaseUnwrapping_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_HistogramPhaseUnwrapping_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl HistogramPhaseUnwrapping_Params {
@@ -169,7 +169,7 @@ pub trait PhaseUnwrapping: core::AlgorithmTrait {
 		input_array_arg!(wrapped_phase_map);
 		output_array_arg!(unwrapped_phase_map);
 		input_array_arg!(shadow_mask);
-		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
 	}
 	
 }

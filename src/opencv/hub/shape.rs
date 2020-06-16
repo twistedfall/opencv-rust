@@ -17,7 +17,7 @@ pub mod prelude {
 pub fn emdl1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray) -> Result<f32> {
 	input_array_arg!(signature1);
 	input_array_arg!(signature2);
-	unsafe { sys::cv_EMDL1_const__InputArrayX_const__InputArrayX(signature1.as_raw__InputArray(), signature2.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_EMDL1_const__InputArrayR_const__InputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray()) }.into_result()
 }
 
 /// Complete constructor
@@ -71,7 +71,7 @@ pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_c
 /// * comparer: createChiHistogramCostExtractor()
 /// * transformer: createThinPlateSplineShapeTransformer()
 pub fn create_shape_context_distance_extractor(n_angular_bins: i32, n_radial_bins: i32, inner_radius: f32, outer_radius: f32, iterations: i32, comparer: &core::Ptr::<dyn crate::shape::HistogramCostExtractor>, transformer: &core::Ptr::<dyn crate::shape::ShapeTransformer>) -> Result<core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>> {
-	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_X_const_Ptr_ShapeTransformer_X(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(r) } )
+	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_R_const_Ptr_ShapeTransformer_R(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(r) } )
 }
 
 /// Complete constructor
@@ -175,7 +175,7 @@ pub trait HistogramCostExtractor: core::AlgorithmTrait {
 		input_array_arg!(descriptors1);
 		input_array_arg!(descriptors2);
 		output_array_arg!(cost_matrix);
-		unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn set_n_dummies(&mut self, n_dummies: i32) -> Result<()> {
@@ -337,13 +337,13 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 	fn set_images(&mut self, image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image1);
 		input_array_arg!(image2);
-		unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_const__InputArrayX_const__InputArrayX(self.as_raw_mut_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray()) }.into_result()
 	}
 	
 	fn get_images(&self, image1: &mut dyn core::ToOutputArray, image2: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(image1);
 		output_array_arg!(image2);
-		unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayX_const__OutputArrayX(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn set_iterations(&mut self, iterations: i32) -> Result<()> {
@@ -410,7 +410,7 @@ pub trait ShapeDistanceExtractor: core::AlgorithmTrait {
 	fn compute_distance(&mut self, contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray) -> Result<f32> {
 		input_array_arg!(contour1);
 		input_array_arg!(contour2);
-		unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_const__InputArrayX_const__InputArrayX(self.as_raw_mut_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -429,7 +429,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait {
 	fn estimate_transformation(&mut self, transforming_shape: &dyn core::ToInputArray, target_shape: &dyn core::ToInputArray, matches: &mut core::Vector::<core::DMatch>) -> Result<()> {
 		input_array_arg!(transforming_shape);
 		input_array_arg!(target_shape);
-		unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayX_const__InputArrayX_vector_DMatch_X(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch()) }.into_result()
+		unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vector_DMatch_R(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch()) }.into_result()
 	}
 	
 	/// Apply a transformation, given a pre-estimated transformation parameters.
@@ -443,7 +443,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait {
 	fn apply_transformation(&mut self, input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<f32> {
 		input_array_arg!(input);
 		output_array_arg!(output);
-		unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Apply a transformation, given a pre-estimated transformation parameters, to an Image.
@@ -462,7 +462,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait {
 	fn warp_image(&self, transforming_image: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
 		input_array_arg!(transforming_image);
 		output_array_arg!(output);
-		unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayX_const__OutputArrayX_int_int_const_ScalarX(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, &border_value) }.into_result()
+		unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR_int_int_const_ScalarR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, &border_value) }.into_result()
 	}
 	
 }

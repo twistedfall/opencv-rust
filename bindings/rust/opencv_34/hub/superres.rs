@@ -21,12 +21,12 @@ pub fn create_frame_source_empty() -> Result<core::Ptr::<dyn crate::superres::Su
 
 pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringX(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_const_StringX(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>> {
@@ -180,7 +180,7 @@ pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait {
 		input_array_arg!(frame1);
 		output_array_arg!(flow1);
 		output_array_arg!(flow2);
-		unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn collect_garbage(&mut self) -> Result<()> {
@@ -387,7 +387,7 @@ pub trait Superres_FrameSource {
 
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
-		unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayX(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn reset(&mut self) -> Result<()> {
@@ -451,7 +451,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// ## Parameters
 	/// * frameSource: Input frame source
 	fn set_input(&mut self, frame_source: &core::Ptr::<dyn crate::superres::Superres_FrameSource>) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_X(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource()) }.into_result()
+		unsafe { sys::cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_R(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource()) }.into_result()
 	}
 	
 	/// Process next frame from input and return output result.
@@ -460,7 +460,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// * frame: Output result
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
-		unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayX(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn reset(&mut self) -> Result<()> {
@@ -609,7 +609,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// ## See also
 	/// setOpticalFlow getOpticalFlow
 	fn set_optical_flow(&mut self, val: &core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_X(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt()) }.into_result()
+		unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt()) }.into_result()
 	}
 	
 }

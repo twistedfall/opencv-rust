@@ -10,7 +10,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_dpm_DPMDetector_detect_MatX_vector_ObjectDetection_X(cv::dpm::DPMDetector* instance, cv::Mat* image, std::vector<cv::dpm::DPMDetector::ObjectDetection>* objects) {
+	Result_void cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(cv::dpm::DPMDetector* instance, cv::Mat* image, std::vector<cv::dpm::DPMDetector::ObjectDetection>* objects) {
 		try {
 			instance->detect(*image, *objects);
 			return Ok();
@@ -31,7 +31,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
-	Result<cv::Ptr<cv::dpm::DPMDetector>*> cv_dpm_DPMDetector_create_const_vector_string_X_const_vector_string_X(const std::vector<std::string>* filenames, const std::vector<std::string>* classNames) {
+	Result<cv::Ptr<cv::dpm::DPMDetector>*> cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(const std::vector<std::string>* filenames, const std::vector<std::string>* classNames) {
 		try {
 			cv::Ptr<cv::dpm::DPMDetector> ret = cv::dpm::DPMDetector::create(*filenames, *classNames);
 			return Ok(new cv::Ptr<cv::dpm::DPMDetector>(ret));
@@ -90,7 +90,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dpm::DPMDetector::ObjectDetection*>))
 	}
 	
-	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectX_float_int(const cv::Rect* rect, float score, int classID) {
+	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(const cv::Rect* rect, float score, int classID) {
 		try {
 			cv::dpm::DPMDetector::ObjectDetection* ret = new cv::dpm::DPMDetector::ObjectDetection(*rect, score, classID);
 			return Ok(ret);

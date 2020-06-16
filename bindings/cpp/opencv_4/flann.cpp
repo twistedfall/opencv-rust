@@ -57,42 +57,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::Index*>))
 	}
 	
-	Result<cv::flann::Index*> cv_flann_Index_Index_const__InputArrayX_const_IndexParamsX_flann_distance_t(const cv::_InputArray* features, const cv::flann::IndexParams* params, cvflann::flann_distance_t distType) {
+	Result<cv::flann::Index*> cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR_flann_distance_t(const cv::_InputArray* features, const cv::flann::IndexParams* params, cvflann::flann_distance_t distType) {
 		try {
 			cv::flann::Index* ret = new cv::flann::Index(*features, *params, distType);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::Index*>))
 	}
 	
-	Result_void cv_flann_Index_build_const__InputArrayX_const_IndexParamsX_flann_distance_t(cv::flann::Index* instance, const cv::_InputArray* features, const cv::flann::IndexParams* params, cvflann::flann_distance_t distType) {
+	Result_void cv_flann_Index_build_const__InputArrayR_const_IndexParamsR_flann_distance_t(cv::flann::Index* instance, const cv::_InputArray* features, const cv::flann::IndexParams* params, cvflann::flann_distance_t distType) {
 		try {
 			instance->build(*features, *params, distType);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_Index_knnSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_const_SearchParamsX(cv::flann::Index* instance, const cv::_InputArray* query, const cv::_OutputArray* indices, const cv::_OutputArray* dists, int knn, const cv::flann::SearchParams* params) {
+	Result_void cv_flann_Index_knnSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SearchParamsR(cv::flann::Index* instance, const cv::_InputArray* query, const cv::_OutputArray* indices, const cv::_OutputArray* dists, int knn, const cv::flann::SearchParams* params) {
 		try {
 			instance->knnSearch(*query, *indices, *dists, knn, *params);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_flann_Index_radiusSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_int_const_SearchParamsX(cv::flann::Index* instance, const cv::_InputArray* query, const cv::_OutputArray* indices, const cv::_OutputArray* dists, double radius, int maxResults, const cv::flann::SearchParams* params) {
+	Result<int> cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int_const_SearchParamsR(cv::flann::Index* instance, const cv::_InputArray* query, const cv::_OutputArray* indices, const cv::_OutputArray* dists, double radius, int maxResults, const cv::flann::SearchParams* params) {
 		try {
 			int ret = instance->radiusSearch(*query, *indices, *dists, radius, maxResults, *params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_flann_Index_save_const_const_StringX(const cv::flann::Index* instance, const char* filename) {
+	Result_void cv_flann_Index_save_const_const_StringR(const cv::flann::Index* instance, const char* filename) {
 		try {
 			instance->save(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_flann_Index_load_const__InputArrayX_const_StringX(cv::flann::Index* instance, const cv::_InputArray* features, const char* filename) {
+	Result<bool> cv_flann_Index_load_const__InputArrayR_const_StringR(cv::flann::Index* instance, const cv::_InputArray* features, const char* filename) {
 		try {
 			bool ret = instance->load(*features, std::string(filename));
 			return Ok(ret);
@@ -144,56 +144,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::IndexParams*>))
 	}
 	
-	Result<void*> cv_flann_IndexParams_getString_const_const_StringX_const_StringX(const cv::flann::IndexParams* instance, const char* key, const char* defaultVal) {
+	Result<void*> cv_flann_IndexParams_getString_const_const_StringR_const_StringR(const cv::flann::IndexParams* instance, const char* key, const char* defaultVal) {
 		try {
 			cv::String ret = instance->getString(std::string(key), std::string(defaultVal));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<int> cv_flann_IndexParams_getInt_const_const_StringX_int(const cv::flann::IndexParams* instance, const char* key, int defaultVal) {
+	Result<int> cv_flann_IndexParams_getInt_const_const_StringR_int(const cv::flann::IndexParams* instance, const char* key, int defaultVal) {
 		try {
 			int ret = instance->getInt(std::string(key), defaultVal);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<double> cv_flann_IndexParams_getDouble_const_const_StringX_double(const cv::flann::IndexParams* instance, const char* key, double defaultVal) {
+	Result<double> cv_flann_IndexParams_getDouble_const_const_StringR_double(const cv::flann::IndexParams* instance, const char* key, double defaultVal) {
 		try {
 			double ret = instance->getDouble(std::string(key), defaultVal);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_flann_IndexParams_setString_const_StringX_const_StringX(cv::flann::IndexParams* instance, const char* key, const char* value) {
+	Result_void cv_flann_IndexParams_setString_const_StringR_const_StringR(cv::flann::IndexParams* instance, const char* key, const char* value) {
 		try {
 			instance->setString(std::string(key), std::string(value));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_IndexParams_setInt_const_StringX_int(cv::flann::IndexParams* instance, const char* key, int value) {
+	Result_void cv_flann_IndexParams_setInt_const_StringR_int(cv::flann::IndexParams* instance, const char* key, int value) {
 		try {
 			instance->setInt(std::string(key), value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_IndexParams_setDouble_const_StringX_double(cv::flann::IndexParams* instance, const char* key, double value) {
+	Result_void cv_flann_IndexParams_setDouble_const_StringR_double(cv::flann::IndexParams* instance, const char* key, double value) {
 		try {
 			instance->setDouble(std::string(key), value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_IndexParams_setFloat_const_StringX_float(cv::flann::IndexParams* instance, const char* key, float value) {
+	Result_void cv_flann_IndexParams_setFloat_const_StringR_float(cv::flann::IndexParams* instance, const char* key, float value) {
 		try {
 			instance->setFloat(std::string(key), value);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_IndexParams_setBool_const_StringX_bool(cv::flann::IndexParams* instance, const char* key, bool value) {
+	Result_void cv_flann_IndexParams_setBool_const_StringR_bool(cv::flann::IndexParams* instance, const char* key, bool value) {
 		try {
 			instance->setBool(std::string(key), value);
 			return Ok();
@@ -207,7 +207,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_flann_IndexParams_getAll_const_vector_String_X_vector_FlannIndexType_X_vector_String_X_vector_double_X(const cv::flann::IndexParams* instance, std::vector<cv::String>* names, std::vector<cv::flann::FlannIndexType>* types, std::vector<cv::String>* strValues, std::vector<double>* numValues) {
+	Result_void cv_flann_IndexParams_getAll_const_vector_String_R_vector_FlannIndexType_R_vector_String_R_vector_double_R(const cv::flann::IndexParams* instance, std::vector<cv::String>* names, std::vector<cv::flann::FlannIndexType>* types, std::vector<cv::String>* strValues, std::vector<double>* numValues) {
 		try {
 			instance->getAll(*names, *types, *strValues, *numValues);
 			return Ok();
@@ -257,7 +257,7 @@ extern "C" {
 	void cv_SavedIndexParams_delete(cv::flann::SavedIndexParams* instance) {
 		delete instance;
 	}
-	Result<cv::flann::SavedIndexParams*> cv_flann_SavedIndexParams_SavedIndexParams_const_StringX(const char* filename) {
+	Result<cv::flann::SavedIndexParams*> cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(const char* filename) {
 		try {
 			cv::flann::SavedIndexParams* ret = new cv::flann::SavedIndexParams(std::string(filename));
 			return Ok(ret);

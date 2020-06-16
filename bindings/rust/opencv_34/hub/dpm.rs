@@ -50,7 +50,7 @@ pub trait DPMDetector {
 	/// * image: An image.
 	/// * objects: The detections: rectangulars, scores and class IDs.
 	fn detect(&mut self, image: &mut core::Mat, objects: &mut core::Vector::<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
-		unsafe { sys::cv_dpm_DPMDetector_detect_MatX_vector_ObjectDetection_X(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection()) }.into_result()
+		unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection()) }.into_result()
 	}
 	
 	/// Return the class (model) names that were passed in constructor or method load or extracted from
@@ -78,7 +78,7 @@ impl dyn DPMDetector + '_ {
 	/// ## C++ default parameters
 	/// * class_names: std::vector<std::string>()
 	pub fn create(filenames: &core::Vector::<String>, class_names: &core::Vector::<String>) -> Result<core::Ptr::<dyn crate::dpm::DPMDetector>> {
-		unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_X_const_vector_string_X(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dpm::DPMDetector>::opencv_from_extern(r) } )
+		unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dpm::DPMDetector>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -126,15 +126,15 @@ impl Drop for DPMDetector_ObjectDetection {
 }
 
 impl DPMDetector_ObjectDetection {
-	pub fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DPMDetector_ObjectDetection {}
 
 impl crate::dpm::DPMDetector_ObjectDetectionTrait for DPMDetector_ObjectDetection {
-	fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DPMDetector_ObjectDetection {
@@ -145,7 +145,7 @@ impl DPMDetector_ObjectDetection {
 	/// ## C++ default parameters
 	/// * class_id: -1
 	pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectX_float_int(&rect, score, class_id) }.into_result().map(|r| unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(r) } )
+		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id) }.into_result().map(|r| unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(r) } )
 	}
 	
 }

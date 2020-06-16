@@ -3,42 +3,42 @@
 #include "img_hash_types.hpp"
 
 extern "C" {
-	Result_void cv_img_hash_averageHash_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
+	Result_void cv_img_hash_averageHash_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
 		try {
 			cv::img_hash::averageHash(*inputArr, *outputArr);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_img_hash_blockMeanHash_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, int mode) {
+	Result_void cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR_int(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, int mode) {
 		try {
 			cv::img_hash::blockMeanHash(*inputArr, *outputArr, mode);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_img_hash_colorMomentHash_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
+	Result_void cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
 		try {
 			cv::img_hash::colorMomentHash(*inputArr, *outputArr);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_img_hash_marrHildrethHash_const__InputArrayX_const__OutputArrayX_float_float(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, float alpha, float scale) {
+	Result_void cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR_float_float(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, float alpha, float scale) {
 		try {
 			cv::img_hash::marrHildrethHash(*inputArr, *outputArr, alpha, scale);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_img_hash_pHash_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
+	Result_void cv_img_hash_pHash_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
 		try {
 			cv::img_hash::pHash(*inputArr, *outputArr);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_img_hash_radialVarianceHash_const__InputArrayX_const__OutputArrayX_double_int(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, double sigma, int numOfAngleLine) {
+	Result_void cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR_double_int(const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr, double sigma, int numOfAngleLine) {
 		try {
 			cv::img_hash::radialVarianceHash(*inputArr, *outputArr, sigma, numOfAngleLine);
 			return Ok();
@@ -92,14 +92,14 @@ extern "C" {
 	void cv_ImgHashBase_delete(cv::img_hash::ImgHashBase* instance) {
 		delete instance;
 	}
-	Result_void cv_img_hash_ImgHashBase_compute_const__InputArrayX_const__OutputArrayX(cv::img_hash::ImgHashBase* instance, const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
+	Result_void cv_img_hash_ImgHashBase_compute_const__InputArrayR_const__OutputArrayR(cv::img_hash::ImgHashBase* instance, const cv::_InputArray* inputArr, const cv::_OutputArray* outputArr) {
 		try {
 			instance->compute(*inputArr, *outputArr);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_img_hash_ImgHashBase_compare_const_const__InputArrayX_const__InputArrayX(const cv::img_hash::ImgHashBase* instance, const cv::_InputArray* hashOne, const cv::_InputArray* hashTwo) {
+	Result<double> cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(const cv::img_hash::ImgHashBase* instance, const cv::_InputArray* hashOne, const cv::_InputArray* hashTwo) {
 		try {
 			double ret = instance->compare(*hashOne, *hashTwo);
 			return Ok(ret);
@@ -199,7 +199,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatX(cv::img_hash::RadialVarianceHash* instance, const cv::Mat* input) {
+	Result<cv::Mat*> cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatR(cv::img_hash::RadialVarianceHash* instance, const cv::Mat* input) {
 		try {
 			cv::Mat ret = instance->getPixPerLine(*input);
 			return Ok(new cv::Mat(ret));

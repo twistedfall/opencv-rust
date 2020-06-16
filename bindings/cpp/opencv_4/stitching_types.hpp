@@ -48,6 +48,7 @@ template struct Result<cv::detail::DpSeamFinder::CostFunction>;
 template struct Result<cv::detail::FeatherBlender*>;
 template struct Result<cv::detail::FisheyeWarper*>;
 template struct Result<cv::detail::GainCompensator*>;
+template struct Result<cv::detail::GraphCutSeamFinderGpu*>;
 template struct Result<cv::detail::GraphCutSeamFinder*>;
 template struct Result<cv::detail::GraphEdge*>;
 template struct Result<cv::detail::Graph*>;

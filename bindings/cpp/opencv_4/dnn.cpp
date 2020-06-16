@@ -2,63 +2,63 @@
 #include "dnn_types.hpp"
 
 extern "C" {
-	Result_void cv_dnn_NMSBoxes_const_vector_Rect2d_X_const_vector_float_X_float_float_vector_int_X_float_int(const std::vector<cv::Rect2d>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
+	Result_void cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_float_float_vector_int_R_float_int(const std::vector<cv::Rect2d>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
 		try {
 			cv::dnn::NMSBoxes(*bboxes, *scores, score_threshold, nms_threshold, *indices, eta, top_k);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_NMSBoxes_const_vector_Rect_X_const_vector_float_X_float_float_vector_int_X_float_int(const std::vector<cv::Rect>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
+	Result_void cv_dnn_NMSBoxes_const_vector_Rect_R_const_vector_float_R_float_float_vector_int_R_float_int(const std::vector<cv::Rect>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
 		try {
 			cv::dnn::NMSBoxes(*bboxes, *scores, score_threshold, nms_threshold, *indices, eta, top_k);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_NMSBoxes_const_vector_RotatedRect_X_const_vector_float_X_float_float_vector_int_X_float_int(const std::vector<cv::RotatedRect>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
+	Result_void cv_dnn_NMSBoxes_const_vector_RotatedRect_R_const_vector_float_R_float_float_vector_int_R_float_int(const std::vector<cv::RotatedRect>* bboxes, const std::vector<float>* scores, float score_threshold, float nms_threshold, std::vector<int>* indices, float eta, int top_k) {
 		try {
 			cv::dnn::NMSBoxes(*bboxes, *scores, score_threshold, nms_threshold, *indices, eta, top_k);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_blobFromImage_const__InputArrayX_const__OutputArrayX_double_const_SizeX_const_ScalarX_bool_bool_int(const cv::_InputArray* image, const cv::_OutputArray* blob, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result_void cv_dnn_blobFromImage_const__InputArrayR_const__OutputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int(const cv::_InputArray* image, const cv::_OutputArray* blob, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
 			cv::dnn::blobFromImage(*image, *blob, scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_dnn_blobFromImage_const__InputArrayX_double_const_SizeX_const_ScalarX_bool_bool_int(const cv::_InputArray* image, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result<cv::Mat*> cv_dnn_blobFromImage_const__InputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int(const cv::_InputArray* image, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
 			cv::Mat ret = cv::dnn::blobFromImage(*image, scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_dnn_blobFromImages_const__InputArrayX_const__OutputArrayX_double_Size_const_ScalarX_bool_bool_int(const cv::_InputArray* images, const cv::_OutputArray* blob, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result_void cv_dnn_blobFromImages_const__InputArrayR_const__OutputArrayR_double_Size_const_ScalarR_bool_bool_int(const cv::_InputArray* images, const cv::_OutputArray* blob, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
 			cv::dnn::blobFromImages(*images, *blob, scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_dnn_blobFromImages_const__InputArrayX_double_Size_const_ScalarX_bool_bool_int(const cv::_InputArray* images, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result<cv::Mat*> cv_dnn_blobFromImages_const__InputArrayR_double_Size_const_ScalarR_bool_bool_int(const cv::_InputArray* images, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
 			cv::Mat ret = cv::dnn::blobFromImages(*images, scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Range*> cv_dnn_clamp_const_RangeX_int(const cv::Range* r, int axisSize) {
+	Result<cv::Range*> cv_dnn_clamp_const_RangeR_int(const cv::Range* r, int axisSize) {
 		try {
 			cv::Range ret = cv::dnn::clamp(*r, axisSize);
 			return Ok(new cv::Range(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Range*>))
 	}
 	
-	Result<int> cv_dnn_clamp_int_const_MatShapeX(int ax, const cv::dnn::MatShape* shape) {
+	Result<int> cv_dnn_clamp_int_const_MatShapeR(int ax, const cv::dnn::MatShape* shape) {
 		try {
 			int ret = cv::dnn::clamp(ax, *shape);
 			return Ok(ret);
@@ -72,7 +72,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<cv::dnn::MatShape*> cv_dnn_concat_const_MatShapeX_const_MatShapeX(const cv::dnn::MatShape* a, const cv::dnn::MatShape* b) {
+	Result<cv::dnn::MatShape*> cv_dnn_concat_const_MatShapeR_const_MatShapeR(const cv::dnn::MatShape* a, const cv::dnn::MatShape* b) {
 		try {
 			cv::dnn::MatShape ret = cv::dnn::concat(*a, *b);
 			return Ok(new cv::dnn::MatShape(ret));
@@ -100,28 +100,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_getPlane_const_MatX_int_int(const cv::Mat* m, int n, int cn) {
+	Result<cv::Mat*> cv_dnn_getPlane_const_MatR_int_int(const cv::Mat* m, int n, int cn) {
 		try {
 			cv::Mat ret = cv::dnn::getPlane(*m, n, cn);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_dnn_imagesFromBlob_const_MatX_const__OutputArrayX(const cv::Mat* blob_, const cv::_OutputArray* images_) {
+	Result_void cv_dnn_imagesFromBlob_const_MatR_const__OutputArrayR(const cv::Mat* blob_, const cv::_OutputArray* images_) {
 		try {
 			cv::dnn::imagesFromBlob(*blob_, *images_);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_print_const_MatShapeX_const_StringX(const cv::dnn::MatShape* shape, const char* name) {
+	Result_void cv_dnn_print_const_MatShapeR_const_StringR(const cv::dnn::MatShape* shape, const char* name) {
 		try {
 			cv::dnn::print(*shape, std::string(name));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromCaffe_const_StringX_const_StringX(const char* prototxt, const char* caffeModel) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromCaffe_const_StringR_const_StringR(const char* prototxt, const char* caffeModel) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromCaffe(std::string(prototxt), std::string(caffeModel));
 			return Ok(new cv::dnn::Net(ret));
@@ -135,14 +135,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromCaffe_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const std::vector<unsigned char>* bufferProto, const std::vector<unsigned char>* bufferModel) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromCaffe_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const std::vector<unsigned char>* bufferProto, const std::vector<unsigned char>* bufferModel) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromCaffe(*bufferProto, *bufferModel);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromDarknet_const_StringX_const_StringX(const char* cfgFile, const char* darknetModel) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromDarknet_const_StringR_const_StringR(const char* cfgFile, const char* darknetModel) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromDarknet(std::string(cfgFile), std::string(darknetModel));
 			return Ok(new cv::dnn::Net(ret));
@@ -156,14 +156,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromDarknet_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const std::vector<unsigned char>* bufferCfg, const std::vector<unsigned char>* bufferModel) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromDarknet_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const std::vector<unsigned char>* bufferCfg, const std::vector<unsigned char>* bufferModel) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromDarknet(*bufferCfg, *bufferModel);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromModelOptimizer_const_StringX_const_StringX(const char* xml, const char* bin) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromModelOptimizer_const_StringR_const_StringR(const char* xml, const char* bin) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromModelOptimizer(std::string(xml), std::string(bin));
 			return Ok(new cv::dnn::Net(ret));
@@ -177,14 +177,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromModelOptimizer_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const std::vector<unsigned char>* bufferModelConfig, const std::vector<unsigned char>* bufferWeights) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromModelOptimizer_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const std::vector<unsigned char>* bufferModelConfig, const std::vector<unsigned char>* bufferWeights) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromModelOptimizer(*bufferModelConfig, *bufferWeights);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromONNX_const_StringX(const char* onnxFile) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromONNX_const_StringR(const char* onnxFile) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromONNX(std::string(onnxFile));
 			return Ok(new cv::dnn::Net(ret));
@@ -198,14 +198,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromONNX_const_vector_unsigned_char_X(const std::vector<unsigned char>* buffer) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromONNX_const_vector_unsigned_char_R(const std::vector<unsigned char>* buffer) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromONNX(*buffer);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromTensorflow_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromTensorflow_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromTensorflow(std::string(model), std::string(config));
 			return Ok(new cv::dnn::Net(ret));
@@ -219,42 +219,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromTensorflow_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const std::vector<unsigned char>* bufferModel, const std::vector<unsigned char>* bufferConfig) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromTensorflow_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const std::vector<unsigned char>* bufferModel, const std::vector<unsigned char>* bufferConfig) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromTensorflow(*bufferModel, *bufferConfig);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNetFromTorch_const_StringX_bool_bool(const char* model, bool isBinary, bool evaluate) {
+	Result<cv::dnn::Net*> cv_dnn_readNetFromTorch_const_StringR_bool_bool(const char* model, bool isBinary, bool evaluate) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNetFromTorch(std::string(model), isBinary, evaluate);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNet_const_StringX_const_StringX_const_StringX(const char* model, const char* config, const char* framework) {
+	Result<cv::dnn::Net*> cv_dnn_readNet_const_StringR_const_StringR_const_StringR(const char* model, const char* config, const char* framework) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNet(std::string(model), std::string(config), std::string(framework));
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_readNet_const_StringX_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const char* framework, const std::vector<unsigned char>* bufferModel, const std::vector<unsigned char>* bufferConfig) {
+	Result<cv::dnn::Net*> cv_dnn_readNet_const_StringR_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const char* framework, const std::vector<unsigned char>* bufferModel, const std::vector<unsigned char>* bufferConfig) {
 		try {
 			cv::dnn::Net ret = cv::dnn::readNet(std::string(framework), *bufferModel, *bufferConfig);
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_readTensorFromONNX_const_StringX(const char* path) {
+	Result<cv::Mat*> cv_dnn_readTensorFromONNX_const_StringR(const char* path) {
 		try {
 			cv::Mat ret = cv::dnn::readTensorFromONNX(std::string(path));
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_readTorchBlob_const_StringX_bool(const char* filename, bool isBinary) {
+	Result<cv::Mat*> cv_dnn_readTorchBlob_const_StringR_bool(const char* filename, bool isBinary) {
 		try {
 			cv::Mat ret = cv::dnn::readTorchBlob(std::string(filename), isBinary);
 			return Ok(new cv::Mat(ret));
@@ -268,28 +268,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<void*> cv_dnn_setInferenceEngineBackendType_const_StringX(const char* newBackendType) {
+	Result<void*> cv_dnn_setInferenceEngineBackendType_const_StringR(const char* newBackendType) {
 		try {
 			cv::String ret = cv::dnn::setInferenceEngineBackendType(std::string(newBackendType));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::dnn::MatShape*> cv_dnn_shape_const_MatSizeX(const cv::MatSize* sz) {
-		try {
-			cv::dnn::MatShape ret = cv::dnn::shape(*sz);
-			return Ok(new cv::dnn::MatShape(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::MatShape*>))
-	}
-	
-	Result<cv::dnn::MatShape*> cv_dnn_shape_const_MatX(const cv::Mat* mat) {
+	Result<cv::dnn::MatShape*> cv_dnn_shape_const_MatR(const cv::Mat* mat) {
 		try {
 			cv::dnn::MatShape ret = cv::dnn::shape(*mat);
 			return Ok(new cv::dnn::MatShape(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::MatShape*>))
 	}
 	
-	Result<cv::dnn::MatShape*> cv_dnn_shape_const_UMatX(const cv::UMat* mat) {
+	Result<cv::dnn::MatShape*> cv_dnn_shape_const_MatSizeR(const cv::MatSize* sz) {
+		try {
+			cv::dnn::MatShape ret = cv::dnn::shape(*sz);
+			return Ok(new cv::dnn::MatShape(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::MatShape*>))
+	}
+	
+	Result<cv::dnn::MatShape*> cv_dnn_shape_const_UMatR(const cv::UMat* mat) {
 		try {
 			cv::dnn::MatShape ret = cv::dnn::shape(*mat);
 			return Ok(new cv::dnn::MatShape(ret));
@@ -310,63 +310,63 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::MatShape*>))
 	}
 	
-	Result_void cv_dnn_shrinkCaffeModel_const_StringX_const_StringX_const_vector_String_X(const char* src, const char* dst, const std::vector<cv::String>* layersTypes) {
+	Result_void cv_dnn_shrinkCaffeModel_const_StringR_const_StringR_const_vector_String_R(const char* src, const char* dst, const std::vector<cv::String>* layersTypes) {
 		try {
 			cv::dnn::shrinkCaffeModel(std::string(src), std::string(dst), *layersTypes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_dnn_slice_const_MatX_const__RangeX(const cv::Mat* m, const cv::dnn::_Range* r0) {
+	Result<cv::Mat*> cv_dnn_slice_const_MatR_const__RangeR(const cv::Mat* m, const cv::dnn::_Range* r0) {
 		try {
 			cv::Mat ret = cv::dnn::slice(*m, *r0);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_slice_const_MatX_const__RangeX_const__RangeX(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1) {
+	Result<cv::Mat*> cv_dnn_slice_const_MatR_const__RangeR_const__RangeR(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1) {
 		try {
 			cv::Mat ret = cv::dnn::slice(*m, *r0, *r1);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_slice_const_MatX_const__RangeX_const__RangeX_const__RangeX(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1, const cv::dnn::_Range* r2) {
+	Result<cv::Mat*> cv_dnn_slice_const_MatR_const__RangeR_const__RangeR_const__RangeR(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1, const cv::dnn::_Range* r2) {
 		try {
 			cv::Mat ret = cv::dnn::slice(*m, *r0, *r1, *r2);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_slice_const_MatX_const__RangeX_const__RangeX_const__RangeX_const__RangeX(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1, const cv::dnn::_Range* r2, const cv::dnn::_Range* r3) {
+	Result<cv::Mat*> cv_dnn_slice_const_MatR_const__RangeR_const__RangeR_const__RangeR_const__RangeR(const cv::Mat* m, const cv::dnn::_Range* r0, const cv::dnn::_Range* r1, const cv::dnn::_Range* r2, const cv::dnn::_Range* r3) {
 		try {
 			cv::Mat ret = cv::dnn::slice(*m, *r0, *r1, *r2, *r3);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<void*> cv_dnn_toString_const_MatShapeX_const_StringX(const cv::dnn::MatShape* shape, const char* name) {
+	Result<void*> cv_dnn_toString_const_MatShapeR_const_StringR(const cv::dnn::MatShape* shape, const char* name) {
 		try {
 			std::string ret = cv::dnn::toString(*shape, std::string(name));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<int> cv_dnn_total_const_MatShapeX_int_int(const cv::dnn::MatShape* shape, int start, int end) {
+	Result<int> cv_dnn_total_const_MatShapeR_int_int(const cv::dnn::MatShape* shape, int start, int end) {
 		try {
 			int ret = cv::dnn::total(*shape, start, end);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_dnn_writeTextGraph_const_StringX_const_StringX(const char* model, const char* output) {
+	Result_void cv_dnn_writeTextGraph_const_StringR_const_StringR(const char* model, const char* output) {
 		try {
 			cv::dnn::writeTextGraph(std::string(model), std::string(output));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::AbsLayer>*> cv_dnn_AbsLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::AbsLayer>*> cv_dnn_AbsLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::AbsLayer> ret = cv::dnn::AbsLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::AbsLayer>(ret));
@@ -380,7 +380,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BNLLLayer>*> cv_dnn_BNLLLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::BNLLLayer>*> cv_dnn_BNLLLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::BNLLLayer> ret = cv::dnn::BNLLLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::BNLLLayer>(ret));
@@ -682,7 +682,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BatchNormLayer>*> cv_dnn_BatchNormLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::BatchNormLayer>*> cv_dnn_BatchNormLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::BatchNormLayer> ret = cv::dnn::BatchNormLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::BatchNormLayer>(ret));
@@ -692,14 +692,14 @@ extern "C" {
 	void cv_BlankLayer_delete(cv::dnn::BlankLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_BlankLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_BlankLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::BlankLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::Layer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ChannelsPReLULayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ChannelsPReLULayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::ChannelsPReLULayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -709,21 +709,21 @@ extern "C" {
 	void cv_ClassificationModel_delete(cv::dnn::ClassificationModel* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::ClassificationModel*> cv_dnn_ClassificationModel_ClassificationModel_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::ClassificationModel*> cv_dnn_ClassificationModel_ClassificationModel_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::ClassificationModel* ret = new cv::dnn::ClassificationModel(std::string(model), std::string(config));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::ClassificationModel*>))
 	}
 	
-	Result<cv::dnn::ClassificationModel*> cv_dnn_ClassificationModel_ClassificationModel_const_NetX(const cv::dnn::Net* network) {
+	Result<cv::dnn::ClassificationModel*> cv_dnn_ClassificationModel_ClassificationModel_const_NetR(const cv::dnn::Net* network) {
 		try {
 			cv::dnn::ClassificationModel* ret = new cv::dnn::ClassificationModel(*network);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::ClassificationModel*>))
 	}
 	
-	Result_void cv_dnn_ClassificationModel_classify_const__InputArrayX_intR_floatR(cv::dnn::ClassificationModel* instance, const cv::_InputArray* frame, int* classId, float* conf) {
+	Result_void cv_dnn_ClassificationModel_classify_const__InputArrayR_intR_floatR(cv::dnn::ClassificationModel* instance, const cv::_InputArray* frame, int* classId, float* conf) {
 		try {
 			instance->classify(*frame, *classId, *conf);
 			return Ok();
@@ -761,7 +761,7 @@ extern "C" {
 	void cv_ConcatLayer_delete(cv::dnn::ConcatLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ConcatLayer>*> cv_dnn_ConcatLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ConcatLayer>*> cv_dnn_ConcatLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ConcatLayer> ret = cv::dnn::ConcatLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ConcatLayer>(ret));
@@ -771,7 +771,7 @@ extern "C" {
 	void cv_ConstLayer_delete(cv::dnn::ConstLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ConstLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ConstLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::ConstLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -781,7 +781,7 @@ extern "C" {
 	void cv_ConvolutionLayer_delete(cv::dnn::ConvolutionLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_ConvolutionLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_ConvolutionLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::ConvolutionLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
@@ -791,7 +791,7 @@ extern "C" {
 	void cv_CropAndResizeLayer_delete(cv::dnn::CropAndResizeLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_CropAndResizeLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_CropAndResizeLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::CropAndResizeLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -801,7 +801,7 @@ extern "C" {
 	void cv_CropLayer_delete(cv::dnn::CropLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_CropLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_CropLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::CropLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -811,7 +811,7 @@ extern "C" {
 	void cv_DeconvolutionLayer_delete(cv::dnn::DeconvolutionLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_DeconvolutionLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_DeconvolutionLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::DeconvolutionLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
@@ -821,21 +821,21 @@ extern "C" {
 	void cv_DetectionModel_delete(cv::dnn::DetectionModel* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_DetectionModel_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_DetectionModel_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::DetectionModel* ret = new cv::dnn::DetectionModel(std::string(model), std::string(config));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DetectionModel*>))
 	}
 	
-	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_DetectionModel_const_NetX(const cv::dnn::Net* network) {
+	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_DetectionModel_const_NetR(const cv::dnn::Net* network) {
 		try {
 			cv::dnn::DetectionModel* ret = new cv::dnn::DetectionModel(*network);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DetectionModel*>))
 	}
 	
-	Result_void cv_dnn_DetectionModel_detect_const__InputArrayX_vector_int_X_vector_float_X_vector_Rect_X_float_float(cv::dnn::DetectionModel* instance, const cv::_InputArray* frame, std::vector<int>* classIds, std::vector<float>* confidences, std::vector<cv::Rect>* boxes, float confThreshold, float nmsThreshold) {
+	Result_void cv_dnn_DetectionModel_detect_const__InputArrayR_vector_int_R_vector_float_R_vector_Rect_R_float_float(cv::dnn::DetectionModel* instance, const cv::_InputArray* frame, std::vector<int>* classIds, std::vector<float>* confidences, std::vector<cv::Rect>* boxes, float confThreshold, float nmsThreshold) {
 		try {
 			instance->detect(*frame, *classIds, *confidences, *boxes, confThreshold, nmsThreshold);
 			return Ok();
@@ -845,7 +845,7 @@ extern "C" {
 	void cv_DetectionOutputLayer_delete(cv::dnn::DetectionOutputLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::DetectionOutputLayer>*> cv_dnn_DetectionOutputLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::DetectionOutputLayer>*> cv_dnn_DetectionOutputLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::DetectionOutputLayer> ret = cv::dnn::DetectionOutputLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::DetectionOutputLayer>(ret));
@@ -855,63 +855,63 @@ extern "C" {
 	void cv_Dict_delete(cv::dnn::Dict* instance) {
 		delete instance;
 	}
-	Result<bool> cv_dnn_Dict_has_const_const_StringX(const cv::dnn::Dict* instance, const char* key) {
+	Result<bool> cv_dnn_Dict_has_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
 		try {
 			bool ret = instance->has(std::string(key));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::dnn::DictValue**> cv_dnn_Dict_ptr_const_StringX(cv::dnn::Dict* instance, const char* key) {
+	Result<cv::dnn::DictValue**> cv_dnn_Dict_ptr_const_StringR(cv::dnn::Dict* instance, const char* key) {
 		try {
 			cv::dnn::DictValue* ret = instance->ptr(std::string(key));
 			return Ok(new cv::dnn::DictValue*(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue**>))
 	}
 	
-	Result<const cv::dnn::DictValue**> cv_dnn_Dict_ptr_const_const_StringX(const cv::dnn::Dict* instance, const char* key) {
+	Result<const cv::dnn::DictValue**> cv_dnn_Dict_ptr_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
 		try {
 			const cv::dnn::DictValue* ret = instance->ptr(std::string(key));
 			return Ok(new const cv::dnn::DictValue*(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::dnn::DictValue**>))
 	}
 	
-	Result<cv::dnn::DictValue*> cv_dnn_Dict_get_const_const_StringX(const cv::dnn::Dict* instance, const char* key) {
+	Result<cv::dnn::DictValue*> cv_dnn_Dict_get_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
 		try {
 			cv::dnn::DictValue ret = instance->get(std::string(key));
 			return Ok(new cv::dnn::DictValue(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
-	Result<void*> cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(cv::dnn::Dict* instance, const char* key, const char* value) {
+	Result<void*> cv_dnn_Dict_set_cv_String_const_StringR_const_StringR(cv::dnn::Dict* instance, const char* key, const char* value) {
 		try {
 			cv::String ret = instance->set<cv::String>(std::string(key), std::string(value));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::dnn::DictValue*> cv_dnn_Dict_set_cv_dnn_DictValue_const_StringX_const_DictValueX(cv::dnn::Dict* instance, const char* key, const cv::dnn::DictValue* value) {
+	Result<cv::dnn::DictValue*> cv_dnn_Dict_set_cv_dnn_DictValue_const_StringR_const_DictValueR(cv::dnn::Dict* instance, const char* key, const cv::dnn::DictValue* value) {
 		try {
 			cv::dnn::DictValue ret = instance->set<cv::dnn::DictValue>(std::string(key), *value);
 			return Ok(new cv::dnn::DictValue(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
-	Result<double> cv_dnn_Dict_set_double_const_StringX_const_doubleR(cv::dnn::Dict* instance, const char* key, const double* value) {
+	Result<double> cv_dnn_Dict_set_double_const_StringR_const_doubleR(cv::dnn::Dict* instance, const char* key, const double* value) {
 		try {
 			double ret = instance->set<double>(std::string(key), *value);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<int64_t> cv_dnn_Dict_set_int64_t_const_StringX_const_int64_tR(cv::dnn::Dict* instance, const char* key, const int64_t* value) {
+	Result<int64_t> cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR(cv::dnn::Dict* instance, const char* key, const int64_t* value) {
 		try {
 			int64_t ret = instance->set<int64_t>(std::string(key), *value);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
-	Result_void cv_dnn_Dict_erase_const_StringX(cv::dnn::Dict* instance, const char* key) {
+	Result_void cv_dnn_Dict_erase_const_StringR(cv::dnn::Dict* instance, const char* key) {
 		try {
 			instance->erase(std::string(key));
 			return Ok();
@@ -921,7 +921,7 @@ extern "C" {
 	void cv_DictValue_delete(cv::dnn::DictValue* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_const_DictValueX(const cv::dnn::DictValue* r) {
+	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_const_DictValueR(const cv::dnn::DictValue* r) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(*r);
 			return Ok(ret);
@@ -1047,7 +1047,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::ELULayer>*> cv_dnn_ELULayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ELULayer>*> cv_dnn_ELULayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ELULayer> ret = cv::dnn::ELULayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ELULayer>(ret));
@@ -1057,7 +1057,7 @@ extern "C" {
 	void cv_EltwiseLayer_delete(cv::dnn::EltwiseLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::EltwiseLayer>*> cv_dnn_EltwiseLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::EltwiseLayer>*> cv_dnn_EltwiseLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::EltwiseLayer> ret = cv::dnn::EltwiseLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::EltwiseLayer>(ret));
@@ -1067,7 +1067,7 @@ extern "C" {
 	void cv_FlattenLayer_delete(cv::dnn::FlattenLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::FlattenLayer>*> cv_dnn_FlattenLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::FlattenLayer>*> cv_dnn_FlattenLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::FlattenLayer> ret = cv::dnn::FlattenLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::FlattenLayer>(ret));
@@ -1091,7 +1091,7 @@ extern "C" {
 	void cv_InnerProductLayer_delete(cv::dnn::InnerProductLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::InnerProductLayer>*> cv_dnn_InnerProductLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::InnerProductLayer>*> cv_dnn_InnerProductLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::InnerProductLayer> ret = cv::dnn::InnerProductLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::InnerProductLayer>(ret));
@@ -1101,7 +1101,7 @@ extern "C" {
 	void cv_InterpLayer_delete(cv::dnn::InterpLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_InterpLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_InterpLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::InterpLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -1111,21 +1111,21 @@ extern "C" {
 	void cv_KeypointsModel_delete(cv::dnn::KeypointsModel* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::KeypointsModel*> cv_dnn_KeypointsModel_KeypointsModel_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::KeypointsModel*> cv_dnn_KeypointsModel_KeypointsModel_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::KeypointsModel* ret = new cv::dnn::KeypointsModel(std::string(model), std::string(config));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::KeypointsModel*>))
 	}
 	
-	Result<cv::dnn::KeypointsModel*> cv_dnn_KeypointsModel_KeypointsModel_const_NetX(const cv::dnn::Net* network) {
+	Result<cv::dnn::KeypointsModel*> cv_dnn_KeypointsModel_KeypointsModel_const_NetR(const cv::dnn::Net* network) {
 		try {
 			cv::dnn::KeypointsModel* ret = new cv::dnn::KeypointsModel(*network);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::KeypointsModel*>))
 	}
 	
-	Result<std::vector<cv::Point2f>*> cv_dnn_KeypointsModel_estimate_const__InputArrayX_float(cv::dnn::KeypointsModel* instance, const cv::_InputArray* frame, float thresh) {
+	Result<std::vector<cv::Point2f>*> cv_dnn_KeypointsModel_estimate_const__InputArrayR_float(cv::dnn::KeypointsModel* instance, const cv::_InputArray* frame, float thresh) {
 		try {
 			std::vector<cv::Point2f> ret = instance->estimate(*frame, thresh);
 			return Ok(new std::vector<cv::Point2f>(ret));
@@ -1219,28 +1219,28 @@ extern "C" {
 	void cv_LRNLayer_delete(cv::dnn::LRNLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::LRNLayer>*> cv_dnn_LRNLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::LRNLayer>*> cv_dnn_LRNLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::LRNLayer> ret = cv::dnn::LRNLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::LRNLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::LRNLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::LSTMLayer>*> cv_dnn_LSTMLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::LSTMLayer>*> cv_dnn_LSTMLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::LSTMLayer> ret = cv::dnn::LSTMLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::LSTMLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::LSTMLayer>*>))
 	}
 	
-	Result_void cv_dnn_LSTMLayer_setWeights_const_MatX_const_MatX_const_MatX(cv::dnn::LSTMLayer* instance, const cv::Mat* Wh, const cv::Mat* Wx, const cv::Mat* b) {
+	Result_void cv_dnn_LSTMLayer_setWeights_const_MatR_const_MatR_const_MatR(cv::dnn::LSTMLayer* instance, const cv::Mat* Wh, const cv::Mat* Wx, const cv::Mat* b) {
 		try {
 			instance->setWeights(*Wh, *Wx, *b);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_LSTMLayer_setOutShape_const_MatShapeX(cv::dnn::LSTMLayer* instance, const cv::dnn::MatShape* outTailShape) {
+	Result_void cv_dnn_LSTMLayer_setOutShape_const_MatShapeR(cv::dnn::LSTMLayer* instance, const cv::dnn::MatShape* outTailShape) {
 		try {
 			instance->setOutShape(*outTailShape);
 			return Ok();
@@ -1268,7 +1268,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_dnn_LSTMLayer_outputNameToIndex_const_StringX(cv::dnn::LSTMLayer* instance, const char* outputName) {
+	Result<int> cv_dnn_LSTMLayer_outputNameToIndex_const_StringR(cv::dnn::LSTMLayer* instance, const char* outputName) {
 		try {
 			int ret = instance->outputNameToIndex(std::string(outputName));
 			return Ok(ret);
@@ -1334,49 +1334,49 @@ extern "C" {
 	void cv_Layer_delete(cv::dnn::Layer* instance) {
 		delete instance;
 	}
-	Result_void cv_dnn_Layer_finalize_const__InputArrayX_const__OutputArrayX(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs) {
+	Result_void cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs) {
 		try {
 			instance->finalize(*inputs, *outputs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Layer_forward_vector_MatX_X_vector_Mat_X_vector_Mat_X(cv::dnn::Layer* instance, std::vector<cv::Mat*>* input, std::vector<cv::Mat>* output, std::vector<cv::Mat>* internals) {
+	Result_void cv_dnn_Layer_forward_vector_MatX_R_vector_Mat_R_vector_Mat_R(cv::dnn::Layer* instance, std::vector<cv::Mat*>* input, std::vector<cv::Mat>* output, std::vector<cv::Mat>* internals) {
 		try {
 			instance->forward(*input, *output, *internals);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Layer_forward_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* internals) {
+	Result_void cv_dnn_Layer_forward_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* internals) {
 		try {
 			instance->forward(*inputs, *outputs, *internals);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Layer_forward_fallback_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* internals) {
+	Result_void cv_dnn_Layer_forward_fallback_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::dnn::Layer* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* internals) {
 		try {
 			instance->forward_fallback(*inputs, *outputs, *internals);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Layer_finalize_const_vector_Mat_X_vector_Mat_X(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs, std::vector<cv::Mat>* outputs) {
+	Result_void cv_dnn_Layer_finalize_const_vector_Mat_R_vector_Mat_R(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs, std::vector<cv::Mat>* outputs) {
 		try {
 			instance->finalize(*inputs, *outputs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_dnn_Layer_finalize_const_vector_Mat_X(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs) {
+	Result<std::vector<cv::Mat>*> cv_dnn_Layer_finalize_const_vector_Mat_R(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs) {
 		try {
 			std::vector<cv::Mat> ret = instance->finalize(*inputs);
 			return Ok(new std::vector<cv::Mat>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_dnn_Layer_run_const_vector_Mat_X_vector_Mat_X_vector_Mat_X(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs, std::vector<cv::Mat>* outputs, std::vector<cv::Mat>* internals) {
+	Result_void cv_dnn_Layer_run_const_vector_Mat_R_vector_Mat_R_vector_Mat_R(cv::dnn::Layer* instance, const std::vector<cv::Mat>* inputs, std::vector<cv::Mat>* outputs, std::vector<cv::Mat>* internals) {
 		try {
 			instance->run(*inputs, *outputs, *internals);
 			return Ok();
@@ -1390,7 +1390,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_dnn_Layer_outputNameToIndex_const_StringX(cv::dnn::Layer* instance, const char* outputName) {
+	Result<int> cv_dnn_Layer_outputNameToIndex_const_StringR(cv::dnn::Layer* instance, const char* outputName) {
 		try {
 			int ret = instance->outputNameToIndex(std::string(outputName));
 			return Ok(ret);
@@ -1404,70 +1404,70 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initHalide_const_vector_Ptr_BackendWrapper__X(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initHalide_const_vector_Ptr_BackendWrapper__R(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->initHalide(*inputs);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initInfEngine_const_vector_Ptr_BackendWrapper__X(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initInfEngine_const_vector_Ptr_BackendWrapper__R(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->initInfEngine(*inputs);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initNgraph_const_vector_Ptr_BackendWrapper__X_const_vector_Ptr_BackendNode__X(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs, const std::vector<cv::Ptr<cv::dnn::BackendNode>>* nodes) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initNgraph_const_vector_Ptr_BackendWrapper__R_const_vector_Ptr_BackendNode__R(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs, const std::vector<cv::Ptr<cv::dnn::BackendNode>>* nodes) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->initNgraph(*inputs, *nodes);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initVkCom_const_vector_Ptr_BackendWrapper__X(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initVkCom_const_vector_Ptr_BackendWrapper__R(cv::dnn::Layer* instance, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->initVkCom(*inputs);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initCUDA_voidX_const_vector_Ptr_BackendWrapper__X_const_vector_Ptr_BackendWrapper__X(cv::dnn::Layer* instance, void* context, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* outputs) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_initCUDA_voidX_const_vector_Ptr_BackendWrapper__R_const_vector_Ptr_BackendWrapper__R(cv::dnn::Layer* instance, void* context, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* inputs, const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* outputs) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->initCUDA(context, *inputs, *outputs);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result_void cv_dnn_Layer_applyHalideScheduler_const_Ptr_BackendNode_X_const_vector_MatX_X_const_vector_Mat_X_int(const cv::dnn::Layer* instance, cv::Ptr<cv::dnn::BackendNode>* node, const std::vector<cv::Mat*>* inputs, const std::vector<cv::Mat>* outputs, int targetId) {
+	Result_void cv_dnn_Layer_applyHalideScheduler_const_Ptr_BackendNode_R_const_vector_MatX_R_const_vector_Mat_R_int(const cv::dnn::Layer* instance, cv::Ptr<cv::dnn::BackendNode>* node, const std::vector<cv::Mat*>* inputs, const std::vector<cv::Mat>* outputs, int targetId) {
 		try {
 			instance->applyHalideScheduler(*node, *inputs, *outputs, targetId);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_tryAttach_const_Ptr_BackendNode_X(cv::dnn::Layer* instance, const cv::Ptr<cv::dnn::BackendNode>* node) {
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_dnn_Layer_tryAttach_const_Ptr_BackendNode_R(cv::dnn::Layer* instance, const cv::Ptr<cv::dnn::BackendNode>* node) {
 		try {
 			cv::Ptr<cv::dnn::BackendNode> ret = instance->tryAttach(*node);
 			return Ok(new cv::Ptr<cv::dnn::BackendNode>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BackendNode>*>))
 	}
 	
-	Result<bool> cv_dnn_Layer_setActivation_const_Ptr_ActivationLayer_X(cv::dnn::Layer* instance, const cv::Ptr<cv::dnn::ActivationLayer>* layer) {
+	Result<bool> cv_dnn_Layer_setActivation_const_Ptr_ActivationLayer_R(cv::dnn::Layer* instance, const cv::Ptr<cv::dnn::ActivationLayer>* layer) {
 		try {
 			bool ret = instance->setActivation(*layer);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_dnn_Layer_tryFuse_Ptr_Layer_X(cv::dnn::Layer* instance, cv::Ptr<cv::dnn::Layer>* top) {
+	Result<bool> cv_dnn_Layer_tryFuse_Ptr_Layer_R(cv::dnn::Layer* instance, cv::Ptr<cv::dnn::Layer>* top) {
 		try {
 			bool ret = instance->tryFuse(*top);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_dnn_Layer_getScaleShift_const_MatX_MatX(const cv::dnn::Layer* instance, cv::Mat* scale, cv::Mat* shift) {
+	Result_void cv_dnn_Layer_getScaleShift_const_MatR_MatR(const cv::dnn::Layer* instance, cv::Mat* scale, cv::Mat* shift) {
 		try {
 			instance->getScaleShift(*scale, *shift);
 			return Ok();
@@ -1481,14 +1481,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_dnn_Layer_getMemoryShapes_const_const_vector_MatShape_X_int_vector_MatShape_X_vector_MatShape_X(const cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs, int requiredOutputs, std::vector<cv::dnn::MatShape>* outputs, std::vector<cv::dnn::MatShape>* internals) {
+	Result<bool> cv_dnn_Layer_getMemoryShapes_const_const_vector_MatShape_R_int_vector_MatShape_R_vector_MatShape_R(const cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs, int requiredOutputs, std::vector<cv::dnn::MatShape>* outputs, std::vector<cv::dnn::MatShape>* internals) {
 		try {
 			bool ret = instance->getMemoryShapes(*inputs, requiredOutputs, *outputs, *internals);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<int64_t> cv_dnn_Layer_getFLOPS_const_const_vector_MatShape_X_const_vector_MatShape_X(const cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs, const std::vector<cv::dnn::MatShape>* outputs) {
+	Result<int64_t> cv_dnn_Layer_getFLOPS_const_const_vector_MatShape_R_const_vector_MatShape_R(const cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs, const std::vector<cv::dnn::MatShape>* outputs) {
 		try {
 			int64_t ret = instance->getFLOPS(*inputs, *outputs);
 			return Ok(ret);
@@ -1502,14 +1502,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Layer*>))
 	}
 	
-	Result<cv::dnn::Layer*> cv_dnn_Layer_Layer_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::dnn::Layer*> cv_dnn_Layer_Layer_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::dnn::Layer* ret = new cv::dnn::Layer(*params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Layer*>))
 	}
 	
-	Result_void cv_dnn_Layer_setParamsFrom_const_LayerParamsX(cv::dnn::Layer* instance, const cv::dnn::LayerParams* params) {
+	Result_void cv_dnn_Layer_setParamsFrom_const_LayerParamsR(cv::dnn::Layer* instance, const cv::dnn::LayerParams* params) {
 		try {
 			instance->setParamsFrom(*params);
 			return Ok();
@@ -1519,21 +1519,21 @@ extern "C" {
 	void cv_LayerFactory_delete(cv::dnn::LayerFactory* instance) {
 		delete instance;
 	}
-	Result_void cv_dnn_LayerFactory_registerLayer_const_StringX_Constructor(const char* type, cv::dnn::LayerFactory::Constructor constructor) {
+	Result_void cv_dnn_LayerFactory_registerLayer_const_StringR_Constructor(const char* type, cv::dnn::LayerFactory::Constructor constructor) {
 		try {
 			cv::dnn::LayerFactory::registerLayer(std::string(type), constructor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_LayerFactory_unregisterLayer_const_StringX(const char* type) {
+	Result_void cv_dnn_LayerFactory_unregisterLayer_const_StringR(const char* type) {
 		try {
 			cv::dnn::LayerFactory::unregisterLayer(std::string(type));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(const char* type, cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_LayerFactory_createLayerInstance_const_StringR_LayerParamsR(const char* type, cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::LayerFactory::createLayerInstance(std::string(type), *params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -1630,7 +1630,7 @@ extern "C" {
 	void cv_MVNLayer_delete(cv::dnn::MVNLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::MVNLayer>*> cv_dnn_MVNLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::MVNLayer>*> cv_dnn_MVNLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::MVNLayer> ret = cv::dnn::MVNLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::MVNLayer>(ret));
@@ -1682,14 +1682,14 @@ extern "C" {
 	void cv_MaxUnpoolLayer_delete(cv::dnn::MaxUnpoolLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::MaxUnpoolLayer>*> cv_dnn_MaxUnpoolLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::MaxUnpoolLayer>*> cv_dnn_MaxUnpoolLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::MaxUnpoolLayer> ret = cv::dnn::MaxUnpoolLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::MaxUnpoolLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::MaxUnpoolLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::MishLayer>*> cv_dnn_MishLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::MishLayer>*> cv_dnn_MishLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::MishLayer> ret = cv::dnn::MishLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::MishLayer>(ret));
@@ -1706,21 +1706,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
-	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::Model* ret = new cv::dnn::Model(std::string(model), std::string(config));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
-	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_NetX(const cv::dnn::Net* network) {
+	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_NetR(const cv::dnn::Net* network) {
 		try {
 			cv::dnn::Model* ret = new cv::dnn::Model(*network);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
-	Result<cv::dnn::Model*> cv_dnn_Model_setInputSize_const_SizeX(cv::dnn::Model* instance, const cv::Size* size) {
+	Result<cv::dnn::Model*> cv_dnn_Model_setInputSize_const_SizeR(cv::dnn::Model* instance, const cv::Size* size) {
 		try {
 			cv::dnn::Model ret = instance->setInputSize(*size);
 			return Ok(new cv::dnn::Model(ret));
@@ -1734,7 +1734,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
-	Result<cv::dnn::Model*> cv_dnn_Model_setInputMean_const_ScalarX(cv::dnn::Model* instance, const cv::Scalar* mean) {
+	Result<cv::dnn::Model*> cv_dnn_Model_setInputMean_const_ScalarR(cv::dnn::Model* instance, const cv::Scalar* mean) {
 		try {
 			cv::dnn::Model ret = instance->setInputMean(*mean);
 			return Ok(new cv::dnn::Model(ret));
@@ -1762,14 +1762,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
-	Result_void cv_dnn_Model_setInputParams_double_const_SizeX_const_ScalarX_bool_bool(cv::dnn::Model* instance, double scale, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop) {
+	Result_void cv_dnn_Model_setInputParams_double_const_SizeR_const_ScalarR_bool_bool(cv::dnn::Model* instance, double scale, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop) {
 		try {
 			instance->setInputParams(scale, *size, *mean, swapRB, crop);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Model_predict_const__InputArrayX_const__OutputArrayX(cv::dnn::Model* instance, const cv::_InputArray* frame, const cv::_OutputArray* outs) {
+	Result_void cv_dnn_Model_predict_const__InputArrayR_const__OutputArrayR(cv::dnn::Model* instance, const cv::_InputArray* frame, const cv::_OutputArray* outs) {
 		try {
 			instance->predict(*frame, *outs);
 			return Ok();
@@ -1786,14 +1786,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_Net_readFromModelOptimizer_const_StringX_const_StringX(const char* xml, const char* bin) {
+	Result<cv::dnn::Net*> cv_dnn_Net_readFromModelOptimizer_const_StringR_const_StringR(const char* xml, const char* bin) {
 		try {
 			cv::dnn::Net ret = cv::dnn::Net::readFromModelOptimizer(std::string(xml), std::string(bin));
 			return Ok(new cv::dnn::Net(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
-	Result<cv::dnn::Net*> cv_dnn_Net_readFromModelOptimizer_const_vector_unsigned_char_X_const_vector_unsigned_char_X(const std::vector<unsigned char>* bufferModelConfig, const std::vector<unsigned char>* bufferWeights) {
+	Result<cv::dnn::Net*> cv_dnn_Net_readFromModelOptimizer_const_vector_unsigned_char_R_const_vector_unsigned_char_R(const std::vector<unsigned char>* bufferModelConfig, const std::vector<unsigned char>* bufferWeights) {
 		try {
 			cv::dnn::Net ret = cv::dnn::Net::readFromModelOptimizer(*bufferModelConfig, *bufferWeights);
 			return Ok(new cv::dnn::Net(ret));
@@ -1821,28 +1821,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_dnn_Net_dumpToFile_const_StringX(cv::dnn::Net* instance, const char* path) {
+	Result_void cv_dnn_Net_dumpToFile_const_StringR(cv::dnn::Net* instance, const char* path) {
 		try {
 			instance->dumpToFile(std::string(path));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_dnn_Net_addLayer_const_StringX_const_StringX_LayerParamsX(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
+	Result<int> cv_dnn_Net_addLayer_const_StringR_const_StringR_LayerParamsR(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
 		try {
 			int ret = instance->addLayer(std::string(name), std::string(type), *params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_dnn_Net_addLayerToPrev_const_StringX_const_StringX_LayerParamsX(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
+	Result<int> cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_LayerParamsR(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
 		try {
 			int ret = instance->addLayerToPrev(std::string(name), std::string(type), *params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_dnn_Net_getLayerId_const_StringX(cv::dnn::Net* instance, const char* layer) {
+	Result<int> cv_dnn_Net_getLayerId_const_StringR(cv::dnn::Net* instance, const char* layer) {
 		try {
 			int ret = instance->getLayerId(std::string(layer));
 			return Ok(ret);
@@ -1884,56 +1884,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_setInputsNames_const_vector_String_X(cv::dnn::Net* instance, const std::vector<cv::String>* inputBlobNames) {
+	Result_void cv_dnn_Net_setInputsNames_const_vector_String_R(cv::dnn::Net* instance, const std::vector<cv::String>* inputBlobNames) {
 		try {
 			instance->setInputsNames(*inputBlobNames);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_setInputShape_const_StringX_const_MatShapeX(cv::dnn::Net* instance, const char* inputName, const cv::dnn::MatShape* shape) {
+	Result_void cv_dnn_Net_setInputShape_const_StringR_const_MatShapeR(cv::dnn::Net* instance, const char* inputName, const cv::dnn::MatShape* shape) {
 		try {
 			instance->setInputShape(std::string(inputName), *shape);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_dnn_Net_forward_const_StringX(cv::dnn::Net* instance, const char* outputName) {
+	Result<cv::Mat*> cv_dnn_Net_forward_const_StringR(cv::dnn::Net* instance, const char* outputName) {
 		try {
 			cv::Mat ret = instance->forward(std::string(outputName));
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::AsyncArray*> cv_dnn_Net_forwardAsync_const_StringX(cv::dnn::Net* instance, const char* outputName) {
+	Result<cv::AsyncArray*> cv_dnn_Net_forwardAsync_const_StringR(cv::dnn::Net* instance, const char* outputName) {
 		try {
 			cv::AsyncArray ret = instance->forwardAsync(std::string(outputName));
 			return Ok(new cv::AsyncArray(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::AsyncArray*>))
 	}
 	
-	Result_void cv_dnn_Net_forward_const__OutputArrayX_const_StringX(cv::dnn::Net* instance, const cv::_OutputArray* outputBlobs, const char* outputName) {
+	Result_void cv_dnn_Net_forward_const__OutputArrayR_const_StringR(cv::dnn::Net* instance, const cv::_OutputArray* outputBlobs, const char* outputName) {
 		try {
 			instance->forward(*outputBlobs, std::string(outputName));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_forward_const__OutputArrayX_const_vector_String_X(cv::dnn::Net* instance, const cv::_OutputArray* outputBlobs, const std::vector<cv::String>* outBlobNames) {
+	Result_void cv_dnn_Net_forward_const__OutputArrayR_const_vector_String_R(cv::dnn::Net* instance, const cv::_OutputArray* outputBlobs, const std::vector<cv::String>* outBlobNames) {
 		try {
 			instance->forward(*outputBlobs, *outBlobNames);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_forward_vector_vector_Mat__X_const_vector_String_X(cv::dnn::Net* instance, std::vector<std::vector<cv::Mat>>* outputBlobs, const std::vector<cv::String>* outBlobNames) {
+	Result_void cv_dnn_Net_forward_vector_vector_Mat__R_const_vector_String_R(cv::dnn::Net* instance, std::vector<std::vector<cv::Mat>>* outputBlobs, const std::vector<cv::String>* outBlobNames) {
 		try {
 			instance->forward(*outputBlobs, *outBlobNames);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_setHalideScheduler_const_StringX(cv::dnn::Net* instance, const char* scheduler) {
+	Result_void cv_dnn_Net_setHalideScheduler_const_StringR(cv::dnn::Net* instance, const char* scheduler) {
 		try {
 			instance->setHalideScheduler(std::string(scheduler));
 			return Ok();
@@ -1954,14 +1954,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_setInput_const__InputArrayX_const_StringX_double_const_ScalarX(cv::dnn::Net* instance, const cv::_InputArray* blob, const char* name, double scalefactor, const cv::Scalar* mean) {
+	Result_void cv_dnn_Net_setInput_const__InputArrayR_const_StringR_double_const_ScalarR(cv::dnn::Net* instance, const cv::_InputArray* blob, const char* name, double scalefactor, const cv::Scalar* mean) {
 		try {
 			instance->setInput(*blob, std::string(name), scalefactor, *mean);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_setParam_LayerId_int_const_MatX(cv::dnn::Net* instance, cv::dnn::Net::LayerId* layer, int numParam, const cv::Mat* blob) {
+	Result_void cv_dnn_Net_setParam_LayerId_int_const_MatR(cv::dnn::Net* instance, cv::dnn::Net::LayerId* layer, int numParam, const cv::Mat* blob) {
 		try {
 			instance->setParam(*layer, numParam, *blob);
 			return Ok();
@@ -1989,112 +1989,112 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::String>*>))
 	}
 	
-	Result_void cv_dnn_Net_getLayersShapes_const_const_vector_MatShape_X_vector_int_X_vector_vector_MatShape__X_vector_vector_MatShape__X(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, std::vector<int>* layersIds, std::vector<std::vector<cv::dnn::MatShape>>* inLayersShapes, std::vector<std::vector<cv::dnn::MatShape>>* outLayersShapes) {
+	Result_void cv_dnn_Net_getLayersShapes_const_const_vector_MatShape_R_vector_int_R_vector_vector_MatShape__R_vector_vector_MatShape__R(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, std::vector<int>* layersIds, std::vector<std::vector<cv::dnn::MatShape>>* inLayersShapes, std::vector<std::vector<cv::dnn::MatShape>>* outLayersShapes) {
 		try {
 			instance->getLayersShapes(*netInputShapes, *layersIds, *inLayersShapes, *outLayersShapes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getLayersShapes_const_const_MatShapeX_vector_int_X_vector_vector_MatShape__X_vector_vector_MatShape__X(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, std::vector<int>* layersIds, std::vector<std::vector<cv::dnn::MatShape>>* inLayersShapes, std::vector<std::vector<cv::dnn::MatShape>>* outLayersShapes) {
+	Result_void cv_dnn_Net_getLayersShapes_const_const_MatShapeR_vector_int_R_vector_vector_MatShape__R_vector_vector_MatShape__R(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, std::vector<int>* layersIds, std::vector<std::vector<cv::dnn::MatShape>>* inLayersShapes, std::vector<std::vector<cv::dnn::MatShape>>* outLayersShapes) {
 		try {
 			instance->getLayersShapes(*netInputShape, *layersIds, *inLayersShapes, *outLayersShapes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getLayerShapes_const_const_MatShapeX_int_vector_MatShape_X_vector_MatShape_X(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, int layerId, std::vector<cv::dnn::MatShape>* inLayerShapes, std::vector<cv::dnn::MatShape>* outLayerShapes) {
+	Result_void cv_dnn_Net_getLayerShapes_const_const_MatShapeR_int_vector_MatShape_R_vector_MatShape_R(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, int layerId, std::vector<cv::dnn::MatShape>* inLayerShapes, std::vector<cv::dnn::MatShape>* outLayerShapes) {
 		try {
 			instance->getLayerShapes(*netInputShape, layerId, *inLayerShapes, *outLayerShapes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getLayerShapes_const_const_vector_MatShape_X_int_vector_MatShape_X_vector_MatShape_X(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, int layerId, std::vector<cv::dnn::MatShape>* inLayerShapes, std::vector<cv::dnn::MatShape>* outLayerShapes) {
+	Result_void cv_dnn_Net_getLayerShapes_const_const_vector_MatShape_R_int_vector_MatShape_R_vector_MatShape_R(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, int layerId, std::vector<cv::dnn::MatShape>* inLayerShapes, std::vector<cv::dnn::MatShape>* outLayerShapes) {
 		try {
 			instance->getLayerShapes(*netInputShapes, layerId, *inLayerShapes, *outLayerShapes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int64_t> cv_dnn_Net_getFLOPS_const_const_vector_MatShape_X(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes) {
+	Result<int64_t> cv_dnn_Net_getFLOPS_const_const_vector_MatShape_R(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes) {
 		try {
 			int64_t ret = instance->getFLOPS(*netInputShapes);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
-	Result<int64_t> cv_dnn_Net_getFLOPS_const_const_MatShapeX(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape) {
+	Result<int64_t> cv_dnn_Net_getFLOPS_const_const_MatShapeR(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape) {
 		try {
 			int64_t ret = instance->getFLOPS(*netInputShape);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
-	Result<int64_t> cv_dnn_Net_getFLOPS_const_int_const_vector_MatShape_X(const cv::dnn::Net* instance, int layerId, const std::vector<cv::dnn::MatShape>* netInputShapes) {
+	Result<int64_t> cv_dnn_Net_getFLOPS_const_int_const_vector_MatShape_R(const cv::dnn::Net* instance, int layerId, const std::vector<cv::dnn::MatShape>* netInputShapes) {
 		try {
 			int64_t ret = instance->getFLOPS(layerId, *netInputShapes);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
-	Result<int64_t> cv_dnn_Net_getFLOPS_const_int_const_MatShapeX(const cv::dnn::Net* instance, int layerId, const cv::dnn::MatShape* netInputShape) {
+	Result<int64_t> cv_dnn_Net_getFLOPS_const_int_const_MatShapeR(const cv::dnn::Net* instance, int layerId, const cv::dnn::MatShape* netInputShape) {
 		try {
 			int64_t ret = instance->getFLOPS(layerId, *netInputShape);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
-	Result_void cv_dnn_Net_getLayerTypes_const_vector_String_X(const cv::dnn::Net* instance, std::vector<cv::String>* layersTypes) {
+	Result_void cv_dnn_Net_getLayerTypes_const_vector_String_R(const cv::dnn::Net* instance, std::vector<cv::String>* layersTypes) {
 		try {
 			instance->getLayerTypes(*layersTypes);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_dnn_Net_getLayersCount_const_const_StringX(const cv::dnn::Net* instance, const char* layerType) {
+	Result<int> cv_dnn_Net_getLayersCount_const_const_StringR(const cv::dnn::Net* instance, const char* layerType) {
 		try {
 			int ret = instance->getLayersCount(std::string(layerType));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_const_vector_MatShape_X_size_tR_size_tR(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, size_t* weights, size_t* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_const_vector_MatShape_R_size_tR_size_tR(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, size_t* weights, size_t* blobs) {
 		try {
 			instance->getMemoryConsumption(*netInputShapes, *weights, *blobs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_const_MatShapeX_size_tR_size_tR(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, size_t* weights, size_t* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_const_MatShapeR_size_tR_size_tR(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, size_t* weights, size_t* blobs) {
 		try {
 			instance->getMemoryConsumption(*netInputShape, *weights, *blobs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_int_const_vector_MatShape_X_size_tR_size_tR(const cv::dnn::Net* instance, int layerId, const std::vector<cv::dnn::MatShape>* netInputShapes, size_t* weights, size_t* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_int_const_vector_MatShape_R_size_tR_size_tR(const cv::dnn::Net* instance, int layerId, const std::vector<cv::dnn::MatShape>* netInputShapes, size_t* weights, size_t* blobs) {
 		try {
 			instance->getMemoryConsumption(layerId, *netInputShapes, *weights, *blobs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_int_const_MatShapeX_size_tR_size_tR(const cv::dnn::Net* instance, int layerId, const cv::dnn::MatShape* netInputShape, size_t* weights, size_t* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_int_const_MatShapeR_size_tR_size_tR(const cv::dnn::Net* instance, int layerId, const cv::dnn::MatShape* netInputShape, size_t* weights, size_t* blobs) {
 		try {
 			instance->getMemoryConsumption(layerId, *netInputShape, *weights, *blobs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_const_vector_MatShape_X_vector_int_X_vector_size_t_X_vector_size_t_X(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, std::vector<int>* layerIds, std::vector<size_t>* weights, std::vector<size_t>* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_const_vector_MatShape_R_vector_int_R_vector_size_t_R_vector_size_t_R(const cv::dnn::Net* instance, const std::vector<cv::dnn::MatShape>* netInputShapes, std::vector<int>* layerIds, std::vector<size_t>* weights, std::vector<size_t>* blobs) {
 		try {
 			instance->getMemoryConsumption(*netInputShapes, *layerIds, *weights, *blobs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Net_getMemoryConsumption_const_const_MatShapeX_vector_int_X_vector_size_t_X_vector_size_t_X(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, std::vector<int>* layerIds, std::vector<size_t>* weights, std::vector<size_t>* blobs) {
+	Result_void cv_dnn_Net_getMemoryConsumption_const_const_MatShapeR_vector_int_R_vector_size_t_R_vector_size_t_R(const cv::dnn::Net* instance, const cv::dnn::MatShape* netInputShape, std::vector<int>* layerIds, std::vector<size_t>* weights, std::vector<size_t>* blobs) {
 		try {
 			instance->getMemoryConsumption(*netInputShape, *layerIds, *weights, *blobs);
 			return Ok();
@@ -2108,7 +2108,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int64_t> cv_dnn_Net_getPerfProfile_vector_double_X(cv::dnn::Net* instance, std::vector<double>* timings) {
+	Result<int64_t> cv_dnn_Net_getPerfProfile_vector_double_R(cv::dnn::Net* instance, std::vector<double>* timings) {
 		try {
 			int64_t ret = instance->getPerfProfile(*timings);
 			return Ok(ret);
@@ -2160,7 +2160,7 @@ extern "C" {
 	void cv_NormalizeBBoxLayer_delete(cv::dnn::NormalizeBBoxLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::NormalizeBBoxLayer>*> cv_dnn_NormalizeBBoxLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::NormalizeBBoxLayer>*> cv_dnn_NormalizeBBoxLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::NormalizeBBoxLayer> ret = cv::dnn::NormalizeBBoxLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::NormalizeBBoxLayer>(ret));
@@ -2170,7 +2170,7 @@ extern "C" {
 	void cv_PaddingLayer_delete(cv::dnn::PaddingLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::PaddingLayer>*> cv_dnn_PaddingLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::PaddingLayer>*> cv_dnn_PaddingLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::PaddingLayer> ret = cv::dnn::PaddingLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::PaddingLayer>(ret));
@@ -2180,7 +2180,7 @@ extern "C" {
 	void cv_PermuteLayer_delete(cv::dnn::PermuteLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::PermuteLayer>*> cv_dnn_PermuteLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::PermuteLayer>*> cv_dnn_PermuteLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::PermuteLayer> ret = cv::dnn::PermuteLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::PermuteLayer>(ret));
@@ -2484,7 +2484,7 @@ extern "C" {
 	void cv_PoolingLayer_delete(cv::dnn::PoolingLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::PoolingLayer>*> cv_dnn_PoolingLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::PoolingLayer>*> cv_dnn_PoolingLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::PoolingLayer> ret = cv::dnn::PoolingLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::PoolingLayer>(ret));
@@ -2533,7 +2533,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::PowerLayer>*> cv_dnn_PowerLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::PowerLayer>*> cv_dnn_PowerLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::PowerLayer> ret = cv::dnn::PowerLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::PowerLayer>(ret));
@@ -2543,7 +2543,7 @@ extern "C" {
 	void cv_PriorBoxLayer_delete(cv::dnn::PriorBoxLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::PriorBoxLayer>*> cv_dnn_PriorBoxLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::PriorBoxLayer>*> cv_dnn_PriorBoxLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::PriorBoxLayer> ret = cv::dnn::PriorBoxLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::PriorBoxLayer>(ret));
@@ -2553,21 +2553,21 @@ extern "C" {
 	void cv_ProposalLayer_delete(cv::dnn::ProposalLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ProposalLayer>*> cv_dnn_ProposalLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ProposalLayer>*> cv_dnn_ProposalLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ProposalLayer> ret = cv::dnn::ProposalLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ProposalLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::ProposalLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::RNNLayer>*> cv_dnn_RNNLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::RNNLayer>*> cv_dnn_RNNLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::RNNLayer> ret = cv::dnn::RNNLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::RNNLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::RNNLayer>*>))
 	}
 	
-	Result_void cv_dnn_RNNLayer_setWeights_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX(cv::dnn::RNNLayer* instance, const cv::Mat* Wxh, const cv::Mat* bh, const cv::Mat* Whh, const cv::Mat* Who, const cv::Mat* bo) {
+	Result_void cv_dnn_RNNLayer_setWeights_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR(cv::dnn::RNNLayer* instance, const cv::Mat* Wxh, const cv::Mat* bh, const cv::Mat* Whh, const cv::Mat* Who, const cv::Mat* bo) {
 		try {
 			instance->setWeights(*Wxh, *bh, *Whh, *Who, *bo);
 			return Ok();
@@ -2609,7 +2609,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::ReLU6Layer>*> cv_dnn_ReLU6Layer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ReLU6Layer>*> cv_dnn_ReLU6Layer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ReLU6Layer> ret = cv::dnn::ReLU6Layer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ReLU6Layer>(ret));
@@ -2630,7 +2630,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::ReLULayer>*> cv_dnn_ReLULayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ReLULayer>*> cv_dnn_ReLULayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ReLULayer> ret = cv::dnn::ReLULayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ReLULayer>(ret));
@@ -2640,7 +2640,7 @@ extern "C" {
 	void cv_RegionLayer_delete(cv::dnn::RegionLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::RegionLayer>*> cv_dnn_RegionLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::RegionLayer>*> cv_dnn_RegionLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::RegionLayer> ret = cv::dnn::RegionLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::RegionLayer>(ret));
@@ -2650,7 +2650,7 @@ extern "C" {
 	void cv_ReorgLayer_delete(cv::dnn::ReorgLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ReorgLayer>*> cv_dnn_ReorgLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ReorgLayer>*> cv_dnn_ReorgLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ReorgLayer> ret = cv::dnn::ReorgLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ReorgLayer>(ret));
@@ -2688,7 +2688,7 @@ extern "C" {
 	void cv_ReshapeLayer_delete(cv::dnn::ReshapeLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ReshapeLayer>*> cv_dnn_ReshapeLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ReshapeLayer>*> cv_dnn_ReshapeLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ReshapeLayer> ret = cv::dnn::ReshapeLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ReshapeLayer>(ret));
@@ -2698,7 +2698,7 @@ extern "C" {
 	void cv_ResizeLayer_delete(cv::dnn::ResizeLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ResizeLayer>*> cv_dnn_ResizeLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ResizeLayer>*> cv_dnn_ResizeLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ResizeLayer> ret = cv::dnn::ResizeLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ResizeLayer>(ret));
@@ -2736,7 +2736,7 @@ extern "C" {
 	void cv_ScaleLayer_delete(cv::dnn::ScaleLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::ScaleLayer>*> cv_dnn_ScaleLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::ScaleLayer>*> cv_dnn_ScaleLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::ScaleLayer> ret = cv::dnn::ScaleLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::ScaleLayer>(ret));
@@ -2746,21 +2746,21 @@ extern "C" {
 	void cv_SegmentationModel_delete(cv::dnn::SegmentationModel* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::SegmentationModel*> cv_dnn_SegmentationModel_SegmentationModel_const_StringX_const_StringX(const char* model, const char* config) {
+	Result<cv::dnn::SegmentationModel*> cv_dnn_SegmentationModel_SegmentationModel_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::SegmentationModel* ret = new cv::dnn::SegmentationModel(std::string(model), std::string(config));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::SegmentationModel*>))
 	}
 	
-	Result<cv::dnn::SegmentationModel*> cv_dnn_SegmentationModel_SegmentationModel_const_NetX(const cv::dnn::Net* network) {
+	Result<cv::dnn::SegmentationModel*> cv_dnn_SegmentationModel_SegmentationModel_const_NetR(const cv::dnn::Net* network) {
 		try {
 			cv::dnn::SegmentationModel* ret = new cv::dnn::SegmentationModel(*network);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::SegmentationModel*>))
 	}
 	
-	Result_void cv_dnn_SegmentationModel_segment_const__InputArrayX_const__OutputArrayX(cv::dnn::SegmentationModel* instance, const cv::_InputArray* frame, const cv::_OutputArray* mask) {
+	Result_void cv_dnn_SegmentationModel_segment_const__InputArrayR_const__OutputArrayR(cv::dnn::SegmentationModel* instance, const cv::_InputArray* frame, const cv::_OutputArray* mask) {
 		try {
 			instance->segment(*frame, *mask);
 			return Ok();
@@ -2770,7 +2770,7 @@ extern "C" {
 	void cv_ShiftLayer_delete(cv::dnn::ShiftLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ShiftLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ShiftLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::ShiftLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
@@ -2794,14 +2794,14 @@ extern "C" {
 	void cv_ShuffleChannelLayer_delete(cv::dnn::ShuffleChannelLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ShuffleChannelLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_dnn_ShuffleChannelLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::ShuffleChannelLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::Layer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::SigmoidLayer>*> cv_dnn_SigmoidLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::SigmoidLayer>*> cv_dnn_SigmoidLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::SigmoidLayer> ret = cv::dnn::SigmoidLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::SigmoidLayer>(ret));
@@ -2853,7 +2853,7 @@ extern "C" {
 	void cv_SliceLayer_delete(cv::dnn::SliceLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::SliceLayer>*> cv_dnn_SliceLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::SliceLayer>*> cv_dnn_SliceLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::SliceLayer> ret = cv::dnn::SliceLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::SliceLayer>(ret));
@@ -2877,7 +2877,7 @@ extern "C" {
 	void cv_SoftmaxLayer_delete(cv::dnn::SoftmaxLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::SoftmaxLayer>*> cv_dnn_SoftmaxLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::SoftmaxLayer>*> cv_dnn_SoftmaxLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::SoftmaxLayer> ret = cv::dnn::SoftmaxLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::SoftmaxLayer>(ret));
@@ -2901,21 +2901,21 @@ extern "C" {
 	void cv_SplitLayer_delete(cv::dnn::SplitLayer* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::dnn::SplitLayer>*> cv_dnn_SplitLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::SplitLayer>*> cv_dnn_SplitLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::SplitLayer> ret = cv::dnn::SplitLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::SplitLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::SplitLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::SwishLayer>*> cv_dnn_SwishLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::SwishLayer>*> cv_dnn_SwishLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::SwishLayer> ret = cv::dnn::SwishLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::SwishLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::SwishLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::TanHLayer>*> cv_dnn_TanHLayer_create_const_LayerParamsX(const cv::dnn::LayerParams* params) {
+	Result<cv::Ptr<cv::dnn::TanHLayer>*> cv_dnn_TanHLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
 		try {
 			cv::Ptr<cv::dnn::TanHLayer> ret = cv::dnn::TanHLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::TanHLayer>(ret));
@@ -2925,7 +2925,7 @@ extern "C" {
 	void cv__Range_delete(cv::dnn::_Range* instance) {
 		delete instance;
 	}
-	Result<cv::dnn::_Range*> cv_dnn__Range__Range_const_RangeX(const cv::Range* r) {
+	Result<cv::dnn::_Range*> cv_dnn__Range__Range_const_RangeR(const cv::Range* r) {
 		try {
 			cv::dnn::_Range* ret = new cv::dnn::_Range(*r);
 			return Ok(ret);

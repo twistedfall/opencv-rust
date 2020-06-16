@@ -27,21 +27,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ClfMilBoost*>))
 	}
 	
-	Result_void cv_ClfMilBoost_init_const_ParamsX(cv::ClfMilBoost* instance, const cv::ClfMilBoost::Params* parameters) {
+	Result_void cv_ClfMilBoost_init_const_ParamsR(cv::ClfMilBoost* instance, const cv::ClfMilBoost::Params* parameters) {
 		try {
 			instance->init(*parameters);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ClfMilBoost_update_const_MatX_const_MatX(cv::ClfMilBoost* instance, const cv::Mat* posx, const cv::Mat* negx) {
+	Result_void cv_ClfMilBoost_update_const_MatR_const_MatR(cv::ClfMilBoost* instance, const cv::Mat* posx, const cv::Mat* negx) {
 		try {
 			instance->update(*posx, *negx);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<float>*> cv_ClfMilBoost_classify_const_MatX_bool(cv::ClfMilBoost* instance, const cv::Mat* x, bool logR) {
+	Result<std::vector<float>*> cv_ClfMilBoost_classify_const_MatR_bool(cv::ClfMilBoost* instance, const cv::Mat* x, bool logR) {
 		try {
 			std::vector<float> ret = instance->classify(*x, logR);
 			return Ok(new std::vector<float>(ret));
@@ -161,21 +161,21 @@ extern "C" {
 	}
 	#endif
 	
-	Result_void cv_CvFeatureParams_init_const_CvFeatureParamsX(cv::CvFeatureParams* instance, const cv::CvFeatureParams* fp) {
+	Result_void cv_CvFeatureParams_init_const_CvFeatureParamsR(cv::CvFeatureParams* instance, const cv::CvFeatureParams* fp) {
 		try {
 			instance->init(*fp);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CvFeatureParams_write_const_FileStorageX(const cv::CvFeatureParams* instance, cv::FileStorage* fs) {
+	Result_void cv_CvFeatureParams_write_const_FileStorageR(const cv::CvFeatureParams* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_CvFeatureParams_read_const_FileNodeX(cv::CvFeatureParams* instance, const cv::FileNode* node) {
+	Result<bool> cv_CvFeatureParams_read_const_FileNodeR(cv::CvFeatureParams* instance, const cv::FileNode* node) {
 		try {
 			bool ret = instance->read(*node);
 			return Ok(ret);
@@ -201,14 +201,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CvHaarEvaluator_setImage_const_MatX_unsigned_char_int(cv::CvHaarEvaluator* instance, const cv::Mat* img, unsigned char clsLabel, int idx) {
+	Result_void cv_CvHaarEvaluator_setImage_const_MatR_unsigned_char_int(cv::CvHaarEvaluator* instance, const cv::Mat* img, unsigned char clsLabel, int idx) {
 		try {
 			instance->setImage(*img, clsLabel, idx);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CvHaarEvaluator_writeFeatures_const_FileStorageX_const_MatX(const cv::CvHaarEvaluator* instance, cv::FileStorage* fs, const cv::Mat* featureMap) {
+	Result_void cv_CvHaarEvaluator_writeFeatures_const_FileStorageR_const_MatR(const cv::CvHaarEvaluator* instance, cv::FileStorage* fs, const cv::Mat* featureMap) {
 		try {
 			instance->writeFeatures(*fs, *featureMap);
 			return Ok();
@@ -216,7 +216,7 @@ extern "C" {
 	}
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_CvHaarEvaluator_writeFeature_const_FileStorageX(const cv::CvHaarEvaluator* instance, cv::FileStorage* fs) {
+	Result_void cv_CvHaarEvaluator_writeFeature_const_FileStorageR(const cv::CvHaarEvaluator* instance, cv::FileStorage* fs) {
 		try {
 			instance->writeFeature(*fs);
 			return Ok();
@@ -285,7 +285,7 @@ extern "C" {
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<bool> cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatX_Rect_floatX(const cv::CvHaarEvaluator::FeatureHaar* instance, const cv::Mat* image, const cv::Rect* ROI, float* result) {
+	Result<bool> cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(const cv::CvHaarEvaluator::FeatureHaar* instance, const cv::Mat* image, const cv::Rect* ROI, float* result) {
 		try {
 			bool ret = instance->eval(*image, *ROI, result);
 			return Ok(ret);
@@ -355,28 +355,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MultiTracker*>))
 	}
 	
-	Result<bool> cv_MultiTracker_add_Ptr_Tracker__const__InputArrayX_const_Rect2dX(cv::MultiTracker* instance, cv::Ptr<cv::Tracker>* newTracker, const cv::_InputArray* image, const cv::Rect2d* boundingBox) {
+	Result<bool> cv_MultiTracker_add_Ptr_Tracker__const__InputArrayR_const_Rect2dR(cv::MultiTracker* instance, cv::Ptr<cv::Tracker>* newTracker, const cv::_InputArray* image, const cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->add(*newTracker, *image, *boundingBox);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_MultiTracker_add_vector_Ptr_Tracker___const__InputArrayX_vector_Rect2d_(cv::MultiTracker* instance, std::vector<cv::Ptr<cv::Tracker>>* newTrackers, const cv::_InputArray* image, std::vector<cv::Rect2d>* boundingBox) {
+	Result<bool> cv_MultiTracker_add_vector_Ptr_Tracker___const__InputArrayR_vector_Rect2d_(cv::MultiTracker* instance, std::vector<cv::Ptr<cv::Tracker>>* newTrackers, const cv::_InputArray* image, std::vector<cv::Rect2d>* boundingBox) {
 		try {
 			bool ret = instance->add(*newTrackers, *image, *boundingBox);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_MultiTracker_update_const__InputArrayX(cv::MultiTracker* instance, const cv::_InputArray* image) {
+	Result<bool> cv_MultiTracker_update_const__InputArrayR(cv::MultiTracker* instance, const cv::_InputArray* image) {
 		try {
 			bool ret = instance->update(*image);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_MultiTracker_update_const__InputArrayX_vector_Rect2d_X(cv::MultiTracker* instance, const cv::_InputArray* image, std::vector<cv::Rect2d>* boundingBox) {
+	Result<bool> cv_MultiTracker_update_const__InputArrayR_vector_Rect2d_R(cv::MultiTracker* instance, const cv::_InputArray* image, std::vector<cv::Rect2d>* boundingBox) {
 		try {
 			bool ret = instance->update(*image, *boundingBox);
 			return Ok(ret);
@@ -400,7 +400,7 @@ extern "C" {
 	void cv_MultiTrackerTLD_delete(cv::MultiTrackerTLD* instance) {
 		delete instance;
 	}
-	Result<bool> cv_MultiTrackerTLD_update_opt_const__InputArrayX(cv::MultiTrackerTLD* instance, const cv::_InputArray* image) {
+	Result<bool> cv_MultiTrackerTLD_update_opt_const__InputArrayR(cv::MultiTrackerTLD* instance, const cv::_InputArray* image) {
 		try {
 			bool ret = instance->update_opt(*image);
 			return Ok(ret);
@@ -473,49 +473,49 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MultiTracker_Alt*>))
 	}
 	
-	Result<bool> cv_MultiTracker_Alt_addTarget_const__InputArrayX_const_Rect2dX_Ptr_Tracker_(cv::MultiTracker_Alt* instance, const cv::_InputArray* image, const cv::Rect2d* boundingBox, cv::Ptr<cv::Tracker>* tracker_algorithm) {
+	Result<bool> cv_MultiTracker_Alt_addTarget_const__InputArrayR_const_Rect2dR_Ptr_Tracker_(cv::MultiTracker_Alt* instance, const cv::_InputArray* image, const cv::Rect2d* boundingBox, cv::Ptr<cv::Tracker>* tracker_algorithm) {
 		try {
 			bool ret = instance->addTarget(*image, *boundingBox, *tracker_algorithm);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_MultiTracker_Alt_update_const__InputArrayX(cv::MultiTracker_Alt* instance, const cv::_InputArray* image) {
+	Result<bool> cv_MultiTracker_Alt_update_const__InputArrayR(cv::MultiTracker_Alt* instance, const cv::_InputArray* image) {
 		try {
 			bool ret = instance->update(*image);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_Tracker_init_const__InputArrayX_const_Rect2dX(cv::Tracker* instance, const cv::_InputArray* image, const cv::Rect2d* boundingBox) {
+	Result<bool> cv_Tracker_init_const__InputArrayR_const_Rect2dR(cv::Tracker* instance, const cv::_InputArray* image, const cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->init(*image, *boundingBox);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_Tracker_update_const__InputArrayX_Rect2dX(cv::Tracker* instance, const cv::_InputArray* image, cv::Rect2d* boundingBox) {
+	Result<bool> cv_Tracker_update_const__InputArrayR_Rect2dR(cv::Tracker* instance, const cv::_InputArray* image, cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->update(*image, *boundingBox);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_Tracker_read_const_FileNodeX(cv::Tracker* instance, const cv::FileNode* fn) {
+	Result_void cv_Tracker_read_const_FileNodeR(cv::Tracker* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_Tracker_write_const_FileStorageX(const cv::Tracker* instance, cv::FileStorage* fs) {
+	Result_void cv_Tracker_write_const_FileStorageR(const cv::Tracker* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::TrackerBoosting>*> cv_TrackerBoosting_create_const_ParamsX(const cv::TrackerBoosting::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerBoosting>*> cv_TrackerBoosting_create_const_ParamsR(const cv::TrackerBoosting::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerBoosting> ret = cv::TrackerBoosting::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerBoosting>(ret));
@@ -609,21 +609,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerBoosting::Params*>))
 	}
 	
-	Result_void cv_TrackerBoosting_Params_read_const_FileNodeX(cv::TrackerBoosting::Params* instance, const cv::FileNode* fn) {
+	Result_void cv_TrackerBoosting_Params_read_const_FileNodeR(cv::TrackerBoosting::Params* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerBoosting_Params_write_const_FileStorageX(const cv::TrackerBoosting::Params* instance, cv::FileStorage* fs) {
+	Result_void cv_TrackerBoosting_Params_write_const_FileStorageR(const cv::TrackerBoosting::Params* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::TrackerCSRT>*> cv_TrackerCSRT_create_const_ParamsX(const cv::TrackerCSRT::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerCSRT>*> cv_TrackerCSRT_create_const_ParamsR(const cv::TrackerCSRT::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerCSRT> ret = cv::TrackerCSRT::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerCSRT>(ret));
@@ -637,7 +637,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerCSRT>*>))
 	}
 	
-	Result_void cv_TrackerCSRT_setInitialMask_const__InputArrayX(cv::TrackerCSRT* instance, const cv::_InputArray* mask) {
+	Result_void cv_TrackerCSRT_setInitialMask_const__InputArrayR(cv::TrackerCSRT* instance, const cv::_InputArray* mask) {
 		try {
 			instance->setInitialMask(*mask);
 			return Ok();
@@ -1032,35 +1032,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerCSRT::Params*>))
 	}
 	
-	Result_void cv_TrackerCSRT_Params_read_const_FileNodeX(cv::TrackerCSRT::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_TrackerCSRT_Params_read_const_FileNodeR(cv::TrackerCSRT::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerCSRT_Params_write_const_FileStorageX(const cv::TrackerCSRT::Params* instance, cv::FileStorage* fs) {
+	Result_void cv_TrackerCSRT_Params_write_const_FileStorageR(const cv::TrackerCSRT::Params* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerFeature_compute_const_vector_Mat_X_MatX(cv::TrackerFeature* instance, const std::vector<cv::Mat>* images, cv::Mat* response) {
+	Result_void cv_TrackerFeature_compute_const_vector_Mat_R_MatR(cv::TrackerFeature* instance, const std::vector<cv::Mat>* images, cv::Mat* response) {
 		try {
 			instance->compute(*images, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::TrackerFeature>*> cv_TrackerFeature_create_const_StringX(const char* trackerFeatureType) {
+	Result<cv::Ptr<cv::TrackerFeature>*> cv_TrackerFeature_create_const_StringR(const char* trackerFeatureType) {
 		try {
 			cv::Ptr<cv::TrackerFeature> ret = cv::TrackerFeature::create(std::string(trackerFeatureType));
 			return Ok(new cv::Ptr<cv::TrackerFeature>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerFeature>*>))
 	}
 	
-	Result_void cv_TrackerFeature_selection_MatX_int(cv::TrackerFeature* instance, cv::Mat* response, int npoints) {
+	Result_void cv_TrackerFeature_selection_MatR_int(cv::TrackerFeature* instance, cv::Mat* response, int npoints) {
 		try {
 			instance->selection(*response, npoints);
 			return Ok();
@@ -1084,7 +1084,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureFeature2d*>))
 	}
 	
-	Result_void cv_TrackerFeatureFeature2d_selection_MatX_int(cv::TrackerFeatureFeature2d* instance, cv::Mat* response, int npoints) {
+	Result_void cv_TrackerFeatureFeature2d_selection_MatR_int(cv::TrackerFeatureFeature2d* instance, cv::Mat* response, int npoints) {
 		try {
 			instance->selection(*response, npoints);
 			return Ok();
@@ -1094,21 +1094,21 @@ extern "C" {
 	void cv_TrackerFeatureHAAR_delete(cv::TrackerFeatureHAAR* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerFeatureHAAR*> cv_TrackerFeatureHAAR_TrackerFeatureHAAR_const_ParamsX(const cv::TrackerFeatureHAAR::Params* parameters) {
+	Result<cv::TrackerFeatureHAAR*> cv_TrackerFeatureHAAR_TrackerFeatureHAAR_const_ParamsR(const cv::TrackerFeatureHAAR::Params* parameters) {
 		try {
 			cv::TrackerFeatureHAAR* ret = new cv::TrackerFeatureHAAR(*parameters);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureHAAR*>))
 	}
 	
-	Result<bool> cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_X_MatX(cv::TrackerFeatureHAAR* instance, const std::vector<int>* selFeatures, const std::vector<cv::Mat>* images, cv::Mat* response) {
+	Result<bool> cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_R_MatR(cv::TrackerFeatureHAAR* instance, const std::vector<int>* selFeatures, const std::vector<cv::Mat>* images, cv::Mat* response) {
 		try {
 			bool ret = instance->extractSelected(*selFeatures, *images, *response);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_TrackerFeatureHAAR_selection_MatX_int(cv::TrackerFeatureHAAR* instance, cv::Mat* response, int npoints) {
+	Result_void cv_TrackerFeatureHAAR_selection_MatR_int(cv::TrackerFeatureHAAR* instance, cv::Mat* response, int npoints) {
 		try {
 			instance->selection(*response, npoints);
 			return Ok();
@@ -1122,7 +1122,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_TrackerFeatureHAAR_swapFeature_int_FeatureHaarX(cv::TrackerFeatureHAAR* instance, int id, cv::CvHaarEvaluator::FeatureHaar* feature) {
+	Result<bool> cv_TrackerFeatureHAAR_swapFeature_int_FeatureHaarR(cv::TrackerFeatureHAAR* instance, int id, cv::CvHaarEvaluator::FeatureHaar* feature) {
 		try {
 			bool ret = instance->swapFeature(id, *feature);
 			return Ok(ret);
@@ -1198,7 +1198,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureHOG*>))
 	}
 	
-	Result_void cv_TrackerFeatureHOG_selection_MatX_int(cv::TrackerFeatureHOG* instance, cv::Mat* response, int npoints) {
+	Result_void cv_TrackerFeatureHOG_selection_MatR_int(cv::TrackerFeatureHOG* instance, cv::Mat* response, int npoints) {
 		try {
 			instance->selection(*response, npoints);
 			return Ok();
@@ -1215,7 +1215,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureLBP*>))
 	}
 	
-	Result_void cv_TrackerFeatureLBP_selection_MatX_int(cv::TrackerFeatureLBP* instance, cv::Mat* response, int npoints) {
+	Result_void cv_TrackerFeatureLBP_selection_MatR_int(cv::TrackerFeatureLBP* instance, cv::Mat* response, int npoints) {
 		try {
 			instance->selection(*response, npoints);
 			return Ok();
@@ -1232,7 +1232,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureSet*>))
 	}
 	
-	Result_void cv_TrackerFeatureSet_extraction_const_vector_Mat_X(cv::TrackerFeatureSet* instance, const std::vector<cv::Mat>* images) {
+	Result_void cv_TrackerFeatureSet_extraction_const_vector_Mat_R(cv::TrackerFeatureSet* instance, const std::vector<cv::Mat>* images) {
 		try {
 			instance->extraction(*images);
 			return Ok();
@@ -1260,7 +1260,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_TrackerFeatureSet_addTrackerFeature_Ptr_TrackerFeature_X(cv::TrackerFeatureSet* instance, cv::Ptr<cv::TrackerFeature>* feature) {
+	Result<bool> cv_TrackerFeatureSet_addTrackerFeature_Ptr_TrackerFeature_R(cv::TrackerFeatureSet* instance, cv::Ptr<cv::TrackerFeature>* feature) {
 		try {
 			bool ret = instance->addTrackerFeature(*feature);
 			return Ok(ret);
@@ -1274,7 +1274,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result<cv::Ptr<cv::TrackerGOTURN>*> cv_TrackerGOTURN_create_const_ParamsX(const cv::TrackerGOTURN::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerGOTURN>*> cv_TrackerGOTURN_create_const_ParamsR(const cv::TrackerGOTURN::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerGOTURN> ret = cv::TrackerGOTURN::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerGOTURN>(ret));
@@ -1298,28 +1298,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerGOTURN::Params*>))
 	}
 	
-	Result_void cv_TrackerGOTURN_Params_read_const_FileNodeX(cv::TrackerGOTURN::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_TrackerGOTURN_Params_read_const_FileNodeR(cv::TrackerGOTURN::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerGOTURN_Params_write_const_FileStorageX(const cv::TrackerGOTURN::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_TrackerGOTURN_Params_write_const_FileStorageR(const cv::TrackerGOTURN::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_Mat__bool(cv::TrackerKCF* instance, void (*unnamed)(cv::Mat, cv::Rect, cv::Mat&), bool pca_func) {
+	Result_void cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_MatR__bool(cv::TrackerKCF* instance, void (*unnamed)(cv::Mat, cv::Rect, cv::Mat&), bool pca_func) {
 		try {
 			instance->setFeatureExtractor(unnamed, pca_func);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::TrackerKCF>*> cv_TrackerKCF_create_const_ParamsX(const cv::TrackerKCF::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerKCF>*> cv_TrackerKCF_create_const_ParamsR(const cv::TrackerKCF::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerKCF> ret = cv::TrackerKCF::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerKCF>(ret));
@@ -1539,21 +1539,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerKCF::Params*>))
 	}
 	
-	Result_void cv_TrackerKCF_Params_read_const_FileNodeX(cv::TrackerKCF::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_TrackerKCF_Params_read_const_FileNodeR(cv::TrackerKCF::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerKCF_Params_write_const_FileStorageX(const cv::TrackerKCF::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_TrackerKCF_Params_write_const_FileStorageR(const cv::TrackerKCF::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::TrackerMIL>*> cv_TrackerMIL_create_const_ParamsX(const cv::TrackerMIL::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerMIL>*> cv_TrackerMIL_create_const_ParamsR(const cv::TrackerMIL::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerMIL> ret = cv::TrackerMIL::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerMIL>(ret));
@@ -1675,14 +1675,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerMIL::Params*>))
 	}
 	
-	Result_void cv_TrackerMIL_Params_read_const_FileNodeX(cv::TrackerMIL::Params* instance, const cv::FileNode* fn) {
+	Result_void cv_TrackerMIL_Params_read_const_FileNodeR(cv::TrackerMIL::Params* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerMIL_Params_write_const_FileStorageX(const cv::TrackerMIL::Params* instance, cv::FileStorage* fs) {
+	Result_void cv_TrackerMIL_Params_write_const_FileStorageR(const cv::TrackerMIL::Params* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -1696,7 +1696,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerMOSSE>*>))
 	}
 	
-	Result<cv::Ptr<cv::TrackerMedianFlow>*> cv_TrackerMedianFlow_create_const_ParamsX(const cv::TrackerMedianFlow::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerMedianFlow>*> cv_TrackerMedianFlow_create_const_ParamsR(const cv::TrackerMedianFlow::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerMedianFlow> ret = cv::TrackerMedianFlow::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerMedianFlow>(ret));
@@ -1804,14 +1804,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerMedianFlow::Params*>))
 	}
 	
-	Result_void cv_TrackerMedianFlow_Params_read_const_FileNodeX(cv::TrackerMedianFlow::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_TrackerMedianFlow_Params_read_const_FileNodeR(cv::TrackerMedianFlow::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerMedianFlow_Params_write_const_FileStorageX(const cv::TrackerMedianFlow::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_TrackerMedianFlow_Params_write_const_FileStorageR(const cv::TrackerMedianFlow::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
@@ -1825,7 +1825,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_TrackerModel_modelEstimation_const_vector_Mat_X(cv::TrackerModel* instance, const std::vector<cv::Mat>* responses) {
+	Result_void cv_TrackerModel_modelEstimation_const_vector_Mat_R(cv::TrackerModel* instance, const std::vector<cv::Mat>* responses) {
 		try {
 			instance->modelEstimation(*responses);
 			return Ok();
@@ -1846,7 +1846,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_TrackerModel_setLastTargetState_const_Ptr_TrackerTargetState_X(cv::TrackerModel* instance, const cv::Ptr<cv::TrackerTargetState>* lastTargetState) {
+	Result_void cv_TrackerModel_setLastTargetState_const_Ptr_TrackerTargetState_R(cv::TrackerModel* instance, const cv::Ptr<cv::TrackerTargetState>* lastTargetState) {
 		try {
 			instance->setLastTargetState(*lastTargetState);
 			return Ok();
@@ -1877,7 +1877,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSampler*>))
 	}
 	
-	Result_void cv_TrackerSampler_sampling_const_MatX_Rect(cv::TrackerSampler* instance, const cv::Mat* image, const cv::Rect* boundingBox) {
+	Result_void cv_TrackerSampler_sampling_const_MatR_Rect(cv::TrackerSampler* instance, const cv::Mat* image, const cv::Rect* boundingBox) {
 		try {
 			instance->sampling(*image, *boundingBox);
 			return Ok();
@@ -1898,21 +1898,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_TrackerSampler_addTrackerSamplerAlgorithm_Ptr_TrackerSamplerAlgorithm_X(cv::TrackerSampler* instance, cv::Ptr<cv::TrackerSamplerAlgorithm>* sampler) {
+	Result<bool> cv_TrackerSampler_addTrackerSamplerAlgorithm_Ptr_TrackerSamplerAlgorithm_R(cv::TrackerSampler* instance, cv::Ptr<cv::TrackerSamplerAlgorithm>* sampler) {
 		try {
 			bool ret = instance->addTrackerSamplerAlgorithm(*sampler);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<cv::Ptr<cv::TrackerSamplerAlgorithm>*> cv_TrackerSamplerAlgorithm_create_const_StringX(const char* trackerSamplerType) {
+	Result<cv::Ptr<cv::TrackerSamplerAlgorithm>*> cv_TrackerSamplerAlgorithm_create_const_StringR(const char* trackerSamplerType) {
 		try {
 			cv::Ptr<cv::TrackerSamplerAlgorithm> ret = cv::TrackerSamplerAlgorithm::create(std::string(trackerSamplerType));
 			return Ok(new cv::Ptr<cv::TrackerSamplerAlgorithm>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerSamplerAlgorithm>*>))
 	}
 	
-	Result<bool> cv_TrackerSamplerAlgorithm_sampling_const_MatX_Rect_vector_Mat_X(cv::TrackerSamplerAlgorithm* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
+	Result<bool> cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerAlgorithm* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
 		try {
 			bool ret = instance->sampling(*image, *boundingBox, *sample);
 			return Ok(ret);
@@ -1929,7 +1929,7 @@ extern "C" {
 	void cv_TrackerSamplerCS_delete(cv::TrackerSamplerCS* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerSamplerCS*> cv_TrackerSamplerCS_TrackerSamplerCS_const_ParamsX(const cv::TrackerSamplerCS::Params* parameters) {
+	Result<cv::TrackerSamplerCS*> cv_TrackerSamplerCS_TrackerSamplerCS_const_ParamsR(const cv::TrackerSamplerCS::Params* parameters) {
 		try {
 			cv::TrackerSamplerCS* ret = new cv::TrackerSamplerCS(*parameters);
 			return Ok(ret);
@@ -1943,7 +1943,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_TrackerSamplerCS_samplingImpl_const_MatX_Rect_vector_Mat_X(cv::TrackerSamplerCS* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
+	Result<bool> cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerCS* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
 		try {
 			bool ret = instance->samplingImpl(*image, *boundingBox, *sample);
 			return Ok(ret);
@@ -1998,7 +1998,7 @@ extern "C" {
 	void cv_TrackerSamplerCSC_delete(cv::TrackerSamplerCSC* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerSamplerCSC*> cv_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsX(const cv::TrackerSamplerCSC::Params* parameters) {
+	Result<cv::TrackerSamplerCSC*> cv_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsR(const cv::TrackerSamplerCSC::Params* parameters) {
 		try {
 			cv::TrackerSamplerCSC* ret = new cv::TrackerSamplerCSC(*parameters);
 			return Ok(ret);
@@ -2109,7 +2109,7 @@ extern "C" {
 	void cv_TrackerSamplerPF_delete(cv::TrackerSamplerPF* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerSamplerPF*> cv_TrackerSamplerPF_TrackerSamplerPF_const_MatX_const_ParamsX(const cv::Mat* chosenRect, const cv::TrackerSamplerPF::Params* parameters) {
+	Result<cv::TrackerSamplerPF*> cv_TrackerSamplerPF_TrackerSamplerPF_const_MatR_const_ParamsR(const cv::Mat* chosenRect, const cv::TrackerSamplerPF::Params* parameters) {
 		try {
 			cv::TrackerSamplerPF* ret = new cv::TrackerSamplerPF(*chosenRect, *parameters);
 			return Ok(ret);
@@ -2182,7 +2182,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerPF::Params*>))
 	}
 	
-	Result<cv::Ptr<cv::TrackerStateEstimator>*> cv_TrackerStateEstimator_create_const_StringX(const char* trackeStateEstimatorType) {
+	Result<cv::Ptr<cv::TrackerStateEstimator>*> cv_TrackerStateEstimator_create_const_StringR(const char* trackeStateEstimatorType) {
 		try {
 			cv::Ptr<cv::TrackerStateEstimator> ret = cv::TrackerStateEstimator::create(std::string(trackeStateEstimatorType));
 			return Ok(new cv::Ptr<cv::TrackerStateEstimator>(ret));
@@ -2199,7 +2199,7 @@ extern "C" {
 	void cv_TrackerStateEstimatorAdaBoosting_delete(cv::TrackerStateEstimatorAdaBoosting* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerStateEstimatorAdaBoosting*> cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectX(int numClassifer, int initIterations, int nFeatures, const cv::Size* patchSize, const cv::Rect* ROI) {
+	Result<cv::TrackerStateEstimatorAdaBoosting*> cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(int numClassifer, int initIterations, int nFeatures, const cv::Size* patchSize, const cv::Rect* ROI) {
 		try {
 			cv::TrackerStateEstimatorAdaBoosting* ret = new cv::TrackerStateEstimatorAdaBoosting(numClassifer, initIterations, nFeatures, *patchSize, *ROI);
 			return Ok(ret);
@@ -2213,7 +2213,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_TrackerStateEstimatorAdaBoosting_setSampleROI_const_RectX(cv::TrackerStateEstimatorAdaBoosting* instance, const cv::Rect* ROI) {
+	Result_void cv_TrackerStateEstimatorAdaBoosting_setSampleROI_const_RectR(cv::TrackerStateEstimatorAdaBoosting* instance, const cv::Rect* ROI) {
 		try {
 			instance->setSampleROI(*ROI);
 			return Ok();
@@ -2245,7 +2245,7 @@ extern "C" {
 		delete instance;
 	}
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState*> cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fX_int_int_bool_const_MatX(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* responses) {
+	Result<cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState*> cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fR_int_int_bool_const_MatR(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* responses) {
 		try {
 			cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState* ret = new cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState(*position, width, height, foreground, *responses);
 			return Ok(ret);
@@ -2254,7 +2254,7 @@ extern "C" {
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_setTargetResponses_const_MatX(cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState* instance, const cv::Mat* responses) {
+	Result_void cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_setTargetResponses_const_MatR(cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState* instance, const cv::Mat* responses) {
 		try {
 			instance->setTargetResponses(*responses);
 			return Ok();
@@ -2303,7 +2303,7 @@ extern "C" {
 		delete instance;
 	}
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState*> cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_TrackerMILTargetState_const_Point2fX_int_int_bool_const_MatX(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* features) {
+	Result<cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState*> cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_TrackerMILTargetState_const_Point2fR_int_int_bool_const_MatR(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* features) {
 		try {
 			cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState* ret = new cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState(*position, width, height, foreground, *features);
 			return Ok(ret);
@@ -2321,7 +2321,7 @@ extern "C" {
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setFeatures_const_MatX(cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState* instance, const cv::Mat* features) {
+	Result_void cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setFeatures_const_MatR(cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState* instance, const cv::Mat* features) {
 		try {
 			instance->setFeatures(*features);
 			return Ok();
@@ -2357,7 +2357,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorSVM*>))
 	}
 	
-	Result<cv::Ptr<cv::TrackerTLD>*> cv_TrackerTLD_create_const_ParamsX(const cv::TrackerTLD::Params* parameters) {
+	Result<cv::Ptr<cv::TrackerTLD>*> cv_TrackerTLD_create_const_ParamsR(const cv::TrackerTLD::Params* parameters) {
 		try {
 			cv::Ptr<cv::TrackerTLD> ret = cv::TrackerTLD::create(*parameters);
 			return Ok(new cv::Ptr<cv::TrackerTLD>(ret));
@@ -2381,14 +2381,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerTLD::Params*>))
 	}
 	
-	Result_void cv_TrackerTLD_Params_read_const_FileNodeX(cv::TrackerTLD::Params* instance, const cv::FileNode* unnamed) {
+	Result_void cv_TrackerTLD_Params_read_const_FileNodeR(cv::TrackerTLD::Params* instance, const cv::FileNode* unnamed) {
 		try {
 			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerTLD_Params_write_const_FileStorageX(const cv::TrackerTLD::Params* instance, cv::FileStorage* unnamed) {
+	Result_void cv_TrackerTLD_Params_write_const_FileStorageR(const cv::TrackerTLD::Params* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
@@ -2405,7 +2405,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result_void cv_TrackerTargetState_setTargetPosition_const_Point2fX(cv::TrackerTargetState* instance, const cv::Point2f* position) {
+	Result_void cv_TrackerTargetState_setTargetPosition_const_Point2fR(cv::TrackerTargetState* instance, const cv::Point2f* position) {
 		try {
 			instance->setTargetPosition(*position);
 			return Ok();

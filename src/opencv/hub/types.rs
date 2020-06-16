@@ -10,13 +10,13 @@ mod aruco_types {
 	}
 	
 	impl PtrOfBoard {
-		pub fn as_raw_PtrOfBoard(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBoard(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::aruco::BoardTrait for PtrOfBoard {
-		fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfCharucoBoard = core::Ptr::<crate::aruco::CharucoBoard>;
@@ -26,18 +26,18 @@ mod aruco_types {
 	}
 	
 	impl PtrOfCharucoBoard {
-		pub fn as_raw_PtrOfCharucoBoard(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfCharucoBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfCharucoBoard(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCharucoBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::aruco::BoardTrait for PtrOfCharucoBoard {
-		fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::aruco::CharucoBoardTrait for PtrOfCharucoBoard {
-		fn as_raw_CharucoBoard(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CharucoBoard(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetectorParameters = core::Ptr::<crate::aruco::DetectorParameters>;
@@ -47,13 +47,13 @@ mod aruco_types {
 	}
 	
 	impl PtrOfDetectorParameters {
-		pub fn as_raw_PtrOfDetectorParameters(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetectorParameters(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::aruco::DetectorParametersTrait for PtrOfDetectorParameters {
-		fn as_raw_DetectorParameters(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DetectorParameters(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDictionary = core::Ptr::<crate::aruco::Dictionary>;
@@ -63,13 +63,13 @@ mod aruco_types {
 	}
 	
 	impl PtrOfDictionary {
-		pub fn as_raw_PtrOfDictionary(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDictionary(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::aruco::DictionaryTrait for PtrOfDictionary {
-		fn as_raw_Dictionary(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Dictionary(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGridBoard = core::Ptr::<crate::aruco::GridBoard>;
@@ -79,18 +79,18 @@ mod aruco_types {
 	}
 	
 	impl PtrOfGridBoard {
-		pub fn as_raw_PtrOfGridBoard(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGridBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGridBoard(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGridBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::aruco::BoardTrait for PtrOfGridBoard {
-		fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Board(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::aruco::GridBoardTrait for PtrOfGridBoard {
-		fn as_raw_GridBoard(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GridBoard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GridBoard(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GridBoard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -108,23 +108,23 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorCNT {
-		pub fn as_raw_PtrOfBackgroundSubtractorCNT(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorCNT(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorCNT(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorCNT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorCNT {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorCNT {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::BackgroundSubtractorCNT for PtrOfBackgroundSubtractorCNT {
-		fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackgroundSubtractorGMG = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>;
@@ -134,23 +134,23 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorGMG {
-		pub fn as_raw_PtrOfBackgroundSubtractorGMG(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorGMG(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorGMG(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorGMG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorGMG {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorGMG {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::BackgroundSubtractorGMG for PtrOfBackgroundSubtractorGMG {
-		fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackgroundSubtractorGSOC = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGSOC>;
@@ -160,23 +160,23 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorGSOC {
-		pub fn as_raw_PtrOfBackgroundSubtractorGSOC(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorGSOC(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorGSOC {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorGSOC {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::BackgroundSubtractorGSOC for PtrOfBackgroundSubtractorGSOC {
-		fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackgroundSubtractorLSBP = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorLSBP>;
@@ -186,23 +186,23 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorLSBP {
-		pub fn as_raw_PtrOfBackgroundSubtractorLSBP(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorLSBP(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorLSBP {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorLSBP {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::BackgroundSubtractorLSBP for PtrOfBackgroundSubtractorLSBP {
-		fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackgroundSubtractorMOG = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>;
@@ -212,23 +212,23 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorMOG {
-		pub fn as_raw_PtrOfBackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorMOG {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorMOG {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::BackgroundSubtractorMOG for PtrOfBackgroundSubtractorMOG {
-		fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSyntheticSequenceGenerator = core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>;
@@ -238,18 +238,18 @@ mod bgsegm_types {
 	}
 	
 	impl PtrOfSyntheticSequenceGenerator {
-		pub fn as_raw_PtrOfSyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSyntheticSequenceGenerator {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bgsegm::SyntheticSequenceGeneratorTrait for PtrOfSyntheticSequenceGenerator {
-		fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -267,18 +267,18 @@ mod bioinspired_types {
 	}
 	
 	impl PtrOfRetina {
-		pub fn as_raw_PtrOfRetina(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRetina(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRetina(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRetina(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRetina {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bioinspired::Retina for PtrOfRetina {
-		fn as_raw_Retina(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Retina(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Retina(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Retina(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRetinaFastToneMapping = core::Ptr::<dyn crate::bioinspired::RetinaFastToneMapping>;
@@ -288,18 +288,18 @@ mod bioinspired_types {
 	}
 	
 	impl PtrOfRetinaFastToneMapping {
-		pub fn as_raw_PtrOfRetinaFastToneMapping(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRetinaFastToneMapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRetinaFastToneMapping(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRetinaFastToneMapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRetinaFastToneMapping {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bioinspired::RetinaFastToneMapping for PtrOfRetinaFastToneMapping {
-		fn as_raw_RetinaFastToneMapping(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RetinaFastToneMapping(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTransientAreasSegmentationModule = core::Ptr::<dyn crate::bioinspired::TransientAreasSegmentationModule>;
@@ -309,18 +309,18 @@ mod bioinspired_types {
 	}
 	
 	impl PtrOfTransientAreasSegmentationModule {
-		pub fn as_raw_PtrOfTransientAreasSegmentationModule(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTransientAreasSegmentationModule(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTransientAreasSegmentationModule(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTransientAreasSegmentationModule(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTransientAreasSegmentationModule {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientAreasSegmentationModule {
-		fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -337,18 +337,18 @@ mod calib3d_types {
 	}
 	
 	impl PtrOfLMSolver {
-		pub fn as_raw_PtrOfLMSolver(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLMSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLMSolver(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLMSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLMSolver {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::LMSolver for PtrOfLMSolver {
-		fn as_raw_LMSolver(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LMSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LMSolver(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LMSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLMSolver_Callback = core::Ptr::<dyn crate::calib3d::LMSolver_Callback>;
@@ -358,13 +358,13 @@ mod calib3d_types {
 	}
 	
 	impl PtrOfLMSolver_Callback {
-		pub fn as_raw_PtrOfLMSolver_Callback(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLMSolver_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLMSolver_Callback(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLMSolver_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::calib3d::LMSolver_Callback for PtrOfLMSolver_Callback {
-		fn as_raw_LMSolver_Callback(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LMSolver_Callback(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStereoBM = core::Ptr::<dyn crate::calib3d::StereoBM>;
@@ -374,23 +374,23 @@ mod calib3d_types {
 	}
 	
 	impl PtrOfStereoBM {
-		pub fn as_raw_PtrOfStereoBM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStereoBM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStereoBM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::StereoBM for PtrOfStereoBM {
-		fn as_raw_StereoBM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::StereoMatcher for PtrOfStereoBM {
-		fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStereoMatcher = core::Ptr::<dyn crate::calib3d::StereoMatcher>;
@@ -400,18 +400,18 @@ mod calib3d_types {
 	}
 	
 	impl PtrOfStereoMatcher {
-		pub fn as_raw_PtrOfStereoMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStereoMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStereoMatcher {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::StereoMatcher for PtrOfStereoMatcher {
-		fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStereoSGBM = core::Ptr::<dyn crate::calib3d::StereoSGBM>;
@@ -421,23 +421,23 @@ mod calib3d_types {
 	}
 	
 	impl PtrOfStereoSGBM {
-		pub fn as_raw_PtrOfStereoSGBM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStereoSGBM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStereoSGBM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::StereoMatcher for PtrOfStereoSGBM {
-		fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::calib3d::StereoSGBM for PtrOfStereoSGBM {
-		fn as_raw_StereoSGBM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -446,6 +446,14 @@ pub use calib3d_types::*;
 mod core_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	impl core::GpuMat_Allocator for types::AbstractRefMut<'static, dyn core::GpuMat_Allocator> {
+		#[inline] fn as_raw_GpuMat_Allocator(&self) -> *const c_void { self.as_raw() }
+		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	impl core::MatOp for types::AbstractRefMut<'static, dyn core::MatOp> {
+		#[inline] fn as_raw_MatOp(&self) -> *const c_void { self.as_raw() }
+		#[inline] fn as_raw_mut_MatOp(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
 	pub type PtrOfConjGradSolver = core::Ptr::<dyn core::ConjGradSolver>;
 	
 	ptr_extern! { dyn core::ConjGradSolver,
@@ -453,23 +461,23 @@ mod core_types {
 	}
 	
 	impl PtrOfConjGradSolver {
-		pub fn as_raw_PtrOfConjGradSolver(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfConjGradSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfConjGradSolver(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfConjGradSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfConjGradSolver {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::ConjGradSolver for PtrOfConjGradSolver {
-		fn as_raw_ConjGradSolver(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ConjGradSolver(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::MinProblemSolver for PtrOfConjGradSolver {
-		fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDownhillSolver = core::Ptr::<dyn core::DownhillSolver>;
@@ -479,23 +487,23 @@ mod core_types {
 	}
 	
 	impl PtrOfDownhillSolver {
-		pub fn as_raw_PtrOfDownhillSolver(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDownhillSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDownhillSolver(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDownhillSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDownhillSolver {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::DownhillSolver for PtrOfDownhillSolver {
-		fn as_raw_DownhillSolver(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DownhillSolver(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::MinProblemSolver for PtrOfDownhillSolver {
-		fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFileStorage = core::Ptr::<core::FileStorage>;
@@ -505,13 +513,13 @@ mod core_types {
 	}
 	
 	impl PtrOfFileStorage {
-		pub fn as_raw_PtrOfFileStorage(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFileStorage(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFileStorage(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFileStorage(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::FileStorageTrait for PtrOfFileStorage {
-		fn as_raw_FileStorage(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FileStorage(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FileStorage(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FileStorage(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFormatted = core::Ptr::<dyn core::Formatted>;
@@ -521,13 +529,13 @@ mod core_types {
 	}
 	
 	impl PtrOfFormatted {
-		pub fn as_raw_PtrOfFormatted(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFormatted(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFormatted(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFormatted(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::Formatted for PtrOfFormatted {
-		fn as_raw_Formatted(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Formatted(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Formatted(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Formatted(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFormatter = core::Ptr::<dyn core::Formatter>;
@@ -537,13 +545,29 @@ mod core_types {
 	}
 	
 	impl PtrOfFormatter {
-		pub fn as_raw_PtrOfFormatter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFormatter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFormatter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFormatter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::Formatter for PtrOfFormatter {
-		fn as_raw_Formatter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Formatter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Formatter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Formatter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfGpuMat_Allocator = core::Ptr::<dyn core::GpuMat_Allocator>;
+	
+	ptr_extern! { dyn core::GpuMat_Allocator,
+		cv_PtrOfGpuMat_Allocator_delete, cv_PtrOfGpuMat_Allocator_get_inner_ptr
+	}
+	
+	impl PtrOfGpuMat_Allocator {
+		#[inline] pub fn as_raw_PtrOfGpuMat_Allocator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGpuMat_Allocator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::GpuMat_Allocator for PtrOfGpuMat_Allocator {
+		#[inline] fn as_raw_GpuMat_Allocator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMinProblemSolver_Function = core::Ptr::<dyn core::MinProblemSolver_Function>;
@@ -553,13 +577,13 @@ mod core_types {
 	}
 	
 	impl PtrOfMinProblemSolver_Function {
-		pub fn as_raw_PtrOfMinProblemSolver_Function(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMinProblemSolver_Function(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMinProblemSolver_Function(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMinProblemSolver_Function(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::MinProblemSolver_Function for PtrOfMinProblemSolver_Function {
-		fn as_raw_MinProblemSolver_Function(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MinProblemSolver_Function(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOff32 = core::Ptr::<f32>;
@@ -569,8 +593,8 @@ mod core_types {
 	}
 	
 	impl PtrOff32 {
-		pub fn as_raw_PtrOff32(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOff32(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOff32(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOff32(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	pub type VectorOfDMatch = core::Vector::<core::DMatch>;
@@ -594,6 +618,26 @@ mod core_types {
 	}
 	
 	unsafe impl Send for core::Vector::<core::DMatch> {}
+	
+	pub type VectorOfGpuMat = core::Vector::<core::GpuMat>;
+	
+	impl VectorOfGpuMat {
+		pub fn as_raw_VectorOfGpuMat(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGpuMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::GpuMat, *const c_void, *mut c_void,
+		cv_VectorOfGpuMat_new, cv_VectorOfGpuMat_delete,
+		cv_VectorOfGpuMat_len, cv_VectorOfGpuMat_is_empty,
+		cv_VectorOfGpuMat_capacity, cv_VectorOfGpuMat_shrink_to_fit,
+		cv_VectorOfGpuMat_reserve, cv_VectorOfGpuMat_remove,
+		cv_VectorOfGpuMat_swap, cv_VectorOfGpuMat_clear,
+		cv_VectorOfGpuMat_get, cv_VectorOfGpuMat_set,
+		cv_VectorOfGpuMat_push, cv_VectorOfGpuMat_insert,
+	}
+	vector_non_copy_or_bool! { core::GpuMat }
+	
+	unsafe impl Send for core::Vector::<core::GpuMat> {}
 	
 	pub type VectorOfKeyPoint = core::Vector::<core::KeyPoint>;
 	
@@ -3178,6 +3222,846 @@ mod core_types {
 }
 pub use core_types::*;
 
+#[cfg(feature = "contrib")]
+mod cudaarithm_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfConvolution = core::Ptr::<dyn crate::cudaarithm::Convolution>;
+	
+	ptr_extern! { dyn crate::cudaarithm::Convolution,
+		cv_PtrOfConvolution_delete, cv_PtrOfConvolution_get_inner_ptr
+	}
+	
+	impl PtrOfConvolution {
+		#[inline] pub fn as_raw_PtrOfConvolution(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfConvolution(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfConvolution {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::Convolution for PtrOfConvolution {
+		#[inline] fn as_raw_Convolution(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Convolution(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfDFT = core::Ptr::<dyn crate::cudaarithm::DFT>;
+	
+	ptr_extern! { dyn crate::cudaarithm::DFT,
+		cv_PtrOfDFT_delete, cv_PtrOfDFT_get_inner_ptr
+	}
+	
+	impl PtrOfDFT {
+		#[inline] pub fn as_raw_PtrOfDFT(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDFT {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::DFT for PtrOfDFT {
+		#[inline] fn as_raw_DFT(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DFT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfLookUpTable = core::Ptr::<dyn crate::cudaarithm::LookUpTable>;
+	
+	ptr_extern! { dyn crate::cudaarithm::LookUpTable,
+		cv_PtrOfLookUpTable_delete, cv_PtrOfLookUpTable_get_inner_ptr
+	}
+	
+	impl PtrOfLookUpTable {
+		#[inline] pub fn as_raw_PtrOfLookUpTable(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLookUpTable(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfLookUpTable {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::LookUpTable for PtrOfLookUpTable {
+		#[inline] fn as_raw_LookUpTable(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudaarithm_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudabgsegm_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCUDA_BackgroundSubtractorMOG = core::Ptr::<dyn crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>;
+	
+	ptr_extern! { dyn crate::cudabgsegm::CUDA_BackgroundSubtractorMOG,
+		cv_PtrOfCUDA_BackgroundSubtractorMOG_delete, cv_PtrOfCUDA_BackgroundSubtractorMOG_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_BackgroundSubtractorMOG {
+		#[inline] pub fn as_raw_PtrOfCUDA_BackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_BackgroundSubtractorMOG {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::BackgroundSubtractor for PtrOfCUDA_BackgroundSubtractorMOG {
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOG for PtrOfCUDA_BackgroundSubtractorMOG {
+		#[inline] fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_BackgroundSubtractorMOG2 = core::Ptr::<dyn crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>;
+	
+	ptr_extern! { dyn crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2,
+		cv_PtrOfCUDA_BackgroundSubtractorMOG2_delete, cv_PtrOfCUDA_BackgroundSubtractorMOG2_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_BackgroundSubtractorMOG2 {
+		#[inline] pub fn as_raw_PtrOfCUDA_BackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_BackgroundSubtractorMOG2 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::BackgroundSubtractor for PtrOfCUDA_BackgroundSubtractorMOG2 {
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::BackgroundSubtractorMOG2 for PtrOfCUDA_BackgroundSubtractorMOG2 {
+		#[inline] fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2 for PtrOfCUDA_BackgroundSubtractorMOG2 {
+		#[inline] fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudabgsegm_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudacodec_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfEncoderCallBack = core::Ptr::<dyn crate::cudacodec::EncoderCallBack>;
+	
+	ptr_extern! { dyn crate::cudacodec::EncoderCallBack,
+		cv_PtrOfEncoderCallBack_delete, cv_PtrOfEncoderCallBack_get_inner_ptr
+	}
+	
+	impl PtrOfEncoderCallBack {
+		#[inline] pub fn as_raw_PtrOfEncoderCallBack(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEncoderCallBack(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudacodec::EncoderCallBack for PtrOfEncoderCallBack {
+		#[inline] fn as_raw_EncoderCallBack(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EncoderCallBack(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfRawVideoSource = core::Ptr::<dyn crate::cudacodec::RawVideoSource>;
+	
+	ptr_extern! { dyn crate::cudacodec::RawVideoSource,
+		cv_PtrOfRawVideoSource_delete, cv_PtrOfRawVideoSource_get_inner_ptr
+	}
+	
+	impl PtrOfRawVideoSource {
+		#[inline] pub fn as_raw_PtrOfRawVideoSource(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRawVideoSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudacodec::RawVideoSource for PtrOfRawVideoSource {
+		#[inline] fn as_raw_RawVideoSource(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RawVideoSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfVideoReader = core::Ptr::<dyn crate::cudacodec::VideoReader>;
+	
+	ptr_extern! { dyn crate::cudacodec::VideoReader,
+		cv_PtrOfVideoReader_delete, cv_PtrOfVideoReader_get_inner_ptr
+	}
+	
+	impl PtrOfVideoReader {
+		#[inline] pub fn as_raw_PtrOfVideoReader(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfVideoReader(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudacodec::VideoReader for PtrOfVideoReader {
+		#[inline] fn as_raw_VideoReader(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_VideoReader(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfVideoWriter = core::Ptr::<dyn crate::cudacodec::VideoWriter>;
+	
+	ptr_extern! { dyn crate::cudacodec::VideoWriter,
+		cv_PtrOfVideoWriter_delete, cv_PtrOfVideoWriter_get_inner_ptr
+	}
+	
+	impl PtrOfVideoWriter {
+		#[inline] pub fn as_raw_PtrOfVideoWriter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfVideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudacodec::VideoWriter for PtrOfVideoWriter {
+		#[inline] fn as_raw_VideoWriter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudacodec_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudafeatures2d_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCUDA_DescriptorMatcher = core::Ptr::<dyn crate::cudafeatures2d::CUDA_DescriptorMatcher>;
+	
+	ptr_extern! { dyn crate::cudafeatures2d::CUDA_DescriptorMatcher,
+		cv_PtrOfCUDA_DescriptorMatcher_delete, cv_PtrOfCUDA_DescriptorMatcher_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_DescriptorMatcher {
+		#[inline] pub fn as_raw_PtrOfCUDA_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_DescriptorMatcher {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_DescriptorMatcher for PtrOfCUDA_DescriptorMatcher {
+		#[inline] fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_FastFeatureDetector = core::Ptr::<dyn crate::cudafeatures2d::CUDA_FastFeatureDetector>;
+	
+	ptr_extern! { dyn crate::cudafeatures2d::CUDA_FastFeatureDetector,
+		cv_PtrOfCUDA_FastFeatureDetector_delete, cv_PtrOfCUDA_FastFeatureDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_FastFeatureDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_FastFeatureDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_FastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_FastFeatureDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for PtrOfCUDA_FastFeatureDetector {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_FastFeatureDetector for PtrOfCUDA_FastFeatureDetector {
+		#[inline] fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsync for PtrOfCUDA_FastFeatureDetector {
+		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_ORB = core::Ptr::<dyn crate::cudafeatures2d::CUDA_ORB>;
+	
+	ptr_extern! { dyn crate::cudafeatures2d::CUDA_ORB,
+		cv_PtrOfCUDA_ORB_delete, cv_PtrOfCUDA_ORB_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_ORB {
+		#[inline] pub fn as_raw_PtrOfCUDA_ORB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_ORB(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_ORB {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for PtrOfCUDA_ORB {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsync for PtrOfCUDA_ORB {
+		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_ORB for PtrOfCUDA_ORB {
+		#[inline] fn as_raw_CUDA_ORB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudafeatures2d_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudafilters_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfFilter = core::Ptr::<dyn crate::cudafilters::Filter>;
+	
+	ptr_extern! { dyn crate::cudafilters::Filter,
+		cv_PtrOfFilter_delete, cv_PtrOfFilter_get_inner_ptr
+	}
+	
+	impl PtrOfFilter {
+		#[inline] pub fn as_raw_PtrOfFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfFilter {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudafilters::Filter for PtrOfFilter {
+		#[inline] fn as_raw_Filter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Filter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudafilters_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudaimgproc_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCUDA_CLAHE = core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_CLAHE,
+		cv_PtrOfCUDA_CLAHE_delete, cv_PtrOfCUDA_CLAHE_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_CLAHE {
+		#[inline] pub fn as_raw_PtrOfCUDA_CLAHE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_CLAHE {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::imgproc::CLAHE for PtrOfCUDA_CLAHE {
+		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CLAHE for PtrOfCUDA_CLAHE {
+		#[inline] fn as_raw_CUDA_CLAHE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_CannyEdgeDetector = core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_CannyEdgeDetector,
+		cv_PtrOfCUDA_CannyEdgeDetector_delete, cv_PtrOfCUDA_CannyEdgeDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_CannyEdgeDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_CannyEdgeDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_CannyEdgeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CannyEdgeDetector for PtrOfCUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_CornernessCriteria = core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_CornernessCriteria,
+		cv_PtrOfCUDA_CornernessCriteria_delete, cv_PtrOfCUDA_CornernessCriteria_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_CornernessCriteria {
+		#[inline] pub fn as_raw_PtrOfCUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_CornernessCriteria {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornernessCriteria for PtrOfCUDA_CornernessCriteria {
+		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_CornersDetector = core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_CornersDetector,
+		cv_PtrOfCUDA_CornersDetector_delete, cv_PtrOfCUDA_CornersDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_CornersDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_CornersDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornersDetector for PtrOfCUDA_CornersDetector {
+		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_HoughCirclesDetector = core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_HoughCirclesDetector,
+		cv_PtrOfCUDA_HoughCirclesDetector_delete, cv_PtrOfCUDA_HoughCirclesDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_HoughCirclesDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_HoughCirclesDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_HoughCirclesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughCirclesDetector for PtrOfCUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_HoughLinesDetector = core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_HoughLinesDetector,
+		cv_PtrOfCUDA_HoughLinesDetector_delete, cv_PtrOfCUDA_HoughLinesDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_HoughLinesDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_HoughLinesDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_HoughLinesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_HoughLinesDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughLinesDetector for PtrOfCUDA_HoughLinesDetector {
+		#[inline] fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_HoughSegmentDetector = core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_HoughSegmentDetector,
+		cv_PtrOfCUDA_HoughSegmentDetector_delete, cv_PtrOfCUDA_HoughSegmentDetector_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_HoughSegmentDetector {
+		#[inline] pub fn as_raw_PtrOfCUDA_HoughSegmentDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_HoughSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughSegmentDetector for PtrOfCUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_TemplateMatching = core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>;
+	
+	ptr_extern! { dyn crate::cudaimgproc::CUDA_TemplateMatching,
+		cv_PtrOfCUDA_TemplateMatching_delete, cv_PtrOfCUDA_TemplateMatching_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_TemplateMatching {
+		#[inline] pub fn as_raw_PtrOfCUDA_TemplateMatching(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_TemplateMatching(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_TemplateMatching {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_TemplateMatching for PtrOfCUDA_TemplateMatching {
+		#[inline] fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudaimgproc_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudaobjdetect_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCascadeClassifier = core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>;
+	
+	ptr_extern! { dyn crate::cudaobjdetect::CascadeClassifier,
+		cv_PtrOfCascadeClassifier_delete, cv_PtrOfCascadeClassifier_get_inner_ptr
+	}
+	
+	impl PtrOfCascadeClassifier {
+		#[inline] pub fn as_raw_PtrOfCascadeClassifier(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCascadeClassifier {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaobjdetect::CascadeClassifier for PtrOfCascadeClassifier {
+		#[inline] fn as_raw_CascadeClassifier(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfHOG = core::Ptr::<dyn crate::cudaobjdetect::HOG>;
+	
+	ptr_extern! { dyn crate::cudaobjdetect::HOG,
+		cv_PtrOfHOG_delete, cv_PtrOfHOG_get_inner_ptr
+	}
+	
+	impl PtrOfHOG {
+		#[inline] pub fn as_raw_PtrOfHOG(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfHOG {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaobjdetect::HOG for PtrOfHOG {
+		#[inline] fn as_raw_HOG(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HOG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudaobjdetect_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudaoptflow_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCUDA_BroxOpticalFlow = core::Ptr::<dyn crate::cudaoptflow::CUDA_BroxOpticalFlow>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_BroxOpticalFlow,
+		cv_PtrOfCUDA_BroxOpticalFlow_delete, cv_PtrOfCUDA_BroxOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_BroxOpticalFlow {
+		#[inline] pub fn as_raw_PtrOfCUDA_BroxOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_BroxOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_BroxOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_BroxOpticalFlow for PtrOfCUDA_BroxOpticalFlow {
+		#[inline] fn as_raw_CUDA_BroxOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_BroxOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_DenseOpticalFlow for PtrOfCUDA_BroxOpticalFlow {
+		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_DensePyrLKOpticalFlow = core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow,
+		cv_PtrOfCUDA_DensePyrLKOpticalFlow_delete, cv_PtrOfCUDA_DensePyrLKOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_DensePyrLKOpticalFlow {
+		#[inline] pub fn as_raw_PtrOfCUDA_DensePyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_DensePyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_DensePyrLKOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_DenseOpticalFlow for PtrOfCUDA_DensePyrLKOpticalFlow {
+		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow for PtrOfCUDA_DensePyrLKOpticalFlow {
+		#[inline] fn as_raw_CUDA_DensePyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DensePyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_FarnebackOpticalFlow = core::Ptr::<dyn crate::cudaoptflow::CUDA_FarnebackOpticalFlow>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_FarnebackOpticalFlow,
+		cv_PtrOfCUDA_FarnebackOpticalFlow_delete, cv_PtrOfCUDA_FarnebackOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_FarnebackOpticalFlow {
+		#[inline] pub fn as_raw_PtrOfCUDA_FarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_FarnebackOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_DenseOpticalFlow for PtrOfCUDA_FarnebackOpticalFlow {
+		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_FarnebackOpticalFlow for PtrOfCUDA_FarnebackOpticalFlow {
+		#[inline] fn as_raw_CUDA_FarnebackOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_NvidiaOpticalFlow_1_0 = core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0,
+		cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_delete, cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] pub fn as_raw_PtrOfCUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow for PtrOfCUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0 for PtrOfCUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_OpticalFlowDual_TVL1 = core::Ptr::<dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1,
+		cv_PtrOfCUDA_OpticalFlowDual_TVL1_delete, cv_PtrOfCUDA_OpticalFlowDual_TVL1_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_OpticalFlowDual_TVL1 {
+		#[inline] pub fn as_raw_PtrOfCUDA_OpticalFlowDual_TVL1(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_OpticalFlowDual_TVL1(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_OpticalFlowDual_TVL1 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_DenseOpticalFlow for PtrOfCUDA_OpticalFlowDual_TVL1 {
+		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1 for PtrOfCUDA_OpticalFlowDual_TVL1 {
+		#[inline] fn as_raw_CUDA_OpticalFlowDual_TVL1(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_OpticalFlowDual_TVL1(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_SparsePyrLKOpticalFlow = core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow,
+		cv_PtrOfCUDA_SparsePyrLKOpticalFlow_delete, cv_PtrOfCUDA_SparsePyrLKOpticalFlow_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_SparsePyrLKOpticalFlow {
+		#[inline] pub fn as_raw_PtrOfCUDA_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_SparsePyrLKOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_SparseOpticalFlow for PtrOfCUDA_SparsePyrLKOpticalFlow {
+		#[inline] fn as_raw_CUDA_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow for PtrOfCUDA_SparsePyrLKOpticalFlow {
+		#[inline] fn as_raw_CUDA_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudaoptflow_types::*;
+
+#[cfg(feature = "contrib")]
+mod cudastereo_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfCUDA_DisparityBilateralFilter = core::Ptr::<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>;
+	
+	ptr_extern! { dyn crate::cudastereo::CUDA_DisparityBilateralFilter,
+		cv_PtrOfCUDA_DisparityBilateralFilter_delete, cv_PtrOfCUDA_DisparityBilateralFilter_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_DisparityBilateralFilter {
+		#[inline] pub fn as_raw_PtrOfCUDA_DisparityBilateralFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_DisparityBilateralFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_DisparityBilateralFilter for PtrOfCUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_DisparityBilateralFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_StereoBM = core::Ptr::<dyn crate::cudastereo::CUDA_StereoBM>;
+	
+	ptr_extern! { dyn crate::cudastereo::CUDA_StereoBM,
+		cv_PtrOfCUDA_StereoBM_delete, cv_PtrOfCUDA_StereoBM_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_StereoBM {
+		#[inline] pub fn as_raw_PtrOfCUDA_StereoBM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_StereoBM {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoBM for PtrOfCUDA_StereoBM {
+		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcher for PtrOfCUDA_StereoBM {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBM for PtrOfCUDA_StereoBM {
+		#[inline] fn as_raw_CUDA_StereoBM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_StereoBeliefPropagation = core::Ptr::<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>;
+	
+	ptr_extern! { dyn crate::cudastereo::CUDA_StereoBeliefPropagation,
+		cv_PtrOfCUDA_StereoBeliefPropagation_delete, cv_PtrOfCUDA_StereoBeliefPropagation_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_StereoBeliefPropagation {
+		#[inline] pub fn as_raw_PtrOfCUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcher for PtrOfCUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagation for PtrOfCUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCUDA_StereoConstantSpaceBP = core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>;
+	
+	ptr_extern! { dyn crate::cudastereo::CUDA_StereoConstantSpaceBP,
+		cv_PtrOfCUDA_StereoConstantSpaceBP_delete, cv_PtrOfCUDA_StereoConstantSpaceBP_get_inner_ptr
+	}
+	
+	impl PtrOfCUDA_StereoConstantSpaceBP {
+		#[inline] pub fn as_raw_PtrOfCUDA_StereoConstantSpaceBP(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcher for PtrOfCUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagation for PtrOfCUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoConstantSpaceBP for PtrOfCUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use cudastereo_types::*;
+
 mod dnn_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3188,28 +4072,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfAbsLayer {
-		pub fn as_raw_PtrOfAbsLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAbsLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::AbsLayer for PtrOfAbsLayer {
-		fn as_raw_AbsLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AbsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfAbsLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAbsLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAbsLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAbsLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::AbsLayer for PtrOfAbsLayer {
+		#[inline] fn as_raw_AbsLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AbsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfAbsLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfAbsLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfActivationLayer = core::Ptr::<dyn crate::dnn::ActivationLayer>;
@@ -3219,23 +4103,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfActivationLayer {
-		pub fn as_raw_PtrOfActivationLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfActivationLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfActivationLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfActivationLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBNLLLayer = core::Ptr::<dyn crate::dnn::BNLLLayer>;
@@ -3245,28 +4129,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfBNLLLayer {
-		pub fn as_raw_PtrOfBNLLLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBNLLLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfBNLLLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBNLLLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBNLLLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBNLLLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfBNLLLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::BNLLLayer for PtrOfBNLLLayer {
-		fn as_raw_BNLLLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BNLLLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BNLLLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BNLLLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfBNLLLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackendNode = core::Ptr::<crate::dnn::BackendNode>;
@@ -3276,13 +4160,13 @@ mod dnn_types {
 	}
 	
 	impl PtrOfBackendNode {
-		pub fn as_raw_PtrOfBackendNode(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackendNode(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackendNode(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackendNode(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::dnn::BackendNodeTrait for PtrOfBackendNode {
-		fn as_raw_BackendNode(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackendNode(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackendNode(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackendNode(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackendWrapper = core::Ptr::<dyn crate::dnn::BackendWrapper>;
@@ -3292,13 +4176,13 @@ mod dnn_types {
 	}
 	
 	impl PtrOfBackendWrapper {
-		pub fn as_raw_PtrOfBackendWrapper(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackendWrapper(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackendWrapper(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackendWrapper(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::dnn::BackendWrapper for PtrOfBackendWrapper {
-		fn as_raw_BackendWrapper(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackendWrapper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackendWrapper(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackendWrapper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBaseConvolutionLayer = core::Ptr::<crate::dnn::BaseConvolutionLayer>;
@@ -3308,23 +4192,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfBaseConvolutionLayer {
-		pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBaseConvolutionLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::BaseConvolutionLayerTrait for PtrOfBaseConvolutionLayer {
-		fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfBaseConvolutionLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBatchNormLayer = core::Ptr::<dyn crate::dnn::BatchNormLayer>;
@@ -3334,28 +4218,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfBatchNormLayer {
-		pub fn as_raw_PtrOfBatchNormLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBatchNormLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfBatchNormLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBatchNormLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBatchNormLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBatchNormLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfBatchNormLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::BatchNormLayer for PtrOfBatchNormLayer {
-		fn as_raw_BatchNormLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BatchNormLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfBatchNormLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfConcatLayer = core::Ptr::<crate::dnn::ConcatLayer>;
@@ -3365,23 +4249,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfConcatLayer {
-		pub fn as_raw_PtrOfConcatLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfConcatLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfConcatLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfConcatLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfConcatLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ConcatLayerTrait for PtrOfConcatLayer {
-		fn as_raw_ConcatLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ConcatLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfConcatLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetectionOutputLayer = core::Ptr::<crate::dnn::DetectionOutputLayer>;
@@ -3391,23 +4275,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfDetectionOutputLayer {
-		pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetectionOutputLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetectionOutputLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDetectionOutputLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::DetectionOutputLayerTrait for PtrOfDetectionOutputLayer {
-		fn as_raw_DetectionOutputLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DetectionOutputLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfDetectionOutputLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfELULayer = core::Ptr::<dyn crate::dnn::ELULayer>;
@@ -3417,28 +4301,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfELULayer {
-		pub fn as_raw_PtrOfELULayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfELULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfELULayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfELULayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfELULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfELULayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfELULayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ELULayer for PtrOfELULayer {
-		fn as_raw_ELULayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ELULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ELULayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ELULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfELULayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfEltwiseLayer = core::Ptr::<crate::dnn::EltwiseLayer>;
@@ -3448,23 +4332,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfEltwiseLayer {
-		pub fn as_raw_PtrOfEltwiseLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfEltwiseLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfEltwiseLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEltwiseLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEltwiseLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::EltwiseLayerTrait for PtrOfEltwiseLayer {
-		fn as_raw_EltwiseLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_EltwiseLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_EltwiseLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EltwiseLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfEltwiseLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFlattenLayer = core::Ptr::<crate::dnn::FlattenLayer>;
@@ -3474,23 +4358,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfFlattenLayer {
-		pub fn as_raw_PtrOfFlattenLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFlattenLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFlattenLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFlattenLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFlattenLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::FlattenLayerTrait for PtrOfFlattenLayer {
-		fn as_raw_FlattenLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FlattenLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfFlattenLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfInnerProductLayer = core::Ptr::<crate::dnn::InnerProductLayer>;
@@ -3500,23 +4384,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfInnerProductLayer {
-		pub fn as_raw_PtrOfInnerProductLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfInnerProductLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfInnerProductLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfInnerProductLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfInnerProductLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::InnerProductLayerTrait for PtrOfInnerProductLayer {
-		fn as_raw_InnerProductLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfInnerProductLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLRNLayer = core::Ptr::<crate::dnn::LRNLayer>;
@@ -3526,23 +4410,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfLRNLayer {
-		pub fn as_raw_PtrOfLRNLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLRNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLRNLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLRNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLRNLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LRNLayerTrait for PtrOfLRNLayer {
-		fn as_raw_LRNLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LRNLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfLRNLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLSTMLayer = core::Ptr::<dyn crate::dnn::LSTMLayer>;
@@ -3552,23 +4436,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfLSTMLayer {
-		pub fn as_raw_PtrOfLSTMLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLSTMLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLSTMLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLSTMLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLSTMLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LSTMLayer for PtrOfLSTMLayer {
-		fn as_raw_LSTMLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LSTMLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LSTMLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LSTMLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfLSTMLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLayer = core::Ptr::<crate::dnn::Layer>;
@@ -3578,18 +4462,18 @@ mod dnn_types {
 	}
 	
 	impl PtrOfLayer {
-		pub fn as_raw_PtrOfLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMVNLayer = core::Ptr::<crate::dnn::MVNLayer>;
@@ -3599,23 +4483,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfMVNLayer {
-		pub fn as_raw_PtrOfMVNLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMVNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMVNLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMVNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMVNLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfMVNLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::MVNLayerTrait for PtrOfMVNLayer {
-		fn as_raw_MVNLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MVNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MVNLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MVNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMaxUnpoolLayer = core::Ptr::<crate::dnn::MaxUnpoolLayer>;
@@ -3625,23 +4509,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfMaxUnpoolLayer {
-		pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMaxUnpoolLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMaxUnpoolLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMaxUnpoolLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfMaxUnpoolLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::MaxUnpoolLayerTrait for PtrOfMaxUnpoolLayer {
-		fn as_raw_MaxUnpoolLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MaxUnpoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MaxUnpoolLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MaxUnpoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMishLayer = core::Ptr::<dyn crate::dnn::MishLayer>;
@@ -3651,28 +4535,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfMishLayer {
-		pub fn as_raw_PtrOfMishLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfMishLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMishLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMishLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfMishLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfMishLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::MishLayer for PtrOfMishLayer {
-		fn as_raw_MishLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MishLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfNormalizeBBoxLayer = core::Ptr::<crate::dnn::NormalizeBBoxLayer>;
@@ -3682,23 +4566,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfNormalizeBBoxLayer {
-		pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfNormalizeBBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfNormalizeBBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfNormalizeBBoxLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfNormalizeBBoxLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::NormalizeBBoxLayerTrait for PtrOfNormalizeBBoxLayer {
-		fn as_raw_NormalizeBBoxLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_NormalizeBBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_NormalizeBBoxLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_NormalizeBBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPaddingLayer = core::Ptr::<crate::dnn::PaddingLayer>;
@@ -3708,23 +4592,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfPaddingLayer {
-		pub fn as_raw_PtrOfPaddingLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPaddingLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPaddingLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPaddingLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPaddingLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfPaddingLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::PaddingLayerTrait for PtrOfPaddingLayer {
-		fn as_raw_PaddingLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PaddingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PaddingLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PaddingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPermuteLayer = core::Ptr::<crate::dnn::PermuteLayer>;
@@ -3734,23 +4618,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfPermuteLayer {
-		pub fn as_raw_PtrOfPermuteLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPermuteLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPermuteLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPermuteLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPermuteLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfPermuteLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::PermuteLayerTrait for PtrOfPermuteLayer {
-		fn as_raw_PermuteLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PermuteLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PermuteLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PermuteLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPoolingLayer = core::Ptr::<crate::dnn::PoolingLayer>;
@@ -3760,23 +4644,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfPoolingLayer {
-		pub fn as_raw_PtrOfPoolingLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPoolingLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPoolingLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPoolingLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPoolingLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfPoolingLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::PoolingLayerTrait for PtrOfPoolingLayer {
-		fn as_raw_PoolingLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PoolingLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPowerLayer = core::Ptr::<dyn crate::dnn::PowerLayer>;
@@ -3786,28 +4670,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfPowerLayer {
-		pub fn as_raw_PtrOfPowerLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPowerLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfPowerLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPowerLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPowerLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPowerLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfPowerLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfPowerLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::PowerLayer for PtrOfPowerLayer {
-		fn as_raw_PowerLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PowerLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPriorBoxLayer = core::Ptr::<crate::dnn::PriorBoxLayer>;
@@ -3817,23 +4701,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfPriorBoxLayer {
-		pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPriorBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPriorBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPriorBoxLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfPriorBoxLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::PriorBoxLayerTrait for PtrOfPriorBoxLayer {
-		fn as_raw_PriorBoxLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PriorBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PriorBoxLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PriorBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfProposalLayer = core::Ptr::<crate::dnn::ProposalLayer>;
@@ -3843,23 +4727,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfProposalLayer {
-		pub fn as_raw_PtrOfProposalLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfProposalLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfProposalLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfProposalLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfProposalLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfProposalLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ProposalLayerTrait for PtrOfProposalLayer {
-		fn as_raw_ProposalLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ProposalLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ProposalLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ProposalLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRNNLayer = core::Ptr::<dyn crate::dnn::RNNLayer>;
@@ -3869,23 +4753,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfRNNLayer {
-		pub fn as_raw_PtrOfRNNLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRNNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRNNLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRNNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRNNLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfRNNLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::RNNLayer for PtrOfRNNLayer {
-		fn as_raw_RNNLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RNNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RNNLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RNNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfReLU6Layer = core::Ptr::<dyn crate::dnn::ReLU6Layer>;
@@ -3895,28 +4779,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfReLU6Layer {
-		pub fn as_raw_PtrOfReLU6Layer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfReLU6Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfReLU6Layer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfReLU6Layer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReLU6Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfReLU6Layer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfReLU6Layer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfReLU6Layer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ReLU6Layer for PtrOfReLU6Layer {
-		fn as_raw_ReLU6Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ReLU6Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ReLU6Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ReLU6Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfReLULayer = core::Ptr::<dyn crate::dnn::ReLULayer>;
@@ -3926,28 +4810,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfReLULayer {
-		pub fn as_raw_PtrOfReLULayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfReLULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfReLULayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfReLULayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReLULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfReLULayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfReLULayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfReLULayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ReLULayer for PtrOfReLULayer {
-		fn as_raw_ReLULayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ReLULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ReLULayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ReLULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRegionLayer = core::Ptr::<crate::dnn::RegionLayer>;
@@ -3957,23 +4841,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfRegionLayer {
-		pub fn as_raw_PtrOfRegionLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRegionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRegionLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRegionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRegionLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfRegionLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::RegionLayerTrait for PtrOfRegionLayer {
-		fn as_raw_RegionLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RegionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RegionLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RegionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfReorgLayer = core::Ptr::<crate::dnn::ReorgLayer>;
@@ -3983,23 +4867,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfReorgLayer {
-		pub fn as_raw_PtrOfReorgLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfReorgLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfReorgLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReorgLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfReorgLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfReorgLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ReorgLayerTrait for PtrOfReorgLayer {
-		fn as_raw_ReorgLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ReorgLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ReorgLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ReorgLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfReshapeLayer = core::Ptr::<crate::dnn::ReshapeLayer>;
@@ -4009,23 +4893,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfReshapeLayer {
-		pub fn as_raw_PtrOfReshapeLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfReshapeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfReshapeLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReshapeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfReshapeLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfReshapeLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ReshapeLayerTrait for PtrOfReshapeLayer {
-		fn as_raw_ReshapeLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ReshapeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ReshapeLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ReshapeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfResizeLayer = core::Ptr::<crate::dnn::ResizeLayer>;
@@ -4035,23 +4919,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfResizeLayer {
-		pub fn as_raw_PtrOfResizeLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfResizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfResizeLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfResizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfResizeLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfResizeLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ResizeLayerTrait for PtrOfResizeLayer {
-		fn as_raw_ResizeLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ResizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ResizeLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ResizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfScaleLayer = core::Ptr::<crate::dnn::ScaleLayer>;
@@ -4061,23 +4945,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfScaleLayer {
-		pub fn as_raw_PtrOfScaleLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfScaleLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfScaleLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfScaleLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfScaleLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfScaleLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::ScaleLayerTrait for PtrOfScaleLayer {
-		fn as_raw_ScaleLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ScaleLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSigmoidLayer = core::Ptr::<dyn crate::dnn::SigmoidLayer>;
@@ -4087,28 +4971,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfSigmoidLayer {
-		pub fn as_raw_PtrOfSigmoidLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSigmoidLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfSigmoidLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSigmoidLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSigmoidLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSigmoidLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfSigmoidLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSigmoidLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::SigmoidLayer for PtrOfSigmoidLayer {
-		fn as_raw_SigmoidLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SigmoidLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSliceLayer = core::Ptr::<crate::dnn::SliceLayer>;
@@ -4118,23 +5002,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfSliceLayer {
-		pub fn as_raw_PtrOfSliceLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSliceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSliceLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSliceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSliceLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSliceLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::SliceLayerTrait for PtrOfSliceLayer {
-		fn as_raw_SliceLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SliceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SliceLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SliceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSoftmaxLayer = core::Ptr::<crate::dnn::SoftmaxLayer>;
@@ -4144,23 +5028,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfSoftmaxLayer {
-		pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSoftmaxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSoftmaxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSoftmaxLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSoftmaxLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::SoftmaxLayerTrait for PtrOfSoftmaxLayer {
-		fn as_raw_SoftmaxLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SoftmaxLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSplitLayer = core::Ptr::<crate::dnn::SplitLayer>;
@@ -4170,23 +5054,23 @@ mod dnn_types {
 	}
 	
 	impl PtrOfSplitLayer {
-		pub fn as_raw_PtrOfSplitLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSplitLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSplitLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSplitLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSplitLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSplitLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::SplitLayerTrait for PtrOfSplitLayer {
-		fn as_raw_SplitLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SplitLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SplitLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SplitLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSwishLayer = core::Ptr::<dyn crate::dnn::SwishLayer>;
@@ -4196,28 +5080,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfSwishLayer {
-		pub fn as_raw_PtrOfSwishLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSwishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfSwishLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSwishLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSwishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSwishLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfSwishLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSwishLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::SwishLayer for PtrOfSwishLayer {
-		fn as_raw_SwishLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SwishLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTanHLayer = core::Ptr::<dyn crate::dnn::TanHLayer>;
@@ -4227,28 +5111,28 @@ mod dnn_types {
 	}
 	
 	impl PtrOfTanHLayer {
-		pub fn as_raw_PtrOfTanHLayer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTanHLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ActivationLayer for PtrOfTanHLayer {
-		fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTanHLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTanHLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTanHLayer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfTanHLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfTanHLayer {
-		fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::dnn::TanHLayer for PtrOfTanHLayer {
-		fn as_raw_TanHLayer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TanHLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TanHLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TanHLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfMatShape = core::Vector::<crate::dnn::MatShape>;
@@ -4373,13 +5257,13 @@ mod dnn_superres_types {
 	}
 	
 	impl PtrOfDnnSuperResImpl {
-		pub fn as_raw_PtrOfDnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::dnn_superres::DnnSuperResImplTrait for PtrOfDnnSuperResImpl {
-		fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -4396,13 +5280,13 @@ mod dpm_types {
 	}
 	
 	impl PtrOfDPMDetector {
-		pub fn as_raw_PtrOfDPMDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDPMDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDPMDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDPMDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::dpm::DPMDetector for PtrOfDPMDetector {
-		fn as_raw_DPMDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DPMDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDPMDetector_ObjectDetection = core::Vector::<crate::dpm::DPMDetector_ObjectDetection>;
@@ -4440,18 +5324,18 @@ mod face_types {
 	}
 	
 	impl PtrOfBIF {
-		pub fn as_raw_PtrOfBIF(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBIF(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBIF(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBIF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBIF {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::BIF for PtrOfBIF {
-		fn as_raw_BIF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BIF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BIF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BIF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfEigenFaceRecognizer = core::Ptr::<dyn crate::face::EigenFaceRecognizer>;
@@ -4461,28 +5345,28 @@ mod face_types {
 	}
 	
 	impl PtrOfEigenFaceRecognizer {
-		pub fn as_raw_PtrOfEigenFaceRecognizer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfEigenFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfEigenFaceRecognizer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEigenFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEigenFaceRecognizer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::BasicFaceRecognizer for PtrOfEigenFaceRecognizer {
-		fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::EigenFaceRecognizer for PtrOfEigenFaceRecognizer {
-		fn as_raw_EigenFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_EigenFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_EigenFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EigenFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FaceRecognizer for PtrOfEigenFaceRecognizer {
-		fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFacemark = core::Ptr::<dyn crate::face::Facemark>;
@@ -4492,18 +5376,18 @@ mod face_types {
 	}
 	
 	impl PtrOfFacemark {
-		pub fn as_raw_PtrOfFacemark(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFacemark(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFacemark(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFacemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFacemark {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::Facemark for PtrOfFacemark {
-		fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFacemarkAAM = core::Ptr::<dyn crate::face::FacemarkAAM>;
@@ -4513,28 +5397,28 @@ mod face_types {
 	}
 	
 	impl PtrOfFacemarkAAM {
-		pub fn as_raw_PtrOfFacemarkAAM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFacemarkAAM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFacemarkAAM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFacemarkAAM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFacemarkAAM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::Facemark for PtrOfFacemarkAAM {
-		fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FacemarkAAM for PtrOfFacemarkAAM {
-		fn as_raw_FacemarkAAM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FacemarkAAM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FacemarkAAM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FacemarkAAM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FacemarkTrain for PtrOfFacemarkAAM {
-		fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFacemarkKazemi = core::Ptr::<dyn crate::face::FacemarkKazemi>;
@@ -4544,23 +5428,23 @@ mod face_types {
 	}
 	
 	impl PtrOfFacemarkKazemi {
-		pub fn as_raw_PtrOfFacemarkKazemi(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFacemarkKazemi(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFacemarkKazemi(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFacemarkKazemi(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFacemarkKazemi {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::Facemark for PtrOfFacemarkKazemi {
-		fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FacemarkKazemi for PtrOfFacemarkKazemi {
-		fn as_raw_FacemarkKazemi(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FacemarkKazemi(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FacemarkKazemi(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FacemarkKazemi(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFacemarkLBF = core::Ptr::<dyn crate::face::FacemarkLBF>;
@@ -4570,28 +5454,28 @@ mod face_types {
 	}
 	
 	impl PtrOfFacemarkLBF {
-		pub fn as_raw_PtrOfFacemarkLBF(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFacemarkLBF(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFacemarkLBF(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFacemarkLBF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFacemarkLBF {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::Facemark for PtrOfFacemarkLBF {
-		fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FacemarkLBF for PtrOfFacemarkLBF {
-		fn as_raw_FacemarkLBF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FacemarkLBF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FacemarkLBF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FacemarkLBF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FacemarkTrain for PtrOfFacemarkLBF {
-		fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFisherFaceRecognizer = core::Ptr::<dyn crate::face::FisherFaceRecognizer>;
@@ -4601,28 +5485,28 @@ mod face_types {
 	}
 	
 	impl PtrOfFisherFaceRecognizer {
-		pub fn as_raw_PtrOfFisherFaceRecognizer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFisherFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFisherFaceRecognizer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFisherFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFisherFaceRecognizer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::BasicFaceRecognizer for PtrOfFisherFaceRecognizer {
-		fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FaceRecognizer for PtrOfFisherFaceRecognizer {
-		fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FisherFaceRecognizer for PtrOfFisherFaceRecognizer {
-		fn as_raw_FisherFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FisherFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FisherFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FisherFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLBPHFaceRecognizer = core::Ptr::<dyn crate::face::LBPHFaceRecognizer>;
@@ -4632,23 +5516,23 @@ mod face_types {
 	}
 	
 	impl PtrOfLBPHFaceRecognizer {
-		pub fn as_raw_PtrOfLBPHFaceRecognizer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLBPHFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLBPHFaceRecognizer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLBPHFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLBPHFaceRecognizer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::FaceRecognizer for PtrOfLBPHFaceRecognizer {
-		fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::LBPHFaceRecognizer for PtrOfLBPHFaceRecognizer {
-		fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMACE = core::Ptr::<dyn crate::face::MACE>;
@@ -4658,18 +5542,18 @@ mod face_types {
 	}
 	
 	impl PtrOfMACE {
-		pub fn as_raw_PtrOfMACE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMACE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMACE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMACE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMACE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::MACE for PtrOfMACE {
-		fn as_raw_MACE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MACE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MACE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MACE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPredictCollector = core::Ptr::<dyn crate::face::PredictCollector>;
@@ -4679,13 +5563,13 @@ mod face_types {
 	}
 	
 	impl PtrOfPredictCollector {
-		pub fn as_raw_PtrOfPredictCollector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPredictCollector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::face::PredictCollector for PtrOfPredictCollector {
-		fn as_raw_PredictCollector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStandardCollector = core::Ptr::<crate::face::StandardCollector>;
@@ -4695,18 +5579,18 @@ mod face_types {
 	}
 	
 	impl PtrOfStandardCollector {
-		pub fn as_raw_PtrOfStandardCollector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStandardCollector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::face::PredictCollector for PtrOfStandardCollector {
-		fn as_raw_PredictCollector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::face::StandardCollectorTrait for PtrOfStandardCollector {
-		fn as_raw_StandardCollector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StandardCollector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfFacemarkAAM_Config = core::Vector::<crate::face::FacemarkAAM_Config>;
@@ -4763,23 +5647,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfAKAZE {
-		pub fn as_raw_PtrOfAKAZE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAKAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAKAZE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAKAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::features2d::AKAZE for PtrOfAKAZE {
-		fn as_raw_AKAZE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AKAZE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AKAZE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AKAZE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAKAZE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfAKAZE {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfAgastFeatureDetector = core::Ptr::<dyn crate::features2d::AgastFeatureDetector>;
@@ -4789,23 +5673,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfAgastFeatureDetector {
-		pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAgastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAgastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::features2d::AgastFeatureDetector for PtrOfAgastFeatureDetector {
-		fn as_raw_AgastFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AgastFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AgastFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AgastFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAgastFeatureDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfAgastFeatureDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBFMatcher = core::Ptr::<crate::features2d::BFMatcher>;
@@ -4815,23 +5699,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfBFMatcher {
-		pub fn as_raw_PtrOfBFMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBFMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBFMatcher {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::BFMatcherTrait for PtrOfBFMatcher {
-		fn as_raw_BFMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BFMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::DescriptorMatcher for PtrOfBFMatcher {
-		fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBRISK = core::Ptr::<crate::features2d::BRISK>;
@@ -4841,23 +5725,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfBRISK {
-		pub fn as_raw_PtrOfBRISK(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBRISK(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBRISK(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBRISK(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBRISK {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::BRISKTrait for PtrOfBRISK {
-		fn as_raw_BRISK(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BRISK(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BRISK(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BRISK(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfBRISK {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDescriptorMatcher = core::Ptr::<dyn crate::features2d::DescriptorMatcher>;
@@ -4867,18 +5751,18 @@ mod features2d_types {
 	}
 	
 	impl PtrOfDescriptorMatcher {
-		pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDescriptorMatcher {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::DescriptorMatcher for PtrOfDescriptorMatcher {
-		fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFastFeatureDetector = core::Ptr::<dyn crate::features2d::FastFeatureDetector>;
@@ -4888,23 +5772,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfFastFeatureDetector {
-		pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFastFeatureDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::FastFeatureDetector for PtrOfFastFeatureDetector {
-		fn as_raw_FastFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FastFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FastFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FastFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfFastFeatureDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFeature2D = core::Ptr::<crate::features2d::Feature2D>;
@@ -4914,18 +5798,18 @@ mod features2d_types {
 	}
 	
 	impl PtrOfFeature2D {
-		pub fn as_raw_PtrOfFeature2D(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFeature2D(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFeature2D {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfFeature2D {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFlannBasedMatcher = core::Ptr::<crate::features2d::FlannBasedMatcher>;
@@ -4935,23 +5819,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfFlannBasedMatcher {
-		pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFlannBasedMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFlannBasedMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFlannBasedMatcher {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::DescriptorMatcher for PtrOfFlannBasedMatcher {
-		fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::FlannBasedMatcherTrait for PtrOfFlannBasedMatcher {
-		fn as_raw_FlannBasedMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FlannBasedMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGFTTDetector = core::Ptr::<dyn crate::features2d::GFTTDetector>;
@@ -4961,23 +5845,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfGFTTDetector {
-		pub fn as_raw_PtrOfGFTTDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGFTTDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGFTTDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGFTTDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGFTTDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfGFTTDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::GFTTDetector for PtrOfGFTTDetector {
-		fn as_raw_GFTTDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GFTTDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GFTTDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GFTTDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfKAZE = core::Ptr::<dyn crate::features2d::KAZE>;
@@ -4987,23 +5871,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfKAZE {
-		pub fn as_raw_PtrOfKAZE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfKAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfKAZE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfKAZE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfKAZE {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::KAZE for PtrOfKAZE {
-		fn as_raw_KAZE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_KAZE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_KAZE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_KAZE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMSER = core::Ptr::<dyn crate::features2d::MSER>;
@@ -5013,23 +5897,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfMSER {
-		pub fn as_raw_PtrOfMSER(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMSER(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMSER(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMSER(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMSER {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfMSER {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::MSER for PtrOfMSER {
-		fn as_raw_MSER(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MSER(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MSER(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MSER(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfORB = core::Ptr::<dyn crate::features2d::ORB>;
@@ -5039,23 +5923,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfORB {
-		pub fn as_raw_PtrOfORB(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfORB(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfORB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfORB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfORB {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfORB {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::ORB for PtrOfORB {
-		fn as_raw_ORB(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ORB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ORB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ORB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSimpleBlobDetector = core::Ptr::<crate::features2d::SimpleBlobDetector>;
@@ -5065,23 +5949,23 @@ mod features2d_types {
 	}
 	
 	impl PtrOfSimpleBlobDetector {
-		pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSimpleBlobDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSimpleBlobDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSimpleBlobDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfSimpleBlobDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::SimpleBlobDetectorTrait for PtrOfSimpleBlobDetector {
-		fn as_raw_SimpleBlobDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SimpleBlobDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SimpleBlobDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SimpleBlobDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5097,13 +5981,13 @@ mod flann_types {
 	}
 	
 	impl PtrOfIndexParams {
-		pub fn as_raw_PtrOfIndexParams(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfIndexParams(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::flann::IndexParamsTrait for PtrOfIndexParams {
-		fn as_raw_IndexParams(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSearchParams = core::Ptr::<crate::flann::SearchParams>;
@@ -5113,18 +5997,18 @@ mod flann_types {
 	}
 	
 	impl PtrOfSearchParams {
-		pub fn as_raw_PtrOfSearchParams(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSearchParams(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::flann::IndexParamsTrait for PtrOfSearchParams {
-		fn as_raw_IndexParams(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::flann::SearchParamsTrait for PtrOfSearchParams {
-		fn as_raw_SearchParams(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SearchParams(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfFlannIndexType = core::Vector::<crate::flann::FlannIndexType>;
@@ -5163,18 +6047,18 @@ mod freetype_types {
 	}
 	
 	impl PtrOfFreeType2 {
-		pub fn as_raw_PtrOfFreeType2(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFreeType2(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFreeType2 {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::freetype::FreeType2 for PtrOfFreeType2 {
-		fn as_raw_FreeType2(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FreeType2(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5192,13 +6076,13 @@ mod hdf_types {
 	}
 	
 	impl PtrOfHDF5 {
-		pub fn as_raw_PtrOfHDF5(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHDF5(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHDF5(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHDF5(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::hdf::HDF5 for PtrOfHDF5 {
-		fn as_raw_HDF5(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HDF5(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5216,18 +6100,18 @@ mod hfs_types {
 	}
 	
 	impl PtrOfHfsSegment {
-		pub fn as_raw_PtrOfHfsSegment(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHfsSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHfsSegment(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHfsSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfHfsSegment {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::hfs::HfsSegment for PtrOfHfsSegment {
-		fn as_raw_HfsSegment(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HfsSegment(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5245,23 +6129,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfAverageHash {
-		pub fn as_raw_PtrOfAverageHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAverageHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAverageHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::AverageHashTrait for PtrOfAverageHash {
-		fn as_raw_AverageHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AverageHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AverageHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfAverageHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBlockMeanHash = core::Ptr::<crate::img_hash::BlockMeanHash>;
@@ -5271,23 +6155,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfBlockMeanHash {
-		pub fn as_raw_PtrOfBlockMeanHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBlockMeanHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBlockMeanHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBlockMeanHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::BlockMeanHashTrait for PtrOfBlockMeanHash {
-		fn as_raw_BlockMeanHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BlockMeanHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BlockMeanHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfBlockMeanHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfColorMomentHash = core::Ptr::<crate::img_hash::ColorMomentHash>;
@@ -5297,23 +6181,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfColorMomentHash {
-		pub fn as_raw_PtrOfColorMomentHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfColorMomentHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfColorMomentHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ColorMomentHashTrait for PtrOfColorMomentHash {
-		fn as_raw_ColorMomentHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ColorMomentHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfColorMomentHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMarrHildrethHash = core::Ptr::<crate::img_hash::MarrHildrethHash>;
@@ -5323,23 +6207,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfMarrHildrethHash {
-		pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMarrHildrethHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMarrHildrethHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfMarrHildrethHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::MarrHildrethHashTrait for PtrOfMarrHildrethHash {
-		fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MarrHildrethHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MarrHildrethHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPHash = core::Ptr::<crate::img_hash::PHash>;
@@ -5349,23 +6233,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfPHash {
-		pub fn as_raw_PtrOfPHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfPHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::PHashTrait for PtrOfPHash {
-		fn as_raw_PHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRadialVarianceHash = core::Ptr::<crate::img_hash::RadialVarianceHash>;
@@ -5375,23 +6259,23 @@ mod img_hash_types {
 	}
 	
 	impl PtrOfRadialVarianceHash {
-		pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRadialVarianceHash(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRadialVarianceHash {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::ImgHashBaseTrait for PtrOfRadialVarianceHash {
-		fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::img_hash::RadialVarianceHashTrait for PtrOfRadialVarianceHash {
-		fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RadialVarianceHash(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5408,18 +6292,18 @@ mod imgproc_types {
 	}
 	
 	impl PtrOfCLAHE {
-		pub fn as_raw_PtrOfCLAHE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfCLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfCLAHE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfCLAHE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::CLAHE for PtrOfCLAHE {
-		fn as_raw_CLAHE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGeneralizedHoughBallard = core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>;
@@ -5429,23 +6313,23 @@ mod imgproc_types {
 	}
 	
 	impl PtrOfGeneralizedHoughBallard {
-		pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGeneralizedHoughBallard(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGeneralizedHoughBallard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGeneralizedHoughBallard {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughBallard {
-		fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::GeneralizedHoughBallard for PtrOfGeneralizedHoughBallard {
-		fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGeneralizedHoughGuil = core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>;
@@ -5455,23 +6339,23 @@ mod imgproc_types {
 	}
 	
 	impl PtrOfGeneralizedHoughGuil {
-		pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGeneralizedHoughGuil(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGeneralizedHoughGuil(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGeneralizedHoughGuil {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughGuil {
-		fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::GeneralizedHoughGuil for PtrOfGeneralizedHoughGuil {
-		fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLineSegmentDetector = core::Ptr::<dyn crate::imgproc::LineSegmentDetector>;
@@ -5481,18 +6365,18 @@ mod imgproc_types {
 	}
 	
 	impl PtrOfLineSegmentDetector {
-		pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLineSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLineSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLineSegmentDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::imgproc::LineSegmentDetector for PtrOfLineSegmentDetector {
-		fn as_raw_LineSegmentDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LineSegmentDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -5509,18 +6393,18 @@ mod line_descriptor_types {
 	}
 	
 	impl PtrOfBinaryDescriptor {
-		pub fn as_raw_PtrOfBinaryDescriptor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBinaryDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBinaryDescriptor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBinaryDescriptor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::line_descriptor::BinaryDescriptorTrait for PtrOfBinaryDescriptor {
-		fn as_raw_BinaryDescriptor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BinaryDescriptor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BinaryDescriptor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BinaryDescriptor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBinaryDescriptorMatcher = core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>;
@@ -5530,18 +6414,18 @@ mod line_descriptor_types {
 	}
 	
 	impl PtrOfBinaryDescriptorMatcher {
-		pub fn as_raw_PtrOfBinaryDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBinaryDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBinaryDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBinaryDescriptorMatcher {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::line_descriptor::BinaryDescriptorMatcherTrait for PtrOfBinaryDescriptorMatcher {
-		fn as_raw_BinaryDescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BinaryDescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BinaryDescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BinaryDescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLSDDetector = core::Ptr::<crate::line_descriptor::LSDDetector>;
@@ -5551,18 +6435,18 @@ mod line_descriptor_types {
 	}
 	
 	impl PtrOfLSDDetector {
-		pub fn as_raw_PtrOfLSDDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLSDDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLSDDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::line_descriptor::LSDDetectorTrait for PtrOfLSDDetector {
-		fn as_raw_LSDDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LSDDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LSDDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LSDDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfKeyLine = core::Vector::<crate::line_descriptor::KeyLine>;
@@ -5621,23 +6505,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfANN_MLP {
-		pub fn as_raw_PtrOfANN_MLP(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfANN_MLP(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
-		fn as_raw_ANN_MLP(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfANN_MLP(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfANN_MLP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfANN_MLP {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
+		#[inline] fn as_raw_ANN_MLP(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfANN_MLP {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBoost = core::Ptr::<dyn crate::ml::Boost>;
@@ -5647,28 +6531,28 @@ mod ml_types {
 	}
 	
 	impl PtrOfBoost {
-		pub fn as_raw_PtrOfBoost(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBoost(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBoost(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBoost {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::Boost for PtrOfBoost {
-		fn as_raw_Boost(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Boost(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Boost(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Boost(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::DTrees for PtrOfBoost {
-		fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfBoost {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDTrees = core::Ptr::<dyn crate::ml::DTrees>;
@@ -5678,23 +6562,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfDTrees {
-		pub fn as_raw_PtrOfDTrees(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDTrees(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDTrees {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::DTrees for PtrOfDTrees {
-		fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfDTrees {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfEM = core::Ptr::<dyn crate::ml::EM>;
@@ -5704,23 +6588,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfEM {
-		pub fn as_raw_PtrOfEM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfEM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfEM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::EM for PtrOfEM {
-		fn as_raw_EM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_EM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_EM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfEM {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfKNearest = core::Ptr::<dyn crate::ml::KNearest>;
@@ -5730,23 +6614,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfKNearest {
-		pub fn as_raw_PtrOfKNearest(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfKNearest(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfKNearest(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKNearest(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfKNearest {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::KNearest for PtrOfKNearest {
-		fn as_raw_KNearest(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_KNearest(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_KNearest(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_KNearest(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfKNearest {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLogisticRegression = core::Ptr::<dyn crate::ml::LogisticRegression>;
@@ -5756,23 +6640,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfLogisticRegression {
-		pub fn as_raw_PtrOfLogisticRegression(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLogisticRegression(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLogisticRegression(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLogisticRegression(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLogisticRegression {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::LogisticRegression for PtrOfLogisticRegression {
-		fn as_raw_LogisticRegression(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LogisticRegression(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfLogisticRegression {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfNormalBayesClassifier = core::Ptr::<dyn crate::ml::NormalBayesClassifier>;
@@ -5782,23 +6666,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfNormalBayesClassifier {
-		pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfNormalBayesClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfNormalBayesClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfNormalBayesClassifier {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::NormalBayesClassifier for PtrOfNormalBayesClassifier {
-		fn as_raw_NormalBayesClassifier(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_NormalBayesClassifier(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfNormalBayesClassifier {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfParamGrid = core::Ptr::<crate::ml::ParamGrid>;
@@ -5808,13 +6692,13 @@ mod ml_types {
 	}
 	
 	impl PtrOfParamGrid {
-		pub fn as_raw_PtrOfParamGrid(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfParamGrid(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::ml::ParamGridTrait for PtrOfParamGrid {
-		fn as_raw_ParamGrid(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ParamGrid(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRTrees = core::Ptr::<dyn crate::ml::RTrees>;
@@ -5824,28 +6708,28 @@ mod ml_types {
 	}
 	
 	impl PtrOfRTrees {
-		pub fn as_raw_PtrOfRTrees(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRTrees(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRTrees {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::DTrees for PtrOfRTrees {
-		fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::RTrees for PtrOfRTrees {
-		fn as_raw_RTrees(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RTrees(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfRTrees {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSVM = core::Ptr::<dyn crate::ml::SVM>;
@@ -5855,23 +6739,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfSVM {
-		pub fn as_raw_PtrOfSVM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSVM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSVM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSVM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::SVM for PtrOfSVM {
-		fn as_raw_SVM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SVM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SVM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SVM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfSVM {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSVMSGD = core::Ptr::<dyn crate::ml::SVMSGD>;
@@ -5881,23 +6765,23 @@ mod ml_types {
 	}
 	
 	impl PtrOfSVMSGD {
-		pub fn as_raw_PtrOfSVMSGD(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSVMSGD(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSVMSGD(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSVMSGD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSVMSGD {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::SVMSGD for PtrOfSVMSGD {
-		fn as_raw_SVMSGD(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SVMSGD(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::StatModel for PtrOfSVMSGD {
-		fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSVM_Kernel = core::Ptr::<dyn crate::ml::SVM_Kernel>;
@@ -5907,18 +6791,18 @@ mod ml_types {
 	}
 	
 	impl PtrOfSVM_Kernel {
-		pub fn as_raw_PtrOfSVM_Kernel(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSVM_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSVM_Kernel(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSVM_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSVM_Kernel {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ml::SVM_Kernel for PtrOfSVM_Kernel {
-		fn as_raw_SVM_Kernel(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SVM_Kernel(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrainData = core::Ptr::<dyn crate::ml::TrainData>;
@@ -5928,13 +6812,13 @@ mod ml_types {
 	}
 	
 	impl PtrOfTrainData {
-		pub fn as_raw_PtrOfTrainData(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrainData(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrainData(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrainData(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::ml::TrainData for PtrOfTrainData {
-		fn as_raw_TrainData(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrainData(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrainData(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrainData(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDTrees_Node = core::Vector::<crate::ml::DTrees_Node>;
@@ -5990,18 +6874,18 @@ mod objdetect_types {
 	}
 	
 	impl PtrOfBaseCascadeClassifier {
-		pub fn as_raw_PtrOfBaseCascadeClassifier(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBaseCascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBaseCascadeClassifier(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBaseCascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBaseCascadeClassifier {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::objdetect::BaseCascadeClassifier for PtrOfBaseCascadeClassifier {
-		fn as_raw_BaseCascadeClassifier(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseCascadeClassifier(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBaseCascadeClassifier_MaskGenerator = core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>;
@@ -6011,13 +6895,13 @@ mod objdetect_types {
 	}
 	
 	impl PtrOfBaseCascadeClassifier_MaskGenerator {
-		pub fn as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::objdetect::BaseCascadeClassifier_MaskGenerator for PtrOfBaseCascadeClassifier_MaskGenerator {
-		fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetectionBasedTracker_IDetector = core::Ptr::<dyn crate::objdetect::DetectionBasedTracker_IDetector>;
@@ -6027,13 +6911,13 @@ mod objdetect_types {
 	}
 	
 	impl PtrOfDetectionBasedTracker_IDetector {
-		pub fn as_raw_PtrOfDetectionBasedTracker_IDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetectionBasedTracker_IDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::objdetect::DetectionBasedTracker_IDetector for PtrOfDetectionBasedTracker_IDetector {
-		fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDetectionBasedTracker_ExtObject = core::Vector::<crate::objdetect::DetectionBasedTracker_ExtObject>;
@@ -6090,23 +6974,23 @@ mod optflow_types {
 	}
 	
 	impl PtrOfDenseRLOFOpticalFlow {
-		pub fn as_raw_PtrOfDenseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDenseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDenseRLOFOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfDenseRLOFOpticalFlow {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::optflow::DenseRLOFOpticalFlow for PtrOfDenseRLOFOpticalFlow {
-		fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDualTVL1OpticalFlow = core::Ptr::<dyn crate::optflow::DualTVL1OpticalFlow>;
@@ -6116,23 +7000,23 @@ mod optflow_types {
 	}
 	
 	impl PtrOfDualTVL1OpticalFlow {
-		pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDualTVL1OpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfDualTVL1OpticalFlow {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::optflow::DualTVL1OpticalFlow for PtrOfDualTVL1OpticalFlow {
-		fn as_raw_DualTVL1OpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DualTVL1OpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGPCTrainingSamples = core::Ptr::<crate::optflow::GPCTrainingSamples>;
@@ -6142,13 +7026,13 @@ mod optflow_types {
 	}
 	
 	impl PtrOfGPCTrainingSamples {
-		pub fn as_raw_PtrOfGPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::optflow::GPCTrainingSamplesTrait for PtrOfGPCTrainingSamples {
-		fn as_raw_GPCTrainingSamples(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GPCTrainingSamples(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GPCTrainingSamples(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GPCTrainingSamples(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGPCTree = core::Ptr::<crate::optflow::GPCTree>;
@@ -6158,18 +7042,18 @@ mod optflow_types {
 	}
 	
 	impl PtrOfGPCTree {
-		pub fn as_raw_PtrOfGPCTree(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGPCTree(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGPCTree(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGPCTree(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGPCTree {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::optflow::GPCTreeTrait for PtrOfGPCTree {
-		fn as_raw_GPCTree(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GPCTree(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GPCTree(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GPCTree(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPCAPrior = core::Ptr::<crate::optflow::PCAPrior>;
@@ -6179,13 +7063,13 @@ mod optflow_types {
 	}
 	
 	impl PtrOfPCAPrior {
-		pub fn as_raw_PtrOfPCAPrior(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPCAPrior(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPCAPrior(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPCAPrior(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::optflow::PCAPriorTrait for PtrOfPCAPrior {
-		fn as_raw_PCAPrior(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PCAPrior(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PCAPrior(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PCAPrior(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRLOFOpticalFlowParameter = core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>;
@@ -6195,13 +7079,13 @@ mod optflow_types {
 	}
 	
 	impl PtrOfRLOFOpticalFlowParameter {
-		pub fn as_raw_PtrOfRLOFOpticalFlowParameter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRLOFOpticalFlowParameter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::optflow::RLOFOpticalFlowParameterTrait for PtrOfRLOFOpticalFlowParameter {
-		fn as_raw_RLOFOpticalFlowParameter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RLOFOpticalFlowParameter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSparseRLOFOpticalFlow = core::Ptr::<dyn crate::optflow::SparseRLOFOpticalFlow>;
@@ -6211,23 +7095,23 @@ mod optflow_types {
 	}
 	
 	impl PtrOfSparseRLOFOpticalFlow {
-		pub fn as_raw_PtrOfSparseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSparseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSparseRLOFOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::SparseOpticalFlow for PtrOfSparseRLOFOpticalFlow {
-		fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::optflow::SparseRLOFOpticalFlow for PtrOfSparseRLOFOpticalFlow {
-		fn as_raw_SparseRLOFOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseRLOFOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfGPCPatchDescriptor = core::Vector::<crate::optflow::GPCPatchDescriptor>;
@@ -6265,23 +7149,23 @@ mod phase_unwrapping_types {
 	}
 	
 	impl PtrOfHistogramPhaseUnwrapping {
-		pub fn as_raw_PtrOfHistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfHistogramPhaseUnwrapping {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::phase_unwrapping::HistogramPhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
-		fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::phase_unwrapping::PhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
-		fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -6298,23 +7182,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfAlignMTB {
-		pub fn as_raw_PtrOfAlignMTB(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAlignMTB(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAlignMTB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAlignMTB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAlignMTB {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::AlignExposures for PtrOfAlignMTB {
-		fn as_raw_AlignExposures(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AlignExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AlignExposures(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AlignExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::AlignMTB for PtrOfAlignMTB {
-		fn as_raw_AlignMTB(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AlignMTB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfCalibrateDebevec = core::Ptr::<dyn crate::photo::CalibrateDebevec>;
@@ -6324,23 +7208,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfCalibrateDebevec {
-		pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfCalibrateDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCalibrateDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfCalibrateDebevec {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::CalibrateCRF for PtrOfCalibrateDebevec {
-		fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::CalibrateDebevec for PtrOfCalibrateDebevec {
-		fn as_raw_CalibrateDebevec(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CalibrateDebevec(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CalibrateDebevec(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CalibrateDebevec(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfCalibrateRobertson = core::Ptr::<dyn crate::photo::CalibrateRobertson>;
@@ -6350,23 +7234,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfCalibrateRobertson {
-		pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfCalibrateRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCalibrateRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfCalibrateRobertson {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::CalibrateCRF for PtrOfCalibrateRobertson {
-		fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::CalibrateRobertson for PtrOfCalibrateRobertson {
-		fn as_raw_CalibrateRobertson(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CalibrateRobertson(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CalibrateRobertson(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CalibrateRobertson(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMergeDebevec = core::Ptr::<dyn crate::photo::MergeDebevec>;
@@ -6376,23 +7260,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfMergeDebevec {
-		pub fn as_raw_PtrOfMergeDebevec(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMergeDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMergeDebevec(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMergeDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMergeDebevec {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeDebevec for PtrOfMergeDebevec {
-		fn as_raw_MergeDebevec(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeDebevec(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeExposures for PtrOfMergeDebevec {
-		fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMergeMertens = core::Ptr::<dyn crate::photo::MergeMertens>;
@@ -6402,23 +7286,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfMergeMertens {
-		pub fn as_raw_PtrOfMergeMertens(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMergeMertens(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMergeMertens(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMergeMertens(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMergeMertens {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeExposures for PtrOfMergeMertens {
-		fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeMertens for PtrOfMergeMertens {
-		fn as_raw_MergeMertens(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeMertens(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMergeRobertson = core::Ptr::<dyn crate::photo::MergeRobertson>;
@@ -6428,23 +7312,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfMergeRobertson {
-		pub fn as_raw_PtrOfMergeRobertson(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMergeRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMergeRobertson(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMergeRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMergeRobertson {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeExposures for PtrOfMergeRobertson {
-		fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::MergeRobertson for PtrOfMergeRobertson {
-		fn as_raw_MergeRobertson(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MergeRobertson(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTonemap = core::Ptr::<dyn crate::photo::Tonemap>;
@@ -6454,18 +7338,18 @@ mod photo_types {
 	}
 	
 	impl PtrOfTonemap {
-		pub fn as_raw_PtrOfTonemap(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTonemap(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTonemap {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::Tonemap for PtrOfTonemap {
-		fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTonemapDrago = core::Ptr::<dyn crate::photo::TonemapDrago>;
@@ -6475,23 +7359,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfTonemapDrago {
-		pub fn as_raw_PtrOfTonemapDrago(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTonemapDrago(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTonemapDrago(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTonemapDrago(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTonemapDrago {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::Tonemap for PtrOfTonemapDrago {
-		fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::TonemapDrago for PtrOfTonemapDrago {
-		fn as_raw_TonemapDrago(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TonemapDrago(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TonemapDrago(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TonemapDrago(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTonemapMantiuk = core::Ptr::<dyn crate::photo::TonemapMantiuk>;
@@ -6501,23 +7385,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfTonemapMantiuk {
-		pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTonemapMantiuk(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTonemapMantiuk(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTonemapMantiuk {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::Tonemap for PtrOfTonemapMantiuk {
-		fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::TonemapMantiuk for PtrOfTonemapMantiuk {
-		fn as_raw_TonemapMantiuk(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TonemapMantiuk(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TonemapMantiuk(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TonemapMantiuk(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTonemapReinhard = core::Ptr::<dyn crate::photo::TonemapReinhard>;
@@ -6527,23 +7411,23 @@ mod photo_types {
 	}
 	
 	impl PtrOfTonemapReinhard {
-		pub fn as_raw_PtrOfTonemapReinhard(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTonemapReinhard(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTonemapReinhard(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTonemapReinhard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTonemapReinhard {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::Tonemap for PtrOfTonemapReinhard {
-		fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::TonemapReinhard for PtrOfTonemapReinhard {
-		fn as_raw_TonemapReinhard(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TonemapReinhard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TonemapReinhard(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TonemapReinhard(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -6560,18 +7444,18 @@ mod plot_types {
 	}
 	
 	impl PtrOfPlot2d {
-		pub fn as_raw_PtrOfPlot2d(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPlot2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPlot2d(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPlot2d(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPlot2d {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::plot::Plot2d for PtrOfPlot2d {
-		fn as_raw_Plot2d(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Plot2d(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Plot2d(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Plot2d(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -6589,23 +7473,23 @@ mod quality_types {
 	}
 	
 	impl PtrOfQualityBRISQUE {
-		pub fn as_raw_PtrOfQualityBRISQUE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQualityBRISQUE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfQualityBRISQUE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBRISQUETrait for PtrOfQualityBRISQUE {
-		fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBase for PtrOfQualityBRISQUE {
-		fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfQualityGMSD = core::Ptr::<crate::quality::QualityGMSD>;
@@ -6615,23 +7499,23 @@ mod quality_types {
 	}
 	
 	impl PtrOfQualityGMSD {
-		pub fn as_raw_PtrOfQualityGMSD(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQualityGMSD(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfQualityGMSD {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBase for PtrOfQualityGMSD {
-		fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityGMSDTrait for PtrOfQualityGMSD {
-		fn as_raw_QualityGMSD(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityGMSD(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfQualityMSE = core::Ptr::<crate::quality::QualityMSE>;
@@ -6641,23 +7525,23 @@ mod quality_types {
 	}
 	
 	impl PtrOfQualityMSE {
-		pub fn as_raw_PtrOfQualityMSE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQualityMSE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfQualityMSE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBase for PtrOfQualityMSE {
-		fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityMSETrait for PtrOfQualityMSE {
-		fn as_raw_QualityMSE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityMSE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfQualityPSNR = core::Ptr::<crate::quality::QualityPSNR>;
@@ -6667,23 +7551,23 @@ mod quality_types {
 	}
 	
 	impl PtrOfQualityPSNR {
-		pub fn as_raw_PtrOfQualityPSNR(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQualityPSNR(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfQualityPSNR {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBase for PtrOfQualityPSNR {
-		fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityPSNRTrait for PtrOfQualityPSNR {
-		fn as_raw_QualityPSNR(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityPSNR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfQualitySSIM = core::Ptr::<crate::quality::QualitySSIM>;
@@ -6693,23 +7577,23 @@ mod quality_types {
 	}
 	
 	impl PtrOfQualitySSIM {
-		pub fn as_raw_PtrOfQualitySSIM(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQualitySSIM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfQualitySSIM {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualityBase for PtrOfQualitySSIM {
-		fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::quality::QualitySSIMTrait for PtrOfQualitySSIM {
-		fn as_raw_QualitySSIM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QualitySSIM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -6727,18 +7611,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfDepthCleaner {
-		pub fn as_raw_PtrOfDepthCleaner(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDepthCleaner(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDepthCleaner {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::DepthCleanerTrait for PtrOfDepthCleaner {
-		fn as_raw_DepthCleaner(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DepthCleaner(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DepthCleaner(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDynafu_DynaFu = core::Ptr::<dyn crate::rgbd::Dynafu_DynaFu>;
@@ -6748,13 +7632,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfDynafu_DynaFu {
-		pub fn as_raw_PtrOfDynafu_DynaFu(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDynafu_DynaFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDynafu_DynaFu(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDynafu_DynaFu(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Dynafu_DynaFu for PtrOfDynafu_DynaFu {
-		fn as_raw_Dynafu_DynaFu(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Dynafu_DynaFu(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDynafu_Params = core::Ptr::<crate::rgbd::Dynafu_Params>;
@@ -6764,13 +7648,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfDynafu_Params {
-		pub fn as_raw_PtrOfDynafu_Params(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDynafu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDynafu_Params(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDynafu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Dynafu_ParamsTrait for PtrOfDynafu_Params {
-		fn as_raw_Dynafu_Params(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Dynafu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Dynafu_Params(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Dynafu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFastICPOdometry = core::Ptr::<crate::rgbd::FastICPOdometry>;
@@ -6780,23 +7664,23 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfFastICPOdometry {
-		pub fn as_raw_PtrOfFastICPOdometry(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFastICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFastICPOdometry(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFastICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFastICPOdometry {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::FastICPOdometryTrait for PtrOfFastICPOdometry {
-		fn as_raw_FastICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FastICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FastICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FastICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Odometry for PtrOfFastICPOdometry {
-		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfICPOdometry = core::Ptr::<crate::rgbd::ICPOdometry>;
@@ -6806,23 +7690,23 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfICPOdometry {
-		pub fn as_raw_PtrOfICPOdometry(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfICPOdometry(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfICPOdometry {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::ICPOdometryTrait for PtrOfICPOdometry {
-		fn as_raw_ICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Odometry for PtrOfICPOdometry {
-		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfKinfu_KinFu = core::Ptr::<dyn crate::rgbd::Kinfu_KinFu>;
@@ -6832,13 +7716,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfKinfu_KinFu {
-		pub fn as_raw_PtrOfKinfu_KinFu(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfKinfu_KinFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfKinfu_KinFu(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKinfu_KinFu(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Kinfu_KinFu for PtrOfKinfu_KinFu {
-		fn as_raw_Kinfu_KinFu(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Kinfu_KinFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Kinfu_KinFu(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Kinfu_KinFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfKinfu_Params = core::Ptr::<crate::rgbd::Kinfu_Params>;
@@ -6848,13 +7732,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfKinfu_Params {
-		pub fn as_raw_PtrOfKinfu_Params(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfKinfu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfKinfu_Params(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKinfu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Kinfu_ParamsTrait for PtrOfKinfu_Params {
-		fn as_raw_Kinfu_Params(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Kinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Kinfu_Params(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Kinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_ColorGradient = core::Ptr::<crate::rgbd::Linemod_ColorGradient>;
@@ -6864,18 +7748,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfLinemod_ColorGradient {
-		pub fn as_raw_PtrOfLinemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLinemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLinemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_ColorGradientTrait for PtrOfLinemod_ColorGradient {
-		fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_Modality for PtrOfLinemod_ColorGradient {
-		fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_DepthNormal = core::Ptr::<crate::rgbd::Linemod_DepthNormal>;
@@ -6885,18 +7769,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfLinemod_DepthNormal {
-		pub fn as_raw_PtrOfLinemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLinemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLinemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_DepthNormalTrait for PtrOfLinemod_DepthNormal {
-		fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_Modality for PtrOfLinemod_DepthNormal {
-		fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_Detector = core::Ptr::<crate::rgbd::Linemod_Detector>;
@@ -6906,13 +7790,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfLinemod_Detector {
-		pub fn as_raw_PtrOfLinemod_Detector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLinemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLinemod_Detector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_DetectorTrait for PtrOfLinemod_Detector {
-		fn as_raw_Linemod_Detector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_Detector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_Modality = core::Ptr::<dyn crate::rgbd::Linemod_Modality>;
@@ -6922,13 +7806,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfLinemod_Modality {
-		pub fn as_raw_PtrOfLinemod_Modality(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLinemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLinemod_Modality(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_Modality for PtrOfLinemod_Modality {
-		fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_QuantizedPyramid = core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>;
@@ -6938,13 +7822,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfLinemod_QuantizedPyramid {
-		pub fn as_raw_PtrOfLinemod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLinemod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLinemod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinemod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Linemod_QuantizedPyramid for PtrOfLinemod_QuantizedPyramid {
-		fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOdometry = core::Ptr::<dyn crate::rgbd::Odometry>;
@@ -6954,18 +7838,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfOdometry {
-		pub fn as_raw_PtrOfOdometry(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOdometry(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfOdometry {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Odometry for PtrOfOdometry {
-		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOdometryFrame = core::Ptr::<crate::rgbd::OdometryFrame>;
@@ -6975,18 +7859,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfOdometryFrame {
-		pub fn as_raw_PtrOfOdometryFrame(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOdometryFrame(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::OdometryFrameTrait for PtrOfOdometryFrame {
-		fn as_raw_OdometryFrame(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OdometryFrame(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdFrameTrait for PtrOfOdometryFrame {
-		fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdFrame = core::Ptr::<crate::rgbd::RgbdFrame>;
@@ -6996,13 +7880,13 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfRgbdFrame {
-		pub fn as_raw_PtrOfRgbdFrame(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRgbdFrame(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdFrameTrait for PtrOfRgbdFrame {
-		fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdICPOdometry = core::Ptr::<crate::rgbd::RgbdICPOdometry>;
@@ -7012,23 +7896,23 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfRgbdICPOdometry {
-		pub fn as_raw_PtrOfRgbdICPOdometry(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRgbdICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRgbdICPOdometry(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRgbdICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRgbdICPOdometry {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Odometry for PtrOfRgbdICPOdometry {
-		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdICPOdometryTrait for PtrOfRgbdICPOdometry {
-		fn as_raw_RgbdICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdICPOdometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdICPOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdNormals = core::Ptr::<crate::rgbd::RgbdNormals>;
@@ -7038,18 +7922,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfRgbdNormals {
-		pub fn as_raw_PtrOfRgbdNormals(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRgbdNormals(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRgbdNormals {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdNormalsTrait for PtrOfRgbdNormals {
-		fn as_raw_RgbdNormals(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdNormals(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdOdometry = core::Ptr::<crate::rgbd::RgbdOdometry>;
@@ -7059,23 +7943,23 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfRgbdOdometry {
-		pub fn as_raw_PtrOfRgbdOdometry(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRgbdOdometry(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRgbdOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRgbdOdometry {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::Odometry for PtrOfRgbdOdometry {
-		fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdOdometryTrait for PtrOfRgbdOdometry {
-		fn as_raw_RgbdOdometry(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdOdometry(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdPlane = core::Ptr::<crate::rgbd::RgbdPlane>;
@@ -7085,18 +7969,18 @@ mod rgbd_types {
 	}
 	
 	impl PtrOfRgbdPlane {
-		pub fn as_raw_PtrOfRgbdPlane(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRgbdPlane(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRgbdPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRgbdPlane {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::rgbd::RgbdPlaneTrait for PtrOfRgbdPlane {
-		fn as_raw_RgbdPlane(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RgbdPlane(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfLinemod_Feature = core::Vector::<crate::rgbd::Linemod_Feature>;
@@ -7196,28 +8080,28 @@ mod saliency_types {
 	}
 	
 	impl PtrOfMotionSaliencyBinWangApr2014 {
-		pub fn as_raw_PtrOfMotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMotionSaliencyBinWangApr2014 {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::MotionSaliency for PtrOfMotionSaliencyBinWangApr2014 {
-		fn as_raw_MotionSaliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::MotionSaliencyBinWangApr2014Trait for PtrOfMotionSaliencyBinWangApr2014 {
-		fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::Saliency for PtrOfMotionSaliencyBinWangApr2014 {
-		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfObjectnessBING = core::Ptr::<crate::saliency::ObjectnessBING>;
@@ -7227,28 +8111,28 @@ mod saliency_types {
 	}
 	
 	impl PtrOfObjectnessBING {
-		pub fn as_raw_PtrOfObjectnessBING(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfObjectnessBING(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfObjectnessBING {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::Objectness for PtrOfObjectnessBING {
-		fn as_raw_Objectness(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::ObjectnessBINGTrait for PtrOfObjectnessBING {
-		fn as_raw_ObjectnessBING(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ObjectnessBING(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::Saliency for PtrOfObjectnessBING {
-		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStaticSaliencyFineGrained = core::Ptr::<crate::saliency::StaticSaliencyFineGrained>;
@@ -7258,28 +8142,28 @@ mod saliency_types {
 	}
 	
 	impl PtrOfStaticSaliencyFineGrained {
-		pub fn as_raw_PtrOfStaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStaticSaliencyFineGrained {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::Saliency for PtrOfStaticSaliencyFineGrained {
-		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::StaticSaliency for PtrOfStaticSaliencyFineGrained {
-		fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::StaticSaliencyFineGrainedTrait for PtrOfStaticSaliencyFineGrained {
-		fn as_raw_StaticSaliencyFineGrained(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StaticSaliencyFineGrained(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStaticSaliencySpectralResidual = core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>;
@@ -7289,28 +8173,28 @@ mod saliency_types {
 	}
 	
 	impl PtrOfStaticSaliencySpectralResidual {
-		pub fn as_raw_PtrOfStaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStaticSaliencySpectralResidual {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::Saliency for PtrOfStaticSaliencySpectralResidual {
-		fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::StaticSaliency for PtrOfStaticSaliencySpectralResidual {
-		fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::saliency::StaticSaliencySpectralResidualTrait for PtrOfStaticSaliencySpectralResidual {
-		fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -7328,18 +8212,18 @@ mod sfm_types {
 	}
 	
 	impl PtrOfSFMLibmvEuclideanReconstruction {
-		pub fn as_raw_PtrOfSFMLibmvEuclideanReconstruction(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSFMLibmvEuclideanReconstruction(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSFMLibmvEuclideanReconstruction(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSFMLibmvEuclideanReconstruction(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::sfm::BaseSFM for PtrOfSFMLibmvEuclideanReconstruction {
-		fn as_raw_BaseSFM(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseSFM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::sfm::SFMLibmvEuclideanReconstruction for PtrOfSFMLibmvEuclideanReconstruction {
-		fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SFMLibmvEuclideanReconstruction(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SFMLibmvEuclideanReconstruction(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -7357,23 +8241,23 @@ mod shape_types {
 	}
 	
 	impl PtrOfAffineTransformer {
-		pub fn as_raw_PtrOfAffineTransformer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAffineTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAffineTransformer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAffineTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::shape::AffineTransformer for PtrOfAffineTransformer {
-		fn as_raw_AffineTransformer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AffineTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_AffineTransformer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AffineTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAffineTransformer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeTransformer for PtrOfAffineTransformer {
-		fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfHausdorffDistanceExtractor = core::Ptr::<dyn crate::shape::HausdorffDistanceExtractor>;
@@ -7383,23 +8267,23 @@ mod shape_types {
 	}
 	
 	impl PtrOfHausdorffDistanceExtractor {
-		pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHausdorffDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHausdorffDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfHausdorffDistanceExtractor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::HausdorffDistanceExtractor for PtrOfHausdorffDistanceExtractor {
-		fn as_raw_HausdorffDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HausdorffDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HausdorffDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HausdorffDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeDistanceExtractor for PtrOfHausdorffDistanceExtractor {
-		fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfHistogramCostExtractor = core::Ptr::<dyn crate::shape::HistogramCostExtractor>;
@@ -7409,18 +8293,18 @@ mod shape_types {
 	}
 	
 	impl PtrOfHistogramCostExtractor {
-		pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfHistogramCostExtractor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::HistogramCostExtractor for PtrOfHistogramCostExtractor {
-		fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfShapeContextDistanceExtractor = core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>;
@@ -7430,23 +8314,23 @@ mod shape_types {
 	}
 	
 	impl PtrOfShapeContextDistanceExtractor {
-		pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfShapeContextDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfShapeContextDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfShapeContextDistanceExtractor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeContextDistanceExtractor for PtrOfShapeContextDistanceExtractor {
-		fn as_raw_ShapeContextDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeContextDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeContextDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeContextDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeDistanceExtractor for PtrOfShapeContextDistanceExtractor {
-		fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfShapeTransformer = core::Ptr::<dyn crate::shape::ShapeTransformer>;
@@ -7456,18 +8340,18 @@ mod shape_types {
 	}
 	
 	impl PtrOfShapeTransformer {
-		pub fn as_raw_PtrOfShapeTransformer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfShapeTransformer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfShapeTransformer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeTransformer for PtrOfShapeTransformer {
-		fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfThinPlateSplineShapeTransformer = core::Ptr::<dyn crate::shape::ThinPlateSplineShapeTransformer>;
@@ -7477,23 +8361,23 @@ mod shape_types {
 	}
 	
 	impl PtrOfThinPlateSplineShapeTransformer {
-		pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfThinPlateSplineShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfThinPlateSplineShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfThinPlateSplineShapeTransformer {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
-		fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::shape::ThinPlateSplineShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
-		fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ThinPlateSplineShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ThinPlateSplineShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -7511,13 +8395,13 @@ mod stereo_types {
 	}
 	
 	impl PtrOfQuasiDenseStereo {
-		pub fn as_raw_PtrOfQuasiDenseStereo(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfQuasiDenseStereo(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfQuasiDenseStereo(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQuasiDenseStereo(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stereo::QuasiDenseStereo for PtrOfQuasiDenseStereo {
-		fn as_raw_QuasiDenseStereo(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_QuasiDenseStereo(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfMatch = core::Vector::<crate::stereo::Match>;
@@ -7554,18 +8438,18 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_BestOf2NearestMatcher {
-		pub fn as_raw_PtrOfDetail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for PtrOfDetail_BestOf2NearestMatcher {
-		fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_FeaturesMatcher for PtrOfDetail_BestOf2NearestMatcher {
-		fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_Blender = core::Ptr::<crate::stitching::Detail_Blender>;
@@ -7575,13 +8459,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_Blender {
-		pub fn as_raw_PtrOfDetail_Blender(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_Blender(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_Blender(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_Blender(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_BlenderTrait for PtrOfDetail_Blender {
-		fn as_raw_Detail_Blender(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_Blender(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_Blender(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_Blender(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_BundleAdjusterBase = core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>;
@@ -7591,18 +8475,18 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_BundleAdjusterBase {
-		pub fn as_raw_PtrOfDetail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_BundleAdjusterBase for PtrOfDetail_BundleAdjusterBase {
-		fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_Estimator for PtrOfDetail_BundleAdjusterBase {
-		fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_Estimator = core::Ptr::<dyn crate::stitching::Detail_Estimator>;
@@ -7612,13 +8496,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_Estimator {
-		pub fn as_raw_PtrOfDetail_Estimator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_Estimator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_Estimator for PtrOfDetail_Estimator {
-		fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_ExposureCompensator = core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>;
@@ -7628,13 +8512,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_ExposureCompensator {
-		pub fn as_raw_PtrOfDetail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_ExposureCompensator for PtrOfDetail_ExposureCompensator {
-		fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_FeaturesMatcher = core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>;
@@ -7644,13 +8528,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_FeaturesMatcher {
-		pub fn as_raw_PtrOfDetail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_FeaturesMatcher for PtrOfDetail_FeaturesMatcher {
-		fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_RotationWarper = core::Ptr::<dyn crate::stitching::Detail_RotationWarper>;
@@ -7660,13 +8544,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_RotationWarper {
-		pub fn as_raw_PtrOfDetail_RotationWarper(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_RotationWarper(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_RotationWarper for PtrOfDetail_RotationWarper {
-		fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDetail_SeamFinder = core::Ptr::<dyn crate::stitching::Detail_SeamFinder>;
@@ -7676,13 +8560,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfDetail_SeamFinder {
-		pub fn as_raw_PtrOfDetail_SeamFinder(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDetail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDetail_SeamFinder(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::Detail_SeamFinder for PtrOfDetail_SeamFinder {
-		fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStitcher = core::Ptr::<crate::stitching::Stitcher>;
@@ -7692,13 +8576,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfStitcher {
-		pub fn as_raw_PtrOfStitcher(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStitcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStitcher(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStitcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::StitcherTrait for PtrOfStitcher {
-		fn as_raw_Stitcher(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Stitcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Stitcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Stitcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfWarperCreator = core::Ptr::<dyn crate::stitching::WarperCreator>;
@@ -7708,13 +8592,13 @@ mod stitching_types {
 	}
 	
 	impl PtrOfWarperCreator {
-		pub fn as_raw_PtrOfWarperCreator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfWarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfWarperCreator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfWarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::stitching::WarperCreator for PtrOfWarperCreator {
-		fn as_raw_WarperCreator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDetail_CameraParams = core::Vector::<crate::stitching::Detail_CameraParams>;
@@ -7791,23 +8675,23 @@ mod structured_light_types {
 	}
 	
 	impl PtrOfGrayCodePattern {
-		pub fn as_raw_PtrOfGrayCodePattern(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGrayCodePattern(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGrayCodePattern(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGrayCodePattern(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGrayCodePattern {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::structured_light::GrayCodePattern for PtrOfGrayCodePattern {
-		fn as_raw_GrayCodePattern(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GrayCodePattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GrayCodePattern(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GrayCodePattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::structured_light::StructuredLightPattern for PtrOfGrayCodePattern {
-		fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSinusoidalPattern = core::Ptr::<dyn crate::structured_light::SinusoidalPattern>;
@@ -7817,23 +8701,23 @@ mod structured_light_types {
 	}
 	
 	impl PtrOfSinusoidalPattern {
-		pub fn as_raw_PtrOfSinusoidalPattern(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSinusoidalPattern(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSinusoidalPattern(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSinusoidalPattern(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSinusoidalPattern {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::structured_light::SinusoidalPattern for PtrOfSinusoidalPattern {
-		fn as_raw_SinusoidalPattern(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SinusoidalPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SinusoidalPattern(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SinusoidalPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::structured_light::StructuredLightPattern for PtrOfSinusoidalPattern {
-		fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSinusoidalPattern_Params = core::Ptr::<crate::structured_light::SinusoidalPattern_Params>;
@@ -7843,13 +8727,13 @@ mod structured_light_types {
 	}
 	
 	impl PtrOfSinusoidalPattern_Params {
-		pub fn as_raw_PtrOfSinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::structured_light::SinusoidalPattern_ParamsTrait for PtrOfSinusoidalPattern_Params {
-		fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -7867,23 +8751,23 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_BroxOpticalFlow {
-		pub fn as_raw_PtrOfSuperres_BroxOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_BroxOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_BroxOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_BroxOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_BroxOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_BroxOpticalFlow for PtrOfSuperres_BroxOpticalFlow {
-		fn as_raw_Superres_BroxOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_BroxOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_BroxOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_BroxOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DenseOpticalFlowExt for PtrOfSuperres_BroxOpticalFlow {
-		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_DenseOpticalFlowExt = core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>;
@@ -7893,18 +8777,18 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_DenseOpticalFlowExt {
-		pub fn as_raw_PtrOfSuperres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_DenseOpticalFlowExt {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DenseOpticalFlowExt for PtrOfSuperres_DenseOpticalFlowExt {
-		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_DualTVL1OpticalFlow = core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>;
@@ -7914,23 +8798,23 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_DualTVL1OpticalFlow {
-		pub fn as_raw_PtrOfSuperres_DualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_DualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_DualTVL1OpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DenseOpticalFlowExt for PtrOfSuperres_DualTVL1OpticalFlow {
-		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DualTVL1OpticalFlow for PtrOfSuperres_DualTVL1OpticalFlow {
-		fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_FarnebackOpticalFlow = core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>;
@@ -7940,23 +8824,23 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_FarnebackOpticalFlow {
-		pub fn as_raw_PtrOfSuperres_FarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_FarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_FarnebackOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DenseOpticalFlowExt for PtrOfSuperres_FarnebackOpticalFlow {
-		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_FarnebackOpticalFlow for PtrOfSuperres_FarnebackOpticalFlow {
-		fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_FrameSource = core::Ptr::<dyn crate::superres::Superres_FrameSource>;
@@ -7966,13 +8850,13 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_FrameSource {
-		pub fn as_raw_PtrOfSuperres_FrameSource(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_FrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_FrameSource(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_FrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_FrameSource for PtrOfSuperres_FrameSource {
-		fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_PyrLKOpticalFlow = core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>;
@@ -7982,23 +8866,23 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_PyrLKOpticalFlow {
-		pub fn as_raw_PtrOfSuperres_PyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_PyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_PyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_PyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_PyrLKOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_DenseOpticalFlowExt for PtrOfSuperres_PyrLKOpticalFlow {
-		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_PyrLKOpticalFlow for PtrOfSuperres_PyrLKOpticalFlow {
-		fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_PyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_PyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperres_SuperResolution = core::Ptr::<dyn crate::superres::Superres_SuperResolution>;
@@ -8008,23 +8892,23 @@ mod superres_types {
 	}
 	
 	impl PtrOfSuperres_SuperResolution {
-		pub fn as_raw_PtrOfSuperres_SuperResolution(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperres_SuperResolution(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperres_SuperResolution(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperres_SuperResolution(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperres_SuperResolution {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_FrameSource for PtrOfSuperres_SuperResolution {
-		fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::superres::Superres_SuperResolution for PtrOfSuperres_SuperResolution {
-		fn as_raw_Superres_SuperResolution(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Superres_SuperResolution(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Superres_SuperResolution(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Superres_SuperResolution(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -8042,13 +8926,13 @@ mod surface_matching_types {
 	}
 	
 	impl PtrOfPose3D {
-		pub fn as_raw_PtrOfPose3D(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPose3D(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::surface_matching::Pose3DTrait for PtrOfPose3D {
-		fn as_raw_Pose3D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Pose3D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPoseCluster3D = core::Ptr::<crate::surface_matching::PoseCluster3D>;
@@ -8058,13 +8942,13 @@ mod surface_matching_types {
 	}
 	
 	impl PtrOfPoseCluster3D {
-		pub fn as_raw_PtrOfPoseCluster3D(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPoseCluster3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPoseCluster3D(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPoseCluster3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::surface_matching::PoseCluster3DTrait for PtrOfPoseCluster3D {
-		fn as_raw_PoseCluster3D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PoseCluster3D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfPose3DPtr = core::Vector::<crate::surface_matching::Pose3DPtr>;
@@ -8102,18 +8986,18 @@ mod text_types {
 	}
 	
 	impl PtrOfERFilter {
-		pub fn as_raw_PtrOfERFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfERFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfERFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfERFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfERFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::ERFilter for PtrOfERFilter {
-		fn as_raw_ERFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ERFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ERFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ERFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfERFilter_Callback = core::Ptr::<dyn crate::text::ERFilter_Callback>;
@@ -8123,13 +9007,13 @@ mod text_types {
 	}
 	
 	impl PtrOfERFilter_Callback {
-		pub fn as_raw_PtrOfERFilter_Callback(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfERFilter_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfERFilter_Callback(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfERFilter_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::ERFilter_Callback for PtrOfERFilter_Callback {
-		fn as_raw_ERFilter_Callback(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ERFilter_Callback(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRBeamSearchDecoder = core::Ptr::<crate::text::OCRBeamSearchDecoder>;
@@ -8139,18 +9023,18 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRBeamSearchDecoder {
-		pub fn as_raw_PtrOfOCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::BaseOCR for PtrOfOCRBeamSearchDecoder {
-		fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::OCRBeamSearchDecoderTrait for PtrOfOCRBeamSearchDecoder {
-		fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRBeamSearchDecoder_ClassifierCallback = core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>;
@@ -8160,13 +9044,13 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRBeamSearchDecoder_ClassifierCallback {
-		pub fn as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait for PtrOfOCRBeamSearchDecoder_ClassifierCallback {
-		fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRHMMDecoder = core::Ptr::<crate::text::OCRHMMDecoder>;
@@ -8176,18 +9060,18 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRHMMDecoder {
-		pub fn as_raw_PtrOfOCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::BaseOCR for PtrOfOCRHMMDecoder {
-		fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::OCRHMMDecoderTrait for PtrOfOCRHMMDecoder {
-		fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRHMMDecoder_ClassifierCallback = core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>;
@@ -8197,13 +9081,13 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRHMMDecoder_ClassifierCallback {
-		pub fn as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::OCRHMMDecoder_ClassifierCallbackTrait for PtrOfOCRHMMDecoder_ClassifierCallback {
-		fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRHolisticWordRecognizer = core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>;
@@ -8213,18 +9097,18 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRHolisticWordRecognizer {
-		pub fn as_raw_PtrOfOCRHolisticWordRecognizer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRHolisticWordRecognizer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::BaseOCR for PtrOfOCRHolisticWordRecognizer {
-		fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::OCRHolisticWordRecognizer for PtrOfOCRHolisticWordRecognizer {
-		fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfOCRTesseract = core::Ptr::<dyn crate::text::OCRTesseract>;
@@ -8234,18 +9118,18 @@ mod text_types {
 	}
 	
 	impl PtrOfOCRTesseract {
-		pub fn as_raw_PtrOfOCRTesseract(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfOCRTesseract(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfOCRTesseract(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOCRTesseract(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::BaseOCR for PtrOfOCRTesseract {
-		fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::OCRTesseract for PtrOfOCRTesseract {
-		fn as_raw_OCRTesseract(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_OCRTesseract(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTextDetectorCNN = core::Ptr::<dyn crate::text::TextDetectorCNN>;
@@ -8255,18 +9139,18 @@ mod text_types {
 	}
 	
 	impl PtrOfTextDetectorCNN {
-		pub fn as_raw_PtrOfTextDetectorCNN(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTextDetectorCNN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::text::TextDetector for PtrOfTextDetectorCNN {
-		fn as_raw_TextDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::text::TextDetectorCNN for PtrOfTextDetectorCNN {
-		fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfERStat = core::Vector::<crate::text::ERStat>;
@@ -8324,13 +9208,13 @@ mod tracking_types {
 	}
 	
 	impl PtrOfCvFeatureParams {
-		pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfCvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::tracking::CvFeatureParamsTrait for PtrOfCvFeatureParams {
-		fn as_raw_CvFeatureParams(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_CvFeatureParams(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMultiTracker = core::Ptr::<crate::tracking::MultiTracker>;
@@ -8340,18 +9224,18 @@ mod tracking_types {
 	}
 	
 	impl PtrOfMultiTracker {
-		pub fn as_raw_PtrOfMultiTracker(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMultiTracker(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMultiTracker {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::MultiTrackerTrait for PtrOfMultiTracker {
-		fn as_raw_MultiTracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MultiTracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTracker = core::Ptr::<dyn crate::tracking::Tracker>;
@@ -8361,18 +9245,18 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTracker {
-		pub fn as_raw_PtrOfTracker(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTracker(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTracker {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTracker {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerBoosting = core::Ptr::<dyn crate::tracking::TrackerBoosting>;
@@ -8382,23 +9266,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerBoosting {
-		pub fn as_raw_PtrOfTrackerBoosting(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerBoosting(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerBoosting {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerBoosting {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerBoosting for PtrOfTrackerBoosting {
-		fn as_raw_TrackerBoosting(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerBoosting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerBoosting(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerBoosting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerCSRT = core::Ptr::<dyn crate::tracking::TrackerCSRT>;
@@ -8408,23 +9292,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerCSRT {
-		pub fn as_raw_PtrOfTrackerCSRT(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerCSRT(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerCSRT(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerCSRT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerCSRT {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerCSRT {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerCSRT for PtrOfTrackerCSRT {
-		fn as_raw_TrackerCSRT(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerCSRT(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerFeature = core::Ptr::<dyn crate::tracking::TrackerFeature>;
@@ -8434,13 +9318,13 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerFeature {
-		pub fn as_raw_PtrOfTrackerFeature(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerFeature(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerFeature for PtrOfTrackerFeature {
-		fn as_raw_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::tracking::TrackerGOTURN>;
@@ -8450,23 +9334,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerGOTURN {
-		pub fn as_raw_PtrOfTrackerGOTURN(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerGOTURN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerGOTURN {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerGOTURN {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerGOTURN for PtrOfTrackerGOTURN {
-		fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerKCF = core::Ptr::<dyn crate::tracking::TrackerKCF>;
@@ -8476,23 +9360,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerKCF {
-		pub fn as_raw_PtrOfTrackerKCF(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerKCF(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerKCF {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerKCF {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerKCF for PtrOfTrackerKCF {
-		fn as_raw_TrackerKCF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerKCF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerMIL = core::Ptr::<dyn crate::tracking::TrackerMIL>;
@@ -8502,23 +9386,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerMIL {
-		pub fn as_raw_PtrOfTrackerMIL(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerMIL(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerMIL {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerMIL {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerMIL for PtrOfTrackerMIL {
-		fn as_raw_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerMOSSE = core::Ptr::<dyn crate::tracking::TrackerMOSSE>;
@@ -8528,23 +9412,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerMOSSE {
-		pub fn as_raw_PtrOfTrackerMOSSE(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerMOSSE(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerMOSSE(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerMOSSE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerMOSSE {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerMOSSE {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerMOSSE for PtrOfTrackerMOSSE {
-		fn as_raw_TrackerMOSSE(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerMOSSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerMOSSE(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerMOSSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerMedianFlow = core::Ptr::<dyn crate::tracking::TrackerMedianFlow>;
@@ -8554,23 +9438,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerMedianFlow {
-		pub fn as_raw_PtrOfTrackerMedianFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerMedianFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerMedianFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerMedianFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerMedianFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerMedianFlow {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerMedianFlow for PtrOfTrackerMedianFlow {
-		fn as_raw_TrackerMedianFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerMedianFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerMedianFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerMedianFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerSamplerAlgorithm = core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>;
@@ -8580,13 +9464,13 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerSamplerAlgorithm {
-		pub fn as_raw_PtrOfTrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerSamplerAlgorithm for PtrOfTrackerSamplerAlgorithm {
-		fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerStateEstimator = core::Ptr::<dyn crate::tracking::TrackerStateEstimator>;
@@ -8596,13 +9480,13 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerStateEstimator {
-		pub fn as_raw_PtrOfTrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerStateEstimator for PtrOfTrackerStateEstimator {
-		fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerTLD = core::Ptr::<dyn crate::tracking::TrackerTLD>;
@@ -8612,23 +9496,23 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerTLD {
-		pub fn as_raw_PtrOfTrackerTLD(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerTLD(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTrackerTLD {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::Tracker for PtrOfTrackerTLD {
-		fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerTLD for PtrOfTrackerTLD {
-		fn as_raw_TrackerTLD(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerTLD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerTLD(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerTLD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerTargetState = core::Ptr::<crate::tracking::TrackerTargetState>;
@@ -8638,13 +9522,13 @@ mod tracking_types {
 	}
 	
 	impl PtrOfTrackerTargetState {
-		pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::tracking::TrackerTargetStateTrait for PtrOfTrackerTargetState {
-		fn as_raw_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfCvHaarEvaluator_FeatureHaar = core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar>;
@@ -8701,23 +9585,23 @@ mod video_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorKNN {
-		pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorKNN(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorKNN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorKNN {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorKNN {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractorKNN for PtrOfBackgroundSubtractorKNN {
-		fn as_raw_BackgroundSubtractorKNN(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorKNN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorKNN(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorKNN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBackgroundSubtractorMOG2 = core::Ptr::<dyn crate::video::BackgroundSubtractorMOG2>;
@@ -8727,23 +9611,23 @@ mod video_types {
 	}
 	
 	impl PtrOfBackgroundSubtractorMOG2 {
-		pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBackgroundSubtractorMOG2 {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorMOG2 {
-		fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::BackgroundSubtractorMOG2 for PtrOfBackgroundSubtractorMOG2 {
-		fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDISOpticalFlow = core::Ptr::<dyn crate::video::DISOpticalFlow>;
@@ -8753,23 +9637,23 @@ mod video_types {
 	}
 	
 	impl PtrOfDISOpticalFlow {
-		pub fn as_raw_PtrOfDISOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDISOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDISOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDISOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDISOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DISOpticalFlow for PtrOfDISOpticalFlow {
-		fn as_raw_DISOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DISOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DISOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DISOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfDISOpticalFlow {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDenseOpticalFlow = core::Ptr::<dyn crate::video::DenseOpticalFlow>;
@@ -8779,18 +9663,18 @@ mod video_types {
 	}
 	
 	impl PtrOfDenseOpticalFlow {
-		pub fn as_raw_PtrOfDenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDenseOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfDenseOpticalFlow {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFarnebackOpticalFlow = core::Ptr::<dyn crate::video::FarnebackOpticalFlow>;
@@ -8800,23 +9684,23 @@ mod video_types {
 	}
 	
 	impl PtrOfFarnebackOpticalFlow {
-		pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFarnebackOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfFarnebackOpticalFlow {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::FarnebackOpticalFlow for PtrOfFarnebackOpticalFlow {
-		fn as_raw_FarnebackOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FarnebackOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSparseOpticalFlow = core::Ptr::<dyn crate::video::SparseOpticalFlow>;
@@ -8826,18 +9710,18 @@ mod video_types {
 	}
 	
 	impl PtrOfSparseOpticalFlow {
-		pub fn as_raw_PtrOfSparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSparseOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::SparseOpticalFlow for PtrOfSparseOpticalFlow {
-		fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSparsePyrLKOpticalFlow = core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>;
@@ -8847,23 +9731,23 @@ mod video_types {
 	}
 	
 	impl PtrOfSparsePyrLKOpticalFlow {
-		pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSparsePyrLKOpticalFlow {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::SparseOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
-		fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::SparsePyrLKOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
-		fn as_raw_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfVariationalRefinement = core::Ptr::<dyn crate::video::VariationalRefinement>;
@@ -8873,23 +9757,23 @@ mod video_types {
 	}
 	
 	impl PtrOfVariationalRefinement {
-		pub fn as_raw_PtrOfVariationalRefinement(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfVariationalRefinement(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfVariationalRefinement(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfVariationalRefinement(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfVariationalRefinement {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::DenseOpticalFlow for PtrOfVariationalRefinement {
-		fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::video::VariationalRefinement for PtrOfVariationalRefinement {
-		fn as_raw_VariationalRefinement(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_VariationalRefinement(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_VariationalRefinement(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_VariationalRefinement(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -8954,13 +9838,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfDeblurerBase {
-		pub fn as_raw_PtrOfDeblurerBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDeblurerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDeblurerBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDeblurerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::DeblurerBase for PtrOfDeblurerBase {
-		fn as_raw_DeblurerBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfIDenseOptFlowEstimator = core::Ptr::<dyn crate::videostab::IDenseOptFlowEstimator>;
@@ -8970,13 +9854,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfIDenseOptFlowEstimator {
-		pub fn as_raw_PtrOfIDenseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfIDenseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfIDenseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIDenseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::IDenseOptFlowEstimator for PtrOfIDenseOptFlowEstimator {
-		fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfIFrameSource = core::Ptr::<dyn crate::videostab::IFrameSource>;
@@ -8986,13 +9870,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfIFrameSource {
-		pub fn as_raw_PtrOfIFrameSource(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfIFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfIFrameSource(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::IFrameSource for PtrOfIFrameSource {
-		fn as_raw_IFrameSource(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfILog = core::Ptr::<dyn crate::videostab::ILog>;
@@ -9002,13 +9886,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfILog {
-		pub fn as_raw_PtrOfILog(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfILog(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfILog(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfILog(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::ILog for PtrOfILog {
-		fn as_raw_ILog(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ILog(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfIMotionStabilizer = core::Ptr::<dyn crate::videostab::IMotionStabilizer>;
@@ -9018,13 +9902,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfIMotionStabilizer {
-		pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfIMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::IMotionStabilizer for PtrOfIMotionStabilizer {
-		fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfIOutlierRejector = core::Ptr::<dyn crate::videostab::IOutlierRejector>;
@@ -9034,13 +9918,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfIOutlierRejector {
-		pub fn as_raw_PtrOfIOutlierRejector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfIOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfIOutlierRejector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::IOutlierRejector for PtrOfIOutlierRejector {
-		fn as_raw_IOutlierRejector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfISparseOptFlowEstimator = core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>;
@@ -9050,13 +9934,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfISparseOptFlowEstimator {
-		pub fn as_raw_PtrOfISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfISparseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfISparseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::ISparseOptFlowEstimator for PtrOfISparseOptFlowEstimator {
-		fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfImageMotionEstimatorBase = core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>;
@@ -9066,13 +9950,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfImageMotionEstimatorBase {
-		pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::ImageMotionEstimatorBase for PtrOfImageMotionEstimatorBase {
-		fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfInpainterBase = core::Ptr::<dyn crate::videostab::InpainterBase>;
@@ -9082,13 +9966,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfInpainterBase {
-		pub fn as_raw_PtrOfInpainterBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfInpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfInpainterBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfInpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::InpainterBase for PtrOfInpainterBase {
-		fn as_raw_InpainterBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMotionEstimatorBase = core::Ptr::<dyn crate::videostab::MotionEstimatorBase>;
@@ -9098,13 +9982,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfMotionEstimatorBase {
-		pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::MotionEstimatorBase for PtrOfMotionEstimatorBase {
-		fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMotionFilterBase = core::Ptr::<dyn crate::videostab::MotionFilterBase>;
@@ -9114,18 +9998,18 @@ mod videostab_types {
 	}
 	
 	impl PtrOfMotionFilterBase {
-		pub fn as_raw_PtrOfMotionFilterBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMotionFilterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMotionFilterBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMotionFilterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::IMotionStabilizer for PtrOfMotionFilterBase {
-		fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::videostab::MotionFilterBase for PtrOfMotionFilterBase {
-		fn as_raw_MotionFilterBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MotionFilterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MotionFilterBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MotionFilterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfWobbleSuppressorBase = core::Ptr::<dyn crate::videostab::WobbleSuppressorBase>;
@@ -9135,13 +10019,13 @@ mod videostab_types {
 	}
 	
 	impl PtrOfWobbleSuppressorBase {
-		pub fn as_raw_PtrOfWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfWobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfWobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::videostab::WobbleSuppressorBase for PtrOfWobbleSuppressorBase {
-		fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -9159,23 +10043,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfAffineFeature2D {
-		pub fn as_raw_PtrOfAffineFeature2D(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAffineFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
-		fn as_raw_AffineFeature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AffineFeature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAffineFeature2D(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAffineFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAffineFeature2D {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfAffineFeature2D {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
+		#[inline] fn as_raw_AffineFeature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AffineFeature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBoostDesc = core::Ptr::<dyn crate::xfeatures2d::BoostDesc>;
@@ -9185,23 +10069,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfBoostDesc {
-		pub fn as_raw_PtrOfBoostDesc(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBoostDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBoostDesc(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBoostDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBoostDesc {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
-		fn as_raw_BoostDesc(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfBoostDesc {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
+		#[inline] fn as_raw_BoostDesc(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBriefDescriptorExtractor = core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>;
@@ -9211,23 +10095,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfBriefDescriptorExtractor {
-		pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfBriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
+		#[inline] fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDAISY = core::Ptr::<dyn crate::xfeatures2d::DAISY>;
@@ -9237,23 +10121,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfDAISY {
-		pub fn as_raw_PtrOfDAISY(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDAISY(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDAISY(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDAISY(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDAISY {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
-		fn as_raw_DAISY(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DAISY(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfDAISY {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
+		#[inline] fn as_raw_DAISY(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DAISY(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFREAK = core::Ptr::<crate::xfeatures2d::FREAK>;
@@ -9263,23 +10147,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfFREAK {
-		pub fn as_raw_PtrOfFREAK(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFREAK(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFREAK {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
-		fn as_raw_FREAK(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FREAK(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfFREAK {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
+		#[inline] fn as_raw_FREAK(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FREAK(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfHarrisLaplaceFeatureDetector = core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>;
@@ -9289,23 +10173,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfHarrisLaplaceFeatureDetector {
-		pub fn as_raw_PtrOfHarrisLaplaceFeatureDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfHarrisLaplaceFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfHarrisLaplaceFeatureDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHarrisLaplaceFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfHarrisLaplaceFeatureDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfHarrisLaplaceFeatureDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::HarrisLaplaceFeatureDetectorTrait for PtrOfHarrisLaplaceFeatureDetector {
-		fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_HarrisLaplaceFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_HarrisLaplaceFeatureDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLATCH = core::Ptr::<crate::xfeatures2d::LATCH>;
@@ -9315,23 +10199,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfLATCH {
-		pub fn as_raw_PtrOfLATCH(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLATCH(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLATCH {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfLATCH {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::LATCHTrait for PtrOfLATCH {
-		fn as_raw_LATCH(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LATCH(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LATCH(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LATCH(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLUCID = core::Ptr::<crate::xfeatures2d::LUCID>;
@@ -9341,23 +10225,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfLUCID {
-		pub fn as_raw_PtrOfLUCID(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLUCID(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLUCID {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfLUCID {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::LUCIDTrait for PtrOfLUCID {
-		fn as_raw_LUCID(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LUCID(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LUCID(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LUCID(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfMSDDetector = core::Ptr::<crate::xfeatures2d::MSDDetector>;
@@ -9367,23 +10251,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfMSDDetector {
-		pub fn as_raw_PtrOfMSDDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfMSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfMSDDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfMSDDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfMSDDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::MSDDetectorTrait for PtrOfMSDDetector {
-		fn as_raw_MSDDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_MSDDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPCTSignatures = core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>;
@@ -9393,18 +10277,18 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfPCTSignatures {
-		pub fn as_raw_PtrOfPCTSignatures(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPCTSignatures(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPCTSignatures(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPCTSignatures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPCTSignatures {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::PCTSignatures for PtrOfPCTSignatures {
-		fn as_raw_PCTSignatures(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PCTSignatures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PCTSignatures(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PCTSignatures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfPCTSignaturesSQFD = core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>;
@@ -9414,18 +10298,18 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfPCTSignaturesSQFD {
-		pub fn as_raw_PtrOfPCTSignaturesSQFD(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfPCTSignaturesSQFD(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfPCTSignaturesSQFD(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPCTSignaturesSQFD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfPCTSignaturesSQFD {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::PCTSignaturesSQFD for PtrOfPCTSignaturesSQFD {
-		fn as_raw_PCTSignaturesSQFD(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_PCTSignaturesSQFD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_PCTSignaturesSQFD(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_PCTSignaturesSQFD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSIFT = core::Ptr::<crate::xfeatures2d::SIFT>;
@@ -9435,23 +10319,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfSIFT {
-		pub fn as_raw_PtrOfSIFT(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSIFT(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSIFT {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfSIFT {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::SIFTTrait for PtrOfSIFT {
-		fn as_raw_SIFT(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SIFT(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSURF = core::Ptr::<dyn crate::xfeatures2d::SURF>;
@@ -9461,23 +10345,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfSURF {
-		pub fn as_raw_PtrOfSURF(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSURF(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSURF(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSURF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSURF {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfSURF {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::SURF for PtrOfSURF {
-		fn as_raw_SURF(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SURF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SURF(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SURF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStarDetector = core::Ptr::<crate::xfeatures2d::StarDetector>;
@@ -9487,23 +10371,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfStarDetector {
-		pub fn as_raw_PtrOfStarDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStarDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStarDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStarDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStarDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfStarDetector {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::StarDetectorTrait for PtrOfStarDetector {
-		fn as_raw_StarDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StarDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfVGG = core::Ptr::<dyn crate::xfeatures2d::VGG>;
@@ -9513,23 +10397,23 @@ mod xfeatures2d_types {
 	}
 	
 	impl PtrOfVGG {
-		pub fn as_raw_PtrOfVGG(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfVGG(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfVGG(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfVGG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfVGG {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::features2d::Feature2DTrait for PtrOfVGG {
-		fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xfeatures2d::VGG for PtrOfVGG {
-		fn as_raw_VGG(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_VGG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_VGG(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_VGG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfElliptic_KeyPoint = core::Vector::<crate::xfeatures2d::Elliptic_KeyPoint>;
@@ -9567,18 +10451,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfAdaptiveManifoldFilter {
-		pub fn as_raw_PtrOfAdaptiveManifoldFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfAdaptiveManifoldFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::ximgproc::AdaptiveManifoldFilter for PtrOfAdaptiveManifoldFilter {
-		fn as_raw_AdaptiveManifoldFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_AdaptiveManifoldFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfAdaptiveManifoldFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAdaptiveManifoldFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfAdaptiveManifoldFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::AdaptiveManifoldFilter for PtrOfAdaptiveManifoldFilter {
+		#[inline] fn as_raw_AdaptiveManifoldFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AdaptiveManifoldFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfContourFitting = core::Ptr::<crate::ximgproc::ContourFitting>;
@@ -9588,18 +10472,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfContourFitting {
-		pub fn as_raw_PtrOfContourFitting(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfContourFitting(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfContourFitting(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfContourFitting(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfContourFitting {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::ContourFittingTrait for PtrOfContourFitting {
-		fn as_raw_ContourFitting(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_ContourFitting(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDTFilter = core::Ptr::<dyn crate::ximgproc::DTFilter>;
@@ -9609,18 +10493,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfDTFilter {
-		pub fn as_raw_PtrOfDTFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDTFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDTFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDTFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDTFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::DTFilter for PtrOfDTFilter {
-		fn as_raw_DTFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DTFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DTFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DTFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfDisparityWLSFilter = core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>;
@@ -9630,23 +10514,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfDisparityWLSFilter {
-		pub fn as_raw_PtrOfDisparityWLSFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfDisparityWLSFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfDisparityWLSFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDisparityWLSFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfDisparityWLSFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::DisparityFilter for PtrOfDisparityWLSFilter {
-		fn as_raw_DisparityFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DisparityFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DisparityFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DisparityFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::DisparityWLSFilter for PtrOfDisparityWLSFilter {
-		fn as_raw_DisparityWLSFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_DisparityWLSFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_DisparityWLSFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_DisparityWLSFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfEdgeAwareInterpolator = core::Ptr::<dyn crate::ximgproc::EdgeAwareInterpolator>;
@@ -9656,23 +10540,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfEdgeAwareInterpolator {
-		pub fn as_raw_PtrOfEdgeAwareInterpolator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfEdgeAwareInterpolator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfEdgeAwareInterpolator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEdgeAwareInterpolator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEdgeAwareInterpolator {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::EdgeAwareInterpolator for PtrOfEdgeAwareInterpolator {
-		fn as_raw_EdgeAwareInterpolator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_EdgeAwareInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_EdgeAwareInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EdgeAwareInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SparseMatchInterpolator for PtrOfEdgeAwareInterpolator {
-		fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfEdgeBoxes = core::Ptr::<dyn crate::ximgproc::EdgeBoxes>;
@@ -9682,18 +10566,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfEdgeBoxes {
-		pub fn as_raw_PtrOfEdgeBoxes(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfEdgeBoxes(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfEdgeBoxes(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEdgeBoxes(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEdgeBoxes {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::EdgeBoxes for PtrOfEdgeBoxes {
-		fn as_raw_EdgeBoxes(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_EdgeBoxes(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_EdgeBoxes(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EdgeBoxes(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFastBilateralSolverFilter = core::Ptr::<dyn crate::ximgproc::FastBilateralSolverFilter>;
@@ -9703,18 +10587,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfFastBilateralSolverFilter {
-		pub fn as_raw_PtrOfFastBilateralSolverFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFastBilateralSolverFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFastBilateralSolverFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFastBilateralSolverFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFastBilateralSolverFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::FastBilateralSolverFilter for PtrOfFastBilateralSolverFilter {
-		fn as_raw_FastBilateralSolverFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FastBilateralSolverFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FastBilateralSolverFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FastBilateralSolverFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFastGlobalSmootherFilter = core::Ptr::<dyn crate::ximgproc::FastGlobalSmootherFilter>;
@@ -9724,18 +10608,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfFastGlobalSmootherFilter {
-		pub fn as_raw_PtrOfFastGlobalSmootherFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFastGlobalSmootherFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFastGlobalSmootherFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFastGlobalSmootherFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFastGlobalSmootherFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::FastGlobalSmootherFilter for PtrOfFastGlobalSmootherFilter {
-		fn as_raw_FastGlobalSmootherFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FastGlobalSmootherFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FastGlobalSmootherFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FastGlobalSmootherFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfFastLineDetector = core::Ptr::<dyn crate::ximgproc::FastLineDetector>;
@@ -9745,18 +10629,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfFastLineDetector {
-		pub fn as_raw_PtrOfFastLineDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfFastLineDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfFastLineDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFastLineDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfFastLineDetector {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::FastLineDetector for PtrOfFastLineDetector {
-		fn as_raw_FastLineDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_FastLineDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_FastLineDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_FastLineDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGraphSegmentation = core::Ptr::<dyn crate::ximgproc::GraphSegmentation>;
@@ -9766,18 +10650,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfGraphSegmentation {
-		pub fn as_raw_PtrOfGraphSegmentation(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGraphSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGraphSegmentation(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGraphSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGraphSegmentation {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::GraphSegmentation for PtrOfGraphSegmentation {
-		fn as_raw_GraphSegmentation(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GraphSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GraphSegmentation(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GraphSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfGuidedFilter = core::Ptr::<dyn crate::ximgproc::GuidedFilter>;
@@ -9787,18 +10671,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfGuidedFilter {
-		pub fn as_raw_PtrOfGuidedFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGuidedFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGuidedFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGuidedFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGuidedFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::GuidedFilter for PtrOfGuidedFilter {
-		fn as_raw_GuidedFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GuidedFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GuidedFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GuidedFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRFFeatureGetter = core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>;
@@ -9808,18 +10692,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfRFFeatureGetter {
-		pub fn as_raw_PtrOfRFFeatureGetter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRFFeatureGetter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRFFeatureGetter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRFFeatureGetter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRFFeatureGetter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::RFFeatureGetter for PtrOfRFFeatureGetter {
-		fn as_raw_RFFeatureGetter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RFFeatureGetter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RFFeatureGetter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RFFeatureGetter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRICInterpolator = core::Ptr::<dyn crate::ximgproc::RICInterpolator>;
@@ -9829,23 +10713,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfRICInterpolator {
-		pub fn as_raw_PtrOfRICInterpolator(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRICInterpolator(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRICInterpolator(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRICInterpolator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRICInterpolator {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::RICInterpolator for PtrOfRICInterpolator {
-		fn as_raw_RICInterpolator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RICInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RICInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RICInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SparseMatchInterpolator for PtrOfRICInterpolator {
-		fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRidgeDetectionFilter = core::Ptr::<dyn crate::ximgproc::RidgeDetectionFilter>;
@@ -9855,18 +10739,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfRidgeDetectionFilter {
-		pub fn as_raw_PtrOfRidgeDetectionFilter(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfRidgeDetectionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfRidgeDetectionFilter(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRidgeDetectionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRidgeDetectionFilter {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::RidgeDetectionFilter for PtrOfRidgeDetectionFilter {
-		fn as_raw_RidgeDetectionFilter(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_RidgeDetectionFilter(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentation = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentation>;
@@ -9876,18 +10760,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentation {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentation(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentation(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentation(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentation {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentation for PtrOfSelectiveSearchSegmentation {
-		fn as_raw_SelectiveSearchSegmentation(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentation(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategy = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>;
@@ -9897,18 +10781,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategy {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategy {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategy {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategyColor = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>;
@@ -9918,23 +10802,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyColor {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyColor {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyColor {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyColor for PtrOfSelectiveSearchSegmentationStrategyColor {
-		fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategyFill = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>;
@@ -9944,23 +10828,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyFill {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyFill {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyFill {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyFill for PtrOfSelectiveSearchSegmentationStrategyFill {
-		fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategyMultiple = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>;
@@ -9970,23 +10854,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyMultiple {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyMultiple {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyMultiple {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple for PtrOfSelectiveSearchSegmentationStrategyMultiple {
-		fn as_raw_SelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategySize = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>;
@@ -9996,23 +10880,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategySize {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategySize {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategySize {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategySize for PtrOfSelectiveSearchSegmentationStrategySize {
-		fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSelectiveSearchSegmentationStrategyTexture = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>;
@@ -10022,23 +10906,23 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyTexture {
-		pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSelectiveSearchSegmentationStrategyTexture {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategy for PtrOfSelectiveSearchSegmentationStrategyTexture {
-		fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTexture for PtrOfSelectiveSearchSegmentationStrategyTexture {
-		fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfStructuredEdgeDetection = core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>;
@@ -10048,18 +10932,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfStructuredEdgeDetection {
-		pub fn as_raw_PtrOfStructuredEdgeDetection(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfStructuredEdgeDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfStructuredEdgeDetection(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfStructuredEdgeDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfStructuredEdgeDetection {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::StructuredEdgeDetection for PtrOfStructuredEdgeDetection {
-		fn as_raw_StructuredEdgeDetection(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_StructuredEdgeDetection(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_StructuredEdgeDetection(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StructuredEdgeDetection(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperpixelLSC = core::Ptr::<dyn crate::ximgproc::SuperpixelLSC>;
@@ -10069,18 +10953,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSuperpixelLSC {
-		pub fn as_raw_PtrOfSuperpixelLSC(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperpixelLSC(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperpixelLSC(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperpixelLSC(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperpixelLSC {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SuperpixelLSC for PtrOfSuperpixelLSC {
-		fn as_raw_SuperpixelLSC(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SuperpixelLSC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SuperpixelLSC(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SuperpixelLSC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperpixelSEEDS = core::Ptr::<dyn crate::ximgproc::SuperpixelSEEDS>;
@@ -10090,18 +10974,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSuperpixelSEEDS {
-		pub fn as_raw_PtrOfSuperpixelSEEDS(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperpixelSEEDS(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperpixelSEEDS(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperpixelSEEDS(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperpixelSEEDS {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SuperpixelSEEDS for PtrOfSuperpixelSEEDS {
-		fn as_raw_SuperpixelSEEDS(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SuperpixelSEEDS(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SuperpixelSEEDS(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SuperpixelSEEDS(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSuperpixelSLIC = core::Ptr::<dyn crate::ximgproc::SuperpixelSLIC>;
@@ -10111,18 +10995,18 @@ mod ximgproc_types {
 	}
 	
 	impl PtrOfSuperpixelSLIC {
-		pub fn as_raw_PtrOfSuperpixelSLIC(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSuperpixelSLIC(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSuperpixelSLIC(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSuperpixelSLIC(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSuperpixelSLIC {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::ximgproc::SuperpixelSLIC for PtrOfSuperpixelSLIC {
-		fn as_raw_SuperpixelSLIC(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SuperpixelSLIC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SuperpixelSLIC(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SuperpixelSLIC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -10140,13 +11024,13 @@ mod xobjdetect_types {
 	}
 	
 	impl PtrOfWBDetector {
-		pub fn as_raw_PtrOfWBDetector(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfWBDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfWBDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfWBDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl crate::xobjdetect::WBDetector for PtrOfWBDetector {
-		fn as_raw_WBDetector(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WBDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }
@@ -10164,23 +11048,23 @@ mod xphoto_types {
 	}
 	
 	impl PtrOfGrayworldWB {
-		pub fn as_raw_PtrOfGrayworldWB(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfGrayworldWB(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfGrayworldWB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGrayworldWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfGrayworldWB {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::GrayworldWB for PtrOfGrayworldWB {
-		fn as_raw_GrayworldWB(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_GrayworldWB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::WhiteBalancer for PtrOfGrayworldWB {
-		fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLearningBasedWB = core::Ptr::<dyn crate::xphoto::LearningBasedWB>;
@@ -10190,23 +11074,23 @@ mod xphoto_types {
 	}
 	
 	impl PtrOfLearningBasedWB {
-		pub fn as_raw_PtrOfLearningBasedWB(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfLearningBasedWB(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfLearningBasedWB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLearningBasedWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfLearningBasedWB {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::LearningBasedWB for PtrOfLearningBasedWB {
-		fn as_raw_LearningBasedWB(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_LearningBasedWB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::WhiteBalancer for PtrOfLearningBasedWB {
-		fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfSimpleWB = core::Ptr::<dyn crate::xphoto::SimpleWB>;
@@ -10216,23 +11100,23 @@ mod xphoto_types {
 	}
 	
 	impl PtrOfSimpleWB {
-		pub fn as_raw_PtrOfSimpleWB(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfSimpleWB(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfSimpleWB(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSimpleWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfSimpleWB {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::SimpleWB for PtrOfSimpleWB {
-		fn as_raw_SimpleWB(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_SimpleWB(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::WhiteBalancer for PtrOfSimpleWB {
-		fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTonemapDurand = core::Ptr::<dyn crate::xphoto::TonemapDurand>;
@@ -10242,23 +11126,23 @@ mod xphoto_types {
 	}
 	
 	impl PtrOfTonemapDurand {
-		pub fn as_raw_PtrOfTonemapDurand(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_PtrOfTonemapDurand(&mut self) -> *mut c_void { self.as_raw_mut() }
+		#[inline] pub fn as_raw_PtrOfTonemapDurand(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTonemapDurand(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
 	impl core::AlgorithmTrait for PtrOfTonemapDurand {
-		fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::photo::Tonemap for PtrOfTonemapDurand {
-		fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	impl crate::xphoto::TonemapDurand for PtrOfTonemapDurand {
-		fn as_raw_TonemapDurand(&self) -> *const c_void { self.inner_as_raw() }
-		fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+		#[inline] fn as_raw_TonemapDurand(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 }

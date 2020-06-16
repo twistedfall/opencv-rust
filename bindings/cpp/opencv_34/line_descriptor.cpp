@@ -3,14 +3,14 @@
 #include "line_descriptor_types.hpp"
 
 extern "C" {
-	Result_void cv_line_descriptor_drawKeylines_const_MatX_const_vector_KeyLine_X_MatX_const_ScalarX_int(const cv::Mat* image, const std::vector<cv::line_descriptor::KeyLine>* keylines, cv::Mat* outImage, const cv::Scalar* color, int flags) {
+	Result_void cv_line_descriptor_drawKeylines_const_MatR_const_vector_KeyLine_R_MatR_const_ScalarR_int(const cv::Mat* image, const std::vector<cv::line_descriptor::KeyLine>* keylines, cv::Mat* outImage, const cv::Scalar* color, int flags) {
 		try {
 			cv::line_descriptor::drawKeylines(*image, *keylines, *outImage, *color, flags);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_drawLineMatches_const_MatX_const_vector_KeyLine_X_const_MatX_const_vector_KeyLine_X_const_vector_DMatch_X_MatX_const_ScalarX_const_ScalarX_const_vector_char_X_int(const cv::Mat* img1, const std::vector<cv::line_descriptor::KeyLine>* keylines1, const cv::Mat* img2, const std::vector<cv::line_descriptor::KeyLine>* keylines2, const std::vector<cv::DMatch>* matches1to2, cv::Mat* outImg, const cv::Scalar* matchColor, const cv::Scalar* singleLineColor, const std::vector<char>* matchesMask, int flags) {
+	Result_void cv_line_descriptor_drawLineMatches_const_MatR_const_vector_KeyLine_R_const_MatR_const_vector_KeyLine_R_const_vector_DMatch_R_MatR_const_ScalarR_const_ScalarR_const_vector_char_R_int(const cv::Mat* img1, const std::vector<cv::line_descriptor::KeyLine>* keylines1, const cv::Mat* img2, const std::vector<cv::line_descriptor::KeyLine>* keylines2, const std::vector<cv::DMatch>* matches1to2, cv::Mat* outImg, const cv::Scalar* matchColor, const cv::Scalar* singleLineColor, const std::vector<char>* matchesMask, int flags) {
 		try {
 			cv::line_descriptor::drawLineMatches(*img1, *keylines1, *img2, *keylines2, *matches1to2, *outImg, *matchColor, *singleLineColor, *matchesMask, flags);
 			return Ok();
@@ -20,7 +20,7 @@ extern "C" {
 	void cv_BinaryDescriptor_delete(cv::line_descriptor::BinaryDescriptor* instance) {
 		delete instance;
 	}
-	Result<cv::line_descriptor::BinaryDescriptor*> cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsX(const cv::line_descriptor::BinaryDescriptor::Params* parameters) {
+	Result<cv::line_descriptor::BinaryDescriptor*> cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsR(const cv::line_descriptor::BinaryDescriptor::Params* parameters) {
 		try {
 			cv::line_descriptor::BinaryDescriptor* ret = new cv::line_descriptor::BinaryDescriptor(*parameters);
 			return Ok(ret);
@@ -83,42 +83,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_read_const_FileNodeX(cv::line_descriptor::BinaryDescriptor* instance, const cv::FileNode* fn) {
+	Result_void cv_line_descriptor_BinaryDescriptor_read_const_FileNodeR(cv::line_descriptor::BinaryDescriptor* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_write_const_FileStorageX(const cv::line_descriptor::BinaryDescriptor* instance, cv::FileStorage* fs) {
+	Result_void cv_line_descriptor_BinaryDescriptor_write_const_FileStorageR(const cv::line_descriptor::BinaryDescriptor* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_detect_const_MatX_vector_KeyLine_X_const_MatX(cv::line_descriptor::BinaryDescriptor* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keypoints, const cv::Mat* mask) {
+	Result_void cv_line_descriptor_BinaryDescriptor_detect_const_MatR_vector_KeyLine_R_const_MatR(cv::line_descriptor::BinaryDescriptor* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keypoints, const cv::Mat* mask) {
 		try {
 			instance->detect(*image, *keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_detect_const_const_vector_Mat_X_vector_vector_KeyLine__X_const_vector_Mat_X(const cv::line_descriptor::BinaryDescriptor* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, const std::vector<cv::Mat>* masks) {
+	Result_void cv_line_descriptor_BinaryDescriptor_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_const_vector_Mat_R(const cv::line_descriptor::BinaryDescriptor* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, const std::vector<cv::Mat>* masks) {
 		try {
 			instance->detect(*images, *keylines, *masks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_compute_const_const_MatX_vector_KeyLine_X_MatX_bool(const cv::line_descriptor::BinaryDescriptor* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keylines, cv::Mat* descriptors, bool returnFloatDescr) {
+	Result_void cv_line_descriptor_BinaryDescriptor_compute_const_const_MatR_vector_KeyLine_R_MatR_bool(const cv::line_descriptor::BinaryDescriptor* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keylines, cv::Mat* descriptors, bool returnFloatDescr) {
 		try {
 			instance->compute(*image, *keylines, *descriptors, returnFloatDescr);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_compute_const_const_vector_Mat_X_vector_vector_KeyLine__X_vector_Mat_X_bool(const cv::line_descriptor::BinaryDescriptor* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, std::vector<cv::Mat>* descriptors, bool returnFloatDescr) {
+	Result_void cv_line_descriptor_BinaryDescriptor_compute_const_const_vector_Mat_R_vector_vector_KeyLine__R_vector_Mat_R_bool(const cv::line_descriptor::BinaryDescriptor* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, std::vector<cv::Mat>* descriptors, bool returnFloatDescr) {
 		try {
 			instance->compute(*images, *keylines, *descriptors, returnFloatDescr);
 			return Ok();
@@ -212,14 +212,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::BinaryDescriptor::Params*>))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_Params_read_const_FileNodeX(cv::line_descriptor::BinaryDescriptor::Params* instance, const cv::FileNode* fn) {
+	Result_void cv_line_descriptor_BinaryDescriptor_Params_read_const_FileNodeR(cv::line_descriptor::BinaryDescriptor::Params* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptor_Params_write_const_FileStorageX(const cv::line_descriptor::BinaryDescriptor::Params* instance, cv::FileStorage* fs) {
+	Result_void cv_line_descriptor_BinaryDescriptor_Params_write_const_FileStorageR(const cv::line_descriptor::BinaryDescriptor::Params* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -229,49 +229,49 @@ extern "C" {
 	void cv_BinaryDescriptorMatcher_delete(cv::line_descriptor::BinaryDescriptorMatcher* instance) {
 		delete instance;
 	}
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_match_const_const_MatX_const_MatX_vector_DMatch_X_const_MatX(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<cv::DMatch>* matches, const cv::Mat* mask) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_match_const_const_MatR_const_MatR_vector_DMatch_R_const_MatR(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<cv::DMatch>* matches, const cv::Mat* mask) {
 		try {
 			instance->match(*queryDescriptors, *trainDescriptors, *matches, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_match_const_MatX_vector_DMatch_X_const_vector_Mat_X(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<cv::DMatch>* matches, const std::vector<cv::Mat>* masks) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_match_const_MatR_vector_DMatch_R_const_vector_Mat_R(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<cv::DMatch>* matches, const std::vector<cv::Mat>* masks) {
 		try {
 			instance->match(*queryDescriptors, *matches, *masks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_const_MatX_const_MatX_vector_vector_DMatch__X_int_const_MatX_bool(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::Mat* mask, bool compactResult) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_const_MatR_const_MatR_vector_vector_DMatch__R_int_const_MatR_bool(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::Mat* mask, bool compactResult) {
 		try {
 			instance->knnMatch(*queryDescriptors, *trainDescriptors, *matches, k, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_MatX_vector_vector_DMatch__X_int_const_vector_Mat_X_bool(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const std::vector<cv::Mat>* masks, bool compactResult) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_MatR_vector_vector_DMatch__R_int_const_vector_Mat_R_bool(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const std::vector<cv::Mat>* masks, bool compactResult) {
 		try {
 			instance->knnMatch(*queryDescriptors, *matches, k, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_const_MatX_const_MatX_vector_vector_DMatch__X_float_const_MatX_bool(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::Mat* mask, bool compactResult) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_const_MatR_const_MatR_vector_vector_DMatch__R_float_const_MatR_bool(const cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, const cv::Mat* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::Mat* mask, bool compactResult) {
 		try {
 			instance->radiusMatch(*queryDescriptors, *trainDescriptors, *matches, maxDistance, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_MatX_vector_vector_DMatch__X_float_const_vector_Mat_X_bool(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const std::vector<cv::Mat>* masks, bool compactResult) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_MatR_vector_vector_DMatch__R_float_const_vector_Mat_R_bool(cv::line_descriptor::BinaryDescriptorMatcher* instance, const cv::Mat* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const std::vector<cv::Mat>* masks, bool compactResult) {
 		try {
 			instance->radiusMatch(*queryDescriptors, *matches, maxDistance, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_BinaryDescriptorMatcher_add_const_vector_Mat_X(cv::line_descriptor::BinaryDescriptorMatcher* instance, const std::vector<cv::Mat>* descriptors) {
+	Result_void cv_line_descriptor_BinaryDescriptorMatcher_add_const_vector_Mat_R(cv::line_descriptor::BinaryDescriptorMatcher* instance, const std::vector<cv::Mat>* descriptors) {
 		try {
 			instance->add(*descriptors);
 			return Ok();
@@ -372,14 +372,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::line_descriptor::LSDDetector>*>))
 	}
 	
-	Result_void cv_line_descriptor_LSDDetector_detect_const_MatX_vector_KeyLine_X_int_int_const_MatX(cv::line_descriptor::LSDDetector* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keypoints, int scale, int numOctaves, const cv::Mat* mask) {
+	Result_void cv_line_descriptor_LSDDetector_detect_const_MatR_vector_KeyLine_R_int_int_const_MatR(cv::line_descriptor::LSDDetector* instance, const cv::Mat* image, std::vector<cv::line_descriptor::KeyLine>* keypoints, int scale, int numOctaves, const cv::Mat* mask) {
 		try {
 			instance->detect(*image, *keypoints, scale, numOctaves, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_line_descriptor_LSDDetector_detect_const_const_vector_Mat_X_vector_vector_KeyLine__X_int_int_const_vector_Mat_X(const cv::line_descriptor::LSDDetector* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, int scale, int numOctaves, const std::vector<cv::Mat>* masks) {
+	Result_void cv_line_descriptor_LSDDetector_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_int_int_const_vector_Mat_R(const cv::line_descriptor::LSDDetector* instance, const std::vector<cv::Mat>* images, std::vector<std::vector<cv::line_descriptor::KeyLine>>* keylines, int scale, int numOctaves, const std::vector<cv::Mat>* masks) {
 		try {
 			instance->detect(*images, *keylines, scale, numOctaves, *masks);
 			return Ok();

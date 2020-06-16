@@ -3,56 +3,56 @@
 #include "videostab_types.hpp"
 
 extern "C" {
-	Result<float> cv_videostab_calcBlurriness_const_MatX(const cv::Mat* frame) {
+	Result<float> cv_videostab_calcBlurriness_const_MatR(const cv::Mat* frame) {
 		try {
 			float ret = cv::videostab::calcBlurriness(*frame);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_videostab_calcFlowMask_const_MatX_const_MatX_const_MatX_float_const_MatX_const_MatX_MatX(const cv::Mat* flowX, const cv::Mat* flowY, const cv::Mat* errors, float maxError, const cv::Mat* mask0, const cv::Mat* mask1, cv::Mat* flowMask) {
+	Result_void cv_videostab_calcFlowMask_const_MatR_const_MatR_const_MatR_float_const_MatR_const_MatR_MatR(const cv::Mat* flowX, const cv::Mat* flowY, const cv::Mat* errors, float maxError, const cv::Mat* mask0, const cv::Mat* mask1, cv::Mat* flowMask) {
 		try {
 			cv::videostab::calcFlowMask(*flowX, *flowY, *errors, maxError, *mask0, *mask1, *flowMask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_completeFrameAccordingToFlow_const_MatX_const_MatX_const_MatX_const_MatX_const_MatX_float_MatX_MatX(const cv::Mat* flowMask, const cv::Mat* flowX, const cv::Mat* flowY, const cv::Mat* frame1, const cv::Mat* mask1, float distThresh, cv::Mat* frame0, cv::Mat* mask0) {
+	Result_void cv_videostab_completeFrameAccordingToFlow_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_float_MatR_MatR(const cv::Mat* flowMask, const cv::Mat* flowX, const cv::Mat* flowY, const cv::Mat* frame1, const cv::Mat* mask1, float distThresh, cv::Mat* frame0, cv::Mat* mask0) {
 		try {
 			cv::videostab::completeFrameAccordingToFlow(*flowMask, *flowX, *flowY, *frame1, *mask1, distThresh, *frame0, *mask0);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_videostab_ensureInclusionConstraint_const_MatX_Size_float(const cv::Mat* M, const cv::Size* size, float trimRatio) {
+	Result<cv::Mat*> cv_videostab_ensureInclusionConstraint_const_MatR_Size_float(const cv::Mat* M, const cv::Size* size, float trimRatio) {
 		try {
 			cv::Mat ret = cv::videostab::ensureInclusionConstraint(*M, *size, trimRatio);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayX_const__InputOutputArrayX_int_floatX(const cv::_InputOutputArray* points0, const cv::_InputOutputArray* points1, int model, float* rmse) {
+	Result<cv::Mat*> cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR_int_floatX(const cv::_InputOutputArray* points0, const cv::_InputOutputArray* points1, int model, float* rmse) {
 		try {
 			cv::Mat ret = cv::videostab::estimateGlobalMotionLeastSquares(*points0, *points1, model, rmse);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_estimateGlobalMotionRansac_const__InputArrayX_const__InputArrayX_int_const_RansacParamsX_floatX_intX(const cv::_InputArray* points0, const cv::_InputArray* points1, int model, const cv::videostab::RansacParams* params, float* rmse, int* ninliers) {
+	Result<cv::Mat*> cv_videostab_estimateGlobalMotionRansac_const__InputArrayR_const__InputArrayR_int_const_RansacParamsR_floatX_intX(const cv::_InputArray* points0, const cv::_InputArray* points1, int model, const cv::videostab::RansacParams* params, float* rmse, int* ninliers) {
 		try {
 			cv::Mat ret = cv::videostab::estimateGlobalMotionRansac(*points0, *points1, model, *params, rmse, ninliers);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatX_Size(const cv::Mat* M, const cv::Size* size) {
+	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatR_Size(const cv::Mat* M, const cv::Size* size) {
 		try {
 			float ret = cv::videostab::estimateOptimalTrimRatio(*M, *size);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_getMotion_int_int_const_vector_Mat_X(int from, int to, const std::vector<cv::Mat>* motions) {
+	Result<cv::Mat*> cv_videostab_getMotion_int_int_const_vector_Mat_R(int from, int to, const std::vector<cv::Mat>* motions) {
 		try {
 			cv::Mat ret = cv::videostab::getMotion(from, to, *motions);
 			return Ok(new cv::Mat(ret));
@@ -62,7 +62,7 @@ extern "C" {
 	void cv_ColorAverageInpainter_delete(cv::videostab::ColorAverageInpainter* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_ColorAverageInpainter_inpaint_int_MatX_MatX(cv::videostab::ColorAverageInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_ColorAverageInpainter_inpaint_int_MatR_MatR(cv::videostab::ColorAverageInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
@@ -79,7 +79,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::ColorInpainter*>))
 	}
 	
-	Result_void cv_videostab_ColorInpainter_inpaint_int_MatX_MatX(cv::videostab::ColorInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_ColorInpainter_inpaint_int_MatR_MatR(cv::videostab::ColorInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
@@ -110,7 +110,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_videostab_ConsistentMosaicInpainter_inpaint_int_MatX_MatX(cv::videostab::ConsistentMosaicInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_ConsistentMosaicInpainter_inpaint_int_MatR_MatR(cv::videostab::ConsistentMosaicInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
@@ -131,14 +131,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_videostab_DeblurerBase_deblur_int_MatX(cv::videostab::DeblurerBase* instance, int idx, cv::Mat* frame) {
+	Result_void cv_videostab_DeblurerBase_deblur_int_MatR(cv::videostab::DeblurerBase* instance, int idx, cv::Mat* frame) {
 		try {
 			instance->deblur(idx, *frame);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_DeblurerBase_setFrames_const_vector_Mat_X(cv::videostab::DeblurerBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_DeblurerBase_setFrames_const_vector_Mat_R(cv::videostab::DeblurerBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setFrames(*val);
 			return Ok();
@@ -152,7 +152,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_DeblurerBase_setMotions_const_vector_Mat_X(cv::videostab::DeblurerBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_DeblurerBase_setMotions_const_vector_Mat_R(cv::videostab::DeblurerBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setMotions(*val);
 			return Ok();
@@ -166,7 +166,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_DeblurerBase_setBlurrinessRates_const_vector_float_X(cv::videostab::DeblurerBase* instance, const std::vector<float>* val) {
+	Result_void cv_videostab_DeblurerBase_setBlurrinessRates_const_vector_float_R(cv::videostab::DeblurerBase* instance, const std::vector<float>* val) {
 		try {
 			instance->setBlurrinessRates(*val);
 			return Ok();
@@ -178,6 +178,23 @@ extern "C" {
 			std::vector<float> ret = instance->blurrinessRates();
 			return Ok(new std::vector<float>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<float>*>))
+	}
+	
+	void cv_DensePyrLkOptFlowEstimatorGpu_delete(cv::videostab::DensePyrLkOptFlowEstimatorGpu* instance) {
+		delete instance;
+	}
+	Result<cv::videostab::DensePyrLkOptFlowEstimatorGpu*> cv_videostab_DensePyrLkOptFlowEstimatorGpu_DensePyrLkOptFlowEstimatorGpu() {
+		try {
+			cv::videostab::DensePyrLkOptFlowEstimatorGpu* ret = new cv::videostab::DensePyrLkOptFlowEstimatorGpu();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::DensePyrLkOptFlowEstimatorGpu*>))
+	}
+	
+	Result_void cv_videostab_DensePyrLkOptFlowEstimatorGpu_run_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR(cv::videostab::DensePyrLkOptFlowEstimatorGpu* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputOutputArray* flowX, const cv::_InputOutputArray* flowY, const cv::_OutputArray* errors) {
+		try {
+			instance->run(*frame0, *frame1, *flowX, *flowY, *errors);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	void cv_FastMarchingMethod_delete(cv::videostab::FastMarchingMethod* instance) {
@@ -200,14 +217,14 @@ extern "C" {
 	void cv_FromFileMotionReader_delete(cv::videostab::FromFileMotionReader* instance) {
 		delete instance;
 	}
-	Result<cv::videostab::FromFileMotionReader*> cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringX(const char* path) {
+	Result<cv::videostab::FromFileMotionReader*> cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(const char* path) {
 		try {
 			cv::videostab::FromFileMotionReader* ret = new cv::videostab::FromFileMotionReader(cv::String(path));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::FromFileMotionReader*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_FromFileMotionReader_estimate_const_MatX_const_MatX_boolX(cv::videostab::FromFileMotionReader* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_FromFileMotionReader_estimate_const_MatR_const_MatR_boolX(cv::videostab::FromFileMotionReader* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
 			return Ok(new cv::Mat(ret));
@@ -245,7 +262,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_videostab_IDenseOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX(cv::videostab::IDenseOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputOutputArray* flowX, const cv::_InputOutputArray* flowY, const cv::_OutputArray* errors) {
+	Result_void cv_videostab_IDenseOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR(cv::videostab::IDenseOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputOutputArray* flowX, const cv::_InputOutputArray* flowY, const cv::_OutputArray* errors) {
 		try {
 			instance->run(*frame0, *frame1, *flowX, *flowY, *errors);
 			return Ok();
@@ -273,14 +290,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::videostab::IOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::IOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_ISparseOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::videostab::ISparseOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputArray* points0, const cv::_InputOutputArray* points1, const cv::_OutputArray* status, const cv::_OutputArray* errors) {
+	Result_void cv_videostab_ISparseOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::videostab::ISparseOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputArray* points0, const cv::_InputOutputArray* points1, const cv::_OutputArray* status, const cv::_OutputArray* errors) {
 		try {
 			instance->run(*frame0, *frame1, *points0, *points1, *status, *errors);
 			return Ok();
@@ -301,7 +318,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_ImageMotionEstimatorBase_estimate_const_MatX_const_MatX_boolX(cv::videostab::ImageMotionEstimatorBase* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_ImageMotionEstimatorBase_estimate_const_MatR_const_MatR_boolX(cv::videostab::ImageMotionEstimatorBase* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
 			return Ok(new cv::Mat(ret));
@@ -336,14 +353,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
-	Result_void cv_videostab_InpainterBase_inpaint_int_MatX_MatX(cv::videostab::InpainterBase* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_InpainterBase_inpaint_int_MatR_MatR(cv::videostab::InpainterBase* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpainterBase_setFrames_const_vector_Mat_X(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpainterBase_setFrames_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setFrames(*val);
 			return Ok();
@@ -357,7 +374,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_InpainterBase_setMotions_const_vector_Mat_X(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpainterBase_setMotions_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setMotions(*val);
 			return Ok();
@@ -371,7 +388,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_InpainterBase_setStabilizedFrames_const_vector_Mat_X(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpainterBase_setStabilizedFrames_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setStabilizedFrames(*val);
 			return Ok();
@@ -385,7 +402,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_InpainterBase_setStabilizationMotions_const_vector_Mat_X(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpainterBase_setStabilizationMotions_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setStabilizationMotions(*val);
 			return Ok();
@@ -430,35 +447,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpaintingPipeline_setFrames_const_vector_Mat_X(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpaintingPipeline_setFrames_const_vector_Mat_R(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setFrames(*val);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpaintingPipeline_setMotions_const_vector_Mat_X(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpaintingPipeline_setMotions_const_vector_Mat_R(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setMotions(*val);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpaintingPipeline_setStabilizedFrames_const_vector_Mat_X(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpaintingPipeline_setStabilizedFrames_const_vector_Mat_R(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setStabilizedFrames(*val);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpaintingPipeline_setStabilizationMotions_const_vector_Mat_X(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_InpaintingPipeline_setStabilizationMotions_const_vector_Mat_R(cv::videostab::InpaintingPipeline* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setStabilizationMotions(*val);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_InpaintingPipeline_inpaint_int_MatX_MatX(cv::videostab::InpaintingPipeline* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_InpaintingPipeline_inpaint_int_MatR_MatR(cv::videostab::InpaintingPipeline* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
@@ -531,14 +548,66 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::videostab::IOutlierRejector>*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatX_const_MatX_boolX(cv::videostab::KeypointBasedMotionEstimator* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatR_const_MatR_boolX(cv::videostab::KeypointBasedMotionEstimator* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayX_const__InputArrayX_boolX(cv::videostab::KeypointBasedMotionEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR_boolX(cv::videostab::KeypointBasedMotionEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, bool* ok) {
+		try {
+			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	void cv_KeypointBasedMotionEstimatorGpu_delete(cv::videostab::KeypointBasedMotionEstimatorGpu* instance) {
+		delete instance;
+	}
+	Result<cv::videostab::KeypointBasedMotionEstimatorGpu*> cv_videostab_KeypointBasedMotionEstimatorGpu_KeypointBasedMotionEstimatorGpu_Ptr_MotionEstimatorBase_(cv::Ptr<cv::videostab::MotionEstimatorBase>* estimator) {
+		try {
+			cv::videostab::KeypointBasedMotionEstimatorGpu* ret = new cv::videostab::KeypointBasedMotionEstimatorGpu(*estimator);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::KeypointBasedMotionEstimatorGpu*>))
+	}
+	
+	Result_void cv_videostab_KeypointBasedMotionEstimatorGpu_setMotionModel_MotionModel(cv::videostab::KeypointBasedMotionEstimatorGpu* instance, cv::videostab::MotionModel val) {
+		try {
+			instance->setMotionModel(val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::videostab::MotionModel> cv_videostab_KeypointBasedMotionEstimatorGpu_motionModel_const(const cv::videostab::KeypointBasedMotionEstimatorGpu* instance) {
+		try {
+			cv::videostab::MotionModel ret = instance->motionModel();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
+	}
+	
+	Result_void cv_videostab_KeypointBasedMotionEstimatorGpu_setOutlierRejector_Ptr_IOutlierRejector_(cv::videostab::KeypointBasedMotionEstimatorGpu* instance, cv::Ptr<cv::videostab::IOutlierRejector>* val) {
+		try {
+			instance->setOutlierRejector(*val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Ptr<cv::videostab::IOutlierRejector>*> cv_videostab_KeypointBasedMotionEstimatorGpu_outlierRejector_const(const cv::videostab::KeypointBasedMotionEstimatorGpu* instance) {
+		try {
+			cv::Ptr<cv::videostab::IOutlierRejector> ret = instance->outlierRejector();
+			return Ok(new cv::Ptr<cv::videostab::IOutlierRejector>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::videostab::IOutlierRejector>*>))
+	}
+	
+	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_MatR_const_MatR_boolX(cv::videostab::KeypointBasedMotionEstimatorGpu* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
+		try {
+			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_GpuMatR_const_GpuMatR_boolX(cv::videostab::KeypointBasedMotionEstimatorGpu* instance, const cv::cuda::GpuMat* frame0, const cv::cuda::GpuMat* frame1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
 			return Ok(new cv::Mat(ret));
@@ -666,7 +735,7 @@ extern "C" {
 	void cv_MoreAccurateMotionWobbleSuppressor_delete(cv::videostab::MoreAccurateMotionWobbleSuppressor* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_const_MatX_MatX(cv::videostab::MoreAccurateMotionWobbleSuppressor* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
+	Result_void cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_const_MatR_MatR(cv::videostab::MoreAccurateMotionWobbleSuppressor* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
 		try {
 			instance->suppress(idx, *frame, *result);
 			return Ok();
@@ -687,6 +756,23 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
+	void cv_MoreAccurateMotionWobbleSuppressorGpu_delete(cv::videostab::MoreAccurateMotionWobbleSuppressorGpu* instance) {
+		delete instance;
+	}
+	Result_void cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_suppress_int_const_GpuMatR_GpuMatR(cv::videostab::MoreAccurateMotionWobbleSuppressorGpu* instance, int idx, const cv::cuda::GpuMat* frame, cv::cuda::GpuMat* result) {
+		try {
+			instance->suppress(idx, *frame, *result);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_suppress_int_const_MatR_MatR(cv::videostab::MoreAccurateMotionWobbleSuppressorGpu* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
+		try {
+			instance->suppress(idx, *frame, *result);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_videostab_MotionEstimatorBase_setMotionModel_MotionModel(cv::videostab::MotionEstimatorBase* instance, cv::videostab::MotionModel val) {
 		try {
 			instance->setMotionModel(val);
@@ -701,7 +787,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_MotionEstimatorBase_estimate_const__InputArrayX_const__InputArrayX_boolX(cv::videostab::MotionEstimatorBase* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_MotionEstimatorBase_estimate_const__InputArrayR_const__InputArrayR_boolX(cv::videostab::MotionEstimatorBase* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*points0, *points1, ok);
 			return Ok(new cv::Mat(ret));
@@ -718,7 +804,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionEstimatorL1*>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_MotionEstimatorL1_estimate_const__InputArrayX_const__InputArrayX_boolX(cv::videostab::MotionEstimatorL1* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_MotionEstimatorL1_estimate_const__InputArrayR_const__InputArrayR_boolX(cv::videostab::MotionEstimatorL1* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*points0, *points1, ok);
 			return Ok(new cv::Mat(ret));
@@ -735,7 +821,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionEstimatorRansacL2*>))
 	}
 	
-	Result_void cv_videostab_MotionEstimatorRansacL2_setRansacParams_const_RansacParamsX(cv::videostab::MotionEstimatorRansacL2* instance, const cv::videostab::RansacParams* val) {
+	Result_void cv_videostab_MotionEstimatorRansacL2_setRansacParams_const_RansacParamsR(cv::videostab::MotionEstimatorRansacL2* instance, const cv::videostab::RansacParams* val) {
 		try {
 			instance->setRansacParams(*val);
 			return Ok();
@@ -763,7 +849,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayX_const__InputArrayX_boolX(cv::videostab::MotionEstimatorRansacL2* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayR_const__InputArrayR_boolX(cv::videostab::MotionEstimatorRansacL2* instance, const cv::_InputArray* points0, const cv::_InputArray* points1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*points0, *points1, ok);
 			return Ok(new cv::Mat(ret));
@@ -836,7 +922,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_videostab_MotionInpainter_inpaint_int_MatX_MatX(cv::videostab::MotionInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
+	Result_void cv_videostab_MotionInpainter_inpaint_int_MatR_MatR(cv::videostab::MotionInpainter* instance, int idx, cv::Mat* frame, cv::Mat* mask) {
 		try {
 			instance->inpaint(idx, *frame, *mask);
 			return Ok();
@@ -863,7 +949,7 @@ extern "C" {
 	void cv_NullDeblurer_delete(cv::videostab::NullDeblurer* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullDeblurer_deblur_int_MatX(cv::videostab::NullDeblurer* instance, int unnamed, cv::Mat* unnamed_1) {
+	Result_void cv_videostab_NullDeblurer_deblur_int_MatR(cv::videostab::NullDeblurer* instance, int unnamed, cv::Mat* unnamed_1) {
 		try {
 			instance->deblur(unnamed, *unnamed_1);
 			return Ok();
@@ -890,7 +976,7 @@ extern "C" {
 	void cv_NullInpainter_delete(cv::videostab::NullInpainter* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullInpainter_inpaint_int_MatX_MatX(cv::videostab::NullInpainter* instance, int unnamed, cv::Mat* unnamed_1, cv::Mat* unnamed_2) {
+	Result_void cv_videostab_NullInpainter_inpaint_int_MatR_MatR(cv::videostab::NullInpainter* instance, int unnamed, cv::Mat* unnamed_1, cv::Mat* unnamed_2) {
 		try {
 			instance->inpaint(unnamed, *unnamed_1, *unnamed_2);
 			return Ok();
@@ -910,7 +996,7 @@ extern "C" {
 	void cv_NullOutlierRejector_delete(cv::videostab::NullOutlierRejector* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::videostab::NullOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::NullOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
@@ -920,7 +1006,7 @@ extern "C" {
 	void cv_NullWobbleSuppressor_delete(cv::videostab::NullWobbleSuppressor* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullWobbleSuppressor_suppress_int_const_MatX_MatX(cv::videostab::NullWobbleSuppressor* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
+	Result_void cv_videostab_NullWobbleSuppressor_suppress_int_const_MatR_MatR(cv::videostab::NullWobbleSuppressor* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
 		try {
 			instance->suppress(idx, *frame, *result);
 			return Ok();
@@ -1093,9 +1179,40 @@ extern "C" {
 	void cv_SparsePyrLkOptFlowEstimator_delete(cv::videostab::SparsePyrLkOptFlowEstimator* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_SparsePyrLkOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::videostab::SparsePyrLkOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputArray* points0, const cv::_InputOutputArray* points1, const cv::_OutputArray* status, const cv::_OutputArray* errors) {
+	Result_void cv_videostab_SparsePyrLkOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::videostab::SparsePyrLkOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputArray* points0, const cv::_InputOutputArray* points1, const cv::_OutputArray* status, const cv::_OutputArray* errors) {
 		try {
 			instance->run(*frame0, *frame1, *points0, *points1, *status, *errors);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_SparsePyrLkOptFlowEstimatorGpu_delete(cv::videostab::SparsePyrLkOptFlowEstimatorGpu* instance) {
+		delete instance;
+	}
+	Result<cv::videostab::SparsePyrLkOptFlowEstimatorGpu*> cv_videostab_SparsePyrLkOptFlowEstimatorGpu_SparsePyrLkOptFlowEstimatorGpu() {
+		try {
+			cv::videostab::SparsePyrLkOptFlowEstimatorGpu* ret = new cv::videostab::SparsePyrLkOptFlowEstimatorGpu();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::SparsePyrLkOptFlowEstimatorGpu*>))
+	}
+	
+	Result_void cv_videostab_SparsePyrLkOptFlowEstimatorGpu_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::videostab::SparsePyrLkOptFlowEstimatorGpu* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputArray* points0, const cv::_InputOutputArray* points1, const cv::_OutputArray* status, const cv::_OutputArray* errors) {
+		try {
+			instance->run(*frame0, *frame1, *points0, *points1, *status, *errors);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_videostab_SparsePyrLkOptFlowEstimatorGpu_run_const_GpuMatR_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_GpuMatR(cv::videostab::SparsePyrLkOptFlowEstimatorGpu* instance, const cv::cuda::GpuMat* frame0, const cv::cuda::GpuMat* frame1, const cv::cuda::GpuMat* points0, cv::cuda::GpuMat* points1, cv::cuda::GpuMat* status, cv::cuda::GpuMat* errors) {
+		try {
+			instance->run(*frame0, *frame1, *points0, *points1, *status, *errors);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_videostab_SparsePyrLkOptFlowEstimatorGpu_run_const_GpuMatR_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR(cv::videostab::SparsePyrLkOptFlowEstimatorGpu* instance, const cv::cuda::GpuMat* frame0, const cv::cuda::GpuMat* frame1, const cv::cuda::GpuMat* points0, cv::cuda::GpuMat* points1, cv::cuda::GpuMat* status) {
+		try {
+			instance->run(*frame0, *frame1, *points0, *points1, *status);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
@@ -1229,7 +1346,7 @@ extern "C" {
 	void cv_ToFileMotionWriter_delete(cv::videostab::ToFileMotionWriter* instance) {
 		delete instance;
 	}
-	Result<cv::videostab::ToFileMotionWriter*> cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringX_Ptr_ImageMotionEstimatorBase_(const char* path, cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* estimator) {
+	Result<cv::videostab::ToFileMotionWriter*> cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_Ptr_ImageMotionEstimatorBase_(const char* path, cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* estimator) {
 		try {
 			cv::videostab::ToFileMotionWriter* ret = new cv::videostab::ToFileMotionWriter(cv::String(path), *estimator);
 			return Ok(ret);
@@ -1250,7 +1367,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
-	Result<cv::Mat*> cv_videostab_ToFileMotionWriter_estimate_const_MatX_const_MatX_boolX(cv::videostab::ToFileMotionWriter* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
+	Result<cv::Mat*> cv_videostab_ToFileMotionWriter_estimate_const_MatR_const_MatR_boolX(cv::videostab::ToFileMotionWriter* instance, const cv::Mat* frame0, const cv::Mat* frame1, bool* ok) {
 		try {
 			cv::Mat ret = instance->estimate(*frame0, *frame1, ok);
 			return Ok(new cv::Mat(ret));
@@ -1295,7 +1412,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::RansacParams*>))
 	}
 	
-	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::videostab::TranslationBasedLocalOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::TranslationBasedLocalOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
@@ -1371,7 +1488,7 @@ extern "C" {
 	void cv_VideoFileSource_delete(cv::videostab::VideoFileSource* instance) {
 		delete instance;
 	}
-	Result<cv::videostab::VideoFileSource*> cv_videostab_VideoFileSource_VideoFileSource_const_StringX_bool(const char* path, bool volatileFrame) {
+	Result<cv::videostab::VideoFileSource*> cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(const char* path, bool volatileFrame) {
 		try {
 			cv::videostab::VideoFileSource* ret = new cv::videostab::VideoFileSource(cv::String(path), volatileFrame);
 			return Ok(ret);
@@ -1444,7 +1561,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	Result_void cv_videostab_WeightingDeblurer_deblur_int_MatX(cv::videostab::WeightingDeblurer* instance, int idx, cv::Mat* frame) {
+	Result_void cv_videostab_WeightingDeblurer_deblur_int_MatR(cv::videostab::WeightingDeblurer* instance, int idx, cv::Mat* frame) {
 		try {
 			instance->deblur(idx, *frame);
 			return Ok();
@@ -1465,7 +1582,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::videostab::ImageMotionEstimatorBase>*>))
 	}
 	
-	Result_void cv_videostab_WobbleSuppressorBase_suppress_int_const_MatX_MatX(cv::videostab::WobbleSuppressorBase* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
+	Result_void cv_videostab_WobbleSuppressorBase_suppress_int_const_MatR_MatR(cv::videostab::WobbleSuppressorBase* instance, int idx, const cv::Mat* frame, cv::Mat* result) {
 		try {
 			instance->suppress(idx, *frame, *result);
 			return Ok();
@@ -1486,7 +1603,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_videostab_WobbleSuppressorBase_setMotions_const_vector_Mat_X(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_WobbleSuppressorBase_setMotions_const_vector_Mat_R(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setMotions(*val);
 			return Ok();
@@ -1500,7 +1617,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_WobbleSuppressorBase_setMotions2_const_vector_Mat_X(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_WobbleSuppressorBase_setMotions2_const_vector_Mat_R(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setMotions2(*val);
 			return Ok();
@@ -1514,7 +1631,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
 	}
 	
-	Result_void cv_videostab_WobbleSuppressorBase_setStabilizationMotions_const_vector_Mat_X(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
+	Result_void cv_videostab_WobbleSuppressorBase_setStabilizationMotions_const_vector_Mat_R(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
 		try {
 			instance->setStabilizationMotions(*val);
 			return Ok();

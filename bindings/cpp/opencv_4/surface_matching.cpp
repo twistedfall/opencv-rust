@@ -20,14 +20,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::ICP*>))
 	}
 	
-	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleR_Matx44dX(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, double* residual, cv::Matx44d* pose) {
+	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, double* residual, cv::Matx44d* pose) {
 		try {
 			int ret = instance->registerModelToScene(*srcPC, *dstPC, *residual, *pose);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, std::vector<cv::ppf_match_3d::Pose3DPtr>* poses) {
+	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, std::vector<cv::ppf_match_3d::Pose3DPtr>* poses) {
 		try {
 			int ret = instance->registerModelToScene(*srcPC, *dstPC, *poses);
 			return Ok(ret);
@@ -58,14 +58,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatX(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* Model) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatR(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* Model) {
 		try {
 			instance->trainModel(*Model);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_PPF3DDetector_match_const_MatX_vector_Pose3DPtr_X_double_double(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* scene, std::vector<cv::ppf_match_3d::Pose3DPtr>* results, double relativeSceneSampleStep, double relativeSceneDistance) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_double_double(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* scene, std::vector<cv::ppf_match_3d::Pose3DPtr>* results, double relativeSceneSampleStep, double relativeSceneDistance) {
 		try {
 			instance->match(*scene, *results, relativeSceneSampleStep, relativeSceneDistance);
 			return Ok();
@@ -73,7 +73,7 @@ extern "C" {
 	}
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeX(cv::ppf_match_3d::PPF3DDetector* instance, const cv::FileNode* fn) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR(cv::ppf_match_3d::PPF3DDetector* instance, const cv::FileNode* fn) {
 		try {
 			instance->read(*fn);
 			return Ok();
@@ -82,7 +82,7 @@ extern "C" {
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageX(const cv::ppf_match_3d::PPF3DDetector* instance, cv::FileStorage* fs) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR(const cv::ppf_match_3d::PPF3DDetector* instance, cv::FileStorage* fs) {
 		try {
 			instance->write(*fs);
 			return Ok();
@@ -219,28 +219,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::Pose3D*>))
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx44dX(cv::ppf_match_3d::Pose3D* instance, cv::Matx44d* NewPose) {
+	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx44dR(cv::ppf_match_3d::Pose3D* instance, cv::Matx44d* NewPose) {
 		try {
 			instance->updatePose(*NewPose);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx33dX_Vec3dX(cv::ppf_match_3d::Pose3D* instance, cv::Matx33d* NewR, cv::Vec3d* NewT) {
+	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx33dR_Vec3dR(cv::ppf_match_3d::Pose3D* instance, cv::Matx33d* NewR, cv::Vec3d* NewT) {
 		try {
 			instance->updatePose(*NewR, *NewT);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dX_Vec3dX(cv::ppf_match_3d::Pose3D* instance, cv::Vec4d* Q, cv::Vec3d* NewT) {
+	Result_void cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dR_Vec3dR(cv::ppf_match_3d::Pose3D* instance, cv::Vec4d* Q, cv::Vec3d* NewT) {
 		try {
 			instance->updatePoseQuat(*Q, *NewT);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_appendPose_Matx44dX(cv::ppf_match_3d::Pose3D* instance, cv::Matx44d* IncrementalPose) {
+	Result_void cv_ppf_match_3d_Pose3D_appendPose_Matx44dR(cv::ppf_match_3d::Pose3D* instance, cv::Matx44d* IncrementalPose) {
 		try {
 			instance->appendPose(*IncrementalPose);
 			return Ok();
@@ -261,14 +261,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::Pose3DPtr*>))
 	}
 	
-	Result<int> cv_ppf_match_3d_Pose3D_writePose_const_stringX(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
+	Result<int> cv_ppf_match_3d_Pose3D_writePose_const_stringR(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
 		try {
 			int ret = instance->writePose(std::string(FileName));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_ppf_match_3d_Pose3D_readPose_const_stringX(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
+	Result<int> cv_ppf_match_3d_Pose3D_readPose_const_stringR(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
 		try {
 			int ret = instance->readPose(std::string(FileName));
 			return Ok(ret);
@@ -348,14 +348,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringX(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
+	Result<int> cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
 		try {
 			int ret = instance->writePoseCluster(std::string(FileName));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<int> cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringX(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
+	Result<int> cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
 		try {
 			int ret = instance->readPoseCluster(std::string(FileName));
 			return Ok(ret);

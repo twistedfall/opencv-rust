@@ -23,7 +23,7 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBase {
 	/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
-		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayX(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray()) }.into_result()
 	}
 	
 }
@@ -50,25 +50,25 @@ impl Drop for QualityBRISQUE {
 }
 
 impl QualityBRISQUE {
-	pub fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QualityBRISQUE {}
 
 impl core::AlgorithmTrait for QualityBRISQUE {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBRISQUETrait for QualityBRISQUE {
-	fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBase for QualityBRISQUE {
-	fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualityBRISQUE {
@@ -79,7 +79,7 @@ impl QualityBRISQUE {
 	pub fn create(model_file_path: &str, range_file_path: &str) -> Result<core::Ptr::<crate::quality::QualityBRISQUE>> {
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringX_const_StringX(model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringR_const_StringR(model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
 	}
 	
 	/// Create an object which calculates quality
@@ -87,7 +87,7 @@ impl QualityBRISQUE {
 	/// * model: cv::Ptr<cv::ml::SVM> which contains a loaded BRISQUE model
 	/// * range: cv::Mat which contains BRISQUE range data
 	pub fn create_1(model: &core::Ptr::<dyn crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr::<crate::quality::QualityBRISQUE>> {
-		unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_X_const_MatX(model.as_raw_PtrOfSVM(), range.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_R_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
 	}
 	
 	/// static method for computing quality
@@ -101,7 +101,7 @@ impl QualityBRISQUE {
 		input_array_arg!(img);
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayX_const_StringX_const_StringX(img.as_raw__InputArray(), model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(img.as_raw__InputArray(), model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result()
 	}
 	
 	/// static method for computing image features used by the BRISQUE algorithm
@@ -111,7 +111,7 @@ impl QualityBRISQUE {
 	pub fn compute_features(img: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(img);
 		output_array_arg!(features);
-		unsafe { sys::cv_quality_QualityBRISQUE_computeFeatures_const__InputArrayX_const__OutputArrayX(img.as_raw__InputArray(), features.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityBRISQUE_computeFeatures_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), features.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -126,13 +126,13 @@ pub trait QualityBase: core::AlgorithmTrait {
 	/// * img: comparison image, or image to evalute for no-reference quality algorithms
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
-		unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayX(self.as_raw_mut_QualityBase(), img.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Returns output quality map that was generated during computation, if supported by the algorithm
 	fn get_quality_map(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayX(self.as_raw_QualityBase(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
@@ -160,7 +160,7 @@ pub trait QualityGMSDTrait: crate::quality::QualityBase {
 	/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayX(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::empty()
@@ -191,25 +191,25 @@ impl Drop for QualityGMSD {
 }
 
 impl QualityGMSD {
-	pub fn as_raw_QualityGMSD(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QualityGMSD(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QualityGMSD {}
 
 impl core::AlgorithmTrait for QualityGMSD {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBase for QualityGMSD {
-	fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityGMSDTrait for QualityGMSD {
-	fn as_raw_QualityGMSD(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityGMSD(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualityGMSD {
@@ -218,7 +218,7 @@ impl QualityGMSD {
 	/// * ref: reference image
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr::<crate::quality::QualityGMSD>> {
 		input_array_arg!(ref_);
-		unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayX(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityGMSD>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityGMSD>::opencv_from_extern(r) } )
 	}
 	
 	/// static method for computing quality
@@ -232,7 +232,7 @@ impl QualityGMSD {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -249,7 +249,7 @@ pub trait QualityMSETrait: crate::quality::QualityBase {
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to potentially max float (worst)
 	fn compute(&mut self, cmp_imgs: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp_imgs);
-		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayX(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::empty()
@@ -279,25 +279,25 @@ impl Drop for QualityMSE {
 }
 
 impl QualityMSE {
-	pub fn as_raw_QualityMSE(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QualityMSE(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QualityMSE {}
 
 impl core::AlgorithmTrait for QualityMSE {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBase for QualityMSE {
-	fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityMSETrait for QualityMSE {
-	fn as_raw_QualityMSE(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityMSE(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualityMSE {
@@ -306,7 +306,7 @@ impl QualityMSE {
 	/// * ref: input image to use as the reference for comparison
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr::<crate::quality::QualityMSE>> {
 		input_array_arg!(ref_);
-		unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayX(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityMSE>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityMSE>::opencv_from_extern(r) } )
 	}
 	
 	/// static method for computing quality
@@ -320,7 +320,7 @@ impl QualityMSE {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -337,7 +337,7 @@ pub trait QualityPSNRTrait: crate::quality::QualityBase {
 	/// Per-channel PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayX(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::empty()
@@ -379,25 +379,25 @@ impl Drop for QualityPSNR {
 }
 
 impl QualityPSNR {
-	pub fn as_raw_QualityPSNR(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QualityPSNR(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QualityPSNR {}
 
 impl core::AlgorithmTrait for QualityPSNR {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBase for QualityPSNR {
-	fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityPSNRTrait for QualityPSNR {
-	fn as_raw_QualityPSNR(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityPSNR(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualityPSNR {
@@ -411,7 +411,7 @@ impl QualityPSNR {
 	/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 	pub fn create(ref_: &dyn core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr::<crate::quality::QualityPSNR>> {
 		input_array_arg!(ref_);
-		unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayX_double(ref_.as_raw__InputArray(), max_pixel_value) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityPSNR>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityPSNR>::opencv_from_extern(r) } )
 	}
 	
 	/// static method for computing quality
@@ -429,7 +429,7 @@ impl QualityPSNR {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value) }.into_result()
+		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value) }.into_result()
 	}
 	
 }
@@ -446,7 +446,7 @@ pub trait QualitySSIMTrait: crate::quality::QualityBase {
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayX(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::empty()
@@ -476,25 +476,25 @@ impl Drop for QualitySSIM {
 }
 
 impl QualitySSIM {
-	pub fn as_raw_QualitySSIM(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_QualitySSIM(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QualitySSIM {}
 
 impl core::AlgorithmTrait for QualitySSIM {
-	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualityBase for QualitySSIM {
-	fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::quality::QualitySSIMTrait for QualitySSIM {
-	fn as_raw_QualitySSIM(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_QualitySSIM(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualitySSIM {
@@ -503,7 +503,7 @@ impl QualitySSIM {
 	/// * ref: input image to use as the reference image for comparison
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr::<crate::quality::QualitySSIM>> {
 		input_array_arg!(ref_);
-		unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayX(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualitySSIM>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualitySSIM>::opencv_from_extern(r) } )
 	}
 	
 	/// static method for computing quality
@@ -517,7 +517,7 @@ impl QualitySSIM {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()
 	}
 	
 }

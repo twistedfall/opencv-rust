@@ -1,3 +1,12 @@
+* 0.42.0
+  * Enable CUDA support, check `examples/cuda.rs` for a bootstrap.
+  * `buildtime-bindgen` is now enabled by default, compilation without it enabled rarely worked in reality.
+    You can still disable it by disabling default features.
+  * `Vector` now implements `Into<Vec>`, `Debug`, `AsRef`, `Borrow`, `Default`, `Extend` and `FromIterator`,
+    `Vector::to_slice` was renamed to `Vector::as_slice` (kudos to jerry73204 and carbotaniuman).
+  * Improve tests and examples.
+  * Internal reorganization for better logic separation.
+
 * 0.41.1
   * Revert the parallelization of the build when `clang-runtime` is enabled, it led to #145
 

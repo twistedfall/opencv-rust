@@ -101,8 +101,8 @@ pub const PSM_SINGLE_WORD: i32 = 8;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum classifier_type {
-	OCR_KNN_CLASSIFIER = 0 as isize,
-	OCR_CNN_CLASSIFIER = 1 as isize,
+	OCR_KNN_CLASSIFIER = 0,
+	OCR_CNN_CLASSIFIER = 1,
 }
 
 opencv_type_enum! { crate::text::classifier_type }
@@ -110,7 +110,7 @@ opencv_type_enum! { crate::text::classifier_type }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum decoder_mode {
-	OCR_DECODER_VITERBI = 0 as isize,
+	OCR_DECODER_VITERBI = 0,
 }
 
 opencv_type_enum! { crate::text::decoder_mode }
@@ -128,7 +128,7 @@ pub enum erGrouping_Modes {
 	/// on thresholds created during training). Verification functions for sequences larger than 3 are
 	/// approximated by verifying that the text line parameters of all (sub)sequences of length 3 are
 	/// consistent.
-	ERGROUPING_ORIENTATION_HORIZ = 0 as isize,
+	ERGROUPING_ORIENTATION_HORIZ = 0,
 	/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
 	/// are agglomerated by Single Linkage Clustering in a weighted feature space that combines proximity
 	/// (x,y coordinates) and similarity measures (color, size, gradient magnitude, stroke width, etc.).
@@ -139,7 +139,7 @@ pub enum erGrouping_Modes {
 	/// 
 	/// 
 	/// Note: This mode is not supported due NFA code removal ( https://github.com/opencv/opencv_contrib/issues/2235 )
-	ERGROUPING_ORIENTATION_ANY = 1 as isize,
+	ERGROUPING_ORIENTATION_ANY = 1,
 }
 
 opencv_type_enum! { crate::text::erGrouping_Modes }
@@ -148,10 +148,10 @@ opencv_type_enum! { crate::text::erGrouping_Modes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ocr_engine_mode {
-	OEM_TESSERACT_ONLY = 0 as isize,
-	OEM_CUBE_ONLY = 1 as isize,
-	OEM_TESSERACT_CUBE_COMBINED = 2 as isize,
-	OEM_DEFAULT = 3 as isize,
+	OEM_TESSERACT_ONLY = 0,
+	OEM_CUBE_ONLY = 1,
+	OEM_TESSERACT_CUBE_COMBINED = 2,
+	OEM_DEFAULT = 3,
 }
 
 opencv_type_enum! { crate::text::ocr_engine_mode }
@@ -160,17 +160,17 @@ opencv_type_enum! { crate::text::ocr_engine_mode }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum page_seg_mode {
-	PSM_OSD_ONLY = 0 as isize,
-	PSM_AUTO_OSD = 1 as isize,
-	PSM_AUTO_ONLY = 2 as isize,
-	PSM_AUTO = 3 as isize,
-	PSM_SINGLE_COLUMN = 4 as isize,
-	PSM_SINGLE_BLOCK_VERT_TEXT = 5 as isize,
-	PSM_SINGLE_BLOCK = 6 as isize,
-	PSM_SINGLE_LINE = 7 as isize,
-	PSM_SINGLE_WORD = 8 as isize,
-	PSM_CIRCLE_WORD = 9 as isize,
-	PSM_SINGLE_CHAR = 10 as isize,
+	PSM_OSD_ONLY = 0,
+	PSM_AUTO_OSD = 1,
+	PSM_AUTO_ONLY = 2,
+	PSM_AUTO = 3,
+	PSM_SINGLE_COLUMN = 4,
+	PSM_SINGLE_BLOCK_VERT_TEXT = 5,
+	PSM_SINGLE_BLOCK = 6,
+	PSM_SINGLE_LINE = 7,
+	PSM_SINGLE_WORD = 8,
+	PSM_CIRCLE_WORD = 9,
+	PSM_SINGLE_CHAR = 10,
 }
 
 opencv_type_enum! { crate::text::page_seg_mode }
@@ -193,7 +193,7 @@ opencv_type_enum! { crate::text::page_seg_mode }
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::Vector::<core::Vector::<core::Point>>, regions: &mut core::Vector::<core::Vector::<crate::text::ERStat>>) -> Result<()> {
 	input_array_arg!(image);
-	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayX_vector_vector_Point__X_vector_vector_ERStat__X(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat()) }.into_result()
+	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vector_vector_Point__R_vector_vector_ERStat__R(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat()) }.into_result()
 }
 
 /// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Neumann12).
@@ -216,7 +216,7 @@ pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::V
 pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn core::ToOutputArray, _mode: i32) -> Result<()> {
 	input_array_arg!(_src);
 	output_array_arg!(_channels);
-	unsafe { sys::cv_text_computeNMChannels_const__InputArrayX_const__OutputArrayX_int(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), _mode) }.into_result()
+	unsafe { sys::cv_text_computeNMChannels_const__InputArrayR_const__OutputArrayR_int(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), _mode) }.into_result()
 }
 
 /// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Neumann12).
@@ -248,7 +248,7 @@ pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn co
 /// * non_max_suppression: true
 /// * min_probability_diff: (float)0.1
 pub fn create_er_filter_nm1(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
-	unsafe { sys::cv_text_createERFilterNM1_const_Ptr_Callback_X_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM1_const_Ptr_Callback_R_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 /// Reads an Extremal Region Filter for the 1st stage classifier of N&M algorithm
@@ -286,7 +286,7 @@ pub fn create_er_filter_nm1(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>
 /// * min_probability_diff: (float)0.1
 pub fn create_er_filter_nm1_1(filename: &str, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_createERFilterNM1_const_StringX_int_float_float_float_bool_float(filename.opencv_to_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float(filename.opencv_to_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 /// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Neumann12).
@@ -304,7 +304,7 @@ pub fn create_er_filter_nm1_1(filename: &str, threshold_delta: i32, min_area: f3
 /// ## C++ default parameters
 /// * min_probability: (float)0.3
 pub fn create_er_filter_nm2(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
-	unsafe { sys::cv_text_createERFilterNM2_const_Ptr_Callback_X_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM2_const_Ptr_Callback_R_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 /// Reads an Extremal Region Filter for the 2nd stage classifier of N&M algorithm
@@ -328,12 +328,12 @@ pub fn create_er_filter_nm2(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>
 /// * min_probability: (float)0.3
 pub fn create_er_filter_nm2_1(filename: &str, min_probability: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_createERFilterNM2_const_StringX_float(filename.opencv_to_extern(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM2_const_StringR_float(filename.opencv_to_extern(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::Vector::<String>) -> Result<core::Mat> {
 	extern_container_arg!(vocabulary);
-	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringX_vector_String_X(vocabulary.opencv_to_extern(), lexicon.as_raw_mut_VectorOfString()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vector_String_R(vocabulary.opencv_to_extern(), lexicon.as_raw_mut_VectorOfString()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Utility function to create a tailored language model transitions table from a given list of words (lexicon).
@@ -353,7 +353,7 @@ pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::V
 pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut core::Vector::<String>, transition_probabilities_table: &mut dyn core::ToOutputArray) -> Result<()> {
 	string_arg_output_send!(via vocabulary_via);
 	output_array_arg!(transition_probabilities_table);
-	let out = unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringX_vector_string_X_const__OutputArrayX(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray()) }.into_result();
+	let out = unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringR_vector_string_R_const__OutputArrayR(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray()) }.into_result();
 	string_arg_output_receive!(out, vocabulary_via => vocabulary);
 	out
 }
@@ -376,12 +376,12 @@ pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut co
 pub fn detect_regions_1(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<dyn crate::text::ERFilter>, er_filter2: &core::Ptr::<dyn crate::text::ERFilter>, groups_rects: &mut core::Vector::<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
 	input_array_arg!(image);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayX_const_Ptr_ERFilter_X_const_Ptr_ERFilter_X_vector_Rect_X_int_const_StringX_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probability) }.into_result()
+	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probability) }.into_result()
 }
 
 pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<dyn crate::text::ERFilter>, er_filter2: &core::Ptr::<dyn crate::text::ERFilter>, regions: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
 	input_array_arg!(image);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayX_const_Ptr_ERFilter_X_const_Ptr_ERFilter_X_vector_vector_Point__X(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
+	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_vector_Point__R(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
 }
 
 /// Find groups of Extremal Regions that are organized as text blocks.
@@ -416,7 +416,7 @@ pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArr
 	input_array_arg!(img);
 	input_array_arg!(channels);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_ERStat__X_vector_vector_Vec2i__X_vector_Rect_X_int_const_stringX_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_ERStat__R_vector_vector_Vec2i__R_vector_Rect_R_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -427,7 +427,7 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 	input_array_arg!(image);
 	input_array_arg!(channel);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_Point___vector_Rect_X_int_const_StringX_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_Point___vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -438,7 +438,7 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 /// returns a pointer to ERFilter::Callback.
 pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM1_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadClassifierNM1_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -449,7 +449,7 @@ pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr::<dyn crate::text
 /// returns a pointer to ERFilter::Callback.
 pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM2_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadClassifierNM2_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRBeamSearchDecoder object.
@@ -463,7 +463,7 @@ pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr::<dyn crate::text
 /// at each window location.
 pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -481,7 +481,7 @@ pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<core::Ptr::
 #[deprecated = "use loadOCRHMMClassifier instead"]
 pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -501,7 +501,7 @@ pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::t
 #[deprecated = "loadOCRHMMClassifier instead"]
 pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -512,7 +512,7 @@ pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<core::Ptr::<crate::te
 /// * classifier: Can be one of classifier_type enum values.
 pub fn load_ocrhmm_classifier(filename: &str, classifier: i32) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifier_const_StringX_int(filename.opencv_to_extern(), classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifier_const_StringR_int(filename.opencv_to_extern(), classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 pub trait BaseOCR {
@@ -526,7 +526,7 @@ pub trait BaseOCR {
 	/// * component_level: 0
 	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -538,7 +538,7 @@ pub trait BaseOCR {
 	/// * component_level: 0
 	fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -567,12 +567,12 @@ pub trait ERFilter: core::AlgorithmTrait {
 	/// classifier.
 	fn run(&mut self, image: &dyn core::ToInputArray, regions: &mut core::Vector::<crate::text::ERStat>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_ERFilter_run_const__InputArrayX_vector_ERStat_X(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vector_ERStat_R(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat()) }.into_result()
 	}
 	
 	/// set/get methods to set the algorithm properties,
 	fn set_callback(&mut self, cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setCallback_const_Ptr_Callback_X(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setCallback_const_Ptr_Callback_R(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback()) }.into_result()
 	}
 	
 	fn set_threshold_delta(&mut self, threshold_delta: i32) -> Result<()> {
@@ -618,7 +618,7 @@ pub trait ERFilter_Callback {
 	/// ## Parameters
 	/// * stat: :   The region to be classified
 	fn eval(&mut self, stat: &crate::text::ERStat) -> Result<f64> {
-		unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatX(self.as_raw_mut_ERFilter_Callback(), stat.as_raw_ERStat()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatR(self.as_raw_mut_ERFilter_Callback(), stat.as_raw_ERStat()) }.into_result()
 	}
 	
 }
@@ -823,15 +823,15 @@ impl Drop for ERStat {
 }
 
 impl ERStat {
-	pub fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ERStat {}
 
 impl crate::text::ERStatTrait for ERStat {
-	fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ERStat {
@@ -888,7 +888,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -900,7 +900,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -909,7 +909,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -917,7 +917,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 }
@@ -943,20 +943,20 @@ impl Drop for OCRBeamSearchDecoder {
 }
 
 impl OCRBeamSearchDecoder {
-	pub fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRBeamSearchDecoder {}
 
 impl crate::text::BaseOCR for OCRBeamSearchDecoder {
-	fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::text::OCRBeamSearchDecoderTrait for OCRBeamSearchDecoder {
-	fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRBeamSearchDecoder {
@@ -986,7 +986,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringX_const__InputArrayX_const__InputArrayX_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -996,7 +996,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
@@ -1030,7 +1030,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringX_const_StringX_const__InputArrayX_const__InputArrayX_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1057,7 +1057,7 @@ pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait {
 	/// including 0 as start-sequence location.
 	fn eval(&mut self, image: &dyn core::ToInputArray, recognition_probabilities: &mut core::Vector::<core::Vector::<f64>>, oversegmentation: &mut core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayX_vector_vector_double__X_vector_int_X(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32()) }.into_result()
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vector_vector_double__R_vector_int_R(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32()) }.into_result()
 	}
 	
 	fn get_window_size(&mut self) -> Result<i32> {
@@ -1092,15 +1092,15 @@ impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
 }
 
 impl OCRBeamSearchDecoder_ClassifierCallback {
-	pub fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRBeamSearchDecoder_ClassifierCallback {}
 
 impl crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait for OCRBeamSearchDecoder_ClassifierCallback {
-	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRBeamSearchDecoder_ClassifierCallback {
@@ -1146,7 +1146,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1182,7 +1182,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1191,7 +1191,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -1199,7 +1199,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1225,20 +1225,20 @@ impl Drop for OCRHMMDecoder {
 }
 
 impl OCRHMMDecoder {
-	pub fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRHMMDecoder {}
 
 impl crate::text::BaseOCR for OCRHMMDecoder {
-	fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::text::OCRHMMDecoderTrait for OCRHMMDecoder {
-	fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRHMMDecoder {
@@ -1265,7 +1265,7 @@ impl OCRHMMDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
@@ -1297,7 +1297,7 @@ impl OCRHMMDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringX_const_StringX_const__InputArrayX_const__InputArrayX_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1324,7 +1324,7 @@ pub trait OCRHMMDecoder_ClassifierCallbackTrait {
 	/// corresponding to each classes in out_class.
 	fn eval(&mut self, image: &dyn core::ToInputArray, out_class: &mut core::Vector::<i32>, out_confidence: &mut core::Vector::<f64>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayX_vector_int_X_vector_double_X(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64()) }.into_result()
+		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vector_int_R_vector_double_R(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64()) }.into_result()
 	}
 	
 }
@@ -1351,15 +1351,15 @@ impl Drop for OCRHMMDecoder_ClassifierCallback {
 }
 
 impl OCRHMMDecoder_ClassifierCallback {
-	pub fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRHMMDecoder_ClassifierCallback {}
 
 impl crate::text::OCRHMMDecoder_ClassifierCallbackTrait for OCRHMMDecoder_ClassifierCallback {
-	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRHMMDecoder_ClassifierCallback {
@@ -1383,7 +1383,7 @@ pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR {
 	/// * component_level: OCR_LEVEL_WORD
 	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1419,7 +1419,7 @@ pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR {
 	/// * component_level: OCR_LEVEL_WORD
 	fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1432,7 +1432,7 @@ impl dyn OCRHolisticWordRecognizer + '_ {
 		extern_container_arg!(arch_filename);
 		extern_container_arg!(weights_filename);
 		extern_container_arg!(words_filename);
-		unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringX_const_stringX_const_stringX(arch_filename.opencv_to_extern(), weights_filename.opencv_to_extern(), words_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_to_extern(), weights_filename.opencv_to_extern(), words_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1474,9 +1474,9 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run_multiple_mask(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
+	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1486,18 +1486,18 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
+	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
 	
 	/// ## C++ default parameters
 	/// * component_level: 0
-	fn run_1(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -1505,12 +1505,12 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	fn set_white_list(&mut self, char_whitelist: &str) -> Result<()> {
 		extern_container_arg!(char_whitelist);
-		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringX(self.as_raw_mut_OCRTesseract(), char_whitelist.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringR(self.as_raw_mut_OCRTesseract(), char_whitelist.opencv_to_extern()) }.into_result()
 	}
 	
 }
@@ -1558,7 +1558,7 @@ pub trait TextDetector {
 	/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector::<core::Rect>, confidence: &mut core::Vector::<f32>) -> Result<()> {
 		input_array_arg!(input_image);
-		unsafe { sys::cv_text_TextDetector_detect_const__InputArrayX_vector_Rect_X_vector_float_X(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32()) }.into_result()
+		unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vector_Rect_R_vector_float_R(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32()) }.into_result()
 	}
 	
 }
@@ -1579,7 +1579,7 @@ pub trait TextDetectorCNN: crate::text::TextDetector {
 	/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector::<core::Rect>, confidence: &mut core::Vector::<f32>) -> Result<()> {
 		input_array_arg!(input_image);
-		unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayX_vector_Rect_X_vector_float_X(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32()) }.into_result()
+		unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vector_Rect_R_vector_float_R(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32()) }.into_result()
 	}
 	
 }
@@ -1595,7 +1595,7 @@ impl dyn TextDetectorCNN + '_ {
 	pub fn create(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector::<core::Size>) -> Result<core::Ptr::<dyn crate::text::TextDetectorCNN>> {
 		extern_container_arg!(model_arch_filename);
 		extern_container_arg!(model_weights_filename);
-		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringX_const_StringX_vector_Size_(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern(), detection_sizes.as_raw_mut_VectorOfSize()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern(), detection_sizes.as_raw_mut_VectorOfSize()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the TextDetectorCNN class using the provided parameters.
@@ -1610,7 +1610,7 @@ impl dyn TextDetectorCNN + '_ {
 	pub fn create_1(model_arch_filename: &str, model_weights_filename: &str) -> Result<core::Ptr::<dyn crate::text::TextDetectorCNN>> {
 		extern_container_arg!(model_arch_filename);
 		extern_container_arg!(model_weights_filename);
-		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringX_const_StringX(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
 	}
 	
 }

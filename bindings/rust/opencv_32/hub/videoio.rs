@@ -620,15 +620,15 @@ pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum VideoCaptureAPIs {
 	/// Auto detect == 0
-	CAP_ANY = 0 as isize,
+	CAP_ANY = 0,
 	/// Video For Windows (platform native)
-	CAP_VFW = 200 as isize,
+	CAP_VFW = 200,
 	// V4L/V4L2 capturing support via libv4l
 	// CAP_V4L = 200 as isize, // duplicate discriminant
 	// Same as CAP_V4L
 	// CAP_V4L2 = 200 as isize, // duplicate discriminant
 	/// IEEE 1394 drivers
-	CAP_FIREWIRE = 300 as isize,
+	CAP_FIREWIRE = 300,
 	// Same as CAP_FIREWIRE
 	// CAP_FIREWARE = 300 as isize, // duplicate discriminant
 	// Same as CAP_FIREWIRE
@@ -638,45 +638,45 @@ pub enum VideoCaptureAPIs {
 	// Same as CAP_FIREWIRE
 	// CAP_CMU1394 = 300 as isize, // duplicate discriminant
 	/// QuickTime
-	CAP_QT = 500 as isize,
+	CAP_QT = 500,
 	/// Unicap drivers
-	CAP_UNICAP = 600 as isize,
+	CAP_UNICAP = 600,
 	/// DirectShow (via videoInput)
-	CAP_DSHOW = 700 as isize,
+	CAP_DSHOW = 700,
 	/// PvAPI, Prosilica GigE SDK
-	CAP_PVAPI = 800 as isize,
+	CAP_PVAPI = 800,
 	/// OpenNI (for Kinect)
-	CAP_OPENNI = 900 as isize,
+	CAP_OPENNI = 900,
 	/// OpenNI (for Asus Xtion)
-	CAP_OPENNI_ASUS = 910 as isize,
+	CAP_OPENNI_ASUS = 910,
 	/// Android - not used
-	CAP_ANDROID = 1000 as isize,
+	CAP_ANDROID = 1000,
 	/// XIMEA Camera API
-	CAP_XIAPI = 1100 as isize,
+	CAP_XIAPI = 1100,
 	/// AVFoundation framework for iOS (OS X Lion will have the same API)
-	CAP_AVFOUNDATION = 1200 as isize,
+	CAP_AVFOUNDATION = 1200,
 	/// Smartek Giganetix GigEVisionSDK
-	CAP_GIGANETIX = 1300 as isize,
+	CAP_GIGANETIX = 1300,
 	/// Microsoft Media Foundation (via videoInput)
-	CAP_MSMF = 1400 as isize,
+	CAP_MSMF = 1400,
 	/// Microsoft Windows Runtime using Media Foundation
-	CAP_WINRT = 1410 as isize,
+	CAP_WINRT = 1410,
 	/// Intel Perceptual Computing SDK
-	CAP_INTELPERC = 1500 as isize,
+	CAP_INTELPERC = 1500,
 	/// OpenNI2 (for Kinect)
-	CAP_OPENNI2 = 1600 as isize,
+	CAP_OPENNI2 = 1600,
 	/// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
-	CAP_OPENNI2_ASUS = 1610 as isize,
+	CAP_OPENNI2_ASUS = 1610,
 	/// gPhoto2 connection
-	CAP_GPHOTO2 = 1700 as isize,
+	CAP_GPHOTO2 = 1700,
 	/// GStreamer
-	CAP_GSTREAMER = 1800 as isize,
+	CAP_GSTREAMER = 1800,
 	/// Open and record video file or stream using the FFMPEG library
-	CAP_FFMPEG = 1900 as isize,
+	CAP_FFMPEG = 1900,
 	/// OpenCV Image Sequence (e.g. img_%02d.jpg)
-	CAP_IMAGES = 2000 as isize,
+	CAP_IMAGES = 2000,
 	/// Aravis SDK
-	CAP_ARAVIS = 2100 as isize,
+	CAP_ARAVIS = 2100,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
@@ -688,13 +688,13 @@ opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum VideoCaptureModes {
 	/// BGR24 (default)
-	CAP_MODE_BGR = 0 as isize,
+	CAP_MODE_BGR = 0,
 	/// RGB24
-	CAP_MODE_RGB = 1 as isize,
+	CAP_MODE_RGB = 1,
 	/// Y8
-	CAP_MODE_GRAY = 2 as isize,
+	CAP_MODE_GRAY = 2,
 	/// YUYV
-	CAP_MODE_YUYV = 3 as isize,
+	CAP_MODE_YUYV = 3,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureModes }
@@ -706,66 +706,66 @@ opencv_type_enum! { crate::videoio::VideoCaptureModes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum VideoCaptureProperties {
 	/// Current position of the video file in milliseconds.
-	CAP_PROP_POS_MSEC = 0 as isize,
+	CAP_PROP_POS_MSEC = 0,
 	/// 0-based index of the frame to be decoded/captured next.
-	CAP_PROP_POS_FRAMES = 1 as isize,
+	CAP_PROP_POS_FRAMES = 1,
 	/// Relative position of the video file: 0=start of the film, 1=end of the film.
-	CAP_PROP_POS_AVI_RATIO = 2 as isize,
+	CAP_PROP_POS_AVI_RATIO = 2,
 	/// Width of the frames in the video stream.
-	CAP_PROP_FRAME_WIDTH = 3 as isize,
+	CAP_PROP_FRAME_WIDTH = 3,
 	/// Height of the frames in the video stream.
-	CAP_PROP_FRAME_HEIGHT = 4 as isize,
+	CAP_PROP_FRAME_HEIGHT = 4,
 	/// Frame rate.
-	CAP_PROP_FPS = 5 as isize,
+	CAP_PROP_FPS = 5,
 	/// 4-character code of codec. see VideoWriter::fourcc .
-	CAP_PROP_FOURCC = 6 as isize,
+	CAP_PROP_FOURCC = 6,
 	/// Number of frames in the video file.
-	CAP_PROP_FRAME_COUNT = 7 as isize,
+	CAP_PROP_FRAME_COUNT = 7,
 	/// Format of the %Mat objects returned by VideoCapture::retrieve().
-	CAP_PROP_FORMAT = 8 as isize,
+	CAP_PROP_FORMAT = 8,
 	/// Backend-specific value indicating the current capture mode.
-	CAP_PROP_MODE = 9 as isize,
+	CAP_PROP_MODE = 9,
 	/// Brightness of the image (only for cameras).
-	CAP_PROP_BRIGHTNESS = 10 as isize,
+	CAP_PROP_BRIGHTNESS = 10,
 	/// Contrast of the image (only for cameras).
-	CAP_PROP_CONTRAST = 11 as isize,
+	CAP_PROP_CONTRAST = 11,
 	/// Saturation of the image (only for cameras).
-	CAP_PROP_SATURATION = 12 as isize,
+	CAP_PROP_SATURATION = 12,
 	/// Hue of the image (only for cameras).
-	CAP_PROP_HUE = 13 as isize,
+	CAP_PROP_HUE = 13,
 	/// Gain of the image (only for cameras).
-	CAP_PROP_GAIN = 14 as isize,
+	CAP_PROP_GAIN = 14,
 	/// Exposure (only for cameras).
-	CAP_PROP_EXPOSURE = 15 as isize,
+	CAP_PROP_EXPOSURE = 15,
 	/// Boolean flags indicating whether images should be converted to RGB.
-	CAP_PROP_CONVERT_RGB = 16 as isize,
+	CAP_PROP_CONVERT_RGB = 16,
 	/// Currently unsupported.
-	CAP_PROP_WHITE_BALANCE_BLUE_U = 17 as isize,
+	CAP_PROP_WHITE_BALANCE_BLUE_U = 17,
 	/// Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently).
-	CAP_PROP_RECTIFICATION = 18 as isize,
-	CAP_PROP_MONOCHROME = 19 as isize,
-	CAP_PROP_SHARPNESS = 20 as isize,
+	CAP_PROP_RECTIFICATION = 18,
+	CAP_PROP_MONOCHROME = 19,
+	CAP_PROP_SHARPNESS = 20,
 	/// DC1394: exposure control done by camera, user can adjust reference level using this feature.
-	CAP_PROP_AUTO_EXPOSURE = 21 as isize,
-	CAP_PROP_GAMMA = 22 as isize,
-	CAP_PROP_TEMPERATURE = 23 as isize,
-	CAP_PROP_TRIGGER = 24 as isize,
-	CAP_PROP_TRIGGER_DELAY = 25 as isize,
-	CAP_PROP_WHITE_BALANCE_RED_V = 26 as isize,
-	CAP_PROP_ZOOM = 27 as isize,
-	CAP_PROP_FOCUS = 28 as isize,
-	CAP_PROP_GUID = 29 as isize,
-	CAP_PROP_ISO_SPEED = 30 as isize,
-	CAP_PROP_BACKLIGHT = 32 as isize,
-	CAP_PROP_PAN = 33 as isize,
-	CAP_PROP_TILT = 34 as isize,
-	CAP_PROP_ROLL = 35 as isize,
-	CAP_PROP_IRIS = 36 as isize,
-	CAP_PROP_SETTINGS = 37 as isize,
+	CAP_PROP_AUTO_EXPOSURE = 21,
+	CAP_PROP_GAMMA = 22,
+	CAP_PROP_TEMPERATURE = 23,
+	CAP_PROP_TRIGGER = 24,
+	CAP_PROP_TRIGGER_DELAY = 25,
+	CAP_PROP_WHITE_BALANCE_RED_V = 26,
+	CAP_PROP_ZOOM = 27,
+	CAP_PROP_FOCUS = 28,
+	CAP_PROP_GUID = 29,
+	CAP_PROP_ISO_SPEED = 30,
+	CAP_PROP_BACKLIGHT = 32,
+	CAP_PROP_PAN = 33,
+	CAP_PROP_TILT = 34,
+	CAP_PROP_ROLL = 35,
+	CAP_PROP_IRIS = 36,
+	CAP_PROP_SETTINGS = 37,
 	/// Pop up video/camera filter dialog (note: only supported by DSHOW backend currently. Property value is ignored)
-	CAP_PROP_BUFFERSIZE = 38 as isize,
+	CAP_PROP_BUFFERSIZE = 38,
 	/// Pop up video/camera filter dialog (note: only supported by DSHOW backend currently. Property value is ignored)
-	CAP_PROP_AUTOFOCUS = 39 as isize,
+	CAP_PROP_AUTOFOCUS = 39,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureProperties }
@@ -777,11 +777,11 @@ opencv_type_enum! { crate::videoio::VideoCaptureProperties }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum VideoWriterProperties {
 	/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
-	VIDEOWRITER_PROP_QUALITY = 1 as isize,
+	VIDEOWRITER_PROP_QUALITY = 1,
 	/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
-	VIDEOWRITER_PROP_FRAMEBYTES = 2 as isize,
+	VIDEOWRITER_PROP_FRAMEBYTES = 2,
 	/// Number of stripes for parallel encoding. -1 for auto detection.
-	VIDEOWRITER_PROP_NSTRIPES = 3 as isize,
+	VIDEOWRITER_PROP_NSTRIPES = 3,
 }
 
 opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -820,7 +820,7 @@ pub trait VideoCaptureTrait {
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file_default(&mut self, filename: &str) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringX(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_VideoCapture_open_const_StringR(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	///  Open a camera for video capturing
@@ -912,7 +912,7 @@ pub trait VideoCaptureTrait {
 	/// * flag: 0
 	fn retrieve(&mut self, image: &mut dyn core::ToOutputArray, flag: i32) -> Result<bool> {
 		output_array_arg!(image);
-		unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayX_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag) }.into_result()
+		unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag) }.into_result()
 	}
 	
 	/// Grabs, decodes and returns the next video frame.
@@ -933,7 +933,7 @@ pub trait VideoCaptureTrait {
 	/// :ocvcvCloneImage and then do whatever you want with the copy.
 	fn read(&mut self, image: &mut dyn core::ToOutputArray) -> Result<bool> {
 		output_array_arg!(image);
-		unsafe { sys::cv_VideoCapture_read_const__OutputArrayX(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Sets a property in the VideoCapture.
@@ -985,7 +985,7 @@ pub trait VideoCaptureTrait {
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringX_int(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern(), api_preference) }.into_result()
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern(), api_preference) }.into_result()
 	}
 	
 }
@@ -1023,15 +1023,15 @@ impl Drop for VideoCapture {
 }
 
 impl VideoCapture {
-	pub fn as_raw_VideoCapture(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_VideoCapture(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for VideoCapture {}
 
 impl crate::videoio::VideoCaptureTrait for VideoCapture {
-	fn as_raw_VideoCapture(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_VideoCapture(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl VideoCapture {
@@ -1057,7 +1057,7 @@ impl VideoCapture {
 	///    Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
 	pub fn from_file_default(filename: &str) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1083,7 +1083,7 @@ impl VideoCapture {
 	/// The list of supported API backends cv::VideoCaptureAPIs
 	pub fn from_file(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringX_int(filename.opencv_to_extern(), api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_to_extern(), api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1131,7 +1131,7 @@ pub trait VideoWriterTrait {
 	/// * is_color: true
 	fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoWriter_open_const_StringX_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result()
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result()
 	}
 	
 	/// Returns true if video writer has been successfully initialized.
@@ -1155,7 +1155,7 @@ pub trait VideoWriterTrait {
 	/// The function/method writes the specified image to video file. It must have the same size as has
 	/// been specified when opening the video writer.
 	fn write(&mut self, image: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_VideoWriter_write_const_MatX(self.as_raw_mut_VideoWriter(), image.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_VideoWriter_write_const_MatR(self.as_raw_mut_VideoWriter(), image.as_raw_Mat()) }.into_result()
 	}
 	
 	/// Sets a property in the VideoWriter.
@@ -1206,15 +1206,15 @@ impl Drop for VideoWriter {
 }
 
 impl VideoWriter {
-	pub fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for VideoWriter {}
 
 impl crate::videoio::VideoWriterTrait for VideoWriter {
-	fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl VideoWriter {
@@ -1262,7 +1262,7 @@ impl VideoWriter {
 	/// * is_color: true
 	pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
 	}
 	
 	/// Concatenates 4 chars to a fourcc code

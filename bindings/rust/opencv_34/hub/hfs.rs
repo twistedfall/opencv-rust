@@ -143,7 +143,7 @@ pub trait HfsSegment: core::AlgorithmTrait {
 	/// * if_draw: true
 	fn perform_segment_gpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
-		unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayX_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// do segmentation with cpu
@@ -154,7 +154,7 @@ pub trait HfsSegment: core::AlgorithmTrait {
 	/// * if_draw: true
 	fn perform_segment_cpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
-		unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayX_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }

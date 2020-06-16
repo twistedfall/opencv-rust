@@ -21,7 +21,7 @@ pub fn draw_correspondencies(bundle: &mut dyn core::ToInputOutputArray, src_loca
 	input_array_arg!(src_locations);
 	input_array_arg!(new_locations);
 	input_array_arg!(colors);
-	unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(bundle.as_raw__InputOutputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(bundle.as_raw__InputOutputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()
 }
 
 /// Debug draw search lines onto an image
@@ -32,7 +32,7 @@ pub fn draw_correspondencies(bundle: &mut dyn core::ToInputOutputArray, src_loca
 pub fn draw_search_lines(img: &mut dyn core::ToInputOutputArray, locations: &dyn core::ToInputArray, color: core::Scalar) -> Result<()> {
 	input_output_array_arg!(img);
 	input_array_arg!(locations);
-	unsafe { sys::cv_rapid_drawSearchLines_const__InputOutputArrayX_const__InputArrayX_const_ScalarX(img.as_raw__InputOutputArray(), locations.as_raw__InputArray(), &color) }.into_result()
+	unsafe { sys::cv_rapid_drawSearchLines_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(img.as_raw__InputOutputArray(), locations.as_raw__InputArray(), &color) }.into_result()
 }
 
 /// Draw a wireframe of a triangle mesh
@@ -51,7 +51,7 @@ pub fn draw_wireframe(img: &mut dyn core::ToInputOutputArray, pts2d: &dyn core::
 	input_output_array_arg!(img);
 	input_array_arg!(pts2d);
 	input_array_arg!(tris);
-	unsafe { sys::cv_rapid_drawWireframe_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const_ScalarX_int_bool(img.as_raw__InputOutputArray(), pts2d.as_raw__InputArray(), tris.as_raw__InputArray(), &color, typ, cull_backface) }.into_result()
+	unsafe { sys::cv_rapid_drawWireframe_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const_ScalarR_int_bool(img.as_raw__InputOutputArray(), pts2d.as_raw__InputArray(), tris.as_raw__InputArray(), &color, typ, cull_backface) }.into_result()
 }
 
 /// Extract control points from the projected silhouette of a mesh
@@ -76,7 +76,7 @@ pub fn extract_control_points(num: i32, len: i32, pts3d: &dyn core::ToInputArray
 	input_array_arg!(tris);
 	output_array_arg!(ctl2d);
 	output_array_arg!(ctl3d);
-	unsafe { sys::cv_rapid_extractControlPoints_int_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(num, len, pts3d.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), &imsize, tris.as_raw__InputArray(), ctl2d.as_raw__OutputArray(), ctl3d.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_extractControlPoints_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(num, len, pts3d.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), &imsize, tris.as_raw__InputArray(), ctl2d.as_raw__OutputArray(), ctl3d.as_raw__OutputArray()) }.into_result()
 }
 
 /// Extract the line bundle from an image
@@ -92,7 +92,7 @@ pub fn extract_line_bundle(len: i32, ctl2d: &dyn core::ToInputArray, img: &dyn c
 	input_array_arg!(img);
 	output_array_arg!(bundle);
 	output_array_arg!(src_locations);
-	unsafe { sys::cv_rapid_extractLineBundle_int_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(len, ctl2d.as_raw__InputArray(), img.as_raw__InputArray(), bundle.as_raw__OutputArray(), src_locations.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_extractLineBundle_int_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(len, ctl2d.as_raw__InputArray(), img.as_raw__InputArray(), bundle.as_raw__OutputArray(), src_locations.as_raw__OutputArray()) }.into_result()
 }
 
 /// Filter corresponding 2d and 3d points based on mask
@@ -104,7 +104,7 @@ pub fn filter_correspondencies(pts2d: &mut dyn core::ToInputOutputArray, pts3d: 
 	input_output_array_arg!(pts2d);
 	input_output_array_arg!(pts3d);
 	input_array_arg!(mask);
-	unsafe { sys::cv_rapid_filterCorrespondencies_const__InputOutputArrayX_const__InputOutputArrayX_const__InputArrayX(pts2d.as_raw__InputOutputArray(), pts3d.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_rapid_filterCorrespondencies_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR(pts2d.as_raw__InputOutputArray(), pts3d.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Find corresponding image locations by searching for a maximal sobel edge along the search line (a single
@@ -122,7 +122,7 @@ pub fn find_correspondencies(bundle: &dyn core::ToInputArray, src_locations: &dy
 	input_array_arg!(src_locations);
 	output_array_arg!(new_locations);
 	output_array_arg!(response);
-	unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(bundle.as_raw__InputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__OutputArray(), response.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__OutputArray(), response.as_raw__OutputArray()) }.into_result()
 }
 
 /// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
@@ -151,5 +151,5 @@ pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core:
 	input_array_arg!(k);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	unsafe { sys::cv_rapid_rapid_const__InputArrayX_int_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray()) }.into_result()
 }

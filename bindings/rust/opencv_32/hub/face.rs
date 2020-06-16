@@ -162,7 +162,7 @@ pub trait BIF: core::AlgorithmTrait {
 	fn compute(&self, image: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(features);
-		unsafe { sys::cv_face_BIF_compute_const_const__InputArrayX_const__OutputArrayX(self.as_raw_BIF(), image.as_raw__InputArray(), features.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_face_BIF_compute_const_const__InputArrayR_const__OutputArrayR(self.as_raw_BIF(), image.as_raw__InputArray(), features.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -375,7 +375,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	fn train(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayX_const__InputArrayX(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Updates a FaceRecognizer with given data and associated labels.
@@ -431,7 +431,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	fn update(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayX_const__InputArrayX(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
@@ -445,7 +445,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// ## Overloaded parameters
 	fn predict_label(&self, src: &dyn core::ToInputArray) -> Result<i32> {
 		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayX(self.as_raw_FaceRecognizer(), src.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Predicts a label and associated confidence (e.g. distance) for a given input image.
@@ -487,7 +487,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// 
 	fn predict(&self, src: &dyn core::ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayX_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence) }.into_result()
 	}
 	
 	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
@@ -499,7 +499,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// not try to get "best@ result, just resend it to caller side with given collector
 	fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr::<dyn crate::face::PredictCollector>) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayX_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector()) }.into_result()
 	}
 	
 	/// Saves a FaceRecognizer and its model state.
@@ -516,7 +516,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// be safely called from within different threads.
 	fn save(&self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_save_const_const_StringX(self.as_raw_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_save_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Loads a FaceRecognizer and its model state.
@@ -527,7 +527,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// FaceRecognizer::load(const String& filename), to ease saving a model.
 	fn load(&mut self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_load_const_StringX(self.as_raw_mut_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_load_const_StringR(self.as_raw_mut_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Saves a FaceRecognizer and its model state.
@@ -548,7 +548,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	///    Saves this model to a given FileStorage.
 	/// * fs: The FileStorage to store this FaceRecognizer to.
 	fn save_1(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_save_const_FileStorageX(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_save_const_FileStorageR(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// Loads a FaceRecognizer and its model state.
@@ -560,7 +560,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn load_1(&mut self, fs: &core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_load_const_FileStorageX(self.as_raw_mut_FaceRecognizer(), fs.as_raw_FileStorage()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_load_const_FileStorageR(self.as_raw_mut_FaceRecognizer(), fs.as_raw_FileStorage()) }.into_result()
 	}
 	
 	/// Sets string info for the specified model's label.
@@ -568,7 +568,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// The string info is replaced by the provided value if it was set before for the specified label.
 	fn set_label_info(&mut self, label: i32, str_info: &str) -> Result<()> {
 		extern_container_arg!(str_info);
-		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringX(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_to_extern()) }.into_result()
 	}
 	
 	/// Gets string information by label.
@@ -585,7 +585,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// info.
 	fn get_labels_by_string(&self, str: &str) -> Result<core::Vector::<i32>> {
 		extern_container_arg!(str);
-		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringX(self.as_raw_FaceRecognizer(), str.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
+		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 	}
 	
 	/// threshold parameter accessor - required for default BestMinDist collector
@@ -742,20 +742,20 @@ impl Drop for StandardCollector {
 }
 
 impl StandardCollector {
-	pub fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
-	pub fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] pub fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for StandardCollector {}
 
 impl crate::face::PredictCollector for StandardCollector {
-	fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::face::StandardCollectorTrait for StandardCollector {
-	fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
-	fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	#[inline] fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl StandardCollector {

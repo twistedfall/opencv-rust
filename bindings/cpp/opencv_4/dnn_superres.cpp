@@ -20,42 +20,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn_superres::DnnSuperResImpl*>))
 	}
 	
-	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringX_int(const char* algo, int scale) {
+	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(const char* algo, int scale) {
 		try {
 			cv::dnn_superres::DnnSuperResImpl* ret = new cv::dnn_superres::DnnSuperResImpl(std::string(algo), scale);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn_superres::DnnSuperResImpl*>))
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* path) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR(cv::dnn_superres::DnnSuperResImpl* instance, const char* path) {
 		try {
 			instance->readModel(std::string(path));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX_const_StringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* weights, const char* definition) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR_const_StringR(cv::dnn_superres::DnnSuperResImpl* instance, const char* weights, const char* definition) {
 		try {
 			instance->readModel(std::string(weights), std::string(definition));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_setModel_const_StringX_int(cv::dnn_superres::DnnSuperResImpl* instance, const char* algo, int scale) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_setModel_const_StringR_int(cv::dnn_superres::DnnSuperResImpl* instance, const char* algo, int scale) {
 		try {
 			instance->setModel(std::string(algo), scale);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayX_const__OutputArrayX(cv::dnn_superres::DnnSuperResImpl* instance, const cv::_InputArray* img, const cv::_OutputArray* result) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayR_const__OutputArrayR(cv::dnn_superres::DnnSuperResImpl* instance, const cv::_InputArray* img, const cv::_OutputArray* result) {
 		try {
 			instance->upsample(*img, *result);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayX_vector_Mat_X_const_vector_int_X_const_vector_String_X(cv::dnn_superres::DnnSuperResImpl* instance, const cv::_InputArray* img, std::vector<cv::Mat>* imgs_new, const std::vector<int>* scale_factors, const std::vector<cv::String>* node_names) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vector_Mat_R_const_vector_int_R_const_vector_String_R(cv::dnn_superres::DnnSuperResImpl* instance, const cv::_InputArray* img, std::vector<cv::Mat>* imgs_new, const std::vector<int>* scale_factors, const std::vector<cv::String>* node_names) {
 		try {
 			instance->upsampleMultioutput(*img, *imgs_new, *scale_factors, *node_names);
 			return Ok();

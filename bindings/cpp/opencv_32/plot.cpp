@@ -3,14 +3,14 @@
 #include "plot_types.hpp"
 
 extern "C" {
-	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayX(const cv::_InputArray* data) {
+	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayR(const cv::_InputArray* data) {
 		try {
 			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*data);
 			return Ok(new cv::Ptr<cv::plot::Plot2d>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::plot::Plot2d>*>))
 	}
 	
-	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayX_const__InputArrayX(const cv::_InputArray* dataX, const cv::_InputArray* dataY) {
+	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayR_const__InputArrayR(const cv::_InputArray* dataX, const cv::_InputArray* dataY) {
 		try {
 			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*dataX, *dataY);
 			return Ok(new cv::Ptr<cv::plot::Plot2d>(ret));
@@ -101,7 +101,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_render_const__OutputArrayX(cv::plot::Plot2d* instance, const cv::_OutputArray* _plotResult) {
+	Result_void cv_plot_Plot2d_render_const__OutputArrayR(cv::plot::Plot2d* instance, const cv::_OutputArray* _plotResult) {
 		try {
 			instance->render(*_plotResult);
 			return Ok();

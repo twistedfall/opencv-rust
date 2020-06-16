@@ -10,7 +10,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>))
 	}
 	
-	Result<bool> cv_decodeQRCode_const__InputArrayX_const__InputArrayX_stringX_const__OutputArrayX(const cv::_InputArray* in, const cv::_InputArray* points, void** decoded_info, const cv::_OutputArray* straight_qrcode) {
+	Result<bool> cv_decodeQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(const cv::_InputArray* in, const cv::_InputArray* points, void** decoded_info, const cv::_OutputArray* straight_qrcode) {
 		try {
 			std::string decoded_info_out;
 			bool ret = cv::decodeQRCode(*in, *points, decoded_info_out, *straight_qrcode);
@@ -19,42 +19,42 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_detectQRCode_const__InputArrayX_vector_Point_X_double_double(const cv::_InputArray* in, std::vector<cv::Point>* points, double eps_x, double eps_y) {
+	Result<bool> cv_detectQRCode_const__InputArrayR_vector_Point_R_double_double(const cv::_InputArray* in, std::vector<cv::Point>* points, double eps_x, double eps_y) {
 		try {
 			bool ret = cv::detectQRCode(*in, *points, eps_x, eps_y);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_groupRectangles_meanshift_vector_Rect_X_vector_double_X_vector_double_X_double_Size(std::vector<cv::Rect>* rectList, std::vector<double>* foundWeights, std::vector<double>* foundScales, double detectThreshold, const cv::Size* winDetSize) {
+	Result_void cv_groupRectangles_meanshift_vector_Rect_R_vector_double_R_vector_double_R_double_Size(std::vector<cv::Rect>* rectList, std::vector<double>* foundWeights, std::vector<double>* foundScales, double detectThreshold, const cv::Size* winDetSize) {
 		try {
 			cv::groupRectangles_meanshift(*rectList, *foundWeights, *foundScales, detectThreshold, *winDetSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_groupRectangles_vector_Rect_X_int_double(std::vector<cv::Rect>* rectList, int groupThreshold, double eps) {
+	Result_void cv_groupRectangles_vector_Rect_R_int_double(std::vector<cv::Rect>* rectList, int groupThreshold, double eps) {
 		try {
 			cv::groupRectangles(*rectList, groupThreshold, eps);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_groupRectangles_vector_Rect_X_int_double_vector_int_X_vector_double_X(std::vector<cv::Rect>* rectList, int groupThreshold, double eps, std::vector<int>* weights, std::vector<double>* levelWeights) {
+	Result_void cv_groupRectangles_vector_Rect_R_int_double_vector_int_X_vector_double_X(std::vector<cv::Rect>* rectList, int groupThreshold, double eps, std::vector<int>* weights, std::vector<double>* levelWeights) {
 		try {
 			cv::groupRectangles(*rectList, groupThreshold, eps, weights, levelWeights);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_groupRectangles_vector_Rect_X_vector_int_X_int_double(std::vector<cv::Rect>* rectList, std::vector<int>* weights, int groupThreshold, double eps) {
+	Result_void cv_groupRectangles_vector_Rect_R_vector_int_R_int_double(std::vector<cv::Rect>* rectList, std::vector<int>* weights, int groupThreshold, double eps) {
 		try {
 			cv::groupRectangles(*rectList, *weights, groupThreshold, eps);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_groupRectangles_vector_Rect_X_vector_int_X_vector_double_X_int_double(std::vector<cv::Rect>* rectList, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, int groupThreshold, double eps) {
+	Result_void cv_groupRectangles_vector_Rect_R_vector_int_R_vector_double_R_int_double(std::vector<cv::Rect>* rectList, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, int groupThreshold, double eps) {
 		try {
 			cv::groupRectangles(*rectList, *rejectLevels, *levelWeights, groupThreshold, eps);
 			return Ok();
@@ -68,28 +68,28 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_BaseCascadeClassifier_load_const_StringX(cv::BaseCascadeClassifier* instance, const char* filename) {
+	Result<bool> cv_BaseCascadeClassifier_load_const_StringR(cv::BaseCascadeClassifier* instance, const char* filename) {
 		try {
 			bool ret = instance->load(cv::String(filename));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_double_int_int_Size_Size(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
 			instance->detectMultiScale(*image, *objects, scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_double_int_int_Size_Size(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
 			instance->detectMultiScale(*image, *objects, *numDetections, scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_vector_double_R_double_int_int_Size_Size_bool(cv::BaseCascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
 		try {
 			instance->detectMultiScale(*image, *objects, *rejectLevels, *levelWeights, scaleFactor, minNeighbors, flags, *minSize, *maxSize, outputRejectLevels);
 			return Ok();
@@ -124,7 +124,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result_void cv_BaseCascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_X(cv::BaseCascadeClassifier* instance, const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* maskGenerator) {
+	Result_void cv_BaseCascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_R(cv::BaseCascadeClassifier* instance, const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* maskGenerator) {
 		try {
 			instance->setMaskGenerator(*maskGenerator);
 			return Ok();
@@ -138,14 +138,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>))
 	}
 	
-	Result<cv::Mat*> cv_BaseCascadeClassifier_MaskGenerator_generateMask_const_MatX(cv::BaseCascadeClassifier::MaskGenerator* instance, const cv::Mat* src) {
+	Result<cv::Mat*> cv_BaseCascadeClassifier_MaskGenerator_generateMask_const_MatR(cv::BaseCascadeClassifier::MaskGenerator* instance, const cv::Mat* src) {
 		try {
 			cv::Mat ret = instance->generateMask(*src);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result_void cv_BaseCascadeClassifier_MaskGenerator_initializeMask_const_MatX(cv::BaseCascadeClassifier::MaskGenerator* instance, const cv::Mat* unnamed) {
+	Result_void cv_BaseCascadeClassifier_MaskGenerator_initializeMask_const_MatR(cv::BaseCascadeClassifier::MaskGenerator* instance, const cv::Mat* unnamed) {
 		try {
 			instance->initializeMask(*unnamed);
 			return Ok();
@@ -176,7 +176,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CascadeClassifier*>))
 	}
 	
-	Result<cv::CascadeClassifier*> cv_CascadeClassifier_CascadeClassifier_const_StringX(const char* filename) {
+	Result<cv::CascadeClassifier*> cv_CascadeClassifier_CascadeClassifier_const_StringR(const char* filename) {
 		try {
 			cv::CascadeClassifier* ret = new cv::CascadeClassifier(cv::String(filename));
 			return Ok(ret);
@@ -190,35 +190,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_CascadeClassifier_load_const_StringX(cv::CascadeClassifier* instance, const char* filename) {
+	Result<bool> cv_CascadeClassifier_load_const_StringR(cv::CascadeClassifier* instance, const char* filename) {
 		try {
 			bool ret = instance->load(cv::String(filename));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_CascadeClassifier_read_const_FileNodeX(cv::CascadeClassifier* instance, const cv::FileNode* node) {
+	Result<bool> cv_CascadeClassifier_read_const_FileNodeR(cv::CascadeClassifier* instance, const cv::FileNode* node) {
 		try {
 			bool ret = instance->read(*node);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_double_int_int_Size_Size(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
 			instance->detectMultiScale(*image, *objects, scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_double_int_int_Size_Size(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
 			instance->detectMultiScale(*image, *objects, *numDetections, scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_vector_double_R_double_int_int_Size_Size_bool(cv::CascadeClassifier* instance, const cv::_InputArray* image, std::vector<cv::Rect>* objects, std::vector<int>* rejectLevels, std::vector<double>* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
 		try {
 			instance->detectMultiScale(*image, *objects, *rejectLevels, *levelWeights, scaleFactor, minNeighbors, flags, *minSize, *maxSize, outputRejectLevels);
 			return Ok();
@@ -253,14 +253,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<bool> cv_CascadeClassifier_convert_const_StringX_const_StringX(const char* oldcascade, const char* newcascade) {
+	Result<bool> cv_CascadeClassifier_convert_const_StringR_const_StringR(const char* oldcascade, const char* newcascade) {
 		try {
 			bool ret = cv::CascadeClassifier::convert(cv::String(oldcascade), cv::String(newcascade));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_CascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_X(cv::CascadeClassifier* instance, const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* maskGenerator) {
+	Result_void cv_CascadeClassifier_setMaskGenerator_const_Ptr_MaskGenerator_R(cv::CascadeClassifier* instance, const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* maskGenerator) {
 		try {
 			instance->setMaskGenerator(*maskGenerator);
 			return Ok();
@@ -277,7 +277,7 @@ extern "C" {
 	void cv_DetectionBasedTracker_delete(cv::DetectionBasedTracker* instance) {
 		delete instance;
 	}
-	Result<cv::DetectionBasedTracker*> cv_DetectionBasedTracker_DetectionBasedTracker_Ptr_IDetector__Ptr_IDetector__const_ParametersX(cv::Ptr<cv::DetectionBasedTracker::IDetector>* mainDetector, cv::Ptr<cv::DetectionBasedTracker::IDetector>* trackingDetector, const cv::DetectionBasedTracker::Parameters* params) {
+	Result<cv::DetectionBasedTracker*> cv_DetectionBasedTracker_DetectionBasedTracker_Ptr_IDetector__Ptr_IDetector__const_ParametersR(cv::Ptr<cv::DetectionBasedTracker::IDetector>* mainDetector, cv::Ptr<cv::DetectionBasedTracker::IDetector>* trackingDetector, const cv::DetectionBasedTracker::Parameters* params) {
 		try {
 			cv::DetectionBasedTracker* ret = new cv::DetectionBasedTracker(*mainDetector, *trackingDetector, *params);
 			return Ok(ret);
@@ -305,14 +305,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DetectionBasedTracker_process_const_MatX(cv::DetectionBasedTracker* instance, const cv::Mat* imageGray) {
+	Result_void cv_DetectionBasedTracker_process_const_MatR(cv::DetectionBasedTracker* instance, const cv::Mat* imageGray) {
 		try {
 			instance->process(*imageGray);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_DetectionBasedTracker_setParameters_const_ParametersX(cv::DetectionBasedTracker* instance, const cv::DetectionBasedTracker::Parameters* params) {
+	Result<bool> cv_DetectionBasedTracker_setParameters_const_ParametersR(cv::DetectionBasedTracker* instance, const cv::DetectionBasedTracker::Parameters* params) {
 		try {
 			bool ret = instance->setParameters(*params);
 			return Ok(ret);
@@ -326,21 +326,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::DetectionBasedTracker::Parameters*>))
 	}
 	
-	Result_void cv_DetectionBasedTracker_getObjects_const_vector_Rect_X(const cv::DetectionBasedTracker* instance, std::vector<cv::Rect>* result) {
+	Result_void cv_DetectionBasedTracker_getObjects_const_vector_Rect_R(const cv::DetectionBasedTracker* instance, std::vector<cv::Rect>* result) {
 		try {
 			instance->getObjects(*result);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DetectionBasedTracker_getObjects_const_vector_ExtObject_X(const cv::DetectionBasedTracker* instance, std::vector<cv::DetectionBasedTracker::ExtObject>* result) {
+	Result_void cv_DetectionBasedTracker_getObjects_const_vector_ExtObject_R(const cv::DetectionBasedTracker* instance, std::vector<cv::DetectionBasedTracker::ExtObject>* result) {
 		try {
 			instance->getObjects(*result);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<int> cv_DetectionBasedTracker_addObject_const_RectX(cv::DetectionBasedTracker* instance, const cv::Rect* location) {
+	Result<int> cv_DetectionBasedTracker_addObject_const_RectR(cv::DetectionBasedTracker* instance, const cv::Rect* location) {
 		try {
 			int ret = instance->addObject(*location);
 			return Ok(ret);
@@ -399,21 +399,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::DetectionBasedTracker::ExtObject*>))
 	}
 	
-	Result_void cv_DetectionBasedTracker_IDetector_detect_const_MatX_vector_Rect_X(cv::DetectionBasedTracker::IDetector* instance, const cv::Mat* image, std::vector<cv::Rect>* objects) {
+	Result_void cv_DetectionBasedTracker_IDetector_detect_const_MatR_vector_Rect_R(cv::DetectionBasedTracker::IDetector* instance, const cv::Mat* image, std::vector<cv::Rect>* objects) {
 		try {
 			instance->detect(*image, *objects);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DetectionBasedTracker_IDetector_setMinObjectSize_const_SizeX(cv::DetectionBasedTracker::IDetector* instance, const cv::Size* min) {
+	Result_void cv_DetectionBasedTracker_IDetector_setMinObjectSize_const_SizeR(cv::DetectionBasedTracker::IDetector* instance, const cv::Size* min) {
 		try {
 			instance->setMinObjectSize(*min);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_DetectionBasedTracker_IDetector_setMaxObjectSize_const_SizeX(cv::DetectionBasedTracker::IDetector* instance, const cv::Size* max) {
+	Result_void cv_DetectionBasedTracker_IDetector_setMaxObjectSize_const_SizeR(cv::DetectionBasedTracker::IDetector* instance, const cv::Size* max) {
 		try {
 			instance->setMaxObjectSize(*max);
 			return Ok();
@@ -772,14 +772,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::HOGDescriptor*>))
 	}
 	
-	Result<cv::HOGDescriptor*> cv_HOGDescriptor_HOGDescriptor_const_StringX(const char* filename) {
+	Result<cv::HOGDescriptor*> cv_HOGDescriptor_HOGDescriptor_const_StringR(const char* filename) {
 		try {
 			cv::HOGDescriptor* ret = new cv::HOGDescriptor(cv::String(filename));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::HOGDescriptor*>))
 	}
 	
-	Result<cv::HOGDescriptor*> cv_HOGDescriptor_HOGDescriptor_const_HOGDescriptorX(const cv::HOGDescriptor* d) {
+	Result<cv::HOGDescriptor*> cv_HOGDescriptor_HOGDescriptor_const_HOGDescriptorR(const cv::HOGDescriptor* d) {
 		try {
 			cv::HOGDescriptor* ret = new cv::HOGDescriptor(*d);
 			return Ok(ret);
@@ -807,84 +807,84 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_HOGDescriptor_setSVMDetector_const__InputArrayX(cv::HOGDescriptor* instance, const cv::_InputArray* _svmdetector) {
+	Result_void cv_HOGDescriptor_setSVMDetector_const__InputArrayR(cv::HOGDescriptor* instance, const cv::_InputArray* _svmdetector) {
 		try {
 			instance->setSVMDetector(*_svmdetector);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_HOGDescriptor_read_FileNodeX(cv::HOGDescriptor* instance, cv::FileNode* fn) {
+	Result<bool> cv_HOGDescriptor_read_FileNodeR(cv::HOGDescriptor* instance, cv::FileNode* fn) {
 		try {
 			bool ret = instance->read(*fn);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_HOGDescriptor_write_const_FileStorageX_const_StringX(const cv::HOGDescriptor* instance, cv::FileStorage* fs, const char* objname) {
+	Result_void cv_HOGDescriptor_write_const_FileStorageR_const_StringR(const cv::HOGDescriptor* instance, cv::FileStorage* fs, const char* objname) {
 		try {
 			instance->write(*fs, cv::String(objname));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_HOGDescriptor_load_const_StringX_const_StringX(cv::HOGDescriptor* instance, const char* filename, const char* objname) {
+	Result<bool> cv_HOGDescriptor_load_const_StringR_const_StringR(cv::HOGDescriptor* instance, const char* filename, const char* objname) {
 		try {
 			bool ret = instance->load(cv::String(filename), cv::String(objname));
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_HOGDescriptor_save_const_const_StringX_const_StringX(const cv::HOGDescriptor* instance, const char* filename, const char* objname) {
+	Result_void cv_HOGDescriptor_save_const_const_StringR_const_StringR(const cv::HOGDescriptor* instance, const char* filename, const char* objname) {
 		try {
 			instance->save(cv::String(filename), cv::String(objname));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_copyTo_const_HOGDescriptorX(const cv::HOGDescriptor* instance, cv::HOGDescriptor* c) {
+	Result_void cv_HOGDescriptor_copyTo_const_HOGDescriptorR(const cv::HOGDescriptor* instance, cv::HOGDescriptor* c) {
 		try {
 			instance->copyTo(*c);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_compute_const_const__InputArrayX_vector_float_X_Size_Size_const_vector_Point_X(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<float>* descriptors, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* locations) {
+	Result_void cv_HOGDescriptor_compute_const_const__InputArrayR_vector_float_R_Size_Size_const_vector_Point_R(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<float>* descriptors, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* locations) {
 		try {
 			instance->compute(*img, *descriptors, *winStride, *padding, *locations);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Point>* foundLocations, std::vector<double>* weights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* searchLocations) {
+	Result_void cv_HOGDescriptor_detect_const_const_MatR_vector_Point_R_vector_double_R_double_Size_Size_const_vector_Point_R(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Point>* foundLocations, std::vector<double>* weights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* searchLocations) {
 		try {
 			instance->detect(*img, *foundLocations, *weights, hitThreshold, *winStride, *padding, *searchLocations);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_double_Size_Size_const_vector_Point_X(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Point>* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* searchLocations) {
+	Result_void cv_HOGDescriptor_detect_const_const_MatR_vector_Point_R_double_Size_Size_const_vector_Point_R(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Point>* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, const std::vector<cv::Point>* searchLocations) {
 		try {
 			instance->detect(*img, *foundLocations, hitThreshold, *winStride, *padding, *searchLocations);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<cv::Rect>* foundLocations, std::vector<double>* foundWeights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
+	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_vector_double_R_double_Size_Size_double_double_bool(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<cv::Rect>* foundLocations, std::vector<double>* foundWeights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
 		try {
 			instance->detectMultiScale(*img, *foundLocations, *foundWeights, hitThreshold, *winStride, *padding, scale, finalThreshold, useMeanshiftGrouping);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_double_Size_Size_double_double_bool(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<cv::Rect>* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
+	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_double_Size_Size_double_double_bool(const cv::HOGDescriptor* instance, const cv::_InputArray* img, std::vector<cv::Rect>* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
 		try {
 			instance->detectMultiScale(*img, *foundLocations, hitThreshold, *winStride, *padding, scale, finalThreshold, useMeanshiftGrouping);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_computeGradient_const_const_MatX_MatX_MatX_Size_Size(const cv::HOGDescriptor* instance, const cv::Mat* img, cv::Mat* grad, cv::Mat* angleOfs, const cv::Size* paddingTL, const cv::Size* paddingBR) {
+	Result_void cv_HOGDescriptor_computeGradient_const_const_MatR_MatR_MatR_Size_Size(const cv::HOGDescriptor* instance, const cv::Mat* img, cv::Mat* grad, cv::Mat* angleOfs, const cv::Size* paddingTL, const cv::Size* paddingBR) {
 		try {
 			instance->computeGradient(*img, *grad, *angleOfs, *paddingTL, *paddingBR);
 			return Ok();
@@ -905,14 +905,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<float>*>))
 	}
 	
-	Result_void cv_HOGDescriptor_detectROI_const_const_MatX_const_vector_Point_X_vector_Point_X_vector_double_X_double_Size_Size(const cv::HOGDescriptor* instance, const cv::Mat* img, const std::vector<cv::Point>* locations, std::vector<cv::Point>* foundLocations, std::vector<double>* confidences, double hitThreshold, const cv::Size* winStride, const cv::Size* padding) {
+	Result_void cv_HOGDescriptor_detectROI_const_const_MatR_const_vector_Point_R_vector_Point_R_vector_double_R_double_Size_Size(const cv::HOGDescriptor* instance, const cv::Mat* img, const std::vector<cv::Point>* locations, std::vector<cv::Point>* foundLocations, std::vector<double>* confidences, double hitThreshold, const cv::Size* winStride, const cv::Size* padding) {
 		try {
 			instance->detectROI(*img, *locations, *foundLocations, *confidences, hitThreshold, *winStride, *padding);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_detectMultiScaleROI_const_const_MatX_vector_Rect_X_vector_DetectionROI_X_double_int(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Rect>* foundLocations, std::vector<cv::DetectionROI>* locations, double hitThreshold, int groupThreshold) {
+	Result_void cv_HOGDescriptor_detectMultiScaleROI_const_const_MatR_vector_Rect_R_vector_DetectionROI_R_double_int(const cv::HOGDescriptor* instance, const cv::Mat* img, std::vector<cv::Rect>* foundLocations, std::vector<cv::DetectionROI>* locations, double hitThreshold, int groupThreshold) {
 		try {
 			instance->detectMultiScaleROI(*img, *foundLocations, *locations, hitThreshold, groupThreshold);
 			return Ok();
@@ -926,7 +926,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_HOGDescriptor_groupRectangles_const_vector_Rect_X_vector_double_X_int_double(const cv::HOGDescriptor* instance, std::vector<cv::Rect>* rectList, std::vector<double>* weights, int groupThreshold, double eps) {
+	Result_void cv_HOGDescriptor_groupRectangles_const_vector_Rect_R_vector_double_R_int_double(const cv::HOGDescriptor* instance, std::vector<cv::Rect>* rectList, std::vector<double>* weights, int groupThreshold, double eps) {
 		try {
 			instance->groupRectangles(*rectList, *weights, groupThreshold, eps);
 			return Ok();
@@ -957,56 +957,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_QRCodeDetector_detect_const_const__InputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points) {
+	Result<bool> cv_QRCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points) {
 		try {
 			bool ret = instance->detect(*img, *points);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<void*> cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, const cv::_OutputArray* straight_qrcode) {
+	Result<void*> cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, const cv::_OutputArray* straight_qrcode) {
 		try {
 			cv::String ret = instance->decode(*img, *points, *straight_qrcode);
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<void*> cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
+	Result<void*> cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
 		try {
 			cv::String ret = instance->detectAndDecode(*img, *points, *straight_qrcode);
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<bool> cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points) {
+	Result<bool> cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points) {
 		try {
 			bool ret = instance->detectMulti(*img, *points);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_String_X_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, std::vector<cv::String>* decoded_info, const cv::_OutputArray* straight_qrcode) {
+	Result<bool> cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_String_R_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, std::vector<cv::String>* decoded_info, const cv::_OutputArray* straight_qrcode) {
 		try {
 			bool ret = instance->decodeMulti(*img, *points, *decoded_info, *straight_qrcode);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_String_X_const__OutputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, std::vector<cv::String>* decoded_info, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
+	Result<bool> cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_String_R_const__OutputArrayR_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, std::vector<cv::String>* decoded_info, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
 		try {
 			bool ret = instance->detectAndDecodeMulti(*img, *decoded_info, *points, *straight_qrcode);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, std::vector<std::string>* decoded_info, const cv::_OutputArray* straight_qrcode) {
+	Result<bool> cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_string_R_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, std::vector<std::string>* decoded_info, const cv::_OutputArray* straight_qrcode) {
 		try {
 			bool ret = instance->decodeMulti(*img, *points, *decoded_info, *straight_qrcode);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<bool> cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, std::vector<std::string>* decoded_info, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
+	Result<bool> cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR(const cv::QRCodeDetector* instance, const cv::_InputArray* img, std::vector<std::string>* decoded_info, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
 		try {
 			bool ret = instance->detectAndDecodeMulti(*img, *decoded_info, *points, *straight_qrcode);
 			return Ok(ret);

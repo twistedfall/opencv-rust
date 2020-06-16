@@ -88,7 +88,7 @@ pub trait Plot2d: core::AlgorithmTrait {
 	
 	fn render(&mut self, _plot_result: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(_plot_result);
-		unsafe { sys::cv_plot_Plot2d_render_const__OutputArrayX(self.as_raw_mut_Plot2d(), _plot_result.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_render_const__OutputArrayR(self.as_raw_mut_Plot2d(), _plot_result.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -101,7 +101,7 @@ impl dyn Plot2d + '_ {
 	/// will be equal to indexes of correspondind elements in data matrix.
 	pub fn create(data: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::plot::Plot2d>> {
 		input_array_arg!(data);
-		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayX(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
+		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates Plot2d object
@@ -112,7 +112,7 @@ impl dyn Plot2d + '_ {
 	pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::plot::Plot2d>> {
 		input_array_arg!(data_x);
 		input_array_arg!(data_y);
-		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayX_const__InputArrayX(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
+		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(r) } )
 	}
 	
 }

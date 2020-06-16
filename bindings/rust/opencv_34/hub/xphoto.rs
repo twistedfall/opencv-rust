@@ -22,11 +22,11 @@ pub const INPAINT_SHIFTMAP: i32 = 0;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Bm3dSteps {
 	/// Execute all steps of the algorithm
-	BM3D_STEPALL = 0 as isize,
+	BM3D_STEPALL = 0,
 	/// Execute only first step of the algorithm
-	BM3D_STEP1 = 1 as isize,
+	BM3D_STEP1 = 1,
 	/// Execute only second step of the algorithm
-	BM3D_STEP2 = 2 as isize,
+	BM3D_STEP2 = 2,
 }
 
 opencv_type_enum! { crate::xphoto::Bm3dSteps }
@@ -38,7 +38,7 @@ pub enum InpaintTypes {
 	/// This algorithm searches for dominant correspondences (transformations) of
 	/// image patches and tries to seamlessly fill-in the area to be inpainted using this
 	/// transformations
-	INPAINT_SHIFTMAP = 0 as isize,
+	INPAINT_SHIFTMAP = 0,
 }
 
 opencv_type_enum! { crate::xphoto::InpaintTypes }
@@ -48,7 +48,7 @@ opencv_type_enum! { crate::xphoto::InpaintTypes }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TransformTypes {
 	/// Un-normalized Haar transform
-	HAAR = 0 as isize,
+	HAAR = 0,
 }
 
 opencv_type_enum! { crate::xphoto::TransformTypes }
@@ -65,7 +65,7 @@ opencv_type_enum! { crate::xphoto::TransformTypes }
 pub fn apply_channel_gains(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayX_const__OutputArrayX_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r) }.into_result()
+	unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r) }.into_result()
 }
 
 /// Performs image denoising using the Block-Matching and 3D-filtering algorithm
@@ -121,7 +121,7 @@ pub fn bm3d_denoising(src: &dyn core::ToInputArray, dst_step1: &mut dyn core::To
 	input_array_arg!(src);
 	input_output_array_arg!(dst_step1);
 	output_array_arg!(dst_step2);
-	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type) }.into_result()
+	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type) }.into_result()
 }
 
 /// Performs image denoising using the Block-Matching and 3D-filtering algorithm
@@ -176,7 +176,7 @@ pub fn bm3d_denoising(src: &dyn core::ToInputArray, dst_step1: &mut dyn core::To
 pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type) }.into_result()
+	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type) }.into_result()
 }
 
 /// Creates an instance of GrayworldWB
@@ -193,7 +193,7 @@ pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldW
 /// * path_to_model: String()
 pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr::<dyn crate::xphoto::LearningBasedWB>> {
 	extern_container_arg!(path_to_model);
-	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringX(path_to_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
+	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringR(path_to_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of SimpleWB
@@ -237,7 +237,7 @@ pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_c
 /// ## C++ default parameters
 /// * psize: 16
 pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_dctDenoising_const_MatX_MatX_double_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize) }.into_result()
+	unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_double_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize) }.into_result()
 }
 
 /// The function implements different single-image inpainting algorithms.
@@ -254,7 +254,7 @@ pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i3
 /// * dst: destination image
 /// * algorithmType: see xphoto::InpaintTypes
 pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm_type: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type) }.into_result()
+	unsafe { sys::cv_xphoto_inpaint_const_MatR_const_MatR_MatR_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type) }.into_result()
 }
 
 /// Gray-world white balance algorithm
@@ -333,7 +333,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	fn extract_simple_features(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Maximum possible value of the input image (e.g. 255 for 8 bit images,
@@ -528,7 +528,7 @@ pub trait WhiteBalancer: core::AlgorithmTrait {
 	fn balance_white(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
