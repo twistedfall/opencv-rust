@@ -91,11 +91,12 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	};
 	let identifier = f.identifier();
 	let is_safe = !settings::FUNC_UNSAFE.contains(identifier.as_ref());
+	let is_static_func = matches!(f.kind(), Kind::StaticMethod(..) | Kind::Function);
 	let return_type = f.return_type();
 	let return_type_func_decl = if is_infallible {
-		return_type.rust_return_func_decl(false)
+		return_type.rust_return_func_decl(false, is_static_func)
 	} else {
-		return_type.rust_return_func_decl_wrapper()
+		format!("Result<{}>", return_type.rust_return_func_decl(false, is_static_func)).into()
 	};
 	let mut prefix = String::new();
 	let mut suffix = if is_infallible {
@@ -113,7 +114,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let call_args = call_args.join(", ");
 	let forward_args = forward_args.join(", ");
 	let post_call_args = post_call_args.join("\n");
-	let ret_map = return_type.rust_return_map(is_safe);
+	let ret_map = return_type.rust_return_map(is_safe, is_static_func);
 	let mut attributes = String::new();
 	if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
 		attributes = format!("#[cfg({})]", attrs.0);

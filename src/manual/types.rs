@@ -1,8 +1,12 @@
+pub use abstract_ref::*;
+
 use crate::{
 	core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray},
 	Result,
 	types,
 };
+
+mod abstract_ref;
 
 #[doc(hidden)]
 #[repr(C)]

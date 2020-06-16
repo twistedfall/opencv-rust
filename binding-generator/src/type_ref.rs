@@ -12,6 +12,7 @@ use once_cell::{
 use regex::{Captures, Regex};
 
 use crate::{
+	AbstractRefWrapper,
 	Class,
 	DefinitionLocation,
 	DependentType,
@@ -752,6 +753,17 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
+	pub fn as_abstract_class_ptr(&self) -> Option<(TypeRef<'tu>, Class<'tu>)> {
+		if let Some(pointee) = self.as_pointer() {
+			if let Some(class) = pointee.as_class() {
+				if class.is_abstract() {
+					return Some((pointee, class))
+				}
+			}
+		}
+		None
+	}
+
 	pub fn as_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
 		if let Kind::Array(elem, size) = self.canonical().kind() {
 			Some((elem, size))
@@ -1251,28 +1263,32 @@ impl<'tu> TypeRef<'tu> {
 		} else {
 			""
 		};
-		format!("{mutable}{name}: {typ}", mutable=mutable, name=name, typ=typ)
+		format!("{mutable}{name}: {typ}", mutable = mutable, name = name, typ = typ)
 	}
 
-	pub fn rust_return_func_decl(&self, with_turbofish: bool) -> Cow<str> {
-		if self.is_by_ptr() {
+	pub fn rust_return_func_decl(&self, with_turbofish: bool, is_static_func: bool) -> Cow<str> {
+		if self.as_abstract_class_ptr().is_some() {
+			format!(
+				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
+				mut_suf = if self.is_const() { "" } else { "Mut" },
+				fish = if with_turbofish { "::" } else { "" },
+				lt = if is_static_func { "'static, " } else { "" },
+				typ = self.source().rust_full_ext(false, with_turbofish),
+			).into()
+		} else if self.is_by_ptr() {
 			self.source().rust_full_ext(false, with_turbofish).into_owned().into()
 		} else {
 			self.rust_full_ext(false, with_turbofish)
 		}
 	}
 
-	pub fn rust_return_func_decl_wrapper(&self) -> Cow<str> {
-		format!("Result<{}>", self.rust_return_func_decl(false)).into()
-	}
-
-	pub fn rust_return_map(&self, is_safe_context: bool) -> Cow<str> {
+	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
 		if self.is_string() || self.is_by_ptr() {
 			format!(
 				".map(|r| {unsafety_call}{{ {typ}::opencv_from_extern(r) }} )",
 				unsafety_call=unsafety_call,
-				typ=self.rust_return_func_decl(true),
+				typ=self.rust_return_func_decl(true, is_static_func),
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.is_const() { "ref" } else { "mut" };
@@ -1376,7 +1392,7 @@ impl<'tu> TypeRef<'tu> {
 				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id())
 			};
 		}
-		if self.as_variable_array().is_some() {
+		if self.as_variable_array().is_some() || self.as_abstract_class_ptr().is_some() {
 			return if self.is_const() || is_const {
 				format!("{name}.as_ptr()", name=name)
 			} else {
@@ -1477,7 +1493,7 @@ impl<'tu> TypeRef<'tu> {
 			_ => {
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					if !self.is_generic() && !self.is_void() {
-						out.push(if self.is_string() {
+						if self.is_string() {
 							let type_ref = TypeRef::new(
 								self.gen_env.resolve_type(&self.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
@@ -1486,10 +1502,13 @@ impl<'tu> TypeRef<'tu> {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
 								dl => dl
 							};
-							D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, self.gen_env, def_location))
+							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, self.gen_env, def_location)));
 						} else {
-							D::from_return_type_wrapper(ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location))
-						});
+							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location)));
+							if self.as_abstract_class_ptr().is_some() {
+								out.push(D::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone(), self.gen_env)))
+							}
+						}
 					}
 				}
 			}
@@ -1731,7 +1750,7 @@ impl<'tu> TypeRef<'tu> {
 	pub fn cpp_extern_return(&self) -> Cow<str> {
 		if self.is_string() {
 			"void*".into()
-		} else if self.is_by_ptr() {
+		} else if self.is_by_ptr() && !self.as_abstract_class_ptr().is_some() {
 			format!("{typ}*", typ=self.cpp_full()).into()
 		} else {
 			self.cpp_full()

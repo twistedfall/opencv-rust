@@ -16,6 +16,7 @@ use clang::{
 use dunce::canonicalize;
 
 use crate::{
+	AbstractRefWrapper,
 	Class,
 	Const,
 	Element,
@@ -38,6 +39,7 @@ use crate::{
 
 pub trait DependentType<'tu> {
 	fn from_return_type_wrapper(s: ReturnTypeWrapper<'tu>) -> Self;
+	fn from_abstract_ref_wrapper(s: AbstractRefWrapper<'tu>) -> Self;
 	fn from_vector(s: Vector<'tu>) -> Self;
 	fn from_smart_ptr(s: SmartPtr<'tu>) -> Self;
 }

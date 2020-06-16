@@ -145,14 +145,7 @@ impl<'tu> EntityElement<'tu> for Field<'tu> {
 
 impl Element for Field<'_> {
 	fn is_ignored(&self) -> bool {
-		DefaultElement::is_ignored(self) || {
-			let type_ref = self.type_ref();
-			type_ref.is_ignored() || if let Some(cls) = type_ref.source().as_class() {
-				cls.is_abstract()
-			} else {
-				false
-			}
-		}
+		DefaultElement::is_ignored(self) || self.type_ref().is_ignored()
 	}
 
 	fn is_system(&self) -> bool {

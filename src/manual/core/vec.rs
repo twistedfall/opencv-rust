@@ -15,7 +15,7 @@ mod vec {
 }
 
 mod scalar {
-	valid_types!(ValidScalarType, f64);
+	valid_types!(ValidScalarType, i32, f64);
 }
 
 macro_rules! vec_impl {

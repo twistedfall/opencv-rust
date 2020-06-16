@@ -9,6 +9,7 @@ license = "MIT"
 version = "0.41.1"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
+autoexamples = false
 
 [lib]
 doctest = false
@@ -18,6 +19,27 @@ maintenance = { status = "actively-developed" }
 
 [workspace]
 members = ["binding-generator"]
+
+[[example]]
+name = "opencl"
+
+[[example]]
+name = "video_capture"
+
+[[example]]
+name = "video_facedetect"
+
+[[example]]
+name = "video_features"
+
+[[example]]
+name = "video_to_gray"
+
+[[example]]
+name = "warp_perspective_demo"
+
+[[example]]
+name = "window"
 
 [dependencies]
 libc = "0.2"

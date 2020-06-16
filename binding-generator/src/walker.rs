@@ -102,7 +102,7 @@ impl<'tu> EntityWalker<'tu> {
 							| EntityKind::UnionDecl | EntityKind::UnexposedDecl | EntityKind::StructDecl
 							| EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
 							| EntityKind::ConversionFunction | EntityKind::ClassTemplate | EntityKind::ClassDecl
-							| EntityKind::Destructor => {
+							| EntityKind::Destructor | EntityKind::VarDecl => {
 								true
 							}
 							_ => {

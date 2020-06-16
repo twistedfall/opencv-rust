@@ -28,6 +28,7 @@ use crate::{
 	Typedef,
 };
 
+mod abstract_ref_wrapper;
 mod class;
 mod constant;
 mod element;

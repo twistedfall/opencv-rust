@@ -157,28 +157,42 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_UMat_getPropStep_const" => "mat_step",
 	"cv_UMat_rowRange_const_int_int" => "row_bounds",
 	"cv_UMat_type_const" => "typ",
+	"cv__InputArray__InputArray_const_GpuMatR" => "from_gpumat",
+	"cv__InputArray__InputArray_const_HostMemR" => "from_hostmem",
 	"cv__InputArray__InputArray_const_MatExprR" => "from_matexpr",
 	"cv__InputArray__InputArray_const_MatR" => "from_mat",
 	"cv__InputArray__InputArray_const_UMatR" => "from_umat",
 	"cv__InputArray__InputArray_const_doubleR" => "from_f64",
+	"cv__InputArray__InputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
 	"cv__InputArray__InputArray_const_vector_Mat_R" => "from_mat_vec",
 	"cv__InputArray__InputArray_const_vector_UMat_R" => "from_umat_vec",
 	"cv__InputArray__InputArray_const_vector_bool_R" => "from_bool_vec",
-	"cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR" => "+_with_mask",
+	"cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR" => "+_masked",
+	"cv__InputOutputArray__InputOutputArray_GpuMatR" => "from_gpumat_mut",
+	"cv__InputOutputArray__InputOutputArray_HostMemR" => "from_hostmem_mut",
 	"cv__InputOutputArray__InputOutputArray_MatR" => "from_mat_mut",
 	"cv__InputOutputArray__InputOutputArray_UMatR" => "from_umat_mut",
+	"cv__InputOutputArray__InputOutputArray_const_GpuMatR" => "from_gpumat",
+	"cv__InputOutputArray__InputOutputArray_const_HostMemR" => "from_hostmem",
 	"cv__InputOutputArray__InputOutputArray_const_MatR" => "from_mat",
 	"cv__InputOutputArray__InputOutputArray_const_UMatR" => "from_umat",
+	"cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
 	"cv__InputOutputArray__InputOutputArray_const_vector_Mat_R" => "from_mat_vec",
 	"cv__InputOutputArray__InputOutputArray_const_vector_UMat_R" => "from_umat_vec",
 	"cv__InputOutputArray__InputOutputArray_vector_Mat_R" => "from_mat_vec_mut",
 	"cv__InputOutputArray__InputOutputArray_vector_UMat_R" => "from_umat_vec_mut",
+	"cv__OutputArray__OutputArray_GpuMatR" => "from_gpumat_mut",
+	"cv__OutputArray__OutputArray_HostMemR" => "from_hostmem_mut",
 	"cv__OutputArray__OutputArray_MatR" => "from_mat_mut",
 	"cv__OutputArray__OutputArray_UMatR" => "from_umat_mut",
+	"cv__OutputArray__OutputArray_const_GpuMatR" => "from_gpumat",
+	"cv__OutputArray__OutputArray_const_HostMemR" => "from_hostmem",
 	"cv__OutputArray__OutputArray_const_MatR" => "from_mat",
 	"cv__OutputArray__OutputArray_const_UMatR" => "from_umat",
+	"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
 	"cv__OutputArray__OutputArray_const_vector_Mat_R" => "from_mat_vec",
 	"cv__OutputArray__OutputArray_const_vector_UMat_R" => "from_umat_vec",
+	"cv__OutputArray__OutputArray_vector_GpuMat_R" => "from_gpumat_vec_mut",
 	"cv__OutputArray__OutputArray_vector_Mat_R" => "from_mat_vec_mut",
 	"cv__OutputArray__OutputArray_vector_UMat_R" => "from_umat_vec_mut",
 	"cv__OutputArray_create_const_Size_int_int_bool_DepthMask" => "+_size",
@@ -186,6 +200,17 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask" => "+_nd",
 	"cv__OutputArray_create_const_int_const_intX_int_int_bool_int" => "+_nd", // 3.2
 	"cv_abs_const_MatExprR" => "+_matexpr",
+	"cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX" => "+_size",
+	"cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX" => "+_size_with_default",
+	"cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t" => "+_size_with_data",
+	"cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range" => "rowscols",
+	"cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect" => "roi",
+	"cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX" => "from_hostmem",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX" => "+_rows_cols",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX" => "+_rows_cols_with_default",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t" => "+_rows_cols_with_data",
+	"cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR" => "+_async",
+	"cv_cuda_GpuMat_upload_const__InputArrayR_StreamR" => "+_async",
 	"cv_directx_getTypeFromD3DFORMAT_int" => "get_type_from_d3d_format",
 	"cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int" => "+2",
 	"cv_getNumberOfCPUs" => "get_number_of_cpus",
@@ -301,6 +326,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_setUseCollection_bool" => "-",
 	"cv_useCollection" => "-",
 	"cv_vconcat_const_MatX_size_t_const__OutputArrayR" => "-", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
+
+	// ### cudaimgproc ###
+	"cv_cuda_histEven_const__InputArrayR_GpuMat_X__4__int_X__4__int_X__4__int_X__4__StreamR" => "-", // slice of boxed objects
+	"cv_cuda_histRange_const__InputArrayR_GpuMat_X__4__const_GpuMat_X__4__StreamR" => "-", // slice of boxed objects
 
 	// ### dnn ###
 	"cv_dnn_DictValue_DictValue_bool" => "from_bool",
@@ -476,6 +505,8 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashm
 	// ### core ###
 	"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
 	"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
+	"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
+	"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
 	"cv_getImpl_vector_int_R_vector_String_R" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
 
 	// ### dnn ###
@@ -521,7 +552,6 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashm
 
 pub static ELEMENT_EXCLUDE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
 	"^cv::String$",
-	"^cv::cuda::",
 	"^cv::internal::format$", // 3.2 duplicate definition
 	"^cv::ogl::",
 	"^cv::face::FacemarkLBF::BBox$", // not used, not exported in windows dll
@@ -540,7 +570,6 @@ pub static ELEMENT_IGNORE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
 	"^cv::MatAllocator$", // doesn't handle cpp part too well
 	"^cv::NAryMatIterator", // uses pointers of pointers
 	"^cv::Node$", // template class
-	"^cv::cuda::",
 	"^cv::ogl::",
 	"^std::exception_ptr$",
 	"^std::random_access_iterator_tag$",
@@ -598,6 +627,7 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::TermCriteria" => ExportConfig::simple(),
 	"cv::optflow::GPCTrainingParams" => ExportConfig::simple(),
 	"cv::optflow::GPCMatchingParams" => ExportConfig::simple(),
+	"cv::cudacodec::FormatInfo" => ExportConfig::simple(),
 
 	// override boxed
 	"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
@@ -640,12 +670,14 @@ pub static FUNC_UNSAFE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv__OutputArray_create_const_int_const_intX_int_int_bool_int",
 	"cv__OutputArray_create_const_int_int_int_int_bool_int",
 	// allows passing arbitrary data
-	"cv_Mat_Mat_int_int_int_voidX_size_t",
 	"cv_Mat_Mat_Size_int_voidX_size_t",
-	"cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX",
 	"cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX",
+	"cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX",
+	"cv_Mat_Mat_int_int_int_voidX_size_t",
 	"cv_Mat_setPropData_unsigned_charX",
 	"cv_UMatData_setPropData_unsigned_charX",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t",
+	"cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t",
 	// no bounds checking
 	"cv_Mat_ptr_const_const_intX",
 	"cv_Mat_ptr_const_int",
@@ -658,6 +690,15 @@ pub static FUNC_UNSAFE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	// pointer to internal data
 	"cv_dnn_Dict_ptr_const_StringR",
 	"cv_dnn_Dict_ptr_const_const_StringR",
+	// takes reference and stores it for the lifetime of an object (fixme: add lifetime management)
+	"cv_cuda_GpuMat_GpuMat_AllocatorX",
+	"cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX",
+	"cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX",
+	"cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX",
+	"cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX",
+	"cv_cuda_GpuMat_setPropAllocator_AllocatorX",
+	"cv_cuda_GpuMat_setDefaultAllocator_AllocatorX", // fixme, should take 'static
 });
 
 pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
@@ -808,13 +849,30 @@ pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), SliceHint>> = Lazy::new(|
 	("cv::mixChannels", 4) => SliceHint::ConvertSlice("from_to", "npairs", 2),
 });
 
-pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
-	"detail" => "Detail",
-	"fisheye" => "Fisheye",
-	"superres" => "Superres",
-	"kinfu" => "Kinfu",
-	"dynafu" => "Dynafu",
-	"linemod" => "Linemod",
+pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| hashmap! {
+	"*" => hashmap! {
+		"detail" => "Detail",
+		"dynafu" => "Dynafu",
+		"fisheye" => "Fisheye",
+		"kinfu" => "Kinfu",
+		"linemod" => "Linemod",
+		"superres" => "Superres",
+	},
+	"cudabgsegm" => hashmap! {
+		"cuda" => "CUDA",
+	},
+	"cudafeatures2d" => hashmap! {
+		"cuda" => "CUDA",
+	},
+	"cudaimgproc" => hashmap! {
+		"cuda" => "CUDA",
+	},
+	"cudaoptflow" => hashmap! {
+		"cuda" => "CUDA",
+	},
+	"cudastereo" => hashmap! {
+		"cuda" => "CUDA",
+	},
 });
 
 pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {

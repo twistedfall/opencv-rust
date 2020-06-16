@@ -342,8 +342,6 @@ While most of the API is covered, for various reasons (that might no longer hold
 functions that are not yet implemented. If a missing module/function is near and dear to you, please file an
 issue (or better, open a pull request!).
 
-CUDA is not supported at the moment, but is definitely in the roadmap. You can use OpenCL for now.
-
 ## The binding strategy
 
 This crate works similar to the model of python and java's OpenCV wrappers - it uses libclang to parse the

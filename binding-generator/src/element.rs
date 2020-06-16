@@ -90,7 +90,7 @@ impl DefaultElement {
 		}
 	}
 
-	pub fn cpp_localname<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+	pub fn cpp_localname<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
 		this.entity().get_name().unwrap_or_else(|| "unnamed".to_string()).into()
 	}
 
@@ -105,7 +105,7 @@ impl DefaultElement {
 		out.into()
 	}
 
-	pub fn rust_module<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+	pub fn rust_module<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
 		let loc = this.entity().get_location().expect("Can't get location")
 			.get_spelling_location().file.expect("Can't file")
 			.get_path();
@@ -137,6 +137,7 @@ impl DefaultElement {
 	pub fn rust_localname<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized)) -> Cow<str> {
 		let mut parts = Vec::with_capacity(4);
 		parts.push(this.rust_leafname().into_owned());
+		let module = Self::rust_module(this);
 		let mut e = this.entity();
 		while let Some(parent) = e.get_semantic_parent() {
 			match parent.get_kind() {
@@ -152,7 +153,10 @@ impl DefaultElement {
 					break;
 				}
 				EntityKind::Namespace => {
-					if let Some(&prefix) = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get(parent.get_name().expect("Can't get parent name").as_str()) {
+					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get(module.as_ref())
+						.or_else(|| settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get("*"))
+						.and_then(|config| config.get(parent.get_name().expect("Can't get parent name").as_str()));
+					if let Some(&prefix) = no_skip_prefix {
 						parts.push(prefix.to_string());
 					} else {
 						break

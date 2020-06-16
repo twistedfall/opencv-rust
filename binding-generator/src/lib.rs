@@ -32,6 +32,7 @@ use clang::Entity;
 use dunce::canonicalize;
 use once_cell::sync::Lazy;
 
+pub use abstract_ref_wrapper::AbstractRefWrapper;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
@@ -56,6 +57,7 @@ pub use typedef::Typedef;
 use vector::Vector;
 pub use walker::{EntityWalker, EntityWalkerVisitor};
 
+mod abstract_ref_wrapper;
 mod class;
 pub mod comment;
 mod constant;

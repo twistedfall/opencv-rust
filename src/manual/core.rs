@@ -1,5 +1,6 @@
 pub use affine3::*;
 pub use CV_MAKETYPE as CV_MAKE_TYPE;
+pub use gpumat::*;
 pub use input_output_array::*;
 pub use mat::*;
 pub use matx::*;
@@ -52,6 +53,7 @@ macro_rules! opencv_type_simple_generic {
 }
 
 mod affine3;
+mod gpumat;
 mod input_output_array;
 mod mat;
 mod matx;

@@ -3,7 +3,7 @@
 #include <opencv2/core/directx.hpp>
 #include <opencv2/core/ocl.hpp>
 #include <opencv2/core/va_intel.hpp>
-//#include <opencv2/core/cuda.hpp> // todo
+#include <opencv2/core/cuda.hpp>
 //#include <opencv2/core/opengl.hpp> // todo
 #if !(CV_VERSION_MAJOR == 3 && CV_VERSION_MINOR == 2)
 	#include <opencv2/core/async.hpp>

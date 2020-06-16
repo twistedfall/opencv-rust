@@ -952,11 +952,10 @@ fn is_core_module(module: &str) -> bool {
 	CORE_MODULES.contains(module)
 }
 
-fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
+fn build_compiler(opencv: &Library) -> cc::Build {
 	let mut out = cc::Build::new();
 	out.cpp(true)
 		.include(&*SRC_CPP_DIR)
-		.include(opencv_header_dir)
 		.include(&*OUT_DIR)
 		.include(".")
 		.flag_if_supported("-Wno-class-memaccess")
@@ -965,6 +964,7 @@ fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
 		.flag_if_supported("-Wno-unused-variable")
 		.flag_if_supported("-Wno-return-type-c-linkage")
 	;
+	opencv.include_paths.iter().for_each(|p| { out.include(p); });
 	if cfg!(target_env = "msvc") {
 		out.flag_if_supported("-std:c++latest")
 			.flag_if_supported("-wd4996")
@@ -981,7 +981,7 @@ fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
 	out
 }
 
-fn build_wrapper(opencv_header_dir: &Path) -> Result<()> {
+fn build_wrapper(opencv: &Library) -> Result<()> {
 	for &v in ENV_VARS.iter() {
 		println!("cargo:rerun-if-env-changed={}", v);
 	}
@@ -996,7 +996,7 @@ fn build_wrapper(opencv_header_dir: &Path) -> Result<()> {
 		}
 	}
 
-	let mut cc = build_compiler(opencv_header_dir);
+	let mut cc = build_compiler(opencv);
 	let modules = MODULES.get().expect("MODULES not initialized");
 	for module in modules.iter().filter(|m| cfg!(feature = "contrib") || is_core_module(m)) {
 		cc.file(OUT_DIR.join(format!("{}.cpp", module)));
@@ -1131,7 +1131,7 @@ fn main() -> Result<()> {
 	#[cfg(feature = "buildtime-bindgen")]
 	generator::gen_wrapper(&opencv_header_dir, generator_build)?;
 	install_wrapper()?;
-	build_wrapper(&opencv_header_dir)?;
+	build_wrapper(&opencv)?;
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
 	cleanup()?;
