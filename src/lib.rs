@@ -21,12 +21,17 @@ pub mod prelude {
 	};
 }
 
+pub mod platform_types {
+	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
+}
+
 pub(crate) mod mod_prelude_types {
 	pub use std::os::raw::{c_char, c_void};
 
-	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
-
-	pub use crate::traits::{Boxed, OpenCVType, OpenCVTypeExternContainer};
+	pub use crate::{
+		platform_types::*,
+		traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+	};
 }
 
 pub(crate) mod mod_prelude {

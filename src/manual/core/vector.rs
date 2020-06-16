@@ -7,12 +7,11 @@ use std::{
 	mem,
 };
 
-use libc::size_t;
-
 pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorElement, VectorExtern, VectorExternCopyNonBool};
 
 use crate::{
+	platform_types::size_t,
 	Result,
 	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
 };

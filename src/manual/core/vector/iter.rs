@@ -1,8 +1,9 @@
 use std::iter::FusedIterator;
 
-use libc::size_t;
-
-use crate::core::{Vector, VectorElement, VectorExtern};
+use crate::{
+	core::{Vector, VectorElement, VectorExtern},
+	platform_types::size_t,
+};
 
 impl<T: VectorElement> IntoIterator for Vector<T> where Vector<T>: VectorExtern<T> {
 	type Item = T;

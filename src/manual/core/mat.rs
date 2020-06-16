@@ -6,8 +6,6 @@ use std::{
 	slice,
 };
 
-use libc::size_t;
-
 pub use mat_::*;
 
 use crate::{
@@ -27,6 +25,7 @@ use crate::{
 		UMat,
 	},
 	Error,
+	platform_types::size_t,
 	prelude::*,
 	Result,
 	sys,
