@@ -56,7 +56,7 @@ impl StringExt for String {
 				let mut out = Vec::with_capacity(10);
 				let mut last_idx = 0;
 				for (idx, _) in rep.match_indices('$') {
-					if let Some((mut next_idx, next_char)) = rep[idx..].char_indices().skip(1).next() {
+					if let Some((mut next_idx, next_char)) = rep[idx..].char_indices().nth(1) {
 						next_idx += idx;
 						if next_char == '$' {
 							out.push(Elem::Literal(&rep[last_idx..next_idx]));
@@ -353,6 +353,7 @@ impl StrExt for str {
 		static R5: Lazy<Regex> = Lazy::new(|| Regex::new(r#"Open_(CL|Gl|VX)"#).expect("Can't compile regex"));
 		let out = R5.replace_all(&out, "Open$1");
 
+		#[allow(clippy::trivial_regex)]
 		static R6: Lazy<Regex> = Lazy::new(|| Regex::new(r#"U_Mat"#).expect("Can't compile regex"));
 		let out = R6.replace_all(&out, "UMat");
 

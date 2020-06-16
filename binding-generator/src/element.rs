@@ -311,7 +311,7 @@ pub fn module_from_path(path: &Path) -> Option<&str> {
 	opencv_module_component(path)
 		.and_then(|m| m.to_str())
 		.map(|m| m.split('.')
-			.nth(0)
+			.next()
 			.unwrap()
 		)
 

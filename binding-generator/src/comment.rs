@@ -37,13 +37,11 @@ pub fn strip_comment_markers(comment: &str) -> String {
 				singleline_delimited = true;
 				asterisk_indented = false;
 			}
-		} else {
-			if let Some(line_clean) = line_clean.strip_str_prefix(MULTILINE_PREFIX) {
-				line = line_clean
-					.trim_start_matches(DETAIL)
-					.trim_start_matches(MULTILINE_CONT)
-					.trim_start();
-			}
+		} else if let Some(line_clean) = line_clean.strip_str_prefix(MULTILINE_PREFIX) {
+			line = line_clean
+				.trim_start_matches(DETAIL)
+				.trim_start_matches(MULTILINE_CONT)
+				.trim_start();
 		}
 		if singleline_delimited && line_clean.starts_with(SINGLELINE) {
 			line = &line_clean[SINGLELINE.len()..];
@@ -118,7 +116,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 			}
 		} else {
 			let indent_len = common_indent.unwrap_or_default().len;
-			if line.len() >= indent_len + 1 {
+			if line.len() > indent_len {
 				line = &line[indent_len..];
 			} else {
 				line = "\n";

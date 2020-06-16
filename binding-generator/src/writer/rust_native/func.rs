@@ -52,7 +52,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		let type_ref = arg.type_ref();
 		if arg.is_user_data() {
 			pre_post_arg_handle(
-				type_ref.rust_userdata_pre_call(&name, callback_arg_name.as_ref().map(|x| x.as_str()).expect("Can't get name of the callback arg")),
+				type_ref.rust_userdata_pre_call(&name, callback_arg_name.as_deref().expect("Can't get name of the callback arg")),
 				&mut pre_call_args,
 			);
 		} else {

@@ -107,9 +107,12 @@ impl<'s> RustNativeBindingWriter<'s> {
 	}
 
 	fn emit_debug_log(&mut self, obj: &impl Debug) {
-		if self.debug && false {
-			let mut f = OpenOptions::new().append(true).open(&self.debug_path).expect("Can't open debug file");
-			writeln!(f, "{:#?}", obj).expect("Can't write debug info");
+		#[allow(clippy::collapsible_if)]
+		if false {
+			if self.debug {
+				let mut f = OpenOptions::new().append(true).open(&self.debug_path).expect("Can't open debug file");
+				writeln!(f, "{:#?}", obj).expect("Can't write debug info");
+			}
 		}
 	}
 }

@@ -82,10 +82,8 @@ impl<'tu> Field<'tu> {
 		let mut children = vec![];
 		let mut skipping_typeref = true;
 		self.entity.visit_children(|c, _| {
-			if skipping_typeref {
-				if c.get_kind() != EntityKind::TypeRef {
-					skipping_typeref = false;
-				}
+			if skipping_typeref && c.get_kind() != EntityKind::TypeRef {
+				skipping_typeref = false;
 			}
 			if !skipping_typeref {
 				children.push(c);

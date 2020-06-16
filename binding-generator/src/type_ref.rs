@@ -14,12 +14,12 @@ use regex::{Captures, Regex};
 use crate::{
 	Class,
 	DefinitionLocation,
+	DependentType,
 	Element,
 	EntityExt,
 	Enum,
 	Field,
 	Function,
-	DependentType,
 	GeneratorEnv,
 	IteratorExt,
 	ReturnTypeWrapper,
@@ -308,20 +308,18 @@ impl<'tu> TypeRef<'tu> {
 					} else {
 						Kind::Class(Class::new(decl, self.gen_env))
 					}
+				} else if let TypeRefTypeHint::Specialized(typ) = self.type_hint {
+					TypeRef::new_ext(typ, self.type_hint, self.parent_entity, self.gen_env).kind()
 				} else {
-					if let TypeRefTypeHint::Specialized(typ) = self.type_hint {
-						TypeRef::new_ext(typ, self.type_hint, self.parent_entity, self.gen_env).kind()
-					} else {
-						let mut generic_type = self.type_ref.get_display_name();
-						// workaround for clang6, FunctionPrototype is seen as Unexposed
-						if generic_type.contains("(") && generic_type.contains(")") {
-							return Kind::Function(
-								Function::new(self.type_ref, self.parent_entity.expect("Can't get parent entity in function prototype"), self.gen_env)
-							);
-						}
-						generic_type.replace_in_place("const ", "");
-						Kind::Generic(generic_type)
+					let mut generic_type = self.type_ref.get_display_name();
+					// workaround for clang6, FunctionPrototype is seen as Unexposed
+					if generic_type.contains('(') && generic_type.contains(')') {
+						return Kind::Function(
+							Function::new(self.type_ref, self.parent_entity.expect("Can't get parent entity in function prototype"), self.gen_env)
+						);
 					}
+					generic_type.replace_in_place("const ", "");
+					Kind::Generic(generic_type)
 				}
 			}
 
@@ -994,6 +992,7 @@ impl<'tu> TypeRef<'tu> {
 
 	fn rust_type_ref(&self, form: Form) -> Cow<str> {
 		if self.is_string() {
+			#[allow(clippy::if_same_then_else)]
 			return if self.is_const() {
 				"String" // todo implement receiving const str's
 			} else {
@@ -1163,6 +1162,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_extern_with_const(&self, constness: Constness) -> Cow<str> {
+		#[allow(clippy::never_loop)] // fixme use named block when stable
 		'typ: loop {
 			if self.is_string() {
 				break 'typ if constness.is_const(self) {
@@ -1227,6 +1227,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_arg_func_decl(&self, name: &str) -> String {
+		#[allow(clippy::never_loop)] // fixme use named block when stable
 		let typ = 'decl_type: loop {
 			if self.is_string() {
 				if self.is_output() {
@@ -1483,7 +1484,7 @@ impl<'tu> TypeRef<'tu> {
 							);
 							let def_location = match def_location {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
-								dl @ _ => dl
+								dl => dl
 							};
 							D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, self.gen_env, def_location))
 						} else {

@@ -18,6 +18,8 @@
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 // fixme VectorOfMat::get allows to mutate?
 
+#![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
+
 use std::{
 	borrow::Cow,
 	env,

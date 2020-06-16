@@ -30,6 +30,7 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Op
 			TokenKind::Identifier => {
 				let spelling = t.get_spelling();
 				if let Some(entity) = t.get_location().get_entity() {
+					#[allow(clippy::single_match)] // using the single pattern for future extensibility
 					match entity.get_kind() {
 						EntityKind::MacroExpansion => {
 							let cnst = Const::new(entity);

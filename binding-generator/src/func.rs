@@ -143,13 +143,11 @@ impl<'tu> Func<'tu> {
 				);
 				if self.entity.is_static_method() {
 					Kind::StaticMethod(class)
+				} else if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
+					let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
+					Kind::InstanceOperator(class, OperatorKind::new(operator.trim(), arg_count))
 				} else {
-					if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
-						let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
-						Kind::InstanceOperator(class, OperatorKind::new(operator.trim(), arg_count))
-					} else {
-						Kind::InstanceMethod(class)
-					}
+					Kind::InstanceMethod(class)
 				}
 			}
 			EntityKind::FieldDecl | EntityKind::VarDecl => {
@@ -367,13 +365,13 @@ impl<'tu> Func<'tu> {
 				}
 
 				if let Some(slice_arg) = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len)) {
-					match slice_arg {
-						&SliceHint::ForceSlice(arg) => {
+					match *slice_arg {
+						SliceHint::ForceSlice(arg) => {
 							if arg == a.rust_leafname().as_ref() {
 								return Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
 							}
 						},
-						&SliceHint::ConvertSlice(ptr_arg, len_arg, len_div) => {
+						SliceHint::ConvertSlice(ptr_arg, len_arg, len_div) => {
 							let arg_name = a.rust_leafname();
 							if ptr_arg == arg_name.as_ref() {
 								return Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
@@ -575,7 +573,8 @@ impl Element for Func<'_> {
 		};
 		let rust_name = if let Some(cls) = self.as_constructor() {
 			let args = self.arguments();
-			'ctor_name: loop { // fixme use named block when stable
+			#[allow(clippy::never_loop)] // fixme use named block when stable
+			'ctor_name: loop {
 				if args.is_empty() {
 					break 'ctor_name "default";
 				} else if args.len() == 1 {

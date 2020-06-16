@@ -302,11 +302,9 @@ impl<V: for<'gtu> GeneratorVisitor<'gtu>> Drop for OpenCVWalker<'_, V> {
 			let mut found_module_comment = false;
 			let mut defgroup_found = false;
 			line_reader(f, |line| {
-				if !found_module_comment {
-					if line.trim_start().starts_with("/**") {
-						found_module_comment = true;
-						defgroup_found = false;
-					}
+				if !found_module_comment && line.trim_start().starts_with("/**") {
+					found_module_comment = true;
+					defgroup_found = false;
 				}
 				if found_module_comment {
 					if comment.contains("@defgroup") {
