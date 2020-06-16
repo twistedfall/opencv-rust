@@ -13,18 +13,18 @@ pub enum DefinitionLocation {
 }
 
 #[derive(Debug)]
-pub struct ReturnTypeWrapper<'tu, 'g> {
-	type_ref: TypeRef<'tu, 'g>,
-	gen_env: &'g GeneratorEnv<'tu>,
+pub struct ReturnTypeWrapper<'tu> {
+	type_ref: TypeRef<'tu>,
+	gen_env: &'tu GeneratorEnv<'tu>,
 	definition_location: DefinitionLocation,
 }
 
-impl<'tu, 'g> ReturnTypeWrapper<'tu, 'g> {
-	pub fn new(type_ref: TypeRef<'tu, 'g>, gen_env: &'g GeneratorEnv<'tu>, definition_location: DefinitionLocation) -> Self {
+impl<'tu> ReturnTypeWrapper<'tu> {
+	pub fn new(type_ref: TypeRef<'tu>, gen_env: &'tu GeneratorEnv<'tu>, definition_location: DefinitionLocation) -> Self {
 		Self { type_ref, gen_env, definition_location }
 	}
 
-	pub fn type_ref(&self) -> &TypeRef<'tu, 'g> {
+	pub fn type_ref(&self) -> &TypeRef<'tu> {
 		&self.type_ref
 	}
 

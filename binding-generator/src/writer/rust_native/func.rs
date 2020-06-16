@@ -273,7 +273,7 @@ fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
 	}
 }
 
-impl RustNativeGeneratedElement for Func<'_, '_> {
+impl RustNativeGeneratedElement for Func<'_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_localname())
 	}

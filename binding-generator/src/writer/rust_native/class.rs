@@ -250,7 +250,7 @@ fn gen_cpp_boxed(c: &Class) -> String {
 	out
 }
 
-fn rust_generate_funcs<'tu, 'g>(fns: impl IntoIterator<Item=&'g Func<'tu, 'g>>, opencv_version: &str) -> String where 'tu: 'g {
+fn rust_generate_funcs<'tu>(fns: impl IntoIterator<Item=&'tu Func<'tu>>, opencv_version: &str) -> String {
 	let fns = fns.into_iter()
 		.filter(|f| !f.is_excluded());
 	rust_disambiguate_names(fns)
@@ -262,13 +262,13 @@ fn rust_generate_funcs<'tu, 'g>(fns: impl IntoIterator<Item=&'g Func<'tu, 'g>>, 
 		.join("")
 }
 
-fn rust_disambiguate_names<'tu, 'g>(fns: impl IntoIterator<Item=&'g Func<'tu, 'g>>) -> impl Iterator<Item=(String, &'g Func<'tu, 'g>)> where 'tu: 'g {
+fn rust_disambiguate_names<'tu>(fns: impl IntoIterator<Item=&'tu Func<'tu>>) -> impl for<'r> Iterator<Item=(String, &'tu Func<'tu>)> {
 	let args = fns.into_iter();
 	NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
 		.into_disambiguator(args, |f| f.rust_leafname())
 }
 
-impl RustNativeGeneratedElement for Class<'_, '_> {
+impl RustNativeGeneratedElement for Class<'_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_localname())
 	}

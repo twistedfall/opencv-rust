@@ -10,7 +10,7 @@ use crate::{
 
 use super::RustNativeGeneratedElement;
 
-impl RustNativeGeneratedElement for ReturnTypeWrapper<'_, '_> {
+impl RustNativeGeneratedElement for ReturnTypeWrapper<'_> {
 	fn element_order(&self) -> u8 {
 		10
 	}

@@ -141,24 +141,24 @@ impl Constness {
 }
 
 #[derive(Clone, Debug)]
-pub enum Kind<'tu, 'g> {
+pub enum Kind<'tu> {
 	/// (rust name, cpp name)
 	Primitive(&'static str, &'static str),
 	/// (element type, array size)
-	Array(TypeRef<'tu, 'g>, Option<usize>),
-	StdVector(Vector<'tu, 'g>),
-	Pointer(TypeRef<'tu, 'g>),
-	Reference(TypeRef<'tu, 'g>),
-	SmartPtr(SmartPtr<'tu, 'g>),
-	Class(Class<'tu, 'g>),
+	Array(TypeRef<'tu>, Option<usize>),
+	StdVector(Vector<'tu>),
+	Pointer(TypeRef<'tu>),
+	Reference(TypeRef<'tu>),
+	SmartPtr(SmartPtr<'tu>),
+	Class(Class<'tu>),
 	Enum(Enum<'tu>),
-	Function(Function<'tu, 'g>),
-	Typedef(Typedef<'tu, 'g>),
+	Function(Function<'tu>),
+	Typedef(Typedef<'tu>),
 	Generic(String),
 	Ignored,
 }
 
-impl Kind<'_, '_> {
+impl Kind<'_> {
 	pub fn is_constified(&self) -> bool {
 		match self {
 			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::Array(inner, ..) => {
@@ -195,19 +195,19 @@ impl Default for TypeRefTypeHint<'_> {
 }
 
 #[derive(Clone)]
-pub struct TypeRef<'tu, 'g> {
+pub struct TypeRef<'tu> {
 	type_ref: Type<'tu>,
 	type_hint: TypeRefTypeHint<'tu>,
 	parent_entity: Option<Entity<'tu>>,
-	gen_env: &'g GeneratorEnv<'tu>,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
-impl<'tu, 'g> TypeRef<'tu, 'g> {
-	pub fn new(type_ref: Type<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+impl<'tu> TypeRef<'tu> {
+	pub fn new(type_ref: Type<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self::new_ext(type_ref, Default::default(), None, gen_env)
 	}
 
-	pub fn new_ext(type_ref: Type<'tu>, type_hint: TypeRefTypeHint<'tu>, parent_entity: Option<Entity<'tu>>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(type_ref: Type<'tu>, type_hint: TypeRefTypeHint<'tu>, parent_entity: Option<Entity<'tu>>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { type_ref, type_hint, parent_entity, gen_env }
 	}
 
@@ -230,7 +230,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		self.type_ref
 	}
 
-	pub fn kind(&self) -> Kind<'tu, 'g> {
+	pub fn kind(&self) -> Kind<'tu> {
 		match self.type_ref.get_kind() {
 			TypeKind::Void => Kind::Primitive("()", "void"),
 			TypeKind::Bool => Kind::Primitive("bool", "bool"),
@@ -401,7 +401,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	/// TypeRef with all of the typedef's traversed
-	pub fn canonical(&self) -> TypeRef<'tu, 'g> {
+	pub fn canonical(&self) -> TypeRef<'tu> {
 		match self.kind() {
 			Kind::Typedef(tdef) => {
 				tdef.underlying_type_ref().canonical()
@@ -413,7 +413,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	/// performs canonical by calling clang function not taking application logic into account
-	pub fn canonical_clang(&self) -> TypeRef<'tu, 'g> {
+	pub fn canonical_clang(&self) -> TypeRef<'tu> {
 		if let TypeRefTypeHint::Specialized(typ) = self.type_hint {
 			Self::new_ext(typ.get_canonical_type(), self.type_hint, self.parent_entity, self.gen_env)
 		} else {
@@ -422,7 +422,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	/// Like canonical(), but also removes indirection by pointer and reference
-	pub fn source(&self) -> TypeRef<'tu, 'g> {
+	pub fn source(&self) -> TypeRef<'tu> {
 		let canonical = self.canonical();
 		match canonical.kind() {
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
@@ -435,7 +435,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	/// Like source(), but digs down to the elements of arrays
-	pub fn base(&self) -> TypeRef<'tu, 'g> {
+	pub fn base(&self) -> TypeRef<'tu> {
 		let source = self.source();
 		match source.kind() {
 			Kind::Array(inner, ..) => {
@@ -513,7 +513,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_template(&self) -> Option<Class<'tu, 'g>> {
+	pub fn as_template(&self) -> Option<Class<'tu>> {
 		match self.base().kind() {
 			Kind::Class(cls) => {
 				cls.as_template()
@@ -704,7 +704,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'g>> {
+	pub fn as_pointer(&self) -> Option<TypeRef<'tu>> {
 		if let Kind::Pointer(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -712,7 +712,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_reference(&self) -> Option<TypeRef<'tu, 'g>> {
+	pub fn as_reference(&self) -> Option<TypeRef<'tu>> {
 		if let Kind::Reference(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -720,7 +720,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu, 'g>> {
+	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu>> {
 		if let Kind::SmartPtr(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -735,7 +735,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			|| self.canonical().as_simple_class().is_some()
 	}
 
-	pub fn as_class(&self) -> Option<Class<'tu, 'g>> {
+	pub fn as_class(&self) -> Option<Class<'tu>> {
 		if let Kind::Class(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -743,7 +743,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_simple_class(&self) -> Option<Class<'tu, 'g>> {
+	pub fn as_simple_class(&self) -> Option<Class<'tu>> {
 		match self.canonical().kind() {
 			Kind::Class(out) if out.is_simple() => {
 				Some(out)
@@ -754,7 +754,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_array(&self) -> Option<(TypeRef<'tu, 'g>, Option<usize>)> {
+	pub fn as_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
 		if let Kind::Array(elem, size) = self.canonical().kind() {
 			Some((elem, size))
 		} else {
@@ -762,7 +762,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_variable_array(&self) -> Option<TypeRef<'tu, 'g>> {
+	pub fn as_variable_array(&self) -> Option<TypeRef<'tu>> {
 		if let Some((elem, None)) = self.as_array() {
 			Some(elem)
 		} else {
@@ -770,7 +770,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_fixed_array(&self) -> Option<(TypeRef<'tu, 'g>, usize)> {
+	pub fn as_fixed_array(&self) -> Option<(TypeRef<'tu>, usize)> {
 		if let Some((elem, Some(size))) = self.as_array() {
 			Some((elem, size))
 		} else {
@@ -778,7 +778,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_string_array(&self) -> Option<(TypeRef<'tu, 'g>, Option<usize>)> {
+	pub fn as_string_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
 		if let Some((elem, size)) = self.as_array() {
 			if elem.is_string() {
 				return Some((elem, size))
@@ -787,7 +787,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		None
 	}
 
-	pub fn as_vector(&self) -> Option<Vector<'tu, 'g>> {
+	pub fn as_vector(&self) -> Option<Vector<'tu>> {
 		if let Kind::StdVector(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -795,7 +795,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_function(&self) -> Option<Function<'tu, 'g>> {
+	pub fn as_function(&self) -> Option<Function<'tu>> {
 		match self.canonical().kind() {
 			Kind::Function(out) => {
 				Some(out)
@@ -806,7 +806,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn as_typedef(&self) -> Option<Typedef<'tu, 'g>> {
+	pub fn as_typedef(&self) -> Option<Typedef<'tu>> {
 		match self.kind() {
 			Kind::Typedef(out) => {
 				Some(out)
@@ -892,7 +892,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu, 'g>> {
+	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
 				vec![]
@@ -1439,7 +1439,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 
 	pub fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
 		if self.is_string() && self.is_output() {
-			format!("string_arg_output_receive!(out, {name}_via => {name})", name=name)
+			format!("string_arg_output_receive!(out, {name}_via => {name})", name = name)
 		} else {
 			"".to_string()
 		}
@@ -1743,13 +1743,13 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 }
 
-impl cmp::PartialEq for TypeRef<'_, '_> {
+impl cmp::PartialEq for TypeRef<'_> {
 	fn eq(&self, other: &Self) -> bool {
 		self.type_ref == other.type_ref
 	}
 }
 
-impl fmt::Debug for TypeRef<'_, '_> {
+impl fmt::Debug for TypeRef<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut props = vec![];
 		if self.is_excluded() {
@@ -1821,8 +1821,8 @@ impl fmt::Debug for TypeRef<'_, '_> {
 }
 
 #[derive(Debug)]
-pub enum TemplateArg<'tu, 'g> {
+pub enum TemplateArg<'tu> {
 	Unknown,
-	Typename(TypeRef<'tu, 'g>),
+	Typename(TypeRef<'tu>),
 	Constant(String),
 }

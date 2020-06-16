@@ -14,18 +14,18 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct Function<'tu, 'g> {
+pub struct Function<'tu> {
 	type_ref: Type<'tu>,
 	parent_entity: Entity<'tu>,
-	gen_env: &'g GeneratorEnv<'tu>,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
-impl<'tu, 'g> Function<'tu, 'g> {
-	pub fn new(type_ref: Type<'tu>, parent_entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+impl<'tu> Function<'tu> {
+	pub fn new(type_ref: Type<'tu>, parent_entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { type_ref, parent_entity, gen_env }
 	}
 
-	pub fn arguments(&self) -> Vec<Field<'tu, 'g>> {
+	pub fn arguments(&self) -> Vec<Field<'tu>> {
 		let mut out = Vec::with_capacity(10);
 		self.parent_entity.visit_children(|c, _| {
 			if c.get_kind() == EntityKind::ParmDecl {
@@ -37,7 +37,7 @@ impl<'tu, 'g> Function<'tu, 'g> {
 	}
 
 	/// arguments without userdata
-	pub fn rust_arguments(&self) -> Vec<Field<'tu, 'g>> {
+	pub fn rust_arguments(&self) -> Vec<Field<'tu>> {
 		self.arguments().into_iter()
 			.filter(|a| !a.is_user_data())
 			.collect()
@@ -47,7 +47,7 @@ impl<'tu, 'g> Function<'tu, 'g> {
 		self.arguments().into_iter().any(|f| f.is_user_data())
 	}
 
-	pub fn return_type(&self) -> TypeRef<'tu, 'g> {
+	pub fn return_type(&self) -> TypeRef<'tu> {
 		TypeRef::new(self.type_ref.get_result_type().expect("Can't get result type"), self.gen_env)
 	}
 
@@ -60,7 +60,7 @@ impl<'tu, 'g> Function<'tu, 'g> {
 	}
 }
 
-impl Element for Function<'_, '_> {
+impl Element for Function<'_> {
 	fn is_system(&self) -> bool {
 		false
 	}
@@ -114,13 +114,13 @@ impl Element for Function<'_, '_> {
 	}
 }
 
-impl fmt::Display for Function<'_, '_> {
+impl fmt::Display for Function<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.cpp_fullname())
 	}
 }
 
-impl fmt::Debug for Function<'_, '_> {
+impl fmt::Debug for Function<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Function");
 		self.update_debug_struct(&mut debug_struct)

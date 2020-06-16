@@ -22,13 +22,13 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct Vector<'tu, 'g> {
+pub struct Vector<'tu> {
 	type_ref: Type<'tu>,
-	gen_env: &'g GeneratorEnv<'tu>,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
-impl<'tu, 'g> Vector<'tu, 'g> {
-	pub fn new(type_ref: Type<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+impl<'tu> Vector<'tu> {
+	pub fn new(type_ref: Type<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { type_ref, gen_env }
 	}
 
@@ -36,11 +36,11 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 		type_ref.is_data_type() || type_ref.as_vector().map_or(false, |v| v.element_type().is_data_type())
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
+	pub fn type_ref(&self) -> TypeRef<'tu> {
 		TypeRef::new(self.type_ref, self.gen_env)
 	}
 
-	pub fn element_type(&self) -> TypeRef<'tu, 'g> {
+	pub fn element_type(&self) -> TypeRef<'tu> {
 		self.type_ref().template_specialization_args().into_iter()
 			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
 				Some(type_ref)
@@ -111,13 +111,13 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for Vector<'tu, '_> {
+impl<'tu> EntityElement<'tu> for Vector<'tu> {
 	fn entity(&self) -> Entity<'tu> {
 		self.type_ref.get_declaration().expect("Can't get declaration")
 	}
 }
 
-impl Element for Vector<'_, '_> {
+impl Element for Vector<'_> {
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self) || self.element_type().is_ignored()
 	}
@@ -167,13 +167,13 @@ impl Element for Vector<'_, '_> {
 	}
 }
 
-impl fmt::Display for Vector<'_, '_> {
+impl fmt::Display for Vector<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity().get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for Vector<'_, '_> {
+impl fmt::Debug for Vector<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Vector");
 		self.update_debug_struct(&mut debug_struct)

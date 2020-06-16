@@ -36,18 +36,18 @@ pub enum Kind {
 }
 
 #[derive(Clone)]
-pub struct Class<'tu, 'g> {
+pub struct Class<'tu> {
 	entity: Entity<'tu>,
 	custom_fullname: Option<String>,
-	gen_env: & 'g GeneratorEnv < 'tu >,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
-impl<'tu, 'g> Class<'tu, 'g> {
-	pub fn new(entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+impl<'tu> Class<'tu> {
+	pub fn new(entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { entity, custom_fullname: None, gen_env }
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { entity, custom_fullname: Some(custom_fullname), gen_env }
 	}
 
@@ -70,7 +70,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		}
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
+	pub fn type_ref(&self) -> TypeRef<'tu> {
 		TypeRef::new(self.entity.get_type().expect("Can't get class type"), self.gen_env)
 	}
 
@@ -82,7 +82,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 			.all(|t| t.is_copy())
 	}
 
-	pub fn as_template(&self) -> Option<Class<'tu, 'g>> {
+	pub fn as_template(&self) -> Option<Class<'tu>> {
 		self.entity.get_template()
 			.map(|t| Class::new(t, self.gen_env))
 	}
@@ -141,7 +141,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		self.entity.walk_bases_while(|_| false)
 	}
 
-	pub fn bases(&self) -> Vec<Class<'tu, 'g>> {
+	pub fn bases(&self) -> Vec<Class<'tu>> {
 		let mut out = vec![];
 		let entity = if let Some(entity) = self.entity.get_template() {
 			entity
@@ -155,7 +155,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		out
 	}
 
-	pub fn all_bases(&self) -> HashSet<Class<'tu, 'g>> {
+	pub fn all_bases(&self) -> HashSet<Class<'tu>> {
 		self.bases().into_iter()
 			.map(|b| {
 				let mut out = b.all_bases();
@@ -174,7 +174,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		self.entity.walk_methods_while(|_| false)
 	}
 
-	pub fn methods(&self) -> Vec<Func<'tu, 'g>> {
+	pub fn methods(&self) -> Vec<Func<'tu>> {
 		let mut out = Vec::with_capacity(64);
 		self.entity.walk_methods_while(|child| {
 			let func = Func::new(child, self.gen_env);
@@ -196,7 +196,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		self.entity.walk_fields_while(|_| false)
 	}
 
-	pub fn fields(&self) -> Vec<Field<'tu, 'g>> {
+	pub fn fields(&self) -> Vec<Field<'tu>> {
 		let mut out = Vec::with_capacity(32);
 		self.entity.walk_fields_while(|child| {
 			out.push(Field::new(child, self.gen_env));
@@ -243,7 +243,7 @@ impl<'tu, 'g> Class<'tu, 'g> {
 			.collect()
 	}
 
-	pub fn field_methods(&self, fields: impl Iterator<Item=&'g Field<'tu, 'g>>) -> Vec<Func<'tu, 'g>> {
+	pub fn field_methods(&self, fields: impl Iterator<Item=&'tu Field<'tu>>) -> Vec<Func<'tu>> {
 		let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
 		out.extend(fields
 			.map(|fld| {
@@ -270,13 +270,13 @@ impl<'tu, 'g> Class<'tu, 'g> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for Class<'tu, '_> {
+impl<'tu> EntityElement<'tu> for Class<'tu> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for Class<'_, '_> {
+impl Element for Class<'_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
 			|| match self.kind() { Kind::Excluded => true, _ => false }
@@ -347,27 +347,27 @@ impl Element for Class<'_, '_> {
 	}
 }
 
-impl hash::Hash for Class<'_, '_> {
+impl hash::Hash for Class<'_> {
 	fn hash<H: hash::Hasher>(&self, state: &mut H) {
 		self.entity.hash(state)
 	}
 }
 
-impl cmp::PartialEq for Class<'_, '_> {
+impl cmp::PartialEq for Class<'_> {
 	fn eq(&self, other: &Self) -> bool {
 		self.entity.eq(&other.entity)
 	}
 }
 
-impl cmp::Eq for Class<'_, '_> {}
+impl cmp::Eq for Class<'_> {}
 
-impl fmt::Display for Class<'_, '_> {
+impl fmt::Display for Class<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for Class<'_, '_> {
+impl fmt::Debug for Class<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut props = vec![];
 		if self.is_template() {

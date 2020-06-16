@@ -11,7 +11,7 @@ use crate::{
 
 use super::RustNativeGeneratedElement;
 
-impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
+impl RustNativeGeneratedElement for SmartPtr<'_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_localalias())
 	}

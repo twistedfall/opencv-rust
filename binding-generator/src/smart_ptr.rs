@@ -18,21 +18,21 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct SmartPtr<'tu, 'g> {
+pub struct SmartPtr<'tu> {
 	entity: Entity<'tu>,
-	gen_env: &'g GeneratorEnv<'tu>,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
-impl<'tu, 'g> SmartPtr<'tu, 'g> {
-	pub fn new(entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+impl<'tu> SmartPtr<'tu> {
+	pub fn new(entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
 		Self { entity, gen_env }
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
+	pub fn type_ref(&self) -> TypeRef<'tu> {
 		TypeRef::new(self.entity.get_type().expect("Can't get smartptr type"), self.gen_env)
 	}
 
-	pub fn pointee(&self) -> TypeRef<'tu, 'g> {
+	pub fn pointee(&self) -> TypeRef<'tu> {
 		self.type_ref().template_specialization_args().into_iter()
 			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
 				Some(type_ref)
@@ -61,13 +61,13 @@ impl<'tu, 'g> SmartPtr<'tu, 'g> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for SmartPtr<'tu, '_> {
+impl<'tu> EntityElement<'tu> for SmartPtr<'tu> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for SmartPtr<'_, '_> {
+impl Element for SmartPtr<'_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self) || self.pointee().is_excluded()
 	}
@@ -117,13 +117,13 @@ impl Element for SmartPtr<'_, '_> {
 	}
 }
 
-impl fmt::Display for SmartPtr<'_, '_> {
+impl fmt::Display for SmartPtr<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for SmartPtr<'_, '_> {
+impl fmt::Debug for SmartPtr<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("SmartPtr");
 		self.update_debug_struct(&mut debug_struct)
