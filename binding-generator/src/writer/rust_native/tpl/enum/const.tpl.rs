@@ -1,3 +1,3 @@
 {{doc_comment}}
-{{name}} = {{value}} as isize,
+{{name}} = {{value}},
 
