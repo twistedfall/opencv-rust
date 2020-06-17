@@ -95,6 +95,18 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 	}
 }
 
+fn sorted<'a>(c: impl IntoIterator<Item=&'a str>) -> Vec<&'a str> {
+	let mut out = c.into_iter().collect::<Vec<_>>();
+	out.sort_unstable();
+	out
+}
+
+fn show<'a>(c: impl IntoIterator<Item=&'a str>) {
+	for f in sorted(c) {
+		println!("{}", f);
+	}
+}
+
 fn main() {
 	let mut args = env::args_os().skip(1);
 	let opencv_header_base_dir = PathBuf::from(args.next().expect("1st argument must be OpenCV header dir"));
@@ -143,28 +155,16 @@ fn main() {
 				});
 		}
 	}
-	println!("Unused entries in settings::FUNC_RENAME:");
-	for f in func_rename_unused {
-		println!("{}", f);
-	}
-	println!("Unused entries in settings::FUNC_CFG_ATTR:");
-	for f in func_cfg_attr_unused {
-		println!("{}", f);
-	}
-	println!("Unused entries in settings::FUNC_UNSAFE:");
-	for f in func_unsafe_unused {
-		println!("{}", f);
-	}
-	println!("Unused entries in settings::FUNC_UNSAFE:");
-	for f in func_manual_unused {
-		println!("{}", f);
-	}
-	println!("Unused entries in settings::FUNC_SPECIALIZE:");
-	for f in func_specialize_unused {
-		println!("{}", f);
-	}
-	println!("Unused entries in settings::SLICE_ARGUMENT:");
-	for f in slice_argument_unused {
-		println!("{}", f);
-	}
+	println!("Unused entries in settings::FUNC_RENAME ({}):", func_rename_unused.len());
+	show(func_rename_unused);
+	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
+	show(func_cfg_attr_unused);
+	println!("Unused entries in settings::FUNC_UNSAFE ({}):", func_unsafe_unused.len());
+	show(func_unsafe_unused);
+	println!("Unused entries in settings::FUNC_UNSAFE ({}):", func_manual_unused.len());
+	show(func_manual_unused);
+	println!("Unused entries in settings::FUNC_SPECIALIZE ({}):", func_specialize_unused.len());
+	show(func_specialize_unused);
+	println!("Unused entries in settings::SLICE_ARGUMENT ({}):", slice_argument_unused.len());
+	show(slice_argument_unused);
 }
