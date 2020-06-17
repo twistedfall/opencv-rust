@@ -438,17 +438,7 @@ impl<'tu> Func<'tu> {
 		for arg in self.arguments() {
 			out.push('_');
 			let type_ref = arg.type_ref();
-			let mut safe_id = type_ref.cpp_safe_id();
-			// workaround for duplicate function definition for
-			// cv_ximgproc_ContourFitting_estimateTransformation_const__InputArray_const__InputArray_const__OutputArray_doubleX_bool
-			// it has 2 definitions, with pointer and with reference
-			if type_ref.as_reference().map_or(false, |inner| inner.is_primitive()) {
-				let safe_id = safe_id.to_mut();
-				if let Some((idx, last_char @ 'X')) = safe_id.char_indices().last() {
-					safe_id.replace_range(idx..idx + last_char.len_utf8(), "R");
-				}
-			}
-			out += &safe_id;
+			out += &type_ref.cpp_safe_id();
 		}
 		out.into()
 	}

@@ -102,21 +102,21 @@ impl Form {
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 enum CppForm<'s> {
-	Declaration,
+	Declaration(bool),
 	Reference(&'s str, bool),
 }
 
 impl CppForm<'_> {
 	pub fn is_full(self) -> bool {
 		match self {
-			CppForm::Declaration => false,
+			CppForm::Declaration(..) => false,
 			CppForm::Reference(..) => true,
 		}
 	}
 
 	pub fn recurse(self) -> Self {
 		match self {
-			CppForm::Declaration => CppForm::Declaration,
+			CppForm::Declaration(extern_types) => CppForm::Declaration(extern_types),
 			CppForm::Reference(_name, extern_types) => CppForm::Reference("", extern_types),
 		}
 	}
@@ -1498,7 +1498,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_safe_id(&self) -> Cow<str> {
-		let mut out: String = self.cpp_local().into_owned();
+		let mut out: String = self.cpp_local_native().into_owned();
 		out.cleanup_name();
 		out.into()
 	}
@@ -1509,8 +1509,14 @@ impl<'tu> TypeRef<'tu> {
 		if kind.is_constified() {
 			out.push_str(self.cpp_const_qual());
 		}
-		let name = match form { CppForm::Reference(name, _) => name, _ => "" };
-		let extern_types = match form { CppForm::Reference(_, extern_types) => extern_types, _ => true };
+		let name = match form {
+			CppForm::Reference(name, _) => name,
+			_ => "",
+		};
+		let extern_types = match form {
+			CppForm::Declaration(extern_types) => extern_types,
+			CppForm::Reference(_, extern_types) => extern_types,
+		};
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
 		out.push_str(&match self.kind() {
 			Kind::Primitive(_, cpp) => {
@@ -1586,7 +1592,11 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_local(&self) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Declaration)
+		self.cpp_type_ref(CppForm::Declaration(true))
+	}
+
+	pub fn cpp_local_native(&self) -> Cow<str> {
+		self.cpp_type_ref(CppForm::Declaration(false))
 	}
 
 	pub fn cpp_full(&self) -> Cow<str> {
