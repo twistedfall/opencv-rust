@@ -84,6 +84,12 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 	}
 }
 
+impl<'a, T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
+	fn from(from: Vector<T>) -> Self {
+		from.to_vec()
+	}
+}
+
 impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a new Vector
 	pub fn new() -> Self {

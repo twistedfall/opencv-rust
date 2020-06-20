@@ -436,10 +436,12 @@ fn to_vec() -> Result<()> {
 	{
 		let vec: VectorOfu8 = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
 		assert_eq!(vec.to_vec(), vec![1, 2, 3, 4, 5]);
+		assert_eq!(Vec::from(vec), vec![1, 2, 3, 4, 5]);
 	}
 	{
 		let vec = VectorOfVec4i::new();
 		assert_eq!(vec.to_vec(), Vec::new());
+		assert_eq!(Vec::from(vec), Vec::new());
 	}
 	{
 		let mut vec = VectorOfMat::new();
