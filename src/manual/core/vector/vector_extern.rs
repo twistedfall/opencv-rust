@@ -157,7 +157,7 @@ macro_rules! vector_copy_non_bool {
 		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
 			#[inline(always)]
 			fn convert_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
-				v.to_slice().to_vec()
+				v.as_slice().to_vec()
 			}
 		}
 

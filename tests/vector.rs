@@ -413,17 +413,17 @@ fn iter() -> Result<()> {
 fn to_slice() -> Result<()> {
 	{
 		let vec = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
-		assert_eq!(vec.to_slice(), &[1, 2, 3, 4, 5]);
+		assert_eq!(vec.as_slice(), &[1, 2, 3, 4, 5]);
 	}
 	{
 		let mut vec = VectorOfi32::new();
 		vec.push(5);
 		vec.push(10);
-		assert_eq!(vec.to_slice(), &[5, 10]);
+		assert_eq!(vec.as_slice(), &[5, 10]);
 	}
 	{
 		let vec = VectorOfPoint2d::from_iter(vec![Point2d::new(10., 20.), Point2d::new(60.5, 90.3), Point2d::new(-40.333, 89.)]);
-		let slice = vec.to_slice();
+		let slice = vec.as_slice();
 		assert_eq!(20., slice[0].y);
 		assert_eq!(60.5, slice[1].x);
 		assert_eq!(Point2d::new(-40.333, 89.), slice[2]);

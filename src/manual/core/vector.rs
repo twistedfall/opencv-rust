@@ -197,7 +197,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		VectorRefIterator::new(self)
 	}
 
-	pub fn to_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
+	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			::std::slice::from_raw_parts(self.extern_data(), self.len())
 		}
