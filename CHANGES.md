@@ -1,3 +1,6 @@
+* 0.41.1
+  * Revert the parallelization of the build when `clang-runtime` is enabled, it led to #145
+
 * 0.41.0
   * Enable parallel build even if `clang-runtime` is enabled (it uses helper generator binary in multiple threads)
   * Enable most of the remaining contrib modules, namely: quality, saliency, stereo, ximgproc, tracking, rgbd,
