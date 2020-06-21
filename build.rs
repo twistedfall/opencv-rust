@@ -110,38 +110,55 @@ mod generator {
 		let mut join_handles = Vec::with_capacity(modules.len());
 		let start;
 		if cfg!(feature = "clang-runtime") {
-			let status = generator_build.expect("Impossible").wait()?;
-			if !status.success() {
-				return Err("Failed to build the bindings generator".into());
-			}
-			let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+			let clang = clang::Clang::new().expect("Cannot initialize clang");
+			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
+			eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			start = Instant::now();
 			modules.iter().for_each(|module| {
-				let token = job_server.acquire().expect("Can't acquire token from job server");
-				let join_handle = thread::spawn({
-					let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
-					let opencv_header_dir = Arc::clone(&opencv_header_dir);
-					move || {
-						let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
-							.and_then(|p| p.to_str())
-							.unwrap_or("None");
-						let mut bin_generator = std::process::Command::new(OUT_DIR.join("release/binding-generator"));
-						bin_generator.arg(&*opencv_header_dir)
-							.arg(&*SRC_CPP_DIR)
-							.arg(&*OUT_DIR)
-							.arg(&module)
-							.arg(version)
-							.arg(clang_stdlib_include_dir);
-						let res = bin_generator.status().expect("Can't run bindings generator");
-						if !res.success() {
-							panic!("Failed to run the bindings generator");
-						}
-						println!("Generated: {}", module);
-						drop(token); // needed to move the token to the thread
-					}
-				});
-				join_handles.push(join_handle);
+				let bindings_writer = binding_generator::writer::RustBindingWriter::new(
+					&*SRC_CPP_DIR,
+					&*OUT_DIR,
+					&module,
+					version,
+					false,
+				);
+				gen.process_opencv_module(&module, bindings_writer);
+				println!("Generated: {}", module);
 			});
+			drop(generator_build); // fixme, prevent unused var warning
+			// fixme, https://github.com/twistedfall/opencv-rust/issues/145
+			// let status = generator_build.expect("Impossible").wait()?;
+			// if !status.success() {
+			// 	return Err("Failed to build the bindings generator".into());
+			// }
+			// let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+			// start = Instant::now();
+			// modules.iter().for_each(|module| {
+			// 	let token = job_server.acquire().expect("Can't acquire token from job server");
+			// 	let join_handle = thread::spawn({
+			// 		let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
+			// 		let opencv_header_dir = Arc::clone(&opencv_header_dir);
+			// 		move || {
+			// 			let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
+			// 				.and_then(|p| p.to_str())
+			// 				.unwrap_or("None");
+			// 			let mut bin_generator = std::process::Command::new(OUT_DIR.join("release/binding-generator"));
+			// 			bin_generator.arg(&*opencv_header_dir)
+			// 				.arg(&*SRC_CPP_DIR)
+			// 				.arg(&*OUT_DIR)
+			// 				.arg(&module)
+			// 				.arg(version)
+			// 				.arg(clang_stdlib_include_dir);
+			// 			let res = bin_generator.status().expect("Can't run bindings generator");
+			// 			if !res.success() {
+			// 				panic!("Failed to run the bindings generator");
+			// 			}
+			// 			println!("Generated: {}", module);
+			// 			drop(token); // needed to move the token to the thread
+			// 		}
+			// 	});
+			// 	join_handles.push(join_handle);
+			// });
 		} else {
 			let clang = clang::Clang::new().expect("Cannot initialize clang");
 			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
@@ -1040,14 +1057,16 @@ fn main() -> Result<()> {
 
 	#[cfg(feature = "buildtime-bindgen")]
 	let generator_build = if cfg!(feature = "clang-runtime") { // start building binding generator as early as possible
-		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or("cargo".into()));
-		let mut cargo = Command::new(cargo_bin);
-		// generator script is quite slow in debug mode, so we force it to be built in release mode
-		cargo
-			.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
-			.env("CARGO_TARGET_DIR", &*OUT_DIR);
-		println!("running: {:?}", &cargo);
-		Some(cargo.spawn()?)
+		None
+		// fixme, https://github.com/twistedfall/opencv-rust/issues/145
+		// let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or("cargo".into()));
+		// let mut cargo = Command::new(cargo_bin);
+		// // generator script is quite slow in debug mode, so we force it to be built in release mode
+		// cargo
+		// 	.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
+		// 	.env("CARGO_TARGET_DIR", &*OUT_DIR);
+		// println!("running: {:?}", &cargo);
+		// Some(cargo.spawn()?)
 	} else {
 		None
 	};
