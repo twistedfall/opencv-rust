@@ -84,6 +84,12 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 	}
 }
 
+impl<'a, T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
+	fn from(from: Vector<T>) -> Self {
+		from.to_vec()
+	}
+}
+
 impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a new Vector
 	pub fn new() -> Self {
@@ -197,7 +203,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		VectorRefIterator::new(self)
 	}
 
-	pub fn to_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
+	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			::std::slice::from_raw_parts(self.extern_data(), self.len())
 		}
