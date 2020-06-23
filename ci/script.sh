@@ -55,12 +55,6 @@ cargo test -vv -p opencv-binding-generator
 
 # todo: test without contrib too
 
-# linux is the only possible platform to build without `buildtime-bindgen`
-if [[ "$OS_FAMILY" == "linux" ]]; then
-	cargo test -vv --no-default-features --features "$CARGO_FEATURES"
-	cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
-fi
-
 CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
 cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"

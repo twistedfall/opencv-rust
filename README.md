@@ -19,7 +19,7 @@ opencv = "0.41"
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.41", default-features = false, features = ["opencv-34"]}
+opencv = {version = "0.41", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
 ```
 
 Or enable usage of `contrib` modules:
@@ -30,11 +30,6 @@ opencv = {version = "0.41", features = ["contrib"]}
 Import prelude
 ```rust
 use opencv::prelude::*;
-```
-
-When building on Windows and macOS you must enable `buildtime-bindgen` feature to avoid link errors:
-```toml
-opencv = {version = "0.41", features = ["buildtime-bindgen"]}
 ```
 
 ## Getting OpenCV
@@ -92,9 +87,9 @@ You need to set up the following environment variables to point to the installed
 
 1. One of the common problems is link errors in the end of the build.
 
-   Try building with `buildtime-bindgen` feature enabled (requires installed clang/llvm), it will recreate
-   rust and cpp files to match the version you have installed. Please be sure to also set up the relevant
-   environment variables that will allow the linker to find the libraries it needs (see below).
+   Make sure you're building with `buildtime-bindgen` feature enabled (requires installed clang/llvm), it will
+   recreate rust and cpp files to match the version you have installed. Please be sure to also set up the
+   relevant environment variables that will allow the linker to find the libraries it needs (see below).
 
 2. You're getting runtime errors like:
    ```
@@ -230,10 +225,9 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `opencv-34` - build against OpenCV 3.4.x
 * `opencv-4` (default) - build against OpenCV 4.x
 * `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
-* `buildtime-bindgen` - regenerate all bindings, requires installed clang/llvm (minimum supported version is
-  6.0), should only be used during the crate development or when building on Windows or macOS, with this
-  feature enabled the bundled headers are no longer used for the code generation, the ones from the installed
-  OpenCV are used instead
+* `buildtime-bindgen` (default) - regenerate all bindings, requires installed clang/llvm (minimum supported
+  version is 6.0), with this feature enabled the bundled headers are no longer used for the code generation,
+  the ones from the installed OpenCV are used instead
 * `clang-runtime` - only useful with the combination with `buildtime-bindgen`, enables the runtime detection
   of libclang (`runtime` feature of `clang-sys`). This makes the build slower because it impairs the parallel
   generation of OpenCV modules. Useful as a workaround for when your dependencies (like `bindgen`) pull in
@@ -378,8 +372,8 @@ crate users.
 
 The crate itself, as imported by users, consists of generated rust code in [src](src) committed to the repo.
 This way, users don't have to handle the code generation overhead in their builds. When developing this crate,
-you can test changes to the binding generation using `cargo build -vv --features buildtime-bindgen`. When
-changing the `binding-generator`, be sure to push changes to the generated code!
+you can test changes to the binding generation using `cargo build -vv`. When changing the `binding-generator`,
+be sure to push changes to the generated code!
 
 If you're looking for things to improve be sure to search for `todo` and `fixme` labels in the project
 source, those usually carry the comment of what exactly needs to be fixed.
