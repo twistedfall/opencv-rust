@@ -104,6 +104,7 @@ impl<T: VectorElement> ::std::borrow::Borrow<[T]> for Vector<T> where Vector<T>:
 }
 
 impl<'a, T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
 	fn from(from: Vector<T>) -> Self {
 		from.to_vec()
 	}

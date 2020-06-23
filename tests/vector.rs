@@ -8,6 +8,7 @@ use opencv::{
 		Point3i,
 		Scalar,
 		SparseMat_Hdr,
+		Vec4i,
 	},
 	Error,
 	prelude::*,
@@ -25,7 +26,7 @@ use opencv::{
 		VectorOfu8,
 		VectorOfVec4i,
 		VectorOfVectorOfPoint3i,
-	},
+	}
 };
 
 #[test]
@@ -434,14 +435,20 @@ fn to_slice() -> Result<()> {
 #[test]
 fn to_vec() -> Result<()> {
 	{
-		let vec: VectorOfu8 = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
-		assert_eq!(vec.to_vec(), vec![1, 2, 3, 4, 5]);
-		assert_eq!(Vec::from(vec), vec![1, 2, 3, 4, 5]);
+		let src_vec = vec![1, 2, 3, 4, 5];
+		let vec: VectorOfu8 = VectorOfu8::from_iter(src_vec.clone());
+		assert_eq!(vec.to_vec(), src_vec);
+		assert_eq!(Vec::from(vec), src_vec);
+		let vec_new: Vec<u8> = VectorOfu8::from_iter(src_vec.clone()).into();
+		assert_eq!(vec_new, src_vec);
 	}
 	{
+		let src_vec = vec![];
 		let vec = VectorOfVec4i::new();
-		assert_eq!(vec.to_vec(), Vec::new());
-		assert_eq!(Vec::from(vec), Vec::new());
+		assert_eq!(vec.to_vec(), src_vec);
+		assert_eq!(Vec::from(vec), src_vec);
+		let vec_new: Vec<Vec4i> = VectorOfVec4i::new().into();
+		assert_eq!(vec_new, src_vec);
 	}
 	{
 		let mut vec = VectorOfMat::new();
