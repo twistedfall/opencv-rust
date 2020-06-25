@@ -1,5 +1,8 @@
 use std::{
+	borrow::Borrow,
 	ffi::c_void,
+	fmt,
+	iter::FromIterator,
 	marker::PhantomData,
 	mem,
 };
@@ -85,19 +88,22 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 }
 
 // technically VectorExternCopyNonBool isn't needed but it simplifies this impl
-impl<T: VectorElement + ::std::fmt::Debug> ::std::fmt::Debug for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
-	fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-		::std::fmt::Debug::fmt(self.as_slice(), f)
+impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
+	#[inline]
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		self.as_slice().fmt(f)
 	}
 }
 
 impl<T: VectorElement> AsRef<[T]> for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
+	#[inline]
 	fn as_ref(&self) -> &[T] {
 		self.as_slice()
 	}
 }
 
-impl<T: VectorElement> ::std::borrow::Borrow<[T]> for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
+impl<T: VectorElement> Borrow<[T]> for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
+	#[inline]
 	fn borrow(&self) -> &[T] {
 		self.as_slice()
 	}
@@ -111,13 +117,13 @@ impl<'a, T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExt
 }
 
 impl<T: VectorElement> Default for Vector<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
 	fn default() -> Vector<T> {
 		Vector::new()
 	}
 }
 
 impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
 	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
 		let s = s.into_iter();
 		let (lo, hi) = s.size_hint();
@@ -128,7 +134,7 @@ impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> wher
 	}
 }
 
-impl<'a, T: VectorElement> ::std::iter::FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
+impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
 	fn from_iter<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
 		let mut out = Self::new();
 		out.extend(s);
@@ -151,7 +157,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 
 	/// Create a Vector from iterator
 	pub fn from_iter<'a>(s: impl IntoIterator<Item=<T as OpenCVType<'a>>::Arg>) -> Self {
-		<Self as ::std::iter::FromIterator<<T as OpenCVType<'a>>::Arg>>::from_iter(s)
+		<Self as FromIterator<_>>::from_iter(s)
 	}
 
 	/// Return Vector length
