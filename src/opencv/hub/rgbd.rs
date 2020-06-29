@@ -350,7 +350,7 @@ pub trait Dynafu_ParamsTrait {
 	
 	/// frame size in pixels
 	fn set_frame_size(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dynafu_Params_setPropFrameSize_Size(self.as_raw_mut_Dynafu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
+		unsafe { sys::cv_dynafu_Params_setPropFrameSize_Size(self.as_raw_mut_Dynafu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
 	}
 	
 	/// camera intrinsics
@@ -360,7 +360,7 @@ pub trait Dynafu_ParamsTrait {
 	
 	/// camera intrinsics
 	fn set_intr(&mut self, val: core::Matx33f) -> () {
-		unsafe { sys::cv_dynafu_Params_setPropIntr_Matx33f(self.as_raw_mut_Dynafu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_intr")
+		unsafe { sys::cv_dynafu_Params_setPropIntr_Matx33f(self.as_raw_mut_Dynafu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_intr")
 	}
 	
 	/// pre-scale per 1 meter for input values
@@ -434,7 +434,7 @@ pub trait Dynafu_ParamsTrait {
 	/// 
 	/// Number of voxels in each dimension.
 	fn set_volume_dims(&mut self, val: core::Vec3i) -> () {
-		unsafe { sys::cv_dynafu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_Dynafu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_volume_dims")
+		unsafe { sys::cv_dynafu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_Dynafu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_dims")
 	}
 	
 	/// Size of voxel in meters
@@ -468,7 +468,7 @@ pub trait Dynafu_ParamsTrait {
 	
 	/// initial volume pose in meters
 	fn set_volume_pose(&mut self, val: core::Affine3f) -> () {
-		unsafe { sys::cv_dynafu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_Dynafu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_volume_pose")
+		unsafe { sys::cv_dynafu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_Dynafu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_pose")
 	}
 	
 	/// distance to truncate in meters
@@ -520,7 +520,7 @@ pub trait Dynafu_ParamsTrait {
 	
 	/// light pose for rendering in meters
 	fn set_light_pose(&mut self, val: core::Vec3f) -> () {
-		unsafe { sys::cv_dynafu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Dynafu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_light_pose")
+		unsafe { sys::cv_dynafu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Dynafu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_light_pose")
 	}
 	
 	/// distance theshold for ICP in meters
@@ -739,7 +739,7 @@ pub trait Kinfu_ParamsTrait {
 	
 	/// frame size in pixels
 	fn set_frame_size(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
+		unsafe { sys::cv_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
 	}
 	
 	/// camera intrinsics
@@ -749,7 +749,7 @@ pub trait Kinfu_ParamsTrait {
 	
 	/// camera intrinsics
 	fn set_intr(&mut self, val: core::Matx33f) -> () {
-		unsafe { sys::cv_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_intr")
+		unsafe { sys::cv_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_intr")
 	}
 	
 	/// pre-scale per 1 meter for input values
@@ -823,7 +823,7 @@ pub trait Kinfu_ParamsTrait {
 	/// 
 	/// Number of voxels in each dimension.
 	fn set_volume_dims(&mut self, val: core::Vec3i) -> () {
-		unsafe { sys::cv_kinfu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_Kinfu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_volume_dims")
+		unsafe { sys::cv_kinfu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_dims")
 	}
 	
 	/// Size of voxel in meters
@@ -857,7 +857,7 @@ pub trait Kinfu_ParamsTrait {
 	
 	/// initial volume pose in meters
 	fn set_volume_pose(&mut self, val: core::Affine3f) -> () {
-		unsafe { sys::cv_kinfu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_Kinfu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_volume_pose")
+		unsafe { sys::cv_kinfu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_pose")
 	}
 	
 	/// distance to truncate in meters
@@ -909,7 +909,7 @@ pub trait Kinfu_ParamsTrait {
 	
 	/// light pose for rendering in meters
 	fn set_light_pose(&mut self, val: core::Vec3f) -> () {
-		unsafe { sys::cv_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Kinfu_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_light_pose")
+		unsafe { sys::cv_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_light_pose")
 	}
 	
 	/// distance theshold for ICP in meters
@@ -962,7 +962,7 @@ pub trait Kinfu_ParamsTrait {
 	/// * R: rotation matrix
 	/// * t: translation vector
 	fn set_initial_volume_pose(&mut self, r: core::Matx33f, t: core::Vec3f) -> Result<()> {
-		unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(self.as_raw_mut_Kinfu_Params(), r.opencv_to_extern(), t.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(self.as_raw_mut_Kinfu_Params(), r.opencv_as_extern(), t.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Set Initial Volume Pose
@@ -970,7 +970,7 @@ pub trait Kinfu_ParamsTrait {
 	/// ## Parameters
 	/// * homogen_tf: 4 by 4 Homogeneous Transform matrix to set the intial pose of TSDF volume
 	fn set_initial_volume_pose_1(&mut self, homogen_tf: core::Matx44f) -> Result<()> {
-		unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx44f(self.as_raw_mut_Kinfu_Params(), homogen_tf.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx44f(self.as_raw_mut_Kinfu_Params(), homogen_tf.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1011,7 +1011,7 @@ impl Kinfu_Params {
 	/// * volumeIntialPoseRot: rotation matrix
 	/// * volumeIntialPoseTransl: translation vector
 	pub fn new(volume_intial_pose_rot: core::Matx33f, volume_intial_pose_transl: core::Vec3f) -> Result<crate::rgbd::Kinfu_Params> {
-		unsafe { sys::cv_kinfu_Params_Params_Matx33f_Vec3f(volume_intial_pose_rot.opencv_to_extern(), volume_intial_pose_transl.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(r) } )
+		unsafe { sys::cv_kinfu_Params_Params_Matx33f_Vec3f(volume_intial_pose_rot.opencv_as_extern(), volume_intial_pose_transl.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(r) } )
 	}
 	
 	/// Constructor for Params
@@ -1019,7 +1019,7 @@ impl Kinfu_Params {
 	/// ## Parameters
 	/// * volumeIntialPose: 4 by 4 Homogeneous Transform matrix to set the intial pose of TSDF volume
 	pub fn new_1(volume_intial_pose: core::Matx44f) -> Result<crate::rgbd::Kinfu_Params> {
-		unsafe { sys::cv_kinfu_Params_Params_Matx44f(volume_intial_pose.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(r) } )
+		unsafe { sys::cv_kinfu_Params_Params_Matx44f(volume_intial_pose.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(r) } )
 	}
 	
 	/// Default parameters
@@ -1281,13 +1281,13 @@ pub trait Linemod_DetectorTrait {
 	/// * bounding_box: NULL
 	fn add_template(&mut self, sources: &core::Vector::<core::Mat>, class_id: &str, object_mask: &core::Mat, bounding_box: &mut core::Rect) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_to_extern(), object_mask.as_raw_Mat(), bounding_box) }.into_result()
+		unsafe { sys::cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box) }.into_result()
 	}
 	
 	/// \brief Add a new object template computed by external means.
 	fn add_synthetic_template(&mut self, templates: &core::Vector::<crate::rgbd::Linemod_Template>, class_id: &str) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_as_extern()) }.into_result()
 	}
 	
 	/// \brief Get the modalities used by this detector.
@@ -1314,7 +1314,7 @@ pub trait Linemod_DetectorTrait {
 	/// (L0, L1), the order is (GradientL0, NormalL0, GradientL1, NormalL1).
 	fn get_templates(&self, class_id: &str, template_id: i32) -> Result<core::Vector::<crate::rgbd::Linemod_Template>> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { core::Vector::<crate::rgbd::Linemod_Template>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern(), template_id) }.into_result().map(|r| unsafe { core::Vector::<crate::rgbd::Linemod_Template>::opencv_from_extern(r) } )
 	}
 	
 	fn num_templates(&self) -> Result<i32> {
@@ -1323,7 +1323,7 @@ pub trait Linemod_DetectorTrait {
 	
 	fn num_templates_1(&self, class_id: &str) -> Result<i32> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern()) }.into_result()
 	}
 	
 	fn num_classes(&self) -> Result<i32> {
@@ -1346,26 +1346,26 @@ pub trait Linemod_DetectorTrait {
 	/// * class_id_override: ""
 	fn read_class(&mut self, fn_: &core::FileNode, class_id_override: &str) -> Result<String> {
 		extern_container_arg!(class_id_override);
-		unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	fn write_class(&self, class_id: &str, fs: &mut core::FileStorage) -> Result<()> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_Linemod_Detector(), class_id.opencv_to_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * format: "templates_%s.yml.gz"
 	fn read_classes(&mut self, class_ids: &core::Vector::<String>, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_linemod_Detector_readClasses_const_vector_String_R_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_readClasses_const_vector_String_R_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * format: "templates_%s.yml.gz"
 	fn write_classes(&self, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_Linemod_Detector(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_Linemod_Detector(), format.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1438,11 +1438,11 @@ impl Linemod_Feature {
 	}
 	
 	pub fn read(self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_linemod_Feature_read_const_FileNodeR(self.opencv_to_extern(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_linemod_Feature_read_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_linemod_Feature_write_const_FileStorageR(self.opencv_to_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_linemod_Feature_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1482,7 +1482,7 @@ pub trait Linemod_MatchTrait {
 	
 	fn set_class_id(&mut self, val: &str) -> () {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_linemod_Match_setPropClass_id_String(self.as_raw_mut_Linemod_Match(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_class_id")
+		unsafe { sys::cv_linemod_Match_setPropClass_id_String(self.as_raw_mut_Linemod_Match(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_class_id")
 	}
 	
 	fn template_id(&self) -> i32 {
@@ -1528,7 +1528,7 @@ impl Linemod_Match {
 	
 	pub fn new(x: i32, y: i32, similarity: f32, class_id: &str, template_id: i32) -> Result<crate::rgbd::Linemod_Match> {
 		extern_container_arg!(class_id);
-		unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringR_int(x, y, similarity, class_id.opencv_to_extern(), template_id) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringR_int(x, y, similarity, class_id.opencv_as_extern(), template_id) }.into_result().map(|r| unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1574,7 +1574,7 @@ impl dyn Linemod_Modality + '_ {
 	/// - "DepthNormal"
 	pub fn create(modality_type: &str) -> Result<core::Ptr::<dyn crate::rgbd::Linemod_Modality>> {
 		extern_container_arg!(modality_type);
-		unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
+		unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(r) } )
 	}
 	
 	/// \brief Load a modality from file.
@@ -2221,7 +2221,7 @@ impl dyn Odometry + '_ {
 	
 	pub fn create(odometry_type: &str) -> Result<core::Ptr::<dyn crate::rgbd::Odometry>> {
 		extern_container_arg!(odometry_type);
-		unsafe { sys::cv_rgbd_Odometry_create_const_StringR(odometry_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Odometry>::opencv_from_extern(r) } )
+		unsafe { sys::cv_rgbd_Odometry_create_const_StringR(odometry_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Odometry>::opencv_from_extern(r) } )
 	}
 	
 }

@@ -129,7 +129,7 @@ pub fn create_video_reader_1(source: &core::Ptr::<dyn crate::cudacodec::RawVideo
 /// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
 pub fn create_video_reader(filename: &str) -> Result<core::Ptr::<dyn crate::cudacodec::VideoReader>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(r) } )
 }
 
 /// Creates video writer.
@@ -158,7 +158,7 @@ pub fn create_video_reader(filename: &str) -> Result<core::Ptr::<dyn crate::cuda
 /// ## C++ default parameters
 /// * format: SF_BGR
 pub fn create_video_writer_2(encoder_callback: &core::Ptr::<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr::<dyn crate::cudacodec::VideoWriter>> {
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_to_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
 }
 
 /// Creates video writer.
@@ -188,7 +188,7 @@ pub fn create_video_writer_2(encoder_callback: &core::Ptr::<dyn crate::cudacodec
 /// ## C++ default parameters
 /// * format: SF_BGR
 pub fn create_video_writer_3(encoder_callback: &core::Ptr::<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr::<dyn crate::cudacodec::VideoWriter>> {
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_to_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
 }
 
 /// Creates video writer.
@@ -208,7 +208,7 @@ pub fn create_video_writer_3(encoder_callback: &core::Ptr::<dyn crate::cudacodec
 /// * format: SF_BGR
 pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr::<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_to_extern(), frame_size.opencv_to_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
 }
 
 /// Creates video writer.
@@ -238,7 +238,7 @@ pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, fo
 /// * format: SF_BGR
 pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr::<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_to_extern(), frame_size.opencv_to_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
 }
 
 /// Callbacks for CUDA video encoder.
@@ -479,7 +479,7 @@ pub trait EncoderParamsTrait {
 	/// * configFile: Config file name.
 	fn load(&mut self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Saves parameters to config file.
@@ -488,7 +488,7 @@ pub trait EncoderParamsTrait {
 	/// * configFile: Config file name.
 	fn save(&self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -532,7 +532,7 @@ impl EncoderParams {
 	/// Creates default parameters or reads parameters from config file.
 	pub fn new(config_file: &str) -> Result<crate::cudacodec::EncoderParams> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(r) } )
+		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(r) } )
 	}
 	
 }

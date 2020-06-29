@@ -1198,12 +1198,12 @@ pub trait DescriptorMatcher: core::AlgorithmTrait {
 	
 	fn write(&self, file_name: &str) -> Result<()> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_DescriptorMatcher_write_const_const_StringR(self.as_raw_DescriptorMatcher(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_DescriptorMatcher_write_const_const_StringR(self.as_raw_DescriptorMatcher(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read(&mut self, file_name: &str) -> Result<()> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_DescriptorMatcher_read_const_StringR(self.as_raw_mut_DescriptorMatcher(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_DescriptorMatcher_read_const_StringR(self.as_raw_mut_DescriptorMatcher(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read_1(&mut self, unnamed: &core::FileNode) -> Result<()> {
@@ -1231,7 +1231,7 @@ pub trait DescriptorMatcher: core::AlgorithmTrait {
 	/// * name: String()
 	fn write_2(&self, fs: &core::Ptr::<core::FileStorage>, name: &str) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_DescriptorMatcher_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_PtrOfFileStorage(), name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_DescriptorMatcher_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1250,7 +1250,7 @@ impl dyn DescriptorMatcher + '_ {
 	/// *   `FlannBased`
 	pub fn create(descriptor_matcher_type: &str) -> Result<core::Ptr::<dyn crate::features2d::DescriptorMatcher>> {
 		extern_container_arg!(descriptor_matcher_type);
-		unsafe { sys::cv_DescriptorMatcher_create_const_StringR(descriptor_matcher_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(r) } )
+		unsafe { sys::cv_DescriptorMatcher_create_const_StringR(descriptor_matcher_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(r) } )
 	}
 	
 	pub fn create_with_matcher_type(matcher_type: i32) -> Result<core::Ptr::<dyn crate::features2d::DescriptorMatcher>> {
@@ -1453,12 +1453,12 @@ pub trait Feature2DTrait: core::AlgorithmTrait {
 	
 	fn write(&self, file_name: &str) -> Result<()> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_Feature2D_write_const_const_StringR(self.as_raw_Feature2D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_Feature2D_write_const_const_StringR(self.as_raw_Feature2D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read(&mut self, file_name: &str) -> Result<()> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_Feature2D_read_const_StringR(self.as_raw_mut_Feature2D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_Feature2D_read_const_StringR(self.as_raw_mut_Feature2D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn write_1(&self, unnamed: &mut core::FileStorage) -> Result<()> {
@@ -1482,7 +1482,7 @@ pub trait Feature2DTrait: core::AlgorithmTrait {
 	/// * name: String()
 	fn write_2(&self, fs: &core::Ptr::<core::FileStorage>, name: &str) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_Feature2D_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_Feature2D(), fs.as_raw_PtrOfFileStorage(), name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_Feature2D_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_Feature2D(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1830,7 +1830,7 @@ impl KeyPointsFilter {
 	}
 	
 	pub fn run_by_image_border(keypoints: &mut core::Vector::<core::KeyPoint>, image_size: core::Size, border_size: i32) -> Result<()> {
-		unsafe { sys::cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_R_Size_int(keypoints.as_raw_mut_VectorOfKeyPoint(), image_size.opencv_to_extern(), border_size) }.into_result()
+		unsafe { sys::cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_R_Size_int(keypoints.as_raw_mut_VectorOfKeyPoint(), image_size.opencv_as_extern(), border_size) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -2236,11 +2236,11 @@ impl SimpleBlobDetector_Params {
 	}
 	
 	pub fn read(self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_SimpleBlobDetector_Params_read_const_FileNodeR(self.opencv_to_extern(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_SimpleBlobDetector_Params_read_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorageR(self.opencv_to_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+		unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }

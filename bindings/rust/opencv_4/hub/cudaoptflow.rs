@@ -129,7 +129,7 @@ pub trait CUDA_DensePyrLKOpticalFlow: crate::cudaoptflow::CUDA_DenseOpticalFlow 
 	}
 	
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), win_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_max_level(&self) -> Result<i32> {
@@ -165,7 +165,7 @@ impl dyn CUDA_DensePyrLKOpticalFlow + '_ {
 	/// * iters: 30
 	/// * use_initial_flow: false
 	pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_to_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(r) } )
+		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -544,7 +544,7 @@ pub trait CUDA_SparsePyrLKOpticalFlow: crate::cudaoptflow::CUDA_SparseOpticalFlo
 	}
 	
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), win_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_max_level(&self) -> Result<i32> {
@@ -580,7 +580,7 @@ impl dyn CUDA_SparsePyrLKOpticalFlow + '_ {
 	/// * iters: 30
 	/// * use_initial_flow: false
 	pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_to_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
+		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }

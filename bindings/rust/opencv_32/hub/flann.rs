@@ -372,13 +372,13 @@ pub trait IndexTrait {
 	
 	fn save(&self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_flann_Index_save_const_const_StringR(self.as_raw_Index(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_flann_Index_save_const_const_StringR(self.as_raw_Index(), filename.opencv_as_extern()) }.into_result()
 	}
 	
 	fn load(&mut self, features: &dyn core::ToInputArray, filename: &str) -> Result<bool> {
 		input_array_arg!(features);
 		extern_container_arg!(filename);
-		unsafe { sys::cv_flann_Index_load_const__InputArrayR_const_StringR(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_flann_Index_load_const__InputArrayR_const_StringR(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.opencv_as_extern()) }.into_result()
 	}
 	
 	fn release(&mut self) -> Result<()> {
@@ -451,47 +451,47 @@ pub trait IndexParamsTrait {
 	fn get_string(&self, key: &str, default_val: &str) -> Result<String> {
 		extern_container_arg!(key);
 		extern_container_arg!(default_val);
-		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringR_const_StringR(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val.opencv_to_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringR_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * default_val: -1
 	fn get_int(&self, key: &str, default_val: i32) -> Result<i32> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringR_int(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringR_int(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val) }.into_result()
 	}
 	
 	/// ## C++ default parameters
 	/// * default_val: -1
 	fn get_double(&self, key: &str, default_val: f64) -> Result<f64> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR_double(self.as_raw_IndexParams(), key.opencv_to_extern(), default_val) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR_double(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val) }.into_result()
 	}
 	
 	fn set_string(&mut self, key: &str, value: &str) -> Result<()> {
 		extern_container_arg!(key);
 		extern_container_arg!(value);
-		unsafe { sys::cv_flann_IndexParams_setString_const_StringR_const_StringR(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setString_const_StringR_const_StringR(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_int(&mut self, key: &str, value: i32) -> Result<()> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setInt_const_StringR_int(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setInt_const_StringR_int(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value) }.into_result()
 	}
 	
 	fn set_double(&mut self, key: &str, value: f64) -> Result<()> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringR_double(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringR_double(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value) }.into_result()
 	}
 	
 	fn set_float(&mut self, key: &str, value: f32) -> Result<()> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringR_float(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringR_float(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value) }.into_result()
 	}
 	
 	fn set_bool(&mut self, key: &str, value: bool) -> Result<()> {
 		extern_container_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setBool_const_StringR_bool(self.as_raw_mut_IndexParams(), key.opencv_to_extern(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setBool_const_StringR_bool(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value) }.into_result()
 	}
 	
 	fn set_algorithm(&mut self, value: i32) -> Result<()> {
@@ -754,7 +754,7 @@ impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
 impl SavedIndexParams {
 	pub fn new(filename: &str) -> Result<crate::flann::SavedIndexParams> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::flann::SavedIndexParams::opencv_from_extern(r) } )
+		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::flann::SavedIndexParams::opencv_from_extern(r) } )
 	}
 	
 }

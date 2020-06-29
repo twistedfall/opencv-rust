@@ -820,7 +820,7 @@ pub trait VideoCaptureTrait {
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file_default(&mut self, filename: &str) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringR(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_VideoCapture_open_const_StringR(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern()) }.into_result()
 	}
 	
 	///  Open a camera for video capturing
@@ -985,7 +985,7 @@ pub trait VideoCaptureTrait {
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	fn open_file(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_to_extern(), api_preference) }.into_result()
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference) }.into_result()
 	}
 	
 }
@@ -1057,7 +1057,7 @@ impl VideoCapture {
 	///    Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
 	pub fn from_file_default(filename: &str) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1083,7 +1083,7 @@ impl VideoCapture {
 	/// The list of supported API backends cv::VideoCaptureAPIs
 	pub fn from_file(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_to_extern(), api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_as_extern(), api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Default constructor
@@ -1131,7 +1131,7 @@ pub trait VideoWriterTrait {
 	/// * is_color: true
 	fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result()
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()
 	}
 	
 	/// Returns true if video writer has been successfully initialized.
@@ -1262,7 +1262,7 @@ impl VideoWriter {
 	/// * is_color: true
 	pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_to_extern(), fourcc, fps, frame_size.opencv_to_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
 	}
 	
 	/// Concatenates 4 chars to a fourcc code

@@ -22,7 +22,7 @@ pub trait CascadeClassifier: core::AlgorithmTrait {
 	/// Maximum possible object size. Objects larger than that are ignored. Used for
 	/// second signature and supported only for LBP cascades.
 	fn set_max_object_size(&mut self, max_object_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_CascadeClassifier_setMaxObjectSize_Size(self.as_raw_mut_CascadeClassifier(), max_object_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cuda_CascadeClassifier_setMaxObjectSize_Size(self.as_raw_mut_CascadeClassifier(), max_object_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_max_object_size(&self) -> Result<core::Size> {
@@ -31,7 +31,7 @@ pub trait CascadeClassifier: core::AlgorithmTrait {
 	
 	/// Minimum possible object size. Objects smaller than that are ignored.
 	fn set_min_object_size(&mut self, min_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_CascadeClassifier_setMinObjectSize_Size(self.as_raw_mut_CascadeClassifier(), min_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cuda_CascadeClassifier_setMinObjectSize_Size(self.as_raw_mut_CascadeClassifier(), min_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_min_object_size(&self) -> Result<core::Size> {
@@ -135,7 +135,7 @@ impl dyn CascadeClassifier + '_ {
 	/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
 	pub fn create(filename: &str) -> Result<core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_cuda_CascadeClassifier_create_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>::opencv_from_extern(r) } )
+		unsafe { sys::cv_cuda_CascadeClassifier_create_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>::opencv_from_extern(r) } )
 	}
 	
 	/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
@@ -215,7 +215,7 @@ pub trait HOG: core::AlgorithmTrait {
 	
 	/// Window stride. It must be a multiple of block stride.
 	fn set_win_stride(&mut self, win_stride: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_HOG_setWinStride_Size(self.as_raw_mut_HOG(), win_stride.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_cuda_HOG_setWinStride_Size(self.as_raw_mut_HOG(), win_stride.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_win_stride(&self) -> Result<core::Size> {
@@ -336,7 +336,7 @@ impl dyn HOG + '_ {
 	/// * cell_size: Size(8,8)
 	/// * nbins: 9
 	pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr::<dyn crate::cudaobjdetect::HOG>> {
-		unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(win_size.opencv_to_extern(), block_size.opencv_to_extern(), block_stride.opencv_to_extern(), cell_size.opencv_to_extern(), nbins) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaobjdetect::HOG>::opencv_from_extern(r) } )
+		unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(win_size.opencv_as_extern(), block_size.opencv_as_extern(), block_stride.opencv_as_extern(), cell_size.opencv_as_extern(), nbins) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaobjdetect::HOG>::opencv_from_extern(r) } )
 	}
 	
 }

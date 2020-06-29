@@ -81,7 +81,7 @@ pub trait MatchTrait {
 	}
 	
 	fn set_p0(&mut self, val: core::Point2i) -> () {
-		unsafe { sys::cv_stereo_Match_setPropP0_Point2i(self.as_raw_mut_Match(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_p0")
+		unsafe { sys::cv_stereo_Match_setPropP0_Point2i(self.as_raw_mut_Match(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_p0")
 	}
 	
 	fn p1(&self) -> core::Point2i {
@@ -89,7 +89,7 @@ pub trait MatchTrait {
 	}
 	
 	fn set_p1(&mut self, val: core::Point2i) -> () {
-		unsafe { sys::cv_stereo_Match_setPropP1_Point2i(self.as_raw_mut_Match(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_p1")
+		unsafe { sys::cv_stereo_Match_setPropP1_Point2i(self.as_raw_mut_Match(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_p1")
 	}
 	
 	fn corr(&self) -> f32 {
@@ -336,7 +336,7 @@ pub trait QuasiDenseStereo {
 	/// loadParameters
 	fn load_parameters(&mut self, filepath: &str) -> Result<i32> {
 		extern_container_arg!(mut filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_to_extern_mut()) }.into_result()
+		unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()
 	}
 	
 	/// Save a file containing all the configuration parameters the class is currently set to.
@@ -351,7 +351,7 @@ pub trait QuasiDenseStereo {
 	/// loadParameters
 	fn save_parameters(&mut self, filepath: &str) -> Result<i32> {
 		extern_container_arg!(mut filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_to_extern_mut()) }.into_result()
+		unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()
 	}
 	
 	/// Get The sparse corresponding points.
@@ -429,7 +429,7 @@ impl dyn QuasiDenseStereo + '_ {
 	/// * param_filepath: cv::String()
 	pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr::<dyn crate::stereo::QuasiDenseStereo>> {
 		extern_container_arg!(mut param_filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_to_extern(), param_filepath.opencv_to_extern_mut()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(r) } )
+		unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(r) } )
 	}
 	
 }

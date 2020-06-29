@@ -421,6 +421,7 @@ mod core_sys {
 		pub fn cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src: *const c_void, dst: *const c_void, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: *const core::Scalar) -> Result_void;
 		pub fn cv_countNonZero_const__InputArrayR(src: *const c_void) -> Result<i32>;
 		pub fn cv_cubeRoot_float(val: f32) -> Result<f32>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR(_src: *const c_void, _dst: *const c_void, stream: *mut c_void) -> Result_void;
 		pub fn cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows: i32, cols: i32, typ: i32, arr: *const c_void) -> Result_void;
 		pub fn cv_cuda_deviceSupports_FeatureSet(feature_set: core::FeatureSet) -> Result<bool>;
@@ -1353,6 +1354,7 @@ mod core_sys {
 		pub fn cv__OutputArray__OutputArray_const_MatR(m: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_vector_Mat_R(vec: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_GpuMatR(d_mat: *const c_void) -> Result<*mut c_void>;
+		#[cfg(not(target_os = "windows"))]
 		pub fn cv__OutputArray__OutputArray_const_vector_GpuMat_R(d_mat: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_HostMemR(cuda_mem: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_UMatR(m: *const c_void) -> Result<*mut c_void>;

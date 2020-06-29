@@ -223,7 +223,7 @@ pub fn calc_hist(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArra
 /// * clip_limit: 40.0
 /// * tile_grid_size: Size(8,8)
 pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>> {
-	unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(r) } )
 }
 
 /// Creates implementation for cuda::CannyEdgeDetector .
@@ -405,7 +405,7 @@ pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, b
 /// ## C++ default parameters
 /// * user_block_size: Size()
 pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>> {
-	unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(r) } )
 }
 
 /// Converts an image from one color space to another.
@@ -574,7 +574,7 @@ pub fn hist_range(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArr
 pub fn mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, criteria.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Performs a mean-shift procedure and stores information about processed points (their colors and
@@ -600,7 +600,7 @@ pub fn mean_shift_proc(src: &dyn core::ToInputArray, dstr: &mut dyn core::ToOutp
 	input_array_arg!(src);
 	output_array_arg!(dstr);
 	output_array_arg!(dstsp);
-	unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, criteria.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Performs a mean-shift segmentation of the source image and eliminates small segments.
@@ -620,7 +620,7 @@ pub fn mean_shift_proc(src: &dyn core::ToInputArray, dstr: &mut dyn core::ToOutp
 pub fn mean_shift_segmentation(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: i32, sr: i32, minsize: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, criteria.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Exchanges the color channels of an image in-place.

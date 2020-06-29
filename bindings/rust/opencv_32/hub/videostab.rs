@@ -65,7 +65,7 @@ pub fn complete_frame_according_to_flow(flow_mask: &core::Mat, flow_x: &core::Ma
 }
 
 pub fn ensure_inclusion_constraint(m: &core::Mat, size: core::Size, trim_ratio: f32) -> Result<core::Mat> {
-	unsafe { sys::cv_videostab_ensureInclusionConstraint_const_MatR_Size_float(m.as_raw_Mat(), size.opencv_to_extern(), trim_ratio) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_videostab_ensureInclusionConstraint_const_MatR_Size_float(m.as_raw_Mat(), size.opencv_as_extern(), trim_ratio) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Estimates best global motion between two 2D point clouds in the least-squares sense.
@@ -112,7 +112,7 @@ pub fn estimate_global_motion_ransac(points0: &dyn core::ToInputArray, points1: 
 }
 
 pub fn estimate_optimal_trim_ratio(m: &core::Mat, size: core::Size) -> Result<f32> {
-	unsafe { sys::cv_videostab_estimateOptimalTrimRatio_const_MatR_Size(m.as_raw_Mat(), size.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_videostab_estimateOptimalTrimRatio_const_MatR_Size(m.as_raw_Mat(), size.opencv_as_extern()) }.into_result()
 }
 
 /// Computes motion between two frames assuming that all the intermediate motions are known.
@@ -412,7 +412,7 @@ impl crate::videostab::ImageMotionEstimatorBase for FromFileMotionReader {
 impl FromFileMotionReader {
 	pub fn new(path: &str) -> Result<crate::videostab::FromFileMotionReader> {
 		extern_container_arg!(path);
-		unsafe { sys::cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(path.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::videostab::FromFileMotionReader::opencv_from_extern(r) } )
+		unsafe { sys::cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(path.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::videostab::FromFileMotionReader::opencv_from_extern(r) } )
 	}
 	
 }
@@ -517,7 +517,7 @@ pub trait ILog {
 
 	fn print(&mut self, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_videostab_ILog_print_const_charX(self.as_raw_mut_ILog(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_ILog_print_const_charX(self.as_raw_mut_ILog(), format.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -536,7 +536,7 @@ pub trait IOutlierRejector {
 		input_array_arg!(points0);
 		input_array_arg!(points1);
 		output_array_arg!(mask);
-		unsafe { sys::cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_IOutlierRejector(), frame_size.opencv_to_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_IOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -802,7 +802,7 @@ pub trait LogToStdoutTrait: crate::videostab::ILog {
 
 	fn print(&mut self, format: &str) -> Result<()> {
 		extern_container_arg!(format);
-		unsafe { sys::cv_videostab_LogToStdout_print_const_charX(self.as_raw_mut_LogToStdout(), format.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_LogToStdout_print_const_charX(self.as_raw_mut_LogToStdout(), format.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -853,7 +853,7 @@ pub trait LpMotionStabilizerTrait: crate::videostab::IMotionStabilizer {
 	}
 	
 	fn set_frame_size(&mut self, val: core::Size) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setFrameSize_Size(self.as_raw_mut_LpMotionStabilizer(), val.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setFrameSize_Size(self.as_raw_mut_LpMotionStabilizer(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	fn frame_size(&self) -> Result<core::Size> {
@@ -1444,7 +1444,7 @@ pub trait NullLogTrait: crate::videostab::ILog {
 
 	fn print(&mut self, unnamed: &str) -> Result<()> {
 		extern_container_arg!(unnamed);
-		unsafe { sys::cv_videostab_NullLog_print_const_charX(self.as_raw_mut_NullLog(), unnamed.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_NullLog_print_const_charX(self.as_raw_mut_NullLog(), unnamed.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1490,7 +1490,7 @@ pub trait NullOutlierRejectorTrait: crate::videostab::IOutlierRejector {
 		input_array_arg!(points0);
 		input_array_arg!(points1);
 		output_array_arg!(mask);
-		unsafe { sys::cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_NullOutlierRejector(), frame_size.opencv_to_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_NullOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -1640,7 +1640,7 @@ pub trait PyrLkOptFlowEstimatorBaseTrait {
 	fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void;
 
 	fn set_win_size(&mut self, val: core::Size) -> Result<()> {
-		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(self.as_raw_mut_PyrLkOptFlowEstimatorBase(), val.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(self.as_raw_mut_PyrLkOptFlowEstimatorBase(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	fn win_size(&self) -> Result<core::Size> {
@@ -1978,7 +1978,7 @@ impl crate::videostab::ToFileMotionWriterTrait for ToFileMotionWriter {
 impl ToFileMotionWriter {
 	pub fn new(path: &str, mut estimator: core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<crate::videostab::ToFileMotionWriter> {
 		extern_container_arg!(path);
-		unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_Ptr_ImageMotionEstimatorBase_(path.opencv_to_extern(), estimator.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result().map(|r| unsafe { crate::videostab::ToFileMotionWriter::opencv_from_extern(r) } )
+		unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_Ptr_ImageMotionEstimatorBase_(path.opencv_as_extern(), estimator.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result().map(|r| unsafe { crate::videostab::ToFileMotionWriter::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1988,7 +1988,7 @@ pub trait TranslationBasedLocalOutlierRejectorTrait: crate::videostab::IOutlierR
 	fn as_raw_mut_TranslationBasedLocalOutlierRejector(&mut self) -> *mut c_void;
 
 	fn set_cell_size(&mut self, val: core::Size) -> Result<()> {
-		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), val.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	fn cell_size(&self) -> Result<core::Size> {
@@ -2007,7 +2007,7 @@ pub trait TranslationBasedLocalOutlierRejectorTrait: crate::videostab::IOutlierR
 		input_array_arg!(points0);
 		input_array_arg!(points1);
 		output_array_arg!(mask);
-		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), frame_size.opencv_to_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -2194,7 +2194,7 @@ impl VideoFileSource {
 	/// * volatile_frame: false
 	pub fn new(path: &str, volatile_frame: bool) -> Result<crate::videostab::VideoFileSource> {
 		extern_container_arg!(path);
-		unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(path.opencv_to_extern(), volatile_frame) }.into_result().map(|r| unsafe { crate::videostab::VideoFileSource::opencv_from_extern(r) } )
+		unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(path.opencv_as_extern(), volatile_frame) }.into_result().map(|r| unsafe { crate::videostab::VideoFileSource::opencv_from_extern(r) } )
 	}
 	
 }

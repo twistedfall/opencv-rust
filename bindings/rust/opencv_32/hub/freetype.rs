@@ -36,7 +36,7 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// * id: face_index to select a font faces in a single file.
 	fn load_font_data(&mut self, font_file_name: &str, id: i32) -> Result<()> {
 		extern_container_arg!(mut font_file_name);
-		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_to_extern_mut(), id) }.into_result()
+		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), id) }.into_result()
 	}
 	
 	/// Set Split Number from Bezier-curve to line
@@ -67,7 +67,7 @@ pub trait FreeType2: core::AlgorithmTrait {
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		extern_container_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_height, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
+		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin) }.into_result()
 	}
 	
 }

@@ -195,7 +195,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness {
 	/// * trainingPath: trained model path
 	fn set_training_path(&mut self, training_path: &str) -> Result<()> {
 		extern_container_arg!(training_path);
-		unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_as_extern()) }.into_result()
 	}
 	
 	/// This is a utility function that allows to set an arbitrary path in which the algorithm will save the
@@ -207,7 +207,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness {
 	/// * resultsDir: results' folder path
 	fn set_bb_res_dir(&mut self, results_dir: &str) -> Result<()> {
 		extern_container_arg!(results_dir);
-		unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_base(&self) -> Result<f64> {
@@ -315,7 +315,7 @@ impl dyn Saliency + '_ {
 	/// \brief Create Saliency by saliency type.
 	pub fn create(saliency_type: &str) -> Result<core::Ptr::<dyn crate::saliency::Saliency>> {
 		extern_container_arg!(saliency_type);
-		unsafe { sys::cv_saliency_Saliency_create_const_StringR(saliency_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::saliency::Saliency>::opencv_from_extern(r) } )
+		unsafe { sys::cv_saliency_Saliency_create_const_StringR(saliency_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::saliency::Saliency>::opencv_from_extern(r) } )
 	}
 	
 }

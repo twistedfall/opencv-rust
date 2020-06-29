@@ -1,3 +1,8 @@
+* 0.43.0
+  * Add `Clone` implementation (that panics on error) for `Mat`, `SparseMat`, `UMat`, `GpuMat` and `HostMem`.
+  * Add `Vector::as_mut_slice()` for copy types.
+  * Add `Vector::clone()` for types with `Clone` implementation (based on work of carbotaniuman).
+
 * 0.42.0
   * Enable CUDA support, check `examples/cuda.rs` for a bootstrap.
   * `buildtime-bindgen` is now enabled by default, compilation without it enabled rarely worked in reality.

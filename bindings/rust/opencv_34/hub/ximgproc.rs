@@ -153,6 +153,9 @@ pub enum LocalBinarizationMethods {
 
 opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods }
 
+///   Specifies the degree of rules validation.
+/// @details The enum specifies the degree of rules validation. This can be used,
+///          for example, to choose a proper way of input arguments validation.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RulesOption {
@@ -453,7 +456,7 @@ pub fn bilateral_texture_filter(src: &dyn core::ToInputArray, dst: &mut dyn core
 pub fn compute_bad_pixel_percent(gt: &dyn core::ToInputArray, src: &dyn core::ToInputArray, roi: core::Rect, thresh: i32) -> Result<f64> {
 	input_array_arg!(gt);
 	input_array_arg!(src);
-	unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_to_extern(), thresh) }.into_result()
+	unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_as_extern(), thresh) }.into_result()
 }
 
 /// Function for computing mean square error for disparity maps
@@ -469,7 +472,7 @@ pub fn compute_bad_pixel_percent(gt: &dyn core::ToInputArray, src: &dyn core::To
 pub fn compute_mse(gt: &dyn core::ToInputArray, src: &dyn core::ToInputArray, roi: core::Rect) -> Result<f64> {
 	input_array_arg!(gt);
 	input_array_arg!(src);
-	unsafe { sys::cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_as_extern()) }.into_result()
 }
 
 ///   Contour sampling .
@@ -754,7 +757,7 @@ pub fn create_right_matcher(mut matcher_left: core::Ptr::<dyn crate::calib3d::St
 /// * how_to_get_features: Ptr<RFFeatureGetter>()
 pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
-	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(model.opencv_to_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
+	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
 }
 
 /// Class implementing the LSC (Linear Spectral Clustering) superpixels
@@ -1125,7 +1128,7 @@ pub fn ni_black_threshold(_src: &dyn core::ToInputArray, _dst: &mut dyn core::To
 pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32> {
 	extern_container_arg!(mut src_path);
 	output_array_arg!(dst);
-	unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_to_extern_mut(), dst.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_as_extern_mut(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Applies the rolling guidance filter to an image.
@@ -1618,7 +1621,7 @@ pub trait DisparityFilter: core::AlgorithmTrait {
 		output_array_arg!(filtered_disparity_map);
 		input_array_arg!(disparity_map_right);
 		input_array_arg!(right_view);
-		unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), roi.opencv_to_extern(), right_view.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), roi.opencv_as_extern(), right_view.as_raw__InputArray()) }.into_result()
 	}
 	
 }

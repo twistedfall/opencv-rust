@@ -604,7 +604,7 @@ pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray
 	input_array_arg!(dst);
 	input_array_arg!(mask);
 	output_array_arg!(blend);
-	unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_to_extern(), blend.as_raw__OutputArray(), flags) }.into_result()
+	unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_as_extern(), blend.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Stylization aims to produce digital imagery with a wide variety of effects not focused on
@@ -727,7 +727,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Computes median threshold and exclude bitmaps of given image.

@@ -435,7 +435,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria getTermCriteria
 	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), val.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	/// BPROP: Strength of the weight gradient term.
@@ -647,7 +647,7 @@ impl dyn ANN_MLP + '_ {
 	/// * filepath: path to serialized ANN
 	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::ANN_MLP>> {
 		extern_container_arg!(filepath);
-		unsafe { sys::cv_ml_ANN_MLP_load_const_StringR(filepath.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::ANN_MLP>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_ANN_MLP_load_const_StringR(filepath.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::ANN_MLP>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -806,7 +806,7 @@ impl dyn Boost + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::Boost>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_Boost_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::Boost>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_Boost_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::Boost>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1087,7 +1087,7 @@ impl dyn DTrees + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::DTrees>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_DTrees_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::DTrees>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_DTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::DTrees>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1601,7 +1601,7 @@ impl dyn EM + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::EM>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_EM_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::EM>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_EM_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::EM>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1725,7 +1725,7 @@ impl dyn KNearest + '_ {
 	/// * filepath: path to serialized KNearest
 	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::KNearest>> {
 		extern_container_arg!(filepath);
-		unsafe { sys::cv_ml_KNearest_load_const_StringR(filepath.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::KNearest>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_KNearest_load_const_StringR(filepath.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::KNearest>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1821,7 +1821,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria getTermCriteria
 	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), val.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Predicts responses for input samples and returns a float type.
@@ -1874,7 +1874,7 @@ impl dyn LogisticRegression + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::LogisticRegression>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_LogisticRegression_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::LogisticRegression>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_LogisticRegression_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::LogisticRegression>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1926,7 +1926,7 @@ impl dyn NormalBayesClassifier + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::NormalBayesClassifier>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::NormalBayesClassifier>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::NormalBayesClassifier>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2156,7 +2156,7 @@ impl dyn RTrees + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::RTrees>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_RTrees_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::RTrees>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_RTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::RTrees>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2512,7 +2512,7 @@ impl dyn SVM + '_ {
 	/// * filepath: path to serialized svm
 	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::SVM>> {
 		extern_container_arg!(filepath);
-		unsafe { sys::cv_ml_SVM_load_const_StringR(filepath.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::SVM>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_SVM_load_const_StringR(filepath.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::SVM>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2742,7 +2742,7 @@ impl dyn SVMSGD + '_ {
 	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::SVMSGD>> {
 		extern_container_arg!(filepath);
 		extern_container_arg!(node_name);
-		unsafe { sys::cv_ml_SVMSGD_load_const_StringR_const_StringR(filepath.opencv_to_extern(), node_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::SVMSGD>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_SVMSGD_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::SVMSGD>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3107,7 +3107,7 @@ impl dyn TrainData + '_ {
 	pub fn load_from_csv(filename: &str, header_line_count: i32, response_start_idx: i32, response_end_idx: i32, var_type_spec: &str, delimiter: i8, missch: i8) -> Result<core::Ptr::<dyn crate::ml::TrainData>> {
 		extern_container_arg!(filename);
 		extern_container_arg!(var_type_spec);
-		unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(filename.opencv_to_extern(), header_line_count, response_start_idx, response_end_idx, var_type_spec.opencv_to_extern(), delimiter, missch) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::TrainData>::opencv_from_extern(r) } )
+		unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(filename.opencv_as_extern(), header_line_count, response_start_idx, response_end_idx, var_type_spec.opencv_as_extern(), delimiter, missch) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ml::TrainData>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates training data from in-memory arrays.

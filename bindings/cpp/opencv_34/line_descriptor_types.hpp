@@ -98,9 +98,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::line_descriptor::KeyLine* cv_VectorOfKeyLine_data(std::vector<cv::line_descriptor::KeyLine>* instance) {
+	const cv::line_descriptor::KeyLine* cv_VectorOfKeyLine_data(const std::vector<cv::line_descriptor::KeyLine>* instance) {
 		return instance->data();
 	}
+	
+	cv::line_descriptor::KeyLine* cv_VectorOfKeyLine_data_mut(std::vector<cv::line_descriptor::KeyLine>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::line_descriptor::KeyLine>* cv_VectorOfKeyLine_clone(const std::vector<cv::line_descriptor::KeyLine>* instance) {
+			return new std::vector<cv::line_descriptor::KeyLine>(*instance);
+		}
 	
 }
 

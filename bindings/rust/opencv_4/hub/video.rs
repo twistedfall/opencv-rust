@@ -39,7 +39,7 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 ///    opencv_source_code/samples/python/camshift.py
 pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
 	input_array_arg!(prob_image);
-	unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_to_extern()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+	unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern()) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
 }
 
 /// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
@@ -67,7 +67,7 @@ pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, c
 pub fn build_optical_flow_pyramid(img: &dyn core::ToInputArray, pyramid: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
 	input_array_arg!(img);
 	output_array_arg!(pyramid);
-	unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_to_extern(), max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
+	unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
 }
 
 /// Computes a dense optical flow using the Gunnar Farneback's algorithm.
@@ -178,7 +178,7 @@ pub fn calc_optical_flow_pyr_lk(prev_img: &dyn core::ToInputArray, next_img: &dy
 	input_output_array_arg!(next_pts);
 	output_array_arg!(status);
 	output_array_arg!(err);
-	unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size.opencv_to_extern(), max_level, criteria.opencv_to_extern(), flags, min_eig_threshold) }.into_result()
+	unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, criteria.opencv_as_extern(), flags, min_eig_threshold) }.into_result()
 }
 
 /// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08) .
@@ -334,7 +334,7 @@ pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image
 	input_array_arg!(input_image);
 	input_output_array_arg!(warp_matrix);
 	input_array_arg!(input_mask);
-	unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_to_extern(), input_mask.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08) .
@@ -392,7 +392,7 @@ pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: 
 	input_array_arg!(input_image);
 	input_output_array_arg!(warp_matrix);
 	input_array_arg!(input_mask);
-	unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_to_extern(), input_mask.as_raw__InputArray(), gauss_filt_size) }.into_result()
+	unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray(), gauss_filt_size) }.into_result()
 }
 
 /// Finds an object on a back projection image.
@@ -415,7 +415,7 @@ pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: 
 /// remaining contours with drawContours.
 pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
 	input_array_arg!(prob_image);
-	unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern()) }.into_result()
 }
 
 /// Read a .flo file
@@ -428,7 +428,7 @@ pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, 
 /// flow in the horizontal direction (u), second - vertical (v).
 pub fn read_optical_flow(path: &str) -> Result<core::Mat> {
 	extern_container_arg!(path);
-	unsafe { sys::cv_readOpticalFlow_const_StringR(path.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_readOpticalFlow_const_StringR(path.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Write a .flo to disk
@@ -443,7 +443,7 @@ pub fn read_optical_flow(path: &str) -> Result<core::Mat> {
 pub fn write_optical_flow(path: &str, flow: &dyn core::ToInputArray) -> Result<bool> {
 	extern_container_arg!(path);
 	input_array_arg!(flow);
-	unsafe { sys::cv_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_to_extern(), flow.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_as_extern(), flow.as_raw__InputArray()) }.into_result()
 }
 
 /// Base class for background/foreground segmentation. :
@@ -1350,7 +1350,7 @@ pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
 	}
 	
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), win_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_max_level(&self) -> Result<i32> {
@@ -1395,7 +1395,7 @@ impl dyn SparsePyrLKOpticalFlow + '_ {
 	/// * flags: 0
 	/// * min_eig_threshold: 1e-4
 	pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>> {
-		unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size.opencv_to_extern(), max_level, crit.opencv_to_extern(), flags, min_eig_threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
+		unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size.opencv_as_extern(), max_level, crit.opencv_as_extern(), flags, min_eig_threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
 	}
 	
 }

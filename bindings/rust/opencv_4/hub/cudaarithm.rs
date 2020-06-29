@@ -320,7 +320,7 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Counts non-zero matrix elements.
@@ -365,7 +365,7 @@ pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// ## C++ default parameters
 /// * user_block_size: Size()
 pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaarithm::Convolution>> {
-	unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(r) } )
 }
 
 /// Creates implementation for cuda::DFT.
@@ -382,7 +382,7 @@ pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr::<dyn
 /// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 /// real-complex transform, so the destination matrix must be real.
 pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr::<dyn crate::cudaarithm::DFT>> {
-	unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_to_extern(), flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(r) } )
+	unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(r) } )
 }
 
 /// Creates implementation for cuda::LookUpTable .
@@ -436,7 +436,7 @@ pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr::<
 pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_to_extern(), flags, stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), flags, stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Computes a matrix-matrix or matrix-scalar division.
@@ -611,7 +611,7 @@ pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_to_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -619,7 +619,7 @@ pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 pub fn lshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_to_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Computes squared magnitudes of complex matrix elements.
@@ -1069,7 +1069,7 @@ pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, 
 	input_array_arg!(src);
 	input_array_arg!(sqr);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Reduces a matrix to a vector.
@@ -1121,7 +1121,7 @@ pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, d
 pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_to_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -1129,7 +1129,7 @@ pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_to_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Copies each plane of a multi-channel matrix into an array.

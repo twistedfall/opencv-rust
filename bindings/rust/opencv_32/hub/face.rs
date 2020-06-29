@@ -516,7 +516,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// be safely called from within different threads.
 	fn save(&self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_save_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_save_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Loads a FaceRecognizer and its model state.
@@ -527,7 +527,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// FaceRecognizer::load(const String& filename), to ease saving a model.
 	fn load(&mut self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_load_const_StringR(self.as_raw_mut_FaceRecognizer(), filename.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_load_const_StringR(self.as_raw_mut_FaceRecognizer(), filename.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Saves a FaceRecognizer and its model state.
@@ -568,7 +568,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// The string info is replaced by the provided value if it was set before for the specified label.
 	fn set_label_info(&mut self, label: i32, str_info: &str) -> Result<()> {
 		extern_container_arg!(str_info);
-		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Gets string information by label.
@@ -585,7 +585,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// info.
 	fn get_labels_by_string(&self, str: &str) -> Result<core::Vector::<i32>> {
 		extern_container_arg!(str);
-		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
+		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 	}
 	
 	/// threshold parameter accessor - required for default BestMinDist collector

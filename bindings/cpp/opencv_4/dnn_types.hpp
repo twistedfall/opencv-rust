@@ -721,9 +721,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const cv::dnn::Target* cv_VectorOfTarget_data(std::vector<cv::dnn::Target>* instance) {
+	const cv::dnn::Target* cv_VectorOfTarget_data(const std::vector<cv::dnn::Target>* instance) {
 		return instance->data();
 	}
+	
+	cv::dnn::Target* cv_VectorOfTarget_data_mut(std::vector<cv::dnn::Target>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::dnn::Target>* cv_VectorOfTarget_clone(const std::vector<cv::dnn::Target>* instance) {
+			return new std::vector<cv::dnn::Target>(*instance);
+		}
 	
 }
 

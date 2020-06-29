@@ -222,7 +222,7 @@ opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
 /// * filename: File name of the image
 pub fn have_image_reader(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_as_extern()) }.into_result()
 }
 
 /// Returns true if an image with the specified filename can be encoded by OpenCV
@@ -231,7 +231,7 @@ pub fn have_image_reader(filename: &str) -> Result<bool> {
 /// * filename: File name of the image
 pub fn have_image_writer(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_as_extern()) }.into_result()
 }
 
 /// Reads an image from a buffer in memory.
@@ -291,7 +291,7 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector::<u8>, params: &core::Vector::<i32>) -> Result<bool> {
 	extern_container_arg!(ext);
 	input_array_arg!(img);
-	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_to_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
 }
 
 /// Loads an image from a file.
@@ -351,7 +351,7 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector:
 /// * flags: IMREAD_COLOR
 pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_imread_const_StringR_int(filename.opencv_to_extern(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_imread_const_StringR_int(filename.opencv_as_extern(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Loads a multi-page image from a file.
@@ -368,7 +368,7 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// * flags: IMREAD_ANYCOLOR
 pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_to_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
+	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
 }
 
 /// Saves an image to a specified file.
@@ -403,5 +403,5 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector::<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
-	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_to_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
+	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
 }

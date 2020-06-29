@@ -31,7 +31,7 @@ pub trait WBDetector {
 	fn train(&mut self, pos_samples: &str, neg_imgs: &str) -> Result<()> {
 		extern_container_arg!(pos_samples);
 		extern_container_arg!(neg_imgs);
-		unsafe { sys::cv_xobjdetect_WBDetector_train_const_stringR_const_stringR(self.as_raw_mut_WBDetector(), pos_samples.opencv_to_extern(), neg_imgs.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_xobjdetect_WBDetector_train_const_stringR_const_stringR(self.as_raw_mut_WBDetector(), pos_samples.opencv_as_extern(), neg_imgs.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Detect objects on image using WaldBoost detector

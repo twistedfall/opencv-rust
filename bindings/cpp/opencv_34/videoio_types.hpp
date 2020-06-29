@@ -63,9 +63,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const cv::VideoCaptureAPIs* cv_VectorOfVideoCaptureAPIs_data(std::vector<cv::VideoCaptureAPIs>* instance) {
+	const cv::VideoCaptureAPIs* cv_VectorOfVideoCaptureAPIs_data(const std::vector<cv::VideoCaptureAPIs>* instance) {
 		return instance->data();
 	}
+	
+	cv::VideoCaptureAPIs* cv_VectorOfVideoCaptureAPIs_data_mut(std::vector<cv::VideoCaptureAPIs>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::VideoCaptureAPIs>* cv_VectorOfVideoCaptureAPIs_clone(const std::vector<cv::VideoCaptureAPIs>* instance) {
+			return new std::vector<cv::VideoCaptureAPIs>(*instance);
+		}
 	
 }
 

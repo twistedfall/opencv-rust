@@ -159,7 +159,7 @@ pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutput
 /// 
 pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
-	unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
+	unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 }
 
 /// Displays image in specified window
@@ -169,7 +169,7 @@ pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
 	input_array_arg!(image);
-	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_to_extern(), image.as_raw__InputArray(), &window_size) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
+	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 }
 
 /// Constructs camera pose from position, focal_point and up_vector (see gluLookAt() for more
@@ -220,14 +220,14 @@ pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mu
 	extern_container_arg!(file);
 	output_array_arg!(colors);
 	output_array_arg!(normals);
-	unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_to_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// ////////////////////////////////////////////////////////////////////////////////////////////
 /// Reads mesh. Only ply format is supported now and no texture load support
 pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 	extern_container_arg!(file);
-	unsafe { sys::cv_viz_readMesh_const_StringR(file.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
+	unsafe { sys::cv_viz_readMesh_const_StringR(file.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
 }
 
 /// ## Parameters
@@ -240,7 +240,7 @@ pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<bool> {
 	extern_container_arg!(file);
 	extern_container_arg!(tag);
-	unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_to_extern(), pose, tag.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_as_extern(), pose, tag.opencv_as_extern()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and loads poses from sequence of files
@@ -264,7 +264,7 @@ pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, s
 	output_array_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
-	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(traj.as_raw__OutputArray(), files_format.opencv_to_extern(), start, end, tag.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(traj.as_raw__OutputArray(), files_format.opencv_as_extern(), start, end, tag.opencv_as_extern()) }.into_result()
 }
 
 /// Unregisters all Viz windows from internal database. After it 'getWindowByName()' will create new windows instead of getting existing from the database.
@@ -289,7 +289,7 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 	input_array_arg!(cloud);
 	input_array_arg!(colors);
 	input_array_arg!(normals);
-	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_to_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
+	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
 }
 
 /// ## Parameters
@@ -302,7 +302,7 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
 	extern_container_arg!(file);
 	extern_container_arg!(tag);
-	unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_to_extern(), &pose, tag.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_as_extern(), &pose, tag.opencv_as_extern()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and writes to a sequence of files with given filename format
@@ -324,7 +324,7 @@ pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start
 	input_array_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
-	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(traj.as_raw__InputArray(), files_format.opencv_to_extern(), start, tag.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(traj.as_raw__InputArray(), files_format.opencv_as_extern(), start, tag.opencv_as_extern()) }.into_result()
 }
 
 /// This class wraps intrinsic parameters of a camera.
@@ -714,7 +714,7 @@ pub trait KeyboardEventTrait {
 	
 	fn set_symbol(&mut self, val: &str) -> () {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_viz_KeyboardEvent_setPropSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_symbol")
+		unsafe { sys::cv_viz_KeyboardEvent_setPropSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_symbol")
 	}
 	
 	fn code(&self) -> u8 {
@@ -771,7 +771,7 @@ impl KeyboardEvent {
 	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
 	pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
 		extern_container_arg!(symbol);
-		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_to_extern(), code, modifiers) }.into_result().map(|r| unsafe { crate::viz::KeyboardEvent::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers) }.into_result().map(|r| unsafe { crate::viz::KeyboardEvent::opencv_from_extern(r) } )
 	}
 	
 }
@@ -882,7 +882,7 @@ impl Mesh {
 	/// * typ: LOAD_PLY
 	pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
 		extern_container_arg!(file);
-		unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_to_extern(), typ) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
 	}
 	
 }
@@ -913,7 +913,7 @@ pub trait MouseEventTrait {
 	}
 	
 	fn set_pointer(&mut self, val: core::Point) -> () {
-		unsafe { sys::cv_viz_MouseEvent_setPropPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pointer")
+		unsafe { sys::cv_viz_MouseEvent_setPropPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_pointer")
 	}
 	
 	fn modifiers(&self) -> i32 {
@@ -983,7 +983,7 @@ pub trait Viz3dTrait {
 	/// * pose: Affine3d::Identity()
 	fn show_widget(&mut self, id: &str, widget: &crate::viz::Widget, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), widget.as_raw_Widget(), &pose) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), &pose) }.into_result()
 	}
 	
 	/// Removes a widget from the window.
@@ -992,7 +992,7 @@ pub trait Viz3dTrait {
 	/// * id: The id of the widget that will be removed.
 	fn remove_widget(&mut self, id: &str) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Retrieves a widget from the window.
@@ -1004,7 +1004,7 @@ pub trait Viz3dTrait {
 	/// * id: The id of the widget that will be returned.
 	fn get_widget(&self, id: &str) -> Result<crate::viz::Widget> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringR(self.as_raw_Viz3d(), id.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 	/// Removes all widgets from the window.
@@ -1031,7 +1031,7 @@ pub trait Viz3dTrait {
 	/// * id: The id of the widget whose pose will be set. @param pose The new pose of the widget.
 	fn set_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), &pose) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose) }.into_result()
 	}
 	
 	/// Updates pose of a widget in the window by pre-multiplying its current pose.
@@ -1041,7 +1041,7 @@ pub trait Viz3dTrait {
 	/// pose of the widget will be pre-multiplied by.
 	fn update_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), &pose) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose) }.into_result()
 	}
 	
 	/// Returns the current pose of a widget in the window.
@@ -1050,7 +1050,7 @@ pub trait Viz3dTrait {
 	/// * id: The id of the widget whose pose will be returned.
 	fn get_widget_pose(&self, id: &str) -> Result<core::Affine3d> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringR(self.as_raw_Viz3d(), id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Sets the intrinsic parameters of the viewer using Camera.
@@ -1085,7 +1085,7 @@ pub trait Viz3dTrait {
 	/// * id: Id of a 3D widget.
 	fn reset_camera_viewpoint(&mut self, id: &str) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Resets camera.
@@ -1141,7 +1141,7 @@ pub trait Viz3dTrait {
 	/// * file: Name of the file.
 	fn save_screenshot(&mut self, file: &str) -> Result<()> {
 		extern_container_arg!(file);
-		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringR(self.as_raw_mut_Viz3d(), file.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringR(self.as_raw_mut_Viz3d(), file.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Sets the position of the window in the screen.
@@ -1297,7 +1297,7 @@ pub trait Viz3dTrait {
 	/// *   **SHADING_PHONG**
 	fn set_rendering_property(&mut self, id: &str, property: i32, value: f64) -> Result<()> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), property, value) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, value) }.into_result()
 	}
 	
 	/// Returns rendering property of a widget.
@@ -1327,7 +1327,7 @@ pub trait Viz3dTrait {
 	/// *   **SHADING_PHONG**
 	fn get_rendering_property(&mut self, id: &str, property: i32) -> Result<f64> {
 		extern_container_arg!(id);
-		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringR_int(self.as_raw_mut_Viz3d(), id.opencv_to_extern(), property) }.into_result()
+		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringR_int(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property) }.into_result()
 	}
 	
 	/// Sets geometry representation of the widgets to surface, wireframe or points.
@@ -1385,7 +1385,7 @@ impl Viz3d {
 	/// * window_name: String()
 	pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
 		extern_container_arg!(window_name);
-		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )
 	}
 	
 	pub fn copy(unnamed: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
@@ -2823,7 +2823,7 @@ pub trait WTextTrait: crate::viz::Widget2DTrait {
 	/// * text: Text content of the widget.
 	fn set_text(&mut self, text: &str) -> Result<()> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the current text content of the widget.
@@ -2883,7 +2883,7 @@ impl WText {
 	/// * color: Color::white()
 	pub fn new(text: &str, pos: core::Point, font_size: i32, color: &crate::viz::Color) -> Result<crate::viz::WText> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_to_extern(), &pos, font_size, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2899,7 +2899,7 @@ pub trait WText3DTrait: crate::viz::Widget3DTrait {
 	/// * text: Text content of the widget.
 	fn set_text(&mut self, text: &str) -> Result<()> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the current text content of the widget.
@@ -2961,7 +2961,7 @@ impl WText3D {
 	/// * color: Color::white()
 	pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &crate::viz::Color) -> Result<crate::viz::WText3D> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_to_extern(), &position, text_scale, face_camera, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText3D::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_as_extern(), &position, text_scale, face_camera, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WText3D::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3367,7 +3367,7 @@ impl Widget {
 	/// * file_name: Ply file name.
 	pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
+		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Widget::opencv_from_extern(r) } )
 	}
 	
 }

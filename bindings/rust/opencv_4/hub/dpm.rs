@@ -91,7 +91,7 @@ pub trait DPMDetector_ObjectDetectionTrait {
 	}
 	
 	fn set_rect(&mut self, val: core::Rect) -> () {
-		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_rect")
+		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rect")
 	}
 	
 	fn score(&self) -> f32 {

@@ -791,22 +791,22 @@ opencv_type_simple! { crate::line_descriptor::KeyLine }
 impl KeyLine {
 	/// Returns the start point of the line in the original image
 	pub fn get_start_point(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the original image
 	pub fn get_end_point(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(self.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the start point of the line in the octave it was extracted from
 	pub fn get_start_point_in_octave(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(self.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the octave it was extracted from
 	pub fn get_end_point_in_octave(self) -> Result<core::Point2f> {
-		unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(self.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// constructor
@@ -896,7 +896,7 @@ impl LSDDetector {
 	}
 	
 	pub fn new(_params: crate::line_descriptor::LSDParam) -> Result<crate::line_descriptor::LSDDetector> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(_params.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
+		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(_params.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
 	/// Creates ad LSDDetector object, using smart pointers.
@@ -905,7 +905,7 @@ impl LSDDetector {
 	}
 	
 	pub fn create_lsd_detector_with_params(params: crate::line_descriptor::LSDParam) -> Result<core::Ptr::<crate::line_descriptor::LSDDetector>> {
-		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(params.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
+		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(params.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
 	
 }

@@ -708,12 +708,12 @@ pub trait Pose3DTrait {
 	
 	fn write_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -800,12 +800,12 @@ pub trait PoseCluster3DTrait {
 	
 	fn write_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 }

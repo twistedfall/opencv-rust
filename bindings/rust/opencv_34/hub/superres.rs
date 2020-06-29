@@ -21,12 +21,12 @@ pub fn create_frame_source_empty() -> Result<core::Ptr::<dyn crate::superres::Su
 
 pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr::<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
 }
 
 pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>> {

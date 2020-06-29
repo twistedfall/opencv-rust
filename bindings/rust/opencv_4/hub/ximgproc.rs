@@ -172,6 +172,9 @@ pub enum LocalBinarizationMethods {
 
 opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods }
 
+///   Specifies the degree of rules validation.
+/// @details The enum specifies the degree of rules validation. This can be used,
+///          for example, to choose a proper way of input arguments validation.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RulesOption {
@@ -484,7 +487,7 @@ pub fn color_match_template(img: &dyn core::ToInputArray, templ: &dyn core::ToIn
 pub fn compute_bad_pixel_percent(gt: &dyn core::ToInputArray, src: &dyn core::ToInputArray, roi: core::Rect, thresh: i32) -> Result<f64> {
 	input_array_arg!(gt);
 	input_array_arg!(src);
-	unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_to_extern(), thresh) }.into_result()
+	unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_as_extern(), thresh) }.into_result()
 }
 
 /// Function for computing mean square error for disparity maps
@@ -500,7 +503,7 @@ pub fn compute_bad_pixel_percent(gt: &dyn core::ToInputArray, src: &dyn core::To
 pub fn compute_mse(gt: &dyn core::ToInputArray, src: &dyn core::ToInputArray, roi: core::Rect) -> Result<f64> {
 	input_array_arg!(gt);
 	input_array_arg!(src);
-	unsafe { sys::cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_as_extern()) }.into_result()
 }
 
 ///   Contour sampling .
@@ -802,7 +805,7 @@ pub fn create_right_matcher(mut matcher_left: core::Ptr::<dyn crate::calib3d::St
 /// * how_to_get_features: Ptr<RFFeatureGetter>()
 pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
-	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(model.opencv_to_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
+	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
 }
 
 /// Class implementing the LSC (Linear Spectral Clustering) superpixels
@@ -1238,7 +1241,7 @@ pub fn qunitary(qimg: &dyn core::ToInputArray, qnimg: &mut dyn core::ToOutputArr
 pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32> {
 	extern_container_arg!(mut src_path);
 	output_array_arg!(dst);
-	unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_to_extern_mut(), dst.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_as_extern_mut(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 ///   Creates a run-length encoded image from a vector of runs (column begin, column end, row)
@@ -1253,7 +1256,7 @@ pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32>
 /// * size: Size(0,0)
 pub fn create_rle_image(runs: &mut core::Vector::<core::Point3i>, res: &mut dyn core::ToOutputArray, size: core::Size) -> Result<()> {
 	output_array_arg!(res);
-	unsafe { sys::cv_ximgproc_rl_createRLEImage_vector_Point3i_R_const__OutputArrayR_Size(runs.as_raw_mut_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_rl_createRLEImage_vector_Point3i_R_const__OutputArrayR_Size(runs.as_raw_mut_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_as_extern()) }.into_result()
 }
 
 ///   Dilates an run-length encoded binary image by using a specific structuring element.
@@ -1272,7 +1275,7 @@ pub fn dilate(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::ToOutputA
 	input_array_arg!(rl_src);
 	output_array_arg!(rl_dest);
 	input_array_arg!(rl_kernel);
-	unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), anchor.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), anchor.opencv_as_extern()) }.into_result()
 }
 
 ///   Erodes an run-length encoded binary image by using a specific structuring element.
@@ -1294,7 +1297,7 @@ pub fn erode(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::ToOutputAr
 	input_array_arg!(rl_src);
 	output_array_arg!(rl_dest);
 	input_array_arg!(rl_kernel);
-	unsafe { sys::cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), b_boundary_on, anchor.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), b_boundary_on, anchor.opencv_as_extern()) }.into_result()
 }
 
 ///   Returns a run length encoded structuring element of the specified size and shape.
@@ -1304,7 +1307,7 @@ pub fn erode(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::ToOutputAr
 /// * shape: 	Element shape that can be one of cv::MorphShapes
 /// * ksize: 	Size of the structuring element.
 pub fn get_structuring_element(shape: i32, ksize: core::Size) -> Result<core::Mat> {
-	unsafe { sys::cv_ximgproc_rl_getStructuringElement_int_Size(shape, ksize.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_ximgproc_rl_getStructuringElement_int_Size(shape, ksize.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 ///   Check whether a custom made structuring element can be used with run length morphological operations.
@@ -1337,7 +1340,7 @@ pub fn morphology_ex(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::To
 	input_array_arg!(rl_src);
 	output_array_arg!(rl_dest);
 	input_array_arg!(rl_kernel);
-	unsafe { sys::cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), op, rl_kernel.as_raw__InputArray(), b_boundary_on_for_erosion, anchor.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), op, rl_kernel.as_raw__InputArray(), b_boundary_on_for_erosion, anchor.opencv_as_extern()) }.into_result()
 }
 
 ///   Paint run length encoded binary image into an image.
@@ -1857,7 +1860,7 @@ pub trait DisparityFilter: core::AlgorithmTrait {
 		output_array_arg!(filtered_disparity_map);
 		input_array_arg!(disparity_map_right);
 		input_array_arg!(right_view);
-		unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), roi.opencv_to_extern(), right_view.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), roi.opencv_as_extern(), right_view.as_raw__InputArray()) }.into_result()
 	}
 	
 }

@@ -92,9 +92,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const cv::flann::FlannIndexType* cv_VectorOfFlannIndexType_data(std::vector<cv::flann::FlannIndexType>* instance) {
+	const cv::flann::FlannIndexType* cv_VectorOfFlannIndexType_data(const std::vector<cv::flann::FlannIndexType>* instance) {
 		return instance->data();
 	}
+	
+	cv::flann::FlannIndexType* cv_VectorOfFlannIndexType_data_mut(std::vector<cv::flann::FlannIndexType>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::flann::FlannIndexType>* cv_VectorOfFlannIndexType_clone(const std::vector<cv::flann::FlannIndexType>* instance) {
+			return new std::vector<cv::flann::FlannIndexType>(*instance);
+		}
 	
 }
 

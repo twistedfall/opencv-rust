@@ -447,7 +447,7 @@ pub fn create_variational_flow_refinement() -> Result<core::Ptr::<dyn crate::opt
 /// flow in the horizontal direction (u), second - vertical (v).
 pub fn read_optical_flow(path: &str) -> Result<core::Mat> {
 	extern_container_arg!(path);
-	unsafe { sys::cv_optflow_readOpticalFlow_const_StringR(path.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_optflow_readOpticalFlow_const_StringR(path.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Write a .flo to disk
@@ -462,16 +462,16 @@ pub fn read_optical_flow(path: &str) -> Result<core::Mat> {
 pub fn write_optical_flow(path: &str, flow: &dyn core::ToInputArray) -> Result<bool> {
 	extern_container_arg!(path);
 	input_array_arg!(flow);
-	unsafe { sys::cv_optflow_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_to_extern(), flow.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_optflow_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_as_extern(), flow.as_raw__InputArray()) }.into_result()
 }
 
 pub fn read(fn_: &core::FileNode, node: &mut crate::optflow::GPCTree_Node, unnamed: crate::optflow::GPCTree_Node) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, unnamed.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, unnamed.opencv_as_extern()) }.into_result()
 }
 
 pub fn write(fs: &mut core::FileStorage, name: &str, node: crate::optflow::GPCTree_Node) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_to_extern(), &node) }.into_result()
+	unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), &node) }.into_result()
 }
 
 /// DIS optical flow algorithm.
@@ -691,7 +691,7 @@ impl GPCDetails {
 	}
 	
 	pub fn get_coordinates_from_index(index: size_t, sz: core::Size, x: &mut i32, y: &mut i32) -> Result<()> {
-		unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, sz.opencv_to_extern(), x, y) }.into_result()
+		unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, sz.opencv_as_extern(), x, y) }.into_result()
 	}
 	
 }
@@ -728,7 +728,7 @@ pub trait GPCPatchDescriptorTrait {
 	}
 	
 	fn set_feature(&mut self, val: core::Vec18<f64>) -> () {
-		unsafe { sys::cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_feature")
+		unsafe { sys::cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_feature")
 	}
 	
 	fn dot(&self, coef: core::Vec18<f64>) -> Result<f64> {
@@ -864,7 +864,7 @@ impl GPCTrainingParams {
 	}
 	
 	pub fn check(self) -> Result<bool> {
-		unsafe { sys::cv_optflow_GPCTrainingParams_check_const(self.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_optflow_GPCTrainingParams_check_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -934,7 +934,7 @@ pub trait GPCTreeTrait: core::AlgorithmTrait {
 	/// ## C++ default parameters
 	/// * params: GPCTrainingParams()
 	fn train(&mut self, samples: &mut crate::optflow::GPCTrainingSamples, params: crate::optflow::GPCTrainingParams) -> Result<()> {
-		unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
@@ -1083,7 +1083,7 @@ impl OpticalFlowPCAFlow {
 	/// * _damping_factor: 0.00002
 	/// * _clahe_clip: 14
 	pub fn new(_prior: core::Ptr::<crate::optflow::PCAPrior>, _basis_size: core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<crate::optflow::OpticalFlowPCAFlow> {
-		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_PCAPrior__Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_to_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip) }.into_result().map(|r| unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(r) } )
+		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_PCAPrior__Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip) }.into_result().map(|r| unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1142,7 +1142,7 @@ impl crate::optflow::PCAPriorTrait for PCAPrior {
 impl PCAPrior {
 	pub fn new(path_to_prior: &str) -> Result<crate::optflow::PCAPrior> {
 		extern_container_arg!(path_to_prior);
-		unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::optflow::PCAPrior::opencv_from_extern(r) } )
+		unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::optflow::PCAPrior::opencv_from_extern(r) } )
 	}
 	
 }

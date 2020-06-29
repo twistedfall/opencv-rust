@@ -39,23 +39,23 @@ pub trait Plot2d: core::AlgorithmTrait {
 	}
 	
 	fn set_plot_line_color(&mut self, _plot_line_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotLineColor_Scalar(self.as_raw_mut_Plot2d(), _plot_line_color.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotLineColor_Scalar(self.as_raw_mut_Plot2d(), _plot_line_color.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_plot_background_color(&mut self, _plot_background_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotBackgroundColor_Scalar(self.as_raw_mut_Plot2d(), _plot_background_color.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotBackgroundColor_Scalar(self.as_raw_mut_Plot2d(), _plot_background_color.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_plot_axis_color(&mut self, _plot_axis_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotAxisColor_Scalar(self.as_raw_mut_Plot2d(), _plot_axis_color.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotAxisColor_Scalar(self.as_raw_mut_Plot2d(), _plot_axis_color.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_plot_grid_color(&mut self, _plot_grid_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotGridColor_Scalar(self.as_raw_mut_Plot2d(), _plot_grid_color.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotGridColor_Scalar(self.as_raw_mut_Plot2d(), _plot_grid_color.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_plot_text_color(&mut self, _plot_text_color: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_plot_Plot2d_setPlotTextColor_Scalar(self.as_raw_mut_Plot2d(), _plot_text_color.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_plot_Plot2d_setPlotTextColor_Scalar(self.as_raw_mut_Plot2d(), _plot_text_color.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_plot_size(&mut self, _plot_size_width: i32, _plot_size_height: i32) -> Result<()> {

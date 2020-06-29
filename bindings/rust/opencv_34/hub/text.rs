@@ -286,7 +286,7 @@ pub fn create_er_filter_nm1(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>
 /// * min_probability_diff: (float)0.1
 pub fn create_er_filter_nm1_1(filename: &str, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float(filename.opencv_to_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float(filename.opencv_as_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 /// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Neumann12).
@@ -328,12 +328,12 @@ pub fn create_er_filter_nm2(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>
 /// * min_probability: (float)0.3
 pub fn create_er_filter_nm2_1(filename: &str, min_probability: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_createERFilterNM2_const_StringR_float(filename.opencv_to_extern(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createERFilterNM2_const_StringR_float(filename.opencv_as_extern(), min_probability) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(r) } )
 }
 
 pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::Vector::<String>) -> Result<core::Mat> {
 	extern_container_arg!(vocabulary);
-	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vector_String_R(vocabulary.opencv_to_extern(), lexicon.as_raw_mut_VectorOfString()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vector_String_R(vocabulary.opencv_as_extern(), lexicon.as_raw_mut_VectorOfString()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Utility function to create a tailored language model transitions table from a given list of words (lexicon).
@@ -376,7 +376,7 @@ pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut co
 pub fn detect_regions_1(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<dyn crate::text::ERFilter>, er_filter2: &core::Ptr::<dyn crate::text::ERFilter>, groups_rects: &mut core::Vector::<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
 	input_array_arg!(image);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probability) }.into_result()
+	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probability) }.into_result()
 }
 
 pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<dyn crate::text::ERFilter>, er_filter2: &core::Ptr::<dyn crate::text::ERFilter>, regions: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
@@ -416,7 +416,7 @@ pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArr
 	input_array_arg!(img);
 	input_array_arg!(channels);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_ERStat__R_vector_vector_Vec2i__R_vector_Rect_R_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_ERStat__R_vector_vector_Vec2i__R_vector_Rect_R_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity) }.into_result()
 }
 
 /// ## C++ default parameters
@@ -427,7 +427,7 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 	input_array_arg!(image);
 	input_array_arg!(channel);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_Point___vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_to_extern(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_Point___vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity) }.into_result()
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -438,7 +438,7 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 /// returns a pointer to ERFilter::Callback.
 pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM1_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadClassifierNM1_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -449,7 +449,7 @@ pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr::<dyn crate::text
 /// returns a pointer to ERFilter::Callback.
 pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM2_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadClassifierNM2_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRBeamSearchDecoder object.
@@ -463,7 +463,7 @@ pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr::<dyn crate::text
 /// at each window location.
 pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -481,7 +481,7 @@ pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<core::Ptr::
 #[deprecated = "use loadOCRHMMClassifier instead"]
 pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -501,7 +501,7 @@ pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::t
 #[deprecated = "loadOCRHMMClassifier instead"]
 pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringR(filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -512,7 +512,7 @@ pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<core::Ptr::<crate::te
 /// * classifier: Can be one of classifier_type enum values.
 pub fn load_ocrhmm_classifier(filename: &str, classifier: i32) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifier_const_StringR_int(filename.opencv_to_extern(), classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
+	unsafe { sys::cv_text_loadOCRHMMClassifier_const_StringR_int(filename.opencv_as_extern(), classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(r) } )
 }
 
 pub trait BaseOCR {
@@ -683,7 +683,7 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_rect(&mut self, val: core::Rect) -> () {
-		unsafe { sys::cv_text_ERStat_setPropRect_Rect(self.as_raw_mut_ERStat(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_rect")
+		unsafe { sys::cv_text_ERStat_setPropRect_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rect")
 	}
 	
 	/// order 1 raw moments to derive the centroid
@@ -986,7 +986,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -996,7 +996,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
@@ -1030,7 +1030,7 @@ impl OCRBeamSearchDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1265,7 +1265,7 @@ impl OCRHMMDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -1274,7 +1274,7 @@ impl OCRHMMDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
@@ -1306,7 +1306,7 @@ impl OCRHMMDecoder {
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_to_extern(), vocabulary.opencv_to_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1441,7 +1441,7 @@ impl dyn OCRHolisticWordRecognizer + '_ {
 		extern_container_arg!(arch_filename);
 		extern_container_arg!(weights_filename);
 		extern_container_arg!(words_filename);
-		unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_to_extern(), weights_filename.opencv_to_extern(), words_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_as_extern(), weights_filename.opencv_as_extern(), words_filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1519,7 +1519,7 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	
 	fn set_white_list(&mut self, char_whitelist: &str) -> Result<()> {
 		extern_container_arg!(char_whitelist);
-		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringR(self.as_raw_mut_OCRTesseract(), char_whitelist.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringR(self.as_raw_mut_OCRTesseract(), char_whitelist.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -1550,7 +1550,7 @@ impl dyn OCRTesseract + '_ {
 		extern_container_arg!(datapath);
 		extern_container_arg!(language);
 		extern_container_arg!(char_whitelist);
-		unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_to_extern(), language.opencv_to_extern(), char_whitelist.opencv_to_extern(), oem, psmode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRTesseract>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_as_extern(), language.opencv_as_extern(), char_whitelist.opencv_as_extern(), oem, psmode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::OCRTesseract>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1604,7 +1604,7 @@ impl dyn TextDetectorCNN + '_ {
 	pub fn create(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector::<core::Size>) -> Result<core::Ptr::<dyn crate::text::TextDetectorCNN>> {
 		extern_container_arg!(model_arch_filename);
 		extern_container_arg!(model_weights_filename);
-		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern(), detection_sizes.as_raw_mut_VectorOfSize()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), detection_sizes.as_raw_mut_VectorOfSize()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates an instance of the TextDetectorCNN class using the provided parameters.
@@ -1619,7 +1619,7 @@ impl dyn TextDetectorCNN + '_ {
 	pub fn create_1(model_arch_filename: &str, model_weights_filename: &str) -> Result<core::Ptr::<dyn crate::text::TextDetectorCNN>> {
 		extern_container_arg!(model_arch_filename);
 		extern_container_arg!(model_weights_filename);
-		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename.opencv_to_extern(), model_weights_filename.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(r) } )
 	}
 	
 }

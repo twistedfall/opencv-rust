@@ -23,7 +23,7 @@ pub fn build_warp_affine_maps(m: &dyn core::ToInputArray, inverse: bool, dsize: 
 	input_array_arg!(m);
 	output_array_arg!(xmap);
 	output_array_arg!(ymap);
-	unsafe { sys::cv_cuda_buildWarpAffineMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, dsize.opencv_to_extern(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_buildWarpAffineMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, dsize.opencv_as_extern(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Builds transformation maps for perspective transformation.
@@ -44,7 +44,7 @@ pub fn build_warp_perspective_maps(m: &dyn core::ToInputArray, inverse: bool, ds
 	input_array_arg!(m);
 	output_array_arg!(xmap);
 	output_array_arg!(ymap);
-	unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, dsize.opencv_to_extern(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, dsize.opencv_as_extern(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Smoothes an image and downsamples it.
@@ -112,7 +112,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, xm
 	output_array_arg!(dst);
 	input_array_arg!(xmap);
 	input_array_arg!(ymap);
-	unsafe { sys::cv_cuda_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), xmap.as_raw__InputArray(), ymap.as_raw__InputArray(), interpolation, border_mode, border_value.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), xmap.as_raw__InputArray(), ymap.as_raw__InputArray(), interpolation, border_mode, border_value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Resizes an image.
@@ -142,7 +142,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, xm
 pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, fx: f64, fy: f64, interpolation: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), fx, fy, interpolation, stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_as_extern(), fx, fy, interpolation, stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Rotates an image around the origin (0,0) and then shifts it.
@@ -169,7 +169,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, angle: f64, x_shift: f64, y_shift: f64, interpolation: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rotate_const__InputArrayR_const__OutputArrayR_Size_double_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), angle, x_shift, y_shift, interpolation, stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_rotate_const__InputArrayR_const__OutputArrayR_Size_double_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_as_extern(), angle, x_shift, y_shift, interpolation, stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Applies an affine transformation to an image.
@@ -198,7 +198,7 @@ pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, border_value.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, border_value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// Applies a perspective transformation to an image.
@@ -227,5 +227,5 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, border_value.opencv_to_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, border_value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
 }

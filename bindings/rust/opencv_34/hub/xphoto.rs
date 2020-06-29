@@ -193,7 +193,7 @@ pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldW
 /// * path_to_model: String()
 pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr::<dyn crate::xphoto::LearningBasedWB>> {
 	extern_container_arg!(path_to_model);
-	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringR(path_to_model.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
+	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringR(path_to_model.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of SimpleWB

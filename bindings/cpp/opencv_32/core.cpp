@@ -247,12 +247,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result_void cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR(const cv::_InputArray* _src, const cv::_OutputArray* _dst, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::convertFp16(*_src, *_dst, *stream);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
+	#endif
 	
 	Result_void cv_cuda_createContinuous_int_int_int_const__OutputArrayR(int rows, int cols, int type, const cv::_OutputArray* arr) {
 		try {
@@ -6883,12 +6885,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
 	}
 	
+	#if !defined(OCVRS_TARGET_OS_WINDOWS)
 	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_vector_GpuMat_R(const std::vector<cv::cuda::GpuMat>* d_mat) {
 		try {
 			cv::_OutputArray* ret = new cv::_OutputArray(*d_mat);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
 	}
+	#endif
 	
 	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_HostMemR(const cv::cuda::HostMem* cuda_mem) {
 		try {

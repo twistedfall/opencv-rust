@@ -20,7 +20,7 @@ pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector
 	input_array_arg!(img2);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
-	unsafe { sys::cvv_impl_debugDMatch_const__InputArrayR_vector_KeyPoint__const__InputArrayR_vector_KeyPoint__vector_DMatch__const_CallMetaDataR_const_charX_const_charX_bool(img1.as_raw__InputArray(), keypoints1.as_raw_mut_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_mut_VectorOfKeyPoint(), matches.as_raw_mut_VectorOfDMatch(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern(), use_train_descriptor) }.into_result()
+	unsafe { sys::cvv_impl_debugDMatch_const__InputArrayR_vector_KeyPoint__const__InputArrayR_vector_KeyPoint__vector_DMatch__const_CallMetaDataR_const_charX_const_charX_bool(img1.as_raw__InputArray(), keypoints1.as_raw_mut_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_mut_VectorOfKeyPoint(), matches.as_raw_mut_VectorOfDMatch(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern(), use_train_descriptor) }.into_result()
 }
 
 pub fn debug_filter(original: &dyn core::ToInputArray, result: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
@@ -28,7 +28,7 @@ pub fn debug_filter(original: &dyn core::ToInputArray, result: &dyn core::ToInpu
 	input_array_arg!(result);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
-	unsafe { sys::cvv_impl_debugFilter_const__InputArrayR_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(original.as_raw__InputArray(), result.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern()) }.into_result()
+	unsafe { sys::cvv_impl_debugFilter_const__InputArrayR_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(original.as_raw__InputArray(), result.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern()) }.into_result()
 }
 
 pub fn final_show() -> Result<()> {
@@ -39,7 +39,7 @@ pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData,
 	input_array_arg!(img);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
-	unsafe { sys::cvv_impl_showImage_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(img.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_to_extern(), view.opencv_to_extern()) }.into_result()
+	unsafe { sys::cvv_impl_showImage_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(img.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern()) }.into_result()
 }
 
 /// Optional information about a location in Code.
@@ -108,7 +108,7 @@ impl CallMetaData {
 	pub fn new(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
 		extern_container_arg!(file);
 		extern_container_arg!(function);
-		unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_to_extern(), line, function.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::cvv::CallMetaData::opencv_from_extern(r) } )
+		unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_as_extern(), line, function.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::cvv::CallMetaData::opencv_from_extern(r) } )
 	}
 	
 }

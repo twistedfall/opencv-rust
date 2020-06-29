@@ -576,8 +576,9 @@ mod core_types {
 		cv_VectorOfDMatch_get, cv_VectorOfDMatch_set,
 		cv_VectorOfDMatch_push, cv_VectorOfDMatch_insert,
 	}
-	vector_copy_non_bool! { core::DMatch, *const c_void,
-		cv_VectorOfDMatch_data
+	vector_copy_non_bool! { core::DMatch, *const c_void, *mut c_void,
+		cv_VectorOfDMatch_data, cv_VectorOfDMatch_data_mut,
+		cv_VectorOfDMatch_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::DMatch> {}
@@ -598,7 +599,7 @@ mod core_types {
 		cv_VectorOfGpuMat_get, cv_VectorOfGpuMat_set,
 		cv_VectorOfGpuMat_push, cv_VectorOfGpuMat_insert,
 	}
-	vector_non_copy_or_bool! { core::GpuMat }
+	vector_non_copy_or_bool! { clone core::GpuMat }
 	
 	unsafe impl Send for core::Vector::<core::GpuMat> {}
 	
@@ -618,8 +619,9 @@ mod core_types {
 		cv_VectorOfKeyPoint_get, cv_VectorOfKeyPoint_set,
 		cv_VectorOfKeyPoint_push, cv_VectorOfKeyPoint_insert,
 	}
-	vector_copy_non_bool! { core::KeyPoint, *const c_void,
-		cv_VectorOfKeyPoint_data
+	vector_copy_non_bool! { core::KeyPoint, *const c_void, *mut c_void,
+		cv_VectorOfKeyPoint_data, cv_VectorOfKeyPoint_data_mut,
+		cv_VectorOfKeyPoint_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::KeyPoint> {}
@@ -640,7 +642,7 @@ mod core_types {
 		cv_VectorOfMat_get, cv_VectorOfMat_set,
 		cv_VectorOfMat_push, cv_VectorOfMat_insert,
 	}
-	vector_non_copy_or_bool! { core::Mat }
+	vector_non_copy_or_bool! { clone core::Mat }
 	
 	unsafe impl Send for core::Vector::<core::Mat> {}
 	
@@ -680,8 +682,9 @@ mod core_types {
 		cv_VectorOfPoint_get, cv_VectorOfPoint_set,
 		cv_VectorOfPoint_push, cv_VectorOfPoint_insert,
 	}
-	vector_copy_non_bool! { core::Point, *const c_void,
-		cv_VectorOfPoint_data
+	vector_copy_non_bool! { core::Point, *const c_void, *mut c_void,
+		cv_VectorOfPoint_data, cv_VectorOfPoint_data_mut,
+		cv_VectorOfPoint_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point> {}
@@ -753,8 +756,9 @@ mod core_types {
 		cv_VectorOfPoint2d_get, cv_VectorOfPoint2d_set,
 		cv_VectorOfPoint2d_push, cv_VectorOfPoint2d_insert,
 	}
-	vector_copy_non_bool! { core::Point2d, *const c_void,
-		cv_VectorOfPoint2d_data
+	vector_copy_non_bool! { core::Point2d, *const c_void, *mut c_void,
+		cv_VectorOfPoint2d_data, cv_VectorOfPoint2d_data_mut,
+		cv_VectorOfPoint2d_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point2d> {}
@@ -826,8 +830,9 @@ mod core_types {
 		cv_VectorOfPoint2f_get, cv_VectorOfPoint2f_set,
 		cv_VectorOfPoint2f_push, cv_VectorOfPoint2f_insert,
 	}
-	vector_copy_non_bool! { core::Point2f, *const c_void,
-		cv_VectorOfPoint2f_data
+	vector_copy_non_bool! { core::Point2f, *const c_void, *mut c_void,
+		cv_VectorOfPoint2f_data, cv_VectorOfPoint2f_data_mut,
+		cv_VectorOfPoint2f_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point2f> {}
@@ -899,8 +904,9 @@ mod core_types {
 		cv_VectorOfPoint3d_get, cv_VectorOfPoint3d_set,
 		cv_VectorOfPoint3d_push, cv_VectorOfPoint3d_insert,
 	}
-	vector_copy_non_bool! { core::Point3d, *const c_void,
-		cv_VectorOfPoint3d_data
+	vector_copy_non_bool! { core::Point3d, *const c_void, *mut c_void,
+		cv_VectorOfPoint3d_data, cv_VectorOfPoint3d_data_mut,
+		cv_VectorOfPoint3d_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3d> {}
@@ -972,8 +978,9 @@ mod core_types {
 		cv_VectorOfPoint3f_get, cv_VectorOfPoint3f_set,
 		cv_VectorOfPoint3f_push, cv_VectorOfPoint3f_insert,
 	}
-	vector_copy_non_bool! { core::Point3f, *const c_void,
-		cv_VectorOfPoint3f_data
+	vector_copy_non_bool! { core::Point3f, *const c_void, *mut c_void,
+		cv_VectorOfPoint3f_data, cv_VectorOfPoint3f_data_mut,
+		cv_VectorOfPoint3f_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3f> {}
@@ -1045,8 +1052,9 @@ mod core_types {
 		cv_VectorOfPoint3i_get, cv_VectorOfPoint3i_set,
 		cv_VectorOfPoint3i_push, cv_VectorOfPoint3i_insert,
 	}
-	vector_copy_non_bool! { core::Point3i, *const c_void,
-		cv_VectorOfPoint3i_data
+	vector_copy_non_bool! { core::Point3i, *const c_void, *mut c_void,
+		cv_VectorOfPoint3i_data, cv_VectorOfPoint3i_data_mut,
+		cv_VectorOfPoint3i_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Point3i> {}
@@ -1138,8 +1146,9 @@ mod core_types {
 		cv_VectorOfRect_get, cv_VectorOfRect_set,
 		cv_VectorOfRect_push, cv_VectorOfRect_insert,
 	}
-	vector_copy_non_bool! { core::Rect, *const c_void,
-		cv_VectorOfRect_data
+	vector_copy_non_bool! { core::Rect, *const c_void, *mut c_void,
+		cv_VectorOfRect_data, cv_VectorOfRect_data_mut,
+		cv_VectorOfRect_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Rect> {}
@@ -1211,8 +1220,9 @@ mod core_types {
 		cv_VectorOfRect2d_get, cv_VectorOfRect2d_set,
 		cv_VectorOfRect2d_push, cv_VectorOfRect2d_insert,
 	}
-	vector_copy_non_bool! { core::Rect2d, *const c_void,
-		cv_VectorOfRect2d_data
+	vector_copy_non_bool! { core::Rect2d, *const c_void, *mut c_void,
+		cv_VectorOfRect2d_data, cv_VectorOfRect2d_data_mut,
+		cv_VectorOfRect2d_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Rect2d> {}
@@ -1304,8 +1314,9 @@ mod core_types {
 		cv_VectorOfScalar_get, cv_VectorOfScalar_set,
 		cv_VectorOfScalar_push, cv_VectorOfScalar_insert,
 	}
-	vector_copy_non_bool! { core::Scalar, *const c_void,
-		cv_VectorOfScalar_data
+	vector_copy_non_bool! { core::Scalar, *const c_void, *mut c_void,
+		cv_VectorOfScalar_data, cv_VectorOfScalar_data_mut,
+		cv_VectorOfScalar_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Scalar> {}
@@ -1377,8 +1388,9 @@ mod core_types {
 		cv_VectorOfSize_get, cv_VectorOfSize_set,
 		cv_VectorOfSize_push, cv_VectorOfSize_insert,
 	}
-	vector_copy_non_bool! { core::Size, *const c_void,
-		cv_VectorOfSize_data
+	vector_copy_non_bool! { core::Size, *const c_void, *mut c_void,
+		cv_VectorOfSize_data, cv_VectorOfSize_data_mut,
+		cv_VectorOfSize_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Size> {}
@@ -1470,7 +1482,7 @@ mod core_types {
 		cv_VectorOfUMat_get, cv_VectorOfUMat_set,
 		cv_VectorOfUMat_push, cv_VectorOfUMat_insert,
 	}
-	vector_non_copy_or_bool! { core::UMat }
+	vector_non_copy_or_bool! { clone core::UMat }
 	
 	unsafe impl Send for core::Vector::<core::UMat> {}
 	
@@ -1490,8 +1502,9 @@ mod core_types {
 		cv_VectorOfVec2i_get, cv_VectorOfVec2i_set,
 		cv_VectorOfVec2i_push, cv_VectorOfVec2i_insert,
 	}
-	vector_copy_non_bool! { core::Vec2i, *const c_void,
-		cv_VectorOfVec2i_data
+	vector_copy_non_bool! { core::Vec2i, *const c_void, *mut c_void,
+		cv_VectorOfVec2i_data, cv_VectorOfVec2i_data_mut,
+		cv_VectorOfVec2i_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec2i> {}
@@ -1563,8 +1576,9 @@ mod core_types {
 		cv_VectorOfVec3d_get, cv_VectorOfVec3d_set,
 		cv_VectorOfVec3d_push, cv_VectorOfVec3d_insert,
 	}
-	vector_copy_non_bool! { core::Vec3d, *const c_void,
-		cv_VectorOfVec3d_data
+	vector_copy_non_bool! { core::Vec3d, *const c_void, *mut c_void,
+		cv_VectorOfVec3d_data, cv_VectorOfVec3d_data_mut,
+		cv_VectorOfVec3d_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec3d> {}
@@ -1636,8 +1650,9 @@ mod core_types {
 		cv_VectorOfVec3f_get, cv_VectorOfVec3f_set,
 		cv_VectorOfVec3f_push, cv_VectorOfVec3f_insert,
 	}
-	vector_copy_non_bool! { core::Vec3f, *const c_void,
-		cv_VectorOfVec3f_data
+	vector_copy_non_bool! { core::Vec3f, *const c_void, *mut c_void,
+		cv_VectorOfVec3f_data, cv_VectorOfVec3f_data_mut,
+		cv_VectorOfVec3f_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec3f> {}
@@ -1709,8 +1724,9 @@ mod core_types {
 		cv_VectorOfVec3i_get, cv_VectorOfVec3i_set,
 		cv_VectorOfVec3i_push, cv_VectorOfVec3i_insert,
 	}
-	vector_copy_non_bool! { core::Vec3i, *const c_void,
-		cv_VectorOfVec3i_data
+	vector_copy_non_bool! { core::Vec3i, *const c_void, *mut c_void,
+		cv_VectorOfVec3i_data, cv_VectorOfVec3i_data_mut,
+		cv_VectorOfVec3i_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec3i> {}
@@ -1782,8 +1798,9 @@ mod core_types {
 		cv_VectorOfVec4f_get, cv_VectorOfVec4f_set,
 		cv_VectorOfVec4f_push, cv_VectorOfVec4f_insert,
 	}
-	vector_copy_non_bool! { core::Vec4f, *const c_void,
-		cv_VectorOfVec4f_data
+	vector_copy_non_bool! { core::Vec4f, *const c_void, *mut c_void,
+		cv_VectorOfVec4f_data, cv_VectorOfVec4f_data_mut,
+		cv_VectorOfVec4f_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec4f> {}
@@ -1855,8 +1872,9 @@ mod core_types {
 		cv_VectorOfVec4i_get, cv_VectorOfVec4i_set,
 		cv_VectorOfVec4i_push, cv_VectorOfVec4i_insert,
 	}
-	vector_copy_non_bool! { core::Vec4i, *const c_void,
-		cv_VectorOfVec4i_data
+	vector_copy_non_bool! { core::Vec4i, *const c_void, *mut c_void,
+		cv_VectorOfVec4i_data, cv_VectorOfVec4i_data_mut,
+		cv_VectorOfVec4i_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec4i> {}
@@ -1928,8 +1946,9 @@ mod core_types {
 		cv_VectorOfVec6f_get, cv_VectorOfVec6f_set,
 		cv_VectorOfVec6f_push, cv_VectorOfVec6f_insert,
 	}
-	vector_copy_non_bool! { core::Vec6f, *const c_void,
-		cv_VectorOfVec6f_data
+	vector_copy_non_bool! { core::Vec6f, *const c_void, *mut c_void,
+		cv_VectorOfVec6f_data, cv_VectorOfVec6f_data_mut,
+		cv_VectorOfVec6f_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<core::Vec6f> {}
@@ -2001,7 +2020,7 @@ mod core_types {
 		cv_VectorOfVectorOfDMatch_get, cv_VectorOfVectorOfDMatch_set,
 		cv_VectorOfVectorOfDMatch_push, cv_VectorOfVectorOfDMatch_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::DMatch> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::DMatch> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::DMatch>> {}
 	
@@ -2021,7 +2040,7 @@ mod core_types {
 		cv_VectorOfVectorOfKeyPoint_get, cv_VectorOfVectorOfKeyPoint_set,
 		cv_VectorOfVectorOfKeyPoint_push, cv_VectorOfVectorOfKeyPoint_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::KeyPoint> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::KeyPoint> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::KeyPoint>> {}
 	
@@ -2041,7 +2060,7 @@ mod core_types {
 		cv_VectorOfVectorOfMat_get, cv_VectorOfVectorOfMat_set,
 		cv_VectorOfVectorOfMat_push, cv_VectorOfVectorOfMat_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Mat> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Mat> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Mat>> {}
 	
@@ -2061,7 +2080,7 @@ mod core_types {
 		cv_VectorOfVectorOfPoint_get, cv_VectorOfVectorOfPoint_set,
 		cv_VectorOfVectorOfPoint_push, cv_VectorOfVectorOfPoint_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Point> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Point> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point>> {}
 	
@@ -2132,7 +2151,7 @@ mod core_types {
 		cv_VectorOfVectorOfPoint2f_get, cv_VectorOfVectorOfPoint2f_set,
 		cv_VectorOfVectorOfPoint2f_push, cv_VectorOfVectorOfPoint2f_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Point2f> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Point2f> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point2f>> {}
 	
@@ -2203,7 +2222,7 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3d_get, cv_VectorOfVectorOfPoint3d_set,
 		cv_VectorOfVectorOfPoint3d_push, cv_VectorOfVectorOfPoint3d_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Point3d> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Point3d> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3d>> {}
 	
@@ -2274,7 +2293,7 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3f_get, cv_VectorOfVectorOfPoint3f_set,
 		cv_VectorOfVectorOfPoint3f_push, cv_VectorOfVectorOfPoint3f_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Point3f> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Point3f> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3f>> {}
 	
@@ -2345,7 +2364,7 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3i_get, cv_VectorOfVectorOfPoint3i_set,
 		cv_VectorOfVectorOfPoint3i_push, cv_VectorOfVectorOfPoint3i_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Point3i> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Point3i> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Point3i>> {}
 	
@@ -2436,7 +2455,7 @@ mod core_types {
 		cv_VectorOfVectorOfRect_get, cv_VectorOfVectorOfRect_set,
 		cv_VectorOfVectorOfRect_push, cv_VectorOfVectorOfRect_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Rect> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Rect> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Rect>> {}
 	
@@ -2507,7 +2526,7 @@ mod core_types {
 		cv_VectorOfVectorOfVec2i_get, cv_VectorOfVectorOfVec2i_set,
 		cv_VectorOfVectorOfVec2i_push, cv_VectorOfVectorOfVec2i_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<core::Vec2i> }
+	vector_non_copy_or_bool! { clone core::Vector::<core::Vec2i> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<core::Vec2i>> {}
 	
@@ -2578,7 +2597,7 @@ mod core_types {
 		cv_VectorOfVectorOfbool_get, cv_VectorOfVectorOfbool_set,
 		cv_VectorOfVectorOfbool_push, cv_VectorOfVectorOfbool_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<bool> }
+	vector_non_copy_or_bool! { clone core::Vector::<bool> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<bool>> {}
 	
@@ -2598,7 +2617,7 @@ mod core_types {
 		cv_VectorOfVectorOff64_get, cv_VectorOfVectorOff64_set,
 		cv_VectorOfVectorOff64_push, cv_VectorOfVectorOff64_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<f64> }
+	vector_non_copy_or_bool! { clone core::Vector::<f64> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<f64>> {}
 	
@@ -2669,7 +2688,7 @@ mod core_types {
 		cv_VectorOfVectorOfi32_get, cv_VectorOfVectorOfi32_set,
 		cv_VectorOfVectorOfi32_push, cv_VectorOfVectorOfi32_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<i32> }
+	vector_non_copy_or_bool! { clone core::Vector::<i32> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<i32>> {}
 	
@@ -2740,7 +2759,7 @@ mod core_types {
 		cv_VectorOfVectorOfi8_get, cv_VectorOfVectorOfi8_set,
 		cv_VectorOfVectorOfi8_push, cv_VectorOfVectorOfi8_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<i8> }
+	vector_non_copy_or_bool! { clone core::Vector::<i8> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<i8>> {}
 	
@@ -2811,7 +2830,7 @@ mod core_types {
 		cv_VectorOfVectorOfu8_get, cv_VectorOfVectorOfu8_set,
 		cv_VectorOfVectorOfu8_push, cv_VectorOfVectorOfu8_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<u8> }
+	vector_non_copy_or_bool! { clone core::Vector::<u8> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<u8>> {}
 	
@@ -2882,7 +2901,7 @@ mod core_types {
 		cv_VectorOfbool_get, cv_VectorOfbool_set,
 		cv_VectorOfbool_push, cv_VectorOfbool_insert,
 	}
-	vector_non_copy_or_bool! { bool }
+	vector_non_copy_or_bool! { clone bool }
 	
 	unsafe impl Send for core::Vector::<bool> {}
 	
@@ -2902,8 +2921,9 @@ mod core_types {
 		cv_VectorOff32_get, cv_VectorOff32_set,
 		cv_VectorOff32_push, cv_VectorOff32_insert,
 	}
-	vector_copy_non_bool! { f32, *const c_void,
-		cv_VectorOff32_data
+	vector_copy_non_bool! { f32, *const c_void, *mut c_void,
+		cv_VectorOff32_data, cv_VectorOff32_data_mut,
+		cv_VectorOff32_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<f32> {}
@@ -2975,8 +2995,9 @@ mod core_types {
 		cv_VectorOff64_get, cv_VectorOff64_set,
 		cv_VectorOff64_push, cv_VectorOff64_insert,
 	}
-	vector_copy_non_bool! { f64, *const c_void,
-		cv_VectorOff64_data
+	vector_copy_non_bool! { f64, *const c_void, *mut c_void,
+		cv_VectorOff64_data, cv_VectorOff64_data_mut,
+		cv_VectorOff64_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<f64> {}
@@ -3048,8 +3069,9 @@ mod core_types {
 		cv_VectorOfi32_get, cv_VectorOfi32_set,
 		cv_VectorOfi32_push, cv_VectorOfi32_insert,
 	}
-	vector_copy_non_bool! { i32, *const c_void,
-		cv_VectorOfi32_data
+	vector_copy_non_bool! { i32, *const c_void, *mut c_void,
+		cv_VectorOfi32_data, cv_VectorOfi32_data_mut,
+		cv_VectorOfi32_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<i32> {}
@@ -3121,8 +3143,9 @@ mod core_types {
 		cv_VectorOfi8_get, cv_VectorOfi8_set,
 		cv_VectorOfi8_push, cv_VectorOfi8_insert,
 	}
-	vector_copy_non_bool! { i8, *const c_void,
-		cv_VectorOfi8_data
+	vector_copy_non_bool! { i8, *const c_void, *mut c_void,
+		cv_VectorOfi8_data, cv_VectorOfi8_data_mut,
+		cv_VectorOfi8_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<i8> {}
@@ -3194,8 +3217,9 @@ mod core_types {
 		cv_VectorOfsize_t_get, cv_VectorOfsize_t_set,
 		cv_VectorOfsize_t_push, cv_VectorOfsize_t_insert,
 	}
-	vector_copy_non_bool! { size_t, *const c_void,
-		cv_VectorOfsize_t_data
+	vector_copy_non_bool! { size_t, *const c_void, *mut c_void,
+		cv_VectorOfsize_t_data, cv_VectorOfsize_t_data_mut,
+		cv_VectorOfsize_t_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<size_t> {}
@@ -3216,8 +3240,9 @@ mod core_types {
 		cv_VectorOfu8_get, cv_VectorOfu8_set,
 		cv_VectorOfu8_push, cv_VectorOfu8_insert,
 	}
-	vector_copy_non_bool! { u8, *const c_void,
-		cv_VectorOfu8_data
+	vector_copy_non_bool! { u8, *const c_void, *mut c_void,
+		cv_VectorOfu8_data, cv_VectorOfu8_data_mut,
+		cv_VectorOfu8_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<u8> {}
@@ -5256,8 +5281,9 @@ mod dnn_types {
 		cv_VectorOfTarget_get, cv_VectorOfTarget_set,
 		cv_VectorOfTarget_push, cv_VectorOfTarget_insert,
 	}
-	vector_copy_non_bool! { crate::dnn::Target, *const c_void,
-		cv_VectorOfTarget_data
+	vector_copy_non_bool! { crate::dnn::Target, *const c_void, *mut c_void,
+		cv_VectorOfTarget_data, cv_VectorOfTarget_data_mut,
+		cv_VectorOfTarget_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<crate::dnn::Target> {}
@@ -6459,8 +6485,9 @@ mod line_descriptor_types {
 		cv_VectorOfKeyLine_get, cv_VectorOfKeyLine_set,
 		cv_VectorOfKeyLine_push, cv_VectorOfKeyLine_insert,
 	}
-	vector_copy_non_bool! { crate::line_descriptor::KeyLine, *const c_void,
-		cv_VectorOfKeyLine_data
+	vector_copy_non_bool! { crate::line_descriptor::KeyLine, *const c_void, *mut c_void,
+		cv_VectorOfKeyLine_data, cv_VectorOfKeyLine_data_mut,
+		cv_VectorOfKeyLine_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<crate::line_descriptor::KeyLine> {}
@@ -6481,7 +6508,7 @@ mod line_descriptor_types {
 		cv_VectorOfVectorOfKeyLine_get, cv_VectorOfVectorOfKeyLine_set,
 		cv_VectorOfVectorOfKeyLine_push, cv_VectorOfVectorOfKeyLine_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector::<crate::line_descriptor::KeyLine> }
+	vector_non_copy_or_bool! { clone core::Vector::<crate::line_descriptor::KeyLine> }
 	
 	unsafe impl Send for core::Vector::<core::Vector::<crate::line_descriptor::KeyLine>> {}
 	
@@ -7723,8 +7750,9 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Feature_get, cv_VectorOfLinemod_Feature_set,
 		cv_VectorOfLinemod_Feature_push, cv_VectorOfLinemod_Feature_insert,
 	}
-	vector_copy_non_bool! { crate::rgbd::Linemod_Feature, *const c_void,
-		cv_VectorOfLinemod_Feature_data
+	vector_copy_non_bool! { crate::rgbd::Linemod_Feature, *const c_void, *mut c_void,
+		cv_VectorOfLinemod_Feature_data, cv_VectorOfLinemod_Feature_data_mut,
+		cv_VectorOfLinemod_Feature_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<crate::rgbd::Linemod_Feature> {}
@@ -9406,8 +9434,9 @@ mod videoio_types {
 		cv_VectorOfVideoCaptureAPIs_get, cv_VectorOfVideoCaptureAPIs_set,
 		cv_VectorOfVideoCaptureAPIs_push, cv_VectorOfVideoCaptureAPIs_insert,
 	}
-	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs, *const c_void,
-		cv_VectorOfVideoCaptureAPIs_data
+	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs, *const c_void, *mut c_void,
+		cv_VectorOfVideoCaptureAPIs_data, cv_VectorOfVideoCaptureAPIs_data_mut,
+		cv_VectorOfVideoCaptureAPIs_clone,
 	}
 	
 	unsafe impl Send for core::Vector::<crate::videoio::VideoCaptureAPIs> {}

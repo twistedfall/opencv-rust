@@ -270,9 +270,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::DMatch* cv_VectorOfDMatch_data(std::vector<cv::DMatch>* instance) {
+	const cv::DMatch* cv_VectorOfDMatch_data(const std::vector<cv::DMatch>* instance) {
 		return instance->data();
 	}
+	
+	cv::DMatch* cv_VectorOfDMatch_data_mut(std::vector<cv::DMatch>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::DMatch>* cv_VectorOfDMatch_clone(const std::vector<cv::DMatch>* instance) {
+			return new std::vector<cv::DMatch>(*instance);
+		}
 	
 }
 
@@ -394,9 +402,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::KeyPoint* cv_VectorOfKeyPoint_data(std::vector<cv::KeyPoint>* instance) {
+	const cv::KeyPoint* cv_VectorOfKeyPoint_data(const std::vector<cv::KeyPoint>* instance) {
 		return instance->data();
 	}
+	
+	cv::KeyPoint* cv_VectorOfKeyPoint_data_mut(std::vector<cv::KeyPoint>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::KeyPoint>* cv_VectorOfKeyPoint_clone(const std::vector<cv::KeyPoint>* instance) {
+			return new std::vector<cv::KeyPoint>(*instance);
+		}
 	
 }
 
@@ -578,9 +594,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point* cv_VectorOfPoint_data(std::vector<cv::Point>* instance) {
+	const cv::Point* cv_VectorOfPoint_data(const std::vector<cv::Point>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point* cv_VectorOfPoint_data_mut(std::vector<cv::Point>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point>* cv_VectorOfPoint_clone(const std::vector<cv::Point>* instance) {
+			return new std::vector<cv::Point>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint_input_array(std::vector<cv::Point>* instance) {
 		try {
@@ -660,9 +684,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point2d* cv_VectorOfPoint2d_data(std::vector<cv::Point2d>* instance) {
+	const cv::Point2d* cv_VectorOfPoint2d_data(const std::vector<cv::Point2d>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point2d* cv_VectorOfPoint2d_data_mut(std::vector<cv::Point2d>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point2d>* cv_VectorOfPoint2d_clone(const std::vector<cv::Point2d>* instance) {
+			return new std::vector<cv::Point2d>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint2d_input_array(std::vector<cv::Point2d>* instance) {
 		try {
@@ -742,9 +774,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point2f* cv_VectorOfPoint2f_data(std::vector<cv::Point2f>* instance) {
+	const cv::Point2f* cv_VectorOfPoint2f_data(const std::vector<cv::Point2f>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point2f* cv_VectorOfPoint2f_data_mut(std::vector<cv::Point2f>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point2f>* cv_VectorOfPoint2f_clone(const std::vector<cv::Point2f>* instance) {
+			return new std::vector<cv::Point2f>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint2f_input_array(std::vector<cv::Point2f>* instance) {
 		try {
@@ -824,9 +864,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point3d* cv_VectorOfPoint3d_data(std::vector<cv::Point3d>* instance) {
+	const cv::Point3d* cv_VectorOfPoint3d_data(const std::vector<cv::Point3d>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point3d* cv_VectorOfPoint3d_data_mut(std::vector<cv::Point3d>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point3d>* cv_VectorOfPoint3d_clone(const std::vector<cv::Point3d>* instance) {
+			return new std::vector<cv::Point3d>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint3d_input_array(std::vector<cv::Point3d>* instance) {
 		try {
@@ -906,9 +954,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point3f* cv_VectorOfPoint3f_data(std::vector<cv::Point3f>* instance) {
+	const cv::Point3f* cv_VectorOfPoint3f_data(const std::vector<cv::Point3f>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point3f* cv_VectorOfPoint3f_data_mut(std::vector<cv::Point3f>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point3f>* cv_VectorOfPoint3f_clone(const std::vector<cv::Point3f>* instance) {
+			return new std::vector<cv::Point3f>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint3f_input_array(std::vector<cv::Point3f>* instance) {
 		try {
@@ -988,9 +1044,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Point3i* cv_VectorOfPoint3i_data(std::vector<cv::Point3i>* instance) {
+	const cv::Point3i* cv_VectorOfPoint3i_data(const std::vector<cv::Point3i>* instance) {
 		return instance->data();
 	}
+	
+	cv::Point3i* cv_VectorOfPoint3i_data_mut(std::vector<cv::Point3i>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Point3i>* cv_VectorOfPoint3i_clone(const std::vector<cv::Point3i>* instance) {
+			return new std::vector<cv::Point3i>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfPoint3i_input_array(std::vector<cv::Point3i>* instance) {
 		try {
@@ -1130,9 +1194,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Rect* cv_VectorOfRect_data(std::vector<cv::Rect>* instance) {
+	const cv::Rect* cv_VectorOfRect_data(const std::vector<cv::Rect>* instance) {
 		return instance->data();
 	}
+	
+	cv::Rect* cv_VectorOfRect_data_mut(std::vector<cv::Rect>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Rect>* cv_VectorOfRect_clone(const std::vector<cv::Rect>* instance) {
+			return new std::vector<cv::Rect>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfRect_input_array(std::vector<cv::Rect>* instance) {
 		try {
@@ -1212,9 +1284,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Rect2d* cv_VectorOfRect2d_data(std::vector<cv::Rect2d>* instance) {
+	const cv::Rect2d* cv_VectorOfRect2d_data(const std::vector<cv::Rect2d>* instance) {
 		return instance->data();
 	}
+	
+	cv::Rect2d* cv_VectorOfRect2d_data_mut(std::vector<cv::Rect2d>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Rect2d>* cv_VectorOfRect2d_clone(const std::vector<cv::Rect2d>* instance) {
+			return new std::vector<cv::Rect2d>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfRect2d_input_array(std::vector<cv::Rect2d>* instance) {
 		try {
@@ -1354,9 +1434,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Scalar* cv_VectorOfScalar_data(std::vector<cv::Scalar>* instance) {
+	const cv::Scalar* cv_VectorOfScalar_data(const std::vector<cv::Scalar>* instance) {
 		return instance->data();
 	}
+	
+	cv::Scalar* cv_VectorOfScalar_data_mut(std::vector<cv::Scalar>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Scalar>* cv_VectorOfScalar_clone(const std::vector<cv::Scalar>* instance) {
+			return new std::vector<cv::Scalar>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfScalar_input_array(std::vector<cv::Scalar>* instance) {
 		try {
@@ -1436,9 +1524,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Size* cv_VectorOfSize_data(std::vector<cv::Size>* instance) {
+	const cv::Size* cv_VectorOfSize_data(const std::vector<cv::Size>* instance) {
 		return instance->data();
 	}
+	
+	cv::Size* cv_VectorOfSize_data_mut(std::vector<cv::Size>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Size>* cv_VectorOfSize_clone(const std::vector<cv::Size>* instance) {
+			return new std::vector<cv::Size>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfSize_input_array(std::vector<cv::Size>* instance) {
 		try {
@@ -1638,9 +1734,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec2i* cv_VectorOfVec2i_data(std::vector<cv::Vec2i>* instance) {
+	const cv::Vec2i* cv_VectorOfVec2i_data(const std::vector<cv::Vec2i>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec2i* cv_VectorOfVec2i_data_mut(std::vector<cv::Vec2i>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec2i>* cv_VectorOfVec2i_clone(const std::vector<cv::Vec2i>* instance) {
+			return new std::vector<cv::Vec2i>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec2i_input_array(std::vector<cv::Vec2i>* instance) {
 		try {
@@ -1720,9 +1824,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec3d* cv_VectorOfVec3d_data(std::vector<cv::Vec3d>* instance) {
+	const cv::Vec3d* cv_VectorOfVec3d_data(const std::vector<cv::Vec3d>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec3d* cv_VectorOfVec3d_data_mut(std::vector<cv::Vec3d>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec3d>* cv_VectorOfVec3d_clone(const std::vector<cv::Vec3d>* instance) {
+			return new std::vector<cv::Vec3d>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec3d_input_array(std::vector<cv::Vec3d>* instance) {
 		try {
@@ -1802,9 +1914,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec3f* cv_VectorOfVec3f_data(std::vector<cv::Vec3f>* instance) {
+	const cv::Vec3f* cv_VectorOfVec3f_data(const std::vector<cv::Vec3f>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec3f* cv_VectorOfVec3f_data_mut(std::vector<cv::Vec3f>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec3f>* cv_VectorOfVec3f_clone(const std::vector<cv::Vec3f>* instance) {
+			return new std::vector<cv::Vec3f>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec3f_input_array(std::vector<cv::Vec3f>* instance) {
 		try {
@@ -1884,9 +2004,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec3i* cv_VectorOfVec3i_data(std::vector<cv::Vec3i>* instance) {
+	const cv::Vec3i* cv_VectorOfVec3i_data(const std::vector<cv::Vec3i>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec3i* cv_VectorOfVec3i_data_mut(std::vector<cv::Vec3i>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec3i>* cv_VectorOfVec3i_clone(const std::vector<cv::Vec3i>* instance) {
+			return new std::vector<cv::Vec3i>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec3i_input_array(std::vector<cv::Vec3i>* instance) {
 		try {
@@ -1966,9 +2094,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec4f* cv_VectorOfVec4f_data(std::vector<cv::Vec4f>* instance) {
+	const cv::Vec4f* cv_VectorOfVec4f_data(const std::vector<cv::Vec4f>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec4f* cv_VectorOfVec4f_data_mut(std::vector<cv::Vec4f>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec4f>* cv_VectorOfVec4f_clone(const std::vector<cv::Vec4f>* instance) {
+			return new std::vector<cv::Vec4f>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec4f_input_array(std::vector<cv::Vec4f>* instance) {
 		try {
@@ -2048,9 +2184,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec4i* cv_VectorOfVec4i_data(std::vector<cv::Vec4i>* instance) {
+	const cv::Vec4i* cv_VectorOfVec4i_data(const std::vector<cv::Vec4i>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec4i* cv_VectorOfVec4i_data_mut(std::vector<cv::Vec4i>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec4i>* cv_VectorOfVec4i_clone(const std::vector<cv::Vec4i>* instance) {
+			return new std::vector<cv::Vec4i>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec4i_input_array(std::vector<cv::Vec4i>* instance) {
 		try {
@@ -2130,9 +2274,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::Vec6f* cv_VectorOfVec6f_data(std::vector<cv::Vec6f>* instance) {
+	const cv::Vec6f* cv_VectorOfVec6f_data(const std::vector<cv::Vec6f>* instance) {
 		return instance->data();
 	}
+	
+	cv::Vec6f* cv_VectorOfVec6f_data_mut(std::vector<cv::Vec6f>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::Vec6f>* cv_VectorOfVec6f_clone(const std::vector<cv::Vec6f>* instance) {
+			return new std::vector<cv::Vec6f>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfVec6f_input_array(std::vector<cv::Vec6f>* instance) {
 		try {
@@ -3430,9 +3582,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const float* cv_VectorOff32_data(std::vector<float>* instance) {
+	const float* cv_VectorOff32_data(const std::vector<float>* instance) {
 		return instance->data();
 	}
+	
+	float* cv_VectorOff32_data_mut(std::vector<float>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<float>* cv_VectorOff32_clone(const std::vector<float>* instance) {
+			return new std::vector<float>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOff32_input_array(std::vector<float>* instance) {
 		try {
@@ -3512,9 +3672,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const double* cv_VectorOff64_data(std::vector<double>* instance) {
+	const double* cv_VectorOff64_data(const std::vector<double>* instance) {
 		return instance->data();
 	}
+	
+	double* cv_VectorOff64_data_mut(std::vector<double>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<double>* cv_VectorOff64_clone(const std::vector<double>* instance) {
+			return new std::vector<double>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOff64_input_array(std::vector<double>* instance) {
 		try {
@@ -3594,9 +3762,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const int* cv_VectorOfi32_data(std::vector<int>* instance) {
+	const int* cv_VectorOfi32_data(const std::vector<int>* instance) {
 		return instance->data();
 	}
+	
+	int* cv_VectorOfi32_data_mut(std::vector<int>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<int>* cv_VectorOfi32_clone(const std::vector<int>* instance) {
+			return new std::vector<int>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfi32_input_array(std::vector<int>* instance) {
 		try {
@@ -3676,9 +3852,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const char* cv_VectorOfi8_data(std::vector<char>* instance) {
+	const char* cv_VectorOfi8_data(const std::vector<char>* instance) {
 		return instance->data();
 	}
+	
+	char* cv_VectorOfi8_data_mut(std::vector<char>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<char>* cv_VectorOfi8_clone(const std::vector<char>* instance) {
+			return new std::vector<char>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfi8_input_array(std::vector<char>* instance) {
 		try {
@@ -3758,9 +3942,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const size_t* cv_VectorOfsize_t_data(std::vector<size_t>* instance) {
+	const size_t* cv_VectorOfsize_t_data(const std::vector<size_t>* instance) {
 		return instance->data();
 	}
+	
+	size_t* cv_VectorOfsize_t_data_mut(std::vector<size_t>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<size_t>* cv_VectorOfsize_t_clone(const std::vector<size_t>* instance) {
+			return new std::vector<size_t>(*instance);
+		}
 	
 }
 
@@ -3822,9 +4014,17 @@ extern "C" {
 		(*instance)[index] = val;
 	}
 
-	const unsigned char* cv_VectorOfu8_data(std::vector<unsigned char>* instance) {
+	const unsigned char* cv_VectorOfu8_data(const std::vector<unsigned char>* instance) {
 		return instance->data();
 	}
+	
+	unsigned char* cv_VectorOfu8_data_mut(std::vector<unsigned char>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<unsigned char>* cv_VectorOfu8_clone(const std::vector<unsigned char>* instance) {
+			return new std::vector<unsigned char>(*instance);
+		}
 	
 	Result<cv::_InputArray*> cv_VectorOfu8_input_array(std::vector<unsigned char>* instance) {
 		try {

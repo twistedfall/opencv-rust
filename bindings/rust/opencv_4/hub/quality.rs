@@ -79,7 +79,7 @@ impl QualityBRISQUE {
 	pub fn create(model_file_path: &str, range_file_path: &str) -> Result<core::Ptr::<crate::quality::QualityBRISQUE>> {
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringR_const_StringR(model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringR_const_StringR(model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
 	}
 	
 	/// Create an object which calculates quality
@@ -101,7 +101,7 @@ impl QualityBRISQUE {
 		input_array_arg!(img);
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(img.as_raw__InputArray(), model_file_path.opencv_to_extern(), range_file_path.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(img.as_raw__InputArray(), model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern()) }.into_result()
 	}
 	
 	/// static method for computing image features used by the BRISQUE algorithm

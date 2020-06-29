@@ -818,7 +818,7 @@ pub trait KeyLineTrait {
 	
 	/// coordinates of the middlepoint
 	fn set_pt(&mut self, val: core::Point2f) -> () {
-		unsafe { sys::cv_line_descriptor_KeyLine_setPropPt_Point2f(self.as_raw_mut_KeyLine(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pt")
+		unsafe { sys::cv_line_descriptor_KeyLine_setPropPt_Point2f(self.as_raw_mut_KeyLine(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_pt")
 	}
 	
 	/// the response, by which the strongest keylines have been selected.

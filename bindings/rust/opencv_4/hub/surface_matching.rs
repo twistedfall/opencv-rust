@@ -654,7 +654,7 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_pose(&mut self, val: core::Matx44d) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_pose")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_pose")
 	}
 	
 	fn angle(&self) -> f64 {
@@ -670,7 +670,7 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_t(&mut self, val: core::Vec3d) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_t")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_t")
 	}
 	
 	fn q(&self) -> core::Vec4d {
@@ -678,7 +678,7 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_q(&mut self, val: core::Vec4d) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_q")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setPropQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_q")
 	}
 	
 	/// \brief Updates the pose with the new one
@@ -713,12 +713,12 @@ pub trait Pose3DTrait {
 	
 	fn write_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 }
@@ -805,12 +805,12 @@ pub trait PoseCluster3DTrait {
 	
 	fn write_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 	fn read_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()
 	}
 	
 }

@@ -373,7 +373,7 @@ pub trait DAISY: crate::features2d::Feature2DTrait {
 	fn compute_2(&mut self, image: &dyn core::ToInputArray, roi: core::Rect, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), roi.opencv_to_extern(), descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), roi.opencv_as_extern(), descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## Parameters
@@ -453,7 +453,7 @@ pub trait Elliptic_KeyPointTrait {
 	
 	/// the lengths of the major and minor ellipse axes
 	fn set_axes(&mut self, val: core::Size_<f32>) -> () {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropAxes_Size__float_(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_axes")
+		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropAxes_Size__float_(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_axes")
 	}
 	
 	/// the integration scale at which the parameters were estimated
@@ -473,7 +473,7 @@ pub trait Elliptic_KeyPointTrait {
 	
 	/// the transformation between image space and local patch space
 	fn set_transf(&mut self, val: core::Matx23f) -> () {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_transf")
+		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_transf")
 	}
 	
 }
@@ -510,7 +510,7 @@ impl Elliptic_KeyPoint {
 	}
 	
 	pub fn new(pt: core::Point2f, angle: f32, axes: core::Size, size: f32, si: f32) -> Result<crate::xfeatures2d::Elliptic_KeyPoint> {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(pt.opencv_to_extern(), angle, axes.opencv_to_extern(), size, si) }.into_result().map(|r| unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(r) } )
+		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(pt.opencv_as_extern(), angle, axes.opencv_as_extern(), size, si) }.into_result().map(|r| unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(r) } )
 	}
 	
 }

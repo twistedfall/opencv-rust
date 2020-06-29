@@ -211,9 +211,17 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 
-	const cv::linemod::Feature* cv_VectorOfLinemod_Feature_data(std::vector<cv::linemod::Feature>* instance) {
+	const cv::linemod::Feature* cv_VectorOfLinemod_Feature_data(const std::vector<cv::linemod::Feature>* instance) {
 		return instance->data();
 	}
+	
+	cv::linemod::Feature* cv_VectorOfLinemod_Feature_data_mut(std::vector<cv::linemod::Feature>* instance) {
+		return instance->data();
+	}
+	
+		std::vector<cv::linemod::Feature>* cv_VectorOfLinemod_Feature_clone(const std::vector<cv::linemod::Feature>* instance) {
+			return new std::vector<cv::linemod::Feature>(*instance);
+		}
 	
 }
 

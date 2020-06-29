@@ -1749,7 +1749,7 @@ pub fn emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputAr
 pub fn gaussian_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), sigma_x, sigma_y, border_type) }.into_result()
+	unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), sigma_x, sigma_y, border_type) }.into_result()
 }
 
 /// Finds circles in a grayscale image using the Hough transform.
@@ -2337,7 +2337,7 @@ pub fn arc_length(curve: &dyn core::ToInputArray, closed: bool) -> Result<f64> {
 /// * tip_length: 0.1
 pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32, tip_length: f64) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift, tip_length) }.into_result()
+	unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift, tip_length) }.into_result()
 }
 
 /// Applies the bilateral filter to an image.
@@ -2413,7 +2413,7 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 pub fn blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, anchor: core::Point, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_to_extern(), anchor.opencv_to_extern(), border_type) }.into_result()
+	unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_type) }.into_result()
 }
 
 /// Calculates the up-right bounding rectangle of a point set.
@@ -2460,7 +2460,7 @@ pub fn bounding_rect(points: &dyn core::ToInputArray) -> Result<core::Rect> {
 pub fn box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
+	unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_as_extern(), anchor.opencv_as_extern(), normalize, border_type) }.into_result()
 }
 
 /// Finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
@@ -2668,7 +2668,7 @@ pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector::<i32>
 /// * shift: 0
 pub fn circle(img: &mut dyn core::ToInputOutputArray, center: core::Point, radius: i32, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), radius, &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_as_extern(), radius, &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2687,7 +2687,7 @@ pub fn circle(img: &mut dyn core::ToInputOutputArray, center: core::Point, radiu
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Rect_PointR_PointR(img_rect.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Rect_PointR_PointR(img_rect.opencv_as_extern(), pt1, pt2) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2706,7 +2706,7 @@ pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Po
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: &mut core::Point2l) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Size2l_Point2lR_Point2lR(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Size2l_Point2lR_Point2lR(img_size.opencv_as_extern(), pt1, pt2) }.into_result()
 }
 
 /// Clips the line against the image rectangle.
@@ -2719,7 +2719,7 @@ pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: 
 /// * pt1: First line point.
 /// * pt2: Second line point.
 pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
-	unsafe { sys::cv_clipLine_Size_PointR_PointR(img_size.opencv_to_extern(), pt1, pt2) }.into_result()
+	unsafe { sys::cv_clipLine_Size_PointR_PointR(img_size.opencv_as_extern(), pt1, pt2) }.into_result()
 }
 
 /// Compares two histograms.
@@ -3155,14 +3155,14 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 pub fn corner_sub_pix(image: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, win_size: core::Size, zero_zone: core::Size, criteria: core::TermCriteria) -> Result<()> {
 	input_array_arg!(image);
 	input_output_array_arg!(corners);
-	unsafe { sys::cv_cornerSubPix_const__InputArrayR_const__InputOutputArrayR_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), win_size.opencv_to_extern(), zero_zone.opencv_to_extern(), criteria.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_cornerSubPix_const__InputArrayR_const__InputOutputArrayR_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), win_size.opencv_as_extern(), zero_zone.opencv_as_extern(), criteria.opencv_as_extern()) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * clip_limit: 40.0
 /// * tile_grid_size: Size(8,8)
 pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr::<dyn crate::imgproc::CLAHE>> {
-	unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::CLAHE>::opencv_from_extern(r) } )
+	unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::CLAHE>::opencv_from_extern(r) } )
 }
 
 /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
@@ -3195,7 +3195,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc:
 /// * type: Created array type
 pub fn create_hanning_window(dst: &mut dyn core::ToOutputArray, win_size: core::Size, typ: i32) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_createHanningWindow_const__OutputArrayR_Size_int(dst.as_raw__OutputArray(), win_size.opencv_to_extern(), typ) }.into_result()
+	unsafe { sys::cv_createHanningWindow_const__OutputArrayR_Size_int(dst.as_raw__OutputArray(), win_size.opencv_as_extern(), typ) }.into_result()
 }
 
 /// Creates a smart pointer to a LineSegmentDetector object and initializes it.
@@ -3318,7 +3318,7 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// Calculates the distance to the closest zero pixel for each pixel of the source image.
@@ -3531,7 +3531,7 @@ pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn co
 	input_output_array_arg!(image);
 	input_array_arg!(contours);
 	input_array_arg!(hierarchy);
-	unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, offset.opencv_as_extern()) }.into_result()
 }
 
 /// Draws a marker on a predefined position in an image.
@@ -3554,7 +3554,7 @@ pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn co
 /// * thickness: 1
 /// * line_type: 8
 pub fn draw_marker(img: &mut core::Mat, position: core::Point, color: core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result<()> {
-	unsafe { sys::cv_drawMarker_MatR_Point_const_ScalarR_int_int_int_int(img.as_raw_mut_Mat(), position.opencv_to_extern(), &color, marker_type, marker_size, thickness, line_type) }.into_result()
+	unsafe { sys::cv_drawMarker_MatR_Point_const_ScalarR_int_int_int_int(img.as_raw_mut_Mat(), position.opencv_as_extern(), &color, marker_type, marker_size, thickness, line_type) }.into_result()
 }
 
 /// Approximates an elliptic arc with a polyline.
@@ -3583,7 +3583,7 @@ pub fn draw_marker(img: &mut core::Mat, position: core::Point, color: core::Scal
 /// accuracy.
 /// * pts: Output vector of polyline vertices.
 pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point2d>) -> Result<()> {
-	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d()) }.into_result()
+	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d()) }.into_result()
 }
 
 /// Approximates an elliptic arc with a polyline.
@@ -3601,7 +3601,7 @@ pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32,
 /// accuracy.
 /// * pts: Output vector of polyline vertices.
 pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point>) -> Result<()> {
-	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R(center.opencv_to_extern(), axes.opencv_to_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint()) }.into_result()
+	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint()) }.into_result()
 }
 
 /// Draws a simple or thick elliptic arc or fills an ellipse sector.
@@ -3634,7 +3634,7 @@ pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_sta
 /// * shift: 0
 pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes: core::Size, angle: f64, start_angle: f64, end_angle: f64, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_to_extern(), axes.opencv_to_extern(), angle, start_angle, end_angle, &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_as_extern(), axes.opencv_as_extern(), angle, start_angle, end_angle, &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Draws a simple or thick elliptic arc or fills an ellipse sector.
@@ -3733,7 +3733,7 @@ pub fn erode(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ke
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// Fills a convex polygon.
@@ -3780,7 +3780,7 @@ pub fn fill_convex_poly(img: &mut dyn core::ToInputOutputArray, points: &dyn cor
 pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInputArray, color: core::Scalar, line_type: i32, shift: i32, offset: core::Point) -> Result<()> {
 	input_output_array_arg!(img);
 	input_array_arg!(pts);
-	unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, offset.opencv_as_extern()) }.into_result()
 }
 
 /// Convolves an image with the kernel.
@@ -3823,7 +3823,7 @@ pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
+	unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), delta, border_type) }.into_result()
 }
 
 /// Finds contours in a binary image.
@@ -3857,7 +3857,7 @@ pub fn find_contours_with_hierarchy(image: &mut dyn core::ToInputOutputArray, co
 	input_output_array_arg!(image);
 	output_array_arg!(contours);
 	output_array_arg!(hierarchy);
-	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, offset.opencv_as_extern()) }.into_result()
 }
 
 /// Finds contours in a binary image.
@@ -3892,7 +3892,7 @@ pub fn find_contours_with_hierarchy(image: &mut dyn core::ToInputOutputArray, co
 pub fn find_contours(image: &mut dyn core::ToInputOutputArray, contours: &mut dyn core::ToOutputArray, mode: i32, method: i32, offset: core::Point) -> Result<()> {
 	input_output_array_arg!(image);
 	output_array_arg!(contours);
-	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), mode, method, offset.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_findContours_const__InputOutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__OutputArray(), mode, method, offset.opencv_as_extern()) }.into_result()
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -4034,7 +4034,7 @@ pub fn fit_line(points: &dyn core::ToInputArray, line: &mut dyn core::ToOutputAr
 /// * flags: 4
 pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 	input_output_array_arg!(image);
-	unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
+	unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), seed_point.opencv_as_extern(), new_val.opencv_as_extern(), rect, lo_diff.opencv_as_extern(), up_diff.opencv_as_extern(), flags) }.into_result()
 }
 
 /// Fills a connected component with the given color.
@@ -4117,7 +4117,7 @@ pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Po
 pub fn flood_fill_mask(image: &mut dyn core::ToInputOutputArray, mask: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 	input_output_array_arg!(image);
 	input_output_array_arg!(mask);
-	unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), seed_point.opencv_to_extern(), new_val.opencv_to_extern(), rect, lo_diff.opencv_to_extern(), up_diff.opencv_to_extern(), flags) }.into_result()
+	unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), seed_point.opencv_as_extern(), new_val.opencv_as_extern(), rect, lo_diff.opencv_as_extern(), up_diff.opencv_as_extern(), flags) }.into_result()
 }
 
 /// Calculates an affine transform from three pairs of the corresponding points.
@@ -4173,7 +4173,7 @@ pub fn get_affine_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInpu
 /// * center_principal_point: false
 pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
-	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_to_extern(), center_principal_point) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_as_extern(), center_principal_point) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Returns filter coefficients for computing spatial image derivatives.
@@ -4222,7 +4222,7 @@ pub fn get_deriv_kernels(kx: &mut dyn core::ToOutputArray, ky: &mut dyn core::To
 /// * psi: CV_PI*0.5
 /// * ktype: CV_64F
 pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, gamma: f64, psi: f64, ktype: i32) -> Result<core::Mat> {
-	unsafe { sys::cv_getGaborKernel_Size_double_double_double_double_double_int(ksize.opencv_to_extern(), sigma, theta, lambd, gamma, psi, ktype) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getGaborKernel_Size_double_double_double_double_double_int(ksize.opencv_as_extern(), sigma, theta, lambd, gamma, psi, ktype) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Returns Gaussian filter coefficients.
@@ -4304,7 +4304,7 @@ pub fn get_perspective_transform(src: &dyn core::ToInputArray, dst: &dyn core::T
 pub fn get_rect_sub_pix(image: &dyn core::ToInputArray, patch_size: core::Size, center: core::Point2f, patch: &mut dyn core::ToOutputArray, patch_type: i32) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(patch);
-	unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR_int(image.as_raw__InputArray(), patch_size.opencv_to_extern(), center.opencv_to_extern(), patch.as_raw__OutputArray(), patch_type) }.into_result()
+	unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR_int(image.as_raw__InputArray(), patch_size.opencv_as_extern(), center.opencv_as_extern(), patch.as_raw__OutputArray(), patch_type) }.into_result()
 }
 
 /// Calculates an affine matrix of 2D rotation.
@@ -4327,7 +4327,7 @@ pub fn get_rect_sub_pix(image: &dyn core::ToInputArray, patch_size: core::Size, 
 /// ## See also
 /// getAffineTransform, warpAffine, transform
 pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
-	unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(center.opencv_to_extern(), angle, scale) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(center.opencv_as_extern(), angle, scale) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Returns a structuring element of the specified size and shape for morphological operations.
@@ -4347,7 +4347,7 @@ pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> 
 /// ## C++ default parameters
 /// * anchor: Point(-1,-1)
 pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Point) -> Result<core::Mat> {
-	unsafe { sys::cv_getStructuringElement_int_Size_Point(shape, ksize.opencv_to_extern(), anchor.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	unsafe { sys::cv_getStructuringElement_int_Size_Point(shape, ksize.opencv_as_extern(), anchor.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
 /// Calculates the width and height of a text string.
@@ -4399,7 +4399,7 @@ pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Poin
 /// cv::putText
 pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
 	extern_container_arg!(text);
-	unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_to_extern(), font_face, font_scale, thickness, base_line) }.into_result()
+	unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_as_extern(), font_face, font_scale, thickness, base_line) }.into_result()
 }
 
 /// Determines strong corners on an image.
@@ -4485,7 +4485,7 @@ pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutput
 	input_output_array_arg!(mask);
 	input_output_array_arg!(bgd_model);
 	input_output_array_arg!(fgd_model);
-	unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), rect.opencv_to_extern(), bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode) }.into_result()
+	unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), rect.opencv_as_extern(), bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode) }.into_result()
 }
 
 /// Computes the undistortion and rectification transformation map.
@@ -4538,7 +4538,7 @@ pub fn init_undistort_rectify_map(camera_matrix: &dyn core::ToInputArray, dist_c
 	input_array_arg!(new_camera_matrix);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_to_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_as_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()
 }
 
 /// initializes maps for cv::remap() for wide-angle
@@ -4551,7 +4551,7 @@ pub fn init_wide_angle_proj_map(camera_matrix: &dyn core::ToInputArray, dist_coe
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_int_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_to_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha) }.into_result()
+	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_int_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha) }.into_result()
 }
 
 /// Calculates the integral of an image.
@@ -4754,7 +4754,7 @@ pub fn is_contour_convex(contour: &dyn core::ToInputArray) -> Result<bool> {
 /// * shift: 0
 pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Remaps an image to polar coordinates space.
@@ -4786,7 +4786,7 @@ pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core:
 pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), max_radius, flags) }.into_result()
+	unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_as_extern(), max_radius, flags) }.into_result()
 }
 
 /// Remaps an image to semilog-polar coordinates space.
@@ -4816,7 +4816,7 @@ pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 pub fn log_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, m: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_to_extern(), m, flags) }.into_result()
+	unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_as_extern(), m, flags) }.into_result()
 }
 
 /// Compares two shapes.
@@ -5005,7 +5005,7 @@ pub fn morphology_ex(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(kernel);
-	unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), anchor.opencv_to_extern(), iterations, border_type, &border_value) }.into_result()
+	unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value) }.into_result()
 }
 
 /// The function is used to detect translational shifts that occur between two images.
@@ -5073,7 +5073,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 /// nearest contour edge. Otherwise, the function only checks if the point is inside a contour or not.
 pub fn point_polygon_test(contour: &dyn core::ToInputArray, pt: core::Point2f, measure_dist: bool) -> Result<f64> {
 	input_array_arg!(contour);
-	unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), pt.opencv_to_extern(), measure_dist) }.into_result()
+	unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), pt.opencv_as_extern(), measure_dist) }.into_result()
 }
 
 /// Draws several polygonal curves.
@@ -5158,7 +5158,7 @@ pub fn pre_corner_detect(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 pub fn put_text(img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_face: i32, font_scale: f64, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 	input_output_array_arg!(img);
 	extern_container_arg!(text);
-	unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_to_extern(), org.opencv_to_extern(), font_face, font_scale, color.opencv_to_extern(), thickness, line_type, bottom_left_origin) }.into_result()
+	unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_face, font_scale, color.opencv_as_extern(), thickness, line_type, bottom_left_origin) }.into_result()
 }
 
 /// Blurs an image and downsamples it.
@@ -5233,7 +5233,7 @@ pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 pub fn pyr_mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: f64, sr: f64, max_level: i32, termcrit: core::TermCriteria) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, termcrit.opencv_to_extern()) }.into_result()
+	unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, termcrit.opencv_as_extern()) }.into_result()
 }
 
 /// Upsamples an image and then blurs it.
@@ -5289,7 +5289,7 @@ pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * line_type: LINE_8
 /// * shift: 0
 pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	unsafe { sys::cv_rectangle_MatR_Rect_const_ScalarR_int_int_int(img.as_raw_mut_Mat(), rec.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_rectangle_MatR_Rect_const_ScalarR_int_int_int(img.as_raw_mut_Mat(), rec.opencv_as_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Draws a simple, thick, or filled up-right rectangle.
@@ -5313,7 +5313,7 @@ pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thic
 /// * shift: 0
 pub fn rectangle_points(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
 	input_output_array_arg!(img);
-	unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), &color, thickness, line_type, shift) }.into_result()
+	unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift) }.into_result()
 }
 
 /// Applies a generic geometrical transformation to an image.
@@ -5405,7 +5405,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ma
 pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, fx: f64, fy: f64, interpolation: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_to_extern(), fx, fy, interpolation) }.into_result()
+	unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_as_extern(), fx, fy, interpolation) }.into_result()
 }
 
 /// Finds out if there is any intersection between two rotated rectangles.
@@ -5457,7 +5457,7 @@ pub fn sep_filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 	output_array_arg!(dst);
 	input_array_arg!(kernel_x);
 	input_array_arg!(kernel_y);
-	unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), anchor.opencv_to_extern(), delta, border_type) }.into_result()
+	unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), anchor.opencv_as_extern(), delta, border_type) }.into_result()
 }
 
 /// Calculates the first order image derivative in both x and y using a Sobel operator
@@ -5516,7 +5516,7 @@ pub fn spatial_gradient(src: &dyn core::ToInputArray, dx: &mut dyn core::ToOutpu
 pub fn sqr_box_filter(_src: &dyn core::ToInputArray, _dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
 	input_array_arg!(_src);
 	output_array_arg!(_dst);
-	unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), ddepth, ksize.opencv_to_extern(), anchor.opencv_to_extern(), normalize, border_type) }.into_result()
+	unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), ddepth, ksize.opencv_as_extern(), anchor.opencv_as_extern(), normalize, border_type) }.into_result()
 }
 
 /// Applies a fixed-level threshold to each array element.
@@ -5663,7 +5663,7 @@ pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
+	unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, &border_value) }.into_result()
 }
 
 /// Applies a perspective transformation to an image.
@@ -5696,7 +5696,7 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_to_extern(), flags, border_mode, &border_value) }.into_result()
+	unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, &border_value) }.into_result()
 }
 
 /// Performs a marker-based image segmentation using the watershed algorithm.
@@ -5751,7 +5751,7 @@ pub trait CLAHE: core::AlgorithmTrait {
 	}
 	
 	fn set_tiles_grid_size(&mut self, tile_grid_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_CLAHE_setTilesGridSize_Size(self.as_raw_mut_CLAHE(), tile_grid_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CLAHE_setTilesGridSize_Size(self.as_raw_mut_CLAHE(), tile_grid_size.opencv_as_extern()) }.into_result()
 	}
 	
 	fn get_tiles_grid_size(&self) -> Result<core::Size> {
@@ -5775,7 +5775,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 	/// * templ_center: Point(-1,-1)
 	fn set_template(&mut self, templ: &dyn core::ToInputArray, templ_center: core::Point) -> Result<()> {
 		input_array_arg!(templ);
-		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), templ_center.opencv_as_extern()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -5784,7 +5784,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		input_array_arg!(edges);
 		input_array_arg!(dx);
 		input_array_arg!(dy);
-		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), templ_center.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), templ_center.opencv_as_extern()) }.into_result()
 	}
 	
 	/// find template on image
@@ -6193,7 +6193,7 @@ impl LineIterator {
 	/// * connectivity: 8
 	/// * left_to_right: false
 	pub fn new(img: &core::Mat, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-		unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), pt1.opencv_to_extern(), pt2.opencv_to_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
+		unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
 	}
 	
 }
@@ -6279,7 +6279,7 @@ pub trait Subdiv2DTrait {
 	/// ## Parameters
 	/// * rect: – Rectangle that includes all of the 2D points that are to be added to the subdivision.
 	fn init_delaunay(&mut self, rect: core::Rect) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), rect.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), rect.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Insert a single point into a Delaunay triangulation.
@@ -6295,7 +6295,7 @@ pub trait Subdiv2DTrait {
 	/// 
 	/// Note: If the point is outside of the triangulation specified rect a runtime error is raised.
 	fn insert(&mut self, pt: core::Point2f) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), pt.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Insert multiple points into a Delaunay triangulation.
@@ -6331,7 +6331,7 @@ pub trait Subdiv2DTrait {
 	/// *  One of input arguments is invalid. A runtime error is raised or, if silent or “parent” error
 	///    processing mode is selected, CV_PTLOC_ERROR is returnd.
 	fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), pt.opencv_to_extern(), edge, vertex) }.into_result()
+		unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), edge, vertex) }.into_result()
 	}
 	
 	/// Finds the subdivision vertex closest to the given point.
@@ -6351,7 +6351,7 @@ pub trait Subdiv2DTrait {
 	/// ## C++ default parameters
 	/// * nearest_pt: 0
 	fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), pt.opencv_to_extern(), nearest_pt) }.into_result()
+		unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), nearest_pt) }.into_result()
 	}
 	
 	/// Returns a list of all edges.
@@ -6543,7 +6543,7 @@ impl Subdiv2D {
 	///    insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
 	///    error is raised.
 	pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
-		unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(rect.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(r) } )
+		unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(rect.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(r) } )
 	}
 	
 }

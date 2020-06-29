@@ -303,7 +303,7 @@ opencv_type_enum! { crate::tracking::TrackerKCF_MODE }
 /// * dataset_ind: 0
 pub fn tld_init_dataset(video_ind: i32, root_path: &str, dataset_ind: i32) -> Result<core::Rect2d> {
 	extern_container_arg!(root_path);
-	unsafe { sys::cv_tld_tld_InitDataset_int_const_charX_int(video_ind, root_path.opencv_to_extern(), dataset_ind) }.into_result()
+	unsafe { sys::cv_tld_tld_InitDataset_int_const_charX_int(video_ind, root_path.opencv_as_extern(), dataset_ind) }.into_result()
 }
 
 pub fn tld_get_next_dataset_frame() -> Result<String> {
@@ -515,7 +515,7 @@ pub trait CvHaarEvaluatorTrait {
 	fn as_raw_mut_CvHaarEvaluator(&mut self) -> *mut c_void;
 
 	fn init(&mut self, _feature_params: &crate::tracking::CvFeatureParams, _max_sample_count: i32, _win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_init_const_CvFeatureParamsX_int_Size(self.as_raw_mut_CvHaarEvaluator(), _feature_params.as_raw_CvFeatureParams(), _max_sample_count, _win_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_init_const_CvFeatureParamsX_int_Size(self.as_raw_mut_CvHaarEvaluator(), _feature_params.as_raw_CvFeatureParams(), _max_sample_count, _win_size.opencv_as_extern()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -545,7 +545,7 @@ pub trait CvHaarEvaluatorTrait {
 	
 	#[cfg(not(target_os = "windows"))]
 	fn set_win_size(&mut self, patch_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_setWinSize_Size(self.as_raw_mut_CvHaarEvaluator(), patch_size.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_setWinSize_Size(self.as_raw_mut_CvHaarEvaluator(), patch_size.opencv_as_extern()) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -601,7 +601,7 @@ pub trait CvHaarEvaluator_FeatureHaarTrait {
 
 	#[cfg(not(target_os = "windows"))]
 	fn eval(&self, image: &core::Mat, roi: core::Rect, result: &mut f32) -> Result<bool> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(self.as_raw_CvHaarEvaluator_FeatureHaar(), image.as_raw_Mat(), roi.opencv_to_extern(), result) }.into_result()
+		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(self.as_raw_CvHaarEvaluator_FeatureHaar(), image.as_raw_Mat(), roi.opencv_as_extern(), result) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -663,7 +663,7 @@ impl crate::tracking::CvHaarEvaluator_FeatureHaarTrait for CvHaarEvaluator_Featu
 impl CvHaarEvaluator_FeatureHaar {
 	#[cfg(not(target_os = "windows"))]
 	pub fn new(patch_size: core::Size) -> Result<crate::tracking::CvHaarEvaluator_FeatureHaar> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(patch_size.opencv_to_extern()) }.into_result().map(|r| unsafe { crate::tracking::CvHaarEvaluator_FeatureHaar::opencv_from_extern(r) } )
+		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(patch_size.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::tracking::CvHaarEvaluator_FeatureHaar::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1217,7 +1217,7 @@ pub trait TrackerCSRT_ParamsTrait {
 	/// Window function: "hann", "cheb", "kaiser"
 	fn set_window_function(&mut self, val: &str) -> () {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_TrackerCSRT_Params_setPropWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_to_extern_mut()) }.into_result().expect("Infallible function failed: set_window_function")
+		unsafe { sys::cv_TrackerCSRT_Params_setPropWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_window_function")
 	}
 	
 	fn kaiser_alpha(&self) -> f32 {
@@ -1474,7 +1474,7 @@ impl dyn TrackerFeature + '_ {
 	/// *   "FEATURE2D" -- All types of Feature2D
 	pub fn create(tracker_feature_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerFeature>> {
 		extern_container_arg!(tracker_feature_type);
-		unsafe { sys::cv_TrackerFeature_create_const_StringR(tracker_feature_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerFeature>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerFeature_create_const_StringR(tracker_feature_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerFeature>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1527,7 +1527,7 @@ impl TrackerFeatureFeature2d {
 	pub fn new(detector_type: &str, descriptor_type: &str) -> Result<crate::tracking::TrackerFeatureFeature2d> {
 		extern_container_arg!(mut detector_type);
 		extern_container_arg!(mut descriptor_type);
-		unsafe { sys::cv_TrackerFeatureFeature2d_TrackerFeatureFeature2d_String_String(detector_type.opencv_to_extern_mut(), descriptor_type.opencv_to_extern_mut()) }.into_result().map(|r| unsafe { crate::tracking::TrackerFeatureFeature2d::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerFeatureFeature2d_TrackerFeatureFeature2d_String_String(detector_type.opencv_as_extern_mut(), descriptor_type.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { crate::tracking::TrackerFeatureFeature2d::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1651,7 +1651,7 @@ pub trait TrackerFeatureHAAR_ParamsTrait {
 	
 	/// rect size
 	fn set_rect_size(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_TrackerFeatureHAAR_Params_setPropRectSize_Size(self.as_raw_mut_TrackerFeatureHAAR_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_rect_size")
+		unsafe { sys::cv_TrackerFeatureHAAR_Params_setPropRectSize_Size(self.as_raw_mut_TrackerFeatureHAAR_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rect_size")
 	}
 	
 	/// true if input images are integral, false otherwise
@@ -1855,7 +1855,7 @@ pub trait TrackerFeatureSetTrait {
 	/// Note: If you use the second method, you must initialize the TrackerFeature
 	fn add_tracker_feature(&mut self, tracker_feature_type: &str) -> Result<bool> {
 		extern_container_arg!(mut tracker_feature_type);
-		unsafe { sys::cv_TrackerFeatureSet_addTrackerFeature_String(self.as_raw_mut_TrackerFeatureSet(), tracker_feature_type.opencv_to_extern_mut()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureSet_addTrackerFeature_String(self.as_raw_mut_TrackerFeatureSet(), tracker_feature_type.opencv_as_extern_mut()) }.into_result()
 	}
 	
 	/// Add TrackerFeature in the collection. Return true if TrackerFeature is added, false otherwise
@@ -2455,7 +2455,7 @@ pub trait TrackerMedianFlow_ParamsTrait {
 	
 	/// window size parameter for Lucas-Kanade optical flow
 	fn set_win_size(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_TrackerMedianFlow_Params_setPropWinSize_Size(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_win_size")
+		unsafe { sys::cv_TrackerMedianFlow_Params_setPropWinSize_Size(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_win_size")
 	}
 	
 	/// maximal pyramid level number for Lucas-Kanade optical flow
@@ -2475,7 +2475,7 @@ pub trait TrackerMedianFlow_ParamsTrait {
 	
 	/// termination criteria for Lucas-Kanade optical flow
 	fn set_term_criteria(&mut self, val: core::TermCriteria) -> () {
-		unsafe { sys::cv_TrackerMedianFlow_Params_setPropTermCriteria_TermCriteria(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_term_criteria")
+		unsafe { sys::cv_TrackerMedianFlow_Params_setPropTermCriteria_TermCriteria(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_term_criteria")
 	}
 	
 	/// window size around a point for normalized cross-correlation check
@@ -2485,7 +2485,7 @@ pub trait TrackerMedianFlow_ParamsTrait {
 	
 	/// window size around a point for normalized cross-correlation check
 	fn set_win_size_ncc(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_TrackerMedianFlow_Params_setPropWinSizeNCC_Size(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_to_extern()) }.into_result().expect("Infallible function failed: set_win_size_ncc")
+		unsafe { sys::cv_TrackerMedianFlow_Params_setPropWinSizeNCC_Size(self.as_raw_mut_TrackerMedianFlow_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_win_size_ncc")
 	}
 	
 	/// criterion for loosing the tracked object
@@ -2615,7 +2615,7 @@ pub trait TrackerSamplerTrait {
 	/// * image: The current frame
 	/// * boundingBox: The bounding box from which regions can be calculated
 	fn sampling(&mut self, image: &core::Mat, bounding_box: core::Rect) -> Result<()> {
-		unsafe { sys::cv_TrackerSampler_sampling_const_MatR_Rect(self.as_raw_mut_TrackerSampler(), image.as_raw_Mat(), bounding_box.opencv_to_extern()) }.into_result()
+		unsafe { sys::cv_TrackerSampler_sampling_const_MatR_Rect(self.as_raw_mut_TrackerSampler(), image.as_raw_Mat(), bounding_box.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
@@ -2648,7 +2648,7 @@ pub trait TrackerSamplerTrait {
 	/// Note: If you use the second method, you must initialize the TrackerSamplerAlgorithm
 	fn add_tracker_sampler_algorithm(&mut self, tracker_sampler_algorithm_type: &str) -> Result<bool> {
 		extern_container_arg!(mut tracker_sampler_algorithm_type);
-		unsafe { sys::cv_TrackerSampler_addTrackerSamplerAlgorithm_String(self.as_raw_mut_TrackerSampler(), tracker_sampler_algorithm_type.opencv_to_extern_mut()) }.into_result()
+		unsafe { sys::cv_TrackerSampler_addTrackerSamplerAlgorithm_String(self.as_raw_mut_TrackerSampler(), tracker_sampler_algorithm_type.opencv_as_extern_mut()) }.into_result()
 	}
 	
 	/// Add TrackerSamplerAlgorithm in the collection. Return true if sampler is added, false otherwise
@@ -2740,7 +2740,7 @@ pub trait TrackerSamplerAlgorithm {
 	/// 
 	/// * sample: The computed samples [AAM](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 	fn sampling(&mut self, image: &core::Mat, bounding_box: core::Rect, sample: &mut core::Vector::<core::Mat>) -> Result<bool> {
-		unsafe { sys::cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerAlgorithm(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerAlgorithm(), image.as_raw_Mat(), bounding_box.opencv_as_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	/// Get the name of the specific TrackerSamplerAlgorithm
@@ -2761,7 +2761,7 @@ impl dyn TrackerSamplerAlgorithm + '_ {
 	/// *   "CS" -- Current State
 	pub fn create(tracker_sampler_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>> {
 		extern_container_arg!(tracker_sampler_type);
-		unsafe { sys::cv_TrackerSamplerAlgorithm_create_const_StringR(tracker_sampler_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerSamplerAlgorithm_create_const_StringR(tracker_sampler_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2784,7 +2784,7 @@ pub trait TrackerSamplerCSTrait: crate::tracking::TrackerSamplerAlgorithm {
 	}
 	
 	fn sampling_impl(&mut self, image: &core::Mat, bounding_box: core::Rect, sample: &mut core::Vector::<core::Mat>) -> Result<bool> {
-		unsafe { sys::cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerCS(), image.as_raw_Mat(), bounding_box.opencv_to_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
+		unsafe { sys::cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(self.as_raw_mut_TrackerSamplerCS(), image.as_raw_Mat(), bounding_box.opencv_as_extern(), sample.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	fn get_roi(&self) -> Result<core::Rect> {
@@ -3259,7 +3259,7 @@ impl dyn TrackerStateEstimator + '_ {
 	/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
 	pub fn create(tracke_state_estimator_type: &str) -> Result<core::Ptr::<dyn crate::tracking::TrackerStateEstimator>> {
 		extern_container_arg!(tracke_state_estimator_type);
-		unsafe { sys::cv_TrackerStateEstimator_create_const_StringR(tracke_state_estimator_type.opencv_to_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerStateEstimator>::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimator_create_const_StringR(tracke_state_estimator_type.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerStateEstimator>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3337,7 +3337,7 @@ impl TrackerStateEstimatorAdaBoosting {
 	/// * patchSize: tracking rect
 	/// * ROI: initial ROI
 	pub fn new(num_classifer: i32, init_iterations: i32, n_features: i32, patch_size: core::Size, roi: core::Rect) -> Result<crate::tracking::TrackerStateEstimatorAdaBoosting> {
-		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(num_classifer, init_iterations, n_features, patch_size.opencv_to_extern(), &roi) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting::opencv_from_extern(r) } )
+		unsafe { sys::cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(num_classifer, init_iterations, n_features, patch_size.opencv_as_extern(), &roi) }.into_result().map(|r| unsafe { crate::tracking::TrackerStateEstimatorAdaBoosting::opencv_from_extern(r) } )
 	}
 	
 }
