@@ -8,27 +8,27 @@ use crate::{
 };
 
 #[doc(hidden)]
-pub trait VectorElement: Sized + for<'a> OpenCVType<'a> where Vector<Self>: VectorExtern<Self> {
-	fn convert_to_vec(v: &Vector<Self>) -> Vec<Self>;
+pub trait VectorElement: for<'a> OpenCVType<'a> where Vector<Self>: VectorExtern<Self> {
+	#[doc(hidden)] fn convert_to_vec(v: &Vector<Self>) -> Vec<Self>;
 }
 
 #[doc(hidden)]
 pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
-	unsafe fn extern_new() -> *mut c_void;
-	unsafe fn extern_clone(&self) -> *mut c_void;
-	unsafe fn extern_delete(&mut self);
-	unsafe fn extern_len(&self) -> size_t;
-	unsafe fn extern_is_empty(&self) -> bool;
-	unsafe fn extern_capacity(&self) -> size_t;
-	unsafe fn extern_shrink_to_fit(&mut self);
-	unsafe fn extern_reserve(&mut self, additional: size_t);
-	unsafe fn extern_remove(&mut self, index: size_t);
-	unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
-	unsafe fn extern_clear(&mut self);
-	unsafe fn extern_get(&self, index: size_t) -> Result<T>;
-	unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	unsafe fn extern_set<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_new() -> *mut c_void;
+	#[doc(hidden)] unsafe fn extern_clone(&self) -> *mut c_void;
+	#[doc(hidden)] unsafe fn extern_delete(&mut self);
+	#[doc(hidden)] unsafe fn extern_len(&self) -> size_t;
+	#[doc(hidden)] unsafe fn extern_is_empty(&self) -> bool;
+	#[doc(hidden)] unsafe fn extern_capacity(&self) -> size_t;
+	#[doc(hidden)] unsafe fn extern_shrink_to_fit(&mut self);
+	#[doc(hidden)] unsafe fn extern_reserve(&mut self, additional: size_t);
+	#[doc(hidden)] unsafe fn extern_remove(&mut self, index: size_t);
+	#[doc(hidden)] unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
+	#[doc(hidden)] unsafe fn extern_clear(&mut self);
+	#[doc(hidden)] unsafe fn extern_get(&self, index: size_t) -> Result<T>;
+	#[doc(hidden)] unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_set<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
 }
 
 #[macro_export]
@@ -151,7 +151,8 @@ macro_rules! vector_extern {
 
 #[doc(hidden)]
 pub trait VectorExternCopyNonBool<T> {
-	unsafe fn extern_data(&self) -> *const T;
+	#[doc(hidden)] unsafe fn extern_data(&self) -> *const T;
+	#[doc(hidden)] unsafe fn extern_data_mut(&mut self) -> *mut T;
 }
 
 #[macro_export]

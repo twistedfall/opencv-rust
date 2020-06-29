@@ -126,25 +126,25 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		&TPL
 	};
 	tpl.interpolate(&hashmap! {
-			"doc_comment" => doc_comment.as_str(),
-			"debug" => &debug,
-			"attributes" => &attributes,
-			"visibility" => &visibility,
-			"unsafety_decl" => if is_safe { "" } else { "unsafe " },
-			"name" => name,
-			"generic_decl" => "",
-			"decl_args" => &decl_args,
-			"rv_rust_full" => return_type_func_decl.as_ref(),
-			"pre_call_args" => &pre_call_args,
-			"prefix" => &prefix,
-			"unsafety_call" => if is_safe { "unsafe " } else { "" },
-			"identifier" => identifier.as_ref(),
-			"call_args" => &call_args,
-			"forward_args" => &forward_args,
-			"suffix" => &suffix,
-			"post_call_args" => &post_call_args,
-			"ret_map" => ret_map.as_ref(),
-		})
+		"doc_comment" => doc_comment.as_str(),
+		"debug" => &debug,
+		"attributes" => &attributes,
+		"visibility" => &visibility,
+		"unsafety_decl" => if is_safe { "" } else { "unsafe " },
+		"name" => name,
+		"generic_decl" => "",
+		"decl_args" => &decl_args,
+		"rv_rust_full" => return_type_func_decl.as_ref(),
+		"pre_call_args" => &pre_call_args,
+		"prefix" => &prefix,
+		"unsafety_call" => if is_safe { "unsafe " } else { "" },
+		"identifier" => identifier.as_ref(),
+		"call_args" => &call_args,
+		"forward_args" => &forward_args,
+		"suffix" => &suffix,
+		"post_call_args" => &post_call_args,
+		"ret_map" => ret_map.as_ref(),
+	})
 }
 
 fn cpp_method_call_name(c: &Class, method_name: &str) -> String {

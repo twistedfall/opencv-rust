@@ -1,6 +1,4 @@
-// todo apply_halide_scheduler accepts vector<Mat*> which gets generated as VectorOfMat, it's probably a bug
 // todo change dyn InputArray to impl InputArray and friends
-// todo drop unused entries from settings
 // todo support converting pointer + size to slice of Mat and other similar objects
 // todo add support for more operators
 // todo add support for arrays in dnn::DictValue
@@ -13,10 +11,10 @@
 // fixme most constructors of Mat have invalid comment "download data from GpuMat"
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
 // fixme docs.rs fails to build crates that have opencv as dependency
+// fixme VectorOfMat::get allows mutation
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-// fixme VectorOfMat::get allows to mutate?
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 

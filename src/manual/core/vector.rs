@@ -25,130 +25,6 @@ pub struct Vector<T: VectorElement> where Self: VectorExtern<T> {
 	_d: PhantomData<T>,
 }
 
-impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
-	#[inline]
-	unsafe fn from_raw(ptr: *mut c_void) -> Self {
-		Self { ptr, _d: PhantomData }
-	}
-
-	#[inline]
-	fn into_raw(self) -> *mut c_void {
-		let out = self.ptr;
-		mem::forget(self);
-		out
-	}
-
-	#[inline]
-	fn as_raw(&self) -> *const c_void {
-		self.ptr
-	}
-
-	#[inline]
-	fn as_raw_mut(&mut self) -> *mut c_void {
-		self.ptr
-	}
-}
-
-impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> {
-	type Owned = Self;
-	type Arg = Self;
-	type ExternReceive = *mut c_void;
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
-		Self::from_raw(s)
-	}
-}
-
-impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: VectorExtern<T> {
-	type ExternSend = *const c_void;
-	type ExternSendMut = *mut c_void;
-
-	#[inline]
-	fn opencv_to_extern(&self) -> Self::ExternSend {
-		self.as_raw()
-	}
-
-	#[inline]
-	fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_raw_mut()
-	}
-}
-
-// technically VectorExternCopyNonBool isn't needed but it simplifies this impl
-impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		f.debug_list().entries(self.iter()).finish()
-	}
-}
-
-impl<T: VectorElement> AsRef<[T]> for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
-	#[inline]
-	fn as_ref(&self) -> &[T] {
-		self.as_slice()
-	}
-}
-
-impl<T: VectorElement> Borrow<[T]> for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
-	#[inline]
-	fn borrow(&self) -> &[T] {
-		self.as_slice()
-	}
-}
-
-impl<'a, T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
-	fn from(from: Vector<T>) -> Self {
-		from.to_vec()
-	}
-}
-
-impl<T: VectorElement> Default for Vector<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
-	fn default() -> Vector<T> {
-		Vector::new()
-	}
-}
-
-
-impl<T: VectorElement> Clone for Vector<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
-	fn clone(&self) -> Vector<T> {
-		self.clone()
-	}
-}
-
-impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
-	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
-		let s = s.into_iter();
-		let (lo, hi) = s.size_hint();
-		self.reserve(hi.unwrap_or(lo));
-		s.into_iter().for_each(|elem| {
-			self.push(elem);
-		});
-	}
-}
-
-impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
-	fn from_iter<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
-		let mut out = Self::new();
-		out.extend(s);
-		out
-	}
-}
-
 impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a new Vector
 	pub fn new() -> Self {
@@ -220,13 +96,13 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Add new element
-	pub fn push(&mut self, val: <T as OpenCVType<'_>>::Arg) {
+	pub fn push(&mut self, val: <T as OpenCVType>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { self.extern_push(val.opencv_as_extern()) }
 	}
 
 	/// Insert a new element at the specified `index`
-	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) -> Result<()> {
+	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
 		vector_index_check(index, self.len() + 1)?;
 		let val = val.opencv_into_extern_container()?;
 		unsafe { self.extern_insert(index, val.opencv_as_extern()) }
@@ -234,7 +110,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Set element at the specified `index`
-	pub fn set(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) -> Result<()> {
+	pub fn set(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
 		vector_index_check(index, self.len())?;
 		let val = val.opencv_into_extern_container()?;
 		unsafe { self.extern_set(index, val.opencv_as_extern()) }
@@ -242,7 +118,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Same as `set()` but without bounds checking
-	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) {
+	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
 		self.extern_set(index, val.opencv_as_extern())
 	}
@@ -273,9 +149,131 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 }
 
+impl<T: VectorElement> Default for Vector<T> where Self: VectorExtern<T> {
+	#[inline]
+	fn default() -> Vector<T> {
+		Vector::new()
+	}
+}
+
+impl<T: VectorElement> Clone for Vector<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
+	fn clone(&self) -> Vector<T> {
+		self.clone()
+	}
+}
+
+impl<T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
+	fn from(from: Vector<T>) -> Self {
+		from.to_vec()
+	}
+}
+
+impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
+	fn from_iter<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
+		let mut out = Self::new();
+		out.extend(s);
+		out
+	}
+}
+
+impl<T: VectorElement> AsRef<[T]> for Vector<T> where Self: VectorExtern<T> + VectorExternCopyNonBool<T> {
+	#[inline]
+	fn as_ref(&self) -> &[T] {
+		self.as_slice()
+	}
+}
+
+impl<T: VectorElement> Borrow<[T]> for Vector<T> where Self: VectorExtern<T> + VectorExternCopyNonBool<T> {
+	#[inline]
+	fn borrow(&self) -> &[T] {
+		self.as_slice()
+	}
+}
+
+impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Self: VectorExtern<T> {
+	#[inline]
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		f.debug_list().entries(self.iter()).finish()
+	}
+}
+
 impl<T: VectorElement> Drop for Vector<T> where Self: VectorExtern<T> {
 	fn drop(&mut self) {
 		unsafe { self.extern_delete() }
+	}
+}
+
+impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
+	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
+		let s = s.into_iter();
+		let (lo, hi) = s.size_hint();
+		self.reserve(hi.unwrap_or(lo));
+		s.into_iter().for_each(|elem| {
+			self.push(elem);
+		});
+	}
+}
+
+impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
+	#[inline]
+	unsafe fn from_raw(ptr: *mut c_void) -> Self {
+		Self { ptr, _d: PhantomData }
+	}
+
+	#[inline]
+	fn into_raw(self) -> *mut c_void {
+		let out = self.ptr;
+		mem::forget(self);
+		out
+	}
+
+	#[inline]
+	fn as_raw(&self) -> *const c_void {
+		self.ptr
+	}
+
+	#[inline]
+	fn as_raw_mut(&mut self) -> *mut c_void {
+		self.ptr
+	}
+}
+
+impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> {
+	type Owned = Self;
+	type Arg = Self;
+	type ExternReceive = *mut c_void;
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
+	}
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+		Self::from_raw(s)
+	}
+}
+
+impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: VectorExtern<T> {
+	type ExternSend = *const c_void;
+	type ExternSendMut = *mut c_void;
+
+	#[inline]
+	fn opencv_as_extern(&self) -> Self::ExternSend {
+		self.as_raw()
+	}
+
+	#[inline]
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+		self.as_raw_mut()
 	}
 }
 

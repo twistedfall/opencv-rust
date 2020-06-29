@@ -91,10 +91,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			);
 			if !methods.is_empty() || !consts.is_empty() {
 				TRAIT_DYN_TPL.interpolate(&hashmap! {
-						"rust_local" => c.rust_trait_localname(),
-						"consts" => consts.into(),
-						"methods" => methods.into(),
-					})
+					"rust_local" => c.rust_trait_localname(),
+					"consts" => consts.into(),
+					"methods" => methods.into(),
+				})
 			} else {
 				String::new()
 			}
@@ -102,16 +102,16 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			String::new()
 		};
 		out = TRAIT_TPL.interpolate(&hashmap! {
-				"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
-				"debug" => get_debug(c).into(),
-				"rust_trait_local" => c.rust_trait_localname(),
-				"rust_local" => type_ref.rust_local(),
-				"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
-				"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
-				"bases" => trait_bases.into(),
-				"trait_methods" => trait_methods.into(),
-				"dyn_impl" => dyn_impl.into(),
-			});
+			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
+			"debug" => get_debug(c).into(),
+			"rust_trait_local" => c.rust_trait_localname(),
+			"rust_local" => type_ref.rust_local(),
+			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"bases" => trait_bases.into(),
+			"trait_methods" => trait_methods.into(),
+			"dyn_impl" => dyn_impl.into(),
+		});
 	}
 
 	if !is_abstract {
@@ -131,12 +131,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					&BASE_TPL
 				};
 				tpl.interpolate(&hashmap! {
-						"base_rust_full" => base.rust_trait_fullname(),
-						"rust_local" => type_ref.rust_local(),
-						"base_rust_local" => base_type_ref.rust_local(),
-						"base_rust_extern_const" => base_type_ref.rust_extern_with_const(Constness::Const),
-						"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(Constness::Mut),
-					})
+					"base_rust_full" => base.rust_trait_fullname(),
+					"rust_local" => type_ref.rust_local(),
+					"base_rust_local" => base_type_ref.rust_local(),
+					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(Constness::Const),
+					"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(Constness::Mut),
+				})
 			})
 			.collect::<Vec<_>>();
 
@@ -152,21 +152,21 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 						}
 					}
 					SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-							"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
-							"visibility" => "pub ".into(),
-							"name" => f.rust_leafname(),
-							"type" => typ,
-						})
+						"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
+						"visibility" => "pub ".into(),
+						"name" => f.rust_leafname(),
+						"type" => typ,
+					})
 				})
 				.collect();
 			if out.is_empty() {
 				out.push(
 					SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-							"doc_comment" => "",
-							"visibility" => "",
-							"name" => "__rust_private",
-							"type" => "[u8; 0]",
-						})
+						"doc_comment" => "",
+						"visibility" => "",
+						"name" => "__rust_private",
+						"type" => "[u8; 0]",
+					})
 				)
 			}
 			out
@@ -197,20 +197,20 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.join("");
 
 		out += &tpl.interpolate(&hashmap! {
-				"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
-				"debug" => get_debug(c).into(),
-				"rust_local" => type_ref.rust_local(),
-				"rust_full" => type_ref.rust_full(),
-				"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
-				"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
-				"fields" => fields.join("").into(),
-				"bases" => bases.join("").into(),
-				"impl" => IMPL_TPL.interpolate(&hashmap! {
-					"rust_local" => c.rust_localname(),
-					"consts" => consts.into(),
-					"methods" => inherent_methods.into(),
-				}).into()
-			});
+			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
+			"debug" => get_debug(c).into(),
+			"rust_local" => type_ref.rust_local(),
+			"rust_full" => type_ref.rust_full(),
+			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"fields" => fields.join("").into(),
+			"bases" => bases.join("").into(),
+			"impl" => IMPL_TPL.interpolate(&hashmap! {
+				"rust_local" => c.rust_localname(),
+				"consts" => consts.into(),
+				"methods" => inherent_methods.into(),
+			}).into()
+		});
 	}
 	out
 }
@@ -262,7 +262,7 @@ fn rust_generate_funcs<'tu>(fns: impl IntoIterator<Item=&'tu Func<'tu>>, opencv_
 		.join("")
 }
 
-fn rust_disambiguate_names<'tu>(fns: impl IntoIterator<Item=&'tu Func<'tu>>) -> impl for<'r> Iterator<Item=(String, &'tu Func<'tu>)> {
+fn rust_disambiguate_names<'tu>(fns: impl IntoIterator<Item=&'tu Func<'tu>>) -> impl Iterator<Item=(String, &'tu Func<'tu>)> {
 	let args = fns.into_iter();
 	NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
 		.into_disambiguator(args, |f| f.rust_leafname())
