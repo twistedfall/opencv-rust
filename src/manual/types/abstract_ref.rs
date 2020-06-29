@@ -62,12 +62,12 @@ impl<T: ?Sized> OpenCVTypeExternContainer for AbstractRefMut<'_, T> {
 	type ExternSendMut = *mut c_void;
 
 	#[inline]
-	fn opencv_to_extern(&self) -> Self::ExternSend {
+	fn opencv_as_extern(&self) -> Self::ExternSend {
 		self.as_raw()
 	}
 
 	#[inline]
-	fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut {
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
 }

@@ -1373,16 +1373,16 @@ impl<'tu> TypeRef<'tu> {
 			return if self.is_output() {
 				format!("&mut {name}_via", name=name)
 			} else if self.is_const() || is_const {
-				format!("{name}.opencv_to_extern()", name=name)
+				format!("{name}.opencv_as_extern()", name=name)
 			} else {
-				format!("{name}.opencv_to_extern_mut()", name=name)
+				format!("{name}.opencv_as_extern_mut()", name=name)
 			}
 		}
 		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const)) {
 			return format!("&{name}", name=name);
 		}
 		if self.as_simple_class().is_some() {
-			return format!("{name}.opencv_to_extern()", name=name);
+			return format!("{name}.opencv_as_extern()", name=name);
 		}
 		if self.is_by_ptr() {
 			let typ = self.source();

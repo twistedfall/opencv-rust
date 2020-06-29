@@ -46,8 +46,8 @@ macro_rules! opencv_type_simple_generic {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
-			#[inline] fn opencv_to_extern(&self) -> Self::ExternSend { self }
-			#[inline] fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut { self }
+			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
+			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
 		}
 	};
 }

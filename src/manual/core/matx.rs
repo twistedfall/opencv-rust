@@ -158,8 +158,8 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
-	#[inline] fn opencv_to_extern(&self) -> Self::ExternSend { self }
-	#[inline] fn opencv_to_extern_mut(&mut self) -> Self::ExternSendMut { self }
+	#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
+	#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
 }
 
 impl<T: ValidMatxType, A: SizedArray<T>> std::cmp::PartialEq for Matx<T, A> {

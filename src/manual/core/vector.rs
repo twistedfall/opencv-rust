@@ -222,14 +222,14 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Add new element
 	pub fn push(&mut self, val: <T as OpenCVType<'_>>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
-		unsafe { self.extern_push(val.opencv_to_extern()) }
+		unsafe { self.extern_push(val.opencv_as_extern()) }
 	}
 
 	/// Insert a new element at the specified `index`
 	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) -> Result<()> {
 		vector_index_check(index, self.len() + 1)?;
 		let val = val.opencv_into_extern_container()?;
-		unsafe { self.extern_insert(index, val.opencv_to_extern()) }
+		unsafe { self.extern_insert(index, val.opencv_as_extern()) }
 		Ok(())
 	}
 
@@ -237,14 +237,14 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	pub fn set(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) -> Result<()> {
 		vector_index_check(index, self.len())?;
 		let val = val.opencv_into_extern_container()?;
-		unsafe { self.extern_set(index, val.opencv_to_extern()) }
+		unsafe { self.extern_set(index, val.opencv_as_extern()) }
 		Ok(())
 	}
 
 	/// Same as `set()` but without bounds checking
 	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType<'_>>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
-		self.extern_set(index, val.opencv_to_extern())
+		self.extern_set(index, val.opencv_as_extern())
 	}
 
 	/// Get element at the specified `index`
