@@ -11,11 +11,11 @@ pub use self::{scalar::ValidScalarType, vec::ValidVecType};
 
 // additional modules needed because valid_types! introduces module named "private"
 mod vec {
-	valid_types!(ValidVecType, i8, u8, i16, u16, i32, f32, f64);
+	valid_types!(ValidVecType: i8, u8, i16, u16, i32, f32, f64);
 }
 
 mod scalar {
-	valid_types!(ValidScalarType, i32, f64);
+	valid_types!(ValidScalarType: i32, f64);
 }
 
 macro_rules! vec_impl {
@@ -51,7 +51,7 @@ macro_rules! vec_impl {
 			}
 		}
 
-		opencv_type_simple_generic! { $type, $type_trait }
+		opencv_type_simple_generic! { $type<$type_trait> }
 	};
 }
 

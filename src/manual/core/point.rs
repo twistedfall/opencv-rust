@@ -4,7 +4,7 @@ use num_traits::{NumCast, ToPrimitive};
 
 use crate::core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec2};
 
-valid_types!(ValidPointType, i32, i64, f32, f64);
+valid_types!(ValidPointType: i32, i64, f32, f64);
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
@@ -76,7 +76,7 @@ impl<T: ValidPointType> Point_<T> {
 	}
 }
 
-opencv_type_simple_generic! { Point_, ValidPointType }
+opencv_type_simple_generic! { Point_<ValidPointType> }
 
 impl<T> Add for Point_<T>
 	where

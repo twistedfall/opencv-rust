@@ -24,7 +24,7 @@ fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
 	}
 }
 
-valid_types!(ValidMatxType, f32, f64);
+valid_types!(ValidMatxType: f32, f64);
 
 pub trait MatxTrait: Sized {
 	type ElemType: ValidMatxType;

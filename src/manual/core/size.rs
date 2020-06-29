@@ -4,7 +4,7 @@ use num_traits::{NumCast, ToPrimitive};
 
 use crate::core::{Point_, ValidPointType};
 
-valid_types!(ValidSizeType, i32, i64, f32, f64);
+valid_types!(ValidSizeType: i32, i64, f32, f64);
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
@@ -41,7 +41,7 @@ impl<T: ValidSizeType> Size_<T> {
 	}
 }
 
-opencv_type_simple_generic! { Size_, ValidSizeType }
+opencv_type_simple_generic! { Size_<ValidSizeType> }
 
 impl<T> Add for Size_<T>
 	where

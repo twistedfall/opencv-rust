@@ -13,4 +13,4 @@ impl<T: ValidMatxType> Default for Affine3<T> {
 	}
 }
 
-opencv_type_simple_generic! { Affine3, ValidMatxType }
+opencv_type_simple_generic! { Affine3<ValidMatxType> }

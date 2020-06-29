@@ -14,7 +14,7 @@ pub use vec::*;
 pub use vector::*;
 
 macro_rules! valid_types {
-	($trait: ident, $($rust_type: ty),+) => {
+	($trait: ident: $($rust_type: ty),+) => {
 		/// This sealed trait is implemented for types that are valid to use in corresponding context
 		pub trait $trait: ::num_traits::NumAssign + PartialOrd + Default + Copy + private::Sealed {}
 
@@ -30,7 +30,7 @@ macro_rules! valid_types {
 }
 
 macro_rules! opencv_type_simple_generic {
-	($type: ident, $trait: ident) => {
+	($type: ident<$trait: ident>) => {
 		impl<T: $trait> $crate::traits::OpenCVType<'_> for $type<T> {
 			type Owned = Self;
 			type Arg = Self;

@@ -8,7 +8,7 @@ use num_traits::{NumCast, ToPrimitive};
 
 use crate::core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType};
 
-valid_types!(ValidRectType, i32, f32, f64);
+valid_types!(ValidRectType: i32, f32, f64);
 
 #[inline(always)]
 fn partial_min<T: PartialOrd>(a: T, b: T) -> T {
@@ -84,7 +84,7 @@ impl<T: ValidRectType> Rect_<T> {
 	}
 }
 
-opencv_type_simple_generic! { Rect_, ValidRectType }
+opencv_type_simple_generic! { Rect_<ValidRectType> }
 
 impl<P, R> Add<Point_<P>> for Rect_<R>
 	where
