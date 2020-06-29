@@ -15,12 +15,12 @@ impl<T: VectorElement> IntoIterator for Vector<T> where Vector<T>: VectorExtern<
 	}
 }
 
-impl<'i, T: VectorElement> IntoIterator for &'i Vector<T> where Vector<T>: VectorExtern<T> {
+impl<'v, T: VectorElement> IntoIterator for &'v Vector<T> where Vector<T>: VectorExtern<T> {
 	type Item = T;
-	type IntoIter = VectorRefIterator<'i, T>;
+	type IntoIter = VectorRefIterator<'v, T>;
 
 	#[inline]
-	fn into_iter(self) -> VectorRefIterator<'i, T> {
+	fn into_iter(self) -> VectorRefIterator<'v, T> {
 		self.iter()
 	}
 }

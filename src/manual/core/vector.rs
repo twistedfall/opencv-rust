@@ -127,11 +127,16 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	pub fn get(&self, index: size_t) -> Result<T> {
 		vector_index_check(index, self.len())?;
 		unsafe { self.extern_get(index) }
+			.into_result()
+			.map(|s| unsafe { T::opencv_from_extern(s) } )
 	}
 
 	/// Same as `get()` but without bounds checking
 	pub unsafe fn get_unchecked(&self, index: size_t) -> T {
-		self.extern_get(index).unwrap() // fixme
+		self.extern_get(index)
+			.into_result()
+			.map(|s| T::opencv_from_extern(s) )
+			.unwrap() // fixme, make it return value directly
 	}
 
 	pub fn iter(&self) -> VectorRefIterator<T> {
