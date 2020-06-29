@@ -9,7 +9,7 @@ use crate::{
 	core::{Mat, MatTrait},
 	Error,
 	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 use super::{DataType, match_dims, match_format, match_is_continuous, match_total, MatTraitManual};
@@ -115,7 +115,6 @@ impl<T> Boxed for Mat_<T> {
 }
 
 impl<T> OpenCVType<'_> for Mat_<T> {
-	type Owned = Self;
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
 	type ExternContainer = Self;
@@ -131,8 +130,22 @@ impl<T> OpenCVType<'_> for Mat_<T> {
 	}
 
 	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		Self::from_raw(s)
+	}
+}
+
+impl<T> OpenCVTypeArg<'_> for Mat_<T> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
 	}
 }
 

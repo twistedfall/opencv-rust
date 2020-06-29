@@ -13,7 +13,7 @@ pub use vector_extern::{VectorElement, VectorExtern, VectorExternCopyNonBool};
 use crate::{
 	platform_types::size_t,
 	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 mod vector_extern;
@@ -239,7 +239,6 @@ impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
 }
 
 impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> {
-	type Owned = Self;
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
 	type ExternContainer = Self;
@@ -255,8 +254,22 @@ impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> 
 	}
 
 	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		Self::from_raw(s)
+	}
+}
+
+impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T> where Self: VectorExtern<T> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
 	}
 }
 

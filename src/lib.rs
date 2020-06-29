@@ -30,7 +30,7 @@ pub(crate) mod mod_prelude_types {
 
 	pub use crate::{
 		platform_types::*,
-		traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+		traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 	};
 }
 

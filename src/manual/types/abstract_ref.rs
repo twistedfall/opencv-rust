@@ -5,7 +5,7 @@ use std::{
 
 use crate::{
 	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 pub struct AbstractRefMut<'r, T: ?Sized> {
@@ -36,7 +36,6 @@ impl<T: ?Sized> Boxed for AbstractRefMut<'_, T> {
 }
 
 impl<'r, T: ?Sized> OpenCVType<'r> for AbstractRefMut<'r, T> {
-	type Owned = Self;
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
 	type ExternContainer = Self;
@@ -52,8 +51,22 @@ impl<'r, T: ?Sized> OpenCVType<'r> for AbstractRefMut<'r, T> {
 	}
 
 	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self::Owned {
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		Self::from_raw(s)
+	}
+}
+
+impl<'r, T: ?Sized> OpenCVTypeArg<'r> for AbstractRefMut<'r, T> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
 	}
 }
 

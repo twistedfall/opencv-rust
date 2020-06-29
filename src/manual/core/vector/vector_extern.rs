@@ -4,7 +4,7 @@ use crate::{
 	core::Vector,
 	platform_types::size_t,
 	Result,
-	traits::{OpenCVType, OpenCVTypeExternContainer},
+	traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 #[doc(hidden)]
@@ -26,9 +26,9 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	#[doc(hidden)] unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
 	#[doc(hidden)] unsafe fn extern_clear(&mut self);
 	#[doc(hidden)] unsafe fn extern_get(&self, index: size_t) -> Result<T>;
-	#[doc(hidden)] unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	#[doc(hidden)] unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	#[doc(hidden)] unsafe fn extern_set<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVType<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)] unsafe fn extern_set<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
 }
 
 #[macro_export]
@@ -129,20 +129,20 @@ macro_rules! vector_extern {
 			}
 
 			#[inline(always)]
-			unsafe fn extern_push<'a>(&mut self, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
-				extern "C" { fn $extern_push<'a>(instance: $vector_extern_mut, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
+			unsafe fn extern_push<'a>(&mut self, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
+				extern "C" { fn $extern_push<'a>(instance: $vector_extern_mut, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
 				$extern_push(self.as_raw_mut(), val)
 			}
 
 			#[inline(always)]
-			unsafe fn extern_insert<'a>(&mut self, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
-				extern "C" { fn $extern_insert<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
+			unsafe fn extern_insert<'a>(&mut self, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
+				extern "C" { fn $extern_insert<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
 				$extern_insert(self.as_raw_mut(), index, val)
 			}
 
 			#[inline(always)]
-			unsafe fn extern_set<'a>(&mut self, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
-				extern "C" { fn $extern_set<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVType<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
+			unsafe fn extern_set<'a>(&mut self, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
+				extern "C" { fn $extern_set<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend); }
 				$extern_set(self.as_raw_mut(), index, val)
 			}
 		}

@@ -11,7 +11,7 @@ use crate::{
 	manual::core::sized::*,
 	Result,
 	sys::Result as SysResult,
-	traits::{Boxed, OpenCVType, OpenCVTypeExternContainer},
+	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
@@ -144,7 +144,6 @@ impl<T: ValidMatxType, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for 
 }
 
 impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
-	type Owned = Self;
 	type Arg = Self;
 	type ExternReceive = Self;
 	type ExternContainer = Self;
@@ -152,6 +151,15 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	#[inline] fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
 	#[inline] fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
 	#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
+}
+
+impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
 }
 
 impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A> {
