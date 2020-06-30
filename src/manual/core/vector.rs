@@ -87,10 +87,10 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 }
 
 // technically VectorExternCopyNonBool isn't needed but it simplifies this impl
-impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Vector<T>: VectorExtern<T> + VectorExternCopyNonBool<T> {
+impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Vector<T>: VectorExtern<T> {
 	#[inline]
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		self.as_slice().fmt(f)
+		f.debug_list().entries(self.iter()).finish()
 	}
 }
 
@@ -122,6 +122,14 @@ impl<T: VectorElement> Default for Vector<T> where Vector<T>: VectorExtern<T> {
 	}
 }
 
+
+impl<T: VectorElement> Clone for Vector<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
+	fn clone(&self) -> Vector<T> {
+		self.clone()
+	}
+}
+
 impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Vector<T>: VectorExtern<T> {
 	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
 		let s = s.into_iter();
@@ -145,6 +153,10 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a new Vector
 	pub fn new() -> Self {
 		unsafe { Self::from_raw(Self::extern_new()) }
+	}
+
+	fn clone(&self) -> Vector<T> {
+		unsafe { Self::from_raw(self.extern_clone()) }
 	}
 
 	/// Create a Vector with pre-defined capacity
