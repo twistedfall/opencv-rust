@@ -34,9 +34,7 @@ macro_rules! opencv_type_boxed {
 
 			#[inline]
 			fn into_raw(self) -> *mut std::ffi::c_void {
-				let out = self.ptr;
-				std::mem::forget(self);
-				out
+				std::mem::ManuallyDrop::new(self).ptr
 			}
 
 			#[inline]

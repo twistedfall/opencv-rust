@@ -4,7 +4,7 @@ use std::{
 	fmt,
 	iter::FromIterator,
 	marker::PhantomData,
-	mem,
+	mem::ManuallyDrop,
 };
 
 pub use iter::{VectorIterator, VectorRefIterator};
@@ -224,9 +224,7 @@ impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
 
 	#[inline]
 	fn into_raw(self) -> *mut c_void {
-		let out = self.ptr;
-		mem::forget(self);
-		out
+		ManuallyDrop::new(self).ptr
 	}
 
 	#[inline]

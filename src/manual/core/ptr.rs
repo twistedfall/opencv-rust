@@ -1,7 +1,7 @@
 use std::{
 	ffi::c_void,
 	marker::PhantomData,
-	mem,
+	mem::ManuallyDrop,
 };
 
 pub use ptr_extern::PtrExtern;
@@ -42,9 +42,7 @@ impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
 
 	#[inline]
 	fn into_raw(self) -> *mut c_void {
-		let out = self.ptr;
-		mem::forget(self);
-		out
+		ManuallyDrop::new(self).ptr
 	}
 
 	#[inline]
