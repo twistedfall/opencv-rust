@@ -111,6 +111,7 @@ mod generator {
 		let start;
 		if cfg!(feature = "clang-runtime") {
 			let clang = clang::Clang::new().expect("Cannot initialize clang");
+			println!("=== Clang: {}", clang::get_version());
 			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
 			eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			start = Instant::now();
@@ -161,6 +162,7 @@ mod generator {
 			// });
 		} else {
 			let clang = clang::Clang::new().expect("Cannot initialize clang");
+			println!("=== Clang: {}", clang::get_version());
 			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
 			eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			let gen = Arc::new(gen);
