@@ -9,7 +9,7 @@ license = "MIT"
 version = "0.42.0"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
-autoexamples = false
+autoexamples = false # cuda example doesn't compile on just any system
 
 [lib]
 doctest = false
@@ -72,4 +72,5 @@ vcpkg = "0.2"
 matches = "0.1"
 
 [package.metadata.docs.rs]
-features = ["docs-only", "contrib"]
+no-default-features = true
+features = ["opencv-4", "docs-only", "contrib"]
