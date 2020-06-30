@@ -5,6 +5,7 @@ use std::{
 	iter::FromIterator,
 	marker::PhantomData,
 	mem::ManuallyDrop,
+	slice,
 };
 
 pub use iter::{VectorIterator, VectorRefIterator};
@@ -145,7 +146,13 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 
 	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
-			::std::slice::from_raw_parts(self.extern_data(), self.len())
+			slice::from_raw_parts(self.extern_data(), self.len())
+		}
+	}
+
+	pub fn as_mut_slice(&mut self) -> &mut [T] where Self: VectorExternCopyNonBool<T> {
+		unsafe {
+			slice::from_raw_parts_mut(self.extern_data_mut(), self.len())
 		}
 	}
 

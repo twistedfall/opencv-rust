@@ -158,7 +158,9 @@ macro_rules! vector_copy_non_bool {
 	(
 		$type: ty,
 		$vector_extern_const: ty,
-		$extern_data: ident
+		$vector_extern_mut: ty,
+		$extern_data_const: ident,
+		$extern_data_mut: ident $(,)?
 	) => {
 		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
 			#[inline(always)]
@@ -170,8 +172,14 @@ macro_rules! vector_copy_non_bool {
 		impl $crate::manual::core::VectorExternCopyNonBool<$type> for $crate::manual::core::Vector<$type> {
 			#[inline(always)]
 			unsafe fn extern_data(&self) -> *const $type {
-				extern "C" { fn $extern_data(instance: $vector_extern_const) -> *const $type; }
-				$extern_data(self.as_raw())
+				extern "C" { fn $extern_data_const(instance: $vector_extern_const) -> *const $type; }
+				$extern_data_const(self.as_raw())
+			}
+
+			#[inline(always)]
+			unsafe fn extern_data_mut(&mut self) -> *mut $type {
+				extern "C" { fn $extern_data_mut(instance: $vector_extern_mut) -> *mut $type; }
+				$extern_data_mut(self.as_raw_mut())
 			}
 		}
 	};

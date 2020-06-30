@@ -411,23 +411,58 @@ fn iter() -> Result<()> {
 }
 
 #[test]
-fn to_slice() -> Result<()> {
+fn as_slice() -> Result<()> {
 	{
-		let vec = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
-		assert_eq!(vec.as_slice(), &[1, 2, 3, 4, 5]);
+		let src = vec![1, 2, 3, 4, 5];
+		let mut vec = VectorOfu8::from_iter(src.clone());
+		assert_eq!(vec.as_slice(), src.as_slice());
+		assert_eq!(vec.as_mut_slice(), src.as_slice());
+		vec.as_mut_slice()[2] = 10;
+		vec.as_mut_slice()[4] = 15;
+		assert_eq!(vec.as_mut_slice(), &[1, 2, 10, 4, 15]);
 	}
 	{
 		let mut vec = VectorOfi32::new();
 		vec.push(5);
 		vec.push(10);
 		assert_eq!(vec.as_slice(), &[5, 10]);
+		vec.as_mut_slice().swap(0, 1);
+		assert_eq!(vec.as_slice(), &[10, 5]);
 	}
 	{
-		let vec = VectorOfPoint2d::from_iter(vec![Point2d::new(10., 20.), Point2d::new(60.5, 90.3), Point2d::new(-40.333, 89.)]);
+		let src = vec![Point2d::new(10., 20.), Point2d::new(60.5, 90.3), Point2d::new(-40.333, 89.)];
+		let mut vec = VectorOfPoint2d::from_iter(src.clone());
 		let slice = vec.as_slice();
 		assert_eq!(20., slice[0].y);
 		assert_eq!(60.5, slice[1].x);
 		assert_eq!(Point2d::new(-40.333, 89.), slice[2]);
+		let slice = vec.as_mut_slice();
+		slice[0].x = 15.;
+		slice[0].y = 90.;
+		slice[1] = Point2d::new(91.5, 92.6);
+		slice.swap(0, 1);
+		assert_eq!(&[Point2d::new(91.5, 92.6), Point2d::new(15., 90.), Point2d::new(-40.333, 89.)], vec.as_slice());
+	}
+	{
+		let default = DMatch::default()?;
+		let src = vec![DMatch::default()?, DMatch::new(1, 2, 9.)?];
+		let mut vec = VectorOfDMatch::from_iter(src.clone());
+		let slice = vec.as_slice();
+		assert_eq!(slice[0].distance, default.distance);
+		assert_eq!(slice[0].img_idx, default.img_idx);
+		assert_eq!(slice[1], DMatch::new(1, 2, 9.)?);
+		let slice = vec.as_mut_slice();
+		slice[0].distance = 15.;
+		slice[0].img_idx = 8;
+		slice[1] = DMatch::new_index(1, 2, 3, 98.)?;
+		slice.swap(0, 1);
+		assert_eq!(
+			&[
+				DMatch::new_index(1, 2, 3, 98.)?,
+				DMatch::new_index(default.query_idx, default.train_idx, 8, 15.)?,
+			],
+			vec.as_slice()
+		);
 	}
 	Ok(())
 }
