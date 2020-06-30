@@ -734,6 +734,20 @@ impl<'tu> TypeRef<'tu> {
 			|| self.canonical().as_simple_class().is_some()
 	}
 
+	pub fn is_clone(&self) -> bool {
+		self.is_copy() || match self.kind() {
+			Kind::StdVector(vec) => {
+				vec.element_type().is_clone()
+			},
+			Kind::Class(cls) => {
+				cls.has_clone()
+			},
+			_ => {
+				false
+			}
+		}
+	}
+
 	pub fn as_class(&self) -> Option<Class<'tu>> {
 		if let Kind::Class(out) = self.canonical().kind() {
 			Some(out)

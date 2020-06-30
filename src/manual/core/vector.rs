@@ -32,10 +32,6 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		unsafe { Self::from_raw(Self::extern_new()) }
 	}
 
-	fn clone(&self) -> Vector<T> {
-		unsafe { Self::from_raw(self.extern_clone()) }
-	}
-
 	/// Create a Vector with pre-defined capacity
 	pub fn with_capacity(capacity: size_t) -> Self {
 		let mut out = Self::new();
@@ -102,6 +98,11 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		unsafe { self.extern_push(val.opencv_as_extern()) }
 	}
 
+	pub(crate) fn push_owned(&mut self, val: T) {
+		let val = val.opencv_into_extern_container_nofail();
+		unsafe { self.extern_push_owned(val.opencv_as_extern()) }
+	}
+
 	/// Insert a new element at the specified `index`
 	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
 		vector_index_check(index, self.len() + 1)?;
@@ -165,13 +166,6 @@ impl<T: VectorElement> Default for Vector<T> where Self: VectorExtern<T> {
 	#[inline]
 	fn default() -> Vector<T> {
 		Vector::new()
-	}
-}
-
-impl<T: VectorElement> Clone for Vector<T> where Vector<T>: VectorExtern<T> {
-	#[inline]
-	fn clone(&self) -> Vector<T> {
-		self.clone()
 	}
 }
 

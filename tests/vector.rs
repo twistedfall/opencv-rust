@@ -5,6 +5,7 @@ use opencv::{
 		self,
 		DMatch,
 		Point2d,
+		Point2f,
 		Point3i,
 		Scalar,
 		SparseMat_Hdr,
@@ -21,10 +22,12 @@ use opencv::{
 		VectorOfi8,
 		VectorOfMat,
 		VectorOfPoint2d,
+		VectorOfPoint2f,
 		VectorOfPoint3i,
 		VectorOfString,
 		VectorOfu8,
 		VectorOfVec4i,
+		VectorOfVectorOfPoint2f,
 		VectorOfVectorOfPoint3i,
 	}
 };
@@ -517,5 +520,79 @@ fn property() -> Result<()> {
 	assert_eq!(pool_out.get(4)?, pool.get(4)? - 10);
 	assert_eq!(pool_out.get(8)?, pool.get(8)? - 10);
 	assert_eq!(pool_out.len(), pool.len());
+	Ok(())
+}
+
+#[test]
+fn clone() -> Result<()> {
+	{
+		let src = vec![1, 2, 3, 4, 5, 6];
+		let mut primitive = VectorOfi32::from_iter(src.clone());
+		let primitive_clone = primitive.clone();
+		primitive.remove(2)?;
+		assert_eq!(primitive.len() + 1, primitive_clone.len());
+		primitive.set(1, 10)?;
+		assert_eq!(10, primitive.get(1)?);
+		primitive.as_mut_slice()[2] = 80;
+		assert_eq!(80, primitive.get(2)?);
+		drop(primitive);
+		assert_eq!(primitive_clone.as_slice(), src.as_slice())
+	}
+	{
+		let src = vec![Point2d::new(1., 2.), Point2d::new(3., 4.), Point2d::new(5., 6.)];
+		let mut simple = VectorOfPoint2d::from_iter(src.clone());
+		let simple_clone = simple.clone();
+		simple.remove(2)?;
+		assert_eq!(simple.len() + 1, simple_clone.len());
+		simple.set(0, Point2d::new(10., 11.))?;
+		assert_eq!(10., simple.get(0)?.x);
+		assert_eq!(11., simple.get(0)?.y);
+		simple.as_mut_slice()[1] = Point2d::new(20., 21.);
+		assert_eq!(20., simple.get(1)?.x);
+		assert_eq!(21., simple.get(1)?.y);
+		drop(simple);
+		assert_eq!(simple_clone.as_slice(), src.as_slice())
+	}
+	{
+		let mut src = vec![
+			Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::from(10.))?,
+			Mat::new_rows_cols_with_default(5, 8, i32::typ(), Scalar::from(20.))?,
+		];
+		let src_clone = src.clone();
+		assert_eq!(20, *src[1].at_2d::<i32>(2, 2)?);
+		assert_eq!(20, *src_clone[1].at_2d::<i32>(2, 2)?);
+		*src[1].at_2d_mut::<i32>(2, 2)? = 30;
+		assert_eq!(30, *src[1].at_2d::<i32>(2, 2)?);
+		assert_eq!(20, *src_clone[1].at_2d::<i32>(2, 2)?);
+		let mut boxed = VectorOfMat::from_iter(src_clone);
+		let boxed_clone = boxed.clone();
+		assert_eq!(20, *boxed.get(1)?.at_2d::<i32>(2, 2)?);
+		assert_eq!(20, *boxed_clone.get(1)?.at_2d::<i32>(2, 2)?);
+		*boxed.get(1)?.at_2d_mut::<i32>(2, 2)? = 30;
+		assert_eq!(30, *boxed.get(1)?.at_2d::<i32>(2, 2)?);
+		assert_eq!(20, *boxed_clone.get(1)?.at_2d::<i32>(2, 2)?);
+		boxed.remove(1)?;
+		assert_eq!(boxed.len() + 1, boxed_clone.len());
+		boxed.set(0, Mat::new_rows_cols_with_default(40, 50, f64::typ(), Scalar::from(40.))?)?;
+		assert_eq!(40., *boxed.get(0)?.at_2d::<f64>(2, 2)?);
+		assert_eq!(10., *boxed_clone.get(0)?.at_2d::<f64>(2, 2)?);
+		drop(boxed);
+		assert_eq!(10., *boxed_clone.get(0)?.at_2d::<f64>(2, 2)?);
+	}
+	{
+		let src = vec![
+			VectorOfPoint2f::from_iter(vec![Point2f::new(10., 11.), Point2f::new(12., 13.)]),
+			VectorOfPoint2f::from_iter(vec![Point2f::new(20., 21.), Point2f::new(22., 23.)]),
+			VectorOfPoint2f::from_iter(vec![Point2f::new(30., 31.), Point2f::new(32., 33.)]),
+		];
+		let mut vec_of_vec = VectorOfVectorOfPoint2f::from_iter(src.clone());
+		let vec_of_vec_clone = vec_of_vec.clone();
+		assert_eq!(21., vec_of_vec.get(1)?.get(0)?.y);
+		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
+		vec_of_vec.set(1, VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]));
+		assert_eq!(41., vec_of_vec.get(1)?.get(0)?.y);
+		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
+	}
+
 	Ok(())
 }

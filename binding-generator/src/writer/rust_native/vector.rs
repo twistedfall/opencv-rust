@@ -63,6 +63,11 @@ impl RustNativeGeneratedElement for Vector<'_> {
 			if element_type.is_copy() && !element_type.is_bool() {
 				additional_methods += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			} else {
+				inter_vars.insert("clone", if vec_type.is_clone() {
+					"clone "
+				} else {
+					""
+				}.into());
 				additional_methods += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
 			if self.is_data_type(&element_type) {
