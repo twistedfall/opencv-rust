@@ -15,6 +15,7 @@ pub trait VectorElement: Sized + for<'a> OpenCVType<'a> where Vector<Self>: Vect
 #[doc(hidden)]
 pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	unsafe fn extern_new() -> *mut c_void;
+	unsafe fn extern_clone(&self) -> *mut c_void;
 	unsafe fn extern_delete(&mut self);
 	unsafe fn extern_len(&self) -> size_t;
 	unsafe fn extern_is_empty(&self) -> bool;
@@ -37,6 +38,7 @@ macro_rules! vector_extern {
 		$vector_extern_const: ty,
 		$vector_extern_mut: ty,
 		$extern_new: ident,
+		$extern_clone: ident,
 		$extern_delete: ident,
 		$extern_len: ident,
 		$extern_is_empty: ident,
@@ -56,6 +58,12 @@ macro_rules! vector_extern {
 			unsafe fn extern_new() -> $vector_extern_mut {
 				extern "C" { fn $extern_new() -> $vector_extern_mut; }
 				$extern_new()
+			}
+
+			#[inline(always)]
+			unsafe fn extern_clone(&self) -> $vector_extern_mut {
+				extern "C" { fn $extern_clone(instance: $vector_extern_const) -> $vector_extern_mut; }
+				$extern_clone(self.as_raw())
 			}
 
 			#[inline(always)]

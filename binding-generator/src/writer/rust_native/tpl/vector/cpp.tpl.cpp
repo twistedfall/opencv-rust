@@ -7,6 +7,10 @@ extern "C" {
 		return new {{cpp_full}}();
 	}
 
+	{{cpp_extern_return}} cv_{{rust_localalias}}_clone(const {{cpp_full}}* instance) {
+        return new {{cpp_full}}(*instance);
+    }
+
 	size_t cv_{{rust_localalias}}_len(const {{cpp_full}}* instance) {
 		return instance->size();
 	}
