@@ -9,5 +9,5 @@ pub struct {{rust_local}} {
 opencv_type_simple! { {{rust_full}} }
 
 {{impl}}
-
+{{impls}}
 

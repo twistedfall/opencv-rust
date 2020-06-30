@@ -327,7 +327,7 @@ fn mat_continuous() -> Result<()> {
 		assert_eq!(8., vec[1][0]);
 		assert_eq!(9., vec[1][1]);
 
-		let mat_clone = sub_mat_non_cont.clone()?;
+		let mat_clone = sub_mat_non_cont.try_clone()?;
 		assert_eq!(mat.typ()?, mat_clone.typ()?);
 		assert_eq!(2, mat_clone.rows());
 		assert_eq!(2, mat_clone.cols());
@@ -475,7 +475,7 @@ fn mat_locate_roi() -> Result<()> {
 #[test]
 fn mat_convert() -> Result<()> {
 	let mat = Mat::from_slice(&[1, 2, 3, 4])?;
-	let mut mat_ = mat.clone()?.try_into_typed::<i32>()?;
+	let mut mat_ = mat.try_clone()?.try_into_typed::<i32>()?;
 	assert_eq!(3, *mat_.at(2)?);
 	*mat_.at_mut(3)? = 8;
 	assert_eq!(8, *mat_.at(3)?);

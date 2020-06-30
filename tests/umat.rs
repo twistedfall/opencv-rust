@@ -104,7 +104,7 @@ fn umat_continuous() -> Result<()> {
         assert!(sub_umat_non_cont.is_submatrix()?);
         assert!(!sub_umat_non_cont.is_continuous()?);
 
-        let umat_clone = sub_umat_non_cont.clone()?;
+        let umat_clone = sub_umat_non_cont.try_clone()?;
         assert_eq!(umat.typ()?, umat_clone.typ()?);
         assert_eq!(2, umat_clone.rows());
         assert_eq!(2, umat_clone.cols());

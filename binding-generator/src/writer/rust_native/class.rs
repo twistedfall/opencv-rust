@@ -27,6 +27,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation()
 	);
 
+	static IMPL_CLONE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/impl_clone.tpl.rs").compile_interpolation()
+	);
+
 	static SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 		|| include_str!("tpl/class/simple.tpl.rs").compile_interpolation()
 	);
@@ -65,7 +69,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	} else {
 		c.field_methods(fields.iter())
 	};
-	methods.extend_from_slice(c.methods().as_slice());
+	let class_methods = c.methods();
+	methods.extend_from_slice(class_methods.as_slice());
 	if is_trait {
 		let mut bases = c.bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
@@ -196,20 +201,30 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.map(|c| c.gen_rust(opencv_version))
 			.join("");
 
+		let rust_local = c.rust_localname();
+		let impls = if c.has_clone() {
+			IMPL_CLONE_TPL.interpolate(&hashmap! {
+				"rust_local" => rust_local.clone(),
+			})
+		} else {
+			"".to_string()
+		};
+
 		out += &tpl.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
-			"rust_local" => type_ref.rust_local(),
-			"rust_full" => type_ref.rust_full(),
+			"rust_local" => rust_local.clone(),
+			"rust_full" => c.rust_fullname(),
 			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
 			"fields" => fields.join("").into(),
 			"bases" => bases.join("").into(),
 			"impl" => IMPL_TPL.interpolate(&hashmap! {
-				"rust_local" => c.rust_localname(),
+				"rust_local" => rust_local,
 				"consts" => consts.into(),
 				"methods" => inherent_methods.into(),
-			}).into()
+			}).into(),
+			"impls" => impls.into(),
 		});
 	}
 	out

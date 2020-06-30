@@ -121,6 +121,10 @@ impl<'tu> Class<'tu> {
 		}
 	}
 
+	pub fn has_clone(&self) -> bool {
+		self.methods().into_iter().any(|m| m.is_clone())
+	}
+
 	pub fn rust_trait_name(&self, full: bool) -> Cow<str> {
 		let mut out = self.rust_name(full);
 		if self.is_trait() && !self.is_abstract() {

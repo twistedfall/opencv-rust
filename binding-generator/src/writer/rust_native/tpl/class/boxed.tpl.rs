@@ -22,5 +22,5 @@ unsafe impl Send for {{rust_local}} {}
 
 {{bases}}
 {{impl}}
-
+{{impls}}
 

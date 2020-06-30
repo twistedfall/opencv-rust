@@ -106,7 +106,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let roi_corners_len = roi_corners.lock().unwrap().len();
         if validation_needed.load(Ordering::Relaxed) && roi_corners_len < 4 {
             validation_needed.store(false, Ordering::Relaxed);
-            image = original_image.clone()?;
+            image = original_image.clone();
             {
                 let roi_corners = roi_corners.lock().unwrap();
                 for i in 0..roi_corners_len {
@@ -121,7 +121,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             highgui::imshow(WINDOW_TITLE, &image)?;
         }
         if validation_needed.load(Ordering::Relaxed) && roi_corners_len == 4 {
-            image = original_image.clone()?;
+            image = original_image.clone();
             {
                 let roi_corners = roi_corners.lock().unwrap();
                 for i in 0..4 {

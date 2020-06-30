@@ -280,7 +280,9 @@ impl RustNativeGeneratedElement for Func<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		let name = if let Some(name_hint) = self.name_hint() {
+		let name = if self.is_clone() {
+			"try_clone".into()
+		} else if let Some(name_hint) = self.name_hint() {
 			name_hint.into()
 		} else {
 			self.rust_leafname()

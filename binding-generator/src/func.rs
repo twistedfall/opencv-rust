@@ -278,6 +278,18 @@ impl<'tu> Func<'tu> {
 			|| self.gen_env.get_export_config(self.entity).map_or(false, |e| e.no_except)
 	}
 
+	pub fn is_clone(&self) -> bool {
+		if self.rust_leafname() == "clone" {
+			if let Some(c) = self.as_instance_method() {
+				self.arguments().is_empty() && self.return_type().as_class().map_or(false, |r| r == c)
+			} else {
+				false
+			}
+		} else {
+			false
+		}
+	}
+
 	pub fn as_specialized(&self) -> Option<&'static HashMap<&'static str, &'static str>> {
 		if let FunctionTypeHint::Specialized(spec) = self.type_hint {
 			Some(spec)
