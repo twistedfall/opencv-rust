@@ -149,6 +149,21 @@ jobs:
           name: generated-failed-bindings-${{ runner.os }}-3.2.0
           path: bindings
 
+  docs-rs:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          default: true
+
+      - name: Run a self-check
+        run: ci/docs-rs.sh
+        shell: bash
+
   check:
     runs-on: ubuntu-20.04
     steps:
