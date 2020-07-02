@@ -10,7 +10,7 @@ edition = "2018"
 [lib]
 
 [dependencies]
-clang = {version = "0.23", features = ["clang_6_0"]}
+clang = {version = "0.24", features = ["clang_6_0"]}
 clang-sys = {version = "0.28", features = ["clang_6_0"]}
 dunce = "1.0"
 maplit = "1.0"
