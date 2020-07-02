@@ -132,8 +132,7 @@ sudo apt -y install \
 	libvtk7-dev \
 	libwebp-dev \
 	pkg-config \
-	qtbase5-dev \
-	wget
+	qtbase5-dev
 
 # workaround to make clang_sys crate detect installed libclang
 sudo ln -s libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
@@ -144,8 +143,8 @@ else
 	base_dir="$HOME/build/opencv/"
 	mkdir -p "$base_dir"
 
-	wget -q -O- "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
-	wget -q -O- "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
+	curl -L "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
+	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
 
 	build_dir="$base_dir/opencv-$OPENCV_VERSION-build/"
 	mkdir -p "$build_dir"

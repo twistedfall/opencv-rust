@@ -99,11 +99,11 @@ BUILD_FLAGS="
 
 mkdir -p ~/build/opencv
 
-wget -q -O- "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
+curl -L "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
-	wget -O- https://patch-diff.githubusercontent.com/raw/opencv/opencv/pull/9228.patch | patch -p1 -d ~/"build/opencv/opencv-$OPENCV_VERSION"
+	curl -L https://patch-diff.githubusercontent.com/raw/opencv/opencv/pull/9228.patch | patch -p1 -d ~/"build/opencv/opencv-$OPENCV_VERSION"
 fi
-wget -q -O- "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
+curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
 
 mkdir -p ~/"build/opencv/opencv-$OPENCV_VERSION-build"
 pushd ~/"build/opencv/opencv-$OPENCV_VERSION-build" > /dev/null
