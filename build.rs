@@ -1095,8 +1095,17 @@ fn main() -> Result<()> {
 	for feature in features {
 		eprintln!("===   {}", feature);
 	}
+	let opencv_header_dir = if cfg!(feature = "opencv-32") {
+		MANIFEST_DIR.join("headers/3.2")
+	} else if cfg!(feature = "opencv-34") {
+		MANIFEST_DIR.join("headers/3.4")
+	} else if cfg!(feature = "opencv-4") {
+		MANIFEST_DIR.join("headers/4")
+	} else {
+		panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
+	};
 	let opencv = if cfg!(feature = "docs-only") {
-		Library::probe_from_paths("", "", "")?
+		Library::probe_from_paths(opencv_header_dir.to_string_lossy().as_ref(), "", "")?
 	} else {
 		Library::probe()?
 	};
@@ -1110,14 +1119,8 @@ fn main() -> Result<()> {
 			opencv.include_paths.iter()
 				.find(|p| p.join("opencv2/core/version.hpp").is_file() || p.join("Headers/core/version.hpp").is_file())
 				.expect("Using buildtime-bindgen, but discovered OpenCV include paths is empty or contains non-existent paths").clone()
-		} else if cfg!(feature = "opencv-32") {
-			MANIFEST_DIR.join("headers/3.2")
-		} else if cfg!(feature = "opencv-34") {
-			MANIFEST_DIR.join("headers/3.4")
-		} else if cfg!(feature = "opencv-4") {
-			MANIFEST_DIR.join("headers/4")
 		} else {
-			panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
+			opencv_header_dir
 		}
 	});
 

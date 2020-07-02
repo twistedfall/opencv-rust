@@ -298,8 +298,8 @@ to be able to free at least some of the closures.
 
 ### Unsafety
 
-Although crate tries to provide ergonomic Rust interface for OpenCV, don't expect
-Rust safety guarantees at this stage. It's especially true for borrow checking and
+Although the crate tries to provide an ergonomic Rust interface for OpenCV, don't expect
+Rust safety guarantees at this stage. It's especially true for the borrow-checking and the
 shared mutable ownership. Notable example would be `Mat` which is a reference counted
 object in its essence. You can own a seemingly separate `Mat` in Rust terms, but
 it's going to be a mutable reference to the other `Mat` under the hood. Treat safety
@@ -309,32 +309,6 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 
 To be able to use some modules you need to have [`opencv_contrib`](https://github.com/opencv/opencv_contrib)
 installed. You can find the full list of contrib modules [here](https://github.com/opencv/opencv_contrib/tree/master/modules) with the exception that `dnn` module is also considered contrib for OpenCV 3.2.
- * aruco
- * bgsegm
- * bioinspired
- * ccalib
- * cvv
- * dnn (only for OpenCV 3.2)
- * dpm
- * face
- * freetype
- * fuzzy
- * hdf
- * img_hash
- * line_descriptor
- * phase_unwrapping
- * plot
- * sfm
- * shape
- * structured_light
- * superres
- * surface_matching
- * text
- * videostab
- * viz
- * xfeatures2d
- * xobjdetect
- * xphoto
 
 ## Missing modules and functions
 
