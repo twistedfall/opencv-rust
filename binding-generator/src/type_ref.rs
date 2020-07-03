@@ -1273,7 +1273,7 @@ impl<'tu> TypeRef<'tu> {
 		} else {
 			""
 		};
-		format!("{mutable}{name}: {typ}", mutable = mutable, name = name, typ = typ)
+		format!("{mutable}{name}: {typ}", mutable=mutable, name=name, typ=typ)
 	}
 
 	pub fn rust_return_func_decl(&self, with_turbofish: bool, is_static_func: bool) -> Cow<str> {

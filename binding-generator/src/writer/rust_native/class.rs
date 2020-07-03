@@ -69,8 +69,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	} else {
 		c.field_methods(fields.iter())
 	};
-	let class_methods = c.methods();
-	methods.extend_from_slice(class_methods.as_slice());
+	methods.extend(c.methods());
 	if is_trait {
 		let mut bases = c.bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
@@ -202,7 +201,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.join("");
 
 		let rust_local = c.rust_localname();
-		let impls = if c.has_clone() {
+		let impls = if methods.iter().any(|m| m.is_clone()) {
 			IMPL_CLONE_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local.clone(),
 			})

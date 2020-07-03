@@ -589,7 +589,7 @@ fn clone() -> Result<()> {
 		let vec_of_vec_clone = vec_of_vec.clone();
 		assert_eq!(21., vec_of_vec.get(1)?.get(0)?.y);
 		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
-		vec_of_vec.set(1, VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]));
+		vec_of_vec.set(1, VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]))?;
 		assert_eq!(41., vec_of_vec.get(1)?.get(0)?.y);
 		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
 	}

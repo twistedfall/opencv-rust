@@ -281,7 +281,7 @@ impl<'tu> Func<'tu> {
 	pub fn is_clone(&self) -> bool {
 		if self.rust_leafname() == "clone" {
 			if let Some(c) = self.as_instance_method() {
-				self.arguments().is_empty() && self.return_type().as_class().map_or(false, |r| r == c)
+				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == c)
 			} else {
 				false
 			}
@@ -336,8 +336,12 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn arguments(&self) -> Vec<Field<'tu>> {
-		let args = match self.kind() {
+	pub fn has_arguments(&self) -> bool {
+		!self.clang_arguments().is_empty()
+	}
+
+	pub fn clang_arguments(&self) -> Vec<Entity<'tu>> {
+		match self.kind() {
 			Kind::GenericFunction | Kind::GenericInstanceMethod(..) => {
 				let mut out = vec![];
 				self.entity.walk_children_while(|child| {
@@ -358,7 +362,11 @@ impl<'tu> Func<'tu> {
 			_ => {
 				self.entity.get_arguments().expect("Can't get arguments")
 			}
-		};
+		}
+	}
+
+	pub fn arguments(&self) -> Vec<Field<'tu>> {
+		let args = self.clang_arguments();
 
 		let empty_hashmap = HashMap::new();
 		let spec = if let Some(spec) = self.as_specialized() {
