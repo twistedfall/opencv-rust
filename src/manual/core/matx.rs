@@ -1,6 +1,7 @@
 use std::{
 	ffi::c_void,
 	fmt,
+	mem::ManuallyDrop,
 };
 
 use num_traits::{One, Zero};
@@ -168,6 +169,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A
 
 	#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
 	#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
+	#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *ManuallyDrop::new(self) as _ }
 }
 
 impl<T: ValidMatxType, A: SizedArray<T>> std::cmp::PartialEq for Matx<T, A> {

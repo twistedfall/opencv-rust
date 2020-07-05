@@ -54,6 +54,7 @@ macro_rules! opencv_type_simple_generic {
 
 			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
 			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
+			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
 		}
 	};
 }

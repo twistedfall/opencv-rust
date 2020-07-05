@@ -16,8 +16,6 @@ jobs:
         os:
           - image: ubuntu-18.04
             family: linux
-          - image: macos-10.15
-            family: osx
           - image: windows-2019
             family: windows
         rust:
@@ -37,6 +35,52 @@ jobs:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
       OPENCV_VERSION: ${{ matrix.version.opencv }}
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
+      CARGO_FEATURES: ${{ matrix.version.features }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/build
+          key: ${{ runner.os }}-${{ matrix.version.opencv }}-build
+
+      - name: Install dependencies
+        run: ci/install.sh
+        shell: bash
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          default: true
+
+      - name: Test project
+        run: ci/script.sh
+        shell: bash
+
+      - name: Upload bindings if test failed
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
+          path: bindings
+
+  framework:
+    strategy:
+      fail-fast: false
+      matrix:
+        rust:
+          - stable
+          - beta
+        version:
+          - opencv: 4.4.0
+            features: opencv-4
+    runs-on: macos-10.15
+    env:
+      OS_FAMILY: osx
+      RUST_TOOLCHAIN: ${{ matrix.rust }}
+      OPENCV_VERSION: ${{ matrix.version.opencv }}
       CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2

@@ -25,6 +25,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 			|| include_str!("tpl/smart_ptr/trait_cast.tpl.rs").compile_interpolation()
 		);
 
+		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation()
+		);
+
 		let type_ref = self.type_ref();
 		let pointee = self.pointee();
 		let pointee_type = pointee.canonical();
@@ -38,6 +42,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 		};
 
 		let mut impls = String::new();
+		if pointee_type.is_primitive() || pointee_type.as_class().map_or(false, |c| !c.is_abstract()) {
+			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
+		} else {
+			inter_vars.insert("ctor", "".into());
+		}
 		if let Some(cls) = pointee_type.as_class() {
 			if cls.is_trait() {
 				let mut all_bases = cls.all_bases();
@@ -62,6 +71,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 			|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation()
 		);
 
+		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/smart_ptr/ctor.tpl.cpp").compile_interpolation()
+		);
+
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 
@@ -70,12 +83,32 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 			inner_cpp_extern.to_mut().push('*');
 		}
 
-		TPL.interpolate(&hashmap! {
+		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
 			"inner_cpp_full" => pointee_type.cpp_full(),
 			"inner_cpp_extern" => inner_cpp_extern,
-		})
+		};
+
+		let pointee_primitive = pointee_type.is_primitive();
+		if pointee_primitive || pointee_type.as_class().map_or(false, |c| !c.is_abstract()) {
+			let inner_cpp_func_call = if pointee_primitive {
+				format!("new {typ}(val)", typ=pointee_type.cpp_full()).into()
+			} else {
+				let mut out = pointee_type.cpp_arg_func_call("val");
+				if out.starts_with("*") {
+					out.to_mut().drain(..1);
+				}
+				out
+			};
+			inter_vars.insert("inner_cpp_func_decl", pointee_type.cpp_arg_func_decl("val").into());
+			inter_vars.insert("inner_cpp_func_call", inner_cpp_func_call);
+			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
+		} else {
+			inter_vars.insert("ctor", "".into());
+		};
+
+		TPL.interpolate(&inter_vars)
 	}
 }

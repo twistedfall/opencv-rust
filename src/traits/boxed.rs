@@ -96,6 +96,11 @@ macro_rules! opencv_type_boxed {
 			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 				self.as_raw_mut()
 			}
+
+			#[inline]
+			fn opencv_into_extern(self) -> Self::ExternSendMut {
+				self.into_raw()
+			}
 		}
 	};
 }

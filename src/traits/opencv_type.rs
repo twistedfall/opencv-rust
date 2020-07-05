@@ -65,6 +65,8 @@ pub trait OpenCVTypeExternContainer {
 	fn opencv_as_extern(&self) -> Self::ExternSend;
 	#[doc(hidden)]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut;
+	#[doc(hidden)]
+	fn opencv_into_extern(self) -> Self::ExternSendMut;
 }
 
 #[macro_export]
@@ -94,6 +96,7 @@ macro_rules! opencv_type_copy {
 
 				#[inline] fn opencv_as_extern(&self) -> Self { *self }
 				#[inline] fn opencv_as_extern_mut(&mut self) -> Self { *self }
+				#[inline] fn opencv_into_extern(self) -> Self { self }
 			}
 		)+
 	};
@@ -132,6 +135,7 @@ macro_rules! opencv_type_simple {
 
 			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
 			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
+			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
 		}
 	};
 }
@@ -197,6 +201,11 @@ impl OpenCVTypeExternContainer for CString {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_ptr() as _  // fixme: use as_mut_ptr() when it's stabilized
+	}
+
+	#[inline]
+	fn opencv_into_extern(self) -> Self::ExternSendMut {
+		self.into_raw()
 	}
 }
 

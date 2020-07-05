@@ -4,7 +4,7 @@ use std::{
 	mem::ManuallyDrop,
 };
 
-pub use ptr_extern::PtrExtern;
+pub use ptr_extern::{PtrExtern, PtrExternCtor};
 
 use crate::{
 	Result,
@@ -23,6 +23,11 @@ pub struct Ptr<T: ?Sized> where Self: PtrExtern {
 }
 
 impl<T: ?Sized> Ptr<T> where Self: PtrExtern {
+	pub fn new(val: T) -> Self where T: Sized + for<'a> OpenCVType<'a>, Self: PtrExternCtor<T> {
+		let val = val.opencv_into_extern_container_nofail();
+		unsafe { Self::from_raw(Self::extern_new(val.opencv_into_extern())) }
+	}
+
 	/// Get raw pointer to the inner object
 	pub fn inner_as_raw(&self) -> *const c_void {
 		unsafe { self.extern_inner_as_ptr() }
@@ -103,6 +108,10 @@ impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T> where Self: PtrExtern {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
+	}
+
+	fn opencv_into_extern(self) -> Self::ExternSendMut {
+		self.into_raw()
 	}
 }
 
