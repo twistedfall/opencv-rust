@@ -204,16 +204,15 @@ The following variables affect the building the of the `opencv` crate, but belon
   [Linux documentation](https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html) has more info.
   Path specified here must contain `libopencv_*.so` files.
 
-* `DYLD_LIBRARY_PATH`
-  Similar to `LD_LIBRARY_PATH`, but for loading `*.dylib` files on macOS, see
-  [man dyld](https://man.cx/dyld(1)) for more info.
-  Path specified here must contain `*.dylib` files.
+* `DYLD_LIBRARY_PATH` and `DYLD_FALLBACK_LIBRARY_PATH`
+  Similar to `LD_LIBRARY_PATH`, but for loading `*.dylib` files on macOS, see [man dyld](https://man.cx/dyld(1))
+  and [this SO answer](https://stackoverflow.com/a/3172515) for more info. Path specified here must contain
+  `*.dylib` files.
 
 * `PATH`
   Windows searches for `*.dll`s in `PATH` among other places, be sure to set it up, or copy required OpenCV
   `*.dll`s next to your binary. Be sure to specify paths in UNIX style (/C/Program Files/Dir) because colon
-   in `PATH` might be interpreted as the entry separator. Summary
-  [here](https://stackoverflow.com/questions/2463243/dll-search-on-windows#answer-6546427).
+   in `PATH` might be interpreted as the entry separator. Summary [here](https://stackoverflow.com/a/6546427).
 
 * clang crate environment variables
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
