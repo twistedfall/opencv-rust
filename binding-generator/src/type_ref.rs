@@ -159,29 +159,6 @@ pub enum Kind<'tu> {
 	Ignored,
 }
 
-impl Kind<'_> {
-	pub fn is_constified(&self) -> bool {
-		match self {
-			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::Array(inner, ..) => {
-				match inner.kind() {
-					// avoid specifying "const" twice for "const Type**"
-					Kind::Pointer(..) | Kind::Reference(..) => {
-						!inner.is_const()
-					}
-					_ => {
-						true
-					}
-				}
-			}
-			Kind::Primitive(..) | Kind::StdVector(..) | Kind::SmartPtr(..)
-			| Kind::Class(..) | Kind::Enum(..) | Kind::Function(..)
-			| Kind::Typedef(..) | Kind::Generic(..) | Kind::Ignored => {
-				false
-			}
-		}
-	}
-}
-
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum TypeRefTypeHint<'tu> {
 	None,
@@ -531,26 +508,39 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn is_const(&self) -> bool {
-		self.type_ref.is_const_qualified() || match self.kind() {
+		self.is_clang_const() || match self.kind() {
 			Kind::Primitive(..) | Kind::Generic(..) | Kind::Enum(..)
 			| Kind::Class(..) | Kind::Function(..) | Kind::Ignored => {
 				false
 			}
 			Kind::Array(elem, ..) => {
-				elem.is_const()
+				elem.is_clang_const()
 			}
 			Kind::StdVector(vec) => {
-				vec.element_type().is_const()
+				vec.element_type().is_clang_const()
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				inner.is_const()
+				inner.is_clang_const()
 			}
 			Kind::SmartPtr(ptr) => {
-				ptr.pointee().is_const()
+				ptr.pointee().is_clang_const()
 			}
 			Kind::Typedef(decl) => {
 				decl.underlying_type_ref().is_const()
 			}
+		}
+	}
+
+	pub fn is_clang_const(&self) -> bool {
+		self.type_ref.is_const_qualified()
+	}
+
+	fn get_const_hint(&self, type_ref: &TypeRef) -> Option<bool> {
+		let is_const = self.is_const();
+		if is_const && !type_ref.is_clang_const() {
+			Some(is_const)
+		} else {
+			None
 		}
 	}
 
@@ -586,7 +576,7 @@ impl<'tu> TypeRef<'tu> {
 				inner.is_std_string()
 			}
 			Kind::Pointer(inner) => {
-				inner.is_std_string() && !inner.is_const()
+				inner.is_std_string() && !inner.is_recursive_const()
 			}
 			_ => {
 				false
@@ -603,7 +593,7 @@ impl<'tu> TypeRef<'tu> {
 				inner.is_cv_string()
 			}
 			Kind::Pointer(inner) => {
-				inner.is_cv_string() && !inner.is_const()
+				inner.is_cv_string() && !inner.is_recursive_const()
 			}
 			_ => {
 				false
@@ -613,11 +603,9 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn is_char_ptr_string(&self) -> bool {
 		match self.canonical().kind() {
-			Kind::Pointer(inner) => {
-				inner.cpp_full() == "char"
-			}
-			Kind::Array(inner, ..) => {
-				inner.cpp_full() == "char"
+			Kind::Pointer(inner) | Kind::Array(inner, ..) => {
+				let inner_cpp_full = inner.cpp_full();
+				inner_cpp_full == "char" || inner_cpp_full == "const char"
 			}
 			_ => {
 				false
@@ -885,7 +873,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	fn is_output(&self) -> bool {
-		!self.is_const() && (self.as_reference().is_some() || self.as_pointer().map_or(false, |t| t.is_string()))
+		!self.is_recursive_const() && (self.as_reference().is_some() || self.as_pointer().map_or(false, |t| t.is_string()))
 	}
 
 	pub fn is_data_type(&self) -> bool {
@@ -904,8 +892,28 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
+	pub fn rust_clang_const_qual(&self, pointer: bool) -> &'static str {
+		if self.is_clang_const() {
+			if pointer {
+				"const "
+			} else {
+				""
+			}
+		} else {
+			"mut "
+		}
+	}
+
 	pub fn cpp_const_qual(&self) -> &'static str {
 		if self.is_const() {
+			"const "
+		} else {
+			""
+		}
+	}
+
+	pub fn cpp_clang_const_qual(&self) -> &'static str {
+		if self.is_clang_const() {
 			"const "
 		} else {
 			""
@@ -942,9 +950,13 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_safe_id(&self) -> Cow<str> {
+		self.rust_safe_id_ext(true)
+	}
+
+	pub fn rust_safe_id_ext(&self, add_const: bool) -> Cow<str> {
 		let mut out = String::with_capacity(64);
 		let kind = self.kind();
-		if kind.is_constified() && self.is_const() {
+		if add_const && self.is_clang_const() {
 			out.push_str("const_");
 		}
 		out.push_str(&match kind {
@@ -1152,7 +1164,7 @@ impl<'tu> TypeRef<'tu> {
 					}
 				}
 				Kind::Reference(inner) => {
-					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_const()) {
+					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_clang_const()) {
 						1 + inner.rust_lifetime_count()
 					} else {
 						0
@@ -1321,7 +1333,7 @@ impl<'tu> TypeRef<'tu> {
 				if is_function_infallible {
 					flags.push("nofail")
 				}
-				if !self.is_const() {
+				if !self.is_recursive_const() {
 					flags.push("mut")
 				}
 				let mut flags = flags.join(" ");
@@ -1382,7 +1394,7 @@ impl<'tu> TypeRef<'tu> {
 		if self.is_string() {
 			return if self.is_output() {
 				format!("&mut {name}_via", name=name)
-			} else if self.is_const() || is_const {
+			} else if self.is_recursive_const() || is_const {
 				format!("{name}.opencv_as_extern()", name=name)
 			} else {
 				format!("{name}.opencv_as_extern_mut()", name=name)
@@ -1397,9 +1409,9 @@ impl<'tu> TypeRef<'tu> {
 		if self.is_by_ptr() {
 			let typ = self.source();
 			return if self.is_const() || is_const {
-				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id())
+				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			} else {
-				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id())
+				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			};
 		}
 		if self.as_variable_array().is_some() || self.as_abstract_class_ptr().is_some() {
@@ -1419,8 +1431,8 @@ impl<'tu> TypeRef<'tu> {
 				return format!(
 					"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
 					name=name,
-					cnst=self.rust_const_qual(true),
-					const_inner=inner.rust_const_qual(true)
+					cnst=self.rust_clang_const_qual(true),
+					const_inner=inner.rust_clang_const_qual(true)
 				);
 			}
 		}
@@ -1481,20 +1493,63 @@ impl<'tu> TypeRef<'tu> {
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
 				out = vec.dependent_types();
-				// implement workaround for race when type with std::string gets generated first
-				// we only want vector<cv::String> because it's more compatible across OpenCV versions
-				if vec.element_type().is_std_string() {
-					let tref = TypeRef::new(
-						self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>"),
+				out.reserve(2);
+				if let Some(Dir::In(str_type)) = vec.element_type().as_string() {
+					// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
+					// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
+					//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
+					// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
+					//   cv::String is an typedef to std::string and it would lead to duplicate definition error
+					// That's why we try to resolve both types and check if they are the same, if they are we only generate
+					// vector<std::string> if not - both.
+					let vec_cv_string = self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>");
+					let vec_std_string = self.gen_env.resolve_type("std::vector<std::string>").expect("Can't resolve std::vector<std::string>");
+					let vec_type_ref = if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
+						TypeRef::new(vec_std_string, self.gen_env)
+					} else {
+						vec.type_ref()
+					};
+					let const_hint = self.get_const_hint(&vec_type_ref);
+					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+						vec_type_ref,
+						const_hint,
+						DefinitionLocation::Module,
 						self.gen_env,
-					);
-					out.push(D::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
+					)));
+					// implement workaround for race when type with std::string gets generated first
+					// we only want vector<cv::String> because it's more compatible across OpenCV versions
+					if str_type == StrType::StdString {
+						let tref = TypeRef::new(
+							vec_cv_string,
+							self.gen_env,
+						);
+						out.push(D::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
+					} else {
+						out.push(D::from_vector(vec))
+					}
 				} else {
-					out.push(D::from_vector(vec))
+					let vec_type_ref = vec.type_ref().canonical_clang();
+					let const_hint = self.get_const_hint(&vec_type_ref);
+					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+						vec_type_ref,
+						const_hint,
+						DefinitionLocation::Module,
+						self.gen_env,
+					)));
+					out.push(D::from_vector(vec));
 				}
 			},
 			Kind::SmartPtr(ptr) => {
 				out = ptr.dependent_types();
+				out.reserve(2);
+				let ptr_type_ref = ptr.type_ref().canonical_clang();
+				let const_hint = self.get_const_hint(&ptr_type_ref);
+				out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+					ptr_type_ref,
+					const_hint,
+					DefinitionLocation::Module,
+					self.gen_env,
+				)));
 				out.push(D::from_smart_ptr(ptr))
 			},
 			Kind::Typedef(typedef) => {
@@ -1512,9 +1567,16 @@ impl<'tu> TypeRef<'tu> {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
 								dl => dl
 							};
-							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, self.gen_env, def_location)));
+							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, def_location, self.gen_env)));
 						} else {
-							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location)));
+							let type_ref = self.canonical_clang();
+							let const_hint = self.get_const_hint(&type_ref);
+							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+								type_ref,
+								const_hint,
+								def_location,
+								self.gen_env,
+							)));
 							if self.as_abstract_class_ptr().is_some() {
 								out.push(D::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone(), self.gen_env)))
 							}
@@ -1533,11 +1595,6 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	fn cpp_type_ref(&self, form: CppForm) -> Cow<str> {
-		let mut out = String::with_capacity(64);
-		let kind = self.kind();
-		if kind.is_constified() {
-			out.push_str(self.cpp_const_qual());
-		}
 		let name = match form {
 			CppForm::Reference(name, _) => name,
 			_ => "",
@@ -1546,10 +1603,20 @@ impl<'tu> TypeRef<'tu> {
 			CppForm::Declaration(extern_types) => extern_types,
 			CppForm::Reference(_, extern_types) => extern_types,
 		};
-		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
-		out.push_str(&match self.kind() {
+		let cnst = self.cpp_clang_const_qual();
+		let (space_name, space_const_name) = if name.is_empty() {
+			("".to_string(), "".to_string())
+		} else {
+			(format!(" {}", name), format!(" {}{}", cnst, name))
+		};
+		match self.kind() {
 			Kind::Primitive(_, cpp) => {
-				cpp.to_string() + &space_name
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=cpp.to_string(),
+					name=space_name,
+				)
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
@@ -1569,21 +1636,31 @@ impl<'tu> TypeRef<'tu> {
 			}
 			Kind::StdVector(vec) => {
 				format!(
-					"{vec_type}<{elem_type}>{name}",
+					"{cnst}{vec_type}<{elem_type}>{name}",
+					cnst=cnst,
 					vec_type=vec.cpp_name(form.is_full()),
 					elem_type=vec.element_type().cpp_type_ref(form.recurse()),
 					name=space_name,
 				)
 			}
 			Kind::Reference(inner) if !extern_types => {
-				format!("{typ}&{name}", typ=inner.cpp_type_ref(form.recurse()), name=space_name)
+				format!(
+					"{typ}&{name}",
+					typ=inner.cpp_type_ref(form.recurse()),
+					name=space_const_name,
+				)
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				format!("{typ}*{name}", typ=inner.cpp_type_ref(form.recurse()), name=space_name)
+				format!(
+					"{typ}*{name}",
+					typ=inner.cpp_type_ref(form.recurse()),
+					name=space_const_name,
+				)
 			}
 			Kind::SmartPtr(ptr) => {
 				format!(
-					"{ptr_type}<{inner_type}>{name}",
+					"{cnst}{ptr_type}<{inner_type}>{name}",
+					cnst=cnst,
 					ptr_type=ptr.cpp_name(form.is_full()),
 					inner_type=ptr.pointee().cpp_type_ref(form.recurse()),
 					name=space_name,
@@ -1594,30 +1671,56 @@ impl<'tu> TypeRef<'tu> {
 				if !self.is_std_string() { // fixme prevents emission of std::string<char>
 					out += &self.cpp_tpl_decl(form);
 				}
-				out + &space_name
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=out,
+					name=space_name,
+				)
 			}
 			Kind::Enum(enm) => {
-				enm.cpp_name(form.is_full()).into_owned() + &space_name
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=enm.cpp_name(form.is_full()),
+					name=space_name,
+				)
 			}
 			Kind::Typedef(tdef) => {
 				let underlying_type = tdef.underlying_type_ref();
-				if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
-					underlying_type.cpp_type_ref(form.recurse()).into_owned() + &space_name
+				let typ = if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
+					underlying_type.cpp_type_ref(form.recurse())
 				} else {
-					tdef.cpp_name(form.is_full()).into_owned() + &space_name
-				}
+					tdef.cpp_name(form.is_full())
+				};
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=typ,
+					name=space_name,
+				)
 			}
 			Kind::Generic(generic_name) => {
-				generic_name + &space_name
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=generic_name,
+					name=space_name,
+				)
 			}
 			Kind::Function(func) => {
-				func.cpp_name(form.is_full()).into_owned() + &space_name
+				let mut typ = func.cpp_name(form.is_full());
+				if typ.contains("(*)") {
+					typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=name));
+					typ.into_owned()
+				} else {
+					format!("{typ}{name}", typ=typ, name=space_name)
+				}
 			}
 			Kind::Ignored => {
-				"<ignored>".to_string() + &space_name
+				format!("<ignored>{name}", name=space_name)
 			}
-		});
-		out.into()
+		}.into()
 	}
 
 	pub fn cpp_local(&self) -> Cow<str> {
@@ -1678,13 +1781,13 @@ impl<'tu> TypeRef<'tu> {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
 				format!("{typ}{name}", typ=self.cpp_full(), name=space_name).into()
 			} else {
-				format!("{cnst}{typ}*{name}", cnst=self.cpp_const_qual(), typ=self.cpp_full(), name=space_name).into()
+				format!("{typ}*{name}", typ=self.cpp_full(), name=space_name).into()
 			}
 		} else if self.is_string() {
 			if self.is_output() {
-				format!("{cnst}void*{name}", cnst=self.cpp_const_qual(), name=space_name).into()
+				format!("{cnst}void*{name}", cnst=self.cpp_recursive_const_qual(), name=space_name).into()
 			} else {
-				format!("{cnst}char*{name}", cnst=self.cpp_const_qual(), name=space_name).into()
+				format!("{cnst}char*{name}", cnst=self.cpp_recursive_const_qual(), name=space_name).into()
 			}
 		} else {
 			self.cpp_full_with_name(name)
@@ -1705,18 +1808,8 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_arg_func_decl(&self, name: &str) -> String {
-		if self.is_output() && self.is_string() {
+		if self.is_output() && self.is_string() || self.as_simple_class().is_some() {
 			return format!("{typ}* {name}", typ=self.cpp_extern(), name=name);
-		}
-		if self.as_function().is_some() {
-			let mut typ: String = self.cpp_extern().into_owned();
-			if typ.contains("(*)") {
-				typ.replace_in_place("(*)", &format!("(*{name})", name=name));
-				return typ;
-			}
-		}
-		if self.as_simple_class().is_some() {
-			return format!("const {typ}* {name}", typ=self.cpp_extern(), name=name)
 		}
 		self.cpp_extern_with_name(name).into_owned()
 	}
@@ -1805,6 +1898,9 @@ impl fmt::Debug for TypeRef<'_> {
 		if self.is_const() {
 			props.push("const");
 		}
+		if self.is_clang_const() {
+			props.push("clang_const");
+		}
 		if self.is_primitive() {
 			props.push("primitive");
 		}
@@ -1839,7 +1935,7 @@ impl fmt::Debug for TypeRef<'_> {
 			props.push("by_ptr");
 		}
 		if self.is_output() {
-			props.push("output_ref");
+			props.push("output_string");
 		}
 		if self.is_generic() {
 			props.push("generic");

@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
@@ -6,9 +8,18 @@ use crate::{
 	ReturnTypeWrapper,
 	StrExt,
 	StringExt,
+	TypeRef,
 };
 
 use super::RustNativeGeneratedElement;
+
+fn cpp_extern_return<'t>(type_ref: &'t TypeRef, const_hint: Option<bool>) -> Cow<'t, str> {
+	let mut out = type_ref.cpp_extern_return();
+	if const_hint.unwrap_or(false) && !type_ref.is_const() {
+		out.to_mut().insert_str(0, "const ");
+	}
+	out
+}
 
 impl RustNativeGeneratedElement for ReturnTypeWrapper<'_> {
 	fn element_order(&self) -> u8 {
@@ -16,7 +27,7 @@ impl RustNativeGeneratedElement for ReturnTypeWrapper<'_> {
 	}
 
 	fn element_safe_id(&self) -> String {
-		let mut name = self.type_ref().cpp_extern_return().into_owned();
+		let mut name = cpp_extern_return(self.type_ref(), self.const_hint()).into_owned();
 		name.cleanup_name();
 		format!("{}-{}", self.definition_location(), name)
 	}
@@ -29,7 +40,7 @@ impl RustNativeGeneratedElement for ReturnTypeWrapper<'_> {
 		);
 
 		CPP_TPL.interpolate(&hashmap! {
-			"cpp_full" => self.type_ref().cpp_extern_return(),
+			"cpp_full" => cpp_extern_return(self.type_ref(), self.const_hint()),
 		})
 	}
 }

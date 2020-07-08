@@ -15,17 +15,26 @@ pub enum DefinitionLocation {
 #[derive(Debug)]
 pub struct ReturnTypeWrapper<'tu> {
 	type_ref: TypeRef<'tu>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	const_hint: Option<bool>,
 	definition_location: DefinitionLocation,
+	gen_env: &'tu GeneratorEnv<'tu>,
 }
 
 impl<'tu> ReturnTypeWrapper<'tu> {
-	pub fn new(type_ref: TypeRef<'tu>, gen_env: &'tu GeneratorEnv<'tu>, definition_location: DefinitionLocation) -> Self {
-		Self { type_ref, gen_env, definition_location }
+	pub fn new(type_ref: TypeRef<'tu>, definition_location: DefinitionLocation, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+		Self::new_ext(type_ref, None, definition_location, gen_env)
+	}
+
+	pub fn new_ext(type_ref: TypeRef<'tu>, const_hint: Option<bool>, definition_location: DefinitionLocation, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+		Self { type_ref, const_hint, definition_location, gen_env }
 	}
 
 	pub fn type_ref(&self) -> &TypeRef<'tu> {
 		&self.type_ref
+	}
+
+	pub fn const_hint(&self) -> Option<bool> {
+		self.const_hint
 	}
 
 	pub fn definition_location(&self) -> Cow<str> {

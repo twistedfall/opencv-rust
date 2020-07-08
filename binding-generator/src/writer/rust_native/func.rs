@@ -270,7 +270,7 @@ fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
 	} else if return_type.is_char_ptr_string() {
 		"return Ok(ocvrs_create_string(ret));".into()
 	} else {
-		"return Ok(ret);".into()
+		format!("return Ok<{typ}>(ret);", typ=return_type.cpp_extern_return()).into()
 	}
 }
 

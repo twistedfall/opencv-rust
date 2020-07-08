@@ -7,12 +7,10 @@ use clang::Entity;
 
 use crate::{
 	DefaultElement,
-	DefinitionLocation,
 	DependentType,
 	Element,
 	EntityElement,
 	GeneratorEnv,
-	ReturnTypeWrapper,
 	type_ref::TemplateArg,
 	TypeRef,
 };
@@ -42,18 +40,15 @@ impl<'tu> SmartPtr<'tu> {
 	}
 
 	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
-		let canon = self.type_ref().canonical_clang();
-		let mut out = vec![
-			D::from_return_type_wrapper(ReturnTypeWrapper::new(canon.clone(), self.gen_env, DefinitionLocation::Module))
-		];
 		if self.pointee().as_typedef().is_some() {
-			out.extend(canon.dependent_types())
+			self.type_ref().canonical_clang().dependent_types()
+		} else {
+			vec![]
 		}
-		out
 	}
 
 	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("PtrOf{typ}", typ=self.pointee().rust_safe_id()).into()
+		format!("PtrOf{typ}", typ=self.pointee().rust_safe_id_ext(false)).into()
 	}
 
 	pub fn rust_fullalias(&self) -> Cow<str> {
