@@ -385,11 +385,7 @@ impl<'tu> TypeRef<'tu> {
 				)
 			}
 
-			TypeKind::MemberPointer => {
-				Kind::Ignored
-			}
-
-			TypeKind::DependentSizedArray => {
+			TypeKind::MemberPointer | TypeKind::DependentSizedArray | TypeKind::Half => {
 				Kind::Ignored
 			}
 
