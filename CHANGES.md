@@ -1,3 +1,9 @@
+* 0.43.2
+  * Fix build on RPi (fixes #157)
+
+* 0.43.1
+  * Fix docs.rs build
+
 * 0.43.0
   * Add `Clone` implementation (that panics on error) for `Mat`, `SparseMat`, `UMat`, `GpuMat` and `HostMem`.
   * Add `Vector::as_mut_slice()` for copy types.
