@@ -186,7 +186,11 @@ pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &dyn core::ToI
 /// * windowSize: Size of the kernerl used for the filtering. Uses a (windowSize x windowSize) filter.
 /// * partition: Specifies the parallel granularity of the workload. This parameter should be used GPU experts when optimizing performance.
 /// 
-/// Outputs an image that has been filtered using median-filtering formulation.
+/// Outputs an image that has been filtered using a median-filtering formulation.
+/// 
+/// Details on this algorithm can be found in:
+/// Green, O., 2017. "Efficient scalable median filtering using histogram-based operations",
+///                   IEEE Transactions on Image Processing, 27(5), pp.2217-2228.
 /// 
 /// ## C++ default parameters
 /// * partition: 128

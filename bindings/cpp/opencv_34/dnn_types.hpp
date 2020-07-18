@@ -3,6 +3,7 @@ template struct Result<const cv::dnn::DictValue**>;
 template struct Result<cv::AsyncArray*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::dnn::AbsLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::AccumLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::ActivationLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::BNLLLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::BackendNode>*>;
@@ -10,10 +11,13 @@ template struct Result<cv::Ptr<cv::dnn::BackendWrapper>*>;
 template struct Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::BatchNormLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::ConcatLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::CorrelationLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::DataAugmentationLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::DetectionOutputLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::ELULayer>*>;
 template struct Result<cv::Ptr<cv::dnn::EltwiseLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::FlattenLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::FlowWarpLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::InnerProductLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::LRNLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::LSTMLayer>*>;
@@ -88,6 +92,14 @@ extern "C" cv::dnn::AbsLayer* cv_PtrOfAbsLayer_get_inner_ptr(cv::Ptr<cv::dnn::Ab
 	return instance->get();
 }
 
+extern "C" void cv_PtrOfAccumLayer_delete(cv::Ptr<cv::dnn::AccumLayer>* instance) {
+	delete instance;
+}
+
+extern "C" cv::dnn::AccumLayer* cv_PtrOfAccumLayer_get_inner_ptr(cv::Ptr<cv::dnn::AccumLayer>* instance) {
+	return instance->get();
+}
+
 extern "C" void cv_PtrOfActivationLayer_delete(cv::Ptr<cv::dnn::ActivationLayer>* instance) {
 	delete instance;
 }
@@ -144,6 +156,22 @@ extern "C" cv::dnn::ConcatLayer* cv_PtrOfConcatLayer_get_inner_ptr(cv::Ptr<cv::d
 	return instance->get();
 }
 
+extern "C" void cv_PtrOfCorrelationLayer_delete(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
+	delete instance;
+}
+
+extern "C" cv::dnn::CorrelationLayer* cv_PtrOfCorrelationLayer_get_inner_ptr(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
+	return instance->get();
+}
+
+extern "C" void cv_PtrOfDataAugmentationLayer_delete(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
+	delete instance;
+}
+
+extern "C" cv::dnn::DataAugmentationLayer* cv_PtrOfDataAugmentationLayer_get_inner_ptr(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
+	return instance->get();
+}
+
 extern "C" void cv_PtrOfDetectionOutputLayer_delete(cv::Ptr<cv::dnn::DetectionOutputLayer>* instance) {
 	delete instance;
 }
@@ -173,6 +201,14 @@ extern "C" void cv_PtrOfFlattenLayer_delete(cv::Ptr<cv::dnn::FlattenLayer>* inst
 }
 
 extern "C" cv::dnn::FlattenLayer* cv_PtrOfFlattenLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlattenLayer>* instance) {
+	return instance->get();
+}
+
+extern "C" void cv_PtrOfFlowWarpLayer_delete(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
+	delete instance;
+}
+
+extern "C" cv::dnn::FlowWarpLayer* cv_PtrOfFlowWarpLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
 	return instance->get();
 }
 

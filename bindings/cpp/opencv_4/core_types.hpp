@@ -1,6 +1,5 @@
 template struct Result<bool>;
 template struct Result<char>;
-template struct Result<const cv::FileStorage**>;
 template struct Result<const cv::MatOp*>;
 template struct Result<const cv::Mat**>;
 template struct Result<const cv::SparseMat**>;

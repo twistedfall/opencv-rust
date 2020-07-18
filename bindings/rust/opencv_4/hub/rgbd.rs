@@ -5,6 +5,8 @@ pub mod prelude {
 	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_ParamsTrait, super::Dynafu_DynaFu };
 }
 
+pub const Kinfu_VolumeType_HASHTSDF: i32 = 1;
+pub const Kinfu_VolumeType_TSDF: i32 = 0;
 pub const OdometryFrame_CACHE_ALL: i32 = 3;
 pub const OdometryFrame_CACHE_DST: i32 = 2;
 pub const OdometryFrame_CACHE_SRC: i32 = 1;
@@ -21,6 +23,15 @@ pub enum DepthCleaner_DEPTH_CLEANER_METHOD {
 }
 
 opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Kinfu_VolumeType {
+	TSDF = 0,
+	HASHTSDF = 1,
+}
+
+opencv_type_enum! { crate::rgbd::Kinfu_VolumeType }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -742,6 +753,14 @@ pub trait Kinfu_ParamsTrait {
 		unsafe { sys::cv_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
 	}
 	
+	fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
+		unsafe { sys::cv_kinfu_Params_getPropVolumeType_const(self.as_raw_Kinfu_Params()) }.into_result().expect("Infallible function failed: volume_type")
+	}
+	
+	fn set_volume_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) -> () {
+		unsafe { sys::cv_kinfu_Params_setPropVolumeType_VolumeType(self.as_raw_mut_Kinfu_Params(), val) }.into_result().expect("Infallible function failed: set_volume_type")
+	}
+	
 	/// camera intrinsics
 	fn intr(&self) -> core::Matx33f {
 		unsafe { sys::cv_kinfu_Params_getPropIntr_const(self.as_raw_Kinfu_Params()) }.into_result().expect("Infallible function failed: intr")
@@ -1033,6 +1052,12 @@ impl Kinfu_Params {
 	/// in case of rapid sensor motion.
 	pub fn coarse_params() -> Result<core::Ptr::<crate::rgbd::Kinfu_Params>> {
 		unsafe { sys::cv_kinfu_Params_coarseParams() }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(r) } )
+	}
+	
+	/// HashTSDF parameters
+	/// A set of parameters suitable for use with HashTSDFVolume
+	pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr::<crate::rgbd::Kinfu_Params>> {
+		unsafe { sys::cv_kinfu_Params_hashTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(r) } )
 	}
 	
 }

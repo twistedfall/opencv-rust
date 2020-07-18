@@ -272,7 +272,9 @@ pub trait CUDA_NvidiaHWOpticalFlow: core::AlgorithmTrait {
 	/// * inputImage: Input image.
 	/// * referenceImage: Reference image of the same size and the same type as input image.
 	/// * flow: A buffer consisting of inputImage.Size() / getGridSize() flow vectors in CV_16SC2 format.
-	/// * stream: Stream for the asynchronous version.
+	/// * stream: It is highly recommended that CUDA streams for pre and post processing of optical flow vectors should be set once per session in create() function as a part of optical flow session creation.
+	///               This parameter is left here for backward compatibility and may be removed in the future.
+	///               Default value is NULL stream;
 	/// * hint: Hint buffer if client provides external hints. Must have same size as flow buffer.
 	///            Caller can provide flow vectors as hints for optical flow calculation.
 	/// * cost: Cost buffer contains numbers indicating the confidence associated with each of the generated flow vectors.
@@ -350,6 +352,12 @@ impl dyn CUDA_NvidiaOpticalFlow_1_0 + '_ {
 	/// * enableExternalHints: Optional Parameter. Flag to enable passing external hints buffer to calc(). Defaults to false.
 	/// * enableCostBuffer: Optional Parameter. Flag to enable cost buffer output from calc(). Defaults to false.
 	/// * gpuId: Optional parameter to select the GPU ID on which the optical flow should be computed. Useful in multi-GPU systems. Defaults to 0.
+	/// * inputStream: Optical flow algorithm may optionally involve cuda preprocessing on the input buffers.
+	///                    The input cuda stream can be used to pipeline and synchronize the cuda preprocessing tasks with OF HW engine.
+	///                    If input stream is not set, the execute function will use default stream which is NULL stream;
+	/// * outputStream: Optical flow algorithm may optionally involve cuda post processing on the output flow vectors.
+	///                    The output cuda stream can be used to pipeline and synchronize the cuda post processing tasks with OF HW engine.
+	///                    If output stream is not set, the execute function will use default stream which is NULL stream;
 	/// 
 	/// ## C++ default parameters
 	/// * perf_preset: cv::cuda::NvidiaOpticalFlow_1_0::NVIDIA_OF_PERF_LEVEL::NV_OF_PERF_LEVEL_SLOW
@@ -357,8 +365,10 @@ impl dyn CUDA_NvidiaOpticalFlow_1_0 + '_ {
 	/// * enable_external_hints: false
 	/// * enable_cost_buffer: false
 	/// * gpu_id: 0
-	pub fn create(width: i32, height: i32, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32) -> Result<core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_int_int_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int(width, height, perf_preset, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(r) } )
+	/// * input_stream: Stream::Null()
+	/// * output_stream: Stream::Null()
+	pub fn create(width: i32, height: i32, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut core::Stream, output_stream: &mut core::Stream) -> Result<core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
+		unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_int_int_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(width, height, perf_preset, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(r) } )
 	}
 	
 }

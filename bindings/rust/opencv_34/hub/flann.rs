@@ -11,6 +11,7 @@ pub mod prelude {
 }
 
 pub const AUTOTUNED: i32 = 255;
+pub const BITS_PER_CHAR: i32 = 8;
 pub const BLOCKSIZE: u32 = 8192;
 pub const CENTERS_GONZALES: i32 = 1;
 pub const CENTERS_KMEANSPP: i32 = 2;

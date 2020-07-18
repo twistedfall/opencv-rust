@@ -3,9 +3,16 @@
 #include "rapid_types.hpp"
 
 extern "C" {
-	Result_void cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputOutputArray* bundle, const cv::_InputArray* srcLocations, const cv::_InputArray* newLocations, const cv::_InputArray* colors) {
+	Result_void cv_rapid_convertCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputArrayR(const cv::_InputArray* cols, const cv::_InputArray* srcLocations, const cv::_OutputArray* pts2d, const cv::_InputOutputArray* pts3d, const cv::_InputArray* mask) {
 		try {
-			cv::rapid::drawCorrespondencies(*bundle, *srcLocations, *newLocations, *colors);
+			cv::rapid::convertCorrespondencies(*cols, *srcLocations, *pts2d, *pts3d, *mask);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputOutputArray* bundle, const cv::_InputArray* cols, const cv::_InputArray* colors) {
+		try {
+			cv::rapid::drawCorrespondencies(*bundle, *cols, *colors);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
@@ -38,25 +45,46 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_rapid_filterCorrespondencies_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR(const cv::_InputOutputArray* pts2d, const cv::_InputOutputArray* pts3d, const cv::_InputArray* mask) {
+	Result_void cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* bundle, const cv::_OutputArray* cols, const cv::_OutputArray* response) {
 		try {
-			cv::rapid::filterCorrespondencies(*pts2d, *pts3d, *mask);
+			cv::rapid::findCorrespondencies(*bundle, *cols, *response);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_rapid_findCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* bundle, const cv::_InputArray* srcLocations, const cv::_OutputArray* newLocations, const cv::_OutputArray* response) {
+	Result<float> cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(const cv::_InputArray* img, int num, int len, const cv::_InputArray* pts3d, const cv::_InputArray* tris, const cv::_InputArray* K, const cv::_InputOutputArray* rvec, const cv::_InputOutputArray* tvec, double* rmsd) {
 		try {
-			cv::rapid::findCorrespondencies(*bundle, *srcLocations, *newLocations, *response);
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<float> cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(const cv::_InputArray* img, int num, int len, const cv::_InputArray* pts3d, const cv::_InputArray* tris, const cv::_InputArray* K, const cv::_InputOutputArray* rvec, const cv::_InputOutputArray* tvec) {
-		try {
-			float ret = cv::rapid::rapid(*img, num, len, *pts3d, *tris, *K, *rvec, *tvec);
+			float ret = cv::rapid::rapid(*img, num, len, *pts3d, *tris, *K, *rvec, *tvec, rmsd);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result<cv::Ptr<cv::rapid::OLSTracker>*> cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(const cv::_InputArray* pts3d, const cv::_InputArray* tris, int histBins, unsigned char sobelThesh) {
+		try {
+			cv::Ptr<cv::rapid::OLSTracker> ret = cv::rapid::OLSTracker::create(*pts3d, *tris, histBins, sobelThesh);
+			return Ok(new cv::Ptr<cv::rapid::OLSTracker>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::rapid::OLSTracker>*>))
+	}
+	
+	Result<cv::Ptr<cv::rapid::Rapid>*> cv_rapid_Rapid_create_const__InputArrayR_const__InputArrayR(const cv::_InputArray* pts3d, const cv::_InputArray* tris) {
+		try {
+			cv::Ptr<cv::rapid::Rapid> ret = cv::rapid::Rapid::create(*pts3d, *tris);
+			return Ok(new cv::Ptr<cv::rapid::Rapid>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::rapid::Rapid>*>))
+	}
+	
+	Result<float> cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_TermCriteriaR(cv::rapid::Tracker* instance, const cv::_InputArray* img, int num, int len, const cv::_InputArray* K, const cv::_InputOutputArray* rvec, const cv::_InputOutputArray* tvec, const cv::TermCriteria* termcrit) {
+		try {
+			float ret = instance->compute(*img, num, len, *K, *rvec, *tvec, *termcrit);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_rapid_Tracker_clearState(cv::rapid::Tracker* instance) {
+		try {
+			instance->clearState();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 }

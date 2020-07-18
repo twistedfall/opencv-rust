@@ -626,6 +626,9 @@ pub const CAP_XINE: i32 = 2400;
 pub const CV__CAP_PROP_LATEST: i32 = 48;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
+/// If it is not zero, the encoder will expect and encode color frames, otherwise it
+/// will work with grayscale frames.
+pub const VIDEOWRITER_PROP_IS_COLOR: i32 = 4;
 /// Number of stripes for parallel encoding. -1 for auto detection.
 pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
 /// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
@@ -815,6 +818,9 @@ pub enum VideoWriterProperties {
 	VIDEOWRITER_PROP_FRAMEBYTES = 2,
 	/// Number of stripes for parallel encoding. -1 for auto detection.
 	VIDEOWRITER_PROP_NSTRIPES = 3,
+	/// If it is not zero, the encoder will expect and encode color frames, otherwise it
+	/// will work with grayscale frames.
+	VIDEOWRITER_PROP_IS_COLOR = 4,
 }
 
 opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -1228,6 +1234,36 @@ pub trait VideoWriterTrait {
 		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()
 	}
 	
+	/// Initializes or reinitializes video writer.
+	/// 
+	/// The method opens video writer. Parameters are the same as in the constructor
+	/// VideoWriter::VideoWriter.
+	/// ## Returns
+	/// `true` if video writer has been successfully initialized
+	/// 
+	/// The method first calls VideoWriter::release to close the already opened file.
+	/// 
+	/// ## Overloaded parameters
+	fn open_1(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector::<i32>) -> Result<bool> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()
+	}
+	
+	/// Initializes or reinitializes video writer.
+	/// 
+	/// The method opens video writer. Parameters are the same as in the constructor
+	/// VideoWriter::VideoWriter.
+	/// ## Returns
+	/// `true` if video writer has been successfully initialized
+	/// 
+	/// The method first calls VideoWriter::release to close the already opened file.
+	/// 
+	/// ## Overloaded parameters
+	fn open_2(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector::<i32>) -> Result<bool> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()
+	}
+	
 	/// Returns true if video writer has been successfully initialized.
 	fn is_opened(&self) -> Result<bool> {
 		unsafe { sys::cv_VideoWriter_isOpened_const(self.as_raw_VideoWriter()) }.into_result()
@@ -1343,12 +1379,12 @@ impl VideoWriter {
 	///    VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G') is a
 	///    motion-jpeg codec etc. List of codes can be obtained at [Video Codecs by
 	///    FOURCC](http://www.fourcc.org/codecs.php) page. FFMPEG backend with MP4 container natively uses
-	///    other values as fourcc code: see [ObjectType](http://www.mp4ra.org/codecs.html),
+	///    other values as fourcc code: see [ObjectType](http://mp4ra.org/#/codecs),
 	///    so you may receive a warning message from OpenCV about fourcc code conversion.
 	/// * fps: Framerate of the created video stream.
 	/// * frameSize: Size of the video frames.
 	/// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
-	///    will work with grayscale frames (the flag is currently supported on Windows only).
+	///    will work with grayscale frames.
 	/// 
 	///    @b Tips:
 	///    - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
@@ -1382,6 +1418,35 @@ impl VideoWriter {
 	pub fn new_with_backend(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
 		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
+	}
+	
+	/// Default constructors
+	/// 
+	/// The constructors/functions initialize video writers.
+	/// *   On Linux FFMPEG is used to write videos;
+	/// *   On Windows FFMPEG or MSWF or DSHOW is used;
+	/// *   On MacOSX AVFoundation is used.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	///      * The `params` parameter allows to specify extra encoder parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .)
+	///      * see cv::VideoWriterProperties
+	pub fn new_1(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector::<i32>) -> Result<crate::videoio::VideoWriter> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
+	}
+	
+	/// Default constructors
+	/// 
+	/// The constructors/functions initialize video writers.
+	/// *   On Linux FFMPEG is used to write videos;
+	/// *   On Windows FFMPEG or MSWF or DSHOW is used;
+	/// *   On MacOSX AVFoundation is used.
+	/// 
+	/// ## Overloaded parameters
+	pub fn new_2(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector::<i32>) -> Result<crate::videoio::VideoWriter> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::videoio::VideoWriter::opencv_from_extern(r) } )
 	}
 	
 	/// Concatenates 4 chars to a fourcc code

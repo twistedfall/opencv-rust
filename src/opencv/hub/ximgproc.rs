@@ -398,7 +398,7 @@ pub fn am_filter(joint: &dyn core::ToInputArray, src: &dyn core::ToInputArray, d
 	unsafe { sys::cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, adjust_outliers) }.into_result()
 }
 
-/// Performs anisotropic diffusian on an image.
+/// Performs anisotropic diffusion on an image.
 /// 
 /// The function applies Perona-Malik anisotropic diffusion to an image. This is the solution to the partial differential equation:
 /// 
@@ -1170,15 +1170,18 @@ pub fn l0_smooth(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// the mean.
 /// * binarizationMethod: Binarization method to use. By default, Niblack's technique is used.
 /// Other techniques can be specified, see cv::ximgproc::LocalBinarizationMethods.
+/// * r: The user-adjustable parameter used by Sauvola's technique. This is the dynamic range
+/// of standard deviation.
 /// ## See also
 /// threshold, adaptiveThreshold
 /// 
 /// ## C++ default parameters
 /// * binarization_method: BINARIZATION_NIBLACK
-pub fn ni_black_threshold(_src: &dyn core::ToInputArray, _dst: &mut dyn core::ToOutputArray, max_value: f64, typ: i32, block_size: i32, k: f64, binarization_method: i32) -> Result<()> {
+/// * r: 128
+pub fn ni_black_threshold(_src: &dyn core::ToInputArray, _dst: &mut dyn core::ToOutputArray, max_value: f64, typ: i32, block_size: i32, k: f64, binarization_method: i32, r: f64) -> Result<()> {
 	input_array_arg!(_src);
 	output_array_arg!(_dst);
-	unsafe { sys::cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double_int(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), max_value, typ, block_size, k, binarization_method) }.into_result()
+	unsafe { sys::cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double_int_double(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), max_value, typ, block_size, k, binarization_method, r) }.into_result()
 }
 
 ///   calculates conjugate of a quaternion image.
@@ -2778,7 +2781,7 @@ pub trait SuperpixelLSC: core::AlgorithmTrait {
 	/// to this component. Calling this function may change the final number of superpixels.
 	/// 
 	/// ## C++ default parameters
-	/// * min_element_size: 20
+	/// * min_element_size: 25
 	fn enforce_label_connectivity(&mut self, min_element_size: i32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_SuperpixelLSC_enforceLabelConnectivity_int(self.as_raw_mut_SuperpixelLSC(), min_element_size) }.into_result()
 	}

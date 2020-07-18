@@ -28,6 +28,7 @@ mod aruco_sys {
 		pub fn cv_aruco_getPredefinedDictionary_int(dict: i32) -> Result<*mut c_void>;
 		pub fn cv_aruco_interpolateCornersCharuco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_Ptr_CharucoBoard_R_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(marker_corners: *const c_void, marker_ids: *const c_void, image: *const c_void, board: *const c_void, charuco_corners: *const c_void, charuco_ids: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, min_markers: i32) -> Result<i32>;
 		pub fn cv_aruco_refineDetectedMarkers_const__InputArrayR_const_Ptr_Board_R_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_float_float_bool_const__OutputArrayR_const_Ptr_DetectorParameters_R(image: *const c_void, board: *const c_void, detected_corners: *const c_void, detected_ids: *const c_void, rejected_corners: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: *const c_void, parameters: *const c_void) -> Result_void;
+		pub fn cv_aruco_testCharucoCornersCollinear_const_Ptr_CharucoBoard_R_const__InputArrayR(_board: *const c_void, _charuco_ids: *const c_void) -> Result<bool>;
 		pub fn cv_aruco_Board_getPropObjPoints(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_aruco_Board_setPropObjPoints_vector_vector_Point3f__(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_aruco_Board_getPropDictionary(instance: *mut c_void) -> Result<*mut c_void>;
@@ -885,6 +886,8 @@ mod core_sys {
 		pub fn cv_FileStorage_write_const_StringR_const_StringR(instance: *mut c_void, name: *const c_char, val: *const c_char) -> Result_void;
 		pub fn cv_FileStorage_write_const_StringR_const__InputArrayR(instance: *mut c_void, name: *const c_char, val: *const c_void) -> Result_void;
 		pub fn cv_FileStorage_writeComment_const_StringR_bool(instance: *mut c_void, comment: *const c_char, append: bool) -> Result_void;
+		pub fn cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(instance: *mut c_void, name: *const c_char, flags: i32, type_name: *const c_char) -> Result_void;
+		pub fn cv_FileStorage_endWriteStruct(instance: *mut c_void) -> Result_void;
 		pub fn cv_FileStorage_getDefaultObjectName_const_StringR(filename: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_FileStorage_getFormat_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_Formatted_next(instance: *mut c_void) -> Result<*mut c_void>;
@@ -1066,6 +1069,7 @@ mod core_sys {
 		pub fn cv_MatExpr_mul_const_const_MatR_double(instance: *const c_void, m: *const c_void, scale: f64) -> Result<*mut c_void>;
 		pub fn cv_MatExpr_cross_const_const_MatR(instance: *const c_void, m: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_MatExpr_dot_const_const_MatR(instance: *const c_void, m: *const c_void) -> Result<f64>;
+		pub fn cv_MatExpr_swap_MatExprR(instance: *mut c_void, b: *mut c_void) -> Result_void;
 		pub fn cv_MatOp_elementWise_const_const_MatExprR(instance: *const c_void, expr: *const c_void) -> Result<bool>;
 		pub fn cv_MatOp_assign_const_const_MatExprR_MatR_int(instance: *const c_void, expr: *const c_void, m: *mut c_void, typ: i32) -> Result_void;
 		pub fn cv_MatOp_roi_const_const_MatExprR_const_RangeR_const_RangeR_MatExprR(instance: *const c_void, expr: *const c_void, row_range: *const c_void, col_range: *const c_void, res: *mut c_void) -> Result_void;
@@ -1315,6 +1319,9 @@ mod core_sys {
 		pub fn cv_TickMeter_getTimeMilli_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_TickMeter_getTimeSec_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_TickMeter_getCounter_const(instance: *const c_void) -> Result<i64>;
+		pub fn cv_TickMeter_getFPS_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_TickMeter_getAvgTimeSec_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_TickMeter_getAvgTimeMilli_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_TickMeter_reset(instance: *mut c_void) -> Result_void;
 		pub fn cv_UMat_getPropFlags_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_UMat_setPropFlags_int(instance: *mut c_void, val: i32) -> Result_void;
@@ -2566,6 +2573,7 @@ mod dnn_sys {
 		pub fn cv_dnn_total_const_MatShapeR_int_int(shape: *const c_void, start: i32, end: i32) -> Result<i32>;
 		pub fn cv_dnn_writeTextGraph_const_StringR_const_StringR(model: *const c_char, output: *const c_char) -> Result_void;
 		pub fn cv_dnn_AbsLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_AccumLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_ActivationLayer_forwardSlice_const_const_floatX_floatX_int_size_t_int_int(instance: *const c_void, src: *const f32, dst: *mut f32, len: i32, out_plane_size: size_t, cn0: i32, cn1: i32) -> Result_void;
 		pub fn cv_dnn_BNLLLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_BackendNode_getPropBackendId_const(instance: *const c_void) -> Result<i32>;
@@ -2620,8 +2628,10 @@ mod dnn_sys {
 		pub fn cv_dnn_ConcatLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_ConstLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_ConvolutionLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_CorrelationLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_CropAndResizeLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_CropLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_DataAugmentationLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_DeconvolutionLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_DetectionOutputLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_Dict_has_const_const_StringR(instance: *const c_void, key: *const c_char) -> Result<bool>;
@@ -2654,6 +2664,7 @@ mod dnn_sys {
 		pub fn cv_dnn_ELULayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_EltwiseLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_FlattenLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_FlowWarpLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_InnerProductLayer_getPropAxis_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_InnerProductLayer_setPropAxis_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_InnerProductLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
@@ -3326,6 +3337,8 @@ mod features2d_sys {
 		pub fn cv_ORB_setFastThreshold_int(instance: *mut c_void, fast_threshold: i32) -> Result_void;
 		pub fn cv_ORB_getFastThreshold_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ORB_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_SIFT_create_int_int_double_double_double(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<*mut c_void>;
+		pub fn cv_SIFT_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_create_const_ParamsR(parameters: *const crate::features2d::SimpleBlobDetector_Params) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_Params_Params() -> Result<crate::features2d::SimpleBlobDetector_Params>;
@@ -6761,7 +6774,6 @@ mod xfeatures2d_sys {
 		pub fn cv_xfeatures2d_PCTSignaturesSQFD_create_int_int_float(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(instance: *const c_void, _signature0: *const c_void, _signature1: *const c_void) -> Result<f32>;
 		pub fn cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatR_const_vector_Mat_R_vector_float_R(instance: *const c_void, source_signature: *const c_void, image_signatures: *const c_void, distances: *mut c_void) -> Result_void;
-		pub fn cv_xfeatures2d_SIFT_create_int_int_double_double_double(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold: f64, n_octaves: i32, n_octave_layers: i32, extended: bool, upright: bool) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_SURF_setHessianThreshold_double(instance: *mut c_void, hessian_threshold: f64) -> Result_void;
 		pub fn cv_xfeatures2d_SURF_getHessianThreshold_const(instance: *const c_void) -> Result<f64>;

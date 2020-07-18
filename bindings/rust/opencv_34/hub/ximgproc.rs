@@ -380,7 +380,7 @@ pub fn am_filter(joint: &dyn core::ToInputArray, src: &dyn core::ToInputArray, d
 	unsafe { sys::cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, adjust_outliers) }.into_result()
 }
 
-/// Performs anisotropic diffusian on an image.
+/// Performs anisotropic diffusion on an image.
 /// 
 /// The function applies Perona-Malik anisotropic diffusion to an image. This is the solution to the partial differential equation:
 /// 
@@ -2283,7 +2283,7 @@ pub trait SuperpixelLSC: core::AlgorithmTrait {
 	/// to this component. Calling this function may change the final number of superpixels.
 	/// 
 	/// ## C++ default parameters
-	/// * min_element_size: 20
+	/// * min_element_size: 25
 	fn enforce_label_connectivity(&mut self, min_element_size: i32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_SuperpixelLSC_enforceLabelConnectivity_int(self.as_raw_mut_SuperpixelLSC(), min_element_size) }.into_result()
 	}

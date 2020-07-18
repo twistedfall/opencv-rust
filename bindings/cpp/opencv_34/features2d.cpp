@@ -1287,6 +1287,23 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	void cv_SIFT_delete(cv::SIFT* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::SIFT>*> cv_SIFT_create_int_int_double_double_double(int nfeatures, int nOctaveLayers, double contrastThreshold, double edgeThreshold, double sigma) {
+		try {
+			cv::Ptr<cv::SIFT> ret = cv::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
+			return Ok(new cv::Ptr<cv::SIFT>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::SIFT>*>))
+	}
+	
+	Result<void*> cv_SIFT_getDefaultName_const(const cv::SIFT* instance) {
+		try {
+			cv::String ret = instance->getDefaultName();
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	void cv_SimpleBlobDetector_delete(cv::SimpleBlobDetector* instance) {
 		delete instance;
 	}

@@ -55,6 +55,16 @@ pub trait DnnSuperResImplTrait {
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_StringR_int(self.as_raw_mut_DnnSuperResImpl(), algo.opencv_as_extern(), scale) }.into_result()
 	}
 	
+	/// Set computation backend
+	fn set_preferable_backend(&mut self, backend_id: i32) -> Result<()> {
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableBackend_int(self.as_raw_mut_DnnSuperResImpl(), backend_id) }.into_result()
+	}
+	
+	/// Set computation target
+	fn set_preferable_target(&mut self, target_id: i32) -> Result<()> {
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableTarget_int(self.as_raw_mut_DnnSuperResImpl(), target_id) }.into_result()
+	}
+	
 	/// Upsample via neural network
 	/// ## Parameters
 	/// * img: Image to upscale

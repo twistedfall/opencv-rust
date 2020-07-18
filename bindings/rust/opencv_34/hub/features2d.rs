@@ -33,7 +33,7 @@
 //!        # Interface
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::KeyPointsFilterTrait, super::Feature2DTrait, super::BRISKTrait, super::ORB, super::MSER, super::FastFeatureDetector, super::AgastFeatureDetector, super::GFTTDetector, super::SimpleBlobDetectorTrait, super::KAZE, super::AKAZE, super::DescriptorMatcher, super::BFMatcherTrait, super::FlannBasedMatcherTrait, super::DrawMatchesFlagsTrait, super::BOWTrainer, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTrait };
+	pub use { super::KeyPointsFilterTrait, super::Feature2DTrait, super::SIFTTrait, super::BRISKTrait, super::ORB, super::MSER, super::FastFeatureDetector, super::AgastFeatureDetector, super::GFTTDetector, super::SimpleBlobDetectorTrait, super::KAZE, super::AKAZE, super::DescriptorMatcher, super::BFMatcherTrait, super::FlannBasedMatcherTrait, super::DrawMatchesFlagsTrait, super::BOWTrainer, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTrait };
 }
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
@@ -90,6 +90,8 @@ pub type DescriptorExtractor = crate::features2d::Feature2D;
 /// between different algorithms solving the same problem. All objects that implement keypoint detectors
 /// inherit the FeatureDetector interface.
 pub type FeatureDetector = crate::features2d::Feature2D;
+pub type SiftDescriptorExtractor = crate::features2d::SIFT;
+pub type SiftFeatureDetector = crate::features2d::SIFT;
 /// Detects corners using the AGAST algorithm
 /// 
 /// ## Parameters
@@ -2090,6 +2092,90 @@ impl dyn ORB + '_ {
 	}
 	
 }
+/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
+/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Lowe04) .
+pub trait SIFTTrait: crate::features2d::Feature2DTrait {
+	fn as_raw_SIFT(&self) -> *const c_void;
+	fn as_raw_mut_SIFT(&mut self) -> *mut c_void;
+
+	fn get_default_name(&self) -> Result<String> {
+		unsafe { sys::cv_SIFT_getDefaultName_const(self.as_raw_SIFT()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
+/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Lowe04) .
+pub struct SIFT {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { SIFT }
+
+impl Drop for SIFT {
+	fn drop(&mut self) {
+		extern "C" { fn cv_SIFT_delete(instance: *mut c_void); }
+		unsafe { cv_SIFT_delete(self.as_raw_mut_SIFT()) };
+	}
+}
+
+impl SIFT {
+	#[inline] pub fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for SIFT {}
+
+impl core::AlgorithmTrait for SIFT {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::features2d::Feature2DTrait for SIFT {
+	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::features2d::SIFTTrait for SIFT {
+	#[inline] fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl SIFT {
+	/// ## Parameters
+	/// * nfeatures: The number of best features to retain. The features are ranked by their scores
+	/// (measured in SIFT algorithm as the local contrast)
+	/// 
+	/// * nOctaveLayers: The number of layers in each octave. 3 is the value used in D. Lowe paper. The
+	/// number of octaves is computed automatically from the image resolution.
+	/// 
+	/// * contrastThreshold: The contrast threshold used to filter out weak features in semi-uniform
+	/// (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+	/// 
+	/// 
+	/// Note: The contrast threshold will be divided by nOctaveLayers when the filtering is applied. When
+	/// nOctaveLayers is set to default and if you want to use the value used in D. Lowe paper, 0.03, set
+	/// this argument to 0.09.
+	/// 
+	/// * edgeThreshold: The threshold used to filter out edge-like features. Note that the its meaning
+	/// is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are
+	/// filtered out (more features are retained).
+	/// 
+	/// * sigma: The sigma of the Gaussian applied to the input image at the octave \#0. If your image
+	/// is captured with a weak camera with soft lenses, you might want to reduce the number.
+	/// 
+	/// ## C++ default parameters
+	/// * nfeatures: 0
+	/// * n_octave_layers: 3
+	/// * contrast_threshold: 0.04
+	/// * edge_threshold: 10
+	/// * sigma: 1.6
+	pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<core::Ptr::<crate::features2d::SIFT>> {
+		unsafe { sys::cv_SIFT_create_int_int_double_double_double(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(r) } )
+	}
+	
+}
+
 /// Class for extracting blobs from an image. :
 /// 
 /// The class implements a simple algorithm for extracting blobs from an image:

@@ -373,6 +373,16 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::AbsLayer>*>))
 	}
 	
+	void cv_AccumLayer_delete(cv::dnn::AccumLayer* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::dnn::AccumLayer>*> cv_dnn_AccumLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::AccumLayer> ret = cv::dnn::AccumLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::AccumLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::AccumLayer>*>))
+	}
+	
 	Result_void cv_dnn_ActivationLayer_forwardSlice_const_const_floatX_floatX_int_size_t_int_int(const cv::dnn::ActivationLayer* instance, const float* src, float* dst, int len, size_t outPlaneSize, int cn0, int cn1) {
 		try {
 			instance->forwardSlice(src, dst, len, outPlaneSize, cn0, cn1);
@@ -764,6 +774,16 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*>))
 	}
 	
+	void cv_CorrelationLayer_delete(cv::dnn::CorrelationLayer* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::dnn::CorrelationLayer>*> cv_dnn_CorrelationLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::CorrelationLayer> ret = cv::dnn::CorrelationLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::CorrelationLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::CorrelationLayer>*>))
+	}
+	
 	void cv_CropAndResizeLayer_delete(cv::dnn::CropAndResizeLayer* instance) {
 		delete instance;
 	}
@@ -782,6 +802,16 @@ extern "C" {
 			cv::Ptr<cv::dnn::Layer> ret = cv::dnn::CropLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::Layer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::Layer>*>))
+	}
+	
+	void cv_DataAugmentationLayer_delete(cv::dnn::DataAugmentationLayer* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::dnn::DataAugmentationLayer>*> cv_dnn_DataAugmentationLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::DataAugmentationLayer> ret = cv::dnn::DataAugmentationLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::DataAugmentationLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::DataAugmentationLayer>*>))
 	}
 	
 	void cv_DeconvolutionLayer_delete(cv::dnn::DeconvolutionLayer* instance) {
@@ -1024,6 +1054,16 @@ extern "C" {
 			cv::Ptr<cv::dnn::FlattenLayer> ret = cv::dnn::FlattenLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::FlattenLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::FlattenLayer>*>))
+	}
+	
+	void cv_FlowWarpLayer_delete(cv::dnn::FlowWarpLayer* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::dnn::FlowWarpLayer>*> cv_dnn_FlowWarpLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::FlowWarpLayer> ret = cv::dnn::FlowWarpLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::FlowWarpLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::FlowWarpLayer>*>))
 	}
 	
 	Result<int> cv_dnn_InnerProductLayer_getPropAxis_const(const cv::dnn::InnerProductLayer* instance) {

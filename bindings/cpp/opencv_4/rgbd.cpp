@@ -552,6 +552,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<cv::kinfu::VolumeType> cv_kinfu_Params_getPropVolumeType_const(const cv::kinfu::Params* instance) {
+		try {
+			cv::kinfu::VolumeType ret = instance->volumeType;
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::VolumeType>))
+	}
+	
+	Result_void cv_kinfu_Params_setPropVolumeType_VolumeType(cv::kinfu::Params* instance, cv::kinfu::VolumeType val) {
+		try {
+			instance->volumeType = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result<cv::Matx33f> cv_kinfu_Params_getPropIntr_const(const cv::kinfu::Params* instance) {
 		try {
 			cv::Matx33f ret = instance->intr;
@@ -852,6 +866,13 @@ extern "C" {
 	Result<cv::Ptr<cv::kinfu::Params>*> cv_kinfu_Params_coarseParams() {
 		try {
 			cv::Ptr<cv::kinfu::Params> ret = cv::kinfu::Params::coarseParams();
+			return Ok(new cv::Ptr<cv::kinfu::Params>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::Params>*>))
+	}
+	
+	Result<cv::Ptr<cv::kinfu::Params>*> cv_kinfu_Params_hashTSDFParams_bool(bool isCoarse) {
+		try {
+			cv::Ptr<cv::kinfu::Params> ret = cv::kinfu::Params::hashTSDFParams(isCoarse);
 			return Ok(new cv::Ptr<cv::kinfu::Params>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::Params>*>))
 	}

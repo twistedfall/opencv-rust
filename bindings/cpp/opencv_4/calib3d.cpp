@@ -170,6 +170,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
+	Result<int> cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_OutputArray* out, const cv::_OutputArray* inliers, double ransacThreshold, double confidence) {
+		try {
+			int ret = cv::estimateTranslation3D(*src, *dst, *out, *inliers, ransacThreshold, confidence);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result_void cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(const cv::_InputArray* rotations, const cv::_InputArray* normals, const cv::_InputArray* beforePoints, const cv::_InputArray* afterPoints, const cv::_OutputArray* possibleSolutions, const cv::_InputArray* pointsMask) {
 		try {
 			cv::filterHomographyDecompByVisibleRefpoints(*rotations, *normals, *beforePoints, *afterPoints, *possibleSolutions, *pointsMask);

@@ -1,21 +1,66 @@
 #![allow(unused_parens)]
 //! # The module brings implementations of intensity transformation algorithms to adjust image contrast.
 //! 
-//! Namespace for all functions is cv::intensity_trasnform.
+//! Namespace for all functions is `cv::intensity_transform`.
 //! 
 //! ### Supported Algorithms
 //! - Autoscaling
 //! - Log Transformations
 //! - Power-Law (Gamma) Transformations
 //! - Contrast Stretching
+//! - BIMEF, A Bio-Inspired Multi-Exposure Fusion Framework for Low-light Image Enhancement [ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)
 //! 
-//! Reference from following book and websites:
+//! References from following book and websites:
 //! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Gonzalez2018)
 //! - http://www.cs.uregina.ca/Links/class-info/425/Lab3/ [lcs435lab](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lcs435lab)
 //! - https://theailearner.com/2019/01/30/contrast-stretching/ [theailearner](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_theailearner)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use {  };
+}
+
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+/// 
+/// ## Parameters
+/// * input: input color image.
+/// * output: resulting image.
+/// * mu: enhancement ratio.
+/// * a: a-parameter in the Camera Response Function (CRF).
+/// * b: b-parameter in the Camera Response Function (CRF).
+/// 
+/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
+/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
+/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
+/// 
+/// ## C++ default parameters
+/// * mu: 0.5f
+/// * a: -0.3293f
+/// * b: 1.1258f
+pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(output);
+	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b) }.into_result()
+}
+
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+/// 
+/// This is an overloaded function with the exposure ratio given as parameter.
+/// 
+/// ## Parameters
+/// * input: input color image.
+/// * output: resulting image.
+/// * k: exposure ratio.
+/// * mu: enhancement ratio.
+/// * a: a-parameter in the Camera Response Function (CRF).
+/// * b: b-parameter in the Camera Response Function (CRF).
+/// 
+/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
+/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
+/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
+pub fn bimef2(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(output);
+	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b) }.into_result()
 }
 
 /// Given an input bgr or grayscale image, apply autoscaling on domain [0, 255] to increase

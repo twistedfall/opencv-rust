@@ -163,6 +163,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<bool> cv_aruco_testCharucoCornersCollinear_const_Ptr_CharucoBoard_R_const__InputArrayR(const cv::Ptr<cv::aruco::CharucoBoard>* _board, const cv::_InputArray* _charucoIds) {
+		try {
+			bool ret = cv::aruco::testCharucoCornersCollinear(*_board, *_charucoIds);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	Result<std::vector<std::vector<cv::Point3f>>*> cv_aruco_Board_getPropObjPoints(cv::aruco::Board* instance) {
 		try {
 			std::vector<std::vector<cv::Point3f>> ret = instance->objPoints;

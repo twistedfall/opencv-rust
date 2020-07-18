@@ -434,7 +434,7 @@ impl Camera {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	/// * fov: Field of view (horizontal, vertical)
+	/// * fov: Field of view (horizontal, vertical) in radians
 	/// * window_size: Size of the window. Principal point is at the center of the window
 	///            by default.
 	pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
@@ -2113,8 +2113,8 @@ impl WCube {
 	/// Constructs a WCube.
 	/// 
 	/// ## Parameters
-	/// * min_point: Specifies minimum point of the bounding box.
-	/// * max_point: Specifies maximum point of the bounding box.
+	/// * min_point: Specifies minimum (or maximum) point of the bounding box.
+	/// * max_point: Specifies maximum (or minimum) point of the bounding box, opposite to the first parameter.
 	/// * wire_frame: If true, cube is represented as wireframe.
 	/// * color: Color of the cube.
 	/// 

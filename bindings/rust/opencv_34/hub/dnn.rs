@@ -10,7 +10,7 @@
 //!   A network training is in principle not supported.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
+	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::DataAugmentationLayerTrait, super::CorrelationLayerTrait, super::AccumLayerTrait, super::FlowWarpLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
 }
 
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &'static str = "NGRAPH";
@@ -715,6 +715,54 @@ impl dyn AbsLayer + '_ {
 	}
 	
 }
+pub trait AccumLayerTrait: crate::dnn::LayerTrait {
+	fn as_raw_AccumLayer(&self) -> *const c_void;
+	fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct AccumLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { AccumLayer }
+
+impl Drop for AccumLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_AccumLayer_delete(instance: *mut c_void); }
+		unsafe { cv_AccumLayer_delete(self.as_raw_mut_AccumLayer()) };
+	}
+}
+
+impl AccumLayer {
+	#[inline] pub fn as_raw_AccumLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for AccumLayer {}
+
+impl crate::dnn::AccumLayerTrait for AccumLayer {
+	#[inline] fn as_raw_AccumLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl core::AlgorithmTrait for AccumLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTrait for AccumLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl AccumLayer {
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::AccumLayer>> {
+		unsafe { sys::cv_dnn_AccumLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::AccumLayer>::opencv_from_extern(r) } )
+	}
+	
+}
+
 pub trait ActivationLayer: crate::dnn::LayerTrait {
 	fn as_raw_ActivationLayer(&self) -> *const c_void;
 	fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void;
@@ -1283,6 +1331,54 @@ impl ConvolutionLayer {
 	
 }
 
+pub trait CorrelationLayerTrait: crate::dnn::LayerTrait {
+	fn as_raw_CorrelationLayer(&self) -> *const c_void;
+	fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct CorrelationLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { CorrelationLayer }
+
+impl Drop for CorrelationLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_CorrelationLayer_delete(instance: *mut c_void); }
+		unsafe { cv_CorrelationLayer_delete(self.as_raw_mut_CorrelationLayer()) };
+	}
+}
+
+impl CorrelationLayer {
+	#[inline] pub fn as_raw_CorrelationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for CorrelationLayer {}
+
+impl core::AlgorithmTrait for CorrelationLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::CorrelationLayerTrait for CorrelationLayer {
+	#[inline] fn as_raw_CorrelationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTrait for CorrelationLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl CorrelationLayer {
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::CorrelationLayer>> {
+		unsafe { sys::cv_dnn_CorrelationLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::CorrelationLayer>::opencv_from_extern(r) } )
+	}
+	
+}
+
 pub trait CropAndResizeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CropAndResizeLayer(&self) -> *const c_void;
 	fn as_raw_mut_CropAndResizeLayer(&mut self) -> *mut c_void;
@@ -1375,6 +1471,54 @@ impl crate::dnn::LayerTrait for CropLayer {
 impl CropLayer {
 	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::Layer>> {
 		unsafe { sys::cv_dnn_CropLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::Layer>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait DataAugmentationLayerTrait: crate::dnn::LayerTrait {
+	fn as_raw_DataAugmentationLayer(&self) -> *const c_void;
+	fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct DataAugmentationLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { DataAugmentationLayer }
+
+impl Drop for DataAugmentationLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_DataAugmentationLayer_delete(instance: *mut c_void); }
+		unsafe { cv_DataAugmentationLayer_delete(self.as_raw_mut_DataAugmentationLayer()) };
+	}
+}
+
+impl DataAugmentationLayer {
+	#[inline] pub fn as_raw_DataAugmentationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for DataAugmentationLayer {}
+
+impl core::AlgorithmTrait for DataAugmentationLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::DataAugmentationLayerTrait for DataAugmentationLayer {
+	#[inline] fn as_raw_DataAugmentationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTrait for DataAugmentationLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl DataAugmentationLayer {
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::DataAugmentationLayer>> {
+		unsafe { sys::cv_dnn_DataAugmentationLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::DataAugmentationLayer>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1816,6 +1960,54 @@ impl crate::dnn::LayerTrait for FlattenLayer {
 impl FlattenLayer {
 	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::FlattenLayer>> {
 		unsafe { sys::cv_dnn_FlattenLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::FlattenLayer>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait FlowWarpLayerTrait: crate::dnn::LayerTrait {
+	fn as_raw_FlowWarpLayer(&self) -> *const c_void;
+	fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct FlowWarpLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { FlowWarpLayer }
+
+impl Drop for FlowWarpLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_FlowWarpLayer_delete(instance: *mut c_void); }
+		unsafe { cv_FlowWarpLayer_delete(self.as_raw_mut_FlowWarpLayer()) };
+	}
+}
+
+impl FlowWarpLayer {
+	#[inline] pub fn as_raw_FlowWarpLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for FlowWarpLayer {}
+
+impl core::AlgorithmTrait for FlowWarpLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::FlowWarpLayerTrait for FlowWarpLayer {
+	#[inline] fn as_raw_FlowWarpLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTrait for FlowWarpLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl FlowWarpLayer {
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::FlowWarpLayer>> {
+		unsafe { sys::cv_dnn_FlowWarpLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::FlowWarpLayer>::opencv_from_extern(r) } )
 	}
 	
 }

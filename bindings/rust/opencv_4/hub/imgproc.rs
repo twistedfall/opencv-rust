@@ -192,6 +192,8 @@ pub const COLORMAP_BONE: i32 = 1;
 pub const COLORMAP_CIVIDIS: i32 = 17;
 /// ![cool](https://docs.opencv.org/4.3.0/colorscale_cool.jpg)
 pub const COLORMAP_COOL: i32 = 8;
+/// ![deepgreen](https://docs.opencv.org/4.3.0/colorscale_deepgreen.jpg)
+pub const COLORMAP_DEEPGREEN: i32 = 21;
 /// ![hot](https://docs.opencv.org/4.3.0/colorscale_hot.jpg)
 pub const COLORMAP_HOT: i32 = 11;
 /// ![HSV](https://docs.opencv.org/4.3.0/colorscale_hsv.jpg)
@@ -750,7 +752,7 @@ pub const MORPH_BLACKHAT: i32 = 6;
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
 pub const MORPH_CLOSE: i32 = 3;
 /// a cross-shaped structuring element:
-/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%20%5Cfork%7B1%7D%7Bif%20i%3D%5Ctexttt%7Banchor%2Ey%7D%20or%20j%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7B0%7D%7Botherwise%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
 pub const MORPH_CROSS: i32 = 1;
 /// see #dilate
 pub const MORPH_DILATE: i32 = 1;
@@ -819,19 +821,29 @@ pub const THRESH_TOZERO_INV: i32 = 4;
 pub const THRESH_TRIANGLE: i32 = 16;
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bthreshold%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Botherwise%7D)
 pub const THRESH_TRUNC: i32 = 2;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
 /// where
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DT%28x%27%2Cy%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20T%28x%27%27%2Cy%27%27%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DI%28x%2Bx%27%2Cy%2By%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Cend%7Barray%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DT%28x%27%2Cy%27%29%20%2D%201%2F%28w%20%5Ccdot%20h%29%20%5Ccdot%20%5Csum%20%5F%7B%0A%20%20%20x%27%27%2Cy%27%27%7D%20T%28x%27%27%2Cy%27%27%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DI%28x%2Bx%27%2Cy%2By%27%29%20%2D%201%2F%28w%20%5Ccdot%20h%29%0A%20%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Cend%7Barray%7D)
+/// with mask:
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DM%28x%27%2Cy%27%29%20%5Ccdot%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%2D%0A%20%20%20%5Cfrac%7B1%7D%7B%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20M%28x%27%27%2Cy%27%27%29%7D%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%0A%20%20%20%28T%28x%27%27%2Cy%27%27%29%20%5Ccdot%20M%28x%27%27%2Cy%27%27%29%29%20%5Cright%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DM%28x%27%2Cy%27%29%0A%20%20%20%5Ccdot%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%2D%20%5Cfrac%7B1%7D%7B%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20M%28x%27%27%2Cy%27%27%29%7D%0A%20%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20%28I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Ccdot%20M%28x%27%27%2Cy%27%27%29%29%20%5Cright%29%0A%20%20%20%5Cend%7Barray%7D%20)
 pub const TM_CCOEFF: i32 = 4;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%20%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%20%7D)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%0A%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%0A%7D)
 pub const TM_CCOEFF_NORMED: i32 = 5;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
+/// with mask:
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5E2%29)
 pub const TM_CCORR: i32 = 2;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%0A%20%20%20%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+/// with mask:
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%5E2%29%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5Cright%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5Cright%29%5E2%7D%7D)
 pub const TM_CCORR_NORMED: i32 = 3;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
+/// with mask:
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2)
 pub const TM_SQDIFF: i32 = 0;
-/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7B%0A%20%20%20x%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+/// with mask:
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%7D%7D)
 pub const TM_SQDIFF_NORMED: i32 = 1;
 /// flag, fills all of the destination image pixels. If some of them correspond to outliers in the
 /// source image, they are set to zero
@@ -1264,6 +1276,8 @@ pub enum ColormapTypes {
 	COLORMAP_TWILIGHT_SHIFTED = 19,
 	/// ![turbo](https://docs.opencv.org/4.3.0/colorscale_turbo.jpg)
 	COLORMAP_TURBO = 20,
+	/// ![deepgreen](https://docs.opencv.org/4.3.0/colorscale_deepgreen.jpg)
+	COLORMAP_DEEPGREEN = 21,
 }
 
 opencv_type_enum! { crate::imgproc::ColormapTypes }
@@ -1282,7 +1296,7 @@ pub enum ConnectedComponentsAlgorithmsTypes {
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
 
-/// connected components algorithm output formats
+/// connected components statistics
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsTypes {
@@ -1616,7 +1630,7 @@ pub enum MorphShapes {
 	/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
 	MORPH_RECT = 0,
 	/// a cross-shaped structuring element:
-	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%20%5Cfork%7B1%7D%7Bif%20i%3D%5Ctexttt%7Banchor%2Ey%7D%20or%20j%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7B0%7D%7Botherwise%7D)
+	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
 	MORPH_CROSS = 1,
 	/// an elliptic structuring element, that is, a filled ellipse inscribed
 	/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
@@ -1722,19 +1736,29 @@ opencv_type_enum! { crate::imgproc::SpecialFilter }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TemplateMatchModes {
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
+	/// with mask:
+	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2)
 	TM_SQDIFF = 0,
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7B%0A%20%20%20x%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+	/// with mask:
+	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%20%5Cright%29%5E2%7D%7D)
 	TM_SQDIFF_NORMED = 1,
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
+	/// with mask:
+	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5E2%29)
 	TM_CCORR = 2,
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%0A%20%20%20%5Csum%5F%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
+	/// with mask:
+	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%0A%20%20%20M%28x%27%2Cy%27%29%5E2%29%7D%7B%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5Cright%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%5Ccdot%20M%28x%27%2Cy%27%29%0A%20%20%20%5Cright%29%5E2%7D%7D)
 	TM_CCORR_NORMED = 3,
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
 	/// where
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DT%28x%27%2Cy%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20T%28x%27%27%2Cy%27%27%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DI%28x%2Bx%27%2Cy%2By%27%29%20%2D%201%2F%28w%20%20%5Ccdot%20h%29%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Cend%7Barray%7D)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DT%28x%27%2Cy%27%29%20%2D%201%2F%28w%20%5Ccdot%20h%29%20%5Ccdot%20%5Csum%20%5F%7B%0A%20%20%20x%27%27%2Cy%27%27%7D%20T%28x%27%27%2Cy%27%27%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DI%28x%2Bx%27%2Cy%2By%27%29%20%2D%201%2F%28w%20%5Ccdot%20h%29%0A%20%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Cend%7Barray%7D)
+	/// with mask:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20T%27%28x%27%2Cy%27%29%3DM%28x%27%2Cy%27%29%20%5Ccdot%20%5Cleft%28%20T%28x%27%2Cy%27%29%20%2D%0A%20%20%20%5Cfrac%7B1%7D%7B%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20M%28x%27%27%2Cy%27%27%29%7D%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%0A%20%20%20%28T%28x%27%27%2Cy%27%27%29%20%5Ccdot%20M%28x%27%27%2Cy%27%27%29%29%20%5Cright%29%20%5C%5C%20I%27%28x%2Bx%27%2Cy%2By%27%29%3DM%28x%27%2Cy%27%29%0A%20%20%20%5Ccdot%20%5Cleft%28%20I%28x%2Bx%27%2Cy%2By%27%29%20%2D%20%5Cfrac%7B1%7D%7B%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20M%28x%27%27%2Cy%27%27%29%7D%0A%20%20%20%5Ccdot%20%5Csum%20%5F%7Bx%27%27%2Cy%27%27%7D%20%28I%28x%2Bx%27%27%2Cy%2By%27%27%29%20%5Ccdot%20M%28x%27%27%2Cy%27%27%29%29%20%5Cright%29%0A%20%20%20%5Cend%7Barray%7D%20)
 	TM_CCOEFF = 4,
-	/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%20%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%20%7D)
+	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum%5F%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%0A%5Csqrt%7B%5Csum%5F%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum%5F%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%0A%7D)
 	TM_CCOEFF_NORMED = 5,
 }
 
@@ -2514,7 +2538,7 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 /// 
-/// The call `blur(src, dst, ksize, anchor, borderType)` is equivalent to `boxFilter(src, dst, src.type(),
+/// The call `blur(src, dst, ksize, anchor, borderType)` is equivalent to `boxFilter(src, dst, src.type(), ksize,
 /// anchor, true, borderType)`.
 /// 
 /// ## Parameters
@@ -2557,7 +2581,7 @@ pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
 /// 
 /// where
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cfork%7B%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%7D%7Bwhen%20%5Ctexttt%7Bnormalize%3Dtrue%7D%7D%7B1%7D%7Botherwise%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%26%20%5Ctexttt%7Bwhen%20%7D%20%5Ctexttt%7Bnormalize%3Dtrue%7D%20%20%5C%5C1%20%26%20%5Ctexttt%7Botherwise%7D%5Cend%7Bcases%7D)
 /// 
 /// Unnormalized box filter is useful for computing various integral characteristics over each pixel
 /// neighborhood, such as covariance matrices of image derivatives (used in dense optical flow
@@ -2841,9 +2865,9 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// ## Parameters
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -2854,9 +2878,9 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// 
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -2887,9 +2911,9 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 /// ## Parameters
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -3901,7 +3925,7 @@ pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// 
 /// The function does actually compute correlation, not the convolution:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20%5F%7B%20%5Cstackrel%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel%2Ecols%7D%2C%7D%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel%2Erows%7D%7D%20%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2D%20%5Ctexttt%7Banchor%2Ex%7D%20%2Cy%2By%27%2D%20%5Ctexttt%7Banchor%2Ey%7D%20%29)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20%5F%7B%20%5Csubstack%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel%2Ecols%7D%5C%5C%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel%2Erows%7D%7D%7D%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2D%20%5Ctexttt%7Banchor%2Ex%7D%20%2Cy%2By%27%2D%20%5Ctexttt%7Banchor%2Ey%7D%20%29)
 /// 
 /// That is, the kernel is not mirrored around the anchor point. If you need a real convolution, flip
 /// the kernel using #flip and set the new anchor to `(kernel.cols - anchor.x - 1, kernel.rows -
@@ -5027,9 +5051,10 @@ pub fn match_shapes(contour1: &dyn core::ToInputArray, contour2: &dyn core::ToIn
 /// Compares a template against overlapped image regions.
 /// 
 /// The function slides through image , compares the overlapped patches of size ![inline formula](https://latex.codecogs.com/png.latex?w%20%5Ctimes%20h) against
-/// templ using the specified method and stores the comparison results in result . Here are the formulae
-/// for the available comparison methods ( ![inline formula](https://latex.codecogs.com/png.latex?I) denotes image, ![inline formula](https://latex.codecogs.com/png.latex?T) template, ![inline formula](https://latex.codecogs.com/png.latex?R) result ). The summation
-/// is done over template and/or the image patch: ![inline formula](https://latex.codecogs.com/png.latex?x%27%20%3D%200%2E%2E%2Ew%2D1%2C%20y%27%20%3D%200%2E%2E%2Eh%2D1)
+/// templ using the specified method and stores the comparison results in result . #TemplateMatchModes
+/// describes the formulae for the available comparison methods ( ![inline formula](https://latex.codecogs.com/png.latex?I) denotes image, ![inline formula](https://latex.codecogs.com/png.latex?T)
+/// template, ![inline formula](https://latex.codecogs.com/png.latex?R) result, ![inline formula](https://latex.codecogs.com/png.latex?M) the optional mask ). The summation is done over template and/or
+/// the image patch: ![inline formula](https://latex.codecogs.com/png.latex?x%27%20%3D%200%2E%2E%2Ew%2D1%2C%20y%27%20%3D%200%2E%2E%2Eh%2D1)
 /// 
 /// After the function finishes the comparison, the best matches can be found as global minimums (when
 /// #TM_SQDIFF was used) or maximums (when #TM_CCORR or #TM_CCOEFF was used) using the
@@ -5045,8 +5070,12 @@ pub fn match_shapes(contour1: &dyn core::ToInputArray, contour2: &dyn core::ToIn
 /// * result: Map of comparison results. It must be single-channel 32-bit floating-point. If image
 /// is ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H) and templ is ![inline formula](https://latex.codecogs.com/png.latex?w%20%5Ctimes%20h) , then result is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2Dw%2B1%29%20%5Ctimes%20%28H%2Dh%2B1%29) .
 /// * method: Parameter specifying the comparison method, see #TemplateMatchModes
-/// * mask: Mask of searched template. It must have the same datatype and size with templ. It is
-/// not set by default. Currently, only the #TM_SQDIFF and #TM_CCORR_NORMED methods are supported.
+/// * mask: Optional mask. It must have the same size as templ. It must either have the same number
+///            of channels as template or only one channel, which is then used for all template and
+///            image channels. If the data type is #CV_8U, the mask is interpreted as a binary mask,
+///            meaning only elements where mask is nonzero are used and are kept unchanged independent
+///            of the actual mask value (weight equals 1). For data tpye #CV_32F, the mask values are
+///            used as weights. The exact formulas are documented in #TemplateMatchModes.
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
@@ -6326,6 +6355,42 @@ pub trait LineIteratorTrait {
 		unsafe { sys::cv_LineIterator_setPropPlusStep_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_plus_step")
 	}
 	
+	fn minus_shift(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropMinusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_shift")
+	}
+	
+	fn set_minus_shift(&mut self, val: i32) -> () {
+		unsafe { sys::cv_LineIterator_setPropMinusShift_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_minus_shift")
+	}
+	
+	fn plus_shift(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropPlusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_shift")
+	}
+	
+	fn set_plus_shift(&mut self, val: i32) -> () {
+		unsafe { sys::cv_LineIterator_setPropPlusShift_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_plus_shift")
+	}
+	
+	fn p(&self) -> core::Point {
+		unsafe { sys::cv_LineIterator_getPropP_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: p")
+	}
+	
+	fn set_p(&mut self, val: core::Point) -> () {
+		unsafe { sys::cv_LineIterator_setPropP_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_p")
+	}
+	
+	fn ptmode(&self) -> bool {
+		unsafe { sys::cv_LineIterator_getPropPtmode_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: ptmode")
+	}
+	
+	fn set_ptmode(&mut self, val: bool) -> () {
+		unsafe { sys::cv_LineIterator_setPropPtmode_bool(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_ptmode")
+	}
+	
+	fn init(&mut self, img: &core::Mat, bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<()> {
+		unsafe { sys::cv_LineIterator_init_const_MatX_Rect_Point_Point_int_bool(self.as_raw_mut_LineIterator(), img.as_raw_Mat(), bounding_area_rect.opencv_as_extern(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result()
+	}
+	
 	/// returns pointer to the current pixel
 	fn try_deref_mut(&mut self) -> Result<&mut u8> {
 		unsafe { sys::cv_LineIterator_operatorX(self.as_raw_mut_LineIterator()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
@@ -6403,13 +6468,34 @@ impl LineIterator {
 	/// the line is 8-connected or 4-connected
 	/// If leftToRight=true, then the iteration is always done
 	/// from the left-most point to the right most,
-	/// not to depend on the ordering of pt1 and pt2 parameters
+	/// not to depend on the ordering of pt1 and pt2 parameters;
 	/// 
 	/// ## C++ default parameters
 	/// * connectivity: 8
 	/// * left_to_right: false
 	pub fn new(img: &core::Mat, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
 		unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
+	}
+	
+	/// ## C++ default parameters
+	/// * connectivity: 8
+	/// * left_to_right: false
+	pub fn new_1(pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+		unsafe { sys::cv_LineIterator_LineIterator_Point_Point_int_bool(pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
+	}
+	
+	/// ## C++ default parameters
+	/// * connectivity: 8
+	/// * left_to_right: false
+	pub fn new_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+		unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point_int_bool(bounding_area_size.opencv_as_extern(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
+	}
+	
+	/// ## C++ default parameters
+	/// * connectivity: 8
+	/// * left_to_right: false
+	pub fn new_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+		unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(bounding_area_rect.opencv_as_extern(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), connectivity, left_to_right) }.into_result().map(|r| unsafe { crate::imgproc::LineIterator::opencv_from_extern(r) } )
 	}
 	
 }

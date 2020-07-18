@@ -183,6 +183,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
 	}
 	
+	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vector_int_R(const char* filename, int fourcc, double fps, const cv::Size* frameSize, const std::vector<int>* params) {
+		try {
+			cv::VideoWriter* ret = new cv::VideoWriter(std::string(filename), fourcc, fps, *frameSize, *params);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
+	}
+	
+	Result<cv::VideoWriter*> cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vector_int_R(const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, const std::vector<int>* params) {
+		try {
+			cv::VideoWriter* ret = new cv::VideoWriter(std::string(filename), apiPreference, fourcc, fps, *frameSize, *params);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoWriter*>))
+	}
+	
 	Result<bool> cv_VideoWriter_open_const_StringR_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			bool ret = instance->open(std::string(filename), fourcc, fps, *frameSize, isColor);
@@ -193,6 +207,20 @@ extern "C" {
 	Result<bool> cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(cv::VideoWriter* instance, const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
 			bool ret = instance->open(std::string(filename), apiPreference, fourcc, fps, *frameSize, isColor);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vector_int_R(cv::VideoWriter* instance, const char* filename, int fourcc, double fps, const cv::Size* frameSize, const std::vector<int>* params) {
+		try {
+			bool ret = instance->open(std::string(filename), fourcc, fps, *frameSize, *params);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vector_int_R(cv::VideoWriter* instance, const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, const std::vector<int>* params) {
+		try {
+			bool ret = instance->open(std::string(filename), apiPreference, fourcc, fps, *frameSize, *params);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}

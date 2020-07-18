@@ -306,7 +306,7 @@ pub fn estimate_rigid_transform_1(src: &dyn core::ToInputArray, dst: &dyn core::
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
 /// ([EP08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EP08)), that is
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 /// 
 /// where
 /// 
@@ -371,7 +371,7 @@ pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
 /// ([EP08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EP08)), that is
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 /// 
 /// where
 /// 

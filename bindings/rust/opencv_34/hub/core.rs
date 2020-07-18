@@ -632,10 +632,10 @@ pub const CV_TYPE_NAME_SEQ: &'static str = "opencv-sequence";
 pub const CV_TYPE_NAME_SEQ_TREE: &'static str = "opencv-sequence-tree";
 pub const CV_TYPE_NAME_SPARSE_MAT: &'static str = "opencv-sparse-matrix";
 pub const CV_USRTYPE1: i32 = 7;
-pub const CV_VERSION: &'static str = "3.4.10";
+pub const CV_VERSION: &'static str = "3.4.11";
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 10;
+pub const CV_VERSION_REVISION: i32 = 11;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -1023,6 +1023,7 @@ pub const USAGE_DEFAULT: i32 = 0;
 pub const WARP_SHUFFLE_FUNCTIONS: i32 = 30;
 pub const _InputArray_CUDA_GPU_MAT: i32 = 589824;
 pub const _InputArray_CUDA_HOST_MEM: i32 = 524288;
+/// removed
 pub const _InputArray_EXPR: i32 = 393216;
 pub const _InputArray_FIXED_SIZE: i32 = 1073741824;
 pub const _InputArray_FIXED_TYPE: i32 = -2147483648;
@@ -7892,7 +7893,7 @@ pub trait FileStorageTrait {
 	/// * name: Name of the written object.
 	/// * obj: Pointer to the object.
 	/// ## See also
-	/// ocvWrite for details.
+	/// cvWrite for details.
 	fn write_obj(&mut self, name: &str, obj: *const c_void) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_FileStorage_writeObj_const_StringR_const_voidX(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), obj) }.into_result()
@@ -7956,6 +7957,25 @@ pub trait FileStorageTrait {
 	fn write_comment(&mut self, comment: &str, append: bool) -> Result<()> {
 		extern_container_arg!(comment);
 		unsafe { sys::cv_FileStorage_writeComment_const_StringR_bool(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), append) }.into_result()
+	}
+	
+	/// Starts to write a nested structure (sequence or a mapping).
+	/// ## Parameters
+	/// * name: name of the structure (if it's a member of parent mapping, otherwise it should be empty
+	/// * flags: type of the structure (FileNode::MAP or FileNode::SEQ (both with optional FileNode::FLOW)).
+	/// * typeName: usually an empty string
+	/// 
+	/// ## C++ default parameters
+	/// * type_name: String()
+	fn start_write_struct(&mut self, name: &str, flags: i32, type_name: &str) -> Result<()> {
+		extern_container_arg!(name);
+		extern_container_arg!(type_name);
+		unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result()
+	}
+	
+	/// Finishes writing nested structure (should pair startWriteStruct())
+	fn end_write_struct(&mut self) -> Result<()> {
+		unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// Returns the current format.
@@ -11141,6 +11161,10 @@ pub trait MatExprTrait {
 		unsafe { sys::cv_MatExpr_dot_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
 	}
 	
+	fn swap(&mut self, b: &mut core::MatExpr) -> Result<()> {
+		unsafe { sys::cv_MatExpr_swap_MatExprR(self.as_raw_mut_MatExpr(), b.as_raw_mut_MatExpr()) }.into_result()
+	}
+	
 }
 
 /// Matrix expression representation
@@ -14163,27 +14187,10 @@ impl TermCriteria {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// ```ignore
-/// TickMeter tm;
-/// tm.start();
-/// // do something ...
-/// tm.stop();
-/// std::cout << tm.getTimeSec();
-/// ```
-/// 
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/3.4.10/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// ```ignore
-/// TickMeter tm;
-/// for (int i = 0; i < 100; i++)
-/// {
-///    tm.start();
-///    // do something ...
-///    tm.stop();
-/// }
-/// double average_time = tm.getTimeSec() / tm.getCounter();
-/// std::cout << "Average time in second per iteration is: " << average_time << std::endl;
-/// ```
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/3.4.10/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub trait TickMeterTrait {
@@ -14225,6 +14232,21 @@ pub trait TickMeterTrait {
 		unsafe { sys::cv_TickMeter_getCounter_const(self.as_raw_TickMeter()) }.into_result()
 	}
 	
+	/// returns average FPS (frames per second) value.
+	fn get_fps(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getFPS_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
+	/// returns average time in seconds
+	fn get_avg_time_sec(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getAvgTimeSec_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
+	/// returns average time in milliseconds
+	fn get_avg_time_milli(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getAvgTimeMilli_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
 	/// resets internal values.
 	fn reset(&mut self) -> Result<()> {
 		unsafe { sys::cv_TickMeter_reset(self.as_raw_mut_TickMeter()) }.into_result()
@@ -14236,27 +14258,10 @@ pub trait TickMeterTrait {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// ```ignore
-/// TickMeter tm;
-/// tm.start();
-/// // do something ...
-/// tm.stop();
-/// std::cout << tm.getTimeSec();
-/// ```
-/// 
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/3.4.10/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// ```ignore
-/// TickMeter tm;
-/// for (int i = 0; i < 100; i++)
-/// {
-///    tm.start();
-///    // do something ...
-///    tm.stop();
-/// }
-/// double average_time = tm.getTimeSec() / tm.getCounter();
-/// std::cout << "Average time in second per iteration is: " << average_time << std::endl;
-/// ```
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/3.4.10/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub struct TickMeter {

@@ -2573,13 +2573,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<const cv::FileStorage**> cv_FileNode_getPropFs_const(const cv::FileNode* instance) {
-		try {
-			const cv::FileStorage* ret = instance->fs;
-			return Ok(new const cv::FileStorage*(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::FileStorage**>))
-	}
-	
 	Result<size_t> cv_FileNode_getPropBlockIdx_const(const cv::FileNode* instance) {
 		try {
 			size_t ret = instance->blockIdx;
@@ -4370,6 +4363,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
+	Result_void cv_MatExpr_swap_MatExprR(cv::MatExpr* instance, cv::MatExpr* b) {
+		try {
+			instance->swap(*b);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result<bool> cv_MatOp_elementWise_const_const_MatExprR(const cv::MatOp* instance, const cv::MatExpr* expr) {
 		try {
 			bool ret = instance->elementWise(*expr);
@@ -6120,6 +6120,27 @@ extern "C" {
 			int64_t ret = instance->getCounter();
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
+	}
+	
+	Result<double> cv_TickMeter_getFPS_const(const cv::TickMeter* instance) {
+		try {
+			double ret = instance->getFPS();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result<double> cv_TickMeter_getAvgTimeSec_const(const cv::TickMeter* instance) {
+		try {
+			double ret = instance->getAvgTimeSec();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result<double> cv_TickMeter_getAvgTimeMilli_const(const cv::TickMeter* instance) {
+		try {
+			double ret = instance->getAvgTimeMilli();
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result_void cv_TickMeter_reset(cv::TickMeter* instance) {

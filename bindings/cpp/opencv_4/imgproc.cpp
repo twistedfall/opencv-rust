@@ -1425,6 +1425,62 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<int> cv_LineIterator_getPropMinusShift_const(const cv::LineIterator* instance) {
+		try {
+			int ret = instance->minusShift;
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_LineIterator_setPropMinusShift_int(cv::LineIterator* instance, int val) {
+		try {
+			instance->minusShift = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_LineIterator_getPropPlusShift_const(const cv::LineIterator* instance) {
+		try {
+			int ret = instance->plusShift;
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_LineIterator_setPropPlusShift_int(cv::LineIterator* instance, int val) {
+		try {
+			instance->plusShift = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Point> cv_LineIterator_getPropP_const(const cv::LineIterator* instance) {
+		try {
+			cv::Point ret = instance->p;
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
+	}
+	
+	Result_void cv_LineIterator_setPropP_Point(cv::LineIterator* instance, const cv::Point* val) {
+		try {
+			instance->p = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_LineIterator_getPropPtmode_const(const cv::LineIterator* instance) {
+		try {
+			bool ret = instance->ptmode;
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result_void cv_LineIterator_setPropPtmode_bool(cv::LineIterator* instance, bool val) {
+		try {
+			instance->ptmode = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	void cv_LineIterator_delete(cv::LineIterator* instance) {
 		delete instance;
 	}
@@ -1433,6 +1489,34 @@ extern "C" {
 			cv::LineIterator* ret = new cv::LineIterator(*img, *pt1, *pt2, connectivity, leftToRight);
 			return Ok(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::LineIterator*>))
+	}
+	
+	Result<cv::LineIterator*> cv_LineIterator_LineIterator_Point_Point_int_bool(const cv::Point* pt1, const cv::Point* pt2, int connectivity, bool leftToRight) {
+		try {
+			cv::LineIterator* ret = new cv::LineIterator(*pt1, *pt2, connectivity, leftToRight);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::LineIterator*>))
+	}
+	
+	Result<cv::LineIterator*> cv_LineIterator_LineIterator_Size_Point_Point_int_bool(const cv::Size* boundingAreaSize, const cv::Point* pt1, const cv::Point* pt2, int connectivity, bool leftToRight) {
+		try {
+			cv::LineIterator* ret = new cv::LineIterator(*boundingAreaSize, *pt1, *pt2, connectivity, leftToRight);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::LineIterator*>))
+	}
+	
+	Result<cv::LineIterator*> cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(const cv::Rect* boundingAreaRect, const cv::Point* pt1, const cv::Point* pt2, int connectivity, bool leftToRight) {
+		try {
+			cv::LineIterator* ret = new cv::LineIterator(*boundingAreaRect, *pt1, *pt2, connectivity, leftToRight);
+			return Ok(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::LineIterator*>))
+	}
+	
+	Result_void cv_LineIterator_init_const_MatX_Rect_Point_Point_int_bool(cv::LineIterator* instance, const cv::Mat* img, const cv::Rect* boundingAreaRect, const cv::Point* pt1, const cv::Point* pt2, int connectivity, bool leftToRight) {
+		try {
+			instance->init(img, *boundingAreaRect, *pt1, *pt2, connectivity, leftToRight);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result<unsigned char*> cv_LineIterator_operatorX(cv::LineIterator* instance) {

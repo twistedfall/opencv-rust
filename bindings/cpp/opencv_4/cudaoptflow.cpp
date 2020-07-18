@@ -311,9 +311,9 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*> cv_cuda_NvidiaOpticalFlow_1_0_create_int_int_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int(int width, int height, cv::cuda::NvidiaOpticalFlow_1_0::NVIDIA_OF_PERF_LEVEL perfPreset, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId) {
+	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*> cv_cuda_NvidiaOpticalFlow_1_0_create_int_int_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(int width, int height, cv::cuda::NvidiaOpticalFlow_1_0::NVIDIA_OF_PERF_LEVEL perfPreset, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId, cv::cuda::Stream* inputStream, cv::cuda::Stream* outputStream) {
 		try {
-			cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0> ret = cv::cuda::NvidiaOpticalFlow_1_0::create(width, height, perfPreset, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId);
+			cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0> ret = cv::cuda::NvidiaOpticalFlow_1_0::create(width, height, perfPreset, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId, *inputStream, *outputStream);
 			return Ok(new cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*>))
 	}

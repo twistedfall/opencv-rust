@@ -356,9 +356,9 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &'static str = "4.3.0";
+pub const CV_VERSION: &'static str = "4.4.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
-pub const CV_VERSION_MINOR: i32 = 3;
+pub const CV_VERSION_MINOR: i32 = 4;
 pub const CV_VERSION_REVISION: i32 = 0;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const CV_VSX: i32 = 0;
@@ -1476,6 +1476,7 @@ pub enum _InputArray_KindFlag {
 	STD_VECTOR = 196608,
 	STD_VECTOR_VECTOR = 262144,
 	STD_VECTOR_MAT = 327680,
+	/// removed
 	EXPR = 393216,
 	OPENGL_BUFFER = 458752,
 	CUDA_HOST_MEM = 524288,
@@ -6995,10 +6996,6 @@ pub trait FileNodeTrait {
 	fn as_raw_FileNode(&self) -> *const c_void;
 	fn as_raw_mut_FileNode(&mut self) -> *mut c_void;
 
-	fn fs(&self) -> core::FileStorage {
-		unsafe { sys::cv_FileNode_getPropFs_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::FileStorage::opencv_from_extern(r) } ).expect("Infallible function failed: fs")
-	}
-	
 	fn block_idx(&self) -> size_t {
 		unsafe { sys::cv_FileNode_getPropBlockIdx_const(self.as_raw_FileNode()) }.into_result().expect("Infallible function failed: block_idx")
 	}
@@ -7254,6 +7251,8 @@ impl FileNode {
 	/// * fs: Pointer to the file storage structure.
 	/// * blockIdx: Index of the memory block where the file node is stored
 	/// * ofs: Offset in bytes from the beginning of the serialized storage
+	/// 
+	///      @deprecated
 	pub fn new(fs: &core::FileStorage, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
 		unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
 	}
@@ -7600,12 +7599,21 @@ pub trait FileStorageTrait {
 		unsafe { sys::cv_FileStorage_writeComment_const_StringR_bool(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), append) }.into_result()
 	}
 	
+	/// Starts to write a nested structure (sequence or a mapping).
+	/// ## Parameters
+	/// * name: name of the structure (if it's a member of parent mapping, otherwise it should be empty
+	/// * flags: type of the structure (FileNode::MAP or FileNode::SEQ (both with optional FileNode::FLOW)).
+	/// * typeName: usually an empty string
+	/// 
+	/// ## C++ default parameters
+	/// * type_name: String()
 	fn start_write_struct(&mut self, name: &str, flags: i32, type_name: &str) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(type_name);
 		unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result()
 	}
 	
+	/// Finishes writing nested structure (should pair startWriteStruct())
 	fn end_write_struct(&mut self) -> Result<()> {
 		unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_mut_FileStorage()) }.into_result()
 	}
@@ -10790,6 +10798,10 @@ pub trait MatExprTrait {
 		unsafe { sys::cv_MatExpr_dot_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
 	}
 	
+	fn swap(&mut self, b: &mut core::MatExpr) -> Result<()> {
+		unsafe { sys::cv_MatExpr_swap_MatExprR(self.as_raw_mut_MatExpr(), b.as_raw_mut_MatExpr()) }.into_result()
+	}
+	
 }
 
 /// Matrix expression representation
@@ -13748,27 +13760,10 @@ impl TermCriteria {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// ```ignore
-/// TickMeter tm;
-/// tm.start();
-/// // do something ...
-/// tm.stop();
-/// std::cout << tm.getTimeSec();
-/// ```
-/// 
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// ```ignore
-/// TickMeter tm;
-/// for (int i = 0; i < 100; i++)
-/// {
-///    tm.start();
-///    // do something ...
-///    tm.stop();
-/// }
-/// double average_time = tm.getTimeSec() / tm.getCounter();
-/// std::cout << "Average time in second per iteration is: " << average_time << std::endl;
-/// ```
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub trait TickMeterTrait {
@@ -13810,6 +13805,21 @@ pub trait TickMeterTrait {
 		unsafe { sys::cv_TickMeter_getCounter_const(self.as_raw_TickMeter()) }.into_result()
 	}
 	
+	/// returns average FPS (frames per second) value.
+	fn get_fps(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getFPS_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
+	/// returns average time in seconds
+	fn get_avg_time_sec(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getAvgTimeSec_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
+	/// returns average time in milliseconds
+	fn get_avg_time_milli(&self) -> Result<f64> {
+		unsafe { sys::cv_TickMeter_getAvgTimeMilli_const(self.as_raw_TickMeter()) }.into_result()
+	}
+	
 	/// resets internal values.
 	fn reset(&mut self) -> Result<()> {
 		unsafe { sys::cv_TickMeter_reset(self.as_raw_mut_TickMeter()) }.into_result()
@@ -13821,27 +13831,10 @@ pub trait TickMeterTrait {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// ```ignore
-/// TickMeter tm;
-/// tm.start();
-/// // do something ...
-/// tm.stop();
-/// std::cout << tm.getTimeSec();
-/// ```
-/// 
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// ```ignore
-/// TickMeter tm;
-/// for (int i = 0; i < 100; i++)
-/// {
-///    tm.start();
-///    // do something ...
-///    tm.stop();
-/// }
-/// double average_time = tm.getTimeSec() / tm.getCounter();
-/// std::cout << "Average time in second per iteration is: " << average_time << std::endl;
-/// ```
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub struct TickMeter {

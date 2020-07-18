@@ -192,6 +192,8 @@ pub const COLORMAP_BONE: i32 = 1;
 pub const COLORMAP_CIVIDIS: i32 = 17;
 /// ![cool](https://docs.opencv.org/3.4.10/colorscale_cool.jpg)
 pub const COLORMAP_COOL: i32 = 8;
+/// ![deepgreen](https://docs.opencv.org/3.4.10/colorscale_deepgreen.jpg)
+pub const COLORMAP_DEEPGREEN: i32 = 21;
 /// ![hot](https://docs.opencv.org/3.4.10/colorscale_hot.jpg)
 pub const COLORMAP_HOT: i32 = 11;
 /// ![HSV](https://docs.opencv.org/3.4.10/colorscale_hsv.jpg)
@@ -734,7 +736,7 @@ pub const MORPH_BLACKHAT: i32 = 6;
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
 pub const MORPH_CLOSE: i32 = 3;
 /// a cross-shaped structuring element:
-/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%20%5Cfork%7B1%7D%7Bif%20i%3D%5Ctexttt%7Banchor%2Ey%7D%20or%20j%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7B0%7D%7Botherwise%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
 pub const MORPH_CROSS: i32 = 1;
 /// see #dilate
 pub const MORPH_DILATE: i32 = 1;
@@ -1250,6 +1252,8 @@ pub enum ColormapTypes {
 	COLORMAP_TWILIGHT_SHIFTED = 19,
 	/// ![turbo](https://docs.opencv.org/3.4.10/colorscale_turbo.jpg)
 	COLORMAP_TURBO = 20,
+	/// ![deepgreen](https://docs.opencv.org/3.4.10/colorscale_deepgreen.jpg)
+	COLORMAP_DEEPGREEN = 21,
 }
 
 opencv_type_enum! { crate::imgproc::ColormapTypes }
@@ -1268,7 +1272,7 @@ pub enum ConnectedComponentsAlgorithmsTypes {
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
 
-/// connected components algorithm output formats
+/// connected components statistics
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsTypes {
@@ -1556,7 +1560,7 @@ pub enum MorphShapes {
 	/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
 	MORPH_RECT = 0,
 	/// a cross-shaped structuring element:
-	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%20%5Cfork%7B1%7D%7Bif%20i%3D%5Ctexttt%7Banchor%2Ey%7D%20or%20j%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7B0%7D%7Botherwise%7D)
+	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
 	MORPH_CROSS = 1,
 	/// an elliptic structuring element, that is, a filled ellipse inscribed
 	/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
@@ -2447,7 +2451,7 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 /// 
-/// The call `blur(src, dst, ksize, anchor, borderType)` is equivalent to `boxFilter(src, dst, src.type(),
+/// The call `blur(src, dst, ksize, anchor, borderType)` is equivalent to `boxFilter(src, dst, src.type(), ksize,
 /// anchor, true, borderType)`.
 /// 
 /// ## Parameters
@@ -2490,7 +2494,7 @@ pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
 /// 
 /// where
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cfork%7B%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%7D%7Bwhen%20%5Ctexttt%7Bnormalize%3Dtrue%7D%7D%7B1%7D%7Botherwise%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%26%20%5Ctexttt%7Bwhen%20%7D%20%5Ctexttt%7Bnormalize%3Dtrue%7D%20%20%5C%5C1%20%26%20%5Ctexttt%7Botherwise%7D%5Cend%7Bcases%7D)
 /// 
 /// Unnormalized box filter is useful for computing various integral characteristics over each pixel
 /// neighborhood, such as covariance matrices of image derivatives (used in dense optical flow
@@ -2774,9 +2778,9 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// ## Parameters
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -2787,9 +2791,9 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// 
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -2820,9 +2824,9 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 /// ## Parameters
 /// * image: the 8-bit single-channel image to be labeled
 /// * labels: destination labeled image
-/// * stats: statistics output for each label, including the background label, see below for
-/// available statistics. Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
-/// #ConnectedComponentsTypes. The data type is CV_32S.
+/// * stats: statistics output for each label, including the background label.
+/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
 /// * centroids: centroid output for each label, including the background label. Centroids are
 /// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
 /// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -3833,7 +3837,7 @@ pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// 
 /// The function does actually compute correlation, not the convolution:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20%5F%7B%20%5Cstackrel%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel%2Ecols%7D%2C%7D%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel%2Erows%7D%7D%20%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2D%20%5Ctexttt%7Banchor%2Ex%7D%20%2Cy%2By%27%2D%20%5Ctexttt%7Banchor%2Ey%7D%20%29)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20%5F%7B%20%5Csubstack%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel%2Ecols%7D%5C%5C%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel%2Erows%7D%7D%7D%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2D%20%5Ctexttt%7Banchor%2Ex%7D%20%2Cy%2By%27%2D%20%5Ctexttt%7Banchor%2Ey%7D%20%29)
 /// 
 /// That is, the kernel is not mirrored around the anchor point. If you need a real convolution, flip
 /// the kernel using #flip and set the new anchor to `(kernel.cols - anchor.x - 1, kernel.rows -

@@ -26,6 +26,7 @@ template struct Result<cv::Vec<float, 3>>;
 template struct Result<cv::Vec<int, 3>>;
 template struct Result<cv::dynafu::Params*>;
 template struct Result<cv::kinfu::Params*>;
+template struct Result<cv::kinfu::VolumeType>;
 template struct Result<cv::linemod::ColorGradient*>;
 template struct Result<cv::linemod::DepthNormal*>;
 template struct Result<cv::linemod::Detector*>;

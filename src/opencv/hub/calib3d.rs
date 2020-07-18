@@ -1510,6 +1510,37 @@ pub fn estimate_chessboard_sharpness(image: &dyn core::ToInputArray, pattern_siz
 	unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray()) }.into_result()
 }
 
+/// Computes an optimal translation between two 3D point sets.
+/// 
+/// It computes
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Ax%5C%5C%0Ay%5C%5C%0Az%5C%5C%0A%5Cend%7Bbmatrix%7D%0A%3D%0A%5Cbegin%7Bbmatrix%7D%0AX%5C%5C%0AY%5C%5C%0AZ%5C%5C%0A%5Cend%7Bbmatrix%7D%0A%2B%0A%5Cbegin%7Bbmatrix%7D%0Ab%5F1%5C%5C%0Ab%5F2%5C%5C%0Ab%5F3%5C%5C%0A%5Cend%7Bbmatrix%7D%0A)
+/// 
+/// ## Parameters
+/// * src: First input 3D point set containing ![inline formula](https://latex.codecogs.com/png.latex?%28X%2CY%2CZ%29).
+/// * dst: Second input 3D point set containing ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%2Cz%29).
+/// * out: Output 3D translation vector ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%201) of the form
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0Ab%5F1%20%5C%5C%0Ab%5F2%20%5C%5C%0Ab%5F3%20%5C%5C%0A%5Cend%7Bbmatrix%7D%0A)
+/// * inliers: Output vector indicating which points are inliers (1-inlier, 0-outlier).
+/// * ransacThreshold: Maximum reprojection error in the RANSAC algorithm to consider a point as
+/// an inlier.
+/// * confidence: Confidence level, between 0 and 1, for the estimated transformation. Anything
+/// between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
+/// significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
+/// 
+/// The function estimates an optimal 3D translation between two 3D point sets using the
+/// RANSAC algorithm.
+/// 
+/// ## C++ default parameters
+/// * ransac_threshold: 3
+/// * confidence: 0.99
+pub fn estimate_translation_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, out: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
+	input_array_arg!(src);
+	input_array_arg!(dst);
+	output_array_arg!(out);
+	output_array_arg!(inliers);
+	unsafe { sys::cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence) }.into_result()
+}
+
 /// Filters homography decompositions based on additional information.
 /// 
 /// ## Parameters
@@ -1838,7 +1869,10 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera matrix. If this assumption does not hold for your use case, use
+/// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
+/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
 /// *   **LMEDS** for the LMedS algorithm.
@@ -1881,7 +1915,10 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera matrix. If this assumption does not hold for your use case, use
+/// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
+/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
 /// *   **LMEDS** for the LMedS algorithm.
@@ -3724,7 +3761,7 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fi) are components of the translation vector ![inline formula](https://latex.codecogs.com/png.latex?T) : ![inline formula](https://latex.codecogs.com/png.latex?T%3D%5BT%5F0%2C%20T%5F1%2C%20T%5F2%5D%5ET) .
 /// And the function can also compute the fundamental matrix F:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%20E%20cameraMatrix1%5E%7B%2D1%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%5Ccdot%20E%20%5Ccdot%20cameraMatrix1%5E%7B%2D1%7D)
 /// 
 /// Besides the stereo-related information, the function can also perform a full calibration of each of
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
@@ -3853,7 +3890,7 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fi) are components of the translation vector ![inline formula](https://latex.codecogs.com/png.latex?T) : ![inline formula](https://latex.codecogs.com/png.latex?T%3D%5BT%5F0%2C%20T%5F1%2C%20T%5F2%5D%5ET) .
 /// And the function can also compute the fundamental matrix F:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%20E%20cameraMatrix1%5E%7B%2D1%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%5Ccdot%20E%20%5Ccdot%20cameraMatrix1%5E%7B%2D1%7D)
 /// 
 /// Besides the stereo-related information, the function can also perform a full calibration of each of
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the

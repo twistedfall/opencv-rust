@@ -4,24 +4,42 @@
 //! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_drummond2002real)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use {  };
+	pub use { super::Tracker, super::Rapid, super::OLSTracker };
+}
+
+/// Collect corresponding 2d and 3d points based on correspondencies and mask
+/// ## Parameters
+/// * cols: correspondence-position per line in line-bundle-space
+/// * srcLocations: the source image location
+/// * pts2d: 2d points
+/// * pts3d: 3d points
+/// * mask: mask containing non-zero values for the elements to be retained
+/// 
+/// ## C++ default parameters
+/// * pts3d: noArray()
+/// * mask: noArray()
+pub fn convert_correspondencies(cols: &dyn core::ToInputArray, src_locations: &dyn core::ToInputArray, pts2d: &mut dyn core::ToOutputArray, pts3d: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+	input_array_arg!(cols);
+	input_array_arg!(src_locations);
+	output_array_arg!(pts2d);
+	input_output_array_arg!(pts3d);
+	input_array_arg!(mask);
+	unsafe { sys::cv_rapid_convertCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputArrayR(cols.as_raw__InputArray(), src_locations.as_raw__InputArray(), pts2d.as_raw__OutputArray(), pts3d.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Debug draw markers of matched correspondences onto a lineBundle
 /// ## Parameters
 /// * bundle: the lineBundle
-/// * srcLocations: the according source locations
-/// * newLocations: matched source locations
+/// * cols: column coordinates in the line bundle
 /// * colors: colors for the markers. Defaults to white.
 /// 
 /// ## C++ default parameters
 /// * colors: noArray()
-pub fn draw_correspondencies(bundle: &mut dyn core::ToInputOutputArray, src_locations: &dyn core::ToInputArray, new_locations: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<()> {
+pub fn draw_correspondencies(bundle: &mut dyn core::ToInputOutputArray, cols: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<()> {
 	input_output_array_arg!(bundle);
-	input_array_arg!(src_locations);
-	input_array_arg!(new_locations);
+	input_array_arg!(cols);
 	input_array_arg!(colors);
-	unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(bundle.as_raw__InputOutputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()
+	unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(bundle.as_raw__InputOutputArray(), cols.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()
 }
 
 /// Debug draw search lines onto an image
@@ -95,34 +113,20 @@ pub fn extract_line_bundle(len: i32, ctl2d: &dyn core::ToInputArray, img: &dyn c
 	unsafe { sys::cv_rapid_extractLineBundle_int_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(len, ctl2d.as_raw__InputArray(), img.as_raw__InputArray(), bundle.as_raw__OutputArray(), src_locations.as_raw__OutputArray()) }.into_result()
 }
 
-/// Filter corresponding 2d and 3d points based on mask
-/// ## Parameters
-/// * pts2d: 2d points
-/// * pts3d: 3d points
-/// * mask: mask containing non-zero values for the elements to be retained
-pub fn filter_correspondencies(pts2d: &mut dyn core::ToInputOutputArray, pts3d: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_output_array_arg!(pts2d);
-	input_output_array_arg!(pts3d);
-	input_array_arg!(mask);
-	unsafe { sys::cv_rapid_filterCorrespondencies_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR(pts2d.as_raw__InputOutputArray(), pts3d.as_raw__InputOutputArray(), mask.as_raw__InputArray()) }.into_result()
-}
-
 /// Find corresponding image locations by searching for a maximal sobel edge along the search line (a single
 /// row in the bundle)
 /// ## Parameters
 /// * bundle: the line bundle
-/// * srcLocations: the according source image location
-/// * newLocations: image locations with maximal edge along the search line
+/// * cols: correspondence-position per line in line-bundle-space
 /// * response: the sobel response for the selected point
 /// 
 /// ## C++ default parameters
 /// * response: noArray()
-pub fn find_correspondencies(bundle: &dyn core::ToInputArray, src_locations: &dyn core::ToInputArray, new_locations: &mut dyn core::ToOutputArray, response: &mut dyn core::ToOutputArray) -> Result<()> {
+pub fn find_correspondencies(bundle: &dyn core::ToInputArray, cols: &mut dyn core::ToOutputArray, response: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(bundle);
-	input_array_arg!(src_locations);
-	output_array_arg!(new_locations);
+	output_array_arg!(cols);
 	output_array_arg!(response);
-	unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), src_locations.as_raw__InputArray(), new_locations.as_raw__OutputArray(), response.as_raw__OutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), cols.as_raw__OutputArray(), response.as_raw__OutputArray()) }.into_result()
 }
 
 /// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
@@ -130,7 +134,7 @@ pub fn find_correspondencies(bundle: &dyn core::ToInputArray, src_locations: &dy
 /// 1. @ref extractControlPoints
 /// 2. @ref extractLineBundle
 /// 3. @ref findCorrespondencies
-/// 4. @ref filterCorrespondencies
+/// 4. @ref convertCorrespondencies
 /// 5. @ref solvePnPRefineLM
 /// 
 /// ## Parameters
@@ -142,14 +146,73 @@ pub fn find_correspondencies(bundle: &dyn core::ToInputArray, src_locations: &dy
 /// * K: camera matrix
 /// * rvec: rotation between mesh and camera. Input values are used as an initial solution.
 /// * tvec: translation between mesh and camera. Input values are used as an initial solution.
+/// * rmsd: the 2d reprojection difference
 /// ## Returns
 /// ratio of search lines that could be extracted and matched
-pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, k: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray) -> Result<f32> {
+/// 
+/// ## C++ default parameters
+/// * rmsd: 0
+pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, k: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
 	input_array_arg!(img);
 	input_array_arg!(pts3d);
 	input_array_arg!(tris);
 	input_array_arg!(k);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray()) }.into_result()
+	unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), rmsd) }.into_result()
+}
+
+/// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
+/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
+pub trait OLSTracker: crate::rapid::Tracker {
+	fn as_raw_OLSTracker(&self) -> *const c_void;
+	fn as_raw_mut_OLSTracker(&mut self) -> *mut c_void;
+
+}
+
+impl dyn OLSTracker + '_ {
+	/// ## C++ default parameters
+	/// * hist_bins: 8
+	/// * sobel_thesh: 10
+	pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr::<dyn crate::rapid::OLSTracker>> {
+		input_array_arg!(pts3d);
+		input_array_arg!(tris);
+		unsafe { sys::cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rapid::OLSTracker>::opencv_from_extern(r) } )
+	}
+	
+}
+/// wrapper around @ref rapid function for uniform access
+pub trait Rapid: crate::rapid::Tracker {
+	fn as_raw_Rapid(&self) -> *const c_void;
+	fn as_raw_mut_Rapid(&mut self) -> *mut c_void;
+
+}
+
+impl dyn Rapid + '_ {
+	pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::rapid::Rapid>> {
+		input_array_arg!(pts3d);
+		input_array_arg!(tris);
+		unsafe { sys::cv_rapid_Rapid_create_const__InputArrayR_const__InputArrayR(pts3d.as_raw__InputArray(), tris.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rapid::Rapid>::opencv_from_extern(r) } )
+	}
+	
+}
+/// Abstract base class for stateful silhouette trackers
+pub trait Tracker: core::AlgorithmTrait {
+	fn as_raw_Tracker(&self) -> *const c_void;
+	fn as_raw_mut_Tracker(&mut self) -> *mut c_void;
+
+	/// ## C++ default parameters
+	/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
+	fn compute(&mut self, img: &dyn core::ToInputArray, num: i32, len: i32, k: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
+		input_array_arg!(img);
+		input_array_arg!(k);
+		input_output_array_arg!(rvec);
+		input_output_array_arg!(tvec);
+		unsafe { sys::cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_TermCriteriaR(self.as_raw_mut_Tracker(), img.as_raw__InputArray(), num, len, k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &termcrit) }.into_result()
+	}
+	
+	fn clear_state(&mut self) -> Result<()> {
+		unsafe { sys::cv_rapid_Tracker_clearState(self.as_raw_mut_Tracker()) }.into_result()
+	}
+	
 }

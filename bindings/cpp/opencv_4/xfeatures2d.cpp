@@ -619,16 +619,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	void cv_SIFT_delete(cv::xfeatures2d::SIFT* instance) {
-		delete instance;
-	}
-	Result<cv::Ptr<cv::xfeatures2d::SIFT>*> cv_xfeatures2d_SIFT_create_int_int_double_double_double(int nfeatures, int nOctaveLayers, double contrastThreshold, double edgeThreshold, double sigma) {
-		try {
-			cv::Ptr<cv::xfeatures2d::SIFT> ret = cv::xfeatures2d::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
-			return Ok(new cv::Ptr<cv::xfeatures2d::SIFT>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::SIFT>*>))
-	}
-	
 	Result<cv::Ptr<cv::xfeatures2d::SURF>*> cv_xfeatures2d_SURF_create_double_int_int_bool_bool(double hessianThreshold, int nOctaves, int nOctaveLayers, bool extended, bool upright) {
 		try {
 			cv::Ptr<cv::xfeatures2d::SURF> ret = cv::xfeatures2d::SURF::create(hessianThreshold, nOctaves, nOctaveLayers, extended, upright);

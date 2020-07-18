@@ -384,6 +384,24 @@ pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<d
 	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_vector_Point__R(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
 }
 
+/// Applies the Stroke Width Transform operator followed by filtering of connected components of similar Stroke Widths to return letter candidates. It also chain them by proximity and size, saving the result in chainBBs.
+/// ## Parameters
+/// * input: the input image with 3 channels.
+/// * result: a vector of resulting bounding boxes where probability of finding text is high
+/// * dark_on_light: a boolean value signifying whether the text is darker or lighter than the background, it is observed to reverse the gradient obtained from Scharr operator, and significantly affect the result.
+/// * draw: an optional Mat of type CV_8UC3 which visualises the detected letters using bounding boxes.
+/// * chainBBs: an optional parameter which chains the letter candidates according to heuristics in the paper and returns all possible regions where text is likely to occur.
+/// 
+/// ## C++ default parameters
+/// * draw: noArray()
+/// * chain_b_bs: noArray()
+pub fn detect_text_swt(input: &dyn core::ToInputArray, result: &mut core::Vector::<core::Rect>, dark_on_light: bool, draw: &mut dyn core::ToOutputArray, chain_b_bs: &mut dyn core::ToOutputArray) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(draw);
+	output_array_arg!(chain_b_bs);
+	unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vector_Rect_R_bool_const__OutputArrayR_const__OutputArrayR(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, draw.as_raw__OutputArray(), chain_b_bs.as_raw__OutputArray()) }.into_result()
+}
+
 /// Find groups of Extremal Regions that are organized as text blocks.
 /// 
 /// ## Parameters

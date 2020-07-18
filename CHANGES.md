@@ -1,3 +1,7 @@
+* 0.43.3
+  * Test with the newly released OpenCV 3.4.11 and 4.4.0
+  * Internal cleanups and CI fixes
+
 * 0.43.2
   * Fix build on RPi (fixes #157)
 

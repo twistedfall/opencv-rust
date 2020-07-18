@@ -1556,7 +1556,10 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera matrix. If this assumption does not hold for your use case, use
+/// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
+/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
 /// *   **LMEDS** for the LMedS algorithm.
@@ -1599,7 +1602,10 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera matrix. If this assumption does not hold for your use case, use
+/// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
+/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
 /// *   **LMEDS** for the LMedS algorithm.
@@ -3345,7 +3351,7 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fi) are components of the translation vector ![inline formula](https://latex.codecogs.com/png.latex?T) : ![inline formula](https://latex.codecogs.com/png.latex?T%3D%5BT%5F0%2C%20T%5F1%2C%20T%5F2%5D%5ET) .
 /// And the function can also compute the fundamental matrix F:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%20E%20cameraMatrix1%5E%7B%2D1%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%5Ccdot%20E%20%5Ccdot%20cameraMatrix1%5E%7B%2D1%7D)
 /// 
 /// Besides the stereo-related information, the function can also perform a full calibration of each of
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
@@ -3474,7 +3480,7 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fi) are components of the translation vector ![inline formula](https://latex.codecogs.com/png.latex?T) : ![inline formula](https://latex.codecogs.com/png.latex?T%3D%5BT%5F0%2C%20T%5F1%2C%20T%5F2%5D%5ET) .
 /// And the function can also compute the fundamental matrix F:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%20E%20cameraMatrix1%5E%7B%2D1%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?F%20%3D%20cameraMatrix2%5E%7B%2DT%7D%5Ccdot%20E%20%5Ccdot%20cameraMatrix1%5E%7B%2D1%7D)
 /// 
 /// Besides the stereo-related information, the function can also perform a full calibration of each of
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the

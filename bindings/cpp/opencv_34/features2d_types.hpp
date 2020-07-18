@@ -18,6 +18,7 @@ template struct Result<cv::Ptr<cv::GFTTDetector>*>;
 template struct Result<cv::Ptr<cv::KAZE>*>;
 template struct Result<cv::Ptr<cv::MSER>*>;
 template struct Result<cv::Ptr<cv::ORB>*>;
+template struct Result<cv::Ptr<cv::SIFT>*>;
 template struct Result<cv::Ptr<cv::SimpleBlobDetector>*>;
 template struct Result<cv::Ptr<cv::flann::IndexParams>*>;
 template struct Result<cv::Ptr<cv::flann::SearchParams>*>;
@@ -137,6 +138,14 @@ extern "C" void cv_PtrOfORB_delete(cv::Ptr<cv::ORB>* instance) {
 }
 
 extern "C" cv::ORB* cv_PtrOfORB_get_inner_ptr(cv::Ptr<cv::ORB>* instance) {
+	return instance->get();
+}
+
+extern "C" void cv_PtrOfSIFT_delete(cv::Ptr<cv::SIFT>* instance) {
+	delete instance;
+}
+
+extern "C" cv::SIFT* cv_PtrOfSIFT_get_inner_ptr(cv::Ptr<cv::SIFT>* instance) {
 	return instance->get();
 }
 
