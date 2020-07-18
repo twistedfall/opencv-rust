@@ -1994,7 +1994,7 @@ Optionally, it computes the essential matrix E:
 where \f$T_i\f$ are components of the translation vector \f$T\f$ : \f$T=[T_0, T_1, T_2]^T\f$ .
 And the function can also compute the fundamental matrix F:
 
-\f[F = cameraMatrix2^{-T} E cameraMatrix1^{-1}\f]
+\f[F = cameraMatrix2^{-T}\cdot E \cdot cameraMatrix1^{-1}\f]
 
 Besides the stereo-related information, the function can also perform a full calibration of each of
 the two cameras. However, due to the high dimensionality of the parameter space and noise in the
@@ -2458,7 +2458,10 @@ be floating-point (single or double precision).
 @param points2 Array of the second image points of the same size and format as points1 .
 @param cameraMatrix Camera matrix \f$K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}\f$ .
 Note that this function assumes that points1 and points2 are feature points from cameras with the
-same camera matrix.
+same camera matrix. If this assumption does not hold for your use case, use
+`undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
+to normalized image coordinates, which are valid for the identity camera matrix. When
+passing these coordinates, pass the identity matrix for this parameter.
 @param method Method for computing an essential matrix.
 -   **RANSAC** for the RANSAC algorithm.
 -   **LMEDS** for the LMedS algorithm.
@@ -2868,6 +2871,53 @@ RANSAC algorithm.
 CV_EXPORTS_W  int estimateAffine3D(InputArray src, InputArray dst,
                                    OutputArray out, OutputArray inliers,
                                    double ransacThreshold = 3, double confidence = 0.99);
+
+/** @brief Computes an optimal translation between two 3D point sets.
+ *
+ * It computes
+ * \f[
+ * \begin{bmatrix}
+ * x\\
+ * y\\
+ * z\\
+ * \end{bmatrix}
+ * =
+ * \begin{bmatrix}
+ * X\\
+ * Y\\
+ * Z\\
+ * \end{bmatrix}
+ * +
+ * \begin{bmatrix}
+ * b_1\\
+ * b_2\\
+ * b_3\\
+ * \end{bmatrix}
+ * \f]
+ *
+ * @param src First input 3D point set containing \f$(X,Y,Z)\f$.
+ * @param dst Second input 3D point set containing \f$(x,y,z)\f$.
+ * @param out Output 3D translation vector \f$3 \times 1\f$ of the form
+ * \f[
+ * \begin{bmatrix}
+ * b_1 \\
+ * b_2 \\
+ * b_3 \\
+ * \end{bmatrix}
+ * \f]
+ * @param inliers Output vector indicating which points are inliers (1-inlier, 0-outlier).
+ * @param ransacThreshold Maximum reprojection error in the RANSAC algorithm to consider a point as
+ * an inlier.
+ * @param confidence Confidence level, between 0 and 1, for the estimated transformation. Anything
+ * between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
+ * significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
+ *
+ * The function estimates an optimal 3D translation between two 3D point sets using the
+ * RANSAC algorithm.
+ *  */
+CV_EXPORTS_W  int estimateTranslation3D(InputArray src, InputArray dst,
+                                        OutputArray out, OutputArray inliers,
+                                        double ransacThreshold = 3, double confidence = 0.99);
 
 /** @brief Computes an optimal affine transformation between two 2D point sets.
 

@@ -24,10 +24,10 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.10
+          - opencv: 3.4.11
             vcpkg: 3
             features: opencv-34
-          - opencv: 4.3.0
+          - opencv: 4.4.0
             vcpkg: 4
             features: opencv-4
     runs-on: ${{ matrix.os.image }}

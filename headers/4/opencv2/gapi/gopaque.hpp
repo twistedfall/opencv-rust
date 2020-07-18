@@ -17,6 +17,7 @@
 
 #include <opencv2/gapi/util/variant.hpp>
 #include <opencv2/gapi/util/throw.hpp>
+#include <opencv2/gapi/util/type_traits.hpp>
 #include <opencv2/gapi/own/assert.hpp>
 
 namespace cv
@@ -25,7 +26,6 @@ namespace cv
 // (user-inaccessible) classes.
 class GNode;
 struct GOrigin;
-
 template<typename T> class GOpaque;
 
 /**
@@ -46,6 +46,7 @@ std::ostream& operator<<(std::ostream& os, const cv::GOpaqueDesc &desc);
 
 namespace detail
 {
+
     // ConstructOpaque is a callback which stores information about T and is used by
     // G-API runtime to construct an object in host memory (T remains opaque for G-API).
     // ConstructOpaque is carried into G-API internals by GOpaqueU.
@@ -87,13 +88,13 @@ namespace detail
     template <typename T>
     bool GOpaqueU::holds() const{
         GAPI_Assert(m_hint != nullptr);
-        using U = typename std::decay<T>::type;
+        using U = util::decay_t<T>;
         return dynamic_cast<TypeHint<U>*>(m_hint.get()) != nullptr;
     };
 
     template <typename T>
     void GOpaqueU::specifyType(){
-        m_hint.reset(new TypeHint<typename std::decay<T>::type>);
+        m_hint.reset(new TypeHint<util::decay_t<T>>);
     };
 
     // This class represents a typed object reference.
@@ -107,6 +108,7 @@ namespace detail
         virtual ~BasicOpaqueRef() {}
 
         virtual void mov(BasicOpaqueRef &ref) = 0;
+        virtual const void* ptr() const = 0;
     };
 
     template<typename T> class OpaqueRefT final: public BasicOpaqueRef
@@ -198,6 +200,8 @@ namespace detail
             GAPI_Assert(tv != nullptr);
             wref() = std::move(tv->wref());
         }
+
+        virtual const void* ptr() const override { return &rref(); }
     };
 
     // This class strips type information from OpaqueRefT<> and makes it usable
@@ -218,8 +222,13 @@ namespace detail
     public:
         OpaqueRef() = default;
 
-        template<typename T> explicit OpaqueRef(T&& obj) :
-            m_ref(new OpaqueRefT<typename std::decay<T>::type>(std::forward<T>(obj))) {}
+
+        template<
+            typename T,
+            typename = util::are_different_t<OpaqueRef, T>
+        >
+        explicit OpaqueRef(T&& obj) :
+            m_ref(new OpaqueRefT<util::decay_t<T>>(std::forward<T>(obj))) {}
 
         template<typename T> void reset()
         {
@@ -250,6 +259,9 @@ namespace detail
         {
             return m_ref->m_desc;
         }
+
+        // May be used to uniquely identify this object internally
+        const void *ptr() const { return m_ref->ptr(); }
     };
 } // namespace detail
 
@@ -269,7 +281,7 @@ public:
 private:
     // Host type (or Flat type) - the type this GOpaque is actually
     // specified to.
-    using HT = typename detail::flatten_g<typename std::decay<T>::type>::type;
+    using HT = typename detail::flatten_g<util::decay_t<T>>::type;
 
     static void CTor(detail::OpaqueRef& ref) {
         ref.reset<HT>();
