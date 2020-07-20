@@ -4641,6 +4641,53 @@ mod optflow_sys {
 pub use optflow_sys::*;
 
 #[cfg(feature = "contrib")]
+mod ovis_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_ovis_addResourceLocation_const_StringR(path: *const c_char) -> Result_void;
+		pub fn cv_ovis_createGridMesh_const_StringR_const_Size2fR_const_SizeR(name: *const c_char, size: *const core::Size2f, segments: *const core::Size) -> Result_void;
+		pub fn cv_ovis_createPlaneMesh_const_StringR_const_Size2fR_const__InputArrayR(name: *const c_char, size: *const core::Size2f, image: *const c_void) -> Result_void;
+		pub fn cv_ovis_createPointCloudMesh_const_StringR_const__InputArrayR_const__InputArrayR(name: *const c_char, vertices: *const c_void, colors: *const c_void) -> Result_void;
+		pub fn cv_ovis_createTriangleMesh_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR(name: *const c_char, vertices: *const c_void, normals: *const c_void, indices: *const c_void) -> Result_void;
+		pub fn cv_ovis_createWindow_const_StringR_const_SizeR_int(title: *const c_char, size: *const core::Size, flags: i32) -> Result<*mut c_void>;
+		pub fn cv_ovis_setMaterialProperty_const_StringR_const_StringR_const_ScalarR(name: *const c_char, prop: *const c_char, value: *const core::Scalar) -> Result_void;
+		pub fn cv_ovis_setMaterialProperty_const_StringR_int_const_ScalarR(name: *const c_char, prop: i32, value: *const core::Scalar) -> Result_void;
+		pub fn cv_ovis_setMaterialProperty_const_StringR_int_const_StringR(name: *const c_char, prop: i32, value: *const c_char) -> Result_void;
+		pub fn cv_ovis_updateTexture_const_StringR_const__InputArrayR(name: *const c_char, image: *const c_void) -> Result_void;
+		pub fn cv_ovis_waitKey_int(delay: i32) -> Result<i32>;
+		pub fn cv_ovis_WindowScene_setBackground_const__InputArrayR(instance: *mut c_void, image: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_setBackground_const_ScalarR(instance: *mut c_void, color: *const core::Scalar) -> Result_void;
+		pub fn cv_ovis_WindowScene_setCompositors_const_vector_String_R(instance: *mut c_void, names: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_createEntity_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(instance: *mut c_void, name: *const c_char, meshname: *const c_char, tvec: *const c_void, rot: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_removeEntity_const_StringR(instance: *mut c_void, name: *const c_char) -> Result_void;
+		pub fn cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_ScalarR(instance: *mut c_void, name: *const c_char, prop: i32, value: *const core::Scalar) -> Result_void;
+		pub fn cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR_int(instance: *mut c_void, name: *const c_char, prop: i32, value: *const c_char, sub_entity_idx: i32) -> Result_void;
+		pub fn cv_ovis_WindowScene_getEntityProperty_const_StringR_int_const__OutputArrayR(instance: *mut c_void, name: *const c_char, prop: i32, value: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR(instance: *mut c_void, name: *const c_char, k: *const c_void, imsize: *const core::Size, z_far: f32, tvec: *const c_void, rot: *const c_void) -> Result<core::Rect2d>;
+		pub fn cv_ovis_WindowScene_createLightEntity_const_StringR_const__InputArrayR_const__InputArrayR_const_ScalarR_const_ScalarR(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void, diffuse_color: *const core::Scalar, specular_color: *const core::Scalar) -> Result_void;
+		pub fn cv_ovis_WindowScene_updateEntityPose_const_StringR_const__InputArrayR_const__InputArrayR(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_setEntityPose_const_StringR_const__InputArrayR_const__InputArrayR_bool(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void, invert: bool) -> Result_void;
+		pub fn cv_ovis_WindowScene_getEntityPose_const_StringR_const__OutputArrayR_const__OutputArrayR_bool(instance: *mut c_void, name: *const c_char, r: *const c_void, tvec: *const c_void, invert: bool) -> Result_void;
+		pub fn cv_ovis_WindowScene_getEntityAnimations_const_StringR_vector_String_R(instance: *mut c_void, name: *const c_char, out: *mut c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_playEntityAnimation_const_StringR_const_StringR_bool(instance: *mut c_void, name: *const c_char, animname: *const c_char, loop_: bool) -> Result_void;
+		pub fn cv_ovis_WindowScene_stopEntityAnimation_const_StringR_const_StringR(instance: *mut c_void, name: *const c_char, animname: *const c_char) -> Result_void;
+		pub fn cv_ovis_WindowScene_getScreenshot_const__OutputArrayR(instance: *mut c_void, frame: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_getCompositorTexture_const_StringR_const_StringR_const__OutputArrayR_int(instance: *mut c_void, compname: *const c_char, texname: *const c_char, out: *const c_void, mrt_index: i32) -> Result_void;
+		pub fn cv_ovis_WindowScene_getDepth_const__OutputArrayR(instance: *mut c_void, depth: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_fixCameraYawAxis_bool_const__InputArrayR(instance: *mut c_void, use_fixed: bool, up: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_setCameraPose_const__InputArrayR_const__InputArrayR_bool(instance: *mut c_void, tvec: *const c_void, rot: *const c_void, invert: bool) -> Result_void;
+		pub fn cv_ovis_WindowScene_setCameraLookAt_const_StringR_const__InputArrayR(instance: *mut c_void, target: *const c_char, offset: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_setEntityLookAt_const_StringR_const_StringR_const__InputArrayR(instance: *mut c_void, origin: *const c_char, target: *const c_char, offset: *const c_void) -> Result_void;
+		pub fn cv_ovis_WindowScene_getCameraPose_const__OutputArrayR_const__OutputArrayR_bool(instance: *mut c_void, r: *const c_void, tvec: *const c_void, invert: bool) -> Result_void;
+		pub fn cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR_float_float(instance: *mut c_void, k: *const c_void, imsize: *const core::Size, z_near: f32, z_far: f32) -> Result_void;
+		pub fn cv_ovis_WindowScene_update(instance: *mut c_void) -> Result_void;
+	}
+}
+#[cfg(feature = "contrib")]
+pub use ovis_sys::*;
+
+#[cfg(feature = "contrib")]
 mod phase_unwrapping_sys {
 	use super::*;
 

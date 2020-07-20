@@ -7297,6 +7297,30 @@ mod optflow_types {
 pub use optflow_types::*;
 
 #[cfg(feature = "contrib")]
+mod ovis_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfWindowScene = core::Ptr::<dyn crate::ovis::WindowScene>;
+	
+	ptr_extern! { dyn crate::ovis::WindowScene,
+		cv_PtrOfWindowScene_delete, cv_PtrOfWindowScene_get_inner_ptr
+	}
+	
+	impl PtrOfWindowScene {
+		#[inline] pub fn as_raw_PtrOfWindowScene(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfWindowScene(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::ovis::WindowScene for PtrOfWindowScene {
+		#[inline] fn as_raw_WindowScene(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_WindowScene(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+}
+#[cfg(feature = "contrib")]
+pub use ovis_types::*;
+
+#[cfg(feature = "contrib")]
 mod phase_unwrapping_types {
 	use crate::{mod_prelude::*, core, types, sys};
 

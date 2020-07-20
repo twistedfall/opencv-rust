@@ -62,6 +62,8 @@ pub mod objdetect;
 #[cfg(feature = "contrib")]
 pub mod optflow;
 #[cfg(feature = "contrib")]
+pub mod ovis;
+#[cfg(feature = "contrib")]
 pub mod phase_unwrapping;
 pub mod photo;
 #[cfg(feature = "contrib")]
@@ -171,6 +173,8 @@ pub mod hub_prelude {
 	pub use super::objdetect::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::optflow::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::ovis::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::phase_unwrapping::prelude::*;
 	pub use super::photo::prelude::*;

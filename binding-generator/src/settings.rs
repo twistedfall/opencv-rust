@@ -723,7 +723,7 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"type" => "typ",
 	"use" => "use_",
 	"impl" => "impl_",
-//	"loop" => "loop_",
+	"loop" => "loop_",
 });
 
 /// dict of functions with manual implementations
