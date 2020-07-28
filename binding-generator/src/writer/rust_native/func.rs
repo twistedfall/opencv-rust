@@ -264,7 +264,7 @@ fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
 			} else {
 				None
 			});
-		out.unwrap_or_else(|| format!("return Ok(new {typ}(ret));", typ = return_type.cpp_full()).into())
+		out.unwrap_or_else(|| format!("return Ok(new {typ}(ret));", typ=return_type.cpp_full()).into())
 	} else if return_type.is_cv_string() || return_type.is_std_string() {
 		"return Ok(ocvrs_create_string(ret.c_str()));".into()
 	} else if return_type.is_char_ptr_string() {
@@ -295,11 +295,12 @@ impl RustNativeGeneratedElement for Func<'_> {
 			|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation()
 		);
 
-		if settings::FUNC_MANUAL.contains_key(self.identifier().as_ref()) {
+		let identifier = self.identifier();
+
+		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
 		}
 
-		let identifier = self.identifier();
 		let mut attributes = String::new();
 		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
 			attributes = format!("#[cfg({})]", attrs.0);
@@ -327,11 +328,12 @@ impl RustNativeGeneratedElement for Func<'_> {
 			|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation()
 		);
 
-		if settings::FUNC_MANUAL.contains_key(self.identifier().as_ref()) {
+		let identifier = self.identifier();
+
+		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
 		}
 
-		let identifier = self.identifier();
 		let mut attributes_begin = String::new();
 		let mut attributes_end = String::new();
 		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {

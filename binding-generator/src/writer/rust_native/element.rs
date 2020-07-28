@@ -27,6 +27,7 @@ pub trait RustNativeGeneratedElement {
 	}
 }
 
+#[derive(Debug)]
 pub enum DepType<'tu> {
 	ReturnTypeWrapper(ReturnTypeWrapper<'tu>),
 	AbstractRefWrapper(AbstractRefWrapper<'tu>),

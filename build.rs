@@ -10,7 +10,7 @@ use std::{
 	process::Command,
 };
 
-use glob_crate::glob;
+use glob::glob;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
 use shlex::Shlex;
@@ -29,7 +29,7 @@ mod generator {
 		time::Instant,
 	};
 
-	use glob_crate::glob;
+	use glob::glob;
 
 	use super::{
 		file_copy_to_dir,
@@ -220,7 +220,7 @@ mod generator {
 				let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
 				let mut module_types_file = OpenOptions::new().create(true).truncate(true).write(true).open(&module_types_cpp)?;
 				let mut type_files: Vec<PathBuf> = glob(&format!("{}/???-{}-*.type.cpp", out_dir_as_str, module))?
-					.collect::<Result<_, glob_crate::GlobError>>()?;
+					.collect::<Result<_, glob::GlobError>>()?;
 				type_files.sort_unstable();
 				for entry in type_files.into_iter() {
 					io::copy(&mut File::open(entry)?, &mut module_types_file)?;

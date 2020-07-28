@@ -25,7 +25,6 @@ use crate::{
 	settings::{self, SliceHint},
 	StrExt,
 	StringExt,
-	type_ref::Kind as TypeRefKind,
 	TypeRef,
 };
 
@@ -306,15 +305,13 @@ impl<'tu> Func<'tu> {
 			Kind::Function | Kind::InstanceMethod(..) | Kind::StaticMethod(..)
 			| Kind::ConversionMethod(..) | Kind::GenericInstanceMethod(..) | Kind::GenericFunction
 			| Kind::FunctionOperator(..) | Kind::InstanceOperator(..) => {
-				let out = TypeRef::new(
+				let mut out = TypeRef::new(
 					self.entity.get_result_type().expect("Can't get return type"),
 					self.gen_env,
 				);
-				let mut out = if let TypeRefKind::Reference(type_ref) = out.canonical().kind() {
-					type_ref
-				} else {
-					out
-				};
+				if let Some(type_ref) = out.as_reference() {
+					out = type_ref
+				}
 				if let Some(spec) = self.as_specialized() {
 					if out.is_generic() {
 						let spec_type = spec.get(out.base().cpp_full().as_ref())

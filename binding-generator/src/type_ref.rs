@@ -1217,16 +1217,16 @@ impl<'tu> TypeRef<'tu> {
 			if let Some((elem, len)) = self.as_fixed_array() {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
-					cnst = self.rust_const_qual(true),
-					typ = elem.rust_extern_with_const(constness),
-					len = len,
+					cnst=self.rust_const_qual(true),
+					typ=elem.rust_extern_with_const(constness),
+					len=len,
 				).into();
 			}
 			if let Some(elem) = self.as_variable_array() {
 				break 'typ format!(
 					"*{cnst}{typ}",
-					cnst = self.rust_const_qual(true),
-					typ = elem.rust_extern_with_const(constness),
+					cnst=self.rust_const_qual(true),
+					typ=elem.rust_extern_with_const(constness),
 				).into()
 			}
 			if let Some(func) = self.as_function() {
@@ -1280,10 +1280,10 @@ impl<'tu> TypeRef<'tu> {
 		if self.as_abstract_class_ptr().is_some() {
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
-				mut_suf = if self.is_const() { "" } else { "Mut" },
-				fish = if with_turbofish { "::" } else { "" },
-				lt = if is_static_func { "'static, " } else { "" },
-				typ = self.source().rust_full_ext(false, with_turbofish),
+				mut_suf=if self.is_const() { "" } else { "Mut" },
+				fish=if with_turbofish { "::" } else { "" },
+				lt=if is_static_func { "'static, " } else { "" },
+				typ=self.source().rust_full_ext(false, with_turbofish),
 			).into()
 		} else if self.is_by_ptr() {
 			self.source().rust_full_ext(false, with_turbofish).into_owned().into()
@@ -1757,6 +1757,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 		name
 	}
+
 	pub fn cpp_extern_return(&self) -> Cow<str> {
 		if self.is_string() {
 			"void*".into()
