@@ -5,6 +5,7 @@
 		{{pre_call_args}}
 		{{call}}
 		{{post_call_args}}
+		{{cleanup_args}}
 		{{return}}
 	} OCVRS_CATCH(OCVRS_TYPE({{return_wrapper_type}}))
 }

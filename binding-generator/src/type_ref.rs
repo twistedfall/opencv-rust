@@ -74,6 +74,19 @@ enum Form {
 	Reference(Option<Lifetime>, bool),
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum StrType {
+	StdString,
+	CvString,
+	CharPtr,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Dir<T> {
+	In(T),
+	Out(T),
+}
+
 impl Form {
 	pub fn is_full(self) -> bool {
 		match self {
@@ -566,55 +579,72 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn is_std_string(&self) -> bool {
-		match self.canonical().kind() {
-			Kind::Class(cls) => {
-				let cpp_fullname = cls.cpp_fullname();
-				cpp_fullname.starts_with("std::") && cpp_fullname.ends_with("::string")
-			}
-			Kind::Reference(inner) => {
-				inner.is_std_string()
-			}
-			Kind::Pointer(inner) => {
-				inner.is_std_string() && !inner.is_recursive_const()
-			}
-			_ => {
-				false
+	pub fn as_string(&self) -> Option<Dir<StrType>> {
+		fn class_string_type(cls: Class) -> Option<StrType> {
+			let cpp_fullname = cls.cpp_fullname();
+			if cpp_fullname.starts_with("std::") && cpp_fullname.ends_with("::string") {
+				Some(StrType::StdString)
+			} else if cpp_fullname == "cv::String" {
+				Some(StrType::CvString)
+			} else {
+				None
 			}
 		}
+
+		match self.canonical().kind() {
+			Kind::Class(cls) => {
+				if let Some(typ) = class_string_type(cls) {
+					return Some(Dir::In(typ))
+				}
+			}
+			Kind::Reference(inner) => {
+				if let Some(typ) = inner.as_class().and_then(class_string_type) {
+					return if inner.is_clang_const() {
+						Some(Dir::In(typ))
+					} else {
+						Some(Dir::Out(typ))
+					};
+				}
+			}
+			Kind::Pointer(inner) => {
+				if let Some(typ) = inner.as_class().and_then(class_string_type) {
+					return if inner.is_clang_const() {
+						Some(Dir::In(typ))
+					} else {
+						Some(Dir::Out(typ))
+					}
+				} else {
+					let inner_cpp_full = inner.cpp_full();
+					if inner_cpp_full == "char" || inner_cpp_full == "const char" {
+						return if inner.is_clang_const() {
+							Some(Dir::In(StrType::CharPtr))
+						} else {
+							Some(Dir::Out(StrType::CharPtr))
+						};
+					}
+				}
+			}
+			Kind::Array(inner, ..) => {
+				let inner_cpp_full = inner.cpp_full();
+				if inner_cpp_full == "char" || inner_cpp_full == "const char" {
+					return Some(Dir::In(StrType::CharPtr))
+				}
+			}
+			_ => {}
+		}
+		None
+	}
+
+	pub fn is_std_string(&self) -> bool {
+		matches!(self.as_string(), Some(Dir::In(StrType::StdString)))
 	}
 
 	pub fn is_cv_string(&self) -> bool {
-		match self.canonical().kind() {
-			Kind::Class(cls) => {
-				cls.cpp_fullname() == "cv::String"
-			}
-			Kind::Reference(inner) => {
-				inner.is_cv_string()
-			}
-			Kind::Pointer(inner) => {
-				inner.is_cv_string() && !inner.is_recursive_const()
-			}
-			_ => {
-				false
-			}
-		}
+		matches!(self.as_string(), Some(Dir::In(StrType::CvString)))
 	}
 
 	pub fn is_char_ptr_string(&self) -> bool {
-		match self.canonical().kind() {
-			Kind::Pointer(inner) | Kind::Array(inner, ..) => {
-				let inner_cpp_full = inner.cpp_full();
-				inner_cpp_full == "char" || inner_cpp_full == "const char"
-			}
-			_ => {
-				false
-			}
-		}
-	}
-
-	pub fn is_string(&self) -> bool {
-		self.is_std_string() || self.is_cv_string() || self.is_char_ptr_string()
+		matches!(self.as_string(), Some(Dir::In(StrType::CharPtr)))
 	}
 
 	pub fn is_input_array(&self) -> bool {
@@ -788,7 +818,7 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn as_string_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
 		if let Some((elem, size)) = self.as_array() {
-			if elem.is_string() {
+			if elem.as_string().is_some() {
 				return Some((elem, size))
 			}
 		}
@@ -825,34 +855,6 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-//	pub fn as_entity(&self) -> Option<Box<dyn EntityElement<'tu> + 'tu>> where 'g: 'tu {
-//		match self.kind() {
-//			Kind::Primitive(..) | Kind::Array(..) | Kind::Pointer(..)
-//			| Kind::Reference(..) => {
-//				None
-//			}
-//			Kind::StdVector(out) => {
-//				Some(Box::new(out))
-//			}
-//			Kind::SmartPtr(out) => {
-//				Some(Box::new(out))
-//			}
-//			Kind::Class(out) => {
-//				Some(Box::new(out))
-//			}
-//			Kind::Enum(out) => {
-//				Some(Box::new(out))
-//			}
-//			Kind::Function => {
-//				None
-//			}
-//			Kind::Typedef(out) => {
-//				Some(Box::new(out))
-//			}
-//			Kind::Generic(..) => {
-//				None
-//			}
-//		}
 //	}
 
 	pub fn is_by_ptr(&self) -> bool {
@@ -870,10 +872,6 @@ impl<'tu> TypeRef<'tu> {
 				false
 			}
 		}
-	}
-
-	fn is_output(&self) -> bool {
-		!self.is_recursive_const() && (self.as_reference().is_some() || self.as_pointer().map_or(false, |t| t.is_string()))
 	}
 
 	pub fn is_data_type(&self) -> bool {
@@ -1025,7 +1023,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	fn rust_type_ref(&self, form: Form) -> Cow<str> {
-		if self.is_string() {
+		if self.as_string().is_some() {
 			#[allow(clippy::if_same_then_else)]
 			return if self.is_const() {
 				"String" // todo implement receiving const str's
@@ -1152,7 +1150,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	fn rust_lifetime_count(&self) -> usize {
-		if self.is_string() {
+		if self.as_string().is_some() {
 			0
 		} else {
 			match self.kind() {
@@ -1198,14 +1196,19 @@ impl<'tu> TypeRef<'tu> {
 	pub fn rust_extern_with_const(&self, constness: Constness) -> Cow<str> {
 		#[allow(clippy::never_loop)] // fixme use named block when stable
 		'typ: loop {
-			if self.is_string() {
-				break 'typ if constness.is_const(self) {
-					"*const c_char".into()
-				} else if self.is_output() {
-					"*mut *mut c_void".into()
-				} else {
-					"*mut c_char".into()
-				};
+			if let Some(dir) = self.as_string() {
+				match dir {
+					Dir::In(_) => {
+						break 'typ if constness.is_const(self) {
+							"*const c_char".into()
+						} else {
+							"*mut c_char".into()
+						};
+					},
+					Dir::Out(_) => {
+						break 'typ "*mut *mut c_void".into();
+					},
+				}
 			}
 			if self.is_by_ptr() {
 				break 'typ if constness.is_const(self) {
@@ -1219,7 +1222,7 @@ impl<'tu> TypeRef<'tu> {
 				out.write_fmt(format_args!("*{}", self.rust_const_qual(true))).expect("Impossible");
 				if inner.is_void() {
 					out += "c_void";
-				} else if self.is_string() {
+				} else if self.as_string().is_some() {
 					out += "c_char";
 				} else {
 					out += &inner.rust_extern_with_const(constness)
@@ -1235,10 +1238,17 @@ impl<'tu> TypeRef<'tu> {
 				).into();
 			}
 			if let Some(elem) = self.as_variable_array() {
+				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
+					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
+					// argv is treated as array of output arguments and it doesn't seem to be meant this way
+					format!("*{cnst}c_char", cnst=elem.rust_clang_const_qual(true)).into()
+				} else {
+					elem.rust_extern_with_const(constness)
+				};
 				break 'typ format!(
 					"*{cnst}{typ}",
 					cnst=self.rust_const_qual(true),
-					typ=elem.rust_extern_with_const(constness),
+					typ=typ,
 				).into()
 			}
 			if let Some(func) = self.as_function() {
@@ -1263,12 +1273,11 @@ impl<'tu> TypeRef<'tu> {
 	pub fn rust_arg_func_decl(&self, name: &str) -> String {
 		#[allow(clippy::never_loop)] // fixme use named block when stable
 		let typ = 'decl_type: loop {
-			if self.is_string() {
-				if self.is_output() {
-					break 'decl_type "&mut String".into();
-				} else {
-					break 'decl_type "&str".into();
-				}
+			if let Some(dir) = self.as_string() {
+				break 'decl_type match dir {
+					Dir::In(_) => "&str".into(),
+					Dir::Out(_) => "&mut String".into(),
+				};
 			} else if self.is_input_array() {
 				break 'decl_type "&dyn core::ToInputArray".into();
 			} else if self.is_output_array() {
@@ -1306,7 +1315,7 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
-		if self.is_string() || self.is_by_ptr() {
+		if self.as_string().is_some() || self.is_by_ptr() {
 			format!(
 				".map(|r| {unsafety_call}{{ {typ}::opencv_from_extern(r) }} )",
 				unsafety_call=unsafety_call,
@@ -1325,23 +1334,26 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
-		if self.is_string() {
-			return if self.is_output() {
-				format!("string_arg_output_send!(via {name}_via)", name=name)
-			} else {
-				let mut flags = vec![];
-				if is_function_infallible {
-					flags.push("nofail")
-				}
-				if !self.is_recursive_const() {
-					flags.push("mut")
-				}
-				let mut flags = flags.join(" ");
-				if !flags.is_empty() {
-					flags.push(' ');
-				}
-				format!("extern_container_arg!({flags}{name})", flags=flags, name=name)
-			}
+		if let Some(dir) = self.as_string() {
+			return match dir {
+				Dir::In(_) => {
+					let mut flags = vec![];
+					if is_function_infallible {
+						flags.push("nofail")
+					}
+					if !self.is_const() {
+						flags.push("mut")
+					}
+					let mut flags = flags.join(" ");
+					if !flags.is_empty() {
+						flags.push(' ');
+					}
+					format!("extern_container_arg!({flags}{name})", flags=flags, name=name)
+				},
+				Dir::Out(_) => {
+					format!("string_arg_output_send!(via {name}_via)", name=name)
+				},
+			};
 		} else if self.is_input_array() {
 			return format!("input_array_arg!({name})", name=name);
 		} else if self.is_output_array() {
@@ -1391,14 +1403,15 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_arg_func_call(&self, name: &str, is_const: bool) -> String {
-		if self.is_string() {
-			return if self.is_output() {
-				format!("&mut {name}_via", name=name)
-			} else if self.is_recursive_const() || is_const {
-				format!("{name}.opencv_as_extern()", name=name)
-			} else {
-				format!("{name}.opencv_as_extern_mut()", name=name)
-			}
+		if let Some(dir) = self.as_string() {
+			return match dir {
+				Dir::In(_) => if self.is_const() || is_const {
+					format!("{name}.opencv_as_extern()", name=name)
+				} else {
+					format!("{name}.opencv_as_extern_mut()", name=name)
+				},
+				Dir::Out(_) => format!("&mut {name}_via", name=name),
+			};
 		}
 		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const)) {
 			return format!("&{name}", name=name);
@@ -1461,7 +1474,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_extern_return(&self) -> Cow<str> {
-		if self.is_string() {
+		if self.as_string().is_some() {
 			"*mut c_void".into()
 		} else {
 			self.rust_extern_with_const(Constness::Mut)
@@ -1477,7 +1490,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
-		if self.is_string() && self.is_output() {
+		if let Some(Dir::Out(_)) = self.as_string() {
 			format!("string_arg_output_receive!(out, {name}_via => {name})", name = name)
 		} else {
 			"".to_string()
@@ -1558,7 +1571,7 @@ impl<'tu> TypeRef<'tu> {
 			_ => {
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					if !self.is_generic() && !self.is_void() {
-						if self.is_string() {
+						if self.as_string().is_some() {
 							let type_ref = TypeRef::new(
 								self.gen_env.resolve_type(&self.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
@@ -1777,17 +1790,16 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn cpp_extern_with_name(&self, name: &str) -> Cow<str> {
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
-		if self.is_by_ptr() {
+		if let Some(dir) = self.as_string() {
+			match dir {
+				Dir::In(_) => format!("{cnst}char*{name}", cnst=self.cpp_const_qual(), name=space_name).into(),
+				Dir::Out(_) => format!("{cnst}void*{name}", cnst=self.cpp_const_qual(), name=space_name).into(),
+			}
+		} else if self.is_by_ptr() {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
 				format!("{typ}{name}", typ=self.cpp_full(), name=space_name).into()
 			} else {
 				format!("{typ}*{name}", typ=self.cpp_full(), name=space_name).into()
-			}
-		} else if self.is_string() {
-			if self.is_output() {
-				format!("{cnst}void*{name}", cnst=self.cpp_recursive_const_qual(), name=space_name).into()
-			} else {
-				format!("{cnst}char*{name}", cnst=self.cpp_recursive_const_qual(), name=space_name).into()
 			}
 		} else {
 			self.cpp_full_with_name(name)
@@ -1808,35 +1820,43 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_arg_func_decl(&self, name: &str) -> String {
-		if self.is_output() && self.is_string() || self.as_simple_class().is_some() {
+		if matches!(self.as_string(), Some(Dir::Out(_))) || self.as_simple_class().is_some() {
 			return format!("{typ}* {name}", typ=self.cpp_extern(), name=name);
 		}
 		self.cpp_extern_with_name(name).into_owned()
 	}
 
 	pub fn cpp_arg_pre_call(&self, name: &str) -> String {
-		if self.is_output() {
-			if self.is_std_string() {
+		match self.as_string() {
+			Some(Dir::Out(StrType::StdString)) => {
 				return format!("std::string {name}_out", name=name);
-			} else if self.is_cv_string() {
+			}
+			Some(Dir::Out(StrType::CvString)) => {
 				return format!("cv::String {name}_out", name=name);
 			}
+			Some(Dir::Out(StrType::CharPtr)) => {
+				return format!("char* {name}_out = new char[1024]()", name=name);
+			}
+			Some(_) | None => {}
 		}
 		"".to_string()
 	}
 
 	pub fn cpp_arg_func_call<'a>(&self, name: impl Into<Cow<'a, str>>) -> Cow<'a, str> {
 		let name = name.into();
-		let is_cv_string = self.is_cv_string();
-		if is_cv_string || self.is_std_string() {
-			return if self.is_output() {
-				let ptr = if self.as_pointer().is_some() { "&" } else { "" };
-				format!("{ptr}{name}_out", ptr=ptr, name=name).into()
-			} else if is_cv_string {
-				format!("cv::String({name})", name=name).into()
-			} else {
-				format!("std::string({name})", name=name).into()
-			};
+
+		match self.as_string() {
+			Some(Dir::Out(str_type)) => {
+				let ptr = if str_type != StrType::CharPtr && self.as_pointer().is_some() { "&" } else { "" };
+				return format!("{ptr}{name}_out", ptr=ptr, name=name).into();
+			}
+			Some(Dir::In(StrType::StdString)) => {
+				return format!("std::string({name})", name=name).into();
+			},
+			Some(Dir::In(StrType::CvString)) => {
+				return format!("cv::String({name})", name=name).into();
+			},
+			Some(Dir::In(StrType::CharPtr)) | None => {}
 		}
 		if self.is_by_ptr() {
 			return if self.as_pointer().is_some() {
@@ -1852,7 +1872,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_extern_return(&self) -> Cow<str> {
-		if self.is_string() {
+		if self.as_string().is_some() {
 			"void*".into()
 		} else if self.is_by_ptr() && !self.as_abstract_class_ptr().is_some() {
 			format!("{typ}*", typ=self.cpp_full()).into()
@@ -1870,8 +1890,27 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_arg_post_call(&self, name: &str) -> String {
-		if self.is_output() && self.is_string() {
-			return format!("*{name} = ocvrs_create_string({name}_out.c_str())", name=name);
+		match self.as_string() {
+			Some(Dir::Out(StrType::StdString)) | Some(Dir::Out(StrType::CvString)) => {
+				return format!("*{name} = ocvrs_create_string({name}_out.c_str())", name=name);
+			}
+			Some(Dir::Out(StrType::CharPtr)) => {
+				return format!("*{name} = ocvrs_create_string({name}_out)", name=name);
+			}
+			_ => {}
+		}
+		"".to_string()
+	}
+
+	// we need cleanup as a separate step from post_call because in cv_ocl_convertTypeStr_int_int_int_charX the
+	// return value is actually one of the arguments and if we free it (in post_call phase) before converting
+	// to string (in return statement) it will result in UB
+	pub fn cpp_arg_cleanup(&self, name: &str) -> String {
+		match self.as_string() {
+			Some(Dir::Out(StrType::CharPtr)) => {
+				return format!("delete[] {name}_out", name=name);
+			}
+			_ => {}
 		}
 		"".to_string()
 	}
@@ -1907,17 +1946,28 @@ impl fmt::Debug for TypeRef<'_> {
 		if self.is_enum() {
 			props.push("enum");
 		}
-		if self.is_std_string() {
-			props.push("std_string");
-		}
-		if self.is_cv_string() {
-			props.push("cv_string");
-		}
-		if self.is_char_ptr_string() {
-			props.push("char_ptr_string");
-		}
-		if self.is_string() {
+		if let Some(str_type) = self.as_string() {
 			props.push("string");
+			let str_type = match str_type {
+				Dir::In(str_type) => {
+					str_type
+				},
+				Dir::Out(str_type) => {
+					props.push("output_string");
+					str_type
+				},
+			};
+			match str_type {
+				StrType::StdString => {
+					props.push("std_string");
+				},
+				StrType::CvString => {
+					props.push("cv_string");
+				},
+				StrType::CharPtr => {
+					props.push("char_ptr_string");
+				},
+			}
 		}
 		if self.is_void() {
 			props.push("void");
@@ -1933,9 +1983,6 @@ impl fmt::Debug for TypeRef<'_> {
 		}
 		if self.is_by_ptr() {
 			props.push("by_ptr");
-		}
-		if self.is_output() {
-			props.push("output_string");
 		}
 		if self.is_generic() {
 			props.push("generic");

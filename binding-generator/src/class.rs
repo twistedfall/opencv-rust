@@ -339,7 +339,7 @@ impl Element for Class<'_> {
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		if self.type_ref().is_string() {
+		if self.type_ref().as_string().is_some() {
 			"String".into()
 		} else {
 			self.cpp_localname()

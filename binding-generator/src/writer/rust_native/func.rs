@@ -18,6 +18,7 @@ use crate::{
 	settings,
 	StrExt,
 	StringExt,
+	type_ref::{Dir, StrType},
 };
 
 use super::RustNativeGeneratedElement;
@@ -255,22 +256,27 @@ fn cpp_call_invoke(f: &Func) -> String {
 fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
 	let return_type = f.return_type();
 	if return_type.is_void() {
-		"return Ok();".into()
+		"Ok()".into()
 	} else if return_type.is_by_ptr() && !f.as_constructor().is_some() {
 		let out = return_type.source()
 			.as_class()
 			.and_then(|cls| if cls.is_abstract() {
-				Some(Cow::Borrowed("return Ok(ret);"))
+				Some(Cow::Borrowed("Ok(ret)"))
 			} else {
 				None
 			});
-		out.unwrap_or_else(|| format!("return Ok(new {typ}(ret));", typ=return_type.cpp_full()).into())
-	} else if return_type.is_cv_string() || return_type.is_std_string() {
-		"return Ok(ocvrs_create_string(ret.c_str()));".into()
-	} else if return_type.is_char_ptr_string() {
-		"return Ok(ocvrs_create_string(ret));".into()
+		out.unwrap_or_else(|| format!("Ok(new {typ}(ret))", typ=return_type.cpp_full()).into())
+	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
+		match string_type {
+			StrType::StdString | StrType::CvString => {
+				"Ok(ocvrs_create_string(ret.c_str()))".into()
+			},
+			StrType::CharPtr => {
+				"Ok(ocvrs_create_string(ret))".into()
+			},
+		}
 	} else {
-		format!("return Ok<{typ}>(ret);", typ=return_type.cpp_extern_return()).into()
+		format!("Ok<{typ}>(ret)", typ=return_type.cpp_extern_return()).into()
 	}
 }
 
@@ -344,36 +350,39 @@ impl RustNativeGeneratedElement for Func<'_> {
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut post_call_args = Vec::with_capacity(args.len());
+		let mut cleanup_args = Vec::with_capacity(args.len());
 		if let Some(cls) = self.as_instance_method() {
 			decl_args.push(cls.type_ref().cpp_self_func_decl(self.is_const()));
 		}
 		for (name, arg) in args {
 			let type_ref = arg.type_ref();
 			decl_args.push(type_ref.cpp_arg_func_decl(&name));
-			let mut pre_call_arg = type_ref.cpp_arg_pre_call(&name);
-			if !pre_call_arg.is_empty() {
-				pre_call_arg.push(';');
-				pre_call_args.push(pre_call_arg);
-			}
-			let mut post_call_arg = type_ref.cpp_arg_post_call(&name);
-			if !post_call_arg.is_empty() {
-				post_call_arg.push(';');
-				post_call_args.push(post_call_arg);
-			}
+			pre_post_arg_handle(type_ref.cpp_arg_pre_call(&name), &mut pre_call_args);
+			pre_post_arg_handle(type_ref.cpp_arg_post_call(&name), &mut post_call_args);
+			pre_post_arg_handle(type_ref.cpp_arg_cleanup(&name), &mut cleanup_args);
 		}
 
 		let return_type = self.return_type();
+		let return_wrapper_full = return_type.cpp_extern_return_wrapper_full();
+		let ret = cpp_method_return(self);
+		let ret = if cleanup_args.is_empty() {
+			format!("return {};", ret).into()
+		} else {
+			pre_post_arg_handle(format!("{typ} f_ret = {expr}", typ=return_wrapper_full, expr=ret), &mut post_call_args);
+			"return f_ret;".into()
+		};
 
 		TPL.interpolate(&hashmap! {
 			"attributes_begin" => attributes_begin.into(),
 			"debug" => get_debug(self).into(),
-			"return_wrapper_type" => return_type.cpp_extern_return_wrapper_full(),
+			"return_wrapper_type" => return_wrapper_full,
 			"identifier" => identifier,
 			"decl_args" => decl_args.join(", ").into(),
 			"pre_call_args" => pre_call_args.join("\n").into(),
 			"call" => cpp_call_invoke(self).into(),
 			"post_call_args" => post_call_args.join("\n").into(),
-			"return" => cpp_method_return(self),
+			"cleanup_args" => cleanup_args.join("\n").into(),
+			"return" => ret,
 			"attributes_end" => attributes_end.into(),
 		})
 	}

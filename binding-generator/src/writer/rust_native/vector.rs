@@ -52,7 +52,7 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		};
 		if element_type.as_typedef().is_some()
 			&& !element_type.is_data_type()
-			&& !element_type.is_string()
+			&& !element_type.as_string().is_some()
 			&& !settings::FORCE_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_full().as_ref())
 		{
 			&TYPE_ALIAS_TPL
@@ -111,7 +111,7 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		if element_type.is_by_ptr() {
 			prefix = format!("new {inner_cpp_full}(", inner_cpp_full = element_type.cpp_full()).into();
 			suffix = ")".into();
-		} else if element_type.is_string() {
+		} else if element_type.as_string().is_some() {
 			prefix = "ocvrs_create_string(".into();
 			suffix = ".c_str())".into();
 		}

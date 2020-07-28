@@ -25,6 +25,7 @@ use crate::{
 	settings::{self, SliceHint},
 	StrExt,
 	StringExt,
+	type_ref::{Dir, StrType},
 	TypeRef,
 };
 
@@ -248,7 +249,7 @@ impl<'tu> Func<'tu> {
 		else if let Some(fld) = self.as_field_accessor() {
 			self.type_hint != FunctionTypeHint::FieldSetter && {
 				let type_ref = fld.type_ref();
-				type_ref.is_const() || type_ref.is_copy() || type_ref.is_cv_string() || type_ref.is_std_string()
+				type_ref.is_const() || type_ref.is_copy() || matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
 			}
 		} else {
 			self.entity.is_const_method()

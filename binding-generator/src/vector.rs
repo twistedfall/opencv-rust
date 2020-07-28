@@ -54,7 +54,7 @@ impl<'tu> Vector<'tu> {
 		let is_data_type = self.is_data_type(&element_type);
 		let mut out = element_type.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Type));
 		out.reserve(1 + if is_data_type { 3 } else { 0 });
-		if element_type.is_string() {
+		if element_type.as_string().is_some() {
 			out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(
 				TypeRef::new(self.gen_env.resolve_type(&element_type.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"), self.gen_env),
 				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
