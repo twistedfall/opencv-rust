@@ -33,14 +33,14 @@ extern "C" {
 	Result<int> cv_face_BIF_getNumBands_const(const cv::face::BIF* instance) {
 		try {
 			int ret = instance->getNumBands();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_face_BIF_getNumRotations_const(const cv::face::BIF* instance) {
 		try {
 			int ret = instance->getNumRotations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -54,7 +54,7 @@ extern "C" {
 	Result<int> cv_face_BasicFaceRecognizer_getNumComponents_const(const cv::face::BasicFaceRecognizer* instance) {
 		try {
 			int ret = instance->getNumComponents();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -68,7 +68,7 @@ extern "C" {
 	Result<double> cv_face_BasicFaceRecognizer_getThreshold_const(const cv::face::BasicFaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -131,7 +131,7 @@ extern "C" {
 	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
 		try {
 			int ret = instance->predict(*src);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -201,7 +201,7 @@ extern "C" {
 	Result<double> cv_face_FaceRecognizer_getThreshold_const(const cv::face::FaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -215,7 +215,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getGridX_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getGridX();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -229,7 +229,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getGridY_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getGridY();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -243,7 +243,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getRadius_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -257,7 +257,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getNeighbors_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getNeighbors();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -271,7 +271,7 @@ extern "C" {
 	Result<double> cv_face_LBPHFaceRecognizer_getThreshold_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -306,7 +306,7 @@ extern "C" {
 	Result<bool> cv_face_PredictCollector_collect_int_double(cv::face::PredictCollector* instance, int label, double dist) {
 		try {
 			bool ret = instance->collect(label, dist);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -316,7 +316,7 @@ extern "C" {
 	Result<cv::face::StandardCollector*> cv_face_StandardCollector_StandardCollector_double(double threshold_) {
 		try {
 			cv::face::StandardCollector* ret = new cv::face::StandardCollector(threshold_);
-			return Ok(ret);
+			return Ok<cv::face::StandardCollector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::StandardCollector*>))
 	}
 	
@@ -330,21 +330,21 @@ extern "C" {
 	Result<bool> cv_face_StandardCollector_collect_int_double(cv::face::StandardCollector* instance, int label, double dist) {
 		try {
 			bool ret = instance->collect(label, dist);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_face_StandardCollector_getMinLabel_const(const cv::face::StandardCollector* instance) {
 		try {
 			int ret = instance->getMinLabel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_face_StandardCollector_getMinDist_const(const cv::face::StandardCollector* instance) {
 		try {
 			double ret = instance->getMinDist();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -358,7 +358,7 @@ extern "C" {
 	Result<cv::face::StandardCollector::PredictResult> cv_face_StandardCollector_PredictResult_PredictResult_int_double(int label_, double distance_) {
 		try {
 			cv::face::StandardCollector::PredictResult ret(label_, distance_);
-			return Ok(ret);
+			return Ok<cv::face::StandardCollector::PredictResult>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::StandardCollector::PredictResult>))
 	}
 	

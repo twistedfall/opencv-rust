@@ -1,4 +1,8 @@
 template struct Result<bool>;
+template struct Result<const cv::Ptr<cv::text::ERFilter::Callback>*>;
+template struct Result<const cv::Ptr<cv::text::ERFilter>*>;
+template struct Result<const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>*>;
+template struct Result<const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::text::ERFilter::Callback>*>;
 template struct Result<cv::Ptr<cv::text::ERFilter>*>;
@@ -32,76 +36,110 @@ template struct Result<std::vector<std::vector<cv::Vec<int, 2>>>*>;
 template struct Result<std::vector<std::vector<cv::text::ERStat>>*>;
 template struct Result<std::vector<std::vector<double>>*>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfERFilter_delete(cv::Ptr<cv::text::ERFilter>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfERFilter_delete(cv::Ptr<cv::text::ERFilter>* instance) {
+		delete instance;
+	}
+
+	cv::text::ERFilter* cv_PtrOfERFilter_get_inner_ptr(cv::Ptr<cv::text::ERFilter>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::text::ERFilter* cv_PtrOfERFilter_get_inner_ptr(cv::Ptr<cv::text::ERFilter>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfERFilter_Callback_delete(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
+		delete instance;
+	}
+
+	cv::text::ERFilter::Callback* cv_PtrOfERFilter_Callback_get_inner_ptr(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfERFilter_Callback_delete(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::text::OCRBeamSearchDecoder>* cv_PtrOfOCRBeamSearchDecoder_new(cv::text::OCRBeamSearchDecoder* val) {
+		return new cv::Ptr<cv::text::OCRBeamSearchDecoder>(val);
+	}
+	
+	void cv_PtrOfOCRBeamSearchDecoder_delete(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRBeamSearchDecoder* cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::text::ERFilter::Callback* cv_PtrOfERFilter_Callback_get_inner_ptr(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_new(cv::text::OCRBeamSearchDecoder::ClassifierCallback* val) {
+		return new cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>(val);
+	}
+	
+	void cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRBeamSearchDecoder::ClassifierCallback* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfOCRBeamSearchDecoder_delete(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::text::OCRHMMDecoder>* cv_PtrOfOCRHMMDecoder_new(cv::text::OCRHMMDecoder* val) {
+		return new cv::Ptr<cv::text::OCRHMMDecoder>(val);
+	}
+	
+	void cv_PtrOfOCRHMMDecoder_delete(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRHMMDecoder* cv_PtrOfOCRHMMDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::text::OCRBeamSearchDecoder* cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* cv_PtrOfOCRHMMDecoder_ClassifierCallback_new(cv::text::OCRHMMDecoder::ClassifierCallback* val) {
+		return new cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>(val);
+	}
+	
+	void cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRHMMDecoder::ClassifierCallback* cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfOCRHolisticWordRecognizer_delete(cv::Ptr<cv::text::OCRHolisticWordRecognizer>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRHolisticWordRecognizer* cv_PtrOfOCRHolisticWordRecognizer_get_inner_ptr(cv::Ptr<cv::text::OCRHolisticWordRecognizer>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::text::OCRBeamSearchDecoder::ClassifierCallback* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfOCRTesseract_delete(cv::Ptr<cv::text::OCRTesseract>* instance) {
+		delete instance;
+	}
+
+	cv::text::OCRTesseract* cv_PtrOfOCRTesseract_get_inner_ptr(cv::Ptr<cv::text::OCRTesseract>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfOCRHMMDecoder_delete(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfTextDetectorCNN_delete(cv::Ptr<cv::text::TextDetectorCNN>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::text::OCRHMMDecoder* cv_PtrOfOCRHMMDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
-	delete instance;
-}
-
-extern "C" cv::text::OCRHMMDecoder::ClassifierCallback* cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOCRHolisticWordRecognizer_delete(cv::Ptr<cv::text::OCRHolisticWordRecognizer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::text::OCRHolisticWordRecognizer* cv_PtrOfOCRHolisticWordRecognizer_get_inner_ptr(cv::Ptr<cv::text::OCRHolisticWordRecognizer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOCRTesseract_delete(cv::Ptr<cv::text::OCRTesseract>* instance) {
-	delete instance;
-}
-
-extern "C" cv::text::OCRTesseract* cv_PtrOfOCRTesseract_get_inner_ptr(cv::Ptr<cv::text::OCRTesseract>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTextDetectorCNN_delete(cv::Ptr<cv::text::TextDetectorCNN>* instance) {
-	delete instance;
-}
-
-extern "C" cv::text::TextDetectorCNN* cv_PtrOfTextDetectorCNN_get_inner_ptr(cv::Ptr<cv::text::TextDetectorCNN>* instance) {
-	return instance->get();
+	cv::text::TextDetectorCNN* cv_PtrOfTextDetectorCNN_get_inner_ptr(cv::Ptr<cv::text::TextDetectorCNN>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

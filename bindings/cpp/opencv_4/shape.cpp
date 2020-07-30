@@ -6,7 +6,7 @@ extern "C" {
 	Result<float> cv_EMDL1_const__InputArrayR_const__InputArrayR(const cv::_InputArray* signature1, const cv::_InputArray* signature2) {
 		try {
 			float ret = cv::EMDL1(*signature1, *signature2);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -76,7 +76,7 @@ extern "C" {
 	Result<bool> cv_AffineTransformer_getFullAffine_const(const cv::AffineTransformer* instance) {
 		try {
 			bool ret = instance->getFullAffine();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -90,7 +90,7 @@ extern "C" {
 	Result<int> cv_EMDHistogramCostExtractor_getNormFlag_const(const cv::EMDHistogramCostExtractor* instance) {
 		try {
 			int ret = instance->getNormFlag();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -104,7 +104,7 @@ extern "C" {
 	Result<int> cv_HausdorffDistanceExtractor_getDistanceFlag_const(const cv::HausdorffDistanceExtractor* instance) {
 		try {
 			int ret = instance->getDistanceFlag();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -118,7 +118,7 @@ extern "C" {
 	Result<float> cv_HausdorffDistanceExtractor_getRankProportion_const(const cv::HausdorffDistanceExtractor* instance) {
 		try {
 			float ret = instance->getRankProportion();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<int> cv_HistogramCostExtractor_getNDummies_const(const cv::HistogramCostExtractor* instance) {
 		try {
 			int ret = instance->getNDummies();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<float> cv_HistogramCostExtractor_getDefaultCost_const(const cv::HistogramCostExtractor* instance) {
 		try {
 			float ret = instance->getDefaultCost();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -167,7 +167,7 @@ extern "C" {
 	Result<int> cv_NormHistogramCostExtractor_getNormFlag_const(const cv::NormHistogramCostExtractor* instance) {
 		try {
 			int ret = instance->getNormFlag();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<int> cv_ShapeContextDistanceExtractor_getAngularBins_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			int ret = instance->getAngularBins();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -195,7 +195,7 @@ extern "C" {
 	Result<int> cv_ShapeContextDistanceExtractor_getRadialBins_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			int ret = instance->getRadialBins();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -209,7 +209,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getInnerRadius_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getInnerRadius();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getOuterRadius_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getOuterRadius();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<bool> cv_ShapeContextDistanceExtractor_getRotationInvariant_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			bool ret = instance->getRotationInvariant();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getShapeContextWeight_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getShapeContextWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getImageAppearanceWeight_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getImageAppearanceWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -279,7 +279,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getBendingEnergyWeight_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getBendingEnergyWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -307,7 +307,7 @@ extern "C" {
 	Result<int> cv_ShapeContextDistanceExtractor_getIterations_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			int ret = instance->getIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -335,7 +335,7 @@ extern "C" {
 	Result<float> cv_ShapeContextDistanceExtractor_getStdDev_const(const cv::ShapeContextDistanceExtractor* instance) {
 		try {
 			float ret = instance->getStdDev();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -356,7 +356,7 @@ extern "C" {
 	Result<float> cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(cv::ShapeDistanceExtractor* instance, const cv::_InputArray* contour1, const cv::_InputArray* contour2) {
 		try {
 			float ret = instance->computeDistance(*contour1, *contour2);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -370,7 +370,7 @@ extern "C" {
 	Result<float> cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(cv::ShapeTransformer* instance, const cv::_InputArray* input, const cv::_OutputArray* output) {
 		try {
 			float ret = instance->applyTransformation(*input, *output);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -391,7 +391,7 @@ extern "C" {
 	Result<double> cv_ThinPlateSplineShapeTransformer_getRegularizationParameter_const(const cv::ThinPlateSplineShapeTransformer* instance) {
 		try {
 			double ret = instance->getRegularizationParameter();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	

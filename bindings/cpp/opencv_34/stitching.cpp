@@ -70,10 +70,10 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_detail_overlapRoi_Point_Point_Size_Size_RectR(const cv::Point* tl1, const cv::Point* tl2, const cv::Size* sz1, const cv::Size* sz2, cv::Rect* roi) {
+	Result<bool> cv_detail_overlapRoi_Point_Point_Size_Size_RectR(cv::Point* tl1, cv::Point* tl2, cv::Size* sz1, cv::Size* sz2, cv::Rect* roi) {
 		try {
 			bool ret = cv::detail::overlapRoi(*tl1, *tl2, *sz1, *sz2, *roi);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -94,28 +94,28 @@ extern "C" {
 	Result<cv::Rect> cv_detail_resultRoiIntersection_const_vector_Point_R_const_vector_Size_R(const std::vector<cv::Point>* corners, const std::vector<cv::Size>* sizes) {
 		try {
 			cv::Rect ret = cv::detail::resultRoiIntersection(*corners, *sizes);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Rect> cv_detail_resultRoi_const_vector_Point_R_const_vector_Size_R(const std::vector<cv::Point>* corners, const std::vector<cv::Size>* sizes) {
 		try {
 			cv::Rect ret = cv::detail::resultRoi(*corners, *sizes);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Rect> cv_detail_resultRoi_const_vector_Point_R_const_vector_UMat_R(const std::vector<cv::Point>* corners, const std::vector<cv::UMat>* images) {
 		try {
 			cv::Rect ret = cv::detail::resultRoi(*corners, *images);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_resultTl_const_vector_Point_R(const std::vector<cv::Point>* corners) {
 		try {
 			cv::Point ret = cv::detail::resultTl(*corners);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
@@ -129,7 +129,7 @@ extern "C" {
 	Result<int> cv_detail_stitchingLogLevel() {
 		try {
 			int ret = cv::detail::stitchingLogLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -156,7 +156,7 @@ extern "C" {
 	Result<cv::CompressedRectilinearPortraitWarper*> cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float(float A, float B) {
 		try {
 			cv::CompressedRectilinearPortraitWarper* ret = new cv::CompressedRectilinearPortraitWarper(A, B);
-			return Ok(ret);
+			return Ok<cv::CompressedRectilinearPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CompressedRectilinearPortraitWarper*>))
 	}
 	
@@ -173,7 +173,7 @@ extern "C" {
 	Result<cv::CompressedRectilinearWarper*> cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(float A, float B) {
 		try {
 			cv::CompressedRectilinearWarper* ret = new cv::CompressedRectilinearWarper(A, B);
-			return Ok(ret);
+			return Ok<cv::CompressedRectilinearWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CompressedRectilinearWarper*>))
 	}
 	
@@ -220,7 +220,7 @@ extern "C" {
 	Result<cv::PaniniPortraitWarper*> cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(float A, float B) {
 		try {
 			cv::PaniniPortraitWarper* ret = new cv::PaniniPortraitWarper(A, B);
-			return Ok(ret);
+			return Ok<cv::PaniniPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::PaniniPortraitWarper*>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<cv::PaniniWarper*> cv_PaniniWarper_PaniniWarper_float_float(float A, float B) {
 		try {
 			cv::PaniniWarper* ret = new cv::PaniniWarper(A, B);
-			return Ok(ret);
+			return Ok<cv::PaniniWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::PaniniWarper*>))
 	}
 	
@@ -298,7 +298,7 @@ extern "C" {
 	Result<double> cv_Stitcher_registrationResol_const(const cv::Stitcher* instance) {
 		try {
 			double ret = instance->registrationResol();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -312,7 +312,7 @@ extern "C" {
 	Result<double> cv_Stitcher_seamEstimationResol_const(const cv::Stitcher* instance) {
 		try {
 			double ret = instance->seamEstimationResol();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -326,7 +326,7 @@ extern "C" {
 	Result<double> cv_Stitcher_compositingResol_const(const cv::Stitcher* instance) {
 		try {
 			double ret = instance->compositingResol();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -340,7 +340,7 @@ extern "C" {
 	Result<double> cv_Stitcher_panoConfidenceThresh_const(const cv::Stitcher* instance) {
 		try {
 			double ret = instance->panoConfidenceThresh();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -354,7 +354,7 @@ extern "C" {
 	Result<bool> cv_Stitcher_waveCorrection_const(const cv::Stitcher* instance) {
 		try {
 			bool ret = instance->waveCorrection();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -368,7 +368,7 @@ extern "C" {
 	Result<cv::detail::WaveCorrectKind> cv_Stitcher_waveCorrectKind_const(const cv::Stitcher* instance) {
 		try {
 			cv::detail::WaveCorrectKind ret = instance->waveCorrectKind();
-			return Ok(ret);
+			return Ok<cv::detail::WaveCorrectKind>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::WaveCorrectKind>))
 	}
 	
@@ -386,11 +386,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::FeaturesFinder>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::FeaturesFinder>*> cv_Stitcher_featuresFinder_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::FeaturesFinder>*> cv_Stitcher_featuresFinder_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::FeaturesFinder> ret = instance->featuresFinder();
-			return Ok(new cv::Ptr<cv::detail::FeaturesFinder>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::FeaturesFinder>*>))
+			const cv::Ptr<cv::detail::FeaturesFinder> ret = instance->featuresFinder();
+			return Ok(new const cv::Ptr<cv::detail::FeaturesFinder>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::FeaturesFinder>*>))
 	}
 	
 	Result_void cv_Stitcher_setFeaturesFinder_Ptr_FeaturesFinder_(cv::Stitcher* instance, cv::Ptr<cv::detail::FeaturesFinder>* features_finder) {
@@ -407,11 +407,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::FeaturesMatcher>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::FeaturesMatcher>*> cv_Stitcher_featuresMatcher_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::FeaturesMatcher>*> cv_Stitcher_featuresMatcher_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::FeaturesMatcher> ret = instance->featuresMatcher();
-			return Ok(new cv::Ptr<cv::detail::FeaturesMatcher>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::FeaturesMatcher>*>))
+			const cv::Ptr<cv::detail::FeaturesMatcher> ret = instance->featuresMatcher();
+			return Ok(new const cv::Ptr<cv::detail::FeaturesMatcher>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::FeaturesMatcher>*>))
 	}
 	
 	Result_void cv_Stitcher_setFeaturesMatcher_Ptr_FeaturesMatcher_(cv::Stitcher* instance, cv::Ptr<cv::detail::FeaturesMatcher>* features_matcher) {
@@ -421,11 +421,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::UMat*> cv_Stitcher_matchingMask_const(const cv::Stitcher* instance) {
+	Result<const cv::UMat*> cv_Stitcher_matchingMask_const(const cv::Stitcher* instance) {
 		try {
-			cv::UMat ret = instance->matchingMask();
-			return Ok(new cv::UMat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::UMat*>))
+			const cv::UMat ret = instance->matchingMask();
+			return Ok(new const cv::UMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::UMat*>))
 	}
 	
 	Result_void cv_Stitcher_setMatchingMask_const_UMatR(cv::Stitcher* instance, const cv::UMat* mask) {
@@ -442,11 +442,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::BundleAdjusterBase>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::BundleAdjusterBase>*> cv_Stitcher_bundleAdjuster_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::BundleAdjusterBase>*> cv_Stitcher_bundleAdjuster_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::BundleAdjusterBase> ret = instance->bundleAdjuster();
-			return Ok(new cv::Ptr<cv::detail::BundleAdjusterBase>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::BundleAdjusterBase>*>))
+			const cv::Ptr<cv::detail::BundleAdjusterBase> ret = instance->bundleAdjuster();
+			return Ok(new const cv::Ptr<cv::detail::BundleAdjusterBase>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::BundleAdjusterBase>*>))
 	}
 	
 	Result_void cv_Stitcher_setBundleAdjuster_Ptr_BundleAdjusterBase_(cv::Stitcher* instance, cv::Ptr<cv::detail::BundleAdjusterBase>* bundle_adjuster) {
@@ -463,11 +463,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::WarperCreator>*>))
 	}
 	
-	Result<cv::Ptr<cv::WarperCreator>*> cv_Stitcher_warper_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::WarperCreator>*> cv_Stitcher_warper_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::WarperCreator> ret = instance->warper();
-			return Ok(new cv::Ptr<cv::WarperCreator>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::WarperCreator>*>))
+			const cv::Ptr<cv::WarperCreator> ret = instance->warper();
+			return Ok(new const cv::Ptr<cv::WarperCreator>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::WarperCreator>*>))
 	}
 	
 	Result_void cv_Stitcher_setWarper_Ptr_WarperCreator_(cv::Stitcher* instance, cv::Ptr<cv::WarperCreator>* creator) {
@@ -484,11 +484,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::ExposureCompensator>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::ExposureCompensator>*> cv_Stitcher_exposureCompensator_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::ExposureCompensator>*> cv_Stitcher_exposureCompensator_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::ExposureCompensator> ret = instance->exposureCompensator();
-			return Ok(new cv::Ptr<cv::detail::ExposureCompensator>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::ExposureCompensator>*>))
+			const cv::Ptr<cv::detail::ExposureCompensator> ret = instance->exposureCompensator();
+			return Ok(new const cv::Ptr<cv::detail::ExposureCompensator>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::ExposureCompensator>*>))
 	}
 	
 	Result_void cv_Stitcher_setExposureCompensator_Ptr_ExposureCompensator_(cv::Stitcher* instance, cv::Ptr<cv::detail::ExposureCompensator>* exposure_comp) {
@@ -505,11 +505,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::SeamFinder>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::SeamFinder>*> cv_Stitcher_seamFinder_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::SeamFinder>*> cv_Stitcher_seamFinder_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::SeamFinder> ret = instance->seamFinder();
-			return Ok(new cv::Ptr<cv::detail::SeamFinder>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::SeamFinder>*>))
+			const cv::Ptr<cv::detail::SeamFinder> ret = instance->seamFinder();
+			return Ok(new const cv::Ptr<cv::detail::SeamFinder>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::SeamFinder>*>))
 	}
 	
 	Result_void cv_Stitcher_setSeamFinder_Ptr_SeamFinder_(cv::Stitcher* instance, cv::Ptr<cv::detail::SeamFinder>* seam_finder) {
@@ -526,11 +526,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::Blender>*>))
 	}
 	
-	Result<cv::Ptr<cv::detail::Blender>*> cv_Stitcher_blender_const(const cv::Stitcher* instance) {
+	Result<const cv::Ptr<cv::detail::Blender>*> cv_Stitcher_blender_const(const cv::Stitcher* instance) {
 		try {
-			cv::Ptr<cv::detail::Blender> ret = instance->blender();
-			return Ok(new cv::Ptr<cv::detail::Blender>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::Blender>*>))
+			const cv::Ptr<cv::detail::Blender> ret = instance->blender();
+			return Ok(new const cv::Ptr<cv::detail::Blender>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Ptr<cv::detail::Blender>*>))
 	}
 	
 	Result_void cv_Stitcher_setBlender_Ptr_Blender_(cv::Stitcher* instance, cv::Ptr<cv::detail::Blender>* b) {
@@ -543,42 +543,42 @@ extern "C" {
 	Result<cv::Stitcher::Status> cv_Stitcher_estimateTransform_const__InputArrayR(cv::Stitcher* instance, const cv::_InputArray* images) {
 		try {
 			cv::Stitcher::Status ret = instance->estimateTransform(*images);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
 	Result<cv::Stitcher::Status> cv_Stitcher_estimateTransform_const__InputArrayR_const_vector_vector_Rect__R(cv::Stitcher* instance, const cv::_InputArray* images, const std::vector<std::vector<cv::Rect>>* rois) {
 		try {
 			cv::Stitcher::Status ret = instance->estimateTransform(*images, *rois);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
 	Result<cv::Stitcher::Status> cv_Stitcher_composePanorama_const__OutputArrayR(cv::Stitcher* instance, const cv::_OutputArray* pano) {
 		try {
 			cv::Stitcher::Status ret = instance->composePanorama(*pano);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
 	Result<cv::Stitcher::Status> cv_Stitcher_composePanorama_const__InputArrayR_const__OutputArrayR(cv::Stitcher* instance, const cv::_InputArray* images, const cv::_OutputArray* pano) {
 		try {
 			cv::Stitcher::Status ret = instance->composePanorama(*images, *pano);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
 	Result<cv::Stitcher::Status> cv_Stitcher_stitch_const__InputArrayR_const__OutputArrayR(cv::Stitcher* instance, const cv::_InputArray* images, const cv::_OutputArray* pano) {
 		try {
 			cv::Stitcher::Status ret = instance->stitch(*images, *pano);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
 	Result<cv::Stitcher::Status> cv_Stitcher_stitch_const__InputArrayR_const_vector_vector_Rect__R_const__OutputArrayR(cv::Stitcher* instance, const cv::_InputArray* images, const std::vector<std::vector<cv::Rect>>* rois, const cv::_OutputArray* pano) {
 		try {
 			cv::Stitcher::Status ret = instance->stitch(*images, *rois, *pano);
-			return Ok(ret);
+			return Ok<cv::Stitcher::Status>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
@@ -599,7 +599,7 @@ extern "C" {
 	Result<double> cv_Stitcher_workScale_const(const cv::Stitcher* instance) {
 		try {
 			double ret = instance->workScale();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -626,7 +626,7 @@ extern "C" {
 	Result<cv::detail::AKAZEFeaturesFinder*> cv_detail_AKAZEFeaturesFinder_AKAZEFeaturesFinder_int_int_int_float_int_int_int(int descriptor_type, int descriptor_size, int descriptor_channels, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
 		try {
 			cv::detail::AKAZEFeaturesFinder* ret = new cv::detail::AKAZEFeaturesFinder(descriptor_type, descriptor_size, descriptor_channels, threshold, nOctaves, nOctaveLayers, diffusivity);
-			return Ok(ret);
+			return Ok<cv::detail::AKAZEFeaturesFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::AKAZEFeaturesFinder*>))
 	}
 	
@@ -639,7 +639,7 @@ extern "C" {
 	Result<cv::detail::AffineBestOf2NearestMatcher*> cv_detail_AffineBestOf2NearestMatcher_AffineBestOf2NearestMatcher_bool_bool_float_int(bool full_affine, bool try_use_gpu, float match_conf, int num_matches_thresh1) {
 		try {
 			cv::detail::AffineBestOf2NearestMatcher* ret = new cv::detail::AffineBestOf2NearestMatcher(full_affine, try_use_gpu, match_conf, num_matches_thresh1);
-			return Ok(ret);
+			return Ok<cv::detail::AffineBestOf2NearestMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::AffineBestOf2NearestMatcher*>))
 	}
 	
@@ -649,35 +649,35 @@ extern "C" {
 	Result<cv::detail::AffineWarper*> cv_detail_AffineWarper_AffineWarper_float(float scale) {
 		try {
 			cv::detail::AffineWarper* ret = new cv::detail::AffineWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::AffineWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::AffineWarper*>))
 	}
 	
 	Result<cv::Point2f> cv_detail_AffineWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::AffineWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* H) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *H);
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result<cv::Rect> cv_detail_AffineWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::AffineWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* H, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_AffineWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::AffineWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* H, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *H, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_AffineWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::AffineWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* H, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *H, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result<cv::Rect> cv_detail_AffineWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::AffineWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* H) {
+	Result<cv::Rect> cv_detail_AffineWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::AffineWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* H) {
 		try {
 			cv::Rect ret = instance->warpRoi(*src_size, *K, *H);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -687,7 +687,7 @@ extern "C" {
 	Result<cv::detail::BestOf2NearestMatcher*> cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int(bool try_use_gpu, float match_conf, int num_matches_thresh1, int num_matches_thresh2) {
 		try {
 			cv::detail::BestOf2NearestMatcher* ret = new cv::detail::BestOf2NearestMatcher(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2);
-			return Ok(ret);
+			return Ok<cv::detail::BestOf2NearestMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BestOf2NearestMatcher*>))
 	}
 	
@@ -704,7 +704,7 @@ extern "C" {
 	Result<cv::detail::BestOf2NearestRangeMatcher*> cv_detail_BestOf2NearestRangeMatcher_BestOf2NearestRangeMatcher_int_bool_float_int_int(int range_width, bool try_use_gpu, float match_conf, int num_matches_thresh1, int num_matches_thresh2) {
 		try {
 			cv::detail::BestOf2NearestRangeMatcher* ret = new cv::detail::BestOf2NearestRangeMatcher(range_width, try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2);
-			return Ok(ret);
+			return Ok<cv::detail::BestOf2NearestRangeMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BestOf2NearestRangeMatcher*>))
 	}
 	
@@ -725,14 +725,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_Blender_prepare_Rect(cv::detail::Blender* instance, const cv::Rect* dst_roi) {
+	Result_void cv_detail_Blender_prepare_Rect(cv::detail::Blender* instance, cv::Rect* dst_roi) {
 		try {
 			instance->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_Blender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::Blender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, const cv::Point* tl) {
+	Result_void cv_detail_Blender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::Blender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, cv::Point* tl) {
 		try {
 			instance->feed(*img, *mask, *tl);
 			return Ok();
@@ -752,11 +752,11 @@ extern "C" {
 	Result<cv::detail::BlocksGainCompensator*> cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(int bl_width, int bl_height) {
 		try {
 			cv::detail::BlocksGainCompensator* ret = new cv::detail::BlocksGainCompensator(bl_width, bl_height);
-			return Ok(ret);
+			return Ok<cv::detail::BlocksGainCompensator*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BlocksGainCompensator*>))
 	}
 	
-	Result_void cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::BlocksGainCompensator* instance, int index, const cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
+	Result_void cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::BlocksGainCompensator* instance, int index, cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
 		try {
 			instance->apply(index, *corner, *image, *mask);
 			return Ok();
@@ -769,7 +769,7 @@ extern "C" {
 	Result<cv::detail::BundleAdjusterAffine*> cv_detail_BundleAdjusterAffine_BundleAdjusterAffine() {
 		try {
 			cv::detail::BundleAdjusterAffine* ret = new cv::detail::BundleAdjusterAffine();
-			return Ok(ret);
+			return Ok<cv::detail::BundleAdjusterAffine*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BundleAdjusterAffine*>))
 	}
 	
@@ -779,15 +779,15 @@ extern "C" {
 	Result<cv::detail::BundleAdjusterAffinePartial*> cv_detail_BundleAdjusterAffinePartial_BundleAdjusterAffinePartial() {
 		try {
 			cv::detail::BundleAdjusterAffinePartial* ret = new cv::detail::BundleAdjusterAffinePartial();
-			return Ok(ret);
+			return Ok<cv::detail::BundleAdjusterAffinePartial*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BundleAdjusterAffinePartial*>))
 	}
 	
-	Result<cv::Mat*> cv_detail_BundleAdjusterBase_refinementMask_const(const cv::detail::BundleAdjusterBase* instance) {
+	Result<const cv::Mat*> cv_detail_BundleAdjusterBase_refinementMask_const(const cv::detail::BundleAdjusterBase* instance) {
 		try {
-			cv::Mat ret = instance->refinementMask();
-			return Ok(new cv::Mat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+			const cv::Mat ret = instance->refinementMask();
+			return Ok(new const cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Mat*>))
 	}
 	
 	Result_void cv_detail_BundleAdjusterBase_setRefinementMask_const_MatR(cv::detail::BundleAdjusterBase* instance, const cv::Mat* mask) {
@@ -800,7 +800,7 @@ extern "C" {
 	Result<double> cv_detail_BundleAdjusterBase_confThresh_const(const cv::detail::BundleAdjusterBase* instance) {
 		try {
 			double ret = instance->confThresh();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -814,7 +814,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_detail_BundleAdjusterBase_termCriteria(cv::detail::BundleAdjusterBase* instance) {
 		try {
 			cv::TermCriteria ret = instance->termCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -831,7 +831,7 @@ extern "C" {
 	Result<cv::detail::BundleAdjusterRay*> cv_detail_BundleAdjusterRay_BundleAdjusterRay() {
 		try {
 			cv::detail::BundleAdjusterRay* ret = new cv::detail::BundleAdjusterRay();
-			return Ok(ret);
+			return Ok<cv::detail::BundleAdjusterRay*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BundleAdjusterRay*>))
 	}
 	
@@ -841,14 +841,14 @@ extern "C" {
 	Result<cv::detail::BundleAdjusterReproj*> cv_detail_BundleAdjusterReproj_BundleAdjusterReproj() {
 		try {
 			cv::detail::BundleAdjusterReproj* ret = new cv::detail::BundleAdjusterReproj();
-			return Ok(ret);
+			return Ok<cv::detail::BundleAdjusterReproj*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::BundleAdjusterReproj*>))
 	}
 	
 	Result<double> cv_detail_CameraParams_getPropFocal_const(const cv::detail::CameraParams* instance) {
 		try {
 			double ret = instance->focal;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -862,7 +862,7 @@ extern "C" {
 	Result<double> cv_detail_CameraParams_getPropAspect_const(const cv::detail::CameraParams* instance) {
 		try {
 			double ret = instance->aspect;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -876,7 +876,7 @@ extern "C" {
 	Result<double> cv_detail_CameraParams_getPropPpx_const(const cv::detail::CameraParams* instance) {
 		try {
 			double ret = instance->ppx;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -890,7 +890,7 @@ extern "C" {
 	Result<double> cv_detail_CameraParams_getPropPpy_const(const cv::detail::CameraParams* instance) {
 		try {
 			double ret = instance->ppy;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -935,14 +935,14 @@ extern "C" {
 	Result<cv::detail::CameraParams*> cv_detail_CameraParams_CameraParams() {
 		try {
 			cv::detail::CameraParams* ret = new cv::detail::CameraParams();
-			return Ok(ret);
+			return Ok<cv::detail::CameraParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CameraParams*>))
 	}
 	
 	Result<cv::detail::CameraParams*> cv_detail_CameraParams_CameraParams_const_CameraParamsR(const cv::detail::CameraParams* other) {
 		try {
 			cv::detail::CameraParams* ret = new cv::detail::CameraParams(*other);
-			return Ok(ret);
+			return Ok<cv::detail::CameraParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CameraParams*>))
 	}
 	
@@ -956,7 +956,7 @@ extern "C" {
 	Result<float> cv_detail_CompressedRectilinearPortraitProjector_getPropA_const(const cv::detail::CompressedRectilinearPortraitProjector* instance) {
 		try {
 			float ret = instance->a;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -970,7 +970,7 @@ extern "C" {
 	Result<float> cv_detail_CompressedRectilinearPortraitProjector_getPropB_const(const cv::detail::CompressedRectilinearPortraitProjector* instance) {
 		try {
 			float ret = instance->b;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1004,14 +1004,14 @@ extern "C" {
 	Result<cv::detail::CompressedRectilinearPortraitWarper*> cv_detail_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float_float(float scale, float A, float B) {
 		try {
 			cv::detail::CompressedRectilinearPortraitWarper* ret = new cv::detail::CompressedRectilinearPortraitWarper(scale, A, B);
-			return Ok(ret);
+			return Ok<cv::detail::CompressedRectilinearPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CompressedRectilinearPortraitWarper*>))
 	}
 	
 	Result<float> cv_detail_CompressedRectilinearProjector_getPropA_const(const cv::detail::CompressedRectilinearProjector* instance) {
 		try {
 			float ret = instance->a;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1025,7 +1025,7 @@ extern "C" {
 	Result<float> cv_detail_CompressedRectilinearProjector_getPropB_const(const cv::detail::CompressedRectilinearProjector* instance) {
 		try {
 			float ret = instance->b;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1059,7 +1059,7 @@ extern "C" {
 	Result<cv::detail::CompressedRectilinearWarper*> cv_detail_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float_float(float scale, float A, float B) {
 		try {
 			cv::detail::CompressedRectilinearWarper* ret = new cv::detail::CompressedRectilinearWarper(scale, A, B);
-			return Ok(ret);
+			return Ok<cv::detail::CompressedRectilinearWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CompressedRectilinearWarper*>))
 	}
 	
@@ -1086,7 +1086,7 @@ extern "C" {
 	Result<cv::detail::CylindricalPortraitWarper*> cv_detail_CylindricalPortraitWarper_CylindricalPortraitWarper_float(float scale) {
 		try {
 			cv::detail::CylindricalPortraitWarper* ret = new cv::detail::CylindricalPortraitWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::CylindricalPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CylindricalPortraitWarper*>))
 	}
 	
@@ -1113,21 +1113,21 @@ extern "C" {
 	Result<cv::detail::CylindricalWarper*> cv_detail_CylindricalWarper_CylindricalWarper_float(float scale) {
 		try {
 			cv::detail::CylindricalWarper* ret = new cv::detail::CylindricalWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::CylindricalWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CylindricalWarper*>))
 	}
 	
-	Result<cv::Rect> cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::CylindricalWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::CylindricalWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_CylindricalWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::CylindricalWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
@@ -1137,35 +1137,35 @@ extern "C" {
 	Result<cv::detail::CylindricalWarperGpu*> cv_detail_CylindricalWarperGpu_CylindricalWarperGpu_float(float scale) {
 		try {
 			cv::detail::CylindricalWarperGpu* ret = new cv::detail::CylindricalWarperGpu(scale);
-			return Ok(ret);
+			return Ok<cv::detail::CylindricalWarperGpu*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::CylindricalWarperGpu*>))
 	}
 	
-	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::CylindricalWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::CylindricalWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_CylindricalWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::CylindricalWarperGpu* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::CylindricalWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
+	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::CylindricalWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_CylindricalWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(cv::detail::CylindricalWarperGpu* instance, const cv::cuda::GpuMat* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, cv::cuda::GpuMat* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
@@ -1203,7 +1203,7 @@ extern "C" {
 	Result<cv::detail::DisjointSets*> cv_detail_DisjointSets_DisjointSets_int(int elem_count) {
 		try {
 			cv::detail::DisjointSets* ret = new cv::detail::DisjointSets(elem_count);
-			return Ok(ret);
+			return Ok<cv::detail::DisjointSets*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::DisjointSets*>))
 	}
 	
@@ -1217,14 +1217,14 @@ extern "C" {
 	Result<int> cv_detail_DisjointSets_findSetByElem_int(cv::detail::DisjointSets* instance, int elem) {
 		try {
 			int ret = instance->findSetByElem(elem);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_detail_DisjointSets_mergeSets_int_int(cv::detail::DisjointSets* instance, int set1, int set2) {
 		try {
 			int ret = instance->mergeSets(set1, set2);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1234,14 +1234,14 @@ extern "C" {
 	Result<cv::detail::DpSeamFinder*> cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cv::detail::DpSeamFinder::CostFunction costFunc) {
 		try {
 			cv::detail::DpSeamFinder* ret = new cv::detail::DpSeamFinder(costFunc);
-			return Ok(ret);
+			return Ok<cv::detail::DpSeamFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::DpSeamFinder*>))
 	}
 	
 	Result<cv::detail::DpSeamFinder::CostFunction> cv_detail_DpSeamFinder_costFunction_const(const cv::detail::DpSeamFinder* instance) {
 		try {
 			cv::detail::DpSeamFinder::CostFunction ret = instance->costFunction();
-			return Ok(ret);
+			return Ok<cv::detail::DpSeamFinder::CostFunction>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::DpSeamFinder::CostFunction>))
 	}
 	
@@ -1273,7 +1273,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::ExposureCompensator* instance, int index, const cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
+	Result_void cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::ExposureCompensator* instance, int index, cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
 		try {
 			instance->apply(index, *corner, *image, *mask);
 			return Ok();
@@ -1286,14 +1286,14 @@ extern "C" {
 	Result<cv::detail::FeatherBlender*> cv_detail_FeatherBlender_FeatherBlender_float(float sharpness) {
 		try {
 			cv::detail::FeatherBlender* ret = new cv::detail::FeatherBlender(sharpness);
-			return Ok(ret);
+			return Ok<cv::detail::FeatherBlender*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::FeatherBlender*>))
 	}
 	
 	Result<float> cv_detail_FeatherBlender_sharpness_const(const cv::detail::FeatherBlender* instance) {
 		try {
 			float ret = instance->sharpness();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1304,14 +1304,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_FeatherBlender_prepare_Rect(cv::detail::FeatherBlender* instance, const cv::Rect* dst_roi) {
+	Result_void cv_detail_FeatherBlender_prepare_Rect(cv::detail::FeatherBlender* instance, cv::Rect* dst_roi) {
 		try {
 			instance->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_FeatherBlender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::FeatherBlender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, const cv::Point* tl) {
+	Result_void cv_detail_FeatherBlender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::FeatherBlender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, cv::Point* tl) {
 		try {
 			instance->feed(*img, *mask, *tl);
 			return Ok();
@@ -1328,7 +1328,7 @@ extern "C" {
 	Result<cv::Rect> cv_detail_FeatherBlender_createWeightMaps_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(cv::detail::FeatherBlender* instance, const std::vector<cv::UMat>* masks, const std::vector<cv::Point>* corners, std::vector<cv::UMat>* weight_maps) {
 		try {
 			cv::Rect ret = instance->createWeightMaps(*masks, *corners, *weight_maps);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -1342,7 +1342,7 @@ extern "C" {
 	Result<bool> cv_detail_FeaturesMatcher_isThreadSafe_const(const cv::detail::FeaturesMatcher* instance) {
 		try {
 			bool ret = instance->isThreadSafe();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1376,14 +1376,14 @@ extern "C" {
 	Result<cv::detail::FisheyeWarper*> cv_detail_FisheyeWarper_FisheyeWarper_float(float scale) {
 		try {
 			cv::detail::FisheyeWarper* ret = new cv::detail::FisheyeWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::FisheyeWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::FisheyeWarper*>))
 	}
 	
 	void cv_Detail_GainCompensator_delete(cv::detail::GainCompensator* instance) {
 		delete instance;
 	}
-	Result_void cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::GainCompensator* instance, int index, const cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
+	Result_void cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::GainCompensator* instance, int index, cv::Point* corner, const cv::_InputOutputArray* image, const cv::_InputArray* mask) {
 		try {
 			instance->apply(index, *corner, *image, *mask);
 			return Ok();
@@ -1403,7 +1403,7 @@ extern "C" {
 	Result<cv::detail::Graph*> cv_detail_Graph_Graph_int(int num_vertices) {
 		try {
 			cv::detail::Graph* ret = new cv::detail::Graph(num_vertices);
-			return Ok(ret);
+			return Ok<cv::detail::Graph*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::Graph*>))
 	}
 	
@@ -1417,7 +1417,7 @@ extern "C" {
 	Result<int> cv_detail_Graph_numVertices_const(const cv::detail::Graph* instance) {
 		try {
 			int ret = instance->numVertices();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1434,7 +1434,7 @@ extern "C" {
 	Result<cv::detail::GraphCutSeamFinder*> cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_int_float_float(int cost_type, float terminal_cost, float bad_region_penalty) {
 		try {
 			cv::detail::GraphCutSeamFinder* ret = new cv::detail::GraphCutSeamFinder(cost_type, terminal_cost, bad_region_penalty);
-			return Ok(ret);
+			return Ok<cv::detail::GraphCutSeamFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::GraphCutSeamFinder*>))
 	}
 	
@@ -1454,7 +1454,7 @@ extern "C" {
 	Result<cv::detail::GraphCutSeamFinderGpu*> cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu_int_float_float(int cost_type, float terminal_cost, float bad_region_penalty) {
 		try {
 			cv::detail::GraphCutSeamFinderGpu* ret = new cv::detail::GraphCutSeamFinderGpu(cost_type, terminal_cost, bad_region_penalty);
-			return Ok(ret);
+			return Ok<cv::detail::GraphCutSeamFinderGpu*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::GraphCutSeamFinderGpu*>))
 	}
 	
@@ -1465,7 +1465,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_GraphCutSeamFinderGpu_findInPair_size_t_size_t_Rect(cv::detail::GraphCutSeamFinderGpu* instance, size_t first, size_t second, const cv::Rect* roi) {
+	Result_void cv_detail_GraphCutSeamFinderGpu_findInPair_size_t_size_t_Rect(cv::detail::GraphCutSeamFinderGpu* instance, size_t first, size_t second, cv::Rect* roi) {
 		try {
 			instance->findInPair(first, second, *roi);
 			return Ok();
@@ -1475,7 +1475,7 @@ extern "C" {
 	Result<int> cv_detail_GraphEdge_getPropFrom_const(const cv::detail::GraphEdge* instance) {
 		try {
 			int ret = instance->from;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1489,7 +1489,7 @@ extern "C" {
 	Result<int> cv_detail_GraphEdge_getPropTo_const(const cv::detail::GraphEdge* instance) {
 		try {
 			int ret = instance->to;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1503,7 +1503,7 @@ extern "C" {
 	Result<float> cv_detail_GraphEdge_getPropWeight_const(const cv::detail::GraphEdge* instance) {
 		try {
 			float ret = instance->weight;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1520,7 +1520,7 @@ extern "C" {
 	Result<cv::detail::GraphEdge*> cv_detail_GraphEdge_GraphEdge_int_int_float(int from, int to, float weight) {
 		try {
 			cv::detail::GraphEdge* ret = new cv::detail::GraphEdge(from, to, weight);
-			return Ok(ret);
+			return Ok<cv::detail::GraphEdge*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::GraphEdge*>))
 	}
 	
@@ -1530,14 +1530,14 @@ extern "C" {
 	Result<cv::detail::HomographyBasedEstimator*> cv_detail_HomographyBasedEstimator_HomographyBasedEstimator_bool(bool is_focals_estimated) {
 		try {
 			cv::detail::HomographyBasedEstimator* ret = new cv::detail::HomographyBasedEstimator(is_focals_estimated);
-			return Ok(ret);
+			return Ok<cv::detail::HomographyBasedEstimator*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::HomographyBasedEstimator*>))
 	}
 	
 	Result<int> cv_detail_ImageFeatures_getPropImg_idx_const(const cv::detail::ImageFeatures* instance) {
 		try {
 			int ret = instance->img_idx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1551,11 +1551,11 @@ extern "C" {
 	Result<cv::Size> cv_detail_ImageFeatures_getPropImg_size_const(const cv::detail::ImageFeatures* instance) {
 		try {
 			cv::Size ret = instance->img_size;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_detail_ImageFeatures_setPropImg_size_Size(cv::detail::ImageFeatures* instance, const cv::Size* val) {
+	Result_void cv_detail_ImageFeatures_setPropImg_size_Size(cv::detail::ImageFeatures* instance, cv::Size* val) {
 		try {
 			instance->img_size = *val;
 			return Ok();
@@ -1596,7 +1596,7 @@ extern "C" {
 	Result<int> cv_detail_MatchesInfo_getPropSrc_img_idx_const(const cv::detail::MatchesInfo* instance) {
 		try {
 			int ret = instance->src_img_idx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1610,7 +1610,7 @@ extern "C" {
 	Result<int> cv_detail_MatchesInfo_getPropDst_img_idx_const(const cv::detail::MatchesInfo* instance) {
 		try {
 			int ret = instance->dst_img_idx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1652,7 +1652,7 @@ extern "C" {
 	Result<int> cv_detail_MatchesInfo_getPropNum_inliers_const(const cv::detail::MatchesInfo* instance) {
 		try {
 			int ret = instance->num_inliers;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1680,7 +1680,7 @@ extern "C" {
 	Result<double> cv_detail_MatchesInfo_getPropConfidence_const(const cv::detail::MatchesInfo* instance) {
 		try {
 			double ret = instance->confidence;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1697,14 +1697,14 @@ extern "C" {
 	Result<cv::detail::MatchesInfo*> cv_detail_MatchesInfo_MatchesInfo() {
 		try {
 			cv::detail::MatchesInfo* ret = new cv::detail::MatchesInfo();
-			return Ok(ret);
+			return Ok<cv::detail::MatchesInfo*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::MatchesInfo*>))
 	}
 	
 	Result<cv::detail::MatchesInfo*> cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoR(const cv::detail::MatchesInfo* other) {
 		try {
 			cv::detail::MatchesInfo* ret = new cv::detail::MatchesInfo(*other);
-			return Ok(ret);
+			return Ok<cv::detail::MatchesInfo*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::MatchesInfo*>))
 	}
 	
@@ -1731,7 +1731,7 @@ extern "C" {
 	Result<cv::detail::MercatorWarper*> cv_detail_MercatorWarper_MercatorWarper_float(float scale) {
 		try {
 			cv::detail::MercatorWarper* ret = new cv::detail::MercatorWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::MercatorWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::MercatorWarper*>))
 	}
 	
@@ -1741,14 +1741,14 @@ extern "C" {
 	Result<cv::detail::MultiBandBlender*> cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(int try_gpu, int num_bands, int weight_type) {
 		try {
 			cv::detail::MultiBandBlender* ret = new cv::detail::MultiBandBlender(try_gpu, num_bands, weight_type);
-			return Ok(ret);
+			return Ok<cv::detail::MultiBandBlender*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::MultiBandBlender*>))
 	}
 	
 	Result<int> cv_detail_MultiBandBlender_numBands_const(const cv::detail::MultiBandBlender* instance) {
 		try {
 			int ret = instance->numBands();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1759,14 +1759,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_MultiBandBlender_prepare_Rect(cv::detail::MultiBandBlender* instance, const cv::Rect* dst_roi) {
+	Result_void cv_detail_MultiBandBlender_prepare_Rect(cv::detail::MultiBandBlender* instance, cv::Rect* dst_roi) {
 		try {
 			instance->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_detail_MultiBandBlender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::MultiBandBlender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, const cv::Point* tl) {
+	Result_void cv_detail_MultiBandBlender_feed_const__InputArrayR_const__InputArrayR_Point(cv::detail::MultiBandBlender* instance, const cv::_InputArray* img, const cv::_InputArray* mask, cv::Point* tl) {
 		try {
 			instance->feed(*img, *mask, *tl);
 			return Ok();
@@ -1786,14 +1786,14 @@ extern "C" {
 	Result<cv::detail::NoBundleAdjuster*> cv_detail_NoBundleAdjuster_NoBundleAdjuster() {
 		try {
 			cv::detail::NoBundleAdjuster* ret = new cv::detail::NoBundleAdjuster();
-			return Ok(ret);
+			return Ok<cv::detail::NoBundleAdjuster*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::NoBundleAdjuster*>))
 	}
 	
 	void cv_Detail_NoExposureCompensator_delete(cv::detail::NoExposureCompensator* instance) {
 		delete instance;
 	}
-	Result_void cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::NoExposureCompensator* instance, int unnamed, const cv::Point* unnamed_1, const cv::_InputOutputArray* unnamed_2, const cv::_InputArray* unnamed_3) {
+	Result_void cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(cv::detail::NoExposureCompensator* instance, int unnamed, cv::Point* unnamed_1, const cv::_InputOutputArray* unnamed_2, const cv::_InputArray* unnamed_3) {
 		try {
 			instance->apply(unnamed, *unnamed_1, *unnamed_2, *unnamed_3);
 			return Ok();
@@ -1813,10 +1813,10 @@ extern "C" {
 	void cv_Detail_OrbFeaturesFinder_delete(cv::detail::OrbFeaturesFinder* instance) {
 		delete instance;
 	}
-	Result<cv::detail::OrbFeaturesFinder*> cv_detail_OrbFeaturesFinder_OrbFeaturesFinder_Size_int_float_int(const cv::Size* _grid_size, int nfeatures, float scaleFactor, int nlevels) {
+	Result<cv::detail::OrbFeaturesFinder*> cv_detail_OrbFeaturesFinder_OrbFeaturesFinder_Size_int_float_int(cv::Size* _grid_size, int nfeatures, float scaleFactor, int nlevels) {
 		try {
 			cv::detail::OrbFeaturesFinder* ret = new cv::detail::OrbFeaturesFinder(*_grid_size, nfeatures, scaleFactor, nlevels);
-			return Ok(ret);
+			return Ok<cv::detail::OrbFeaturesFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::OrbFeaturesFinder*>))
 	}
 	
@@ -1830,7 +1830,7 @@ extern "C" {
 	Result<float> cv_detail_PaniniPortraitProjector_getPropA_const(const cv::detail::PaniniPortraitProjector* instance) {
 		try {
 			float ret = instance->a;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1844,7 +1844,7 @@ extern "C" {
 	Result<float> cv_detail_PaniniPortraitProjector_getPropB_const(const cv::detail::PaniniPortraitProjector* instance) {
 		try {
 			float ret = instance->b;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1878,14 +1878,14 @@ extern "C" {
 	Result<cv::detail::PaniniPortraitWarper*> cv_detail_PaniniPortraitWarper_PaniniPortraitWarper_float_float_float(float scale, float A, float B) {
 		try {
 			cv::detail::PaniniPortraitWarper* ret = new cv::detail::PaniniPortraitWarper(scale, A, B);
-			return Ok(ret);
+			return Ok<cv::detail::PaniniPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::PaniniPortraitWarper*>))
 	}
 	
 	Result<float> cv_detail_PaniniProjector_getPropA_const(const cv::detail::PaniniProjector* instance) {
 		try {
 			float ret = instance->a;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1899,7 +1899,7 @@ extern "C" {
 	Result<float> cv_detail_PaniniProjector_getPropB_const(const cv::detail::PaniniProjector* instance) {
 		try {
 			float ret = instance->b;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1933,7 +1933,7 @@ extern "C" {
 	Result<cv::detail::PaniniWarper*> cv_detail_PaniniWarper_PaniniWarper_float_float_float(float scale, float A, float B) {
 		try {
 			cv::detail::PaniniWarper* ret = new cv::detail::PaniniWarper(scale, A, B);
-			return Ok(ret);
+			return Ok<cv::detail::PaniniWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::PaniniWarper*>))
 	}
 	
@@ -1960,7 +1960,7 @@ extern "C" {
 	Result<cv::detail::PlanePortraitWarper*> cv_detail_PlanePortraitWarper_PlanePortraitWarper_float(float scale) {
 		try {
 			cv::detail::PlanePortraitWarper* ret = new cv::detail::PlanePortraitWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::PlanePortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::PlanePortraitWarper*>))
 	}
 	
@@ -1987,63 +1987,63 @@ extern "C" {
 	Result<cv::detail::PlaneWarper*> cv_detail_PlaneWarper_PlaneWarper_float(float scale) {
 		try {
 			cv::detail::PlaneWarper* ret = new cv::detail::PlaneWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::PlaneWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::PlaneWarper*>))
 	}
 	
 	Result<cv::Point2f> cv_detail_PlaneWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *R);
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
 	Result<cv::Point2f> cv_detail_PlaneWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *R, *T);
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *T, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::PlaneWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::PlaneWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, *T, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R) {
+	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Rect ret = instance->warpRoi(*src_size, *K, *R);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T) {
+	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T) {
 		try {
 			cv::Rect ret = instance->warpRoi(*src_size, *K, *R, *T);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -2053,70 +2053,70 @@ extern "C" {
 	Result<cv::detail::PlaneWarperGpu*> cv_detail_PlaneWarperGpu_PlaneWarperGpu_float(float scale) {
 		try {
 			cv::detail::PlaneWarperGpu* ret = new cv::detail::PlaneWarperGpu(scale);
-			return Ok(ret);
+			return Ok<cv::detail::PlaneWarperGpu*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::PlaneWarperGpu*>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *T, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::PlaneWarperGpu* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, *T, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::PlaneWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::PlaneWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::PlaneWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::PlaneWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *T, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(cv::detail::PlaneWarperGpu* instance, const cv::cuda::GpuMat* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, cv::cuda::GpuMat* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
 	Result<cv::Point> cv_detail_PlaneWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(cv::detail::PlaneWarperGpu* instance, const cv::cuda::GpuMat* src, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, int interp_mode, int border_mode, cv::cuda::GpuMat* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, *T, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
 	Result<float> cv_detail_ProjectorBase_getPropScale_const(const cv::detail::ProjectorBase* instance) {
 		try {
 			float ret = instance->scale;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -2130,35 +2130,35 @@ extern "C" {
 	Result<float(*)[9]> cv_detail_ProjectorBase_getPropK(cv::detail::ProjectorBase* instance) {
 		try {
 			float(*ret)[9] = &instance->k;
-			return Ok(ret);
+			return Ok<float(*)[9]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float(*)[9]>))
 	}
 	
 	Result<float(*)[9]> cv_detail_ProjectorBase_getPropRinv(cv::detail::ProjectorBase* instance) {
 		try {
 			float(*ret)[9] = &instance->rinv;
-			return Ok(ret);
+			return Ok<float(*)[9]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float(*)[9]>))
 	}
 	
 	Result<float(*)[9]> cv_detail_ProjectorBase_getPropR_kinv(cv::detail::ProjectorBase* instance) {
 		try {
 			float(*ret)[9] = &instance->r_kinv;
-			return Ok(ret);
+			return Ok<float(*)[9]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float(*)[9]>))
 	}
 	
 	Result<float(*)[9]> cv_detail_ProjectorBase_getPropK_rinv(cv::detail::ProjectorBase* instance) {
 		try {
 			float(*ret)[9] = &instance->k_rinv;
-			return Ok(ret);
+			return Ok<float(*)[9]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float(*)[9]>))
 	}
 	
 	Result<float(*)[3]> cv_detail_ProjectorBase_getPropT(cv::detail::ProjectorBase* instance) {
 		try {
 			float(*ret)[3] = &instance->t;
-			return Ok(ret);
+			return Ok<float(*)[3]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float(*)[3]>))
 	}
 	
@@ -2175,42 +2175,42 @@ extern "C" {
 	Result<cv::Point2f> cv_detail_RotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::RotationWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *R);
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result<cv::Rect> cv_detail_RotationWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::RotationWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_RotationWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::RotationWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_RotationWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::RotationWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result_void cv_detail_RotationWarper_warpBackward_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_Size_const__OutputArrayR(cv::detail::RotationWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::Size* dst_size, const cv::_OutputArray* dst) {
+	Result_void cv_detail_RotationWarper_warpBackward_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_Size_const__OutputArrayR(cv::detail::RotationWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, cv::Size* dst_size, const cv::_OutputArray* dst) {
 		try {
 			instance->warpBackward(*src, *K, *R, interp_mode, border_mode, *dst_size, *dst);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Rect> cv_detail_RotationWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::RotationWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R) {
+	Result<cv::Rect> cv_detail_RotationWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(cv::detail::RotationWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Rect ret = instance->warpRoi(*src_size, *K, *R);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<float> cv_detail_RotationWarper_getScale_const(const cv::detail::RotationWarper* instance) {
 		try {
 			float ret = instance->getScale();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -2234,7 +2234,7 @@ extern "C" {
 	Result<cv::detail::SiftFeaturesFinder*> cv_detail_SiftFeaturesFinder_SiftFeaturesFinder() {
 		try {
 			cv::detail::SiftFeaturesFinder* ret = new cv::detail::SiftFeaturesFinder();
-			return Ok(ret);
+			return Ok<cv::detail::SiftFeaturesFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SiftFeaturesFinder*>))
 	}
 	
@@ -2261,7 +2261,7 @@ extern "C" {
 	Result<cv::detail::SphericalPortraitWarper*> cv_detail_SphericalPortraitWarper_SphericalPortraitWarper_float(float scale) {
 		try {
 			cv::detail::SphericalPortraitWarper* ret = new cv::detail::SphericalPortraitWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::SphericalPortraitWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SphericalPortraitWarper*>))
 	}
 	
@@ -2288,21 +2288,21 @@ extern "C" {
 	Result<cv::detail::SphericalWarper*> cv_detail_SphericalWarper_SphericalWarper_float(float scale) {
 		try {
 			cv::detail::SphericalWarper* ret = new cv::detail::SphericalWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::SphericalWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SphericalWarper*>))
 	}
 	
-	Result<cv::Rect> cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::SphericalWarper* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::SphericalWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_SphericalWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::SphericalWarper* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
@@ -2312,35 +2312,35 @@ extern "C" {
 	Result<cv::detail::SphericalWarperGpu*> cv_detail_SphericalWarperGpu_SphericalWarperGpu_float(float scale) {
 		try {
 			cv::detail::SphericalWarperGpu* ret = new cv::detail::SphericalWarperGpu(scale);
-			return Ok(ret);
+			return Ok<cv::detail::SphericalWarperGpu*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SphericalWarperGpu*>))
 	}
 	
-	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::SphericalWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
+	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::SphericalWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_SphericalWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(cv::detail::SphericalWarperGpu* instance, const cv::_InputArray* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, const cv::_OutputArray* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::SphericalWarperGpu* instance, const cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
+	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(cv::detail::SphericalWarperGpu* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, cv::cuda::GpuMat* xmap, cv::cuda::GpuMat* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *xmap, *ymap);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Point> cv_detail_SphericalWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(cv::detail::SphericalWarperGpu* instance, const cv::cuda::GpuMat* src, const cv::_InputArray* K, const cv::_InputArray* R, int interp_mode, int border_mode, cv::cuda::GpuMat* dst) {
 		try {
 			cv::Point ret = instance->warp(*src, *K, *R, interp_mode, border_mode, *dst);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
@@ -2367,7 +2367,7 @@ extern "C" {
 	Result<cv::detail::StereographicWarper*> cv_detail_StereographicWarper_StereographicWarper_float(float scale) {
 		try {
 			cv::detail::StereographicWarper* ret = new cv::detail::StereographicWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::StereographicWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::StereographicWarper*>))
 	}
 	
@@ -2377,7 +2377,7 @@ extern "C" {
 	Result<cv::detail::SurfFeaturesFinder*> cv_detail_SurfFeaturesFinder_SurfFeaturesFinder_double_int_int_int_int(double hess_thresh, int num_octaves, int num_layers, int num_octaves_descr, int num_layers_descr) {
 		try {
 			cv::detail::SurfFeaturesFinder* ret = new cv::detail::SurfFeaturesFinder(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr);
-			return Ok(ret);
+			return Ok<cv::detail::SurfFeaturesFinder*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SurfFeaturesFinder*>))
 	}
 	
@@ -2387,7 +2387,7 @@ extern "C" {
 	Result<cv::detail::SurfFeaturesFinderGpu*> cv_detail_SurfFeaturesFinderGpu_SurfFeaturesFinderGpu_double_int_int_int_int(double hess_thresh, int num_octaves, int num_layers, int num_octaves_descr, int num_layers_descr) {
 		try {
 			cv::detail::SurfFeaturesFinderGpu* ret = new cv::detail::SurfFeaturesFinderGpu(hess_thresh, num_octaves, num_layers, num_octaves_descr, num_layers_descr);
-			return Ok(ret);
+			return Ok<cv::detail::SurfFeaturesFinderGpu*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::SurfFeaturesFinderGpu*>))
 	}
 	
@@ -2421,7 +2421,7 @@ extern "C" {
 	Result<cv::detail::TransverseMercatorWarper*> cv_detail_TransverseMercatorWarper_TransverseMercatorWarper_float(float scale) {
 		try {
 			cv::detail::TransverseMercatorWarper* ret = new cv::detail::TransverseMercatorWarper(scale);
-			return Ok(ret);
+			return Ok<cv::detail::TransverseMercatorWarper*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::TransverseMercatorWarper*>))
 	}
 	

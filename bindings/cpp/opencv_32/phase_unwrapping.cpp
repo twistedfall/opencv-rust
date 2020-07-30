@@ -20,7 +20,7 @@ extern "C" {
 	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropWidth_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
 			int ret = instance->width;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -34,7 +34,7 @@ extern "C" {
 	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropHeight_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
 			int ret = instance->height;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -48,7 +48,7 @@ extern "C" {
 	Result<float> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropHistThresh_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
 			float ret = instance->histThresh;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -62,7 +62,7 @@ extern "C" {
 	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropNbrOfSmallBins_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
 			int ret = instance->nbrOfSmallBins;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -76,7 +76,7 @@ extern "C" {
 	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_getPropNbrOfLargeBins_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
 			int ret = instance->nbrOfLargeBins;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -93,7 +93,7 @@ extern "C" {
 	Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() {
 		try {
 			cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* ret = new cv::phase_unwrapping::HistogramPhaseUnwrapping::Params();
-			return Ok(ret);
+			return Ok<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>))
 	}
 	

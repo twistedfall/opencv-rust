@@ -3,28 +3,28 @@
 #include "cudafilters_types.hpp"
 
 extern "C" {
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxFilter_int_int_Size_Point_int_Scalar(int srcType, int dstType, const cv::Size* ksize, const cv::Point* anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxFilter_int_int_Size_Point_int_Scalar(int srcType, int dstType, cv::Size* ksize, cv::Point* anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createBoxFilter(srcType, dstType, *ksize, *anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxMaxFilter_int_Size_Point_int_Scalar(int srcType, const cv::Size* ksize, const cv::Point* anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxMaxFilter_int_Size_Point_int_Scalar(int srcType, cv::Size* ksize, cv::Point* anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createBoxMaxFilter(srcType, *ksize, *anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxMinFilter_int_Size_Point_int_Scalar(int srcType, const cv::Size* ksize, const cv::Point* anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createBoxMinFilter_int_Size_Point_int_Scalar(int srcType, cv::Size* ksize, cv::Point* anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createBoxMinFilter(srcType, *ksize, *anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createColumnSumFilter_int_int_int_int_int_Scalar(int srcType, int dstType, int ksize, int anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createColumnSumFilter_int_int_int_int_int_Scalar(int srcType, int dstType, int ksize, int anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createColumnSumFilter(srcType, dstType, ksize, anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
@@ -38,21 +38,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createGaussianFilter_int_int_Size_double_double_int_int(int srcType, int dstType, const cv::Size* ksize, double sigma1, double sigma2, int rowBorderMode, int columnBorderMode) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createGaussianFilter_int_int_Size_double_double_int_int(int srcType, int dstType, cv::Size* ksize, double sigma1, double sigma2, int rowBorderMode, int columnBorderMode) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createGaussianFilter(srcType, dstType, *ksize, sigma1, sigma2, rowBorderMode, columnBorderMode);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createLaplacianFilter_int_int_int_double_int_Scalar(int srcType, int dstType, int ksize, double scale, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createLaplacianFilter_int_int_int_double_int_Scalar(int srcType, int dstType, int ksize, double scale, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createLaplacianFilter(srcType, dstType, ksize, scale, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(int srcType, int dstType, const cv::_InputArray* kernel, const cv::Point* anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(int srcType, int dstType, const cv::_InputArray* kernel, cv::Point* anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createLinearFilter(srcType, dstType, *kernel, *anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
@@ -66,14 +66,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(int op, int srcType, const cv::_InputArray* kernel, const cv::Point* anchor, int iterations) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(int op, int srcType, const cv::_InputArray* kernel, cv::Point* anchor, int iterations) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createMorphologyFilter(op, srcType, *kernel, *anchor, iterations);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createRowSumFilter_int_int_int_int_int_Scalar(int srcType, int dstType, int ksize, int anchor, int borderMode, const cv::Scalar* borderVal) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createRowSumFilter_int_int_int_int_int_Scalar(int srcType, int dstType, int ksize, int anchor, int borderMode, cv::Scalar* borderVal) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createRowSumFilter(srcType, dstType, ksize, anchor, borderMode, *borderVal);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));
@@ -87,7 +87,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::Filter>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(int srcType, int dstType, const cv::_InputArray* rowKernel, const cv::_InputArray* columnKernel, const cv::Point* anchor, int rowBorderMode, int columnBorderMode) {
+	Result<cv::Ptr<cv::cuda::Filter>*> cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(int srcType, int dstType, const cv::_InputArray* rowKernel, const cv::_InputArray* columnKernel, cv::Point* anchor, int rowBorderMode, int columnBorderMode) {
 		try {
 			cv::Ptr<cv::cuda::Filter> ret = cv::cuda::createSeparableLinearFilter(srcType, dstType, *rowKernel, *columnKernel, *anchor, rowBorderMode, columnBorderMode);
 			return Ok(new cv::Ptr<cv::cuda::Filter>(ret));

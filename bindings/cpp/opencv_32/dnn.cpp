@@ -61,11 +61,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_BaseConvolutionLayer_getPropKernel_const(const cv::dnn::BaseConvolutionLayer* instance) {
 		try {
 			cv::Size ret = instance->kernel;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPropKernel_Size(cv::dnn::BaseConvolutionLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPropKernel_Size(cv::dnn::BaseConvolutionLayer* instance, cv::Size* val) {
 		try {
 			instance->kernel = *val;
 			return Ok();
@@ -75,11 +75,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_BaseConvolutionLayer_getPropStride_const(const cv::dnn::BaseConvolutionLayer* instance) {
 		try {
 			cv::Size ret = instance->stride;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPropStride_Size(cv::dnn::BaseConvolutionLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPropStride_Size(cv::dnn::BaseConvolutionLayer* instance, cv::Size* val) {
 		try {
 			instance->stride = *val;
 			return Ok();
@@ -89,11 +89,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_BaseConvolutionLayer_getPropPad_const(const cv::dnn::BaseConvolutionLayer* instance) {
 		try {
 			cv::Size ret = instance->pad;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPropPad_Size(cv::dnn::BaseConvolutionLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPropPad_Size(cv::dnn::BaseConvolutionLayer* instance, cv::Size* val) {
 		try {
 			instance->pad = *val;
 			return Ok();
@@ -103,11 +103,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_BaseConvolutionLayer_getPropDilation_const(const cv::dnn::BaseConvolutionLayer* instance) {
 		try {
 			cv::Size ret = instance->dilation;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPropDilation_Size(cv::dnn::BaseConvolutionLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPropDilation_Size(cv::dnn::BaseConvolutionLayer* instance, cv::Size* val) {
 		try {
 			instance->dilation = *val;
 			return Ok();
@@ -134,21 +134,21 @@ extern "C" {
 	Result<cv::dnn::Blob*> cv_dnn_Blob_Blob() {
 		try {
 			cv::dnn::Blob* ret = new cv::dnn::Blob();
-			return Ok(ret);
+			return Ok<cv::dnn::Blob*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Blob*>))
 	}
 	
 	Result<cv::dnn::Blob*> cv_dnn_Blob_Blob_const_BlobShapeR_int_int(const cv::dnn::BlobShape* shape, int type, int allocFlags) {
 		try {
 			cv::dnn::Blob* ret = new cv::dnn::Blob(*shape, type, allocFlags);
-			return Ok(ret);
+			return Ok<cv::dnn::Blob*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Blob*>))
 	}
 	
 	Result<cv::dnn::Blob*> cv_dnn_Blob_Blob_const__InputArrayR(const cv::_InputArray* data) {
 		try {
 			cv::dnn::Blob* ret = new cv::dnn::Blob(*data);
-			return Ok(ret);
+			return Ok<cv::dnn::Blob*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Blob*>))
 	}
 	
@@ -201,11 +201,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_dnn_Blob_matRefConst_const(const cv::dnn::Blob* instance) {
+	Result<const cv::Mat*> cv_dnn_Blob_matRefConst_const(const cv::dnn::Blob* instance) {
 		try {
-			cv::Mat ret = instance->matRefConst();
-			return Ok(new cv::Mat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+			const cv::Mat ret = instance->matRefConst();
+			return Ok(new const cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Mat*>))
 	}
 	
 	Result<cv::UMat*> cv_dnn_Blob_umatRef_bool(cv::dnn::Blob* instance, bool writeOnly) {
@@ -215,11 +215,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::UMat*>))
 	}
 	
-	Result<cv::UMat*> cv_dnn_Blob_umatRefConst_const(const cv::dnn::Blob* instance) {
+	Result<const cv::UMat*> cv_dnn_Blob_umatRefConst_const(const cv::dnn::Blob* instance) {
 		try {
-			cv::UMat ret = instance->umatRefConst();
-			return Ok(new cv::UMat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::UMat*>))
+			const cv::UMat ret = instance->umatRefConst();
+			return Ok(new const cv::UMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::UMat*>))
 	}
 	
 	Result_void cv_dnn_Blob_updateMat_const_bool(const cv::dnn::Blob* instance, bool syncData) {
@@ -246,35 +246,35 @@ extern "C" {
 	Result<int> cv_dnn_Blob_dims_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->dims();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_size_const_int(const cv::dnn::Blob* instance, int axis) {
 		try {
 			int ret = instance->size(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_xsize_const_int(const cv::dnn::Blob* instance, int axis) {
 		try {
 			int ret = instance->xsize(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<size_t> cv_dnn_Blob_total_const_int_int(const cv::dnn::Blob* instance, int startAxis, int endAxis) {
 		try {
 			size_t ret = instance->total(startAxis, endAxis);
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
 	Result<int> cv_dnn_Blob_canonicalAxis_const_int(const cv::dnn::Blob* instance, int axis) {
 		try {
 			int ret = instance->canonicalAxis(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -288,7 +288,7 @@ extern "C" {
 	Result<bool> cv_dnn_Blob_equalShape_const_const_BlobR(const cv::dnn::Blob* instance, const cv::dnn::Blob* other) {
 		try {
 			bool ret = instance->equalShape(*other);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -309,63 +309,63 @@ extern "C" {
 	Result<int> cv_dnn_Blob_cols_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->cols();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_rows_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->rows();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_channels_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->channels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_num_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->num();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<cv::Size> cv_dnn_Blob_size2_const(const cv::dnn::Blob* instance) {
 		try {
 			cv::Size ret = instance->size2();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
 	Result<cv::Vec4i> cv_dnn_Blob_shape4_const(const cv::dnn::Blob* instance) {
 		try {
 			cv::Vec4i ret = instance->shape4();
-			return Ok(ret);
+			return Ok<cv::Vec4i>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec4i>))
 	}
 	
 	Result<size_t> cv_dnn_Blob_offset_const_int_int_int_int(const cv::dnn::Blob* instance, int n, int cn, int row, int col) {
 		try {
 			size_t ret = instance->offset(n, cn, row, col);
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
 	Result<unsigned char*> cv_dnn_Blob_ptr_int_int_int_int(cv::dnn::Blob* instance, int n, int cn, int row, int col) {
 		try {
 			unsigned char* ret = instance->ptr(n, cn, row, col);
-			return Ok(ret);
+			return Ok<unsigned char*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned char*>))
 	}
 	
 	Result<float*> cv_dnn_Blob_ptrf_int_int_int_int(cv::dnn::Blob* instance, int n, int cn, int row, int col) {
 		try {
 			float* ret = instance->ptrf(n, cn, row, col);
-			return Ok(ret);
+			return Ok<float*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float*>))
 	}
 	
@@ -393,21 +393,21 @@ extern "C" {
 	Result<int> cv_dnn_Blob_type_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->type();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_elemSize_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->elemSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Blob_getState_const(const cv::dnn::Blob* instance) {
 		try {
 			int ret = instance->getState();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -417,49 +417,49 @@ extern "C" {
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape() {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape();
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_int(int s0) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(s0);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_int_int(int s0, int s1) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(s0, s1);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_int_int_int(int s0, int s1, int s2) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(s0, s1, s2);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_int_int_int_int(int num, int cn, int rows, int cols) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(num, cn, rows, cols);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_int_const_intX(int ndims, const int* sizes) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(ndims, sizes);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_BlobShape_const_vector_int_R(const std::vector<int>* sizes) {
 		try {
 			cv::dnn::BlobShape* ret = new cv::dnn::BlobShape(*sizes);
-			return Ok(ret);
+			return Ok<cv::dnn::BlobShape*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BlobShape*>))
 	}
 	
@@ -473,63 +473,63 @@ extern "C" {
 	Result<int> cv_dnn_BlobShape_dims_const(const cv::dnn::BlobShape* instance) {
 		try {
 			int ret = instance->dims();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_size_int(cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->size(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_size_const_int(const cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->size(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_operator___const_int(const cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->operator[](axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_operator___int(cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->operator[](axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_xsize_const_int(const cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->xsize(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_BlobShape_canonicalAxis_const_int(const cv::dnn::BlobShape* instance, int axis) {
 		try {
 			int ret = instance->canonicalAxis(axis);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<ptrdiff_t> cv_dnn_BlobShape_total_const(const cv::dnn::BlobShape* instance) {
 		try {
 			ptrdiff_t ret = instance->total();
-			return Ok(ret);
+			return Ok<ptrdiff_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<ptrdiff_t>))
 	}
 	
 	Result<ptrdiff_t> cv_dnn_BlobShape_total_const_int_int(const cv::dnn::BlobShape* instance, int startAxis, int endAxis) {
 		try {
 			ptrdiff_t ret = instance->total(startAxis, endAxis);
-			return Ok(ret);
+			return Ok<ptrdiff_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<ptrdiff_t>))
 	}
 	
@@ -543,21 +543,21 @@ extern "C" {
 	Result<const int*> cv_dnn_BlobShape_ptr_const(const cv::dnn::BlobShape* instance) {
 		try {
 			const int* ret = instance->ptr();
-			return Ok(ret);
+			return Ok<const int*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const int*>))
 	}
 	
 	Result<int*> cv_dnn_BlobShape_ptr(cv::dnn::BlobShape* instance) {
 		try {
 			int* ret = instance->ptr();
-			return Ok(ret);
+			return Ok<int*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int*>))
 	}
 	
 	Result<bool> cv_dnn_BlobShape_equal_const_const_BlobShapeR(const cv::dnn::BlobShape* instance, const cv::dnn::BlobShape* other) {
 		try {
 			bool ret = instance->equal(*other);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -592,14 +592,14 @@ extern "C" {
 	Result<bool> cv_dnn_BlobShape_isEmpty_const(const cv::dnn::BlobShape* instance) {
 		try {
 			bool ret = instance->isEmpty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_dnn_ConcatLayer_getPropAxis_const(const cv::dnn::ConcatLayer* instance) {
 		try {
 			int ret = instance->axis;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -617,7 +617,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::ConcatLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const cv::Size* dilation) {
+	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(cv::Size* kernel, cv::Size* stride, cv::Size* pad, cv::Size* dilation) {
 		try {
 			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::ConvolutionLayer::create(*kernel, *stride, *pad, *dilation);
 			return Ok(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
@@ -627,7 +627,7 @@ extern "C" {
 	Result<int> cv_dnn_CropLayer_getPropStartAxis_const(const cv::dnn::CropLayer* instance) {
 		try {
 			int ret = instance->startAxis;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -659,7 +659,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::CropLayer>*>))
 	}
 	
-	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const cv::Size* dilation) {
+	Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*> cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(cv::Size* kernel, cv::Size* stride, cv::Size* pad, cv::Size* dilation) {
 		try {
 			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::DeconvolutionLayer::create(*kernel, *stride, *pad, *dilation);
 			return Ok(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
@@ -672,7 +672,7 @@ extern "C" {
 	Result<bool> cv_dnn_Dict_has_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
 		try {
 			bool ret = instance->has(cv::String(key));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -683,39 +683,39 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue**>))
 	}
 	
-	Result<cv::dnn::DictValue*> cv_dnn_Dict_get_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
+	Result<const cv::dnn::DictValue*> cv_dnn_Dict_get_const_const_StringR(const cv::dnn::Dict* instance, const char* key) {
 		try {
-			cv::dnn::DictValue ret = instance->get(cv::String(key));
-			return Ok(new cv::dnn::DictValue(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
+			const cv::dnn::DictValue ret = instance->get(cv::String(key));
+			return Ok(new const cv::dnn::DictValue(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::dnn::DictValue*>))
 	}
 	
 	Result<void*> cv_dnn_Dict_set_cv_String_const_StringR_const_StringR(cv::dnn::Dict* instance, const char* key, const char* value) {
 		try {
-			cv::String ret = instance->set<cv::String>(cv::String(key), cv::String(value));
+			const cv::String ret = instance->set<cv::String>(cv::String(key), cv::String(value));
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::dnn::DictValue*> cv_dnn_Dict_set_cv_dnn_DictValue_const_StringR_const_DictValueR(cv::dnn::Dict* instance, const char* key, const cv::dnn::DictValue* value) {
+	Result<const cv::dnn::DictValue*> cv_dnn_Dict_set_cv_dnn_DictValue_const_StringR_const_DictValueR(cv::dnn::Dict* instance, const char* key, const cv::dnn::DictValue* value) {
 		try {
-			cv::dnn::DictValue ret = instance->set<cv::dnn::DictValue>(cv::String(key), *value);
-			return Ok(new cv::dnn::DictValue(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
+			const cv::dnn::DictValue ret = instance->set<cv::dnn::DictValue>(cv::String(key), *value);
+			return Ok(new const cv::dnn::DictValue(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::dnn::DictValue*>))
 	}
 	
-	Result<double> cv_dnn_Dict_set_double_const_StringR_const_doubleR(cv::dnn::Dict* instance, const char* key, const double* value) {
+	Result<const double> cv_dnn_Dict_set_double_const_StringR_const_doubleR(cv::dnn::Dict* instance, const char* key, const double* value) {
 		try {
-			double ret = instance->set<double>(cv::String(key), *value);
-			return Ok(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+			const double ret = instance->set<double>(cv::String(key), *value);
+			return Ok<const double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const double>))
 	}
 	
-	Result<int64_t> cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR(cv::dnn::Dict* instance, const char* key, const int64_t* value) {
+	Result<const int64_t> cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR(cv::dnn::Dict* instance, const char* key, const int64_t* value) {
 		try {
-			int64_t ret = instance->set<int64_t>(cv::String(key), *value);
-			return Ok(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
+			const int64_t ret = instance->set<int64_t>(cv::String(key), *value);
+			return Ok<const int64_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const int64_t>))
 	}
 	
 	void cv_DictValue_delete(cv::dnn::DictValue* instance) {
@@ -724,42 +724,42 @@ extern "C" {
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_const_DictValueR(const cv::dnn::DictValue* r) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(*r);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_int64_t(int64_t i) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(i);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_int(int i) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(i);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_unsigned_int(unsigned int p) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(p);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_double(double p) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(p);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
 	Result<cv::dnn::DictValue*> cv_dnn_DictValue_DictValue_const_charX(const char* s) {
 		try {
 			cv::dnn::DictValue* ret = new cv::dnn::DictValue(s);
-			return Ok(ret);
+			return Ok<cv::dnn::DictValue*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DictValue*>))
 	}
 	
@@ -773,49 +773,49 @@ extern "C" {
 	Result<double> cv_dnn_DictValue_get_double_const_int(const cv::dnn::DictValue* instance, int idx) {
 		try {
 			double ret = instance->get<double>(idx);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result<int> cv_dnn_DictValue_get_int_const_int(const cv::dnn::DictValue* instance, int idx) {
 		try {
 			int ret = instance->get<int>(idx);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int64_t> cv_dnn_DictValue_get_int64_t_const_int(const cv::dnn::DictValue* instance, int idx) {
 		try {
 			int64_t ret = instance->get<int64_t>(idx);
-			return Ok(ret);
+			return Ok<int64_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
 	Result<int> cv_dnn_DictValue_size_const(const cv::dnn::DictValue* instance) {
 		try {
 			int ret = instance->size();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<bool> cv_dnn_DictValue_isInt_const(const cv::dnn::DictValue* instance) {
 		try {
 			bool ret = instance->isInt();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_dnn_DictValue_isString_const(const cv::dnn::DictValue* instance) {
 		try {
 			bool ret = instance->isString();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_dnn_DictValue_isReal_const(const cv::dnn::DictValue* instance) {
 		try {
 			bool ret = instance->isReal();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -836,7 +836,7 @@ extern "C" {
 	Result<int> cv_dnn_InnerProductLayer_getPropAxis_const(const cv::dnn::InnerProductLayer* instance) {
 		try {
 			int ret = instance->axis;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -857,7 +857,7 @@ extern "C" {
 	Result<int> cv_dnn_LRNLayer_getPropType_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			int ret = instance->type;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -871,7 +871,7 @@ extern "C" {
 	Result<int> cv_dnn_LRNLayer_getPropSize_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			int ret = instance->size;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -885,7 +885,7 @@ extern "C" {
 	Result<double> cv_dnn_LRNLayer_getPropAlpha_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			double ret = instance->alpha;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -899,7 +899,7 @@ extern "C" {
 	Result<double> cv_dnn_LRNLayer_getPropBeta_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			double ret = instance->beta;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -913,7 +913,7 @@ extern "C" {
 	Result<double> cv_dnn_LRNLayer_getPropBias_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			double ret = instance->bias;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -927,7 +927,7 @@ extern "C" {
 	Result<bool> cv_dnn_LRNLayer_getPropNormBySize_const(const cv::dnn::LRNLayer* instance) {
 		try {
 			bool ret = instance->normBySize;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1018,14 +1018,14 @@ extern "C" {
 	Result<int> cv_dnn_LSTMLayer_inputNameToIndex_String(cv::dnn::LSTMLayer* instance, char* inputName) {
 		try {
 			int ret = instance->inputNameToIndex(cv::String(inputName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_LSTMLayer_outputNameToIndex_String(cv::dnn::LSTMLayer* instance, char* outputName) {
 		try {
 			int ret = instance->outputNameToIndex(cv::String(outputName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1116,14 +1116,14 @@ extern "C" {
 	Result<int> cv_dnn_Layer_inputNameToIndex_String(cv::dnn::Layer* instance, char* inputName) {
 		try {
 			int ret = instance->inputNameToIndex(cv::String(inputName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Layer_outputNameToIndex_String(cv::dnn::Layer* instance, char* outputName) {
 		try {
 			int ret = instance->outputNameToIndex(cv::String(outputName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1206,7 +1206,7 @@ extern "C" {
 	Result<double> cv_dnn_MVNLayer_getPropEps_const(const cv::dnn::MVNLayer* instance) {
 		try {
 			double ret = instance->eps;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1220,7 +1220,7 @@ extern "C" {
 	Result<bool> cv_dnn_MVNLayer_getPropNormVariance_const(const cv::dnn::MVNLayer* instance) {
 		try {
 			bool ret = instance->normVariance;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1234,7 +1234,7 @@ extern "C" {
 	Result<bool> cv_dnn_MVNLayer_getPropAcrossChannels_const(const cv::dnn::MVNLayer* instance) {
 		try {
 			bool ret = instance->acrossChannels;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1258,35 +1258,35 @@ extern "C" {
 	Result<cv::dnn::Net*> cv_dnn_Net_Net() {
 		try {
 			cv::dnn::Net* ret = new cv::dnn::Net();
-			return Ok(ret);
+			return Ok<cv::dnn::Net*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
 	Result<bool> cv_dnn_Net_empty_const(const cv::dnn::Net* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_dnn_Net_addLayer_const_StringR_const_StringR_LayerParamsR(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
 		try {
 			int ret = instance->addLayer(cv::String(name), cv::String(type), *params);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_LayerParamsR(cv::dnn::Net* instance, const char* name, const char* type, cv::dnn::LayerParams* params) {
 		try {
 			int ret = instance->addLayerToPrev(cv::String(name), cv::String(type), *params);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_dnn_Net_getLayerId_const_StringR(cv::dnn::Net* instance, const char* layer) {
 		try {
 			int ret = instance->getLayerId(cv::String(layer));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1405,7 +1405,7 @@ extern "C" {
 	Result<int> cv_dnn_PoolingLayer_getPropType_const(const cv::dnn::PoolingLayer* instance) {
 		try {
 			int ret = instance->type;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1419,11 +1419,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_PoolingLayer_getPropKernel_const(const cv::dnn::PoolingLayer* instance) {
 		try {
 			cv::Size ret = instance->kernel;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPropKernel_Size(cv::dnn::PoolingLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_PoolingLayer_setPropKernel_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
 		try {
 			instance->kernel = *val;
 			return Ok();
@@ -1433,11 +1433,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_PoolingLayer_getPropStride_const(const cv::dnn::PoolingLayer* instance) {
 		try {
 			cv::Size ret = instance->stride;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPropStride_Size(cv::dnn::PoolingLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_PoolingLayer_setPropStride_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
 		try {
 			instance->stride = *val;
 			return Ok();
@@ -1447,11 +1447,11 @@ extern "C" {
 	Result<cv::Size> cv_dnn_PoolingLayer_getPropPad_const(const cv::dnn::PoolingLayer* instance) {
 		try {
 			cv::Size ret = instance->pad;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPropPad_Size(cv::dnn::PoolingLayer* instance, const cv::Size* val) {
+	Result_void cv_dnn_PoolingLayer_setPropPad_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
 		try {
 			instance->pad = *val;
 			return Ok();
@@ -1461,7 +1461,7 @@ extern "C" {
 	Result<bool> cv_dnn_PoolingLayer_getPropGlobalPooling_const(const cv::dnn::PoolingLayer* instance) {
 		try {
 			bool ret = instance->globalPooling;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1486,7 +1486,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::dnn::PoolingLayer>*> cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringR(int type, const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const char* padMode) {
+	Result<cv::Ptr<cv::dnn::PoolingLayer>*> cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringR(int type, cv::Size* kernel, cv::Size* stride, cv::Size* pad, const char* padMode) {
 		try {
 			cv::Ptr<cv::dnn::PoolingLayer> ret = cv::dnn::PoolingLayer::create(type, *kernel, *stride, *pad, cv::String(padMode));
 			return Ok(new cv::Ptr<cv::dnn::PoolingLayer>(ret));
@@ -1503,7 +1503,7 @@ extern "C" {
 	Result<double> cv_dnn_PowerLayer_getPropPower_const(const cv::dnn::PowerLayer* instance) {
 		try {
 			double ret = instance->power;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1517,7 +1517,7 @@ extern "C" {
 	Result<double> cv_dnn_PowerLayer_getPropScale_const(const cv::dnn::PowerLayer* instance) {
 		try {
 			double ret = instance->scale;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1531,7 +1531,7 @@ extern "C" {
 	Result<double> cv_dnn_PowerLayer_getPropShift_const(const cv::dnn::PowerLayer* instance) {
 		try {
 			double ret = instance->shift;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1580,7 +1580,7 @@ extern "C" {
 	Result<double> cv_dnn_ReLULayer_getPropNegativeSlope_const(const cv::dnn::ReLULayer* instance) {
 		try {
 			double ret = instance->negativeSlope;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1643,7 +1643,7 @@ extern "C" {
 	Result<int> cv_dnn_SliceLayer_getPropAxis_const(const cv::dnn::SliceLayer* instance) {
 		try {
 			int ret = instance->axis;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1692,7 +1692,7 @@ extern "C" {
 	Result<int> cv_dnn_SplitLayer_getPropOutputsCount_const(const cv::dnn::SplitLayer* instance) {
 		try {
 			int ret = instance->outputsCount;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1723,14 +1723,14 @@ extern "C" {
 	Result<cv::dnn::_Range*> cv_dnn__Range__Range_const_RangeR(const cv::Range* r) {
 		try {
 			cv::dnn::_Range* ret = new cv::dnn::_Range(*r);
-			return Ok(ret);
+			return Ok<cv::dnn::_Range*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::_Range*>))
 	}
 	
 	Result<cv::dnn::_Range*> cv_dnn__Range__Range_int_int(int start, int size) {
 		try {
 			cv::dnn::_Range* ret = new cv::dnn::_Range(start, size);
-			return Ok(ret);
+			return Ok<cv::dnn::_Range*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::_Range*>))
 	}
 	

@@ -215,7 +215,7 @@ pub fn create_simple_wb() -> Result<core::Ptr::<dyn crate::xphoto::SimpleWB>> {
 /// ## C++ default parameters
 /// * psize: 16
 pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_double_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize) }.into_result()
+	unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double_const_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize) }.into_result()
 }
 
 /// The function implements different single-image inpainting algorithms.
@@ -232,7 +232,7 @@ pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i3
 /// * dst: destination image
 /// * algorithmType: see xphoto::InpaintTypes
 pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm_type: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_inpaint_const_MatR_const_MatR_MatR_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type) }.into_result()
+	unsafe { sys::cv_xphoto_inpaint_const_MatR_const_MatR_MatR_const_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type) }.into_result()
 }
 
 /// Gray-world white balance algorithm

@@ -1,10 +1,26 @@
 template struct Result<bool>;
+template struct Result<const cv::Ptr<cv::dnn::ActivationLayer>*>;
+template struct Result<const cv::Ptr<cv::dnn::BackendNode>*>;
+template struct Result<const cv::dnn::DictValue*>;
 template struct Result<const cv::dnn::DictValue**>;
+template struct Result<const double>;
+template struct Result<const long>;
+template struct Result<const std::vector<cv::Mat*>*>;
+template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<const std::vector<cv::Ptr<cv::dnn::BackendNode>>*>;
+template struct Result<const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>*>;
+template struct Result<const std::vector<cv::Rect_<double>>*>;
+template struct Result<const std::vector<cv::Rect_<int>>*>;
+template struct Result<const std::vector<cv::RotatedRect>*>;
+template struct Result<const std::vector<float>*>;
+template struct Result<const std::vector<int>*>;
+template struct Result<const std::vector<std::string>*>;
+template struct Result<const std::vector<std::vector<int>>*>;
+template struct Result<const std::vector<unsigned char>*>;
 template struct Result<cv::AsyncArray*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::dnn::AbsLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::AccumLayer>*>;
-template struct Result<cv::Ptr<cv::dnn::ActivationLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::BNLLLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::BackendNode>*>;
 template struct Result<cv::Ptr<cv::dnn::BackendWrapper>*>;
@@ -71,13 +87,9 @@ template struct Result<std::vector<bool>*>;
 template struct Result<std::vector<cv::Mat*>*>;
 template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Point_<float>>*>;
-template struct Result<std::vector<cv::Ptr<cv::dnn::BackendNode>>*>;
-template struct Result<std::vector<cv::Ptr<cv::dnn::BackendWrapper>>*>;
 template struct Result<std::vector<cv::Ptr<cv::dnn::Layer>>*>;
 template struct Result<std::vector<cv::Range>*>;
-template struct Result<std::vector<cv::Rect_<double>>*>;
 template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::RotatedRect>*>;
 template struct Result<std::vector<cv::dnn::Target>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<float>*>;
@@ -87,359 +99,562 @@ template struct Result<std::vector<std::vector<cv::Mat>>*>;
 template struct Result<std::vector<std::vector<cv::Range>>*>;
 template struct Result<std::vector<std::vector<int>>*>;
 template struct Result<std::vector<std::vector<std::vector<int>>>*>;
-template struct Result<std::vector<unsigned char>*>;
 template struct Result<std::vector<unsigned long>*>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfAbsLayer_delete(cv::Ptr<cv::dnn::AbsLayer>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfAbsLayer_delete(cv::Ptr<cv::dnn::AbsLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::AbsLayer* cv_PtrOfAbsLayer_get_inner_ptr(cv::Ptr<cv::dnn::AbsLayer>* instance) {
+		return instance->get();
+	}
 }
-
-extern "C" cv::dnn::AbsLayer* cv_PtrOfAbsLayer_get_inner_ptr(cv::Ptr<cv::dnn::AbsLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfAccumLayer_delete(cv::Ptr<cv::dnn::AccumLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::AccumLayer* cv_PtrOfAccumLayer_get_inner_ptr(cv::Ptr<cv::dnn::AccumLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfActivationLayer_delete(cv::Ptr<cv::dnn::ActivationLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ActivationLayer* cv_PtrOfActivationLayer_get_inner_ptr(cv::Ptr<cv::dnn::ActivationLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfBNLLLayer_delete(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::BNLLLayer* cv_PtrOfBNLLLayer_get_inner_ptr(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfBackendNode_delete(cv::Ptr<cv::dnn::BackendNode>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::BackendNode* cv_PtrOfBackendNode_get_inner_ptr(cv::Ptr<cv::dnn::BackendNode>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfBackendWrapper_delete(cv::Ptr<cv::dnn::BackendWrapper>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::BackendWrapper* cv_PtrOfBackendWrapper_get_inner_ptr(cv::Ptr<cv::dnn::BackendWrapper>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfBaseConvolutionLayer_delete(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::BaseConvolutionLayer* cv_PtrOfBaseConvolutionLayer_get_inner_ptr(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfBatchNormLayer_delete(cv::Ptr<cv::dnn::BatchNormLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::BatchNormLayer* cv_PtrOfBatchNormLayer_get_inner_ptr(cv::Ptr<cv::dnn::BatchNormLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfConcatLayer_delete(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ConcatLayer* cv_PtrOfConcatLayer_get_inner_ptr(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfCorrelationLayer_delete(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::CorrelationLayer* cv_PtrOfCorrelationLayer_get_inner_ptr(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfDataAugmentationLayer_delete(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::DataAugmentationLayer* cv_PtrOfDataAugmentationLayer_get_inner_ptr(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfDetectionOutputLayer_delete(cv::Ptr<cv::dnn::DetectionOutputLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::DetectionOutputLayer* cv_PtrOfDetectionOutputLayer_get_inner_ptr(cv::Ptr<cv::dnn::DetectionOutputLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfELULayer_delete(cv::Ptr<cv::dnn::ELULayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ELULayer* cv_PtrOfELULayer_get_inner_ptr(cv::Ptr<cv::dnn::ELULayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfEltwiseLayer_delete(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::EltwiseLayer* cv_PtrOfEltwiseLayer_get_inner_ptr(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfFlattenLayer_delete(cv::Ptr<cv::dnn::FlattenLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::FlattenLayer* cv_PtrOfFlattenLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlattenLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfFlowWarpLayer_delete(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::FlowWarpLayer* cv_PtrOfFlowWarpLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfInnerProductLayer_delete(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::InnerProductLayer* cv_PtrOfInnerProductLayer_get_inner_ptr(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLRNLayer_delete(cv::Ptr<cv::dnn::LRNLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::LRNLayer* cv_PtrOfLRNLayer_get_inner_ptr(cv::Ptr<cv::dnn::LRNLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLSTMLayer_delete(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::LSTMLayer* cv_PtrOfLSTMLayer_get_inner_ptr(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLayer_delete(cv::Ptr<cv::dnn::Layer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::Layer* cv_PtrOfLayer_get_inner_ptr(cv::Ptr<cv::dnn::Layer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfMVNLayer_delete(cv::Ptr<cv::dnn::MVNLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::MVNLayer* cv_PtrOfMVNLayer_get_inner_ptr(cv::Ptr<cv::dnn::MVNLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfMaxUnpoolLayer_delete(cv::Ptr<cv::dnn::MaxUnpoolLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::MaxUnpoolLayer* cv_PtrOfMaxUnpoolLayer_get_inner_ptr(cv::Ptr<cv::dnn::MaxUnpoolLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfMishLayer_delete(cv::Ptr<cv::dnn::MishLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::MishLayer* cv_PtrOfMishLayer_get_inner_ptr(cv::Ptr<cv::dnn::MishLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfNormalizeBBoxLayer_delete(cv::Ptr<cv::dnn::NormalizeBBoxLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::NormalizeBBoxLayer* cv_PtrOfNormalizeBBoxLayer_get_inner_ptr(cv::Ptr<cv::dnn::NormalizeBBoxLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPaddingLayer_delete(cv::Ptr<cv::dnn::PaddingLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::PaddingLayer* cv_PtrOfPaddingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PaddingLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPermuteLayer_delete(cv::Ptr<cv::dnn::PermuteLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::PermuteLayer* cv_PtrOfPermuteLayer_get_inner_ptr(cv::Ptr<cv::dnn::PermuteLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPoolingLayer_delete(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::PoolingLayer* cv_PtrOfPoolingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPowerLayer_delete(cv::Ptr<cv::dnn::PowerLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::PowerLayer* cv_PtrOfPowerLayer_get_inner_ptr(cv::Ptr<cv::dnn::PowerLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPriorBoxLayer_delete(cv::Ptr<cv::dnn::PriorBoxLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::PriorBoxLayer* cv_PtrOfPriorBoxLayer_get_inner_ptr(cv::Ptr<cv::dnn::PriorBoxLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfProposalLayer_delete(cv::Ptr<cv::dnn::ProposalLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ProposalLayer* cv_PtrOfProposalLayer_get_inner_ptr(cv::Ptr<cv::dnn::ProposalLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRNNLayer_delete(cv::Ptr<cv::dnn::RNNLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::RNNLayer* cv_PtrOfRNNLayer_get_inner_ptr(cv::Ptr<cv::dnn::RNNLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfReLU6Layer_delete(cv::Ptr<cv::dnn::ReLU6Layer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ReLU6Layer* cv_PtrOfReLU6Layer_get_inner_ptr(cv::Ptr<cv::dnn::ReLU6Layer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfReLULayer_delete(cv::Ptr<cv::dnn::ReLULayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ReLULayer* cv_PtrOfReLULayer_get_inner_ptr(cv::Ptr<cv::dnn::ReLULayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRegionLayer_delete(cv::Ptr<cv::dnn::RegionLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::RegionLayer* cv_PtrOfRegionLayer_get_inner_ptr(cv::Ptr<cv::dnn::RegionLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfReorgLayer_delete(cv::Ptr<cv::dnn::ReorgLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ReorgLayer* cv_PtrOfReorgLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReorgLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfReshapeLayer_delete(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ReshapeLayer* cv_PtrOfReshapeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfResizeLayer_delete(cv::Ptr<cv::dnn::ResizeLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ResizeLayer* cv_PtrOfResizeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ResizeLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfScaleLayer_delete(cv::Ptr<cv::dnn::ScaleLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::ScaleLayer* cv_PtrOfScaleLayer_get_inner_ptr(cv::Ptr<cv::dnn::ScaleLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSigmoidLayer_delete(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::SigmoidLayer* cv_PtrOfSigmoidLayer_get_inner_ptr(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSliceLayer_delete(cv::Ptr<cv::dnn::SliceLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::SliceLayer* cv_PtrOfSliceLayer_get_inner_ptr(cv::Ptr<cv::dnn::SliceLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSoftmaxLayer_delete(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::SoftmaxLayer* cv_PtrOfSoftmaxLayer_get_inner_ptr(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSplitLayer_delete(cv::Ptr<cv::dnn::SplitLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::SplitLayer* cv_PtrOfSplitLayer_get_inner_ptr(cv::Ptr<cv::dnn::SplitLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSwishLayer_delete(cv::Ptr<cv::dnn::SwishLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::SwishLayer* cv_PtrOfSwishLayer_get_inner_ptr(cv::Ptr<cv::dnn::SwishLayer>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTanHLayer_delete(cv::Ptr<cv::dnn::TanHLayer>* instance) {
-	delete instance;
-}
-
-extern "C" cv::dnn::TanHLayer* cv_PtrOfTanHLayer_get_inner_ptr(cv::Ptr<cv::dnn::TanHLayer>* instance) {
-	return instance->get();
+
+extern "C" {
+	cv::Ptr<cv::dnn::AccumLayer>* cv_PtrOfAccumLayer_new(cv::dnn::AccumLayer* val) {
+		return new cv::Ptr<cv::dnn::AccumLayer>(val);
+	}
+	
+	void cv_PtrOfAccumLayer_delete(cv::Ptr<cv::dnn::AccumLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::AccumLayer* cv_PtrOfAccumLayer_get_inner_ptr(cv::Ptr<cv::dnn::AccumLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfActivationLayer_delete(cv::Ptr<cv::dnn::ActivationLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ActivationLayer* cv_PtrOfActivationLayer_get_inner_ptr(cv::Ptr<cv::dnn::ActivationLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfBNLLLayer_delete(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::BNLLLayer* cv_PtrOfBNLLLayer_get_inner_ptr(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::BackendNode>* cv_PtrOfBackendNode_new(cv::dnn::BackendNode* val) {
+		return new cv::Ptr<cv::dnn::BackendNode>(val);
+	}
+	
+	void cv_PtrOfBackendNode_delete(cv::Ptr<cv::dnn::BackendNode>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::BackendNode* cv_PtrOfBackendNode_get_inner_ptr(cv::Ptr<cv::dnn::BackendNode>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfBackendWrapper_delete(cv::Ptr<cv::dnn::BackendWrapper>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::BackendWrapper* cv_PtrOfBackendWrapper_get_inner_ptr(cv::Ptr<cv::dnn::BackendWrapper>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::BaseConvolutionLayer>* cv_PtrOfBaseConvolutionLayer_new(cv::dnn::BaseConvolutionLayer* val) {
+		return new cv::Ptr<cv::dnn::BaseConvolutionLayer>(val);
+	}
+	
+	void cv_PtrOfBaseConvolutionLayer_delete(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::BaseConvolutionLayer* cv_PtrOfBaseConvolutionLayer_get_inner_ptr(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfBatchNormLayer_delete(cv::Ptr<cv::dnn::BatchNormLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::BatchNormLayer* cv_PtrOfBatchNormLayer_get_inner_ptr(cv::Ptr<cv::dnn::BatchNormLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ConcatLayer>* cv_PtrOfConcatLayer_new(cv::dnn::ConcatLayer* val) {
+		return new cv::Ptr<cv::dnn::ConcatLayer>(val);
+	}
+	
+	void cv_PtrOfConcatLayer_delete(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ConcatLayer* cv_PtrOfConcatLayer_get_inner_ptr(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::CorrelationLayer>* cv_PtrOfCorrelationLayer_new(cv::dnn::CorrelationLayer* val) {
+		return new cv::Ptr<cv::dnn::CorrelationLayer>(val);
+	}
+	
+	void cv_PtrOfCorrelationLayer_delete(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::CorrelationLayer* cv_PtrOfCorrelationLayer_get_inner_ptr(cv::Ptr<cv::dnn::CorrelationLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::DataAugmentationLayer>* cv_PtrOfDataAugmentationLayer_new(cv::dnn::DataAugmentationLayer* val) {
+		return new cv::Ptr<cv::dnn::DataAugmentationLayer>(val);
+	}
+	
+	void cv_PtrOfDataAugmentationLayer_delete(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::DataAugmentationLayer* cv_PtrOfDataAugmentationLayer_get_inner_ptr(cv::Ptr<cv::dnn::DataAugmentationLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::DetectionOutputLayer>* cv_PtrOfDetectionOutputLayer_new(cv::dnn::DetectionOutputLayer* val) {
+		return new cv::Ptr<cv::dnn::DetectionOutputLayer>(val);
+	}
+	
+	void cv_PtrOfDetectionOutputLayer_delete(cv::Ptr<cv::dnn::DetectionOutputLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::DetectionOutputLayer* cv_PtrOfDetectionOutputLayer_get_inner_ptr(cv::Ptr<cv::dnn::DetectionOutputLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfELULayer_delete(cv::Ptr<cv::dnn::ELULayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ELULayer* cv_PtrOfELULayer_get_inner_ptr(cv::Ptr<cv::dnn::ELULayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::EltwiseLayer>* cv_PtrOfEltwiseLayer_new(cv::dnn::EltwiseLayer* val) {
+		return new cv::Ptr<cv::dnn::EltwiseLayer>(val);
+	}
+	
+	void cv_PtrOfEltwiseLayer_delete(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::EltwiseLayer* cv_PtrOfEltwiseLayer_get_inner_ptr(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::FlattenLayer>* cv_PtrOfFlattenLayer_new(cv::dnn::FlattenLayer* val) {
+		return new cv::Ptr<cv::dnn::FlattenLayer>(val);
+	}
+	
+	void cv_PtrOfFlattenLayer_delete(cv::Ptr<cv::dnn::FlattenLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::FlattenLayer* cv_PtrOfFlattenLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlattenLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::FlowWarpLayer>* cv_PtrOfFlowWarpLayer_new(cv::dnn::FlowWarpLayer* val) {
+		return new cv::Ptr<cv::dnn::FlowWarpLayer>(val);
+	}
+	
+	void cv_PtrOfFlowWarpLayer_delete(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::FlowWarpLayer* cv_PtrOfFlowWarpLayer_get_inner_ptr(cv::Ptr<cv::dnn::FlowWarpLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::InnerProductLayer>* cv_PtrOfInnerProductLayer_new(cv::dnn::InnerProductLayer* val) {
+		return new cv::Ptr<cv::dnn::InnerProductLayer>(val);
+	}
+	
+	void cv_PtrOfInnerProductLayer_delete(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::InnerProductLayer* cv_PtrOfInnerProductLayer_get_inner_ptr(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::LRNLayer>* cv_PtrOfLRNLayer_new(cv::dnn::LRNLayer* val) {
+		return new cv::Ptr<cv::dnn::LRNLayer>(val);
+	}
+	
+	void cv_PtrOfLRNLayer_delete(cv::Ptr<cv::dnn::LRNLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::LRNLayer* cv_PtrOfLRNLayer_get_inner_ptr(cv::Ptr<cv::dnn::LRNLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfLSTMLayer_delete(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::LSTMLayer* cv_PtrOfLSTMLayer_get_inner_ptr(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::Layer>* cv_PtrOfLayer_new(cv::dnn::Layer* val) {
+		return new cv::Ptr<cv::dnn::Layer>(val);
+	}
+	
+	void cv_PtrOfLayer_delete(cv::Ptr<cv::dnn::Layer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::Layer* cv_PtrOfLayer_get_inner_ptr(cv::Ptr<cv::dnn::Layer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::MVNLayer>* cv_PtrOfMVNLayer_new(cv::dnn::MVNLayer* val) {
+		return new cv::Ptr<cv::dnn::MVNLayer>(val);
+	}
+	
+	void cv_PtrOfMVNLayer_delete(cv::Ptr<cv::dnn::MVNLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::MVNLayer* cv_PtrOfMVNLayer_get_inner_ptr(cv::Ptr<cv::dnn::MVNLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::MaxUnpoolLayer>* cv_PtrOfMaxUnpoolLayer_new(cv::dnn::MaxUnpoolLayer* val) {
+		return new cv::Ptr<cv::dnn::MaxUnpoolLayer>(val);
+	}
+	
+	void cv_PtrOfMaxUnpoolLayer_delete(cv::Ptr<cv::dnn::MaxUnpoolLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::MaxUnpoolLayer* cv_PtrOfMaxUnpoolLayer_get_inner_ptr(cv::Ptr<cv::dnn::MaxUnpoolLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfMishLayer_delete(cv::Ptr<cv::dnn::MishLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::MishLayer* cv_PtrOfMishLayer_get_inner_ptr(cv::Ptr<cv::dnn::MishLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::NormalizeBBoxLayer>* cv_PtrOfNormalizeBBoxLayer_new(cv::dnn::NormalizeBBoxLayer* val) {
+		return new cv::Ptr<cv::dnn::NormalizeBBoxLayer>(val);
+	}
+	
+	void cv_PtrOfNormalizeBBoxLayer_delete(cv::Ptr<cv::dnn::NormalizeBBoxLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::NormalizeBBoxLayer* cv_PtrOfNormalizeBBoxLayer_get_inner_ptr(cv::Ptr<cv::dnn::NormalizeBBoxLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::PaddingLayer>* cv_PtrOfPaddingLayer_new(cv::dnn::PaddingLayer* val) {
+		return new cv::Ptr<cv::dnn::PaddingLayer>(val);
+	}
+	
+	void cv_PtrOfPaddingLayer_delete(cv::Ptr<cv::dnn::PaddingLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::PaddingLayer* cv_PtrOfPaddingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PaddingLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::PermuteLayer>* cv_PtrOfPermuteLayer_new(cv::dnn::PermuteLayer* val) {
+		return new cv::Ptr<cv::dnn::PermuteLayer>(val);
+	}
+	
+	void cv_PtrOfPermuteLayer_delete(cv::Ptr<cv::dnn::PermuteLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::PermuteLayer* cv_PtrOfPermuteLayer_get_inner_ptr(cv::Ptr<cv::dnn::PermuteLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::PoolingLayer>* cv_PtrOfPoolingLayer_new(cv::dnn::PoolingLayer* val) {
+		return new cv::Ptr<cv::dnn::PoolingLayer>(val);
+	}
+	
+	void cv_PtrOfPoolingLayer_delete(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::PoolingLayer* cv_PtrOfPoolingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfPowerLayer_delete(cv::Ptr<cv::dnn::PowerLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::PowerLayer* cv_PtrOfPowerLayer_get_inner_ptr(cv::Ptr<cv::dnn::PowerLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::PriorBoxLayer>* cv_PtrOfPriorBoxLayer_new(cv::dnn::PriorBoxLayer* val) {
+		return new cv::Ptr<cv::dnn::PriorBoxLayer>(val);
+	}
+	
+	void cv_PtrOfPriorBoxLayer_delete(cv::Ptr<cv::dnn::PriorBoxLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::PriorBoxLayer* cv_PtrOfPriorBoxLayer_get_inner_ptr(cv::Ptr<cv::dnn::PriorBoxLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ProposalLayer>* cv_PtrOfProposalLayer_new(cv::dnn::ProposalLayer* val) {
+		return new cv::Ptr<cv::dnn::ProposalLayer>(val);
+	}
+	
+	void cv_PtrOfProposalLayer_delete(cv::Ptr<cv::dnn::ProposalLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ProposalLayer* cv_PtrOfProposalLayer_get_inner_ptr(cv::Ptr<cv::dnn::ProposalLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfRNNLayer_delete(cv::Ptr<cv::dnn::RNNLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::RNNLayer* cv_PtrOfRNNLayer_get_inner_ptr(cv::Ptr<cv::dnn::RNNLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfReLU6Layer_delete(cv::Ptr<cv::dnn::ReLU6Layer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ReLU6Layer* cv_PtrOfReLU6Layer_get_inner_ptr(cv::Ptr<cv::dnn::ReLU6Layer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfReLULayer_delete(cv::Ptr<cv::dnn::ReLULayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ReLULayer* cv_PtrOfReLULayer_get_inner_ptr(cv::Ptr<cv::dnn::ReLULayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::RegionLayer>* cv_PtrOfRegionLayer_new(cv::dnn::RegionLayer* val) {
+		return new cv::Ptr<cv::dnn::RegionLayer>(val);
+	}
+	
+	void cv_PtrOfRegionLayer_delete(cv::Ptr<cv::dnn::RegionLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::RegionLayer* cv_PtrOfRegionLayer_get_inner_ptr(cv::Ptr<cv::dnn::RegionLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ReorgLayer>* cv_PtrOfReorgLayer_new(cv::dnn::ReorgLayer* val) {
+		return new cv::Ptr<cv::dnn::ReorgLayer>(val);
+	}
+	
+	void cv_PtrOfReorgLayer_delete(cv::Ptr<cv::dnn::ReorgLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ReorgLayer* cv_PtrOfReorgLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReorgLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ReshapeLayer>* cv_PtrOfReshapeLayer_new(cv::dnn::ReshapeLayer* val) {
+		return new cv::Ptr<cv::dnn::ReshapeLayer>(val);
+	}
+	
+	void cv_PtrOfReshapeLayer_delete(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ReshapeLayer* cv_PtrOfReshapeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ResizeLayer>* cv_PtrOfResizeLayer_new(cv::dnn::ResizeLayer* val) {
+		return new cv::Ptr<cv::dnn::ResizeLayer>(val);
+	}
+	
+	void cv_PtrOfResizeLayer_delete(cv::Ptr<cv::dnn::ResizeLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ResizeLayer* cv_PtrOfResizeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ResizeLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::ScaleLayer>* cv_PtrOfScaleLayer_new(cv::dnn::ScaleLayer* val) {
+		return new cv::Ptr<cv::dnn::ScaleLayer>(val);
+	}
+	
+	void cv_PtrOfScaleLayer_delete(cv::Ptr<cv::dnn::ScaleLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::ScaleLayer* cv_PtrOfScaleLayer_get_inner_ptr(cv::Ptr<cv::dnn::ScaleLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfSigmoidLayer_delete(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::SigmoidLayer* cv_PtrOfSigmoidLayer_get_inner_ptr(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::SliceLayer>* cv_PtrOfSliceLayer_new(cv::dnn::SliceLayer* val) {
+		return new cv::Ptr<cv::dnn::SliceLayer>(val);
+	}
+	
+	void cv_PtrOfSliceLayer_delete(cv::Ptr<cv::dnn::SliceLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::SliceLayer* cv_PtrOfSliceLayer_get_inner_ptr(cv::Ptr<cv::dnn::SliceLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::SoftmaxLayer>* cv_PtrOfSoftmaxLayer_new(cv::dnn::SoftmaxLayer* val) {
+		return new cv::Ptr<cv::dnn::SoftmaxLayer>(val);
+	}
+	
+	void cv_PtrOfSoftmaxLayer_delete(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::SoftmaxLayer* cv_PtrOfSoftmaxLayer_get_inner_ptr(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::dnn::SplitLayer>* cv_PtrOfSplitLayer_new(cv::dnn::SplitLayer* val) {
+		return new cv::Ptr<cv::dnn::SplitLayer>(val);
+	}
+	
+	void cv_PtrOfSplitLayer_delete(cv::Ptr<cv::dnn::SplitLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::SplitLayer* cv_PtrOfSplitLayer_get_inner_ptr(cv::Ptr<cv::dnn::SplitLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfSwishLayer_delete(cv::Ptr<cv::dnn::SwishLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::SwishLayer* cv_PtrOfSwishLayer_get_inner_ptr(cv::Ptr<cv::dnn::SwishLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfTanHLayer_delete(cv::Ptr<cv::dnn::TanHLayer>* instance) {
+		delete instance;
+	}
+
+	cv::dnn::TanHLayer* cv_PtrOfTanHLayer_get_inner_ptr(cv::Ptr<cv::dnn::TanHLayer>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

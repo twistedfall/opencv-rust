@@ -38,11 +38,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<size_t> cvv_impl_CallMetaData_getPropLine_const(const cvv::impl::CallMetaData* instance) {
+	Result<const size_t> cvv_impl_CallMetaData_getPropLine_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			size_t ret = instance->line;
-			return Ok(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+			const size_t ret = instance->line;
+			return Ok<const size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const size_t>))
 	}
 	
 	Result<void*> cvv_impl_CallMetaData_getPropFunction_const(const cvv::impl::CallMetaData* instance) {
@@ -52,11 +52,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<bool> cvv_impl_CallMetaData_getPropIsKnown_const(const cvv::impl::CallMetaData* instance) {
+	Result<const bool> cvv_impl_CallMetaData_getPropIsKnown_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			bool ret = instance->isKnown;
-			return Ok(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+			const bool ret = instance->isKnown;
+			return Ok<const bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const bool>))
 	}
 	
 	void cv_CallMetaData_delete(cvv::impl::CallMetaData* instance) {
@@ -65,21 +65,21 @@ extern "C" {
 	Result<cvv::impl::CallMetaData*> cvv_impl_CallMetaData_CallMetaData() {
 		try {
 			cvv::impl::CallMetaData* ret = new cvv::impl::CallMetaData();
-			return Ok(ret);
+			return Ok<cvv::impl::CallMetaData*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cvv::impl::CallMetaData*>))
 	}
 	
 	Result<cvv::impl::CallMetaData*> cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(const char* file, size_t line, const char* function) {
 		try {
 			cvv::impl::CallMetaData* ret = new cvv::impl::CallMetaData(file, line, function);
-			return Ok(ret);
+			return Ok<cvv::impl::CallMetaData*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cvv::impl::CallMetaData*>))
 	}
 	
 	Result<bool> cvv_impl_CallMetaData_operator_bool(cvv::impl::CallMetaData* instance) {
 		try {
 			bool ret = instance->operator bool();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	

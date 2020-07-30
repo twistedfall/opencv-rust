@@ -7,12 +7,14 @@ template struct Result<cv::stereo::PropagationParameters*>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::stereo::Match>*>;
-extern "C" void cv_PtrOfQuasiDenseStereo_delete(cv::Ptr<cv::stereo::QuasiDenseStereo>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfQuasiDenseStereo_delete(cv::Ptr<cv::stereo::QuasiDenseStereo>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::stereo::QuasiDenseStereo* cv_PtrOfQuasiDenseStereo_get_inner_ptr(cv::Ptr<cv::stereo::QuasiDenseStereo>* instance) {
-	return instance->get();
+	cv::stereo::QuasiDenseStereo* cv_PtrOfQuasiDenseStereo_get_inner_ptr(cv::Ptr<cv::stereo::QuasiDenseStereo>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

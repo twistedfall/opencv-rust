@@ -62,7 +62,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorCNT_getMinPixelStability_const(const cv::bgsegm::BackgroundSubtractorCNT* instance) {
 		try {
 			int ret = instance->getMinPixelStability();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -76,7 +76,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorCNT_getMaxPixelStability_const(const cv::bgsegm::BackgroundSubtractorCNT* instance) {
 		try {
 			int ret = instance->getMaxPixelStability();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -90,7 +90,7 @@ extern "C" {
 	Result<bool> cv_bgsegm_BackgroundSubtractorCNT_getUseHistory_const(const cv::bgsegm::BackgroundSubtractorCNT* instance) {
 		try {
 			bool ret = instance->getUseHistory();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -104,7 +104,7 @@ extern "C" {
 	Result<bool> cv_bgsegm_BackgroundSubtractorCNT_getIsParallel_const(const cv::bgsegm::BackgroundSubtractorCNT* instance) {
 		try {
 			bool ret = instance->getIsParallel();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -118,7 +118,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorGMG_getMaxFeatures_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			int ret = instance->getMaxFeatures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -132,7 +132,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorGMG_getDefaultLearningRate_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			double ret = instance->getDefaultLearningRate();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -146,7 +146,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorGMG_getNumFrames_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			int ret = instance->getNumFrames();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -160,7 +160,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorGMG_getQuantizationLevels_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			int ret = instance->getQuantizationLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -174,7 +174,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorGMG_getBackgroundPrior_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			double ret = instance->getBackgroundPrior();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -188,7 +188,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorGMG_getSmoothingRadius_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			int ret = instance->getSmoothingRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -202,7 +202,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorGMG_getDecisionThreshold_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			double ret = instance->getDecisionThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -216,7 +216,7 @@ extern "C" {
 	Result<bool> cv_bgsegm_BackgroundSubtractorGMG_getUpdateBackgroundModel_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			bool ret = instance->getUpdateBackgroundModel();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -230,7 +230,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorGMG_getMinVal_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			double ret = instance->getMinVal();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -244,7 +244,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorGMG_getMaxVal_const(const cv::bgsegm::BackgroundSubtractorGMG* instance) {
 		try {
 			double ret = instance->getMaxVal();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -310,7 +310,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(const cv::bgsegm::BackgroundSubtractorMOG* instance) {
 		try {
 			int ret = instance->getHistory();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -324,7 +324,7 @@ extern "C" {
 	Result<int> cv_bgsegm_BackgroundSubtractorMOG_getNMixtures_const(const cv::bgsegm::BackgroundSubtractorMOG* instance) {
 		try {
 			int ret = instance->getNMixtures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -338,7 +338,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorMOG_getBackgroundRatio_const(const cv::bgsegm::BackgroundSubtractorMOG* instance) {
 		try {
 			double ret = instance->getBackgroundRatio();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -352,7 +352,7 @@ extern "C" {
 	Result<double> cv_bgsegm_BackgroundSubtractorMOG_getNoiseSigma_const(const cv::bgsegm::BackgroundSubtractorMOG* instance) {
 		try {
 			double ret = instance->getNoiseSigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -369,7 +369,7 @@ extern "C" {
 	Result<cv::bgsegm::SyntheticSequenceGenerator*> cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(const cv::_InputArray* background, const cv::_InputArray* object, double amplitude, double wavelength, double wavespeed, double objspeed) {
 		try {
 			cv::bgsegm::SyntheticSequenceGenerator* ret = new cv::bgsegm::SyntheticSequenceGenerator(*background, *object, amplitude, wavelength, wavespeed, objspeed);
-			return Ok(ret);
+			return Ok<cv::bgsegm::SyntheticSequenceGenerator*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::bgsegm::SyntheticSequenceGenerator*>))
 	}
 	

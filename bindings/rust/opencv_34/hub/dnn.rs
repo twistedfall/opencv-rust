@@ -85,7 +85,7 @@ pub type Net_LayerId = crate::dnn::DictValue;
 /// * eta: 1.f
 /// * top_k: 0
 pub fn nms_boxes_f64(bboxes: &core::Vector::<core::Rect2d>, scores: &core::Vector::<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector::<i32>, eta: f32, top_k: i32) -> Result<()> {
-	unsafe { sys::cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_float_float_vector_int_R_float_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
+	unsafe { sys::cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
 }
 
 /// Performs non maximum suppression given boxes and corresponding scores.
@@ -103,14 +103,14 @@ pub fn nms_boxes_f64(bboxes: &core::Vector::<core::Rect2d>, scores: &core::Vecto
 /// * eta: 1.f
 /// * top_k: 0
 pub fn nms_boxes(bboxes: &core::Vector::<core::Rect>, scores: &core::Vector::<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector::<i32>, eta: f32, top_k: i32) -> Result<()> {
-	unsafe { sys::cv_dnn_NMSBoxes_const_vector_Rect_R_const_vector_float_R_float_float_vector_int_R_float_int(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
+	unsafe { sys::cv_dnn_NMSBoxes_const_vector_Rect_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
 pub fn nms_boxes_rotated(bboxes: &core::Vector::<core::RotatedRect>, scores: &core::Vector::<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector::<i32>, eta: f32, top_k: i32) -> Result<()> {
-	unsafe { sys::cv_dnn_NMSBoxes_const_vector_RotatedRect_R_const_vector_float_R_float_float_vector_int_R_float_int(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
+	unsafe { sys::cv_dnn_NMSBoxes_const_vector_RotatedRect_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k) }.into_result()
 }
 
 /// Creates 4-dimensional blob from image.
@@ -626,7 +626,7 @@ pub fn shape_3(mat: &core::UMat) -> Result<core::Vector::<i32>> {
 }
 
 pub fn shape(dims: &i32, n: i32) -> Result<core::Vector::<i32>> {
-	unsafe { sys::cv_dnn_shape_const_intX_int(dims, n) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
+	unsafe { sys::cv_dnn_shape_const_intX_const_int(dims, n) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 }
 
 /// ## C++ default parameters
@@ -2580,7 +2580,7 @@ pub trait LayerTrait: core::AlgorithmTrait {
 	}
 	
 	fn get_memory_shapes(&self, inputs: &core::Vector::<crate::dnn::MatShape>, required_outputs: i32, outputs: &mut core::Vector::<crate::dnn::MatShape>, internals: &mut core::Vector::<crate::dnn::MatShape>) -> Result<bool> {
-		unsafe { sys::cv_dnn_Layer_getMemoryShapes_const_const_vector_MatShape_R_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Layer(), inputs.as_raw_VectorOfMatShape(), required_outputs, outputs.as_raw_mut_VectorOfMatShape(), internals.as_raw_mut_VectorOfMatShape()) }.into_result()
+		unsafe { sys::cv_dnn_Layer_getMemoryShapes_const_const_vector_MatShape_R_const_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Layer(), inputs.as_raw_VectorOfMatShape(), required_outputs, outputs.as_raw_mut_VectorOfMatShape(), internals.as_raw_mut_VectorOfMatShape()) }.into_result()
 	}
 	
 	fn get_flops(&self, inputs: &core::Vector::<crate::dnn::MatShape>, outputs: &core::Vector::<crate::dnn::MatShape>) -> Result<i64> {
@@ -3259,7 +3259,7 @@ pub trait NetTrait {
 	/// * outLayerShapes: output parameter for output layers shapes;
 	/// order is the same as in layersIds
 	fn get_layer_shapes(&self, net_input_shape: &crate::dnn::MatShape, layer_id: i32, in_layer_shapes: &mut core::Vector::<crate::dnn::MatShape>, out_layer_shapes: &mut core::Vector::<crate::dnn::MatShape>) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_getLayerShapes_const_const_MatShapeR_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Net(), net_input_shape.as_raw_VectorOfi32(), layer_id, in_layer_shapes.as_raw_mut_VectorOfMatShape(), out_layer_shapes.as_raw_mut_VectorOfMatShape()) }.into_result()
+		unsafe { sys::cv_dnn_Net_getLayerShapes_const_const_MatShapeR_const_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Net(), net_input_shape.as_raw_VectorOfi32(), layer_id, in_layer_shapes.as_raw_mut_VectorOfMatShape(), out_layer_shapes.as_raw_mut_VectorOfMatShape()) }.into_result()
 	}
 	
 	/// Returns input and output shapes for layer with specified
@@ -3274,7 +3274,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn get_layer_shapes_1(&self, net_input_shapes: &core::Vector::<crate::dnn::MatShape>, layer_id: i32, in_layer_shapes: &mut core::Vector::<crate::dnn::MatShape>, out_layer_shapes: &mut core::Vector::<crate::dnn::MatShape>) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_getLayerShapes_const_const_vector_MatShape_R_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Net(), net_input_shapes.as_raw_VectorOfMatShape(), layer_id, in_layer_shapes.as_raw_mut_VectorOfMatShape(), out_layer_shapes.as_raw_mut_VectorOfMatShape()) }.into_result()
+		unsafe { sys::cv_dnn_Net_getLayerShapes_const_const_vector_MatShape_R_const_int_vector_MatShape_R_vector_MatShape_R(self.as_raw_Net(), net_input_shapes.as_raw_VectorOfMatShape(), layer_id, in_layer_shapes.as_raw_mut_VectorOfMatShape(), out_layer_shapes.as_raw_mut_VectorOfMatShape()) }.into_result()
 	}
 	
 	/// Computes FLOP for whole loaded model with specified input shapes.
@@ -3305,7 +3305,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn get_flops_2(&self, layer_id: i32, net_input_shapes: &core::Vector::<crate::dnn::MatShape>) -> Result<i64> {
-		unsafe { sys::cv_dnn_Net_getFLOPS_const_int_const_vector_MatShape_R(self.as_raw_Net(), layer_id, net_input_shapes.as_raw_VectorOfMatShape()) }.into_result()
+		unsafe { sys::cv_dnn_Net_getFLOPS_const_const_int_const_vector_MatShape_R(self.as_raw_Net(), layer_id, net_input_shapes.as_raw_VectorOfMatShape()) }.into_result()
 	}
 	
 	/// Computes FLOP for whole loaded model with specified input shapes.
@@ -3316,7 +3316,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn get_flops_3(&self, layer_id: i32, net_input_shape: &crate::dnn::MatShape) -> Result<i64> {
-		unsafe { sys::cv_dnn_Net_getFLOPS_const_int_const_MatShapeR(self.as_raw_Net(), layer_id, net_input_shape.as_raw_VectorOfi32()) }.into_result()
+		unsafe { sys::cv_dnn_Net_getFLOPS_const_const_int_const_MatShapeR(self.as_raw_Net(), layer_id, net_input_shape.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Returns list of types for layer used in model.
@@ -3369,7 +3369,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn get_memory_consumption_for_layer(&self, layer_id: i32, net_input_shapes: &core::Vector::<crate::dnn::MatShape>, weights: &mut size_t, blobs: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_int_const_vector_MatShape_R_size_tR_size_tR(self.as_raw_Net(), layer_id, net_input_shapes.as_raw_VectorOfMatShape(), weights, blobs) }.into_result()
+		unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_const_int_const_vector_MatShape_R_size_tR_size_tR(self.as_raw_Net(), layer_id, net_input_shapes.as_raw_VectorOfMatShape(), weights, blobs) }.into_result()
 	}
 	
 	/// Computes bytes number which are required to store
@@ -3382,7 +3382,7 @@ pub trait NetTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn get_memory_consumption_2(&self, layer_id: i32, net_input_shape: &crate::dnn::MatShape, weights: &mut size_t, blobs: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_int_const_MatShapeR_size_tR_size_tR(self.as_raw_Net(), layer_id, net_input_shape.as_raw_VectorOfi32(), weights, blobs) }.into_result()
+		unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_const_int_const_MatShapeR_size_tR_size_tR(self.as_raw_Net(), layer_id, net_input_shape.as_raw_VectorOfi32(), weights, blobs) }.into_result()
 	}
 	
 	/// Computes bytes number which are required to store

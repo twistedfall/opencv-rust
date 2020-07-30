@@ -6,7 +6,7 @@ extern "C" {
 	Result<float> cv_videostab_calcBlurriness_const_MatR(const cv::Mat* frame) {
 		try {
 			float ret = cv::videostab::calcBlurriness(*frame);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -24,7 +24,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_videostab_ensureInclusionConstraint_const_MatR_Size_float(const cv::Mat* M, const cv::Size* size, float trimRatio) {
+	Result<cv::Mat*> cv_videostab_ensureInclusionConstraint_const_MatR_Size_float(const cv::Mat* M, cv::Size* size, float trimRatio) {
 		try {
 			cv::Mat ret = cv::videostab::ensureInclusionConstraint(*M, *size, trimRatio);
 			return Ok(new cv::Mat(ret));
@@ -45,10 +45,10 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatR_Size(const cv::Mat* M, const cv::Size* size) {
+	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatR_Size(const cv::Mat* M, cv::Size* size) {
 		try {
 			float ret = cv::videostab::estimateOptimalTrimRatio(*M, *size);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -75,7 +75,7 @@ extern "C" {
 	Result<cv::videostab::ColorInpainter*> cv_videostab_ColorInpainter_ColorInpainter_int_double(int method, double radius) {
 		try {
 			cv::videostab::ColorInpainter* ret = new cv::videostab::ColorInpainter(method, radius);
-			return Ok(ret);
+			return Ok<cv::videostab::ColorInpainter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::ColorInpainter*>))
 	}
 	
@@ -92,7 +92,7 @@ extern "C" {
 	Result<cv::videostab::ConsistentMosaicInpainter*> cv_videostab_ConsistentMosaicInpainter_ConsistentMosaicInpainter() {
 		try {
 			cv::videostab::ConsistentMosaicInpainter* ret = new cv::videostab::ConsistentMosaicInpainter();
-			return Ok(ret);
+			return Ok<cv::videostab::ConsistentMosaicInpainter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::ConsistentMosaicInpainter*>))
 	}
 	
@@ -106,7 +106,7 @@ extern "C" {
 	Result<float> cv_videostab_ConsistentMosaicInpainter_stdevThresh_const(const cv::videostab::ConsistentMosaicInpainter* instance) {
 		try {
 			float ret = instance->stdevThresh();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -127,7 +127,7 @@ extern "C" {
 	Result<int> cv_videostab_DeblurerBase_radius_const(const cv::videostab::DeblurerBase* instance) {
 		try {
 			int ret = instance->radius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -145,11 +145,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_DeblurerBase_frames_const(const cv::videostab::DeblurerBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_DeblurerBase_frames_const(const cv::videostab::DeblurerBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->frames();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->frames();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_DeblurerBase_setMotions_const_vector_Mat_R(cv::videostab::DeblurerBase* instance, const std::vector<cv::Mat>* val) {
@@ -159,11 +159,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_DeblurerBase_motions_const(const cv::videostab::DeblurerBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_DeblurerBase_motions_const(const cv::videostab::DeblurerBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->motions();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->motions();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_DeblurerBase_setBlurrinessRates_const_vector_float_R(cv::videostab::DeblurerBase* instance, const std::vector<float>* val) {
@@ -173,11 +173,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<float>*> cv_videostab_DeblurerBase_blurrinessRates_const(const cv::videostab::DeblurerBase* instance) {
+	Result<const std::vector<float>*> cv_videostab_DeblurerBase_blurrinessRates_const(const cv::videostab::DeblurerBase* instance) {
 		try {
-			std::vector<float> ret = instance->blurrinessRates();
-			return Ok(new std::vector<float>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<float>*>))
+			const std::vector<float> ret = instance->blurrinessRates();
+			return Ok(new const std::vector<float>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<float>*>))
 	}
 	
 	void cv_FastMarchingMethod_delete(cv::videostab::FastMarchingMethod* instance) {
@@ -186,7 +186,7 @@ extern "C" {
 	Result<cv::videostab::FastMarchingMethod*> cv_videostab_FastMarchingMethod_FastMarchingMethod() {
 		try {
 			cv::videostab::FastMarchingMethod* ret = new cv::videostab::FastMarchingMethod();
-			return Ok(ret);
+			return Ok<cv::videostab::FastMarchingMethod*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::FastMarchingMethod*>))
 	}
 	
@@ -203,7 +203,7 @@ extern "C" {
 	Result<cv::videostab::FromFileMotionReader*> cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(const char* path) {
 		try {
 			cv::videostab::FromFileMotionReader* ret = new cv::videostab::FromFileMotionReader(cv::String(path));
-			return Ok(ret);
+			return Ok<cv::videostab::FromFileMotionReader*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::FromFileMotionReader*>))
 	}
 	
@@ -220,7 +220,7 @@ extern "C" {
 	Result<cv::videostab::GaussianMotionFilter*> cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int_float(int radius, float stdev) {
 		try {
 			cv::videostab::GaussianMotionFilter* ret = new cv::videostab::GaussianMotionFilter(radius, stdev);
-			return Ok(ret);
+			return Ok<cv::videostab::GaussianMotionFilter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::GaussianMotionFilter*>))
 	}
 	
@@ -234,14 +234,14 @@ extern "C" {
 	Result<int> cv_videostab_GaussianMotionFilter_radius_const(const cv::videostab::GaussianMotionFilter* instance) {
 		try {
 			int ret = instance->radius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<float> cv_videostab_GaussianMotionFilter_stdev_const(const cv::videostab::GaussianMotionFilter* instance) {
 		try {
 			float ret = instance->stdev();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -273,7 +273,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::IOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::IOutlierRejector* instance, cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
@@ -297,7 +297,7 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_ImageMotionEstimatorBase_motionModel_const(const cv::videostab::ImageMotionEstimatorBase* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
@@ -318,7 +318,7 @@ extern "C" {
 	Result<int> cv_videostab_InpainterBase_radius_const(const cv::videostab::InpainterBase* instance) {
 		try {
 			int ret = instance->radius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -332,7 +332,7 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_InpainterBase_motionModel_const(const cv::videostab::InpainterBase* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
@@ -350,11 +350,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_InpainterBase_frames_const(const cv::videostab::InpainterBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_InpainterBase_frames_const(const cv::videostab::InpainterBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->frames();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->frames();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_InpainterBase_setMotions_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
@@ -364,11 +364,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_InpainterBase_motions_const(const cv::videostab::InpainterBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_InpainterBase_motions_const(const cv::videostab::InpainterBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->motions();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->motions();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_InpainterBase_setStabilizedFrames_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
@@ -378,11 +378,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_InpainterBase_stabilizedFrames_const(const cv::videostab::InpainterBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_InpainterBase_stabilizedFrames_const(const cv::videostab::InpainterBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->stabilizedFrames();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->stabilizedFrames();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_InpainterBase_setStabilizationMotions_const_vector_Mat_R(cv::videostab::InpainterBase* instance, const std::vector<cv::Mat>* val) {
@@ -392,11 +392,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_InpainterBase_stabilizationMotions_const(const cv::videostab::InpainterBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_InpainterBase_stabilizationMotions_const(const cv::videostab::InpainterBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->stabilizationMotions();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->stabilizationMotions();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	void cv_InpaintingPipeline_delete(cv::videostab::InpaintingPipeline* instance) {
@@ -412,7 +412,7 @@ extern "C" {
 	Result<bool> cv_videostab_InpaintingPipeline_empty_const(const cv::videostab::InpaintingPipeline* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -471,7 +471,7 @@ extern "C" {
 	Result<cv::videostab::KeypointBasedMotionEstimator*> cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_Ptr_MotionEstimatorBase_(cv::Ptr<cv::videostab::MotionEstimatorBase>* estimator) {
 		try {
 			cv::videostab::KeypointBasedMotionEstimator* ret = new cv::videostab::KeypointBasedMotionEstimator(*estimator);
-			return Ok(ret);
+			return Ok<cv::videostab::KeypointBasedMotionEstimator*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::KeypointBasedMotionEstimator*>))
 	}
 	
@@ -485,7 +485,7 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_KeypointBasedMotionEstimator_motionModel_const(const cv::videostab::KeypointBasedMotionEstimator* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
@@ -554,7 +554,7 @@ extern "C" {
 	Result<cv::videostab::LpMotionStabilizer*> cv_videostab_LpMotionStabilizer_LpMotionStabilizer_MotionModel(cv::videostab::MotionModel model) {
 		try {
 			cv::videostab::LpMotionStabilizer* ret = new cv::videostab::LpMotionStabilizer(model);
-			return Ok(ret);
+			return Ok<cv::videostab::LpMotionStabilizer*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::LpMotionStabilizer*>))
 	}
 	
@@ -568,11 +568,11 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_LpMotionStabilizer_motionModel_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
-	Result_void cv_videostab_LpMotionStabilizer_setFrameSize_Size(cv::videostab::LpMotionStabilizer* instance, const cv::Size* val) {
+	Result_void cv_videostab_LpMotionStabilizer_setFrameSize_Size(cv::videostab::LpMotionStabilizer* instance, cv::Size* val) {
 		try {
 			instance->setFrameSize(*val);
 			return Ok();
@@ -582,7 +582,7 @@ extern "C" {
 	Result<cv::Size> cv_videostab_LpMotionStabilizer_frameSize_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			cv::Size ret = instance->frameSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -596,7 +596,7 @@ extern "C" {
 	Result<float> cv_videostab_LpMotionStabilizer_trimRatio_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			float ret = instance->trimRatio();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -610,7 +610,7 @@ extern "C" {
 	Result<float> cv_videostab_LpMotionStabilizer_weight1_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			float ret = instance->weight1();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -624,7 +624,7 @@ extern "C" {
 	Result<float> cv_videostab_LpMotionStabilizer_weight2_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			float ret = instance->weight2();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -638,7 +638,7 @@ extern "C" {
 	Result<float> cv_videostab_LpMotionStabilizer_weight3_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			float ret = instance->weight3();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -652,7 +652,7 @@ extern "C" {
 	Result<float> cv_videostab_LpMotionStabilizer_weight4_const(const cv::videostab::LpMotionStabilizer* instance) {
 		try {
 			float ret = instance->weight4();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -676,7 +676,7 @@ extern "C" {
 	Result<int> cv_videostab_MoreAccurateMotionWobbleSuppressorBase_period_const(const cv::videostab::MoreAccurateMotionWobbleSuppressorBase* instance) {
 		try {
 			int ret = instance->period();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -690,7 +690,7 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_MotionEstimatorBase_motionModel_const(const cv::videostab::MotionEstimatorBase* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
@@ -707,7 +707,7 @@ extern "C" {
 	Result<cv::videostab::MotionEstimatorL1*> cv_videostab_MotionEstimatorL1_MotionEstimatorL1_MotionModel(cv::videostab::MotionModel model) {
 		try {
 			cv::videostab::MotionEstimatorL1* ret = new cv::videostab::MotionEstimatorL1(model);
-			return Ok(ret);
+			return Ok<cv::videostab::MotionEstimatorL1*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionEstimatorL1*>))
 	}
 	
@@ -724,7 +724,7 @@ extern "C" {
 	Result<cv::videostab::MotionEstimatorRansacL2*> cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2_MotionModel(cv::videostab::MotionModel model) {
 		try {
 			cv::videostab::MotionEstimatorRansacL2* ret = new cv::videostab::MotionEstimatorRansacL2(model);
-			return Ok(ret);
+			return Ok<cv::videostab::MotionEstimatorRansacL2*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionEstimatorRansacL2*>))
 	}
 	
@@ -752,7 +752,7 @@ extern "C" {
 	Result<float> cv_videostab_MotionEstimatorRansacL2_minInlierRatio_const(const cv::videostab::MotionEstimatorRansacL2* instance) {
 		try {
 			float ret = instance->minInlierRatio();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -769,7 +769,7 @@ extern "C" {
 	Result<cv::videostab::MotionInpainter*> cv_videostab_MotionInpainter_MotionInpainter() {
 		try {
 			cv::videostab::MotionInpainter* ret = new cv::videostab::MotionInpainter();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionInpainter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionInpainter*>))
 	}
 	
@@ -797,7 +797,7 @@ extern "C" {
 	Result<float> cv_videostab_MotionInpainter_flowErrorThreshold_const(const cv::videostab::MotionInpainter* instance) {
 		try {
 			float ret = instance->flowErrorThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -811,7 +811,7 @@ extern "C" {
 	Result<float> cv_videostab_MotionInpainter_distThresh_const(const cv::videostab::MotionInpainter* instance) {
 		try {
 			float ret = instance->distThresh();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -825,7 +825,7 @@ extern "C" {
 	Result<int> cv_videostab_MotionInpainter_borderMode_const(const cv::videostab::MotionInpainter* instance) {
 		try {
 			int ret = instance->borderMode();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -849,7 +849,7 @@ extern "C" {
 	Result<bool> cv_videostab_MotionStabilizationPipeline_empty_const(const cv::videostab::MotionStabilizationPipeline* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -903,7 +903,7 @@ extern "C" {
 	void cv_NullOutlierRejector_delete(cv::videostab::NullOutlierRejector* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::NullOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::NullOutlierRejector* instance, cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
@@ -926,7 +926,7 @@ extern "C" {
 	Result<cv::videostab::OnePassStabilizer*> cv_videostab_OnePassStabilizer_OnePassStabilizer() {
 		try {
 			cv::videostab::OnePassStabilizer* ret = new cv::videostab::OnePassStabilizer();
-			return Ok(ret);
+			return Ok<cv::videostab::OnePassStabilizer*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::OnePassStabilizer*>))
 	}
 	
@@ -964,11 +964,11 @@ extern "C" {
 	Result<cv::videostab::PyrLkOptFlowEstimatorBase*> cv_videostab_PyrLkOptFlowEstimatorBase_PyrLkOptFlowEstimatorBase() {
 		try {
 			cv::videostab::PyrLkOptFlowEstimatorBase* ret = new cv::videostab::PyrLkOptFlowEstimatorBase();
-			return Ok(ret);
+			return Ok<cv::videostab::PyrLkOptFlowEstimatorBase*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::PyrLkOptFlowEstimatorBase*>))
 	}
 	
-	Result_void cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(cv::videostab::PyrLkOptFlowEstimatorBase* instance, const cv::Size* val) {
+	Result_void cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(cv::videostab::PyrLkOptFlowEstimatorBase* instance, cv::Size* val) {
 		try {
 			instance->setWinSize(*val);
 			return Ok();
@@ -978,7 +978,7 @@ extern "C" {
 	Result<cv::Size> cv_videostab_PyrLkOptFlowEstimatorBase_winSize_const(const cv::videostab::PyrLkOptFlowEstimatorBase* instance) {
 		try {
 			cv::Size ret = instance->winSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -992,14 +992,14 @@ extern "C" {
 	Result<int> cv_videostab_PyrLkOptFlowEstimatorBase_maxLevel_const(const cv::videostab::PyrLkOptFlowEstimatorBase* instance) {
 		try {
 			int ret = instance->maxLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_videostab_RansacParams_getPropSize_const(const cv::videostab::RansacParams* instance) {
 		try {
 			int ret = instance->size;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1013,7 +1013,7 @@ extern "C" {
 	Result<float> cv_videostab_RansacParams_getPropThresh_const(const cv::videostab::RansacParams* instance) {
 		try {
 			float ret = instance->thresh;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1027,7 +1027,7 @@ extern "C" {
 	Result<float> cv_videostab_RansacParams_getPropEps_const(const cv::videostab::RansacParams* instance) {
 		try {
 			float ret = instance->eps;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1041,7 +1041,7 @@ extern "C" {
 	Result<float> cv_videostab_RansacParams_getPropProb_const(const cv::videostab::RansacParams* instance) {
 		try {
 			float ret = instance->prob;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1058,21 +1058,21 @@ extern "C" {
 	Result<cv::videostab::RansacParams*> cv_videostab_RansacParams_RansacParams() {
 		try {
 			cv::videostab::RansacParams* ret = new cv::videostab::RansacParams();
-			return Ok(ret);
+			return Ok<cv::videostab::RansacParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::RansacParams*>))
 	}
 	
 	Result<cv::videostab::RansacParams*> cv_videostab_RansacParams_RansacParams_int_float_float_float(int size, float thresh, float eps, float prob) {
 		try {
 			cv::videostab::RansacParams* ret = new cv::videostab::RansacParams(size, thresh, eps, prob);
-			return Ok(ret);
+			return Ok<cv::videostab::RansacParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::RansacParams*>))
 	}
 	
 	Result<int> cv_videostab_RansacParams_niters_const(const cv::videostab::RansacParams* instance) {
 		try {
 			int ret = instance->niters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1117,7 +1117,7 @@ extern "C" {
 	Result<int> cv_videostab_StabilizerBase_radius_const(const cv::videostab::StabilizerBase* instance) {
 		try {
 			int ret = instance->radius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1173,7 +1173,7 @@ extern "C" {
 	Result<float> cv_videostab_StabilizerBase_trimRatio_const(const cv::videostab::StabilizerBase* instance) {
 		try {
 			float ret = instance->trimRatio();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1187,7 +1187,7 @@ extern "C" {
 	Result<bool> cv_videostab_StabilizerBase_doCorrectionForInclusion_const(const cv::videostab::StabilizerBase* instance) {
 		try {
 			bool ret = instance->doCorrectionForInclusion();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1201,7 +1201,7 @@ extern "C" {
 	Result<int> cv_videostab_StabilizerBase_borderMode_const(const cv::videostab::StabilizerBase* instance) {
 		try {
 			int ret = instance->borderMode();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1225,7 +1225,7 @@ extern "C" {
 	Result<cv::videostab::ToFileMotionWriter*> cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_Ptr_ImageMotionEstimatorBase_(const char* path, cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* estimator) {
 		try {
 			cv::videostab::ToFileMotionWriter* ret = new cv::videostab::ToFileMotionWriter(cv::String(path), *estimator);
-			return Ok(ret);
+			return Ok<cv::videostab::ToFileMotionWriter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::ToFileMotionWriter*>))
 	}
 	
@@ -1239,7 +1239,7 @@ extern "C" {
 	Result<cv::videostab::MotionModel> cv_videostab_ToFileMotionWriter_motionModel_const(const cv::videostab::ToFileMotionWriter* instance) {
 		try {
 			cv::videostab::MotionModel ret = instance->motionModel();
-			return Ok(ret);
+			return Ok<cv::videostab::MotionModel>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MotionModel>))
 	}
 	
@@ -1256,11 +1256,11 @@ extern "C" {
 	Result<cv::videostab::TranslationBasedLocalOutlierRejector*> cv_videostab_TranslationBasedLocalOutlierRejector_TranslationBasedLocalOutlierRejector() {
 		try {
 			cv::videostab::TranslationBasedLocalOutlierRejector* ret = new cv::videostab::TranslationBasedLocalOutlierRejector();
-			return Ok(ret);
+			return Ok<cv::videostab::TranslationBasedLocalOutlierRejector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::TranslationBasedLocalOutlierRejector*>))
 	}
 	
-	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(cv::videostab::TranslationBasedLocalOutlierRejector* instance, const cv::Size* val) {
+	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(cv::videostab::TranslationBasedLocalOutlierRejector* instance, cv::Size* val) {
 		try {
 			instance->setCellSize(*val);
 			return Ok();
@@ -1270,7 +1270,7 @@ extern "C" {
 	Result<cv::Size> cv_videostab_TranslationBasedLocalOutlierRejector_cellSize_const(const cv::videostab::TranslationBasedLocalOutlierRejector* instance) {
 		try {
 			cv::Size ret = instance->cellSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -1288,7 +1288,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::RansacParams*>))
 	}
 	
-	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::TranslationBasedLocalOutlierRejector* instance, const cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
+	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::videostab::TranslationBasedLocalOutlierRejector* instance, cv::Size* frameSize, const cv::_InputArray* points0, const cv::_InputArray* points1, const cv::_OutputArray* mask) {
 		try {
 			instance->process(*frameSize, *points0, *points1, *mask);
 			return Ok();
@@ -1301,7 +1301,7 @@ extern "C" {
 	Result<cv::videostab::TwoPassStabilizer*> cv_videostab_TwoPassStabilizer_TwoPassStabilizer() {
 		try {
 			cv::videostab::TwoPassStabilizer* ret = new cv::videostab::TwoPassStabilizer();
-			return Ok(ret);
+			return Ok<cv::videostab::TwoPassStabilizer*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::TwoPassStabilizer*>))
 	}
 	
@@ -1343,7 +1343,7 @@ extern "C" {
 	Result<bool> cv_videostab_TwoPassStabilizer_mustEstimateTrimaRatio_const(const cv::videostab::TwoPassStabilizer* instance) {
 		try {
 			bool ret = instance->mustEstimateTrimaRatio();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1367,7 +1367,7 @@ extern "C" {
 	Result<cv::videostab::VideoFileSource*> cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(const char* path, bool volatileFrame) {
 		try {
 			cv::videostab::VideoFileSource* ret = new cv::videostab::VideoFileSource(cv::String(path), volatileFrame);
-			return Ok(ret);
+			return Ok<cv::videostab::VideoFileSource*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::VideoFileSource*>))
 	}
 	
@@ -1388,28 +1388,28 @@ extern "C" {
 	Result<int> cv_videostab_VideoFileSource_width(cv::videostab::VideoFileSource* instance) {
 		try {
 			int ret = instance->width();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_videostab_VideoFileSource_height(cv::videostab::VideoFileSource* instance) {
 		try {
 			int ret = instance->height();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_videostab_VideoFileSource_count(cv::videostab::VideoFileSource* instance) {
 		try {
 			int ret = instance->count();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_videostab_VideoFileSource_fps(cv::videostab::VideoFileSource* instance) {
 		try {
 			double ret = instance->fps();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1419,7 +1419,7 @@ extern "C" {
 	Result<cv::videostab::WeightingDeblurer*> cv_videostab_WeightingDeblurer_WeightingDeblurer() {
 		try {
 			cv::videostab::WeightingDeblurer* ret = new cv::videostab::WeightingDeblurer();
-			return Ok(ret);
+			return Ok<cv::videostab::WeightingDeblurer*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::WeightingDeblurer*>))
 	}
 	
@@ -1433,7 +1433,7 @@ extern "C" {
 	Result<float> cv_videostab_WeightingDeblurer_sensitivity_const(const cv::videostab::WeightingDeblurer* instance) {
 		try {
 			float ret = instance->sensitivity();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1475,7 +1475,7 @@ extern "C" {
 	Result<int> cv_videostab_WobbleSuppressorBase_frameCount_const(const cv::videostab::WobbleSuppressorBase* instance) {
 		try {
 			int ret = instance->frameCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1486,11 +1486,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_motions_const(const cv::videostab::WobbleSuppressorBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_motions_const(const cv::videostab::WobbleSuppressorBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->motions();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->motions();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_WobbleSuppressorBase_setMotions2_const_vector_Mat_R(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
@@ -1500,11 +1500,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_motions2_const(const cv::videostab::WobbleSuppressorBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_motions2_const(const cv::videostab::WobbleSuppressorBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->motions2();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->motions2();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_videostab_WobbleSuppressorBase_setStabilizationMotions_const_vector_Mat_R(cv::videostab::WobbleSuppressorBase* instance, const std::vector<cv::Mat>* val) {
@@ -1514,11 +1514,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(const cv::videostab::WobbleSuppressorBase* instance) {
+	Result<const std::vector<cv::Mat>*> cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(const cv::videostab::WobbleSuppressorBase* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->stabilizationMotions();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->stabilizationMotions();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 }

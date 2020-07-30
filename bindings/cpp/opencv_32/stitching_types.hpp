@@ -1,4 +1,18 @@
 template struct Result<bool>;
+template struct Result<const cv::Mat*>;
+template struct Result<const cv::Ptr<cv::WarperCreator>*>;
+template struct Result<const cv::Ptr<cv::detail::Blender>*>;
+template struct Result<const cv::Ptr<cv::detail::BundleAdjusterBase>*>;
+template struct Result<const cv::Ptr<cv::detail::ExposureCompensator>*>;
+template struct Result<const cv::Ptr<cv::detail::FeaturesFinder>*>;
+template struct Result<const cv::Ptr<cv::detail::FeaturesMatcher>*>;
+template struct Result<const cv::Ptr<cv::detail::SeamFinder>*>;
+template struct Result<const cv::UMat*>;
+template struct Result<const std::vector<cv::Point_<int>>*>;
+template struct Result<const std::vector<cv::Size_<int>>*>;
+template struct Result<const std::vector<cv::UMat>*>;
+template struct Result<const std::vector<cv::detail::MatchesInfo>*>;
+template struct Result<const std::vector<std::vector<cv::Rect_<int>>>*>;
 template struct Result<cv::CompressedRectilinearPortraitWarper*>;
 template struct Result<cv::CompressedRectilinearWarper*>;
 template struct Result<cv::Mat*>;
@@ -73,9 +87,7 @@ template struct Result<int>;
 template struct Result<std::vector<cv::DMatch>*>;
 template struct Result<std::vector<cv::KeyPoint>*>;
 template struct Result<std::vector<cv::Mat>*>;
-template struct Result<std::vector<cv::Point_<int>>*>;
 template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::Size_<int>>*>;
 template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<cv::UMat>*>;
 template struct Result<std::vector<cv::detail::CameraParams>*>;
@@ -83,79 +95,104 @@ template struct Result<std::vector<cv::detail::ImageFeatures>*>;
 template struct Result<std::vector<cv::detail::MatchesInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::vector<cv::Rect_<int>>>*>;
 template struct Result<std::vector<unsigned char>*>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfDetail_Blender_delete(cv::Ptr<cv::detail::Blender>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::detail::Blender>* cv_PtrOfDetail_Blender_new(cv::detail::Blender* val) {
+		return new cv::Ptr<cv::detail::Blender>(val);
+	}
+	
+	void cv_PtrOfDetail_Blender_delete(cv::Ptr<cv::detail::Blender>* instance) {
+		delete instance;
+	}
+
+	cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr(cv::Ptr<cv::detail::Blender>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr(cv::Ptr<cv::detail::Blender>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDetail_BundleAdjusterBase_delete(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
+		delete instance;
+	}
+
+	cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDetail_BundleAdjusterBase_delete(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfDetail_ExposureCompensator_delete(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
+		delete instance;
+	}
+
+	cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDetail_FeaturesFinder_delete(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
+		delete instance;
+	}
+
+	cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDetail_ExposureCompensator_delete(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfDetail_FeaturesMatcher_delete(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
+		delete instance;
+	}
+
+	cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDetail_RotationWarper_delete(cv::Ptr<cv::detail::RotationWarper>* instance) {
+		delete instance;
+	}
+
+	cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr(cv::Ptr<cv::detail::RotationWarper>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDetail_FeaturesFinder_delete(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfDetail_SeamFinder_delete(cv::Ptr<cv::detail::SeamFinder>* instance) {
+		delete instance;
+	}
+
+	cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr(cv::Ptr<cv::detail::SeamFinder>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::Stitcher>* cv_PtrOfStitcher_new(cv::Stitcher* val) {
+		return new cv::Ptr<cv::Stitcher>(val);
+	}
+	
+	void cv_PtrOfStitcher_delete(cv::Ptr<cv::Stitcher>* instance) {
+		delete instance;
+	}
+
+	cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr(cv::Ptr<cv::Stitcher>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDetail_FeaturesMatcher_delete(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfWarperCreator_delete(cv::Ptr<cv::WarperCreator>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfDetail_RotationWarper_delete(cv::Ptr<cv::detail::RotationWarper>* instance) {
-	delete instance;
-}
-
-extern "C" cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr(cv::Ptr<cv::detail::RotationWarper>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfDetail_SeamFinder_delete(cv::Ptr<cv::detail::SeamFinder>* instance) {
-	delete instance;
-}
-
-extern "C" cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr(cv::Ptr<cv::detail::SeamFinder>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfStitcher_delete(cv::Ptr<cv::Stitcher>* instance) {
-	delete instance;
-}
-
-extern "C" cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr(cv::Ptr<cv::Stitcher>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfWarperCreator_delete(cv::Ptr<cv::WarperCreator>* instance) {
-	delete instance;
-}
-
-extern "C" cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr(cv::Ptr<cv::WarperCreator>* instance) {
-	return instance->get();
+	cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr(cv::Ptr<cv::WarperCreator>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

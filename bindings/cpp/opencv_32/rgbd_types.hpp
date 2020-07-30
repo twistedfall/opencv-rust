@@ -1,4 +1,10 @@
 template struct Result<bool>;
+template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
+template struct Result<const std::vector<cv::String>*>;
+template struct Result<const std::vector<cv::linemod::Template>*>;
+template struct Result<const std::vector<float>*>;
+template struct Result<const std::vector<int>*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::linemod::Detector>*>;
 template struct Result<cv::Ptr<cv::linemod::Modality>*>;
@@ -22,53 +28,67 @@ template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::Mat>*>;
-template struct Result<std::vector<cv::Ptr<cv::linemod::Modality>>*>;
 template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<cv::linemod::Feature>*>;
 template struct Result<std::vector<cv::linemod::Match>*>;
-template struct Result<std::vector<cv::linemod::Template>*>;
-template struct Result<std::vector<float>*>;
-template struct Result<std::vector<int>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfLinemod_Detector_delete(cv::Ptr<cv::linemod::Detector>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::linemod::Detector>* cv_PtrOfLinemod_Detector_new(cv::linemod::Detector* val) {
+		return new cv::Ptr<cv::linemod::Detector>(val);
+	}
+	
+	void cv_PtrOfLinemod_Detector_delete(cv::Ptr<cv::linemod::Detector>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(cv::Ptr<cv::linemod::Detector>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(cv::Ptr<cv::linemod::Detector>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfLinemod_Modality_delete(cv::Ptr<cv::linemod::Modality>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(cv::Ptr<cv::linemod::Modality>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfLinemod_Modality_delete(cv::Ptr<cv::linemod::Modality>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfLinemod_QuantizedPyramid_delete(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(cv::Ptr<cv::linemod::Modality>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfOdometry_delete(cv::Ptr<cv::rgbd::Odometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::Odometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfLinemod_QuantizedPyramid_delete(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
-	delete instance;
-}
+extern "C" {
+	cv::Ptr<cv::rgbd::OdometryFrame>* cv_PtrOfOdometryFrame_new(cv::rgbd::OdometryFrame* val) {
+		return new cv::Ptr<cv::rgbd::OdometryFrame>(val);
+	}
+	
+	void cv_PtrOfOdometryFrame_delete(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOdometry_delete(cv::Ptr<cv::rgbd::Odometry>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::Odometry>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOdometryFrame_delete(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
-	return instance->get();
+	cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

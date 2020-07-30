@@ -102,7 +102,7 @@ extern "C" {
 	Result<double> cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(const cv::img_hash::ImgHashBase* instance, const cv::_InputArray* hashOne, const cv::_InputArray* hashTwo) {
 		try {
 			double ret = instance->compare(*hashOne, *hashTwo);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -112,14 +112,14 @@ extern "C" {
 	Result<float> cv_img_hash_MarrHildrethHash_getAlpha_const(const cv::img_hash::MarrHildrethHash* instance) {
 		try {
 			float ret = instance->getAlpha();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_img_hash_MarrHildrethHash_getScale_const(const cv::img_hash::MarrHildrethHash* instance) {
 		try {
 			float ret = instance->getScale();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -160,14 +160,14 @@ extern "C" {
 	Result<int> cv_img_hash_RadialVarianceHash_getNumOfAngleLine_const(const cv::img_hash::RadialVarianceHash* instance) {
 		try {
 			int ret = instance->getNumOfAngleLine();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_img_hash_RadialVarianceHash_getSigma_const(const cv::img_hash::RadialVarianceHash* instance) {
 		try {
 			double ret = instance->getSigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	

@@ -6,7 +6,7 @@ extern "C" {
 	Result<double> cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(const cv::_InputArray* orientation, const cv::_InputArray* mask, const cv::_InputArray* mhi, double timestamp, double duration) {
 		try {
 			double ret = cv::motempl::calcGlobalOrientation(*orientation, *mask, *mhi, timestamp, duration);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -31,7 +31,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow, cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* rlofParam, float forwardBackwardThreshold, const cv::Size* gridStep, cv::optflow::InterpolationType interp_type, int epicK, float epicSigma, float epicLambda, int ricSPSize, int ricSLICType, bool use_post_proc, float fgsLambda, float fgsSigma, bool use_variational_refinement) {
+	Result_void cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow, cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* rlofParam, float forwardBackwardThreshold, cv::Size* gridStep, cv::optflow::InterpolationType interp_type, int epicK, float epicSigma, float epicLambda, int ricSPSize, int ricSLICType, bool use_post_proc, float fgsLambda, float fgsSigma, bool use_variational_refinement) {
 		try {
 			cv::optflow::calcOpticalFlowDenseRLOF(*I0, *I1, *flow, *rlofParam, forwardBackwardThreshold, *gridStep, interp_type, epicK, epicSigma, epicLambda, ricSPSize, ricSLICType, use_post_proc, fgsLambda, fgsSigma, use_variational_refinement);
 			return Ok();
@@ -122,7 +122,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::DenseOpticalFlow>*>))
 	}
 	
-	Result_void cv_read_const_FileNodeR_NodeR_Node(const cv::FileNode* fn, cv::optflow::GPCTree::Node* node, const cv::optflow::GPCTree::Node* unnamed) {
+	Result_void cv_read_const_FileNodeR_NodeR_Node(const cv::FileNode* fn, cv::optflow::GPCTree::Node* node, cv::optflow::GPCTree::Node* unnamed) {
 		try {
 			cv::read(*fn, *node, *unnamed);
 			return Ok();
@@ -160,18 +160,18 @@ extern "C" {
 	Result<float> cv_optflow_DenseRLOFOpticalFlow_getForwardBackward_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getForwardBackward();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<cv::Size> cv_optflow_DenseRLOFOpticalFlow_getGridStep_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			cv::Size ret = instance->getGridStep();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(cv::optflow::DenseRLOFOpticalFlow* instance, const cv::Size* val) {
+	Result_void cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(cv::optflow::DenseRLOFOpticalFlow* instance, cv::Size* val) {
 		try {
 			instance->setGridStep(*val);
 			return Ok();
@@ -188,14 +188,14 @@ extern "C" {
 	Result<cv::optflow::InterpolationType> cv_optflow_DenseRLOFOpticalFlow_getInterpolation_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			cv::optflow::InterpolationType ret = instance->getInterpolation();
-			return Ok(ret);
+			return Ok<cv::optflow::InterpolationType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::InterpolationType>))
 	}
 	
 	Result<int> cv_optflow_DenseRLOFOpticalFlow_getEPICK_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			int ret = instance->getEPICK();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -209,7 +209,7 @@ extern "C" {
 	Result<float> cv_optflow_DenseRLOFOpticalFlow_getEPICSigma_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getEPICSigma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<float> cv_optflow_DenseRLOFOpticalFlow_getEPICLambda_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getEPICLambda();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<float> cv_optflow_DenseRLOFOpticalFlow_getFgsLambda_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getFgsLambda();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<float> cv_optflow_DenseRLOFOpticalFlow_getFgsSigma_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getFgsSigma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -272,7 +272,7 @@ extern "C" {
 	Result<bool> cv_optflow_DenseRLOFOpticalFlow_getUsePostProc_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUsePostProc();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -286,7 +286,7 @@ extern "C" {
 	Result<bool> cv_optflow_DenseRLOFOpticalFlow_getUseVariationalRefinement_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseVariationalRefinement();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -300,7 +300,7 @@ extern "C" {
 	Result<int> cv_optflow_DenseRLOFOpticalFlow_getRICSPSize_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			int ret = instance->getRICSPSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -314,11 +314,11 @@ extern "C" {
 	Result<int> cv_optflow_DenseRLOFOpticalFlow_getRICSLICType_const(const cv::optflow::DenseRLOFOpticalFlow* instance) {
 		try {
 			int ret = instance->getRICSLICType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>*> cv_optflow_DenseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* rlofParam, float forwardBackwardThreshold, const cv::Size* gridStep, cv::optflow::InterpolationType interp_type, int epicK, float epicSigma, float epicLambda, int ricSPSize, int ricSLICType, bool use_post_proc, float fgsLambda, float fgsSigma, bool use_variational_refinement) {
+	Result<cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>*> cv_optflow_DenseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* rlofParam, float forwardBackwardThreshold, cv::Size* gridStep, cv::optflow::InterpolationType interp_type, int epicK, float epicSigma, float epicLambda, int ricSPSize, int ricSLICType, bool use_post_proc, float fgsLambda, float fgsSigma, bool use_variational_refinement) {
 		try {
 			cv::Ptr<cv::optflow::DenseRLOFOpticalFlow> ret = cv::optflow::DenseRLOFOpticalFlow::create(*rlofParam, forwardBackwardThreshold, *gridStep, interp_type, epicK, epicSigma, epicLambda, ricSPSize, ricSLICType, use_post_proc, fgsLambda, fgsSigma, use_variational_refinement);
 			return Ok(new cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>(ret));
@@ -328,7 +328,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getTau_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getTau();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -342,7 +342,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getLambda_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getLambda();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -356,7 +356,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getTheta_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getTheta();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -370,7 +370,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getGamma_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -384,7 +384,7 @@ extern "C" {
 	Result<int> cv_optflow_DualTVL1OpticalFlow_getScalesNumber_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			int ret = instance->getScalesNumber();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -398,7 +398,7 @@ extern "C" {
 	Result<int> cv_optflow_DualTVL1OpticalFlow_getWarpingsNumber_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			int ret = instance->getWarpingsNumber();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getEpsilon_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getEpsilon();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<int> cv_optflow_DualTVL1OpticalFlow_getInnerIterations_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			int ret = instance->getInnerIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -440,7 +440,7 @@ extern "C" {
 	Result<int> cv_optflow_DualTVL1OpticalFlow_getOuterIterations_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			int ret = instance->getOuterIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -454,7 +454,7 @@ extern "C" {
 	Result<bool> cv_optflow_DualTVL1OpticalFlow_getUseInitialFlow_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseInitialFlow();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<double> cv_optflow_DualTVL1OpticalFlow_getScaleStep_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			double ret = instance->getScaleStep();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -482,7 +482,7 @@ extern "C" {
 	Result<int> cv_optflow_DualTVL1OpticalFlow_getMedianFiltering_const(const cv::optflow::DualTVL1OpticalFlow* instance) {
 		try {
 			int ret = instance->getMedianFiltering();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -510,7 +510,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(size_t index, const cv::Size* sz, int* x, int* y) {
+	Result_void cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(size_t index, cv::Size* sz, int* x, int* y) {
 		try {
 			cv::optflow::GPCDetails::getCoordinatesFromIndex(index, *sz, *x, *y);
 			return Ok();
@@ -520,25 +520,25 @@ extern "C" {
 	Result<cv::optflow::GPCMatchingParams> cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(bool _useOpenCL) {
 		try {
 			cv::optflow::GPCMatchingParams ret(_useOpenCL);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCMatchingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCMatchingParams>))
 	}
 	
 	Result<cv::optflow::GPCMatchingParams> cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(const cv::optflow::GPCMatchingParams* params) {
 		try {
 			cv::optflow::GPCMatchingParams ret(*params);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCMatchingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCMatchingParams>))
 	}
 	
 	Result<cv::Vec<double, 18>> cv_optflow_GPCPatchDescriptor_getPropFeature_const(const cv::optflow::GPCPatchDescriptor* instance) {
 		try {
 			cv::Vec<double, 18> ret = instance->feature;
-			return Ok(ret);
+			return Ok<cv::Vec<double, 18>>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec<double, 18>>))
 	}
 	
-	Result_void cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(cv::optflow::GPCPatchDescriptor* instance, const cv::Vec<double, 18>* val) {
+	Result_void cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(cv::optflow::GPCPatchDescriptor* instance, cv::Vec<double, 18>* val) {
 		try {
 			instance->feature = *val;
 			return Ok();
@@ -551,7 +551,7 @@ extern "C" {
 	Result<double> cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(const cv::optflow::GPCPatchDescriptor* instance, const cv::Vec<double, 18>* coef) {
 		try {
 			double ret = instance->dot(*coef);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -565,7 +565,7 @@ extern "C" {
 	Result<bool> cv_optflow_GPCPatchDescriptor_isSeparated_const(const cv::optflow::GPCPatchDescriptor* instance) {
 		try {
 			bool ret = instance->isSeparated();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -624,14 +624,14 @@ extern "C" {
 	Result<cv::optflow::GPCTrainingParams> cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(unsigned int _maxTreeDepth, int _minNumberOfSamples, cv::optflow::GPCDescType _descriptorType, bool _printProgress) {
 		try {
 			cv::optflow::GPCTrainingParams ret(_maxTreeDepth, _minNumberOfSamples, _descriptorType, _printProgress);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCTrainingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCTrainingParams>))
 	}
 	
 	Result<bool> cv_optflow_GPCTrainingParams_check_const(const cv::optflow::GPCTrainingParams instance) {
 		try {
 			bool ret = instance.check();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -655,21 +655,21 @@ extern "C" {
 	Result<size_t> cv_optflow_GPCTrainingSamples_size_const(const cv::optflow::GPCTrainingSamples* instance) {
 		try {
 			size_t ret = instance->size();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
 	Result<int> cv_optflow_GPCTrainingSamples_type_const(const cv::optflow::GPCTrainingSamples* instance) {
 		try {
 			int ret = instance->type();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	void cv_GPCTree_delete(cv::optflow::GPCTree* instance) {
 		delete instance;
 	}
-	Result_void cv_optflow_GPCTree_train_GPCTrainingSamplesR_GPCTrainingParams(cv::optflow::GPCTree* instance, cv::optflow::GPCTrainingSamples* samples, const cv::optflow::GPCTrainingParams* params) {
+	Result_void cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(cv::optflow::GPCTree* instance, cv::optflow::GPCTrainingSamples* samples, const cv::optflow::GPCTrainingParams* params) {
 		try {
 			instance->train(*samples, *params);
 			return Ok();
@@ -693,7 +693,7 @@ extern "C" {
 	Result<unsigned int> cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(const cv::optflow::GPCTree* instance, const cv::optflow::GPCPatchDescriptor* descr) {
 		try {
 			unsigned int ret = instance->findLeafForPatch(*descr);
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -707,17 +707,17 @@ extern "C" {
 	Result<int> cv_optflow_GPCTree_getDescriptorType_const(const cv::optflow::GPCTree* instance) {
 		try {
 			int ret = instance->getDescriptorType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	void cv_OpticalFlowPCAFlow_delete(cv::optflow::OpticalFlowPCAFlow* instance) {
 		delete instance;
 	}
-	Result<cv::optflow::OpticalFlowPCAFlow*> cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_PCAPrior__Size_float_float_float_float_float(const cv::Ptr<cv::optflow::PCAPrior>* _prior, const cv::Size* _basisSize, float _sparseRate, float _retainedCornersFraction, float _occlusionsThreshold, float _dampingFactor, float _claheClip) {
+	Result<cv::optflow::OpticalFlowPCAFlow*> cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(cv::Ptr<const cv::optflow::PCAPrior>* _prior, const cv::Size* _basisSize, float _sparseRate, float _retainedCornersFraction, float _occlusionsThreshold, float _dampingFactor, float _claheClip) {
 		try {
 			cv::optflow::OpticalFlowPCAFlow* ret = new cv::optflow::OpticalFlowPCAFlow(*_prior, *_basisSize, _sparseRate, _retainedCornersFraction, _occlusionsThreshold, _dampingFactor, _claheClip);
-			return Ok(ret);
+			return Ok<cv::optflow::OpticalFlowPCAFlow*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::OpticalFlowPCAFlow*>))
 	}
 	
@@ -741,21 +741,21 @@ extern "C" {
 	Result<cv::optflow::PCAPrior*> cv_optflow_PCAPrior_PCAPrior_const_charX(const char* pathToPrior) {
 		try {
 			cv::optflow::PCAPrior* ret = new cv::optflow::PCAPrior(pathToPrior);
-			return Ok(ret);
+			return Ok<cv::optflow::PCAPrior*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::PCAPrior*>))
 	}
 	
 	Result<int> cv_optflow_PCAPrior_getPadding_const(const cv::optflow::PCAPrior* instance) {
 		try {
 			int ret = instance->getPadding();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_optflow_PCAPrior_getBasisSize_const(const cv::optflow::PCAPrior* instance) {
 		try {
 			int ret = instance->getBasisSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -769,7 +769,7 @@ extern "C" {
 	Result<cv::optflow::SolverType> cv_optflow_RLOFOpticalFlowParameter_getPropSolverType_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			cv::optflow::SolverType ret = instance->solverType;
-			return Ok(ret);
+			return Ok<cv::optflow::SolverType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::SolverType>))
 	}
 	
@@ -783,7 +783,7 @@ extern "C" {
 	Result<cv::optflow::SupportRegionType> cv_optflow_RLOFOpticalFlowParameter_getPropSupportRegionType_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			cv::optflow::SupportRegionType ret = instance->supportRegionType;
-			return Ok(ret);
+			return Ok<cv::optflow::SupportRegionType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::SupportRegionType>))
 	}
 	
@@ -797,7 +797,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getPropNormSigma0_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->normSigma0;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -811,7 +811,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getPropNormSigma1_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->normSigma1;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -825,7 +825,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getPropSmallWinSize_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->smallWinSize;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -839,7 +839,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getPropLargeWinSize_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->largeWinSize;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -853,7 +853,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getPropCrossSegmentationThreshold_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->crossSegmentationThreshold;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -867,7 +867,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getPropMaxLevel_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->maxLevel;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -881,7 +881,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getPropUseInitialFlow_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->useInitialFlow;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -895,7 +895,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getPropUseIlluminationModel_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->useIlluminationModel;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -909,7 +909,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getPropUseGlobalMotionPrior_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->useGlobalMotionPrior;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -923,7 +923,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getPropMaxIteration_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->maxIteration;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -937,7 +937,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getPropMinEigenValue_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->minEigenValue;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -951,7 +951,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getPropGlobalMotionRansacThreshold_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->globalMotionRansacThreshold;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -968,7 +968,7 @@ extern "C" {
 	Result<cv::optflow::RLOFOpticalFlowParameter*> cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter() {
 		try {
 			cv::optflow::RLOFOpticalFlowParameter* ret = new cv::optflow::RLOFOpticalFlowParameter();
-			return Ok(ret);
+			return Ok<cv::optflow::RLOFOpticalFlowParameter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::RLOFOpticalFlowParameter*>))
 	}
 	
@@ -989,7 +989,7 @@ extern "C" {
 	Result<cv::optflow::SolverType> cv_optflow_RLOFOpticalFlowParameter_getSolverType_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			cv::optflow::SolverType ret = instance->getSolverType();
-			return Ok(ret);
+			return Ok<cv::optflow::SolverType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::SolverType>))
 	}
 	
@@ -1003,7 +1003,7 @@ extern "C" {
 	Result<cv::optflow::SupportRegionType> cv_optflow_RLOFOpticalFlowParameter_getSupportRegionType_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			cv::optflow::SupportRegionType ret = instance->getSupportRegionType();
-			return Ok(ret);
+			return Ok<cv::optflow::SupportRegionType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::SupportRegionType>))
 	}
 	
@@ -1017,7 +1017,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getNormSigma0_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->getNormSigma0();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1031,7 +1031,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getNormSigma1_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->getNormSigma1();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1045,7 +1045,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getSmallWinSize_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->getSmallWinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1059,7 +1059,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getLargeWinSize_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->getLargeWinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1073,7 +1073,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getCrossSegmentationThreshold_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->getCrossSegmentationThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1087,7 +1087,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getMaxLevel_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->getMaxLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1101,7 +1101,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getUseInitialFlow_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->getUseInitialFlow();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1115,7 +1115,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getUseIlluminationModel_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->getUseIlluminationModel();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1129,7 +1129,7 @@ extern "C" {
 	Result<bool> cv_optflow_RLOFOpticalFlowParameter_getUseGlobalMotionPrior_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			bool ret = instance->getUseGlobalMotionPrior();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1143,7 +1143,7 @@ extern "C" {
 	Result<int> cv_optflow_RLOFOpticalFlowParameter_getMaxIteration_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			int ret = instance->getMaxIteration();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1157,7 +1157,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getMinEigenValue_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->getMinEigenValue();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1171,7 +1171,7 @@ extern "C" {
 	Result<float> cv_optflow_RLOFOpticalFlowParameter_getGlobalMotionRansacThreshold_const(const cv::optflow::RLOFOpticalFlowParameter* instance) {
 		try {
 			float ret = instance->getGlobalMotionRansacThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1206,7 +1206,7 @@ extern "C" {
 	Result<float> cv_optflow_SparseRLOFOpticalFlow_getForwardBackward_const(const cv::optflow::SparseRLOFOpticalFlow* instance) {
 		try {
 			float ret = instance->getForwardBackward();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

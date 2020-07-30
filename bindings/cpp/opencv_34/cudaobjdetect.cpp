@@ -17,7 +17,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::CascadeClassifier>*>))
 	}
 	
-	Result_void cv_cuda_CascadeClassifier_setMaxObjectSize_Size(cv::cuda::CascadeClassifier* instance, const cv::Size* maxObjectSize) {
+	Result_void cv_cuda_CascadeClassifier_setMaxObjectSize_Size(cv::cuda::CascadeClassifier* instance, cv::Size* maxObjectSize) {
 		try {
 			instance->setMaxObjectSize(*maxObjectSize);
 			return Ok();
@@ -27,11 +27,11 @@ extern "C" {
 	Result<cv::Size> cv_cuda_CascadeClassifier_getMaxObjectSize_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			cv::Size ret = instance->getMaxObjectSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_cuda_CascadeClassifier_setMinObjectSize_Size(cv::cuda::CascadeClassifier* instance, const cv::Size* minSize) {
+	Result_void cv_cuda_CascadeClassifier_setMinObjectSize_Size(cv::cuda::CascadeClassifier* instance, cv::Size* minSize) {
 		try {
 			instance->setMinObjectSize(*minSize);
 			return Ok();
@@ -41,7 +41,7 @@ extern "C" {
 	Result<cv::Size> cv_cuda_CascadeClassifier_getMinObjectSize_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			cv::Size ret = instance->getMinObjectSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -55,7 +55,7 @@ extern "C" {
 	Result<double> cv_cuda_CascadeClassifier_getScaleFactor_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			double ret = instance->getScaleFactor();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<int> cv_cuda_CascadeClassifier_getMinNeighbors_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			int ret = instance->getMinNeighbors();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<bool> cv_cuda_CascadeClassifier_getFindLargestObject(cv::cuda::CascadeClassifier* instance) {
 		try {
 			bool ret = instance->getFindLargestObject();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -97,14 +97,14 @@ extern "C" {
 	Result<int> cv_cuda_CascadeClassifier_getMaxNumObjects_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			int ret = instance->getMaxNumObjects();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<cv::Size> cv_cuda_CascadeClassifier_getClassifierSize_const(const cv::cuda::CascadeClassifier* instance) {
 		try {
 			cv::Size ret = instance->getClassifierSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -122,7 +122,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::HOG>*> cv_cuda_HOG_create_Size_Size_Size_Size_int(const cv::Size* win_size, const cv::Size* block_size, const cv::Size* block_stride, const cv::Size* cell_size, int nbins) {
+	Result<cv::Ptr<cv::cuda::HOG>*> cv_cuda_HOG_create_Size_Size_Size_Size_int(cv::Size* win_size, cv::Size* block_size, cv::Size* block_stride, cv::Size* cell_size, int nbins) {
 		try {
 			cv::Ptr<cv::cuda::HOG> ret = cv::cuda::HOG::create(*win_size, *block_size, *block_stride, *cell_size, nbins);
 			return Ok(new cv::Ptr<cv::cuda::HOG>(ret));
@@ -139,7 +139,7 @@ extern "C" {
 	Result<double> cv_cuda_HOG_getWinSigma_const(const cv::cuda::HOG* instance) {
 		try {
 			double ret = instance->getWinSigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<double> cv_cuda_HOG_getL2HysThreshold_const(const cv::cuda::HOG* instance) {
 		try {
 			double ret = instance->getL2HysThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -167,7 +167,7 @@ extern "C" {
 	Result<bool> cv_cuda_HOG_getGammaCorrection_const(const cv::cuda::HOG* instance) {
 		try {
 			bool ret = instance->getGammaCorrection();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<int> cv_cuda_HOG_getNumLevels_const(const cv::cuda::HOG* instance) {
 		try {
 			int ret = instance->getNumLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -195,11 +195,11 @@ extern "C" {
 	Result<double> cv_cuda_HOG_getHitThreshold_const(const cv::cuda::HOG* instance) {
 		try {
 			double ret = instance->getHitThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result_void cv_cuda_HOG_setWinStride_Size(cv::cuda::HOG* instance, const cv::Size* win_stride) {
+	Result_void cv_cuda_HOG_setWinStride_Size(cv::cuda::HOG* instance, cv::Size* win_stride) {
 		try {
 			instance->setWinStride(*win_stride);
 			return Ok();
@@ -209,7 +209,7 @@ extern "C" {
 	Result<cv::Size> cv_cuda_HOG_getWinStride_const(const cv::cuda::HOG* instance) {
 		try {
 			cv::Size ret = instance->getWinStride();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<double> cv_cuda_HOG_getScaleFactor_const(const cv::cuda::HOG* instance) {
 		try {
 			double ret = instance->getScaleFactor();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<int> cv_cuda_HOG_getGroupThreshold_const(const cv::cuda::HOG* instance) {
 		try {
 			int ret = instance->getGroupThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -251,21 +251,21 @@ extern "C" {
 	Result<int> cv_cuda_HOG_getDescriptorFormat_const(const cv::cuda::HOG* instance) {
 		try {
 			int ret = instance->getDescriptorFormat();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<size_t> cv_cuda_HOG_getDescriptorSize_const(const cv::cuda::HOG* instance) {
 		try {
 			size_t ret = instance->getDescriptorSize();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
 	Result<size_t> cv_cuda_HOG_getBlockHistogramSize_const(const cv::cuda::HOG* instance) {
 		try {
 			size_t ret = instance->getBlockHistogramSize();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	

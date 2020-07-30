@@ -41,7 +41,7 @@ extern "C" {
 	Result<int> cv_cuda_BackgroundSubtractorMOG_getHistory_const(const cv::cuda::BackgroundSubtractorMOG* instance) {
 		try {
 			int ret = instance->getHistory();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -55,7 +55,7 @@ extern "C" {
 	Result<int> cv_cuda_BackgroundSubtractorMOG_getNMixtures_const(const cv::cuda::BackgroundSubtractorMOG* instance) {
 		try {
 			int ret = instance->getNMixtures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<double> cv_cuda_BackgroundSubtractorMOG_getBackgroundRatio_const(const cv::cuda::BackgroundSubtractorMOG* instance) {
 		try {
 			double ret = instance->getBackgroundRatio();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<double> cv_cuda_BackgroundSubtractorMOG_getNoiseSigma_const(const cv::cuda::BackgroundSubtractorMOG* instance) {
 		try {
 			double ret = instance->getNoiseSigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	

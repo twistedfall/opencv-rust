@@ -3,14 +3,14 @@
 #include "highgui_types.hpp"
 
 extern "C" {
-	Result_void cv_addText_const_MatR_const_StringR_Point_const_QtFontR(const cv::Mat* img, const char* text, const cv::Point* org, const cv::QtFont* font) {
+	Result_void cv_addText_const_MatR_const_StringR_Point_const_QtFontR(const cv::Mat* img, const char* text, cv::Point* org, const cv::QtFont* font) {
 		try {
 			cv::addText(*img, cv::String(text), *org, *font);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(const cv::Mat* img, const char* text, const cv::Point* org, const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
+	Result_void cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(const cv::Mat* img, const char* text, cv::Point* org, const char* nameFont, int pointSize, cv::Scalar* color, int weight, int style, int spacing) {
 		try {
 			cv::addText(*img, cv::String(text), *org, cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok();
@@ -20,14 +20,14 @@ extern "C" {
 	Result<int> cv_createButton_const_StringR_ButtonCallback_voidX_int_bool(const char* bar_name, cv::ButtonCallback on_change, void* userdata, int type, bool initial_button_state) {
 		try {
 			int ret = cv::createButton(cv::String(bar_name), on_change, userdata, type, initial_button_state);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(const char* trackbarname, const char* winname, int* value, int count, cv::TrackbarCallback onChange, void* userdata) {
 		try {
 			int ret = cv::createTrackbar(cv::String(trackbarname), cv::String(winname), value, count, onChange, userdata);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -59,7 +59,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::QtFont*> cv_fontQt_const_StringR_int_Scalar_int_int_int(const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
+	Result<cv::QtFont*> cv_fontQt_const_StringR_int_Scalar_int_int_int(const char* nameFont, int pointSize, cv::Scalar* color, int weight, int style, int spacing) {
 		try {
 			cv::QtFont ret = cv::fontQt(cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok(new cv::QtFont(ret));
@@ -69,28 +69,28 @@ extern "C" {
 	Result<int> cv_getMouseWheelDelta_int(int flags) {
 		try {
 			int ret = cv::getMouseWheelDelta(flags);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_getTrackbarPos_const_StringR_const_StringR(const char* trackbarname, const char* winname) {
 		try {
 			int ret = cv::getTrackbarPos(cv::String(trackbarname), cv::String(winname));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<cv::Rect> cv_getWindowImageRect_const_StringR(const char* winname) {
 		try {
 			cv::Rect ret = cv::getWindowImageRect(cv::String(winname));
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<double> cv_getWindowProperty_const_StringR_int(const char* winname, int prop_id) {
 		try {
 			double ret = cv::getWindowProperty(cv::String(winname), prop_id);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -146,14 +146,14 @@ extern "C" {
 	Result<cv::Rect> cv_selectROI_const_StringR_const__InputArrayR_bool_bool(const char* windowName, const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
 		try {
 			cv::Rect ret = cv::selectROI(cv::String(windowName), *img, showCrosshair, fromCenter);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<cv::Rect> cv_selectROI_const__InputArrayR_bool_bool(const cv::_InputArray* img, bool showCrosshair, bool fromCenter) {
 		try {
 			cv::Rect ret = cv::selectROI(*img, showCrosshair, fromCenter);
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -223,14 +223,14 @@ extern "C" {
 	Result<int> cv_startLoop_int__X__int__charXX__int_charXX(int (*pt2Func)(int, char**), int argc, char** argv) {
 		try {
 			int ret = cv::startLoop(pt2Func, argc, argv);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_startWindowThread() {
 		try {
 			int ret = cv::startWindowThread();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -251,14 +251,14 @@ extern "C" {
 	Result<int> cv_waitKeyEx_int(int delay) {
 		try {
 			int ret = cv::waitKeyEx(delay);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_waitKey_int(int delay) {
 		try {
 			int ret = cv::waitKey(delay);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -272,11 +272,11 @@ extern "C" {
 	Result<cv::Scalar> cv_QtFont_getPropColor_const(const cv::QtFont* instance) {
 		try {
 			cv::Scalar ret = instance->color;
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
-	Result_void cv_QtFont_setPropColor_Scalar(cv::QtFont* instance, const cv::Scalar* val) {
+	Result_void cv_QtFont_setPropColor_Scalar(cv::QtFont* instance, cv::Scalar* val) {
 		try {
 			instance->color = *val;
 			return Ok();
@@ -286,7 +286,7 @@ extern "C" {
 	Result<int> cv_QtFont_getPropFont_face_const(const cv::QtFont* instance) {
 		try {
 			int ret = instance->font_face;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -300,28 +300,28 @@ extern "C" {
 	Result<const int*> cv_QtFont_getPropAscii_const(const cv::QtFont* instance) {
 		try {
 			const int* ret = instance->ascii;
-			return Ok(ret);
+			return Ok<const int*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const int*>))
 	}
 	
 	Result<const int*> cv_QtFont_getPropGreek_const(const cv::QtFont* instance) {
 		try {
 			const int* ret = instance->greek;
-			return Ok(ret);
+			return Ok<const int*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const int*>))
 	}
 	
 	Result<const int*> cv_QtFont_getPropCyrillic_const(const cv::QtFont* instance) {
 		try {
 			const int* ret = instance->cyrillic;
-			return Ok(ret);
+			return Ok<const int*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const int*>))
 	}
 	
 	Result<float> cv_QtFont_getPropHscale_const(const cv::QtFont* instance) {
 		try {
 			float ret = instance->hscale;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -335,7 +335,7 @@ extern "C" {
 	Result<float> cv_QtFont_getPropVscale_const(const cv::QtFont* instance) {
 		try {
 			float ret = instance->vscale;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -349,7 +349,7 @@ extern "C" {
 	Result<float> cv_QtFont_getPropShear_const(const cv::QtFont* instance) {
 		try {
 			float ret = instance->shear;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -363,7 +363,7 @@ extern "C" {
 	Result<int> cv_QtFont_getPropThickness_const(const cv::QtFont* instance) {
 		try {
 			int ret = instance->thickness;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -377,7 +377,7 @@ extern "C" {
 	Result<float> cv_QtFont_getPropDx_const(const cv::QtFont* instance) {
 		try {
 			float ret = instance->dx;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -391,7 +391,7 @@ extern "C" {
 	Result<int> cv_QtFont_getPropLine_type_const(const cv::QtFont* instance) {
 		try {
 			int ret = instance->line_type;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

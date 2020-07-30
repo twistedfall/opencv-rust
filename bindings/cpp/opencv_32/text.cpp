@@ -180,21 +180,21 @@ extern "C" {
 	Result<int> cv_text_ERFilter_getNumRejected(cv::text::ERFilter* instance) {
 		try {
 			int ret = instance->getNumRejected();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_text_ERFilter_Callback_eval_const_ERStatR(cv::text::ERFilter::Callback* instance, const cv::text::ERStat* stat) {
 		try {
 			double ret = instance->eval(*stat);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result<int> cv_text_ERStat_getPropPixel_const(const cv::text::ERStat* instance) {
 		try {
 			int ret = instance->pixel;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -208,7 +208,7 @@ extern "C" {
 	Result<int> cv_text_ERStat_getPropLevel_const(const cv::text::ERStat* instance) {
 		try {
 			int ret = instance->level;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -222,7 +222,7 @@ extern "C" {
 	Result<int> cv_text_ERStat_getPropArea_const(const cv::text::ERStat* instance) {
 		try {
 			int ret = instance->area;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -236,7 +236,7 @@ extern "C" {
 	Result<int> cv_text_ERStat_getPropPerimeter_const(const cv::text::ERStat* instance) {
 		try {
 			int ret = instance->perimeter;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -250,7 +250,7 @@ extern "C" {
 	Result<int> cv_text_ERStat_getPropEuler_const(const cv::text::ERStat* instance) {
 		try {
 			int ret = instance->euler;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -264,11 +264,11 @@ extern "C" {
 	Result<cv::Rect> cv_text_ERStat_getPropRect_const(const cv::text::ERStat* instance) {
 		try {
 			cv::Rect ret = instance->rect;
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_text_ERStat_setPropRect_Rect(cv::text::ERStat* instance, const cv::Rect* val) {
+	Result_void cv_text_ERStat_setPropRect_Rect(cv::text::ERStat* instance, cv::Rect* val) {
 		try {
 			instance->rect = *val;
 			return Ok();
@@ -278,21 +278,21 @@ extern "C" {
 	Result<double(*)[2]> cv_text_ERStat_getPropRaw_moments(cv::text::ERStat* instance) {
 		try {
 			double(*ret)[2] = &instance->raw_moments;
-			return Ok(ret);
+			return Ok<double(*)[2]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double(*)[2]>))
 	}
 	
 	Result<double(*)[3]> cv_text_ERStat_getPropCentral_moments(cv::text::ERStat* instance) {
 		try {
 			double(*ret)[3] = &instance->central_moments;
-			return Ok(ret);
+			return Ok<double(*)[3]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double(*)[3]>))
 	}
 	
 	Result<float> cv_text_ERStat_getPropMed_crossings_const(const cv::text::ERStat* instance) {
 		try {
 			float ret = instance->med_crossings;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -306,7 +306,7 @@ extern "C" {
 	Result<float> cv_text_ERStat_getPropHole_area_ratio_const(const cv::text::ERStat* instance) {
 		try {
 			float ret = instance->hole_area_ratio;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -320,7 +320,7 @@ extern "C" {
 	Result<float> cv_text_ERStat_getPropConvex_hull_ratio_const(const cv::text::ERStat* instance) {
 		try {
 			float ret = instance->convex_hull_ratio;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -334,7 +334,7 @@ extern "C" {
 	Result<float> cv_text_ERStat_getPropNum_inflexion_points_const(const cv::text::ERStat* instance) {
 		try {
 			float ret = instance->num_inflexion_points;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -348,7 +348,7 @@ extern "C" {
 	Result<double> cv_text_ERStat_getPropProbability_const(const cv::text::ERStat* instance) {
 		try {
 			double ret = instance->probability;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -418,7 +418,7 @@ extern "C" {
 	Result<bool> cv_text_ERStat_getPropLocal_maxima_const(const cv::text::ERStat* instance) {
 		try {
 			bool ret = instance->local_maxima;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -463,7 +463,7 @@ extern "C" {
 	Result<cv::text::ERStat*> cv_text_ERStat_ERStat_int_int_int_int(int level, int pixel, int x, int y) {
 		try {
 			cv::text::ERStat* ret = new cv::text::ERStat(level, pixel, x, y);
-			return Ok(ret);
+			return Ok<cv::text::ERStat*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::text::ERStat*>))
 	}
 	
@@ -502,14 +502,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, cv::text::decoder_mode mode, int beam_size) {
+	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, cv::text::decoder_mode mode, int beam_size) {
 		try {
 			cv::Ptr<cv::text::OCRBeamSearchDecoder> ret = cv::text::OCRBeamSearchDecoder::create(*classifier, std::string(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode, beam_size);
 			return Ok(new cv::Ptr<cv::text::OCRBeamSearchDecoder>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*>))
 	}
 	
-	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode, int beam_size) {
+	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode, int beam_size) {
 		try {
 			cv::Ptr<cv::text::OCRBeamSearchDecoder> ret = cv::text::OCRBeamSearchDecoder::create(*classifier, cv::String(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode, beam_size);
 			return Ok(new cv::Ptr<cv::text::OCRBeamSearchDecoder>(ret));
@@ -529,14 +529,14 @@ extern "C" {
 	Result<int> cv_text_OCRBeamSearchDecoder_ClassifierCallback_getWindowSize(cv::text::OCRBeamSearchDecoder::ClassifierCallback* instance) {
 		try {
 			int ret = instance->getWindowSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_text_OCRBeamSearchDecoder_ClassifierCallback_getStepSize(cv::text::OCRBeamSearchDecoder::ClassifierCallback* instance) {
 		try {
 			int ret = instance->getStepSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -575,14 +575,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
-	Result<cv::Ptr<cv::text::OCRHMMDecoder>*> cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode(const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, cv::text::decoder_mode mode) {
+	Result<cv::Ptr<cv::text::OCRHMMDecoder>*> cv_text_OCRHMMDecoder_create_const_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode(const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, cv::text::decoder_mode mode) {
 		try {
 			cv::Ptr<cv::text::OCRHMMDecoder> ret = cv::text::OCRHMMDecoder::create(*classifier, std::string(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode);
 			return Ok(new cv::Ptr<cv::text::OCRHMMDecoder>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::text::OCRHMMDecoder>*>))
 	}
 	
-	Result<cv::Ptr<cv::text::OCRHMMDecoder>*> cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode) {
+	Result<cv::Ptr<cv::text::OCRHMMDecoder>*> cv_text_OCRHMMDecoder_create_const_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode) {
 		try {
 			cv::Ptr<cv::text::OCRHMMDecoder> ret = cv::text::OCRHMMDecoder::create(*classifier, cv::String(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode);
 			return Ok(new cv::Ptr<cv::text::OCRHMMDecoder>(ret));

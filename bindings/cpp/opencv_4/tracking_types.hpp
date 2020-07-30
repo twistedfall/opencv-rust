@@ -1,4 +1,11 @@
 template struct Result<bool>;
+template struct Result<const cv::Ptr<cv::TrackerTargetState>*>;
+template struct Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*>;
+template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<const std::vector<cv::Rect_<double>>*>;
+template struct Result<const std::vector<cv::Rect_<int>>*>;
+template struct Result<const std::vector<float>*>;
+template struct Result<const std::vector<int>*>;
 template struct Result<cv::ClfMilBoost*>;
 template struct Result<cv::ClfMilBoost::Params*>;
 template struct Result<cv::CvFeatureParams*>;
@@ -55,133 +62,173 @@ template struct Result<cv::TrackerTLD::Params*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::CvHaarEvaluator::FeatureHaar>*>;
 template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Ptr<cv::Tracker>>*>;
 template struct Result<std::vector<cv::Rect_<double>>*>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
 template struct Result<std::vector<cv::Scalar_<double>>*>;
 template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfCvFeatureParams_delete(cv::Ptr<cv::CvFeatureParams>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::CvFeatureParams>* cv_PtrOfCvFeatureParams_new(cv::CvFeatureParams* val) {
+		return new cv::Ptr<cv::CvFeatureParams>(val);
+	}
+	
+	void cv_PtrOfCvFeatureParams_delete(cv::Ptr<cv::CvFeatureParams>* instance) {
+		delete instance;
+	}
+
+	cv::CvFeatureParams* cv_PtrOfCvFeatureParams_get_inner_ptr(cv::Ptr<cv::CvFeatureParams>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::CvFeatureParams* cv_PtrOfCvFeatureParams_get_inner_ptr(cv::Ptr<cv::CvFeatureParams>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::MultiTracker>* cv_PtrOfMultiTracker_new(cv::MultiTracker* val) {
+		return new cv::Ptr<cv::MultiTracker>(val);
+	}
+	
+	void cv_PtrOfMultiTracker_delete(cv::Ptr<cv::MultiTracker>* instance) {
+		delete instance;
+	}
+
+	cv::MultiTracker* cv_PtrOfMultiTracker_get_inner_ptr(cv::Ptr<cv::MultiTracker>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfMultiTracker_delete(cv::Ptr<cv::MultiTracker>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTracker_delete(cv::Ptr<cv::Tracker>* instance) {
+		delete instance;
+	}
+
+	cv::Tracker* cv_PtrOfTracker_get_inner_ptr(cv::Ptr<cv::Tracker>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::MultiTracker* cv_PtrOfMultiTracker_get_inner_ptr(cv::Ptr<cv::MultiTracker>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerBoosting_delete(cv::Ptr<cv::TrackerBoosting>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerBoosting* cv_PtrOfTrackerBoosting_get_inner_ptr(cv::Ptr<cv::TrackerBoosting>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTracker_delete(cv::Ptr<cv::Tracker>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTrackerCSRT_delete(cv::Ptr<cv::TrackerCSRT>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerCSRT* cv_PtrOfTrackerCSRT_get_inner_ptr(cv::Ptr<cv::TrackerCSRT>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::Tracker* cv_PtrOfTracker_get_inner_ptr(cv::Ptr<cv::Tracker>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerFeature_delete(cv::Ptr<cv::TrackerFeature>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerFeature* cv_PtrOfTrackerFeature_get_inner_ptr(cv::Ptr<cv::TrackerFeature>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTrackerBoosting_delete(cv::Ptr<cv::TrackerBoosting>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTrackerGOTURN_delete(cv::Ptr<cv::TrackerGOTURN>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr(cv::Ptr<cv::TrackerGOTURN>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::TrackerBoosting* cv_PtrOfTrackerBoosting_get_inner_ptr(cv::Ptr<cv::TrackerBoosting>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerKCF_delete(cv::Ptr<cv::TrackerKCF>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerKCF* cv_PtrOfTrackerKCF_get_inner_ptr(cv::Ptr<cv::TrackerKCF>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTrackerCSRT_delete(cv::Ptr<cv::TrackerCSRT>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTrackerMIL_delete(cv::Ptr<cv::TrackerMIL>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr(cv::Ptr<cv::TrackerMIL>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::TrackerCSRT* cv_PtrOfTrackerCSRT_get_inner_ptr(cv::Ptr<cv::TrackerCSRT>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerMOSSE_delete(cv::Ptr<cv::TrackerMOSSE>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerMOSSE* cv_PtrOfTrackerMOSSE_get_inner_ptr(cv::Ptr<cv::TrackerMOSSE>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTrackerFeature_delete(cv::Ptr<cv::TrackerFeature>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTrackerMedianFlow_delete(cv::Ptr<cv::TrackerMedianFlow>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerMedianFlow* cv_PtrOfTrackerMedianFlow_get_inner_ptr(cv::Ptr<cv::TrackerMedianFlow>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::TrackerFeature* cv_PtrOfTrackerFeature_get_inner_ptr(cv::Ptr<cv::TrackerFeature>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerSamplerAlgorithm_delete(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerSamplerAlgorithm* cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTrackerGOTURN_delete(cv::Ptr<cv::TrackerGOTURN>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfTrackerStateEstimator_delete(cv::Ptr<cv::TrackerStateEstimator>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerStateEstimator* cv_PtrOfTrackerStateEstimator_get_inner_ptr(cv::Ptr<cv::TrackerStateEstimator>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr(cv::Ptr<cv::TrackerGOTURN>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfTrackerTLD_delete(cv::Ptr<cv::TrackerTLD>* instance) {
+		delete instance;
+	}
+
+	cv::TrackerTLD* cv_PtrOfTrackerTLD_get_inner_ptr(cv::Ptr<cv::TrackerTLD>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfTrackerKCF_delete(cv::Ptr<cv::TrackerKCF>* instance) {
-	delete instance;
-}
+extern "C" {
+	cv::Ptr<cv::TrackerTargetState>* cv_PtrOfTrackerTargetState_new(cv::TrackerTargetState* val) {
+		return new cv::Ptr<cv::TrackerTargetState>(val);
+	}
+	
+	void cv_PtrOfTrackerTargetState_delete(cv::Ptr<cv::TrackerTargetState>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::TrackerKCF* cv_PtrOfTrackerKCF_get_inner_ptr(cv::Ptr<cv::TrackerKCF>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerMIL_delete(cv::Ptr<cv::TrackerMIL>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr(cv::Ptr<cv::TrackerMIL>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerMOSSE_delete(cv::Ptr<cv::TrackerMOSSE>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerMOSSE* cv_PtrOfTrackerMOSSE_get_inner_ptr(cv::Ptr<cv::TrackerMOSSE>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerMedianFlow_delete(cv::Ptr<cv::TrackerMedianFlow>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerMedianFlow* cv_PtrOfTrackerMedianFlow_get_inner_ptr(cv::Ptr<cv::TrackerMedianFlow>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerSamplerAlgorithm_delete(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerSamplerAlgorithm* cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerStateEstimator_delete(cv::Ptr<cv::TrackerStateEstimator>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerStateEstimator* cv_PtrOfTrackerStateEstimator_get_inner_ptr(cv::Ptr<cv::TrackerStateEstimator>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerTLD_delete(cv::Ptr<cv::TrackerTLD>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerTLD* cv_PtrOfTrackerTLD_get_inner_ptr(cv::Ptr<cv::TrackerTLD>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfTrackerTargetState_delete(cv::Ptr<cv::TrackerTargetState>* instance) {
-	delete instance;
-}
-
-extern "C" cv::TrackerTargetState* cv_PtrOfTrackerTargetState_get_inner_ptr(cv::Ptr<cv::TrackerTargetState>* instance) {
-	return instance->get();
+	cv::TrackerTargetState* cv_PtrOfTrackerTargetState_get_inner_ptr(cv::Ptr<cv::TrackerTargetState>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

@@ -1,4 +1,6 @@
 template struct Result<bool>;
+template struct Result<const std::vector<cv::KeyPoint>*>;
+template struct Result<const std::vector<cv::Mat>*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::DescriptorMatcher>*>;
 template struct Result<cv::Ptr<cv::Feature2D>*>;

@@ -3,17 +3,17 @@
 #include "video_types.hpp"
 
 extern "C" {
-	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
+	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, cv::TermCriteria* criteria) {
 		try {
 			cv::RotatedRect ret = cv::CamShift(*probImage, *window, *criteria);
 			return Ok(new cv::RotatedRect(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::RotatedRect*>))
 	}
 	
-	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(const cv::_InputArray* img, const cv::_OutputArray* pyramid, const cv::Size* winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
+	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(const cv::_InputArray* img, const cv::_OutputArray* pyramid, cv::Size* winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
 		try {
 			int ret = cv::buildOpticalFlowPyramid(*img, *pyramid, *winSize, maxLevel, withDerivatives, pyrBorder, derivBorder, tryReuseInputImage);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -24,7 +24,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, const cv::Size* winSize, int maxLevel, const cv::TermCriteria* criteria, int flags, double minEigThreshold) {
+	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, cv::Size* winSize, int maxLevel, cv::TermCriteria* criteria, int flags, double minEigThreshold) {
 		try {
 			cv::calcOpticalFlowPyrLK(*prevImg, *nextImg, *prevPts, *nextPts, *status, *err, *winSize, maxLevel, *criteria, flags, minEigThreshold);
 			return Ok();
@@ -34,7 +34,7 @@ extern "C" {
 	Result<double> cv_computeECC_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputArray* inputMask) {
 		try {
 			double ret = cv::computeECC(*templateImage, *inputImage, *inputMask);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -59,24 +59,24 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
+	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
+	Result<double> cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask, gaussFiltSize);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<int> cv_meanShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
+	Result<int> cv_meanShift_const__InputArrayR_RectR_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, cv::TermCriteria* criteria) {
 		try {
 			int ret = cv::meanShift(*probImage, *window, *criteria);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -90,7 +90,7 @@ extern "C" {
 	Result<bool> cv_writeOpticalFlow_const_StringR_const__InputArrayR(const char* path, const cv::_InputArray* flow) {
 		try {
 			bool ret = cv::writeOpticalFlow(std::string(path), *flow);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorKNN_getHistory_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			int ret = instance->getHistory();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorKNN_getNSamples_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			int ret = instance->getNSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorKNN_getDist2Threshold_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			double ret = instance->getDist2Threshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorKNN_getkNNSamples_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			int ret = instance->getkNNSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -167,7 +167,7 @@ extern "C" {
 	Result<bool> cv_BackgroundSubtractorKNN_getDetectShadows_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			bool ret = instance->getDetectShadows();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorKNN_getShadowValue_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			int ret = instance->getShadowValue();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -195,7 +195,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorKNN_getShadowThreshold_const(const cv::BackgroundSubtractorKNN* instance) {
 		try {
 			double ret = instance->getShadowThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -209,7 +209,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorMOG2_getHistory_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			int ret = instance->getHistory();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorMOG2_getNMixtures_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			int ret = instance->getNMixtures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getBackgroundRatio_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getBackgroundRatio();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getVarThreshold_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getVarThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getVarThresholdGen_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getVarThresholdGen();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -279,7 +279,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getVarInit_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getVarInit();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -293,7 +293,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getVarMin_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getVarMin();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -307,7 +307,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getVarMax_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getVarMax();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -321,7 +321,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getComplexityReductionThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -335,7 +335,7 @@ extern "C" {
 	Result<bool> cv_BackgroundSubtractorMOG2_getDetectShadows_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			bool ret = instance->getDetectShadows();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -349,7 +349,7 @@ extern "C" {
 	Result<int> cv_BackgroundSubtractorMOG2_getShadowValue_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			int ret = instance->getShadowValue();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -363,7 +363,7 @@ extern "C" {
 	Result<double> cv_BackgroundSubtractorMOG2_getShadowThreshold_const(const cv::BackgroundSubtractorMOG2* instance) {
 		try {
 			double ret = instance->getShadowThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -384,7 +384,7 @@ extern "C" {
 	Result<int> cv_DISOpticalFlow_getFinestScale_const(const cv::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getFinestScale();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -398,7 +398,7 @@ extern "C" {
 	Result<int> cv_DISOpticalFlow_getPatchSize_const(const cv::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getPatchSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<int> cv_DISOpticalFlow_getPatchStride_const(const cv::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getPatchStride();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<int> cv_DISOpticalFlow_getGradientDescentIterations_const(const cv::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getGradientDescentIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -440,7 +440,7 @@ extern "C" {
 	Result<int> cv_DISOpticalFlow_getVariationalRefinementIterations_const(const cv::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getVariationalRefinementIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -454,7 +454,7 @@ extern "C" {
 	Result<float> cv_DISOpticalFlow_getVariationalRefinementAlpha_const(const cv::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementAlpha();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<float> cv_DISOpticalFlow_getVariationalRefinementDelta_const(const cv::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementDelta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -482,7 +482,7 @@ extern "C" {
 	Result<float> cv_DISOpticalFlow_getVariationalRefinementGamma_const(const cv::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementGamma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -496,7 +496,7 @@ extern "C" {
 	Result<bool> cv_DISOpticalFlow_getUseMeanNormalization_const(const cv::DISOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseMeanNormalization();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -510,7 +510,7 @@ extern "C" {
 	Result<bool> cv_DISOpticalFlow_getUseSpatialPropagation_const(const cv::DISOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseSpatialPropagation();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<int> cv_FarnebackOpticalFlow_getNumLevels_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -559,7 +559,7 @@ extern "C" {
 	Result<double> cv_FarnebackOpticalFlow_getPyrScale_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			double ret = instance->getPyrScale();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -573,7 +573,7 @@ extern "C" {
 	Result<bool> cv_FarnebackOpticalFlow_getFastPyramids_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			bool ret = instance->getFastPyramids();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -587,7 +587,7 @@ extern "C" {
 	Result<int> cv_FarnebackOpticalFlow_getWinSize_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getWinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -601,7 +601,7 @@ extern "C" {
 	Result<int> cv_FarnebackOpticalFlow_getNumIters_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -615,7 +615,7 @@ extern "C" {
 	Result<int> cv_FarnebackOpticalFlow_getPolyN_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getPolyN();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -629,7 +629,7 @@ extern "C" {
 	Result<double> cv_FarnebackOpticalFlow_getPolySigma_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			double ret = instance->getPolySigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -643,7 +643,7 @@ extern "C" {
 	Result<int> cv_FarnebackOpticalFlow_getFlags_const(const cv::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getFlags();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -877,14 +877,14 @@ extern "C" {
 	Result<cv::KalmanFilter*> cv_KalmanFilter_KalmanFilter() {
 		try {
 			cv::KalmanFilter* ret = new cv::KalmanFilter();
-			return Ok(ret);
+			return Ok<cv::KalmanFilter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KalmanFilter*>))
 	}
 	
 	Result<cv::KalmanFilter*> cv_KalmanFilter_KalmanFilter_int_int_int_int(int dynamParams, int measureParams, int controlParams, int type) {
 		try {
 			cv::KalmanFilter* ret = new cv::KalmanFilter(dynamParams, measureParams, controlParams, type);
-			return Ok(ret);
+			return Ok<cv::KalmanFilter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KalmanFilter*>))
 	}
 	
@@ -895,18 +895,18 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_KalmanFilter_predict_const_MatR(cv::KalmanFilter* instance, const cv::Mat* control) {
+	Result<const cv::Mat*> cv_KalmanFilter_predict_const_MatR(cv::KalmanFilter* instance, const cv::Mat* control) {
 		try {
-			cv::Mat ret = instance->predict(*control);
-			return Ok(new cv::Mat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+			const cv::Mat ret = instance->predict(*control);
+			return Ok(new const cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Mat*>))
 	}
 	
-	Result<cv::Mat*> cv_KalmanFilter_correct_const_MatR(cv::KalmanFilter* instance, const cv::Mat* measurement) {
+	Result<const cv::Mat*> cv_KalmanFilter_correct_const_MatR(cv::KalmanFilter* instance, const cv::Mat* measurement) {
 		try {
-			cv::Mat ret = instance->correct(*measurement);
-			return Ok(new cv::Mat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+			const cv::Mat ret = instance->correct(*measurement);
+			return Ok(new const cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Mat*>))
 	}
 	
 	Result_void cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::SparseOpticalFlow* instance, const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err) {
@@ -919,11 +919,11 @@ extern "C" {
 	Result<cv::Size> cv_SparsePyrLKOpticalFlow_getWinSize_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			cv::Size ret = instance->getWinSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_SparsePyrLKOpticalFlow_setWinSize_Size(cv::SparsePyrLKOpticalFlow* instance, const cv::Size* winSize) {
+	Result_void cv_SparsePyrLKOpticalFlow_setWinSize_Size(cv::SparsePyrLKOpticalFlow* instance, cv::Size* winSize) {
 		try {
 			instance->setWinSize(*winSize);
 			return Ok();
@@ -933,7 +933,7 @@ extern "C" {
 	Result<int> cv_SparsePyrLKOpticalFlow_getMaxLevel_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getMaxLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -947,7 +947,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_SparsePyrLKOpticalFlow_getTermCriteria_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -961,7 +961,7 @@ extern "C" {
 	Result<int> cv_SparsePyrLKOpticalFlow_getFlags_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getFlags();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -975,7 +975,7 @@ extern "C" {
 	Result<double> cv_SparsePyrLKOpticalFlow_getMinEigThreshold_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			double ret = instance->getMinEigThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -986,7 +986,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(const cv::Size* winSize, int maxLevel, const cv::TermCriteria* crit, int flags, double minEigThreshold) {
+	Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(cv::Size* winSize, int maxLevel, cv::TermCriteria* crit, int flags, double minEigThreshold) {
 		try {
 			cv::Ptr<cv::SparsePyrLKOpticalFlow> ret = cv::SparsePyrLKOpticalFlow::create(*winSize, maxLevel, *crit, flags, minEigThreshold);
 			return Ok(new cv::Ptr<cv::SparsePyrLKOpticalFlow>(ret));
@@ -1003,7 +1003,7 @@ extern "C" {
 	Result<int> cv_VariationalRefinement_getFixedPointIterations_const(const cv::VariationalRefinement* instance) {
 		try {
 			int ret = instance->getFixedPointIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1017,7 +1017,7 @@ extern "C" {
 	Result<int> cv_VariationalRefinement_getSorIterations_const(const cv::VariationalRefinement* instance) {
 		try {
 			int ret = instance->getSorIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1031,7 +1031,7 @@ extern "C" {
 	Result<float> cv_VariationalRefinement_getOmega_const(const cv::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getOmega();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1045,7 +1045,7 @@ extern "C" {
 	Result<float> cv_VariationalRefinement_getAlpha_const(const cv::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getAlpha();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1059,7 +1059,7 @@ extern "C" {
 	Result<float> cv_VariationalRefinement_getDelta_const(const cv::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getDelta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1073,7 +1073,7 @@ extern "C" {
 	Result<float> cv_VariationalRefinement_getGamma_const(const cv::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

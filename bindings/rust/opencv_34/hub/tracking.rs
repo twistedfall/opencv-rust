@@ -1131,7 +1131,7 @@ pub trait TrackerCSRT: crate::tracking::Tracker {
 	fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 
 	fn set_initial_mask(&mut self, mask: core::Mat) -> Result<()> {
-		unsafe { sys::cv_TrackerCSRT_setInitialMask_Mat(self.as_raw_mut_TrackerCSRT(), mask.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerCSRT_setInitialMask_const_Mat(self.as_raw_mut_TrackerCSRT(), mask.as_raw_Mat()) }.into_result()
 	}
 	
 }
@@ -1537,7 +1537,7 @@ pub trait TrackerFeatureHAARTrait: crate::tracking::TrackerFeature {
 	/// * images: The images
 	/// * response: Collection of response for the specific TrackerFeature
 	fn extract_selected(&mut self, sel_features: core::Vector::<i32>, images: &core::Vector::<core::Mat>, response: &mut core::Mat) -> Result<bool> {
-		unsafe { sys::cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_R_MatR(self.as_raw_mut_TrackerFeatureHAAR(), sel_features.as_raw_VectorOfi32(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
+		unsafe { sys::cv_TrackerFeatureHAAR_extractSelected_const_vector_int__const_vector_Mat_R_MatR(self.as_raw_mut_TrackerFeatureHAAR(), sel_features.as_raw_VectorOfi32(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat()) }.into_result()
 	}
 	
 	/// Identify most effective features
@@ -2029,7 +2029,7 @@ pub trait TrackerKCF: crate::tracking::Tracker {
 	/// ## C++ default parameters
 	/// * pca_func: false
 	fn set_feature_extractor(&mut self, unnamed: Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>, pca_func: bool) -> Result<()> {
-		unsafe { sys::cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_MatR__bool(self.as_raw_mut_TrackerKCF(), unnamed, pca_func) }.into_result()
+		unsafe { sys::cv_TrackerKCF_setFeatureExtractor_void__X__const_cv_Mat__const_cv_Rect__cv_MatR__bool(self.as_raw_mut_TrackerKCF(), unnamed, pca_func) }.into_result()
 	}
 	
 }

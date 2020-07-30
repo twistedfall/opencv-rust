@@ -6,7 +6,7 @@ extern "C" {
 	Result<double> cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(const cv::_InputArray* orientation, const cv::_InputArray* mask, const cv::_InputArray* mhi, double timestamp, double duration) {
 		try {
 			double ret = cv::motempl::calcGlobalOrientation(*orientation, *mask, *mhi, timestamp, duration);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -111,11 +111,11 @@ extern "C" {
 	Result<bool> cv_optflow_writeOpticalFlow_const_StringR_const__InputArrayR(const char* path, const cv::_InputArray* flow) {
 		try {
 			bool ret = cv::optflow::writeOpticalFlow(cv::String(path), *flow);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result_void cv_read_const_FileNodeR_NodeR_Node(const cv::FileNode* fn, cv::optflow::GPCTree::Node* node, const cv::optflow::GPCTree::Node* unnamed) {
+	Result_void cv_read_const_FileNodeR_NodeR_Node(const cv::FileNode* fn, cv::optflow::GPCTree::Node* node, cv::optflow::GPCTree::Node* unnamed) {
 		try {
 			cv::read(*fn, *node, *unnamed);
 			return Ok();
@@ -132,7 +132,7 @@ extern "C" {
 	Result<int> cv_optflow_DISOpticalFlow_getFinestScale_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getFinestScale();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -146,7 +146,7 @@ extern "C" {
 	Result<int> cv_optflow_DISOpticalFlow_getPatchSize_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getPatchSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -160,7 +160,7 @@ extern "C" {
 	Result<int> cv_optflow_DISOpticalFlow_getPatchStride_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getPatchStride();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -174,7 +174,7 @@ extern "C" {
 	Result<int> cv_optflow_DISOpticalFlow_getGradientDescentIterations_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getGradientDescentIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -188,7 +188,7 @@ extern "C" {
 	Result<int> cv_optflow_DISOpticalFlow_getVariationalRefinementIterations_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			int ret = instance->getVariationalRefinementIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -202,7 +202,7 @@ extern "C" {
 	Result<float> cv_optflow_DISOpticalFlow_getVariationalRefinementAlpha_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementAlpha();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -216,7 +216,7 @@ extern "C" {
 	Result<float> cv_optflow_DISOpticalFlow_getVariationalRefinementDelta_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementDelta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -230,7 +230,7 @@ extern "C" {
 	Result<float> cv_optflow_DISOpticalFlow_getVariationalRefinementGamma_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			float ret = instance->getVariationalRefinementGamma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -244,7 +244,7 @@ extern "C" {
 	Result<bool> cv_optflow_DISOpticalFlow_getUseMeanNormalization_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseMeanNormalization();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -258,7 +258,7 @@ extern "C" {
 	Result<bool> cv_optflow_DISOpticalFlow_getUseSpatialPropagation_const(const cv::optflow::DISOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseSpatialPropagation();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -279,7 +279,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(size_t index, const cv::Size* sz, int* x, int* y) {
+	Result_void cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(size_t index, cv::Size* sz, int* x, int* y) {
 		try {
 			cv::optflow::GPCDetails::getCoordinatesFromIndex(index, *sz, *x, *y);
 			return Ok();
@@ -289,25 +289,25 @@ extern "C" {
 	Result<cv::optflow::GPCMatchingParams> cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(bool _useOpenCL) {
 		try {
 			cv::optflow::GPCMatchingParams ret(_useOpenCL);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCMatchingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCMatchingParams>))
 	}
 	
 	Result<cv::optflow::GPCMatchingParams> cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(const cv::optflow::GPCMatchingParams* params) {
 		try {
 			cv::optflow::GPCMatchingParams ret(*params);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCMatchingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCMatchingParams>))
 	}
 	
 	Result<cv::Vec<double, 18>> cv_optflow_GPCPatchDescriptor_getPropFeature_const(const cv::optflow::GPCPatchDescriptor* instance) {
 		try {
 			cv::Vec<double, 18> ret = instance->feature;
-			return Ok(ret);
+			return Ok<cv::Vec<double, 18>>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec<double, 18>>))
 	}
 	
-	Result_void cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(cv::optflow::GPCPatchDescriptor* instance, const cv::Vec<double, 18>* val) {
+	Result_void cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(cv::optflow::GPCPatchDescriptor* instance, cv::Vec<double, 18>* val) {
 		try {
 			instance->feature = *val;
 			return Ok();
@@ -320,7 +320,7 @@ extern "C" {
 	Result<double> cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(const cv::optflow::GPCPatchDescriptor* instance, const cv::Vec<double, 18>* coef) {
 		try {
 			double ret = instance->dot(*coef);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -334,7 +334,7 @@ extern "C" {
 	Result<bool> cv_optflow_GPCPatchDescriptor_isSeparated_const(const cv::optflow::GPCPatchDescriptor* instance) {
 		try {
 			bool ret = instance->isSeparated();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -393,14 +393,14 @@ extern "C" {
 	Result<cv::optflow::GPCTrainingParams> cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(unsigned int _maxTreeDepth, int _minNumberOfSamples, cv::optflow::GPCDescType _descriptorType, bool _printProgress) {
 		try {
 			cv::optflow::GPCTrainingParams ret(_maxTreeDepth, _minNumberOfSamples, _descriptorType, _printProgress);
-			return Ok(ret);
+			return Ok<cv::optflow::GPCTrainingParams>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::GPCTrainingParams>))
 	}
 	
 	Result<bool> cv_optflow_GPCTrainingParams_check_const(const cv::optflow::GPCTrainingParams instance) {
 		try {
 			bool ret = instance.check();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -424,21 +424,21 @@ extern "C" {
 	Result<size_t> cv_optflow_GPCTrainingSamples_size_const(const cv::optflow::GPCTrainingSamples* instance) {
 		try {
 			size_t ret = instance->size();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
 	Result<int> cv_optflow_GPCTrainingSamples_type_const(const cv::optflow::GPCTrainingSamples* instance) {
 		try {
 			int ret = instance->type();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	void cv_GPCTree_delete(cv::optflow::GPCTree* instance) {
 		delete instance;
 	}
-	Result_void cv_optflow_GPCTree_train_GPCTrainingSamplesR_GPCTrainingParams(cv::optflow::GPCTree* instance, cv::optflow::GPCTrainingSamples* samples, const cv::optflow::GPCTrainingParams* params) {
+	Result_void cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(cv::optflow::GPCTree* instance, cv::optflow::GPCTrainingSamples* samples, const cv::optflow::GPCTrainingParams* params) {
 		try {
 			instance->train(*samples, *params);
 			return Ok();
@@ -462,7 +462,7 @@ extern "C" {
 	Result<unsigned int> cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(const cv::optflow::GPCTree* instance, const cv::optflow::GPCPatchDescriptor* descr) {
 		try {
 			unsigned int ret = instance->findLeafForPatch(*descr);
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -476,17 +476,17 @@ extern "C" {
 	Result<int> cv_optflow_GPCTree_getDescriptorType_const(const cv::optflow::GPCTree* instance) {
 		try {
 			int ret = instance->getDescriptorType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	void cv_OpticalFlowPCAFlow_delete(cv::optflow::OpticalFlowPCAFlow* instance) {
 		delete instance;
 	}
-	Result<cv::optflow::OpticalFlowPCAFlow*> cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_PCAPrior__Size_float_float_float_float_float(const cv::Ptr<cv::optflow::PCAPrior>* _prior, const cv::Size* _basisSize, float _sparseRate, float _retainedCornersFraction, float _occlusionsThreshold, float _dampingFactor, float _claheClip) {
+	Result<cv::optflow::OpticalFlowPCAFlow*> cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(cv::Ptr<const cv::optflow::PCAPrior>* _prior, const cv::Size* _basisSize, float _sparseRate, float _retainedCornersFraction, float _occlusionsThreshold, float _dampingFactor, float _claheClip) {
 		try {
 			cv::optflow::OpticalFlowPCAFlow* ret = new cv::optflow::OpticalFlowPCAFlow(*_prior, *_basisSize, _sparseRate, _retainedCornersFraction, _occlusionsThreshold, _dampingFactor, _claheClip);
-			return Ok(ret);
+			return Ok<cv::optflow::OpticalFlowPCAFlow*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::OpticalFlowPCAFlow*>))
 	}
 	
@@ -510,21 +510,21 @@ extern "C" {
 	Result<cv::optflow::PCAPrior*> cv_optflow_PCAPrior_PCAPrior_const_charX(const char* pathToPrior) {
 		try {
 			cv::optflow::PCAPrior* ret = new cv::optflow::PCAPrior(pathToPrior);
-			return Ok(ret);
+			return Ok<cv::optflow::PCAPrior*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::optflow::PCAPrior*>))
 	}
 	
 	Result<int> cv_optflow_PCAPrior_getPadding_const(const cv::optflow::PCAPrior* instance) {
 		try {
 			int ret = instance->getPadding();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_optflow_PCAPrior_getBasisSize_const(const cv::optflow::PCAPrior* instance) {
 		try {
 			int ret = instance->getBasisSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<int> cv_optflow_VariationalRefinement_getFixedPointIterations_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			int ret = instance->getFixedPointIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -559,7 +559,7 @@ extern "C" {
 	Result<int> cv_optflow_VariationalRefinement_getSorIterations_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			int ret = instance->getSorIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -573,7 +573,7 @@ extern "C" {
 	Result<float> cv_optflow_VariationalRefinement_getOmega_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getOmega();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -587,7 +587,7 @@ extern "C" {
 	Result<float> cv_optflow_VariationalRefinement_getAlpha_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getAlpha();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -601,7 +601,7 @@ extern "C" {
 	Result<float> cv_optflow_VariationalRefinement_getDelta_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getDelta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -615,7 +615,7 @@ extern "C" {
 	Result<float> cv_optflow_VariationalRefinement_getGamma_const(const cv::optflow::VariationalRefinement* instance) {
 		try {
 			float ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

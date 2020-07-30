@@ -1,12 +1,11 @@
-#include "common.hpp"
-#include <opencv2/flann.hpp>
+#include "flann.hpp"
 #include "flann_types.hpp"
 
 extern "C" {
 	Result<cvflann::flann_distance_t> cvflann_flann_distance_type() {
 		try {
 			cvflann::flann_distance_t ret = cvflann::flann_distance_type();
-			return Ok(ret);
+			return Ok<cvflann::flann_distance_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cvflann::flann_distance_t>))
 	}
 	
@@ -23,7 +22,7 @@ extern "C" {
 	Result<cv::flann::AutotunedIndexParams*> cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(float target_precision, float build_weight, float memory_weight, float sample_fraction) {
 		try {
 			cv::flann::AutotunedIndexParams* ret = new cv::flann::AutotunedIndexParams(target_precision, build_weight, memory_weight, sample_fraction);
-			return Ok(ret);
+			return Ok<cv::flann::AutotunedIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::AutotunedIndexParams*>))
 	}
 	
@@ -33,7 +32,7 @@ extern "C" {
 	Result<cv::flann::CompositeIndexParams*> cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(int trees, int branching, int iterations, cvflann::flann_centers_init_t centers_init, float cb_index) {
 		try {
 			cv::flann::CompositeIndexParams* ret = new cv::flann::CompositeIndexParams(trees, branching, iterations, centers_init, cb_index);
-			return Ok(ret);
+			return Ok<cv::flann::CompositeIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::CompositeIndexParams*>))
 	}
 	
@@ -43,7 +42,7 @@ extern "C" {
 	Result<cv::flann::HierarchicalClusteringIndexParams*> cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(int branching, cvflann::flann_centers_init_t centers_init, int trees, int leaf_size) {
 		try {
 			cv::flann::HierarchicalClusteringIndexParams* ret = new cv::flann::HierarchicalClusteringIndexParams(branching, centers_init, trees, leaf_size);
-			return Ok(ret);
+			return Ok<cv::flann::HierarchicalClusteringIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::HierarchicalClusteringIndexParams*>))
 	}
 	
@@ -53,14 +52,14 @@ extern "C" {
 	Result<cv::flann::Index*> cv_flann_Index_Index() {
 		try {
 			cv::flann::Index* ret = new cv::flann::Index();
-			return Ok(ret);
+			return Ok<cv::flann::Index*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::Index*>))
 	}
 	
 	Result<cv::flann::Index*> cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR_flann_distance_t(const cv::_InputArray* features, const cv::flann::IndexParams* params, cvflann::flann_distance_t distType) {
 		try {
 			cv::flann::Index* ret = new cv::flann::Index(*features, *params, distType);
-			return Ok(ret);
+			return Ok<cv::flann::Index*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::Index*>))
 	}
 	
@@ -81,7 +80,7 @@ extern "C" {
 	Result<int> cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int_const_SearchParamsR(cv::flann::Index* instance, const cv::_InputArray* query, const cv::_OutputArray* indices, const cv::_OutputArray* dists, double radius, int maxResults, const cv::flann::SearchParams* params) {
 		try {
 			int ret = instance->radiusSearch(*query, *indices, *dists, radius, maxResults, *params);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -95,7 +94,7 @@ extern "C" {
 	Result<bool> cv_flann_Index_load_const__InputArrayR_const_StringR(cv::flann::Index* instance, const cv::_InputArray* features, const char* filename) {
 		try {
 			bool ret = instance->load(*features, cv::String(filename));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -109,21 +108,21 @@ extern "C" {
 	Result<cvflann::flann_distance_t> cv_flann_Index_getDistance_const(const cv::flann::Index* instance) {
 		try {
 			cvflann::flann_distance_t ret = instance->getDistance();
-			return Ok(ret);
+			return Ok<cvflann::flann_distance_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cvflann::flann_distance_t>))
 	}
 	
 	Result<cvflann::flann_algorithm_t> cv_flann_Index_getAlgorithm_const(const cv::flann::Index* instance) {
 		try {
 			cvflann::flann_algorithm_t ret = instance->getAlgorithm();
-			return Ok(ret);
+			return Ok<cvflann::flann_algorithm_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cvflann::flann_algorithm_t>))
 	}
 	
 	Result<void*> cv_flann_IndexParams_getPropParams(cv::flann::IndexParams* instance) {
 		try {
 			void* ret = instance->params;
-			return Ok(ret);
+			return Ok<void*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
@@ -140,7 +139,7 @@ extern "C" {
 	Result<cv::flann::IndexParams*> cv_flann_IndexParams_IndexParams() {
 		try {
 			cv::flann::IndexParams* ret = new cv::flann::IndexParams();
-			return Ok(ret);
+			return Ok<cv::flann::IndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::IndexParams*>))
 	}
 	
@@ -154,14 +153,14 @@ extern "C" {
 	Result<int> cv_flann_IndexParams_getInt_const_const_StringR_int(const cv::flann::IndexParams* instance, const char* key, int defaultVal) {
 		try {
 			int ret = instance->getInt(cv::String(key), defaultVal);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_flann_IndexParams_getDouble_const_const_StringR_double(const cv::flann::IndexParams* instance, const char* key, double defaultVal) {
 		try {
 			double ret = instance->getDouble(cv::String(key), defaultVal);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -220,7 +219,7 @@ extern "C" {
 	Result<cv::flann::KDTreeIndexParams*> cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(int trees) {
 		try {
 			cv::flann::KDTreeIndexParams* ret = new cv::flann::KDTreeIndexParams(trees);
-			return Ok(ret);
+			return Ok<cv::flann::KDTreeIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::KDTreeIndexParams*>))
 	}
 	
@@ -230,7 +229,7 @@ extern "C" {
 	Result<cv::flann::KMeansIndexParams*> cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(int branching, int iterations, cvflann::flann_centers_init_t centers_init, float cb_index) {
 		try {
 			cv::flann::KMeansIndexParams* ret = new cv::flann::KMeansIndexParams(branching, iterations, centers_init, cb_index);
-			return Ok(ret);
+			return Ok<cv::flann::KMeansIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::KMeansIndexParams*>))
 	}
 	
@@ -240,7 +239,7 @@ extern "C" {
 	Result<cv::flann::LinearIndexParams*> cv_flann_LinearIndexParams_LinearIndexParams() {
 		try {
 			cv::flann::LinearIndexParams* ret = new cv::flann::LinearIndexParams();
-			return Ok(ret);
+			return Ok<cv::flann::LinearIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::LinearIndexParams*>))
 	}
 	
@@ -250,7 +249,7 @@ extern "C" {
 	Result<cv::flann::LshIndexParams*> cv_flann_LshIndexParams_LshIndexParams_int_int_int(int table_number, int key_size, int multi_probe_level) {
 		try {
 			cv::flann::LshIndexParams* ret = new cv::flann::LshIndexParams(table_number, key_size, multi_probe_level);
-			return Ok(ret);
+			return Ok<cv::flann::LshIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::LshIndexParams*>))
 	}
 	
@@ -260,7 +259,7 @@ extern "C" {
 	Result<cv::flann::SavedIndexParams*> cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(const char* filename) {
 		try {
 			cv::flann::SavedIndexParams* ret = new cv::flann::SavedIndexParams(cv::String(filename));
-			return Ok(ret);
+			return Ok<cv::flann::SavedIndexParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::SavedIndexParams*>))
 	}
 	
@@ -270,7 +269,7 @@ extern "C" {
 	Result<cv::flann::SearchParams*> cv_flann_SearchParams_SearchParams_int_float_bool(int checks, float eps, bool sorted) {
 		try {
 			cv::flann::SearchParams* ret = new cv::flann::SearchParams(checks, eps, sorted);
-			return Ok(ret);
+			return Ok<cv::flann::SearchParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::SearchParams*>))
 	}
 	

@@ -6,7 +6,7 @@ extern "C" {
 	Result<bool> cv_dpm_DPMDetector_isEmpty_const(const cv::dpm::DPMDetector* instance) {
 		try {
 			bool ret = instance->isEmpty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -17,17 +17,17 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<std::string>*> cv_dpm_DPMDetector_getClassNames_const(const cv::dpm::DPMDetector* instance) {
+	Result<const std::vector<std::string>*> cv_dpm_DPMDetector_getClassNames_const(const cv::dpm::DPMDetector* instance) {
 		try {
-			std::vector<std::string> ret = instance->getClassNames();
-			return Ok(new std::vector<std::string>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<std::string>*>))
+			const std::vector<std::string> ret = instance->getClassNames();
+			return Ok(new const std::vector<std::string>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<std::string>*>))
 	}
 	
 	Result<size_t> cv_dpm_DPMDetector_getClassCount_const(const cv::dpm::DPMDetector* instance) {
 		try {
 			size_t ret = instance->getClassCount();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
@@ -41,11 +41,11 @@ extern "C" {
 	Result<cv::Rect> cv_dpm_DPMDetector_ObjectDetection_getPropRect_const(const cv::dpm::DPMDetector::ObjectDetection* instance) {
 		try {
 			cv::Rect ret = instance->rect;
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(cv::dpm::DPMDetector::ObjectDetection* instance, const cv::Rect* val) {
+	Result_void cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(cv::dpm::DPMDetector::ObjectDetection* instance, cv::Rect* val) {
 		try {
 			instance->rect = *val;
 			return Ok();
@@ -55,7 +55,7 @@ extern "C" {
 	Result<float> cv_dpm_DPMDetector_ObjectDetection_getPropScore_const(const cv::dpm::DPMDetector::ObjectDetection* instance) {
 		try {
 			float ret = instance->score;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<int> cv_dpm_DPMDetector_ObjectDetection_getPropClassID_const(const cv::dpm::DPMDetector::ObjectDetection* instance) {
 		try {
 			int ret = instance->classID;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -86,14 +86,14 @@ extern "C" {
 	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() {
 		try {
 			cv::dpm::DPMDetector::ObjectDetection* ret = new cv::dpm::DPMDetector::ObjectDetection();
-			return Ok(ret);
+			return Ok<cv::dpm::DPMDetector::ObjectDetection*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dpm::DPMDetector::ObjectDetection*>))
 	}
 	
 	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(const cv::Rect* rect, float score, int classID) {
 		try {
 			cv::dpm::DPMDetector::ObjectDetection* ret = new cv::dpm::DPMDetector::ObjectDetection(*rect, score, classID);
-			return Ok(ret);
+			return Ok<cv::dpm::DPMDetector::ObjectDetection*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dpm::DPMDetector::ObjectDetection*>))
 	}
 	

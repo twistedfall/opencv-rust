@@ -26,14 +26,14 @@ extern "C" {
 	Result<bool> cv_hdf_HDF5_hlexists_const_const_StringR(const cv::hdf::HDF5* instance, const char* label) {
 		try {
 			bool ret = instance->hlexists(cv::String(label));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_hdf_HDF5_atexists_const_const_StringR(const cv::hdf::HDF5* instance, const char* atlabel) {
 		try {
 			bool ret = instance->atexists(cv::String(atlabel));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -44,7 +44,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_atwrite_int_const_StringR(cv::hdf::HDF5* instance, int value, const char* atlabel) {
+	Result_void cv_hdf_HDF5_atwrite_const_int_const_StringR(cv::hdf::HDF5* instance, const int value, const char* atlabel) {
 		try {
 			instance->atwrite(value, cv::String(atlabel));
 			return Ok();
@@ -58,7 +58,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_atwrite_double_const_StringR(cv::hdf::HDF5* instance, double value, const char* atlabel) {
+	Result_void cv_hdf_HDF5_atwrite_const_double_const_StringR(cv::hdf::HDF5* instance, const double value, const char* atlabel) {
 		try {
 			instance->atwrite(value, cv::String(atlabel));
 			return Ok();
@@ -102,56 +102,56 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_int_int_const_StringR(const cv::hdf::HDF5* instance, int rows, int cols, int type, const char* dslabel) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR(const cv::hdf::HDF5* instance, const int rows, const int cols, const int type, const char* dslabel) {
 		try {
 			instance->dscreate(rows, cols, type, cv::String(dslabel));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_int_int_const_StringR_int(const cv::hdf::HDF5* instance, int rows, int cols, int type, const char* dslabel, int compresslevel) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int(const cv::hdf::HDF5* instance, const int rows, const int cols, const int type, const char* dslabel, const int compresslevel) {
 		try {
 			instance->dscreate(rows, cols, type, cv::String(dslabel), compresslevel);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_int_int_const_StringR_int_const_vector_int_R(const cv::hdf::HDF5* instance, int rows, int cols, int type, const char* dslabel, int compresslevel, const std::vector<int>* dims_chunks) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_vector_int_R(const cv::hdf::HDF5* instance, const int rows, const int cols, const int type, const char* dslabel, const int compresslevel, const std::vector<int>* dims_chunks) {
 		try {
 			instance->dscreate(rows, cols, type, cv::String(dslabel), compresslevel, *dims_chunks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_int_int_const_StringR_int_const_intX(const cv::hdf::HDF5* instance, int rows, int cols, int type, const char* dslabel, int compresslevel, const int* dims_chunks) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_intX(const cv::hdf::HDF5* instance, const int rows, const int cols, const int type, const char* dslabel, const int compresslevel, const int* dims_chunks) {
 		try {
 			instance->dscreate(rows, cols, type, cv::String(dslabel), compresslevel, dims_chunks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_const_intX_int_const_StringR(const cv::hdf::HDF5* instance, int n_dims, const int* sizes, int type, const char* dslabel) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR(const cv::hdf::HDF5* instance, const int n_dims, const int* sizes, const int type, const char* dslabel) {
 		try {
 			instance->dscreate(n_dims, sizes, type, cv::String(dslabel));
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_const_intX_int_const_StringR_int(const cv::hdf::HDF5* instance, int n_dims, const int* sizes, int type, const char* dslabel, int compresslevel) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR_const_int(const cv::hdf::HDF5* instance, const int n_dims, const int* sizes, const int type, const char* dslabel, const int compresslevel) {
 		try {
 			instance->dscreate(n_dims, sizes, type, cv::String(dslabel), compresslevel);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_const_vector_int_R_int_const_StringR_int_const_vector_int_R(const cv::hdf::HDF5* instance, const std::vector<int>* sizes, int type, const char* dslabel, int compresslevel, const std::vector<int>* dims_chunks) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_vector_int_R_const_int_const_StringR_const_int_const_vector_int_R(const cv::hdf::HDF5* instance, const std::vector<int>* sizes, const int type, const char* dslabel, const int compresslevel, const std::vector<int>* dims_chunks) {
 		try {
 			instance->dscreate(*sizes, type, cv::String(dslabel), compresslevel, *dims_chunks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_dscreate_const_int_const_intX_int_const_StringR_int_const_intX(const cv::hdf::HDF5* instance, int n_dims, const int* sizes, int type, const char* dslabel, int compresslevel, const int* dims_chunks) {
+	Result_void cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR_const_int_const_intX(const cv::hdf::HDF5* instance, const int n_dims, const int* sizes, const int type, const char* dslabel, const int compresslevel, const int* dims_chunks) {
 		try {
 			instance->dscreate(n_dims, sizes, type, cv::String(dslabel), compresslevel, dims_chunks);
 			return Ok();
@@ -168,7 +168,7 @@ extern "C" {
 	Result<int> cv_hdf_HDF5_dsgettype_const_const_StringR(const cv::hdf::HDF5* instance, const char* dslabel) {
 		try {
 			int ret = instance->dsgettype(cv::String(dslabel));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -259,32 +259,32 @@ extern "C" {
 	Result<int> cv_hdf_HDF5_kpgetsize_const_const_StringR_int(const cv::hdf::HDF5* instance, const char* kplabel, int dims_flag) {
 		try {
 			int ret = instance->kpgetsize(cv::String(kplabel), dims_flag);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_hdf_HDF5_kpcreate_const_int_const_StringR_int_int(const cv::hdf::HDF5* instance, int size, const char* kplabel, int compresslevel, int chunks) {
+	Result_void cv_hdf_HDF5_kpcreate_const_const_int_const_StringR_const_int_const_int(const cv::hdf::HDF5* instance, const int size, const char* kplabel, const int compresslevel, const int chunks) {
 		try {
 			instance->kpcreate(size, cv::String(kplabel), compresslevel, chunks);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__const_StringR_int_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
+	Result_void cv_hdf_HDF5_kpwrite_const_const_vector_KeyPoint__const_StringR_const_int_const_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, const int offset, const int counts) {
 		try {
 			instance->kpwrite(*keypoints, cv::String(kplabel), offset, counts);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__const_StringR_int_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
+	Result_void cv_hdf_HDF5_kpinsert_const_const_vector_KeyPoint__const_StringR_const_int_const_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, const int offset, const int counts) {
 		try {
 			instance->kpinsert(*keypoints, cv::String(kplabel), offset, counts);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_hdf_HDF5_kpread_const_vector_KeyPoint_R_const_StringR_int_int(const cv::hdf::HDF5* instance, std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
+	Result_void cv_hdf_HDF5_kpread_const_vector_KeyPoint_R_const_StringR_const_int_const_int(const cv::hdf::HDF5* instance, std::vector<cv::KeyPoint>* keypoints, const char* kplabel, const int offset, const int counts) {
 		try {
 			instance->kpread(*keypoints, cv::String(kplabel), offset, counts);
 			return Ok();

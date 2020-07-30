@@ -1,4 +1,7 @@
 template struct Result<bool>;
+template struct Result<const std::vector<cv::Point_<float>>*>;
+template struct Result<const std::vector<float>*>;
+template struct Result<const std::vector<int>*>;
 template struct Result<const unsigned char*>;
 template struct Result<cv::LineIterator*>;
 template struct Result<cv::Mat*>;
@@ -26,39 +29,46 @@ template struct Result<std::vector<cv::Point_<int>>*>;
 template struct Result<std::vector<cv::Vec<float, 4>>*>;
 template struct Result<std::vector<cv::Vec<float, 6>>*>;
 template struct Result<std::vector<cv::Vec<int, 4>>*>;
-template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<std::vector<cv::Point_<float>>>*>;
 template struct Result<unsigned char*>;
-extern "C" void cv_PtrOfCLAHE_delete(cv::Ptr<cv::CLAHE>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfCLAHE_delete(cv::Ptr<cv::CLAHE>* instance) {
+		delete instance;
+	}
+
+	cv::CLAHE* cv_PtrOfCLAHE_get_inner_ptr(cv::Ptr<cv::CLAHE>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::CLAHE* cv_PtrOfCLAHE_get_inner_ptr(cv::Ptr<cv::CLAHE>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfGeneralizedHoughBallard_delete(cv::Ptr<cv::GeneralizedHoughBallard>* instance) {
+		delete instance;
+	}
+
+	cv::GeneralizedHoughBallard* cv_PtrOfGeneralizedHoughBallard_get_inner_ptr(cv::Ptr<cv::GeneralizedHoughBallard>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfGeneralizedHoughBallard_delete(cv::Ptr<cv::GeneralizedHoughBallard>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfGeneralizedHoughGuil_delete(cv::Ptr<cv::GeneralizedHoughGuil>* instance) {
+		delete instance;
+	}
+
+	cv::GeneralizedHoughGuil* cv_PtrOfGeneralizedHoughGuil_get_inner_ptr(cv::Ptr<cv::GeneralizedHoughGuil>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::GeneralizedHoughBallard* cv_PtrOfGeneralizedHoughBallard_get_inner_ptr(cv::Ptr<cv::GeneralizedHoughBallard>* instance) {
-	return instance->get();
-}
+extern "C" {
+	void cv_PtrOfLineSegmentDetector_delete(cv::Ptr<cv::LineSegmentDetector>* instance) {
+		delete instance;
+	}
 
-extern "C" void cv_PtrOfGeneralizedHoughGuil_delete(cv::Ptr<cv::GeneralizedHoughGuil>* instance) {
-	delete instance;
-}
-
-extern "C" cv::GeneralizedHoughGuil* cv_PtrOfGeneralizedHoughGuil_get_inner_ptr(cv::Ptr<cv::GeneralizedHoughGuil>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLineSegmentDetector_delete(cv::Ptr<cv::LineSegmentDetector>* instance) {
-	delete instance;
-}
-
-extern "C" cv::LineSegmentDetector* cv_PtrOfLineSegmentDetector_get_inner_ptr(cv::Ptr<cv::LineSegmentDetector>* instance) {
-	return instance->get();
+	cv::LineSegmentDetector* cv_PtrOfLineSegmentDetector_get_inner_ptr(cv::Ptr<cv::LineSegmentDetector>* instance) {
+		return instance->get();
+	}
 }
 

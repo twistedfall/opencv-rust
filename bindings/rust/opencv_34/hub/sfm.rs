@@ -523,7 +523,7 @@ pub fn reconstruct_2(images: core::Vector::<String>, ps: &mut dyn core::ToOutput
 	output_array_arg!(ps);
 	output_array_arg!(points3d);
 	input_output_array_arg!(k);
-	unsafe { sys::cv_sfm_reconstruct_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective) }.into_result()
+	unsafe { sys::cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective) }.into_result()
 }
 
 /// Reconstruct 3d points from 2d images while performing autocalibration.
@@ -550,7 +550,7 @@ pub fn reconstruct_3(images: core::Vector::<String>, rs: &mut dyn core::ToOutput
 	output_array_arg!(ts);
 	input_output_array_arg!(k);
 	output_array_arg!(points3d);
-	unsafe { sys::cv_sfm_reconstruct_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective) }.into_result()
+	unsafe { sys::cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective) }.into_result()
 }
 
 /// Computes the relative camera motion between two cameras.
@@ -834,7 +834,7 @@ impl libmv_CameraIntrinsicsOptions {
 	/// * _polynomial_p1: 0
 	/// * _polynomial_p2: 0
 	pub fn new(_distortion_model: i32, _focal_length: f64, _principal_point_x: f64, _principal_point_y: f64, _polynomial_k1: f64, _polynomial_k2: f64, _polynomial_k3: f64, _polynomial_p1: f64, _polynomial_p2: f64) -> Result<crate::sfm::libmv_CameraIntrinsicsOptions> {
-		unsafe { sys::cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions_int_double_double_double_double_double_double_double_double(_distortion_model, _focal_length, _principal_point_x, _principal_point_y, _polynomial_k1, _polynomial_k2, _polynomial_k3, _polynomial_p1, _polynomial_p2) }.into_result()
+		unsafe { sys::cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions_const_int_const_double_const_double_const_double_const_double_const_double_const_double_const_double_const_double(_distortion_model, _focal_length, _principal_point_x, _principal_point_y, _polynomial_k1, _polynomial_k2, _polynomial_k3, _polynomial_p1, _polynomial_p2) }.into_result()
 	}
 	
 }
@@ -866,7 +866,7 @@ impl libmv_ReconstructionOptions {
 	/// * _select_keyframes: 1
 	/// * _verbosity_level: -1
 	pub fn new(_keyframe1: i32, _keyframe2: i32, _refine_intrinsics: i32, _select_keyframes: i32, _verbosity_level: i32) -> Result<crate::sfm::libmv_ReconstructionOptions> {
-		unsafe { sys::cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_int_int_int_int_int(_keyframe1, _keyframe2, _refine_intrinsics, _select_keyframes, _verbosity_level) }.into_result()
+		unsafe { sys::cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_const_int_const_int_const_int_const_int_const_int(_keyframe1, _keyframe2, _refine_intrinsics, _select_keyframes, _verbosity_level) }.into_result()
 	}
 	
 }

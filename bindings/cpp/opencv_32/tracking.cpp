@@ -6,14 +6,14 @@ extern "C" {
 	Result<cv::Rect2d> cv_selectROI_Mat_bool(cv::Mat* img, bool fromCenter) {
 		try {
 			cv::Rect2d ret = cv::selectROI(*img, fromCenter);
-			return Ok(ret);
+			return Ok<cv::Rect2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect2d>))
 	}
 	
 	Result<cv::Rect2d> cv_selectROI_const_StringR_Mat_bool_bool(const char* windowName, cv::Mat* img, bool showCrossair, bool fromCenter) {
 		try {
 			cv::Rect2d ret = cv::selectROI(cv::String(windowName), *img, showCrossair, fromCenter);
-			return Ok(ret);
+			return Ok<cv::Rect2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect2d>))
 	}
 	
@@ -27,7 +27,7 @@ extern "C" {
 	Result<cv::Rect2d> cv_tld_tld_InitDataset_int_const_charX_int(int videoInd, const char* rootPath, int datasetInd) {
 		try {
 			cv::Rect2d ret = cv::tld::tld_InitDataset(videoInd, rootPath, datasetInd);
-			return Ok(ret);
+			return Ok<cv::Rect2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect2d>))
 	}
 	
@@ -44,7 +44,7 @@ extern "C" {
 	Result<cv::ClfMilBoost*> cv_ClfMilBoost_ClfMilBoost() {
 		try {
 			cv::ClfMilBoost* ret = new cv::ClfMilBoost();
-			return Ok(ret);
+			return Ok<cv::ClfMilBoost*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ClfMilBoost*>))
 	}
 	
@@ -72,14 +72,14 @@ extern "C" {
 	Result<float> cv_ClfMilBoost_sigmoid_float(cv::ClfMilBoost* instance, float x) {
 		try {
 			float ret = instance->sigmoid(x);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<int> cv_ClfMilBoost_Params_getProp_numSel_const(const cv::ClfMilBoost::Params* instance) {
 		try {
 			int ret = instance->_numSel;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -93,7 +93,7 @@ extern "C" {
 	Result<int> cv_ClfMilBoost_Params_getProp_numFeat_const(const cv::ClfMilBoost::Params* instance) {
 		try {
 			int ret = instance->_numFeat;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -107,7 +107,7 @@ extern "C" {
 	Result<float> cv_ClfMilBoost_Params_getProp_lRate_const(const cv::ClfMilBoost::Params* instance) {
 		try {
 			float ret = instance->_lRate;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -124,14 +124,14 @@ extern "C" {
 	Result<cv::ClfMilBoost::Params*> cv_ClfMilBoost_Params_Params() {
 		try {
 			cv::ClfMilBoost::Params* ret = new cv::ClfMilBoost::Params();
-			return Ok(ret);
+			return Ok<cv::ClfMilBoost::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ClfMilBoost::Params*>))
 	}
 	
 	Result<int> cv_CvFeatureParams_getPropMaxCatCount_const(const cv::CvFeatureParams* instance) {
 		try {
 			int ret = instance->maxCatCount;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -145,7 +145,7 @@ extern "C" {
 	Result<int> cv_CvFeatureParams_getPropFeatSize_const(const cv::CvFeatureParams* instance) {
 		try {
 			int ret = instance->featSize;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -159,7 +159,7 @@ extern "C" {
 	Result<int> cv_CvFeatureParams_getPropNumFeatures_const(const cv::CvFeatureParams* instance) {
 		try {
 			int ret = instance->numFeatures;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -177,7 +177,7 @@ extern "C" {
 	Result<cv::CvFeatureParams*> cv_CvFeatureParams_CvFeatureParams() {
 		try {
 			cv::CvFeatureParams* ret = new cv::CvFeatureParams();
-			return Ok(ret);
+			return Ok<cv::CvFeatureParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CvFeatureParams*>))
 	}
 	#endif
@@ -199,7 +199,7 @@ extern "C" {
 	Result<bool> cv_CvFeatureParams_read_const_FileNodeR(cv::CvFeatureParams* instance, const cv::FileNode* node) {
 		try {
 			bool ret = instance->read(*node);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -215,7 +215,7 @@ extern "C" {
 	void cv_CvHaarEvaluator_delete(cv::CvHaarEvaluator* instance) {
 		delete instance;
 	}
-	Result_void cv_CvHaarEvaluator_init_const_CvFeatureParamsX_int_Size(cv::CvHaarEvaluator* instance, const cv::CvFeatureParams* _featureParams, int _maxSampleCount, const cv::Size* _winSize) {
+	Result_void cv_CvHaarEvaluator_init_const_CvFeatureParamsX_int_Size(cv::CvHaarEvaluator* instance, const cv::CvFeatureParams* _featureParams, int _maxSampleCount, cv::Size* _winSize) {
 		try {
 			instance->init(_featureParams, _maxSampleCount, *_winSize);
 			return Ok();
@@ -246,11 +246,11 @@ extern "C" {
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<std::vector<cv::CvHaarEvaluator::FeatureHaar>*> cv_CvHaarEvaluator_getFeatures_const(const cv::CvHaarEvaluator* instance) {
+	Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*> cv_CvHaarEvaluator_getFeatures_const(const cv::CvHaarEvaluator* instance) {
 		try {
-			std::vector<cv::CvHaarEvaluator::FeatureHaar> ret = instance->getFeatures();
-			return Ok(new std::vector<cv::CvHaarEvaluator::FeatureHaar>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::CvHaarEvaluator::FeatureHaar>*>))
+			const std::vector<cv::CvHaarEvaluator::FeatureHaar> ret = instance->getFeatures();
+			return Ok(new const std::vector<cv::CvHaarEvaluator::FeatureHaar>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*>))
 	}
 	#endif
 	
@@ -262,7 +262,7 @@ extern "C" {
 	}
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_CvHaarEvaluator_setWinSize_Size(cv::CvHaarEvaluator* instance, const cv::Size* patchSize) {
+	Result_void cv_CvHaarEvaluator_setWinSize_Size(cv::CvHaarEvaluator* instance, cv::Size* patchSize) {
 		try {
 			instance->setWinSize(*patchSize);
 			return Ok();
@@ -274,7 +274,7 @@ extern "C" {
 	Result<cv::Size> cv_CvHaarEvaluator_setWinSize_const(const cv::CvHaarEvaluator* instance) {
 		try {
 			cv::Size ret = instance->setWinSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	#endif
@@ -297,19 +297,19 @@ extern "C" {
 		delete instance;
 	}
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::CvHaarEvaluator::FeatureHaar*> cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(const cv::Size* patchSize) {
+	Result<cv::CvHaarEvaluator::FeatureHaar*> cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(cv::Size* patchSize) {
 		try {
 			cv::CvHaarEvaluator::FeatureHaar* ret = new cv::CvHaarEvaluator::FeatureHaar(*patchSize);
-			return Ok(ret);
+			return Ok<cv::CvHaarEvaluator::FeatureHaar*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CvHaarEvaluator::FeatureHaar*>))
 	}
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<bool> cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(const cv::CvHaarEvaluator::FeatureHaar* instance, const cv::Mat* image, const cv::Rect* ROI, float* result) {
+	Result<bool> cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(const cv::CvHaarEvaluator::FeatureHaar* instance, const cv::Mat* image, cv::Rect* ROI, float* result) {
 		try {
 			bool ret = instance->eval(*image, *ROI, result);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	#endif
@@ -318,26 +318,26 @@ extern "C" {
 	Result<int> cv_CvHaarEvaluator_FeatureHaar_getNumAreas(cv::CvHaarEvaluator::FeatureHaar* instance) {
 		try {
 			int ret = instance->getNumAreas();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<std::vector<float>*> cv_CvHaarEvaluator_FeatureHaar_getWeights_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
+	Result<const std::vector<float>*> cv_CvHaarEvaluator_FeatureHaar_getWeights_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
 		try {
-			std::vector<float> ret = instance->getWeights();
-			return Ok(new std::vector<float>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<float>*>))
+			const std::vector<float> ret = instance->getWeights();
+			return Ok(new const std::vector<float>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<float>*>))
 	}
 	#endif
 	
 	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<std::vector<cv::Rect>*> cv_CvHaarEvaluator_FeatureHaar_getAreas_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
+	Result<const std::vector<cv::Rect>*> cv_CvHaarEvaluator_FeatureHaar_getAreas_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
 		try {
-			std::vector<cv::Rect> ret = instance->getAreas();
-			return Ok(new std::vector<cv::Rect>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Rect>*>))
+			const std::vector<cv::Rect> ret = instance->getAreas();
+			return Ok(new const std::vector<cv::Rect>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Rect>*>))
 	}
 	#endif
 	
@@ -352,7 +352,7 @@ extern "C" {
 	Result<float> cv_CvHaarEvaluator_FeatureHaar_getInitMean_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
 		try {
 			float ret = instance->getInitMean();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	#endif
@@ -361,7 +361,7 @@ extern "C" {
 	Result<float> cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
 		try {
 			float ret = instance->getInitSigma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	#endif
@@ -386,49 +386,49 @@ extern "C" {
 	Result<cv::MultiTracker*> cv_MultiTracker_MultiTracker_const_StringR(const char* trackerType) {
 		try {
 			cv::MultiTracker* ret = new cv::MultiTracker(cv::String(trackerType));
-			return Ok(ret);
+			return Ok<cv::MultiTracker*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MultiTracker*>))
 	}
 	
 	Result<bool> cv_MultiTracker_add_const_MatR_const_Rect2dR(cv::MultiTracker* instance, const cv::Mat* image, const cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->add(*image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_add_const_StringR_const_MatR_const_Rect2dR(cv::MultiTracker* instance, const char* trackerType, const cv::Mat* image, const cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->add(cv::String(trackerType), *image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_add_const_StringR_const_MatR_vector_Rect2d_(cv::MultiTracker* instance, const char* trackerType, const cv::Mat* image, std::vector<cv::Rect2d>* boundingBox) {
 		try {
 			bool ret = instance->add(cv::String(trackerType), *image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_add_const_MatR_vector_Rect2d_(cv::MultiTracker* instance, const cv::Mat* image, std::vector<cv::Rect2d>* boundingBox) {
 		try {
 			bool ret = instance->add(*image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_update_const_MatR(cv::MultiTracker* instance, const cv::Mat* image) {
 		try {
 			bool ret = instance->update(*image);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_update_const_MatR_vector_Rect2d_R(cv::MultiTracker* instance, const cv::Mat* image, std::vector<cv::Rect2d>* boundingBox) {
 		try {
 			bool ret = instance->update(*image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -438,14 +438,14 @@ extern "C" {
 	Result<bool> cv_MultiTrackerTLD_update_opt_const_MatR(cv::MultiTrackerTLD* instance, const cv::Mat* image) {
 		try {
 			bool ret = instance->update_opt(*image);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_MultiTracker_Alt_getPropTargetNum_const(const cv::MultiTracker_Alt* instance) {
 		try {
 			int ret = instance->targetNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -504,35 +504,35 @@ extern "C" {
 	Result<cv::MultiTracker_Alt*> cv_MultiTracker_Alt_MultiTracker_Alt() {
 		try {
 			cv::MultiTracker_Alt* ret = new cv::MultiTracker_Alt();
-			return Ok(ret);
+			return Ok<cv::MultiTracker_Alt*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MultiTracker_Alt*>))
 	}
 	
 	Result<bool> cv_MultiTracker_Alt_addTarget_const_MatR_const_Rect2dR_String(cv::MultiTracker_Alt* instance, const cv::Mat* image, const cv::Rect2d* boundingBox, char* tracker_algorithm_name) {
 		try {
 			bool ret = instance->addTarget(*image, *boundingBox, cv::String(tracker_algorithm_name));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_MultiTracker_Alt_update_const_MatR(cv::MultiTracker_Alt* instance, const cv::Mat* image) {
 		try {
 			bool ret = instance->update(*image);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_Tracker_init_const_MatR_const_Rect2dR(cv::Tracker* instance, const cv::Mat* image, const cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->init(*image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_Tracker_update_const_MatR_Rect2dR(cv::Tracker* instance, const cv::Mat* image, cv::Rect2d* boundingBox) {
 		try {
 			bool ret = instance->update(*image, *boundingBox);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -574,7 +574,7 @@ extern "C" {
 	Result<int> cv_TrackerBoosting_Params_getPropNumClassifiers_const(const cv::TrackerBoosting::Params* instance) {
 		try {
 			int ret = instance->numClassifiers;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -588,7 +588,7 @@ extern "C" {
 	Result<float> cv_TrackerBoosting_Params_getPropSamplerOverlap_const(const cv::TrackerBoosting::Params* instance) {
 		try {
 			float ret = instance->samplerOverlap;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -602,7 +602,7 @@ extern "C" {
 	Result<float> cv_TrackerBoosting_Params_getPropSamplerSearchFactor_const(const cv::TrackerBoosting::Params* instance) {
 		try {
 			float ret = instance->samplerSearchFactor;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -616,7 +616,7 @@ extern "C" {
 	Result<int> cv_TrackerBoosting_Params_getPropIterationInit_const(const cv::TrackerBoosting::Params* instance) {
 		try {
 			int ret = instance->iterationInit;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -630,7 +630,7 @@ extern "C" {
 	Result<int> cv_TrackerBoosting_Params_getPropFeatureSetNumFeatures_const(const cv::TrackerBoosting::Params* instance) {
 		try {
 			int ret = instance->featureSetNumFeatures;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -647,7 +647,7 @@ extern "C" {
 	Result<cv::TrackerBoosting::Params*> cv_TrackerBoosting_Params_Params() {
 		try {
 			cv::TrackerBoosting::Params* ret = new cv::TrackerBoosting::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerBoosting::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerBoosting::Params*>))
 	}
 	
@@ -699,7 +699,7 @@ extern "C" {
 	Result<cv::TrackerFeatureFeature2d*> cv_TrackerFeatureFeature2d_TrackerFeatureFeature2d_String_String(char* detectorType, char* descriptorType) {
 		try {
 			cv::TrackerFeatureFeature2d* ret = new cv::TrackerFeatureFeature2d(cv::String(detectorType), cv::String(descriptorType));
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureFeature2d*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureFeature2d*>))
 	}
 	
@@ -716,14 +716,14 @@ extern "C" {
 	Result<cv::TrackerFeatureHAAR*> cv_TrackerFeatureHAAR_TrackerFeatureHAAR_const_ParamsR(const cv::TrackerFeatureHAAR::Params* parameters) {
 		try {
 			cv::TrackerFeatureHAAR* ret = new cv::TrackerFeatureHAAR(*parameters);
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureHAAR*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureHAAR*>))
 	}
 	
-	Result<bool> cv_TrackerFeatureHAAR_extractSelected_vector_int__const_vector_Mat_R_MatR(cv::TrackerFeatureHAAR* instance, const std::vector<int>* selFeatures, const std::vector<cv::Mat>* images, cv::Mat* response) {
+	Result<bool> cv_TrackerFeatureHAAR_extractSelected_const_vector_int__const_vector_Mat_R_MatR(cv::TrackerFeatureHAAR* instance, const std::vector<int>* selFeatures, const std::vector<cv::Mat>* images, cv::Mat* response) {
 		try {
 			bool ret = instance->extractSelected(*selFeatures, *images, *response);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -737,14 +737,14 @@ extern "C" {
 	Result<bool> cv_TrackerFeatureHAAR_swapFeature_int_int(cv::TrackerFeatureHAAR* instance, int source, int target) {
 		try {
 			bool ret = instance->swapFeature(source, target);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_TrackerFeatureHAAR_swapFeature_int_FeatureHaarR(cv::TrackerFeatureHAAR* instance, int id, cv::CvHaarEvaluator::FeatureHaar* feature) {
 		try {
 			bool ret = instance->swapFeature(id, *feature);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -758,7 +758,7 @@ extern "C" {
 	Result<int> cv_TrackerFeatureHAAR_Params_getPropNumFeatures_const(const cv::TrackerFeatureHAAR::Params* instance) {
 		try {
 			int ret = instance->numFeatures;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -772,11 +772,11 @@ extern "C" {
 	Result<cv::Size> cv_TrackerFeatureHAAR_Params_getPropRectSize_const(const cv::TrackerFeatureHAAR::Params* instance) {
 		try {
 			cv::Size ret = instance->rectSize;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_TrackerFeatureHAAR_Params_setPropRectSize_Size(cv::TrackerFeatureHAAR::Params* instance, const cv::Size* val) {
+	Result_void cv_TrackerFeatureHAAR_Params_setPropRectSize_Size(cv::TrackerFeatureHAAR::Params* instance, cv::Size* val) {
 		try {
 			instance->rectSize = *val;
 			return Ok();
@@ -786,7 +786,7 @@ extern "C" {
 	Result<bool> cv_TrackerFeatureHAAR_Params_getPropIsIntegral_const(const cv::TrackerFeatureHAAR::Params* instance) {
 		try {
 			bool ret = instance->isIntegral;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -803,7 +803,7 @@ extern "C" {
 	Result<cv::TrackerFeatureHAAR::Params*> cv_TrackerFeatureHAAR_Params_Params() {
 		try {
 			cv::TrackerFeatureHAAR::Params* ret = new cv::TrackerFeatureHAAR::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureHAAR::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureHAAR::Params*>))
 	}
 	
@@ -813,7 +813,7 @@ extern "C" {
 	Result<cv::TrackerFeatureHOG*> cv_TrackerFeatureHOG_TrackerFeatureHOG() {
 		try {
 			cv::TrackerFeatureHOG* ret = new cv::TrackerFeatureHOG();
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureHOG*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureHOG*>))
 	}
 	
@@ -830,7 +830,7 @@ extern "C" {
 	Result<cv::TrackerFeatureLBP*> cv_TrackerFeatureLBP_TrackerFeatureLBP() {
 		try {
 			cv::TrackerFeatureLBP* ret = new cv::TrackerFeatureLBP();
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureLBP*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureLBP*>))
 	}
 	
@@ -847,7 +847,7 @@ extern "C" {
 	Result<cv::TrackerFeatureSet*> cv_TrackerFeatureSet_TrackerFeatureSet() {
 		try {
 			cv::TrackerFeatureSet* ret = new cv::TrackerFeatureSet();
-			return Ok(ret);
+			return Ok<cv::TrackerFeatureSet*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerFeatureSet*>))
 	}
 	
@@ -875,22 +875,22 @@ extern "C" {
 	Result<bool> cv_TrackerFeatureSet_addTrackerFeature_String(cv::TrackerFeatureSet* instance, char* trackerFeatureType) {
 		try {
 			bool ret = instance->addTrackerFeature(cv::String(trackerFeatureType));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_TrackerFeatureSet_addTrackerFeature_Ptr_TrackerFeature_R(cv::TrackerFeatureSet* instance, cv::Ptr<cv::TrackerFeature>* feature) {
 		try {
 			bool ret = instance->addTrackerFeature(*feature);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_TrackerFeatureSet_getResponses_const(const cv::TrackerFeatureSet* instance) {
+	Result<const std::vector<cv::Mat>*> cv_TrackerFeatureSet_getResponses_const(const cv::TrackerFeatureSet* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->getResponses();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->getResponses();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result<cv::Ptr<cv::TrackerGOTURN>*> cv_TrackerGOTURN_createTracker_const_ParamsR(const cv::TrackerGOTURN::Params* parameters) {
@@ -906,7 +906,7 @@ extern "C" {
 	Result<cv::TrackerGOTURN::Params*> cv_TrackerGOTURN_Params_Params() {
 		try {
 			cv::TrackerGOTURN::Params* ret = new cv::TrackerGOTURN::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerGOTURN::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerGOTURN::Params*>))
 	}
 	
@@ -924,7 +924,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_TrackerKCF_setFeatureExtractor_void__X__cv_Mat__cv_Rect__cv_MatR__bool(cv::TrackerKCF* instance, void (*unnamed)(cv::Mat, cv::Rect, cv::Mat&), bool pca_func) {
+	Result_void cv_TrackerKCF_setFeatureExtractor_void__X__const_cv_Mat__const_cv_Rect__cv_MatR__bool(cv::TrackerKCF* instance, void (*unnamed)(const cv::Mat, const cv::Rect, cv::Mat&), bool pca_func) {
 		try {
 			instance->setFeatureExtractor(unnamed, pca_func);
 			return Ok();
@@ -941,7 +941,7 @@ extern "C" {
 	Result<double> cv_TrackerKCF_Params_getPropSigma_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			double ret = instance->sigma;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -955,7 +955,7 @@ extern "C" {
 	Result<double> cv_TrackerKCF_Params_getPropLambda_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			double ret = instance->lambda;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -969,7 +969,7 @@ extern "C" {
 	Result<double> cv_TrackerKCF_Params_getPropInterp_factor_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			double ret = instance->interp_factor;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -983,7 +983,7 @@ extern "C" {
 	Result<double> cv_TrackerKCF_Params_getPropOutput_sigma_factor_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			double ret = instance->output_sigma_factor;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -997,7 +997,7 @@ extern "C" {
 	Result<double> cv_TrackerKCF_Params_getPropPca_learning_rate_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			double ret = instance->pca_learning_rate;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1011,7 +1011,7 @@ extern "C" {
 	Result<bool> cv_TrackerKCF_Params_getPropResize_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			bool ret = instance->resize;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1025,7 +1025,7 @@ extern "C" {
 	Result<bool> cv_TrackerKCF_Params_getPropSplit_coeff_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			bool ret = instance->split_coeff;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1039,7 +1039,7 @@ extern "C" {
 	Result<bool> cv_TrackerKCF_Params_getPropWrap_kernel_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			bool ret = instance->wrap_kernel;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1053,7 +1053,7 @@ extern "C" {
 	Result<bool> cv_TrackerKCF_Params_getPropCompress_feature_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			bool ret = instance->compress_feature;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1067,7 +1067,7 @@ extern "C" {
 	Result<int> cv_TrackerKCF_Params_getPropMax_patch_size_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			int ret = instance->max_patch_size;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1081,7 +1081,7 @@ extern "C" {
 	Result<int> cv_TrackerKCF_Params_getPropCompressed_size_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			int ret = instance->compressed_size;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1095,7 +1095,7 @@ extern "C" {
 	Result<unsigned int> cv_TrackerKCF_Params_getPropDesc_pca_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			unsigned int ret = instance->desc_pca;
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -1109,7 +1109,7 @@ extern "C" {
 	Result<unsigned int> cv_TrackerKCF_Params_getPropDesc_npca_const(const cv::TrackerKCF::Params* instance) {
 		try {
 			unsigned int ret = instance->desc_npca;
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -1126,7 +1126,7 @@ extern "C" {
 	Result<cv::TrackerKCF::Params*> cv_TrackerKCF_Params_Params() {
 		try {
 			cv::TrackerKCF::Params* ret = new cv::TrackerKCF::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerKCF::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerKCF::Params*>))
 	}
 	
@@ -1154,7 +1154,7 @@ extern "C" {
 	Result<float> cv_TrackerMIL_Params_getPropSamplerInitInRadius_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			float ret = instance->samplerInitInRadius;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1168,7 +1168,7 @@ extern "C" {
 	Result<int> cv_TrackerMIL_Params_getPropSamplerInitMaxNegNum_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			int ret = instance->samplerInitMaxNegNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1182,7 +1182,7 @@ extern "C" {
 	Result<float> cv_TrackerMIL_Params_getPropSamplerSearchWinSize_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			float ret = instance->samplerSearchWinSize;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1196,7 +1196,7 @@ extern "C" {
 	Result<float> cv_TrackerMIL_Params_getPropSamplerTrackInRadius_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			float ret = instance->samplerTrackInRadius;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1210,7 +1210,7 @@ extern "C" {
 	Result<int> cv_TrackerMIL_Params_getPropSamplerTrackMaxPosNum_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			int ret = instance->samplerTrackMaxPosNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1224,7 +1224,7 @@ extern "C" {
 	Result<int> cv_TrackerMIL_Params_getPropSamplerTrackMaxNegNum_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			int ret = instance->samplerTrackMaxNegNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1238,7 +1238,7 @@ extern "C" {
 	Result<int> cv_TrackerMIL_Params_getPropFeatureSetNumFeatures_const(const cv::TrackerMIL::Params* instance) {
 		try {
 			int ret = instance->featureSetNumFeatures;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1255,7 +1255,7 @@ extern "C" {
 	Result<cv::TrackerMIL::Params*> cv_TrackerMIL_Params_Params() {
 		try {
 			cv::TrackerMIL::Params* ret = new cv::TrackerMIL::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerMIL::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerMIL::Params*>))
 	}
 	
@@ -1283,7 +1283,7 @@ extern "C" {
 	Result<int> cv_TrackerMedianFlow_Params_getPropPointsInGrid_const(const cv::TrackerMedianFlow::Params* instance) {
 		try {
 			int ret = instance->pointsInGrid;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1300,7 +1300,7 @@ extern "C" {
 	Result<cv::TrackerMedianFlow::Params*> cv_TrackerMedianFlow_Params_Params() {
 		try {
 			cv::TrackerMedianFlow::Params* ret = new cv::TrackerMedianFlow::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerMedianFlow::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerMedianFlow::Params*>))
 	}
 	
@@ -1321,7 +1321,7 @@ extern "C" {
 	Result<bool> cv_TrackerModel_setTrackerStateEstimator_Ptr_TrackerStateEstimator_(cv::TrackerModel* instance, cv::Ptr<cv::TrackerStateEstimator>* trackerStateEstimator) {
 		try {
 			bool ret = instance->setTrackerStateEstimator(*trackerStateEstimator);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1342,7 +1342,7 @@ extern "C" {
 	Result<bool> cv_TrackerModel_runStateEstimator(cv::TrackerModel* instance) {
 		try {
 			bool ret = instance->runStateEstimator();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1373,35 +1373,35 @@ extern "C" {
 	Result<cv::TrackerSampler*> cv_TrackerSampler_TrackerSampler() {
 		try {
 			cv::TrackerSampler* ret = new cv::TrackerSampler();
-			return Ok(ret);
+			return Ok<cv::TrackerSampler*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSampler*>))
 	}
 	
-	Result_void cv_TrackerSampler_sampling_const_MatR_Rect(cv::TrackerSampler* instance, const cv::Mat* image, const cv::Rect* boundingBox) {
+	Result_void cv_TrackerSampler_sampling_const_MatR_Rect(cv::TrackerSampler* instance, const cv::Mat* image, cv::Rect* boundingBox) {
 		try {
 			instance->sampling(*image, *boundingBox);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_TrackerSampler_getSamples_const(const cv::TrackerSampler* instance) {
+	Result<const std::vector<cv::Mat>*> cv_TrackerSampler_getSamples_const(const cv::TrackerSampler* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->getSamples();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->getSamples();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result<bool> cv_TrackerSampler_addTrackerSamplerAlgorithm_String(cv::TrackerSampler* instance, char* trackerSamplerAlgorithmType) {
 		try {
 			bool ret = instance->addTrackerSamplerAlgorithm(cv::String(trackerSamplerAlgorithmType));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_TrackerSampler_addTrackerSamplerAlgorithm_Ptr_TrackerSamplerAlgorithm_R(cv::TrackerSampler* instance, cv::Ptr<cv::TrackerSamplerAlgorithm>* sampler) {
 		try {
 			bool ret = instance->addTrackerSamplerAlgorithm(*sampler);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1412,10 +1412,10 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerSamplerAlgorithm>*>))
 	}
 	
-	Result<bool> cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerAlgorithm* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
+	Result<bool> cv_TrackerSamplerAlgorithm_sampling_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerAlgorithm* instance, const cv::Mat* image, cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
 		try {
 			bool ret = instance->sampling(*image, *boundingBox, *sample);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1432,7 +1432,7 @@ extern "C" {
 	Result<cv::TrackerSamplerCS*> cv_TrackerSamplerCS_TrackerSamplerCS_const_ParamsR(const cv::TrackerSamplerCS::Params* parameters) {
 		try {
 			cv::TrackerSamplerCS* ret = new cv::TrackerSamplerCS(*parameters);
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerCS*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerCS*>))
 	}
 	
@@ -1443,24 +1443,24 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<bool> cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerCS* instance, const cv::Mat* image, const cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
+	Result<bool> cv_TrackerSamplerCS_samplingImpl_const_MatR_Rect_vector_Mat_R(cv::TrackerSamplerCS* instance, const cv::Mat* image, cv::Rect* boundingBox, std::vector<cv::Mat>* sample) {
 		try {
 			bool ret = instance->samplingImpl(*image, *boundingBox, *sample);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<cv::Rect> cv_TrackerSamplerCS_getROI_const(const cv::TrackerSamplerCS* instance) {
 		try {
 			cv::Rect ret = instance->getROI();
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
 	Result<float> cv_TrackerSamplerCS_Params_getPropOverlap_const(const cv::TrackerSamplerCS::Params* instance) {
 		try {
 			float ret = instance->overlap;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1474,7 +1474,7 @@ extern "C" {
 	Result<float> cv_TrackerSamplerCS_Params_getPropSearchFactor_const(const cv::TrackerSamplerCS::Params* instance) {
 		try {
 			float ret = instance->searchFactor;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1491,7 +1491,7 @@ extern "C" {
 	Result<cv::TrackerSamplerCS::Params*> cv_TrackerSamplerCS_Params_Params() {
 		try {
 			cv::TrackerSamplerCS::Params* ret = new cv::TrackerSamplerCS::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerCS::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerCS::Params*>))
 	}
 	
@@ -1501,7 +1501,7 @@ extern "C" {
 	Result<cv::TrackerSamplerCSC*> cv_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsR(const cv::TrackerSamplerCSC::Params* parameters) {
 		try {
 			cv::TrackerSamplerCSC* ret = new cv::TrackerSamplerCSC(*parameters);
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerCSC*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerCSC*>))
 	}
 	
@@ -1515,7 +1515,7 @@ extern "C" {
 	Result<float> cv_TrackerSamplerCSC_Params_getPropInitInRad_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			float ret = instance->initInRad;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1529,7 +1529,7 @@ extern "C" {
 	Result<float> cv_TrackerSamplerCSC_Params_getPropTrackInPosRad_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			float ret = instance->trackInPosRad;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1543,7 +1543,7 @@ extern "C" {
 	Result<float> cv_TrackerSamplerCSC_Params_getPropSearchWinSize_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			float ret = instance->searchWinSize;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1557,7 +1557,7 @@ extern "C" {
 	Result<int> cv_TrackerSamplerCSC_Params_getPropInitMaxNegNum_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			int ret = instance->initMaxNegNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1571,7 +1571,7 @@ extern "C" {
 	Result<int> cv_TrackerSamplerCSC_Params_getPropTrackMaxPosNum_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			int ret = instance->trackMaxPosNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1585,7 +1585,7 @@ extern "C" {
 	Result<int> cv_TrackerSamplerCSC_Params_getPropTrackMaxNegNum_const(const cv::TrackerSamplerCSC::Params* instance) {
 		try {
 			int ret = instance->trackMaxNegNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1602,7 +1602,7 @@ extern "C" {
 	Result<cv::TrackerSamplerCSC::Params*> cv_TrackerSamplerCSC_Params_Params() {
 		try {
 			cv::TrackerSamplerCSC::Params* ret = new cv::TrackerSamplerCSC::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerCSC::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerCSC::Params*>))
 	}
 	
@@ -1612,14 +1612,14 @@ extern "C" {
 	Result<cv::TrackerSamplerPF*> cv_TrackerSamplerPF_TrackerSamplerPF_const_MatR_const_ParamsR(const cv::Mat* chosenRect, const cv::TrackerSamplerPF::Params* parameters) {
 		try {
 			cv::TrackerSamplerPF* ret = new cv::TrackerSamplerPF(*chosenRect, *parameters);
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerPF*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerPF*>))
 	}
 	
 	Result<int> cv_TrackerSamplerPF_Params_getPropIterationNum_const(const cv::TrackerSamplerPF::Params* instance) {
 		try {
 			int ret = instance->iterationNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1633,7 +1633,7 @@ extern "C" {
 	Result<int> cv_TrackerSamplerPF_Params_getPropParticlesNum_const(const cv::TrackerSamplerPF::Params* instance) {
 		try {
 			int ret = instance->particlesNum;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1647,7 +1647,7 @@ extern "C" {
 	Result<double> cv_TrackerSamplerPF_Params_getPropAlpha_const(const cv::TrackerSamplerPF::Params* instance) {
 		try {
 			double ret = instance->alpha;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1678,7 +1678,7 @@ extern "C" {
 	Result<cv::TrackerSamplerPF::Params*> cv_TrackerSamplerPF_Params_Params() {
 		try {
 			cv::TrackerSamplerPF::Params* ret = new cv::TrackerSamplerPF::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerSamplerPF::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerSamplerPF::Params*>))
 	}
 	
@@ -1699,17 +1699,17 @@ extern "C" {
 	void cv_TrackerStateEstimatorAdaBoosting_delete(cv::TrackerStateEstimatorAdaBoosting* instance) {
 		delete instance;
 	}
-	Result<cv::TrackerStateEstimatorAdaBoosting*> cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(int numClassifer, int initIterations, int nFeatures, const cv::Size* patchSize, const cv::Rect* ROI) {
+	Result<cv::TrackerStateEstimatorAdaBoosting*> cv_TrackerStateEstimatorAdaBoosting_TrackerStateEstimatorAdaBoosting_int_int_int_Size_const_RectR(int numClassifer, int initIterations, int nFeatures, cv::Size* patchSize, const cv::Rect* ROI) {
 		try {
 			cv::TrackerStateEstimatorAdaBoosting* ret = new cv::TrackerStateEstimatorAdaBoosting(numClassifer, initIterations, nFeatures, *patchSize, *ROI);
-			return Ok(ret);
+			return Ok<cv::TrackerStateEstimatorAdaBoosting*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorAdaBoosting*>))
 	}
 	
 	Result<cv::Rect> cv_TrackerStateEstimatorAdaBoosting_getSampleROI_const(const cv::TrackerStateEstimatorAdaBoosting* instance) {
 		try {
 			cv::Rect ret = instance->getSampleROI();
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -1748,7 +1748,7 @@ extern "C" {
 	Result<cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState*> cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fR_int_int_bool_const_MatR(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* responses) {
 		try {
 			cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState* ret = new cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState(*position, width, height, foreground, *responses);
-			return Ok(ret);
+			return Ok<cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState*>))
 	}
 	#endif
@@ -1784,7 +1784,7 @@ extern "C" {
 	Result<bool> cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_isTargetFg_const(const cv::TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState* instance) {
 		try {
 			bool ret = instance->isTargetFg();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	#endif
@@ -1795,7 +1795,7 @@ extern "C" {
 	Result<cv::TrackerStateEstimatorMILBoosting*> cv_TrackerStateEstimatorMILBoosting_TrackerStateEstimatorMILBoosting_int(int nFeatures) {
 		try {
 			cv::TrackerStateEstimatorMILBoosting* ret = new cv::TrackerStateEstimatorMILBoosting(nFeatures);
-			return Ok(ret);
+			return Ok<cv::TrackerStateEstimatorMILBoosting*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorMILBoosting*>))
 	}
 	
@@ -1806,7 +1806,7 @@ extern "C" {
 	Result<cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState*> cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_TrackerMILTargetState_const_Point2fR_int_int_bool_const_MatR(const cv::Point2f* position, int width, int height, bool foreground, const cv::Mat* features) {
 		try {
 			cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState* ret = new cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState(*position, width, height, foreground, *features);
-			return Ok(ret);
+			return Ok<cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState*>))
 	}
 	#endif
@@ -1833,7 +1833,7 @@ extern "C" {
 	Result<bool> cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_isTargetFg_const(const cv::TrackerStateEstimatorMILBoosting::TrackerMILTargetState* instance) {
 		try {
 			bool ret = instance->isTargetFg();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	#endif
@@ -1853,7 +1853,7 @@ extern "C" {
 	Result<cv::TrackerStateEstimatorSVM*> cv_TrackerStateEstimatorSVM_TrackerStateEstimatorSVM() {
 		try {
 			cv::TrackerStateEstimatorSVM* ret = new cv::TrackerStateEstimatorSVM();
-			return Ok(ret);
+			return Ok<cv::TrackerStateEstimatorSVM*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerStateEstimatorSVM*>))
 	}
 	
@@ -1870,7 +1870,7 @@ extern "C" {
 	Result<cv::TrackerTLD::Params*> cv_TrackerTLD_Params_Params() {
 		try {
 			cv::TrackerTLD::Params* ret = new cv::TrackerTLD::Params();
-			return Ok(ret);
+			return Ok<cv::TrackerTLD::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerTLD::Params*>))
 	}
 	
@@ -1894,7 +1894,7 @@ extern "C" {
 	Result<cv::Point2f> cv_TrackerTargetState_getTargetPosition_const(const cv::TrackerTargetState* instance) {
 		try {
 			cv::Point2f ret = instance->getTargetPosition();
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
@@ -1908,7 +1908,7 @@ extern "C" {
 	Result<int> cv_TrackerTargetState_getTargetWidth_const(const cv::TrackerTargetState* instance) {
 		try {
 			int ret = instance->getTargetWidth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1922,7 +1922,7 @@ extern "C" {
 	Result<int> cv_TrackerTargetState_getTargetHeight_const(const cv::TrackerTargetState* instance) {
 		try {
 			int ret = instance->getTargetHeight();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

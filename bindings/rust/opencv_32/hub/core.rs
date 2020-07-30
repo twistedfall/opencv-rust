@@ -1652,7 +1652,7 @@ pub type Mat4i = core::Mat_<core::Vec4i>;
 pub type Mat4s = core::Mat_<core::Vec4s>;
 pub type Mat4w = core::Mat_<core::Vec4w>;
 pub type MatConstIterator_difference_type = ptrdiff_t;
-pub type MatConstIterator_pointer<'a, 'b> = &'a &'b u8;
+pub type MatConstIterator_pointer<'a, 'b> = &'a mut &'b u8;
 pub type MatConstIterator_reference<'a> = &'a mut u8;
 pub type MatConstIterator_value_type<'a> = &'a mut u8;
 pub type MatND = core::Mat;
@@ -2825,7 +2825,7 @@ pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flag
 /// ## Returns
 /// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromD3DFORMAT_int(i_d3_dformat) }.into_result()
+	unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(i_d3_dformat) }.into_result()
 }
 
 /// Get OpenCV type from DirectX type
@@ -2834,7 +2834,7 @@ pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
 /// ## Returns
 /// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_int(i_dxgi_format) }.into_result()
+	unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format) }.into_result()
 }
 
 /// Performs per-element division of two arrays or a scalar by an array.
@@ -4531,9 +4531,11 @@ pub fn convert_from_image(cl_mem_image: *mut c_void, dst: &mut core::UMat) -> Re
 	unsafe { sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat()) }.into_result()
 }
 
-pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &str) -> Result<String> {
-	extern_container_arg!(mut buf);
-	unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, buf.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &mut String) -> Result<String> {
+	string_arg_output_send!(via buf_via);
+	let out = unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } );
+	string_arg_output_receive!(out, buf_via => buf);
+	out
 }
 
 pub fn finish() -> Result<()> {

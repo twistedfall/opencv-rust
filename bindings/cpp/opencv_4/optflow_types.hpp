@@ -1,11 +1,12 @@
 template struct Result<bool>;
+template struct Result<const std::vector<std::string>*>;
+template struct Result<cv::Ptr<const cv::optflow::PCAPrior>*>;
 template struct Result<cv::Ptr<cv::DenseOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::SparseOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::DualTVL1OpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::GPCTrainingSamples>*>;
 template struct Result<cv::Ptr<cv::optflow::GPCTree>*>;
-template struct Result<cv::Ptr<cv::optflow::PCAPrior>*>;
 template struct Result<cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>*>;
 template struct Result<cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>*>;
 template struct Result<cv::Size_<int>>;
@@ -24,63 +25,92 @@ template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::Rect_<int>>*>;
 template struct Result<std::vector<cv::optflow::GPCPatchDescriptor>*>;
-template struct Result<std::vector<std::string>*>;
 template struct Result<unsigned int>;
 template struct Result<unsigned long>;
-extern "C" void cv_PtrOfDenseRLOFOpticalFlow_delete(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfDenseRLOFOpticalFlow_delete(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
+		delete instance;
+	}
+
+	cv::optflow::DenseRLOFOpticalFlow* cv_PtrOfDenseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::optflow::DenseRLOFOpticalFlow* cv_PtrOfDenseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDualTVL1OpticalFlow_delete(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
+		delete instance;
+	}
+
+	cv::optflow::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDualTVL1OpticalFlow_delete(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::optflow::GPCTrainingSamples>* cv_PtrOfGPCTrainingSamples_new(cv::optflow::GPCTrainingSamples* val) {
+		return new cv::Ptr<cv::optflow::GPCTrainingSamples>(val);
+	}
+	
+	void cv_PtrOfGPCTrainingSamples_delete(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+		delete instance;
+	}
+
+	cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::optflow::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::optflow::GPCTree>* cv_PtrOfGPCTree_new(cv::optflow::GPCTree* val) {
+		return new cv::Ptr<cv::optflow::GPCTree>(val);
+	}
+	
+	void cv_PtrOfGPCTree_delete(cv::Ptr<cv::optflow::GPCTree>* instance) {
+		delete instance;
+	}
+
+	cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(cv::Ptr<cv::optflow::GPCTree>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfGPCTrainingSamples_delete(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<const cv::optflow::PCAPrior>* cv_PtrOfPCAPrior_new(const cv::optflow::PCAPrior* val) {
+		return new cv::Ptr<const cv::optflow::PCAPrior>(val);
+	}
+	
+	void cv_PtrOfPCAPrior_delete(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+		delete instance;
+	}
+
+	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* cv_PtrOfRLOFOpticalFlowParameter_new(cv::optflow::RLOFOpticalFlowParameter* val) {
+		return new cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>(val);
+	}
+	
+	void cv_PtrOfRLOFOpticalFlowParameter_delete(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
+		delete instance;
+	}
+
+	cv::optflow::RLOFOpticalFlowParameter* cv_PtrOfRLOFOpticalFlowParameter_get_inner_ptr(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfGPCTree_delete(cv::Ptr<cv::optflow::GPCTree>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfSparseRLOFOpticalFlow_delete(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(cv::Ptr<cv::optflow::GPCTree>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfPCAPrior_delete(cv::Ptr<cv::optflow::PCAPrior>* instance) {
-	delete instance;
-}
-
-extern "C" cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(cv::Ptr<cv::optflow::PCAPrior>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRLOFOpticalFlowParameter_delete(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
-	delete instance;
-}
-
-extern "C" cv::optflow::RLOFOpticalFlowParameter* cv_PtrOfRLOFOpticalFlowParameter_get_inner_ptr(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfSparseRLOFOpticalFlow_delete(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
-	delete instance;
-}
-
-extern "C" cv::optflow::SparseRLOFOpticalFlow* cv_PtrOfSparseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
-	return instance->get();
+	cv::optflow::SparseRLOFOpticalFlow* cv_PtrOfSparseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

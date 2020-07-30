@@ -1,4 +1,7 @@
 template struct Result<bool>;
+template struct Result<const cv::DetectionBasedTracker::Parameters*>;
+template struct Result<const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>;
+template struct Result<const std::vector<cv::Point_<int>>*>;
 template struct Result<cv::CascadeClassifier*>;
 template struct Result<cv::DetectionBasedTracker*>;
 template struct Result<cv::DetectionBasedTracker::ExtObject*>;
@@ -26,28 +29,34 @@ template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfBaseCascadeClassifier_delete(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfBaseCascadeClassifier_delete(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
+		delete instance;
+	}
+
+	cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfBaseCascadeClassifier_MaskGenerator_delete(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
+		delete instance;
+	}
+
+	cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfBaseCascadeClassifier_MaskGenerator_delete(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfDetectionBasedTracker_IDetector_delete(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfDetectionBasedTracker_IDetector_delete(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
-	delete instance;
-}
-
-extern "C" cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
-	return instance->get();
+	cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

@@ -2,10 +2,29 @@ template struct Result<bool>;
 template struct Result<char>;
 template struct Result<const cv::MatOp*>;
 template struct Result<const cv::Mat**>;
+template struct Result<const cv::Ptr<cv::FileStorage>*>;
+template struct Result<const cv::Ptr<cv::MinProblemSolver::Function>*>;
+template struct Result<const cv::Ptr<cv::cuda::GpuMat::Allocator>*>;
 template struct Result<const cv::SparseMat**>;
 template struct Result<const cv::SparseMat::Node**>;
+template struct Result<const cv::_InputOutputArray*>;
+template struct Result<const cv::ocl::Device*>;
+template struct Result<const cv::ocl::ProgramSource*>;
+template struct Result<const cv::ocl::Queue*>;
+template struct Result<const int>;
 template struct Result<const int*>;
+template struct Result<const std::vector<bool>*>;
+template struct Result<const std::vector<cv::DMatch>*>;
+template struct Result<const std::vector<cv::KeyPoint>*>;
+template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<const std::vector<cv::Point_<float>>*>;
+template struct Result<const std::vector<cv::Range>*>;
+template struct Result<const std::vector<cv::UMat>*>;
+template struct Result<const std::vector<cv::cuda::GpuMat>*>;
+template struct Result<const std::vector<int>*>;
+template struct Result<const std::vector<std::vector<bool>>*>;
 template struct Result<const unsigned char*>;
+template struct Result<const unsigned long>;
 template struct Result<const void*>;
 template struct Result<cv::Algorithm*>;
 template struct Result<cv::AsyncArray*>;
@@ -44,7 +63,6 @@ template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::ConjGradSolver>*>;
 template struct Result<cv::Ptr<cv::DownhillSolver>*>;
-template struct Result<cv::Ptr<cv::FileStorage>*>;
 template struct Result<cv::Ptr<cv::Formatted>*>;
 template struct Result<cv::Ptr<cv::Formatter>*>;
 template struct Result<cv::Ptr<cv::MinProblemSolver::Function>*>;
@@ -149,68 +167,92 @@ template struct Result<unsigned long*>;
 template struct Result<unsigned long(*)[2]>;
 template struct Result<unsigned short>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfConjGradSolver_delete(cv::Ptr<cv::ConjGradSolver>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfConjGradSolver_delete(cv::Ptr<cv::ConjGradSolver>* instance) {
+		delete instance;
+	}
+
+	cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDownhillSolver_delete(cv::Ptr<cv::DownhillSolver>* instance) {
+		delete instance;
+	}
+
+	cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr(cv::Ptr<cv::DownhillSolver>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDownhillSolver_delete(cv::Ptr<cv::DownhillSolver>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::FileStorage>* cv_PtrOfFileStorage_new(cv::FileStorage* val) {
+		return new cv::Ptr<cv::FileStorage>(val);
+	}
+	
+	void cv_PtrOfFileStorage_delete(cv::Ptr<cv::FileStorage>* instance) {
+		delete instance;
+	}
+
+	cv::FileStorage* cv_PtrOfFileStorage_get_inner_ptr(cv::Ptr<cv::FileStorage>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr(cv::Ptr<cv::DownhillSolver>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfFormatted_delete(cv::Ptr<cv::Formatted>* instance) {
+		delete instance;
+	}
+
+	cv::Formatted* cv_PtrOfFormatted_get_inner_ptr(cv::Ptr<cv::Formatted>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfFileStorage_delete(cv::Ptr<cv::FileStorage>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfFormatter_delete(cv::Ptr<cv::Formatter>* instance) {
+		delete instance;
+	}
+
+	cv::Formatter* cv_PtrOfFormatter_get_inner_ptr(cv::Ptr<cv::Formatter>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::FileStorage* cv_PtrOfFileStorage_get_inner_ptr(cv::Ptr<cv::FileStorage>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfGpuMat_Allocator_delete(cv::Ptr<cv::cuda::GpuMat::Allocator>* instance) {
+		delete instance;
+	}
+
+	cv::cuda::GpuMat::Allocator* cv_PtrOfGpuMat_Allocator_get_inner_ptr(cv::Ptr<cv::cuda::GpuMat::Allocator>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfFormatted_delete(cv::Ptr<cv::Formatted>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfMinProblemSolver_Function_delete(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
+		delete instance;
+	}
+
+	cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::Formatted* cv_PtrOfFormatted_get_inner_ptr(cv::Ptr<cv::Formatted>* instance) {
-	return instance->get();
-}
+extern "C" {
+	cv::Ptr<float>* cv_PtrOff32_new(float val) {
+		return new cv::Ptr<float>(new float(val));
+	}
+	
+	void cv_PtrOff32_delete(cv::Ptr<float>* instance) {
+		delete instance;
+	}
 
-extern "C" void cv_PtrOfFormatter_delete(cv::Ptr<cv::Formatter>* instance) {
-	delete instance;
-}
-
-extern "C" cv::Formatter* cv_PtrOfFormatter_get_inner_ptr(cv::Ptr<cv::Formatter>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfGpuMat_Allocator_delete(cv::Ptr<cv::cuda::GpuMat::Allocator>* instance) {
-	delete instance;
-}
-
-extern "C" cv::cuda::GpuMat::Allocator* cv_PtrOfGpuMat_Allocator_get_inner_ptr(cv::Ptr<cv::cuda::GpuMat::Allocator>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfMinProblemSolver_Function_delete(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
-	delete instance;
-}
-
-extern "C" cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOff32_delete(cv::Ptr<float>* instance) {
-	delete instance;
-}
-
-extern "C" float* cv_PtrOff32_get_inner_ptr(cv::Ptr<float>* instance) {
-	return instance->get();
+	float* cv_PtrOff32_get_inner_ptr(cv::Ptr<float>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {
@@ -254,11 +296,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfDMatch_push(std::vector<cv::DMatch>* instance, const cv::DMatch* val) {
+	void cv_VectorOfDMatch_push(std::vector<cv::DMatch>* instance, cv::DMatch* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfDMatch_insert(std::vector<cv::DMatch>* instance, size_t index, const cv::DMatch* val) {
+	void cv_VectorOfDMatch_insert(std::vector<cv::DMatch>* instance, size_t index, cv::DMatch* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -266,7 +308,7 @@ extern "C" {
 		return Ok<cv::DMatch>((*instance)[index]);
 	}
 
-	void cv_VectorOfDMatch_set(std::vector<cv::DMatch>* instance, size_t index, const cv::DMatch* val) {
+	void cv_VectorOfDMatch_set(std::vector<cv::DMatch>* instance, size_t index, cv::DMatch* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -386,11 +428,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfKeyPoint_push(std::vector<cv::KeyPoint>* instance, const cv::KeyPoint* val) {
+	void cv_VectorOfKeyPoint_push(std::vector<cv::KeyPoint>* instance, cv::KeyPoint* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfKeyPoint_insert(std::vector<cv::KeyPoint>* instance, size_t index, const cv::KeyPoint* val) {
+	void cv_VectorOfKeyPoint_insert(std::vector<cv::KeyPoint>* instance, size_t index, cv::KeyPoint* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -398,7 +440,7 @@ extern "C" {
 		return Ok<cv::KeyPoint>((*instance)[index]);
 	}
 
-	void cv_VectorOfKeyPoint_set(std::vector<cv::KeyPoint>* instance, size_t index, const cv::KeyPoint* val) {
+	void cv_VectorOfKeyPoint_set(std::vector<cv::KeyPoint>* instance, size_t index, cv::KeyPoint* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -578,11 +620,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint_push(std::vector<cv::Point>* instance, const cv::Point* val) {
+	void cv_VectorOfPoint_push(std::vector<cv::Point>* instance, cv::Point* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint_insert(std::vector<cv::Point>* instance, size_t index, const cv::Point* val) {
+	void cv_VectorOfPoint_insert(std::vector<cv::Point>* instance, size_t index, cv::Point* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -590,7 +632,7 @@ extern "C" {
 		return Ok<cv::Point>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint_set(std::vector<cv::Point>* instance, size_t index, const cv::Point* val) {
+	void cv_VectorOfPoint_set(std::vector<cv::Point>* instance, size_t index, cv::Point* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -668,11 +710,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint2d_push(std::vector<cv::Point2d>* instance, const cv::Point2d* val) {
+	void cv_VectorOfPoint2d_push(std::vector<cv::Point2d>* instance, cv::Point2d* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint2d_insert(std::vector<cv::Point2d>* instance, size_t index, const cv::Point2d* val) {
+	void cv_VectorOfPoint2d_insert(std::vector<cv::Point2d>* instance, size_t index, cv::Point2d* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -680,7 +722,7 @@ extern "C" {
 		return Ok<cv::Point2d>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint2d_set(std::vector<cv::Point2d>* instance, size_t index, const cv::Point2d* val) {
+	void cv_VectorOfPoint2d_set(std::vector<cv::Point2d>* instance, size_t index, cv::Point2d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -758,11 +800,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint2f_push(std::vector<cv::Point2f>* instance, const cv::Point2f* val) {
+	void cv_VectorOfPoint2f_push(std::vector<cv::Point2f>* instance, cv::Point2f* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint2f_insert(std::vector<cv::Point2f>* instance, size_t index, const cv::Point2f* val) {
+	void cv_VectorOfPoint2f_insert(std::vector<cv::Point2f>* instance, size_t index, cv::Point2f* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -770,7 +812,7 @@ extern "C" {
 		return Ok<cv::Point2f>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint2f_set(std::vector<cv::Point2f>* instance, size_t index, const cv::Point2f* val) {
+	void cv_VectorOfPoint2f_set(std::vector<cv::Point2f>* instance, size_t index, cv::Point2f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -848,11 +890,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint3d_push(std::vector<cv::Point3d>* instance, const cv::Point3d* val) {
+	void cv_VectorOfPoint3d_push(std::vector<cv::Point3d>* instance, cv::Point3d* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint3d_insert(std::vector<cv::Point3d>* instance, size_t index, const cv::Point3d* val) {
+	void cv_VectorOfPoint3d_insert(std::vector<cv::Point3d>* instance, size_t index, cv::Point3d* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -860,7 +902,7 @@ extern "C" {
 		return Ok<cv::Point3d>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint3d_set(std::vector<cv::Point3d>* instance, size_t index, const cv::Point3d* val) {
+	void cv_VectorOfPoint3d_set(std::vector<cv::Point3d>* instance, size_t index, cv::Point3d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -938,11 +980,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint3f_push(std::vector<cv::Point3f>* instance, const cv::Point3f* val) {
+	void cv_VectorOfPoint3f_push(std::vector<cv::Point3f>* instance, cv::Point3f* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint3f_insert(std::vector<cv::Point3f>* instance, size_t index, const cv::Point3f* val) {
+	void cv_VectorOfPoint3f_insert(std::vector<cv::Point3f>* instance, size_t index, cv::Point3f* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -950,7 +992,7 @@ extern "C" {
 		return Ok<cv::Point3f>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint3f_set(std::vector<cv::Point3f>* instance, size_t index, const cv::Point3f* val) {
+	void cv_VectorOfPoint3f_set(std::vector<cv::Point3f>* instance, size_t index, cv::Point3f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1028,11 +1070,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfPoint3i_push(std::vector<cv::Point3i>* instance, const cv::Point3i* val) {
+	void cv_VectorOfPoint3i_push(std::vector<cv::Point3i>* instance, cv::Point3i* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfPoint3i_insert(std::vector<cv::Point3i>* instance, size_t index, const cv::Point3i* val) {
+	void cv_VectorOfPoint3i_insert(std::vector<cv::Point3i>* instance, size_t index, cv::Point3i* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1040,7 +1082,7 @@ extern "C" {
 		return Ok<cv::Point3i>((*instance)[index]);
 	}
 
-	void cv_VectorOfPoint3i_set(std::vector<cv::Point3i>* instance, size_t index, const cv::Point3i* val) {
+	void cv_VectorOfPoint3i_set(std::vector<cv::Point3i>* instance, size_t index, cv::Point3i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1178,11 +1220,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfRect_push(std::vector<cv::Rect>* instance, const cv::Rect* val) {
+	void cv_VectorOfRect_push(std::vector<cv::Rect>* instance, cv::Rect* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfRect_insert(std::vector<cv::Rect>* instance, size_t index, const cv::Rect* val) {
+	void cv_VectorOfRect_insert(std::vector<cv::Rect>* instance, size_t index, cv::Rect* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1190,7 +1232,7 @@ extern "C" {
 		return Ok<cv::Rect>((*instance)[index]);
 	}
 
-	void cv_VectorOfRect_set(std::vector<cv::Rect>* instance, size_t index, const cv::Rect* val) {
+	void cv_VectorOfRect_set(std::vector<cv::Rect>* instance, size_t index, cv::Rect* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1268,11 +1310,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfRect2d_push(std::vector<cv::Rect2d>* instance, const cv::Rect2d* val) {
+	void cv_VectorOfRect2d_push(std::vector<cv::Rect2d>* instance, cv::Rect2d* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfRect2d_insert(std::vector<cv::Rect2d>* instance, size_t index, const cv::Rect2d* val) {
+	void cv_VectorOfRect2d_insert(std::vector<cv::Rect2d>* instance, size_t index, cv::Rect2d* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1280,7 +1322,7 @@ extern "C" {
 		return Ok<cv::Rect2d>((*instance)[index]);
 	}
 
-	void cv_VectorOfRect2d_set(std::vector<cv::Rect2d>* instance, size_t index, const cv::Rect2d* val) {
+	void cv_VectorOfRect2d_set(std::vector<cv::Rect2d>* instance, size_t index, cv::Rect2d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1418,11 +1460,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfScalar_push(std::vector<cv::Scalar>* instance, const cv::Scalar* val) {
+	void cv_VectorOfScalar_push(std::vector<cv::Scalar>* instance, cv::Scalar* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfScalar_insert(std::vector<cv::Scalar>* instance, size_t index, const cv::Scalar* val) {
+	void cv_VectorOfScalar_insert(std::vector<cv::Scalar>* instance, size_t index, cv::Scalar* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1430,7 +1472,7 @@ extern "C" {
 		return Ok<cv::Scalar>((*instance)[index]);
 	}
 
-	void cv_VectorOfScalar_set(std::vector<cv::Scalar>* instance, size_t index, const cv::Scalar* val) {
+	void cv_VectorOfScalar_set(std::vector<cv::Scalar>* instance, size_t index, cv::Scalar* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1508,11 +1550,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfSize_push(std::vector<cv::Size>* instance, const cv::Size* val) {
+	void cv_VectorOfSize_push(std::vector<cv::Size>* instance, cv::Size* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfSize_insert(std::vector<cv::Size>* instance, size_t index, const cv::Size* val) {
+	void cv_VectorOfSize_insert(std::vector<cv::Size>* instance, size_t index, cv::Size* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1520,7 +1562,7 @@ extern "C" {
 		return Ok<cv::Size>((*instance)[index]);
 	}
 
-	void cv_VectorOfSize_set(std::vector<cv::Size>* instance, size_t index, const cv::Size* val) {
+	void cv_VectorOfSize_set(std::vector<cv::Size>* instance, size_t index, cv::Size* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1718,11 +1760,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec2i_push(std::vector<cv::Vec2i>* instance, const cv::Vec2i* val) {
+	void cv_VectorOfVec2i_push(std::vector<cv::Vec2i>* instance, cv::Vec2i* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec2i_insert(std::vector<cv::Vec2i>* instance, size_t index, const cv::Vec2i* val) {
+	void cv_VectorOfVec2i_insert(std::vector<cv::Vec2i>* instance, size_t index, cv::Vec2i* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1730,7 +1772,7 @@ extern "C" {
 		return Ok<cv::Vec2i>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec2i_set(std::vector<cv::Vec2i>* instance, size_t index, const cv::Vec2i* val) {
+	void cv_VectorOfVec2i_set(std::vector<cv::Vec2i>* instance, size_t index, cv::Vec2i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1808,11 +1850,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec3d_push(std::vector<cv::Vec3d>* instance, const cv::Vec3d* val) {
+	void cv_VectorOfVec3d_push(std::vector<cv::Vec3d>* instance, cv::Vec3d* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec3d_insert(std::vector<cv::Vec3d>* instance, size_t index, const cv::Vec3d* val) {
+	void cv_VectorOfVec3d_insert(std::vector<cv::Vec3d>* instance, size_t index, cv::Vec3d* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1820,7 +1862,7 @@ extern "C" {
 		return Ok<cv::Vec3d>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec3d_set(std::vector<cv::Vec3d>* instance, size_t index, const cv::Vec3d* val) {
+	void cv_VectorOfVec3d_set(std::vector<cv::Vec3d>* instance, size_t index, cv::Vec3d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1898,11 +1940,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec3f_push(std::vector<cv::Vec3f>* instance, const cv::Vec3f* val) {
+	void cv_VectorOfVec3f_push(std::vector<cv::Vec3f>* instance, cv::Vec3f* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec3f_insert(std::vector<cv::Vec3f>* instance, size_t index, const cv::Vec3f* val) {
+	void cv_VectorOfVec3f_insert(std::vector<cv::Vec3f>* instance, size_t index, cv::Vec3f* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -1910,7 +1952,7 @@ extern "C" {
 		return Ok<cv::Vec3f>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec3f_set(std::vector<cv::Vec3f>* instance, size_t index, const cv::Vec3f* val) {
+	void cv_VectorOfVec3f_set(std::vector<cv::Vec3f>* instance, size_t index, cv::Vec3f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1988,11 +2030,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec3i_push(std::vector<cv::Vec3i>* instance, const cv::Vec3i* val) {
+	void cv_VectorOfVec3i_push(std::vector<cv::Vec3i>* instance, cv::Vec3i* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec3i_insert(std::vector<cv::Vec3i>* instance, size_t index, const cv::Vec3i* val) {
+	void cv_VectorOfVec3i_insert(std::vector<cv::Vec3i>* instance, size_t index, cv::Vec3i* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -2000,7 +2042,7 @@ extern "C" {
 		return Ok<cv::Vec3i>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec3i_set(std::vector<cv::Vec3i>* instance, size_t index, const cv::Vec3i* val) {
+	void cv_VectorOfVec3i_set(std::vector<cv::Vec3i>* instance, size_t index, cv::Vec3i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2078,11 +2120,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec4f_push(std::vector<cv::Vec4f>* instance, const cv::Vec4f* val) {
+	void cv_VectorOfVec4f_push(std::vector<cv::Vec4f>* instance, cv::Vec4f* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec4f_insert(std::vector<cv::Vec4f>* instance, size_t index, const cv::Vec4f* val) {
+	void cv_VectorOfVec4f_insert(std::vector<cv::Vec4f>* instance, size_t index, cv::Vec4f* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -2090,7 +2132,7 @@ extern "C" {
 		return Ok<cv::Vec4f>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec4f_set(std::vector<cv::Vec4f>* instance, size_t index, const cv::Vec4f* val) {
+	void cv_VectorOfVec4f_set(std::vector<cv::Vec4f>* instance, size_t index, cv::Vec4f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2168,11 +2210,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec4i_push(std::vector<cv::Vec4i>* instance, const cv::Vec4i* val) {
+	void cv_VectorOfVec4i_push(std::vector<cv::Vec4i>* instance, cv::Vec4i* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec4i_insert(std::vector<cv::Vec4i>* instance, size_t index, const cv::Vec4i* val) {
+	void cv_VectorOfVec4i_insert(std::vector<cv::Vec4i>* instance, size_t index, cv::Vec4i* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -2180,7 +2222,7 @@ extern "C" {
 		return Ok<cv::Vec4i>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec4i_set(std::vector<cv::Vec4i>* instance, size_t index, const cv::Vec4i* val) {
+	void cv_VectorOfVec4i_set(std::vector<cv::Vec4i>* instance, size_t index, cv::Vec4i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2258,11 +2300,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfVec6f_push(std::vector<cv::Vec6f>* instance, const cv::Vec6f* val) {
+	void cv_VectorOfVec6f_push(std::vector<cv::Vec6f>* instance, cv::Vec6f* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfVec6f_insert(std::vector<cv::Vec6f>* instance, size_t index, const cv::Vec6f* val) {
+	void cv_VectorOfVec6f_insert(std::vector<cv::Vec6f>* instance, size_t index, cv::Vec6f* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -2270,7 +2312,7 @@ extern "C" {
 		return Ok<cv::Vec6f>((*instance)[index]);
 	}
 
-	void cv_VectorOfVec6f_set(std::vector<cv::Vec6f>* instance, size_t index, const cv::Vec6f* val) {
+	void cv_VectorOfVec6f_set(std::vector<cv::Vec6f>* instance, size_t index, cv::Vec6f* val) {
 		(*instance)[index] = *val;
 	}
 

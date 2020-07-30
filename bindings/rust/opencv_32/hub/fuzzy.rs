@@ -136,7 +136,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 	input_array_arg!(a);
 	input_array_arg!(b);
 	output_array_arg!(kernel);
-	unsafe { sys::cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Creates kernel from general functions.
@@ -150,7 +150,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 /// The function creates kernel from predefined functions.
 pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(kernel);
-	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_int(function, radius, kernel.as_raw__OutputArray(), chn) }.into_result()
+	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_const_int(function, radius, kernel.as_raw__OutputArray(), chn) }.into_result()
 }
 
 /// Image filtering

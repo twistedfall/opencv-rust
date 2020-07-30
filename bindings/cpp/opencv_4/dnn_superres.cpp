@@ -16,14 +16,14 @@ extern "C" {
 	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() {
 		try {
 			cv::dnn_superres::DnnSuperResImpl* ret = new cv::dnn_superres::DnnSuperResImpl();
-			return Ok(ret);
+			return Ok<cv::dnn_superres::DnnSuperResImpl*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn_superres::DnnSuperResImpl*>))
 	}
 	
 	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(const char* algo, int scale) {
 		try {
 			cv::dnn_superres::DnnSuperResImpl* ret = new cv::dnn_superres::DnnSuperResImpl(std::string(algo), scale);
-			return Ok(ret);
+			return Ok<cv::dnn_superres::DnnSuperResImpl*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn_superres::DnnSuperResImpl*>))
 	}
 	
@@ -79,7 +79,7 @@ extern "C" {
 	Result<int> cv_dnn_superres_DnnSuperResImpl_getScale(cv::dnn_superres::DnnSuperResImpl* instance) {
 		try {
 			int ret = instance->getScale();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

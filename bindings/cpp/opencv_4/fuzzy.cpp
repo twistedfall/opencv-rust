@@ -3,14 +3,14 @@
 #include "fuzzy_types.hpp"
 
 extern "C" {
-	Result_void cv_ft_FT02D_FL_process_const__InputArrayR_int_const__OutputArrayR(const cv::_InputArray* matrix, int radius, const cv::_OutputArray* output) {
+	Result_void cv_ft_FT02D_FL_process_const__InputArrayR_const_int_const__OutputArrayR(const cv::_InputArray* matrix, const int radius, const cv::_OutputArray* output) {
 		try {
 			cv::ft::FT02D_FL_process(*matrix, radius, *output);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ft_FT02D_FL_process_float_const__InputArrayR_int_const__OutputArrayR(const cv::_InputArray* matrix, int radius, const cv::_OutputArray* output) {
+	Result_void cv_ft_FT02D_FL_process_float_const__InputArrayR_const_int_const__OutputArrayR(const cv::_InputArray* matrix, const int radius, const cv::_OutputArray* output) {
 		try {
 			cv::ft::FT02D_FL_process_float(*matrix, radius, *output);
 			return Ok();
@@ -34,7 +34,7 @@ extern "C" {
 	Result<int> cv_ft_FT02D_iteration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__OutputArrayR_bool(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* output, const cv::_InputArray* mask, const cv::_OutputArray* maskOutput, bool firstStop) {
 		try {
 			int ret = cv::ft::FT02D_iteration(*matrix, *kernel, *output, *mask, *maskOutput, firstStop);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -52,14 +52,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_int(int radius, const cv::_OutputArray* matrix, int chn) {
+	Result_void cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_const_int(int radius, const cv::_OutputArray* matrix, const int chn) {
 		try {
 			cv::ft::FT12D_createPolynomMatrixHorizontal(radius, *matrix, chn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_int(int radius, const cv::_OutputArray* matrix, int chn) {
+	Result_void cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_const_int(int radius, const cv::_OutputArray* matrix, const int chn) {
 		try {
 			cv::ft::FT12D_createPolynomMatrixVertical(radius, *matrix, chn);
 			return Ok();
@@ -87,14 +87,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(const cv::_InputArray* A, const cv::_InputArray* B, const cv::_OutputArray* kernel, int chn) {
+	Result_void cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_int(const cv::_InputArray* A, const cv::_InputArray* B, const cv::_OutputArray* kernel, const int chn) {
 		try {
 			cv::ft::createKernel(*A, *B, *kernel, chn);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ft_createKernel_int_int_const__OutputArrayR_int(int function, int radius, const cv::_OutputArray* kernel, int chn) {
+	Result_void cv_ft_createKernel_int_int_const__OutputArrayR_const_int(int function, int radius, const cv::_OutputArray* kernel, const int chn) {
 		try {
 			cv::ft::createKernel(function, radius, *kernel, chn);
 			return Ok();

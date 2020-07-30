@@ -41,7 +41,7 @@ extern "C" {
 	Result<cv::Vec4i> cv_ximgproc_HoughPoint2Line_const_PointR_const__InputArrayR_int_int_int(const cv::Point* houghPoint, const cv::_InputArray* srcImgInfo, int angleRange, int makeSkew, int rules) {
 		try {
 			cv::Vec4i ret = cv::ximgproc::HoughPoint2Line(*houghPoint, *srcImgInfo, angleRange, makeSkew, rules);
-			return Ok(ret);
+			return Ok<cv::Vec4i>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec4i>))
 	}
 	
@@ -59,17 +59,17 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<double> cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI, int thresh) {
+	Result<double> cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(const cv::_InputArray* GT, const cv::_InputArray* src, cv::Rect* ROI, int thresh) {
 		try {
 			double ret = cv::ximgproc::computeBadPixelPercent(*GT, *src, *ROI, thresh);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
-	Result<double> cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(const cv::_InputArray* GT, const cv::_InputArray* src, const cv::Rect* ROI) {
+	Result<double> cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(const cv::_InputArray* GT, const cv::_InputArray* src, cv::Rect* ROI) {
 		try {
 			double ret = cv::ximgproc::computeMSE(*GT, *src, *ROI);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -150,7 +150,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::StereoMatcher>*>))
 	}
 	
-	Result<cv::Ptr<cv::ximgproc::StructuredEdgeDetection>*> cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(const char* model, const cv::Ptr<cv::ximgproc::RFFeatureGetter>* howToGetFeatures) {
+	Result<cv::Ptr<cv::ximgproc::StructuredEdgeDetection>*> cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(const char* model, cv::Ptr<const cv::ximgproc::RFFeatureGetter>* howToGetFeatures) {
 		try {
 			cv::Ptr<cv::ximgproc::StructuredEdgeDetection> ret = cv::ximgproc::createStructuredEdgeDetection(cv::String(model), *howToGetFeatures);
 			return Ok(new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(ret));
@@ -230,7 +230,7 @@ extern "C" {
 	Result<int> cv_ximgproc_readGT_String_const__OutputArrayR(char* src_path, const cv::_OutputArray* dst) {
 		try {
 			int ret = cv::ximgproc::readGT(cv::String(src_path), *dst);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -356,7 +356,7 @@ extern "C" {
 	Result<double> cv_ximgproc_AdaptiveManifoldFilter_getSigmaS_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			double ret = instance->getSigmaS();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -370,7 +370,7 @@ extern "C" {
 	Result<double> cv_ximgproc_AdaptiveManifoldFilter_getSigmaR_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			double ret = instance->getSigmaR();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -384,7 +384,7 @@ extern "C" {
 	Result<int> cv_ximgproc_AdaptiveManifoldFilter_getTreeHeight_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			int ret = instance->getTreeHeight();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -398,7 +398,7 @@ extern "C" {
 	Result<int> cv_ximgproc_AdaptiveManifoldFilter_getPCAIterations_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			int ret = instance->getPCAIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<bool> cv_ximgproc_AdaptiveManifoldFilter_getAdjustOutliers_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			bool ret = instance->getAdjustOutliers();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<bool> cv_ximgproc_AdaptiveManifoldFilter_getUseRNG_const(const cv::ximgproc::AdaptiveManifoldFilter* instance) {
 		try {
 			bool ret = instance->getUseRNG();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -444,7 +444,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(cv::ximgproc::DisparityFilter* instance, const cv::_InputArray* disparity_map_left, const cv::_InputArray* left_view, const cv::_OutputArray* filtered_disparity_map, const cv::_InputArray* disparity_map_right, const cv::Rect* ROI, const cv::_InputArray* right_view) {
+	Result_void cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(cv::ximgproc::DisparityFilter* instance, const cv::_InputArray* disparity_map_left, const cv::_InputArray* left_view, const cv::_OutputArray* filtered_disparity_map, const cv::_InputArray* disparity_map_right, cv::Rect* ROI, const cv::_InputArray* right_view) {
 		try {
 			instance->filter(*disparity_map_left, *left_view, *filtered_disparity_map, *disparity_map_right, *ROI, *right_view);
 			return Ok();
@@ -454,7 +454,7 @@ extern "C" {
 	Result<double> cv_ximgproc_DisparityWLSFilter_getLambda(cv::ximgproc::DisparityWLSFilter* instance) {
 		try {
 			double ret = instance->getLambda();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<double> cv_ximgproc_DisparityWLSFilter_getSigmaColor(cv::ximgproc::DisparityWLSFilter* instance) {
 		try {
 			double ret = instance->getSigmaColor();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -482,7 +482,7 @@ extern "C" {
 	Result<int> cv_ximgproc_DisparityWLSFilter_getLRCthresh(cv::ximgproc::DisparityWLSFilter* instance) {
 		try {
 			int ret = instance->getLRCthresh();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -496,7 +496,7 @@ extern "C" {
 	Result<int> cv_ximgproc_DisparityWLSFilter_getDepthDiscontinuityRadius(cv::ximgproc::DisparityWLSFilter* instance) {
 		try {
 			int ret = instance->getDepthDiscontinuityRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -517,7 +517,7 @@ extern "C" {
 	Result<cv::Rect> cv_ximgproc_DisparityWLSFilter_getROI(cv::ximgproc::DisparityWLSFilter* instance) {
 		try {
 			cv::Rect ret = instance->getROI();
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
@@ -531,7 +531,7 @@ extern "C" {
 	Result<int> cv_ximgproc_EdgeAwareInterpolator_getK(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			int ret = instance->getK();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<float> cv_ximgproc_EdgeAwareInterpolator_getSigma(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			float ret = instance->getSigma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -559,7 +559,7 @@ extern "C" {
 	Result<float> cv_ximgproc_EdgeAwareInterpolator_getLambda(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			float ret = instance->getLambda();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -573,7 +573,7 @@ extern "C" {
 	Result<bool> cv_ximgproc_EdgeAwareInterpolator_getUsePostProcessing(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			bool ret = instance->getUsePostProcessing();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -587,7 +587,7 @@ extern "C" {
 	Result<float> cv_ximgproc_EdgeAwareInterpolator_getFGSLambda(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			float ret = instance->getFGSLambda();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -601,7 +601,7 @@ extern "C" {
 	Result<float> cv_ximgproc_EdgeAwareInterpolator_getFGSSigma(cv::ximgproc::EdgeAwareInterpolator* instance) {
 		try {
 			float ret = instance->getFGSSigma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -633,7 +633,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_int_int_int_int_int(const cv::ximgproc::RFFeatureGetter* instance, const cv::Mat* src, cv::Mat* features, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
+	Result_void cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_const_int_const_int_const_int_const_int_const_int(const cv::ximgproc::RFFeatureGetter* instance, const cv::Mat* src, cv::Mat* features, const int gnrmRad, const int gsmthRad, const int shrink, const int outNum, const int gradNum) {
 		try {
 			instance->getFeatures(*src, *features, gnrmRad, gsmthRad, shrink, outNum, gradNum);
 			return Ok();
@@ -657,7 +657,7 @@ extern "C" {
 	Result<int> cv_ximgproc_SuperpixelLSC_getNumberOfSuperpixels_const(const cv::ximgproc::SuperpixelLSC* instance) {
 		try {
 			int ret = instance->getNumberOfSuperpixels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -692,7 +692,7 @@ extern "C" {
 	Result<int> cv_ximgproc_SuperpixelSEEDS_getNumberOfSuperpixels(cv::ximgproc::SuperpixelSEEDS* instance) {
 		try {
 			int ret = instance->getNumberOfSuperpixels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -720,7 +720,7 @@ extern "C" {
 	Result<int> cv_ximgproc_SuperpixelSLIC_getNumberOfSuperpixels_const(const cv::ximgproc::SuperpixelSLIC* instance) {
 		try {
 			int ret = instance->getNumberOfSuperpixels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -769,7 +769,7 @@ extern "C" {
 	Result<double> cv_ximgproc_segmentation_GraphSegmentation_getSigma(cv::ximgproc::segmentation::GraphSegmentation* instance) {
 		try {
 			double ret = instance->getSigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -783,7 +783,7 @@ extern "C" {
 	Result<float> cv_ximgproc_segmentation_GraphSegmentation_getK(cv::ximgproc::segmentation::GraphSegmentation* instance) {
 		try {
 			float ret = instance->getK();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -797,7 +797,7 @@ extern "C" {
 	Result<int> cv_ximgproc_segmentation_GraphSegmentation_getMinSize(cv::ximgproc::segmentation::GraphSegmentation* instance) {
 		try {
 			int ret = instance->getMinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -888,7 +888,7 @@ extern "C" {
 	Result<float> cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_get_int_int(cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* instance, int r1, int r2) {
 		try {
 			float ret = instance->get(r1, r2);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

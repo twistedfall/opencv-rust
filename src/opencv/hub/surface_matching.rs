@@ -482,7 +482,7 @@ impl ICP {
 	/// * sample_type: ICP::ICP_SAMPLING_TYPE_UNIFORM
 	/// * num_max_corr: 1
 	pub fn new(iterations: i32, tolerence: f32, rejection_scale: f32, num_levels: i32, sample_type: i32, num_max_corr: i32) -> Result<crate::surface_matching::ICP> {
-		unsafe { sys::cv_ppf_match_3d_ICP_ICP_int_float_float_int_int_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr) }.into_result().map(|r| unsafe { crate::surface_matching::ICP::opencv_from_extern(r) } )
+		unsafe { sys::cv_ppf_match_3d_ICP_ICP_const_int_const_float_const_float_const_int_const_int_const_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr) }.into_result().map(|r| unsafe { crate::surface_matching::ICP::opencv_from_extern(r) } )
 	}
 	
 }
@@ -513,7 +513,7 @@ pub trait PPF3DDetectorTrait {
 	/// * rotation_threshold: -1
 	/// * use_weighted_clustering: false
 	fn set_search_params(&mut self, position_threshold: f64, rotation_threshold: f64, use_weighted_clustering: bool) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_double_double_bool(self.as_raw_mut_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_const_double_const_double_const_bool(self.as_raw_mut_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering) }.into_result()
 	}
 	
 	/// \brief Trains a new model.
@@ -538,7 +538,7 @@ pub trait PPF3DDetectorTrait {
 	/// * relative_scene_sample_step: 1.0/5.0
 	/// * relative_scene_distance: 0.03
 	fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector::<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_double_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()
 	}
 	
 	#[cfg(not(target_os = "windows"))]
@@ -605,7 +605,7 @@ impl PPF3DDetector {
 	/// * relative_distance_step: 0.05
 	/// * num_angles: 30
 	pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_double_double_double(relative_sampling_step, relative_distance_step, num_angles) }.into_result().map(|r| unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(r) } )
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles) }.into_result().map(|r| unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(r) } )
 	}
 	
 }

@@ -134,7 +134,7 @@ pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut core::
 /// * with_scale: false
 /// * threshold_factor: 6.0
 pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &core::Vector::<core::KeyPoint>, keypoints2: &core::Vector::<core::KeyPoint>, matches1to2: &core::Vector::<core::DMatch>, matches_gms: &mut core::Vector::<core::DMatch>, with_rotation: bool, with_scale: bool, threshold_factor: f64) -> Result<()> {
-	unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_DMatch_R_vector_DMatch_R_bool_bool_double(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), with_rotation, with_scale, threshold_factor) }.into_result()
+	unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_DMatch_R_vector_DMatch_R_const_bool_const_bool_const_double(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), with_rotation, with_scale, threshold_factor) }.into_result()
 }
 
 /// Class implementing affine adaptation for key points.
@@ -219,7 +219,7 @@ pub trait BoostDesc: crate::features2d::Feature2DTrait {
 	fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void;
 
 	fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_bool(self.as_raw_mut_BoostDesc(), use_scale_orientation) }.into_result()
+		unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_const_bool(self.as_raw_mut_BoostDesc(), use_scale_orientation) }.into_result()
 	}
 	
 	fn get_use_scale_orientation(&self) -> Result<bool> {
@@ -227,7 +227,7 @@ pub trait BoostDesc: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_setScaleFactor_float(self.as_raw_mut_BoostDesc(), scale_factor) }.into_result()
+		unsafe { sys::cv_xfeatures2d_BoostDesc_setScaleFactor_const_float(self.as_raw_mut_BoostDesc(), scale_factor) }.into_result()
 	}
 	
 	fn get_scale_factor(&self) -> Result<f32> {
@@ -790,7 +790,7 @@ impl LUCID {
 	/// * lucid_kernel: 1
 	/// * blur_kernel: 2
 	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr::<crate::xfeatures2d::LUCID>> {
-		unsafe { sys::cv_xfeatures2d_LUCID_create_int_int(lucid_kernel, blur_kernel) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(r) } )
+		unsafe { sys::cv_xfeatures2d_LUCID_create_const_int_const_int(lucid_kernel, blur_kernel) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1220,7 +1220,7 @@ impl dyn PCTSignatures + '_ {
 	/// * init_seed_count: 400
 	/// * point_distribution: 0
 	pub fn create(init_sample_count: i32, init_seed_count: i32, point_distribution: i32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_int_int_int(init_sample_count, init_seed_count, point_distribution) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_int_const_int_const_int(init_sample_count, init_seed_count, point_distribution) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1233,7 +1233,7 @@ impl dyn PCTSignatures + '_ {
 	/// ## Returns
 	/// Created algorithm.
 	pub fn create_1(init_sampling_points: &core::Vector::<core::Point2f>, init_seed_count: i32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1279,7 +1279,7 @@ impl dyn PCTSignatures + '_ {
 	/// 
 	/// Note: Generated coordinates are in range [0..1)
 	pub fn generate_init_points(init_points: &mut core::Vector::<core::Point2f>, count: i32, point_distribution: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_const_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution) }.into_result()
 	}
 	
 }
@@ -1331,7 +1331,7 @@ impl dyn PCTSignaturesSQFD + '_ {
 	/// * similarity_function: 2
 	/// * similarity_parameter: 1.0f
 	pub fn create(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_int_int_float(distance_function, similarity_function, similarity_parameter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(r) } )
+		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_const_int_const_int_const_float(distance_function, similarity_function, similarity_parameter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -1510,7 +1510,7 @@ pub trait VGG: crate::features2d::Feature2DTrait {
 	fn as_raw_mut_VGG(&mut self) -> *mut c_void;
 
 	fn set_sigma(&mut self, isigma: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setSigma_float(self.as_raw_mut_VGG(), isigma) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_setSigma_const_float(self.as_raw_mut_VGG(), isigma) }.into_result()
 	}
 	
 	fn get_sigma(&self) -> Result<f32> {
@@ -1518,7 +1518,7 @@ pub trait VGG: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_use_normalize_image(&mut self, img_normalize: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeImage_bool(self.as_raw_mut_VGG(), img_normalize) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeImage_const_bool(self.as_raw_mut_VGG(), img_normalize) }.into_result()
 	}
 	
 	fn get_use_normalize_image(&self) -> Result<bool> {
@@ -1526,7 +1526,7 @@ pub trait VGG: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseScaleOrientation_bool(self.as_raw_mut_VGG(), use_scale_orientation) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_setUseScaleOrientation_const_bool(self.as_raw_mut_VGG(), use_scale_orientation) }.into_result()
 	}
 	
 	fn get_use_scale_orientation(&self) -> Result<bool> {
@@ -1534,7 +1534,7 @@ pub trait VGG: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setScaleFactor_float(self.as_raw_mut_VGG(), scale_factor) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_setScaleFactor_const_float(self.as_raw_mut_VGG(), scale_factor) }.into_result()
 	}
 	
 	fn get_scale_factor(&self) -> Result<f32> {
@@ -1542,7 +1542,7 @@ pub trait VGG: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_use_normalize_descriptor(&mut self, dsc_normalize: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeDescriptor_bool(self.as_raw_mut_VGG(), dsc_normalize) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeDescriptor_const_bool(self.as_raw_mut_VGG(), dsc_normalize) }.into_result()
 	}
 	
 	fn get_use_normalize_descriptor(&self) -> Result<bool> {

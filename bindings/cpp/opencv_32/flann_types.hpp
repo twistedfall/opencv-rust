@@ -18,19 +18,31 @@ template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfIndexParams_delete(cv::Ptr<cv::flann::IndexParams>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::flann::IndexParams>* cv_PtrOfIndexParams_new(cv::flann::IndexParams* val) {
+		return new cv::Ptr<cv::flann::IndexParams>(val);
+	}
+	
+	void cv_PtrOfIndexParams_delete(cv::Ptr<cv::flann::IndexParams>* instance) {
+		delete instance;
+	}
+
+	cv::flann::IndexParams* cv_PtrOfIndexParams_get_inner_ptr(cv::Ptr<cv::flann::IndexParams>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::flann::IndexParams* cv_PtrOfIndexParams_get_inner_ptr(cv::Ptr<cv::flann::IndexParams>* instance) {
-	return instance->get();
-}
+extern "C" {
+	cv::Ptr<cv::flann::SearchParams>* cv_PtrOfSearchParams_new(cv::flann::SearchParams* val) {
+		return new cv::Ptr<cv::flann::SearchParams>(val);
+	}
+	
+	void cv_PtrOfSearchParams_delete(cv::Ptr<cv::flann::SearchParams>* instance) {
+		delete instance;
+	}
 
-extern "C" void cv_PtrOfSearchParams_delete(cv::Ptr<cv::flann::SearchParams>* instance) {
-	delete instance;
-}
-
-extern "C" cv::flann::SearchParams* cv_PtrOfSearchParams_get_inner_ptr(cv::Ptr<cv::flann::SearchParams>* instance) {
-	return instance->get();
+	cv::flann::SearchParams* cv_PtrOfSearchParams_get_inner_ptr(cv::Ptr<cv::flann::SearchParams>* instance) {
+		return instance->get();
+	}
 }
 

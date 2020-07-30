@@ -20,7 +20,7 @@ extern "C" {
 	Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() {
 		try {
 			cv::phase_unwrapping::HistogramPhaseUnwrapping::Params ret;
-			return Ok(ret);
+			return Ok<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params>))
 	}
 	

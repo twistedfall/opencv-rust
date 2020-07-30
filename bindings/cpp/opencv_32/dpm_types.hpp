@@ -1,18 +1,20 @@
 template struct Result<bool>;
+template struct Result<const std::vector<std::string>*>;
 template struct Result<cv::Ptr<cv::dpm::DPMDetector>*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::dpm::DPMDetector::ObjectDetection*>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::dpm::DPMDetector::ObjectDetection>*>;
-template struct Result<std::vector<std::string>*>;
 template struct Result<unsigned long>;
-extern "C" void cv_PtrOfDPMDetector_delete(cv::Ptr<cv::dpm::DPMDetector>* instance) {
-	delete instance;
-}
+extern "C" {
+	void cv_PtrOfDPMDetector_delete(cv::Ptr<cv::dpm::DPMDetector>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::dpm::DPMDetector* cv_PtrOfDPMDetector_get_inner_ptr(cv::Ptr<cv::dpm::DPMDetector>* instance) {
-	return instance->get();
+	cv::dpm::DPMDetector* cv_PtrOfDPMDetector_get_inner_ptr(cv::Ptr<cv::dpm::DPMDetector>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

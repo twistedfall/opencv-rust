@@ -24,7 +24,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(cv::freetype::FreeType2* instance, const cv::_InputOutputArray* img, const char* text, const cv::Point* org, int fontHeight, const cv::Scalar* color, int thickness, int line_type, bool bottomLeftOrigin) {
+	Result_void cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(cv::freetype::FreeType2* instance, const cv::_InputOutputArray* img, const char* text, cv::Point* org, int fontHeight, cv::Scalar* color, int thickness, int line_type, bool bottomLeftOrigin) {
 		try {
 			instance->putText(*img, cv::String(text), *org, fontHeight, *color, thickness, line_type, bottomLeftOrigin);
 			return Ok();

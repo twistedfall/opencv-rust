@@ -69,14 +69,14 @@ extern "C" {
 	Result<int> cv_getNearestPoint_const_vector_Point2f_R_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
 			int ret = cv::getNearestPoint(*recallPrecisionCurve, l_precision);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<float> cv_getRecall_const_vector_Point2f_R_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
 			float ret = cv::getRecall(*recallPrecisionCurve, l_precision);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<cv::AKAZE::DescriptorType> cv_AKAZE_getDescriptorType_const(const cv::AKAZE* instance) {
 		try {
 			cv::AKAZE::DescriptorType ret = instance->getDescriptorType();
-			return Ok(ret);
+			return Ok<cv::AKAZE::DescriptorType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::AKAZE::DescriptorType>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<int> cv_AKAZE_getDescriptorSize_const(const cv::AKAZE* instance) {
 		try {
 			int ret = instance->getDescriptorSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<int> cv_AKAZE_getDescriptorChannels_const(const cv::AKAZE* instance) {
 		try {
 			int ret = instance->getDescriptorChannels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<double> cv_AKAZE_getThreshold_const(const cv::AKAZE* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<int> cv_AKAZE_getNOctaves_const(const cv::AKAZE* instance) {
 		try {
 			int ret = instance->getNOctaves();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -167,7 +167,7 @@ extern "C" {
 	Result<int> cv_AKAZE_getNOctaveLayers_const(const cv::AKAZE* instance) {
 		try {
 			int ret = instance->getNOctaveLayers();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<cv::KAZE::DiffusivityType> cv_AKAZE_getDiffusivity_const(const cv::AKAZE* instance) {
 		try {
 			cv::KAZE::DiffusivityType ret = instance->getDiffusivity();
-			return Ok(ret);
+			return Ok<cv::KAZE::DiffusivityType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KAZE::DiffusivityType>))
 	}
 	
@@ -209,7 +209,7 @@ extern "C" {
 	Result<int> cv_AgastFeatureDetector_getThreshold_const(const cv::AgastFeatureDetector* instance) {
 		try {
 			int ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<bool> cv_AgastFeatureDetector_getNonmaxSuppression_const(const cv::AgastFeatureDetector* instance) {
 		try {
 			bool ret = instance->getNonmaxSuppression();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<cv::AgastFeatureDetector::DetectorType> cv_AgastFeatureDetector_getType_const(const cv::AgastFeatureDetector* instance) {
 		try {
 			cv::AgastFeatureDetector::DetectorType ret = instance->getType();
-			return Ok(ret);
+			return Ok<cv::AgastFeatureDetector::DetectorType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::AgastFeatureDetector::DetectorType>))
 	}
 	
@@ -254,14 +254,14 @@ extern "C" {
 	Result<cv::BFMatcher*> cv_BFMatcher_BFMatcher_int_bool(int normType, bool crossCheck) {
 		try {
 			cv::BFMatcher* ret = new cv::BFMatcher(normType, crossCheck);
-			return Ok(ret);
+			return Ok<cv::BFMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BFMatcher*>))
 	}
 	
 	Result<bool> cv_BFMatcher_isMaskSupported_const(const cv::BFMatcher* instance) {
 		try {
 			bool ret = instance->isMaskSupported();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -285,14 +285,14 @@ extern "C" {
 	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_Feature2D_R_const_Ptr_DescriptorMatcher_R(const cv::Ptr<cv::Feature2D>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
 			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dextractor, *dmatcher);
-			return Ok(ret);
+			return Ok<cv::BOWImgDescriptorExtractor*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BOWImgDescriptorExtractor*>))
 	}
 	
 	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorMatcher_R(const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
 			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dmatcher);
-			return Ok(ret);
+			return Ok<cv::BOWImgDescriptorExtractor*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BOWImgDescriptorExtractor*>))
 	}
 	
@@ -303,11 +303,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Mat*> cv_BOWImgDescriptorExtractor_getVocabulary_const(const cv::BOWImgDescriptorExtractor* instance) {
+	Result<const cv::Mat*> cv_BOWImgDescriptorExtractor_getVocabulary_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
-			cv::Mat ret = instance->getVocabulary();
-			return Ok(new cv::Mat(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+			const cv::Mat ret = instance->getVocabulary();
+			return Ok(new const cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Mat*>))
 	}
 	
 	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR_vector_vector_int__X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters, cv::Mat* descriptors) {
@@ -334,14 +334,14 @@ extern "C" {
 	Result<int> cv_BOWImgDescriptorExtractor_descriptorSize_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
 			int ret = instance->descriptorSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_BOWImgDescriptorExtractor_descriptorType_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
 			int ret = instance->descriptorType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -351,7 +351,7 @@ extern "C" {
 	Result<cv::BOWKMeansTrainer*> cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaR_int_int(int clusterCount, const cv::TermCriteria* termcrit, int attempts, int flags) {
 		try {
 			cv::BOWKMeansTrainer* ret = new cv::BOWKMeansTrainer(clusterCount, *termcrit, attempts, flags);
-			return Ok(ret);
+			return Ok<cv::BOWKMeansTrainer*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::BOWKMeansTrainer*>))
 	}
 	
@@ -376,17 +376,17 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_BOWTrainer_getDescriptors_const(const cv::BOWTrainer* instance) {
+	Result<const std::vector<cv::Mat>*> cv_BOWTrainer_getDescriptors_const(const cv::BOWTrainer* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->getDescriptors();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->getDescriptors();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result<int> cv_BOWTrainer_descriptorsCount_const(const cv::BOWTrainer* instance) {
 		try {
 			int ret = instance->descriptorsCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -452,7 +452,7 @@ extern "C" {
 	Result<int> cv_BRISK_getThreshold_const(const cv::BRISK* instance) {
 		try {
 			int ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -466,7 +466,7 @@ extern "C" {
 	Result<int> cv_BRISK_getOctaves_const(const cv::BRISK* instance) {
 		try {
 			int ret = instance->getOctaves();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -477,11 +477,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::Mat>*> cv_DescriptorMatcher_getTrainDescriptors_const(const cv::DescriptorMatcher* instance) {
+	Result<const std::vector<cv::Mat>*> cv_DescriptorMatcher_getTrainDescriptors_const(const cv::DescriptorMatcher* instance) {
 		try {
-			std::vector<cv::Mat> ret = instance->getTrainDescriptors();
-			return Ok(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Mat>*>))
+			const std::vector<cv::Mat> ret = instance->getTrainDescriptors();
+			return Ok(new const std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Mat>*>))
 	}
 	
 	Result_void cv_DescriptorMatcher_clear(cv::DescriptorMatcher* instance) {
@@ -494,14 +494,14 @@ extern "C" {
 	Result<bool> cv_DescriptorMatcher_empty_const(const cv::DescriptorMatcher* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_DescriptorMatcher_isMaskSupported_const(const cv::DescriptorMatcher* instance) {
 		try {
 			bool ret = instance->isMaskSupported();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -627,7 +627,7 @@ extern "C" {
 	Result<int> cv_FastFeatureDetector_getThreshold_const(const cv::FastFeatureDetector* instance) {
 		try {
 			int ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -641,7 +641,7 @@ extern "C" {
 	Result<bool> cv_FastFeatureDetector_getNonmaxSuppression_const(const cv::FastFeatureDetector* instance) {
 		try {
 			bool ret = instance->getNonmaxSuppression();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -655,7 +655,7 @@ extern "C" {
 	Result<cv::FastFeatureDetector::DetectorType> cv_FastFeatureDetector_getType_const(const cv::FastFeatureDetector* instance) {
 		try {
 			cv::FastFeatureDetector::DetectorType ret = instance->getType();
-			return Ok(ret);
+			return Ok<cv::FastFeatureDetector::DetectorType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::FastFeatureDetector::DetectorType>))
 	}
 	
@@ -707,21 +707,21 @@ extern "C" {
 	Result<int> cv_Feature2D_descriptorSize_const(const cv::Feature2D* instance) {
 		try {
 			int ret = instance->descriptorSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_Feature2D_descriptorType_const(const cv::Feature2D* instance) {
 		try {
 			int ret = instance->descriptorType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_Feature2D_defaultNorm_const(const cv::Feature2D* instance) {
 		try {
 			int ret = instance->defaultNorm();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -756,7 +756,7 @@ extern "C" {
 	Result<bool> cv_Feature2D_empty_const(const cv::Feature2D* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -780,7 +780,7 @@ extern "C" {
 	Result<cv::FlannBasedMatcher*> cv_FlannBasedMatcher_FlannBasedMatcher_const_Ptr_IndexParams_R_const_Ptr_SearchParams_R(const cv::Ptr<cv::flann::IndexParams>* indexParams, const cv::Ptr<cv::flann::SearchParams>* searchParams) {
 		try {
 			cv::FlannBasedMatcher* ret = new cv::FlannBasedMatcher(*indexParams, *searchParams);
-			return Ok(ret);
+			return Ok<cv::FlannBasedMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::FlannBasedMatcher*>))
 	}
 	
@@ -822,7 +822,7 @@ extern "C" {
 	Result<bool> cv_FlannBasedMatcher_isMaskSupported_const(const cv::FlannBasedMatcher* instance) {
 		try {
 			bool ret = instance->isMaskSupported();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -864,7 +864,7 @@ extern "C" {
 	Result<int> cv_GFTTDetector_getMaxFeatures_const(const cv::GFTTDetector* instance) {
 		try {
 			int ret = instance->getMaxFeatures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -878,7 +878,7 @@ extern "C" {
 	Result<double> cv_GFTTDetector_getQualityLevel_const(const cv::GFTTDetector* instance) {
 		try {
 			double ret = instance->getQualityLevel();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -892,7 +892,7 @@ extern "C" {
 	Result<double> cv_GFTTDetector_getMinDistance_const(const cv::GFTTDetector* instance) {
 		try {
 			double ret = instance->getMinDistance();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -906,7 +906,7 @@ extern "C" {
 	Result<int> cv_GFTTDetector_getBlockSize_const(const cv::GFTTDetector* instance) {
 		try {
 			int ret = instance->getBlockSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -920,7 +920,7 @@ extern "C" {
 	Result<bool> cv_GFTTDetector_getHarrisDetector_const(const cv::GFTTDetector* instance) {
 		try {
 			bool ret = instance->getHarrisDetector();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -934,7 +934,7 @@ extern "C" {
 	Result<double> cv_GFTTDetector_getK_const(const cv::GFTTDetector* instance) {
 		try {
 			double ret = instance->getK();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -962,7 +962,7 @@ extern "C" {
 	Result<bool> cv_KAZE_getExtended_const(const cv::KAZE* instance) {
 		try {
 			bool ret = instance->getExtended();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -976,7 +976,7 @@ extern "C" {
 	Result<bool> cv_KAZE_getUpright_const(const cv::KAZE* instance) {
 		try {
 			bool ret = instance->getUpright();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -990,7 +990,7 @@ extern "C" {
 	Result<double> cv_KAZE_getThreshold_const(const cv::KAZE* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1004,7 +1004,7 @@ extern "C" {
 	Result<int> cv_KAZE_getNOctaves_const(const cv::KAZE* instance) {
 		try {
 			int ret = instance->getNOctaves();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1018,7 +1018,7 @@ extern "C" {
 	Result<int> cv_KAZE_getNOctaveLayers_const(const cv::KAZE* instance) {
 		try {
 			int ret = instance->getNOctaveLayers();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1032,7 +1032,7 @@ extern "C" {
 	Result<cv::KAZE::DiffusivityType> cv_KAZE_getDiffusivity_const(const cv::KAZE* instance) {
 		try {
 			cv::KAZE::DiffusivityType ret = instance->getDiffusivity();
-			return Ok(ret);
+			return Ok<cv::KAZE::DiffusivityType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KAZE::DiffusivityType>))
 	}
 	
@@ -1049,11 +1049,11 @@ extern "C" {
 	Result<cv::KeyPointsFilter*> cv_KeyPointsFilter_KeyPointsFilter() {
 		try {
 			cv::KeyPointsFilter* ret = new cv::KeyPointsFilter();
-			return Ok(ret);
+			return Ok<cv::KeyPointsFilter*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::KeyPointsFilter*>))
 	}
 	
-	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_R_Size_int(std::vector<cv::KeyPoint>* keypoints, const cv::Size* imageSize, int borderSize) {
+	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_R_Size_int(std::vector<cv::KeyPoint>* keypoints, cv::Size* imageSize, int borderSize) {
 		try {
 			cv::KeyPointsFilter::runByImageBorder(*keypoints, *imageSize, borderSize);
 			return Ok();
@@ -1119,7 +1119,7 @@ extern "C" {
 	Result<int> cv_MSER_getDelta_const(const cv::MSER* instance) {
 		try {
 			int ret = instance->getDelta();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1133,7 +1133,7 @@ extern "C" {
 	Result<int> cv_MSER_getMinArea_const(const cv::MSER* instance) {
 		try {
 			int ret = instance->getMinArea();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1147,7 +1147,7 @@ extern "C" {
 	Result<int> cv_MSER_getMaxArea_const(const cv::MSER* instance) {
 		try {
 			int ret = instance->getMaxArea();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1161,7 +1161,7 @@ extern "C" {
 	Result<bool> cv_MSER_getPass2Only_const(const cv::MSER* instance) {
 		try {
 			bool ret = instance->getPass2Only();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1189,7 +1189,7 @@ extern "C" {
 	Result<int> cv_ORB_getMaxFeatures_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getMaxFeatures();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1203,7 +1203,7 @@ extern "C" {
 	Result<double> cv_ORB_getScaleFactor_const(const cv::ORB* instance) {
 		try {
 			double ret = instance->getScaleFactor();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1217,7 +1217,7 @@ extern "C" {
 	Result<int> cv_ORB_getNLevels_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getNLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1231,7 +1231,7 @@ extern "C" {
 	Result<int> cv_ORB_getEdgeThreshold_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getEdgeThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1245,7 +1245,7 @@ extern "C" {
 	Result<int> cv_ORB_getFirstLevel_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getFirstLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1259,7 +1259,7 @@ extern "C" {
 	Result<int> cv_ORB_getWTA_K_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getWTA_K();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1273,7 +1273,7 @@ extern "C" {
 	Result<cv::ORB::ScoreType> cv_ORB_getScoreType_const(const cv::ORB* instance) {
 		try {
 			cv::ORB::ScoreType ret = instance->getScoreType();
-			return Ok(ret);
+			return Ok<cv::ORB::ScoreType>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ORB::ScoreType>))
 	}
 	
@@ -1287,7 +1287,7 @@ extern "C" {
 	Result<int> cv_ORB_getPatchSize_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getPatchSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1301,7 +1301,7 @@ extern "C" {
 	Result<int> cv_ORB_getFastThreshold_const(const cv::ORB* instance) {
 		try {
 			int ret = instance->getFastThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1349,7 +1349,7 @@ extern "C" {
 	Result<cv::SimpleBlobDetector::Params> cv_SimpleBlobDetector_Params_Params() {
 		try {
 			cv::SimpleBlobDetector::Params ret;
-			return Ok(ret);
+			return Ok<cv::SimpleBlobDetector::Params>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::SimpleBlobDetector::Params>))
 	}
 	

@@ -1,9 +1,10 @@
 template struct Result<bool>;
+template struct Result<const cv::Size_<int>>;
+template struct Result<const cv::Vec<double, 2>>;
 template struct Result<cv::Affine3<double>>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Point_<int>>;
 template struct Result<cv::Size_<int>>;
-template struct Result<cv::Vec<double, 2>>;
 template struct Result<cv::Vec<unsigned char, 3>>;
 template struct Result<cv::viz::Camera*>;
 template struct Result<cv::viz::Color*>;

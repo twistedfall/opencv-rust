@@ -38,7 +38,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::CLAHE>*> cv_cuda_createCLAHE_double_Size(double clipLimit, const cv::Size* tileGridSize) {
+	Result<cv::Ptr<cv::cuda::CLAHE>*> cv_cuda_createCLAHE_double_Size(double clipLimit, cv::Size* tileGridSize) {
 		try {
 			cv::Ptr<cv::cuda::CLAHE> ret = cv::cuda::createCLAHE(clipLimit, *tileGridSize);
 			return Ok(new cv::Ptr<cv::cuda::CLAHE>(ret));
@@ -108,7 +108,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::CornernessCriteria>*>))
 	}
 	
-	Result<cv::Ptr<cv::cuda::TemplateMatching>*> cv_cuda_createTemplateMatching_int_int_Size(int srcType, int method, const cv::Size* user_block_size) {
+	Result<cv::Ptr<cv::cuda::TemplateMatching>*> cv_cuda_createTemplateMatching_int_int_Size(int srcType, int method, cv::Size* user_block_size) {
 		try {
 			cv::Ptr<cv::cuda::TemplateMatching> ret = cv::cuda::createTemplateMatching(srcType, method, *user_block_size);
 			return Ok(new cv::Ptr<cv::cuda::TemplateMatching>(ret));
@@ -164,21 +164,21 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, int sp, int sr, const cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
+	Result_void cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, int sp, int sr, cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::meanShiftFiltering(*src, *dst, sp, sr, *criteria, *stream);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dstr, const cv::_OutputArray* dstsp, int sp, int sr, const cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
+	Result_void cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dstr, const cv::_OutputArray* dstsp, int sp, int sr, cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::meanShiftProc(*src, *dstr, *dstsp, sp, sr, *criteria, *stream);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, int sp, int sr, int minsize, const cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
+	Result_void cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, int sp, int sr, int minsize, cv::TermCriteria* criteria, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::meanShiftSegmentation(*src, *dst, sp, sr, minsize, *criteria, *stream);
 			return Ok();
@@ -223,7 +223,7 @@ extern "C" {
 	Result<double> cv_cuda_CannyEdgeDetector_getLowThreshold_const(const cv::cuda::CannyEdgeDetector* instance) {
 		try {
 			double ret = instance->getLowThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<double> cv_cuda_CannyEdgeDetector_getHighThreshold_const(const cv::cuda::CannyEdgeDetector* instance) {
 		try {
 			double ret = instance->getHighThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<int> cv_cuda_CannyEdgeDetector_getAppertureSize_const(const cv::cuda::CannyEdgeDetector* instance) {
 		try {
 			int ret = instance->getAppertureSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<bool> cv_cuda_CannyEdgeDetector_getL2Gradient_const(const cv::cuda::CannyEdgeDetector* instance) {
 		try {
 			bool ret = instance->getL2Gradient();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -300,7 +300,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughCirclesDetector_getDp_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			float ret = instance->getDp();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -314,7 +314,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughCirclesDetector_getMinDist_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			float ret = instance->getMinDist();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -328,7 +328,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughCirclesDetector_getCannyThreshold_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			int ret = instance->getCannyThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -342,7 +342,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughCirclesDetector_getVotesThreshold_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			int ret = instance->getVotesThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -356,7 +356,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughCirclesDetector_getMinRadius_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			int ret = instance->getMinRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -370,7 +370,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughCirclesDetector_getMaxRadius_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			int ret = instance->getMaxRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -384,7 +384,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughCirclesDetector_getMaxCircles_const(const cv::cuda::HoughCirclesDetector* instance) {
 		try {
 			int ret = instance->getMaxCircles();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughLinesDetector_getRho_const(const cv::cuda::HoughLinesDetector* instance) {
 		try {
 			float ret = instance->getRho();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughLinesDetector_getTheta_const(const cv::cuda::HoughLinesDetector* instance) {
 		try {
 			float ret = instance->getTheta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -440,7 +440,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughLinesDetector_getThreshold_const(const cv::cuda::HoughLinesDetector* instance) {
 		try {
 			int ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -454,7 +454,7 @@ extern "C" {
 	Result<bool> cv_cuda_HoughLinesDetector_getDoSort_const(const cv::cuda::HoughLinesDetector* instance) {
 		try {
 			bool ret = instance->getDoSort();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughLinesDetector_getMaxLines_const(const cv::cuda::HoughLinesDetector* instance) {
 		try {
 			int ret = instance->getMaxLines();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -489,7 +489,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughSegmentDetector_getRho_const(const cv::cuda::HoughSegmentDetector* instance) {
 		try {
 			float ret = instance->getRho();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -503,7 +503,7 @@ extern "C" {
 	Result<float> cv_cuda_HoughSegmentDetector_getTheta_const(const cv::cuda::HoughSegmentDetector* instance) {
 		try {
 			float ret = instance->getTheta();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -517,7 +517,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughSegmentDetector_getMinLineLength_const(const cv::cuda::HoughSegmentDetector* instance) {
 		try {
 			int ret = instance->getMinLineLength();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -531,7 +531,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughSegmentDetector_getMaxLineGap_const(const cv::cuda::HoughSegmentDetector* instance) {
 		try {
 			int ret = instance->getMaxLineGap();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<int> cv_cuda_HoughSegmentDetector_getMaxLines_const(const cv::cuda::HoughSegmentDetector* instance) {
 		try {
 			int ret = instance->getMaxLines();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

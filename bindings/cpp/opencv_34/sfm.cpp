@@ -26,7 +26,7 @@ extern "C" {
 	Result<double> cv_sfm_depth_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* R, const cv::_InputArray* t, const cv::_InputArray* X) {
 		try {
 			double ret = cv::sfm::depth(*R, *t, *X);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -54,14 +54,14 @@ extern "C" {
 	Result<double> cv_sfm_fundamentalFromCorrespondences7PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR_double(const cv::_InputArray* x1, const cv::_InputArray* x2, double max_error, const cv::_OutputArray* F, const cv::_OutputArray* inliers, double outliers_probability) {
 		try {
 			double ret = cv::sfm::fundamentalFromCorrespondences7PointRobust(*x1, *x2, max_error, *F, *inliers, outliers_probability);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result<double> cv_sfm_fundamentalFromCorrespondences8PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR_double(const cv::_InputArray* x1, const cv::_InputArray* x2, double max_error, const cv::_OutputArray* F, const cv::_OutputArray* inliers, double outliers_probability) {
 		try {
 			double ret = cv::sfm::fundamentalFromCorrespondences8PointRobust(*x1, *x2, max_error, *F, *inliers, outliers_probability);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -110,7 +110,7 @@ extern "C" {
 	Result<int> cv_sfm_motionFromEssentialChooseSolution_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(const cv::_InputArray* Rs, const cv::_InputArray* ts, const cv::_InputArray* K1, const cv::_InputArray* x1, const cv::_InputArray* K2, const cv::_InputArray* x2) {
 		try {
 			int ret = cv::sfm::motionFromEssentialChooseSolution(*Rs, *ts, *K1, *x1, *K2, *x2);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -184,14 +184,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_sfm_reconstruct_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(const std::vector<cv::String>* images, const cv::_OutputArray* Ps, const cv::_OutputArray* points3d, const cv::_InputOutputArray* K, bool is_projective) {
+	Result_void cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(const std::vector<cv::String>* images, const cv::_OutputArray* Ps, const cv::_OutputArray* points3d, const cv::_InputOutputArray* K, bool is_projective) {
 		try {
 			cv::sfm::reconstruct(*images, *Ps, *points3d, *K, is_projective);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_sfm_reconstruct_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(const std::vector<cv::String>* images, const cv::_OutputArray* Rs, const cv::_OutputArray* Ts, const cv::_InputOutputArray* K, const cv::_OutputArray* points3d, bool is_projective) {
+	Result_void cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(const std::vector<cv::String>* images, const cv::_OutputArray* Rs, const cv::_OutputArray* Ts, const cv::_InputOutputArray* K, const cv::_OutputArray* points3d, bool is_projective) {
 		try {
 			cv::sfm::reconstruct(*images, *Rs, *Ts, *K, *points3d, is_projective);
 			return Ok();
@@ -250,7 +250,7 @@ extern "C" {
 	Result<double> cv_sfm_BaseSFM_getError_const(const cv::sfm::BaseSFM* instance) {
 		try {
 			double ret = instance->getError();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -320,7 +320,7 @@ extern "C" {
 	Result<double> cv_sfm_SFMLibmvEuclideanReconstruction_getError_const(const cv::sfm::SFMLibmvEuclideanReconstruction* instance) {
 		try {
 			double ret = instance->getError();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -366,17 +366,17 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::sfm::SFMLibmvEuclideanReconstruction>*>))
 	}
 	
-	Result<cv::sfm::libmv_CameraIntrinsicsOptions> cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions_int_double_double_double_double_double_double_double_double(int _distortion_model, double _focal_length, double _principal_point_x, double _principal_point_y, double _polynomial_k1, double _polynomial_k2, double _polynomial_k3, double _polynomial_p1, double _polynomial_p2) {
+	Result<cv::sfm::libmv_CameraIntrinsicsOptions> cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions_const_int_const_double_const_double_const_double_const_double_const_double_const_double_const_double_const_double(const int _distortion_model, const double _focal_length, const double _principal_point_x, const double _principal_point_y, const double _polynomial_k1, const double _polynomial_k2, const double _polynomial_k3, const double _polynomial_p1, const double _polynomial_p2) {
 		try {
 			cv::sfm::libmv_CameraIntrinsicsOptions ret(_distortion_model, _focal_length, _principal_point_x, _principal_point_y, _polynomial_k1, _polynomial_k2, _polynomial_k3, _polynomial_p1, _polynomial_p2);
-			return Ok(ret);
+			return Ok<cv::sfm::libmv_CameraIntrinsicsOptions>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::sfm::libmv_CameraIntrinsicsOptions>))
 	}
 	
-	Result<cv::sfm::libmv_ReconstructionOptions> cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_int_int_int_int_int(int _keyframe1, int _keyframe2, int _refine_intrinsics, int _select_keyframes, int _verbosity_level) {
+	Result<cv::sfm::libmv_ReconstructionOptions> cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_const_int_const_int_const_int_const_int_const_int(const int _keyframe1, const int _keyframe2, const int _refine_intrinsics, const int _select_keyframes, const int _verbosity_level) {
 		try {
 			cv::sfm::libmv_ReconstructionOptions ret(_keyframe1, _keyframe2, _refine_intrinsics, _select_keyframes, _verbosity_level);
-			return Ok(ret);
+			return Ok<cv::sfm::libmv_ReconstructionOptions>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::sfm::libmv_ReconstructionOptions>))
 	}
 	

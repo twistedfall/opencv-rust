@@ -44,7 +44,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, const cv::Rect* roi, const cv::_OutputArray* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(cv::xfeatures2d::DAISY* instance, const cv::_InputArray* image, cv::Rect* roi, const cv::_OutputArray* descriptors) {
 		try {
 			instance->compute(*image, *roi, *descriptors);
 			return Ok();
@@ -68,7 +68,7 @@ extern "C" {
 	Result<bool> cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX_doubleX(const cv::xfeatures2d::DAISY* instance, double y, double x, int orientation, float* descriptor, double* H) {
 		try {
 			bool ret = instance->GetDescriptor(y, x, orientation, descriptor, H);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -82,7 +82,7 @@ extern "C" {
 	Result<bool> cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX_doubleX(const cv::xfeatures2d::DAISY* instance, double y, double x, int orientation, float* descriptor, double* H) {
 		try {
 			bool ret = instance->GetUnnormalizedDescriptor(y, x, orientation, descriptor, H);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -109,7 +109,7 @@ extern "C" {
 	void cv_LUCID_delete(cv::xfeatures2d::LUCID* instance) {
 		delete instance;
 	}
-	Result<cv::Ptr<cv::xfeatures2d::LUCID>*> cv_xfeatures2d_LUCID_create_int_int(int lucid_kernel, int blur_kernel) {
+	Result<cv::Ptr<cv::xfeatures2d::LUCID>*> cv_xfeatures2d_LUCID_create_const_int_const_int(const int lucid_kernel, const int blur_kernel) {
 		try {
 			cv::Ptr<cv::xfeatures2d::LUCID> ret = cv::xfeatures2d::LUCID::create(lucid_kernel, blur_kernel);
 			return Ok(new cv::Ptr<cv::xfeatures2d::LUCID>(ret));
@@ -126,14 +126,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::MSDDetector>*>))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_int_int_int(int initSampleCount, int initSeedCount, int pointDistribution) {
+	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_int_const_int_const_int(const int initSampleCount, const int initSeedCount, const int pointDistribution) {
 		try {
 			cv::Ptr<cv::xfeatures2d::PCTSignatures> ret = cv::xfeatures2d::PCTSignatures::create(initSampleCount, initSeedCount, pointDistribution);
 			return Ok(new cv::Ptr<cv::xfeatures2d::PCTSignatures>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*>))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_int(const std::vector<cv::Point2f>* initSamplingPoints, int initSeedCount) {
+	Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*> cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_int(const std::vector<cv::Point2f>* initSamplingPoints, const int initSeedCount) {
 		try {
 			cv::Ptr<cv::xfeatures2d::PCTSignatures> ret = cv::xfeatures2d::PCTSignatures::create(*initSamplingPoints, initSeedCount);
 			return Ok(new cv::Ptr<cv::xfeatures2d::PCTSignatures>(ret));
@@ -168,7 +168,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_int_int(std::vector<cv::Point2f>* initPoints, int count, int pointDistribution) {
+	Result_void cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_const_int_int(std::vector<cv::Point2f>* initPoints, const int count, int pointDistribution) {
 		try {
 			cv::xfeatures2d::PCTSignatures::generateInitPoints(*initPoints, count, pointDistribution);
 			return Ok();
@@ -178,14 +178,14 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getSampleCount_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getSampleCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_xfeatures2d_PCTSignatures_getGrayscaleBits_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getGrayscaleBits();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -199,7 +199,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getWindowRadius_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getWindowRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -213,7 +213,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightX_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightX();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -227,7 +227,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightY_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightY();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -241,7 +241,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightL_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightL();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -255,7 +255,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightA_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightA();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -269,7 +269,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightB_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightB();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -283,7 +283,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightConstrast_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightConstrast();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -297,7 +297,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getWeightEntropy_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getWeightEntropy();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -367,14 +367,14 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getInitSeedCount_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getInitSeedCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_xfeatures2d_PCTSignatures_getIterationCount_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getIterationCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -388,7 +388,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getMaxClustersCount_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getMaxClustersCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -402,7 +402,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getClusterMinSize_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getClusterMinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -416,7 +416,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getJoiningDistance_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getJoiningDistance();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -430,7 +430,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignatures_getDropThreshold_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			float ret = instance->getDropThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -444,7 +444,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_PCTSignatures_getDistanceFunction_const(const cv::xfeatures2d::PCTSignatures* instance) {
 		try {
 			int ret = instance->getDistanceFunction();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -455,7 +455,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*> cv_xfeatures2d_PCTSignaturesSQFD_create_int_int_float(int distanceFunction, int similarityFunction, float similarityParameter) {
+	Result<cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*> cv_xfeatures2d_PCTSignaturesSQFD_create_const_int_const_int_const_float(const int distanceFunction, const int similarityFunction, const float similarityParameter) {
 		try {
 			cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD> ret = cv::xfeatures2d::PCTSignaturesSQFD::create(distanceFunction, similarityFunction, similarityParameter);
 			return Ok(new cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>(ret));
@@ -465,7 +465,7 @@ extern "C" {
 	Result<float> cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(const cv::xfeatures2d::PCTSignaturesSQFD* instance, const cv::_InputArray* _signature0, const cv::_InputArray* _signature1) {
 		try {
 			float ret = instance->computeQuadraticFormDistance(*_signature0, *_signature1);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -503,7 +503,7 @@ extern "C" {
 	Result<double> cv_xfeatures2d_SURF_getHessianThreshold_const(const cv::xfeatures2d::SURF* instance) {
 		try {
 			double ret = instance->getHessianThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -517,7 +517,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_SURF_getNOctaves_const(const cv::xfeatures2d::SURF* instance) {
 		try {
 			int ret = instance->getNOctaves();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -531,7 +531,7 @@ extern "C" {
 	Result<int> cv_xfeatures2d_SURF_getNOctaveLayers_const(const cv::xfeatures2d::SURF* instance) {
 		try {
 			int ret = instance->getNOctaveLayers();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<bool> cv_xfeatures2d_SURF_getExtended_const(const cv::xfeatures2d::SURF* instance) {
 		try {
 			bool ret = instance->getExtended();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -559,7 +559,7 @@ extern "C" {
 	Result<bool> cv_xfeatures2d_SURF_getUpright_const(const cv::xfeatures2d::SURF* instance) {
 		try {
 			bool ret = instance->getUpright();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	

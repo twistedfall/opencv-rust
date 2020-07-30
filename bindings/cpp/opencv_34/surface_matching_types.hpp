@@ -11,20 +11,32 @@ template struct Result<double>;
 template struct Result<int>;
 template struct Result<std::vector<cv::Ptr<cv::ppf_match_3d::Pose3D>>*>;
 template struct Result<unsigned long>;
-extern "C" void cv_PtrOfPose3D_delete(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::ppf_match_3d::Pose3D>* cv_PtrOfPose3D_new(cv::ppf_match_3d::Pose3D* val) {
+		return new cv::Ptr<cv::ppf_match_3d::Pose3D>(val);
+	}
+	
+	void cv_PtrOfPose3D_delete(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
+		delete instance;
+	}
+
+	cv::ppf_match_3d::Pose3D* cv_PtrOfPose3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::ppf_match_3d::Pose3D* cv_PtrOfPose3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
-	return instance->get();
-}
+extern "C" {
+	cv::Ptr<cv::ppf_match_3d::PoseCluster3D>* cv_PtrOfPoseCluster3D_new(cv::ppf_match_3d::PoseCluster3D* val) {
+		return new cv::Ptr<cv::ppf_match_3d::PoseCluster3D>(val);
+	}
+	
+	void cv_PtrOfPoseCluster3D_delete(cv::Ptr<cv::ppf_match_3d::PoseCluster3D>* instance) {
+		delete instance;
+	}
 
-extern "C" void cv_PtrOfPoseCluster3D_delete(cv::Ptr<cv::ppf_match_3d::PoseCluster3D>* instance) {
-	delete instance;
-}
-
-extern "C" cv::ppf_match_3d::PoseCluster3D* cv_PtrOfPoseCluster3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::PoseCluster3D>* instance) {
-	return instance->get();
+	cv::ppf_match_3d::PoseCluster3D* cv_PtrOfPoseCluster3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::PoseCluster3D>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {

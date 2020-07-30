@@ -1,3 +1,9 @@
+* 0.44.0
+  * Add support for ovis module
+  * Add implementation of Ptr::new for non-abstract types
+  * Rework string handling, that fixed core::convert_type_str() function which was handling memory very unsafely before
+  * Internal refactor of cpp const handling, that changed the internal function identifiers
+
 * 0.43.3
   * Test with the newly released OpenCV 3.4.11 and 4.4.0
   * Internal cleanups and CI fixes

@@ -171,7 +171,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_InputArray* mask, const cv::Point* p, const cv::_OutputArray* blend, int flags) {
+	Result_void cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(const cv::_InputArray* src, const cv::_InputArray* dst, const cv::_InputArray* mask, cv::Point* p, const cv::_OutputArray* blend, int flags) {
 		try {
 			cv::seamlessClone(*src, *dst, *mask, *p, *blend, flags);
 			return Ok();
@@ -216,11 +216,11 @@ extern "C" {
 	Result<cv::Point> cv_AlignMTB_calculateShift_const__InputArrayR_const__InputArrayR(cv::AlignMTB* instance, const cv::_InputArray* img0, const cv::_InputArray* img1) {
 		try {
 			cv::Point ret = instance->calculateShift(*img0, *img1);
-			return Ok(ret);
+			return Ok<cv::Point>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point>))
 	}
 	
-	Result_void cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(cv::AlignMTB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::Point* shift) {
+	Result_void cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(cv::AlignMTB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::Point* shift) {
 		try {
 			instance->shiftMat(*src, *dst, *shift);
 			return Ok();
@@ -237,7 +237,7 @@ extern "C" {
 	Result<int> cv_AlignMTB_getMaxBits_const(const cv::AlignMTB* instance) {
 		try {
 			int ret = instance->getMaxBits();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<int> cv_AlignMTB_getExcludeRange_const(const cv::AlignMTB* instance) {
 		try {
 			int ret = instance->getExcludeRange();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<bool> cv_AlignMTB_getCut_const(const cv::AlignMTB* instance) {
 		try {
 			bool ret = instance->getCut();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -286,7 +286,7 @@ extern "C" {
 	Result<float> cv_CalibrateDebevec_getLambda_const(const cv::CalibrateDebevec* instance) {
 		try {
 			float ret = instance->getLambda();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -300,7 +300,7 @@ extern "C" {
 	Result<int> cv_CalibrateDebevec_getSamples_const(const cv::CalibrateDebevec* instance) {
 		try {
 			int ret = instance->getSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -314,7 +314,7 @@ extern "C" {
 	Result<bool> cv_CalibrateDebevec_getRandom_const(const cv::CalibrateDebevec* instance) {
 		try {
 			bool ret = instance->getRandom();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -328,7 +328,7 @@ extern "C" {
 	Result<int> cv_CalibrateRobertson_getMaxIter_const(const cv::CalibrateRobertson* instance) {
 		try {
 			int ret = instance->getMaxIter();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -342,7 +342,7 @@ extern "C" {
 	Result<float> cv_CalibrateRobertson_getThreshold_const(const cv::CalibrateRobertson* instance) {
 		try {
 			float ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -398,7 +398,7 @@ extern "C" {
 	Result<float> cv_MergeMertens_getContrastWeight_const(const cv::MergeMertens* instance) {
 		try {
 			float ret = instance->getContrastWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<float> cv_MergeMertens_getSaturationWeight_const(const cv::MergeMertens* instance) {
 		try {
 			float ret = instance->getSaturationWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<float> cv_MergeMertens_getExposureWeight_const(const cv::MergeMertens* instance) {
 		try {
 			float ret = instance->getExposureWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -461,7 +461,7 @@ extern "C" {
 	Result<float> cv_Tonemap_getGamma_const(const cv::Tonemap* instance) {
 		try {
 			float ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -475,7 +475,7 @@ extern "C" {
 	Result<float> cv_TonemapDrago_getSaturation_const(const cv::TonemapDrago* instance) {
 		try {
 			float ret = instance->getSaturation();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -489,7 +489,7 @@ extern "C" {
 	Result<float> cv_TonemapDrago_getBias_const(const cv::TonemapDrago* instance) {
 		try {
 			float ret = instance->getBias();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -503,7 +503,7 @@ extern "C" {
 	Result<float> cv_TonemapMantiuk_getScale_const(const cv::TonemapMantiuk* instance) {
 		try {
 			float ret = instance->getScale();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -517,7 +517,7 @@ extern "C" {
 	Result<float> cv_TonemapMantiuk_getSaturation_const(const cv::TonemapMantiuk* instance) {
 		try {
 			float ret = instance->getSaturation();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -531,7 +531,7 @@ extern "C" {
 	Result<float> cv_TonemapReinhard_getIntensity_const(const cv::TonemapReinhard* instance) {
 		try {
 			float ret = instance->getIntensity();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -545,7 +545,7 @@ extern "C" {
 	Result<float> cv_TonemapReinhard_getLightAdaptation_const(const cv::TonemapReinhard* instance) {
 		try {
 			float ret = instance->getLightAdaptation();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -559,7 +559,7 @@ extern "C" {
 	Result<float> cv_TonemapReinhard_getColorAdaptation_const(const cv::TonemapReinhard* instance) {
 		try {
 			float ret = instance->getColorAdaptation();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

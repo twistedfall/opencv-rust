@@ -1855,7 +1855,7 @@ pub type Mat4i = core::Mat_<core::Vec4i>;
 pub type Mat4s = core::Mat_<core::Vec4s>;
 pub type Mat4w = core::Mat_<core::Vec4w>;
 pub type MatConstIterator_difference_type = ptrdiff_t;
-pub type MatConstIterator_pointer<'a, 'b> = &'a &'b u8;
+pub type MatConstIterator_pointer<'a, 'b> = &'a mut &'b u8;
 pub type MatConstIterator_reference<'a> = &'a mut u8;
 pub type MatConstIterator_value_type<'a> = &'a mut u8;
 pub type MatND = core::Mat;
@@ -2897,72 +2897,72 @@ pub fn depth_to_string(depth: i32) -> Result<String> {
 }
 
 pub fn check_failed_mat_channels_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatChannels_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_mat_channels(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatChannels_int_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_mat_depth_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatDepth_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_mat_depth(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatDepth_int_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_mat_type_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatType_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatType_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_mat_type(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatType_int_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextR(v1.opencv_as_extern(), v2.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_MatType_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_auto_9(v: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_Size__int__const_CheckContextR(v.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+	unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_CheckContextR(v.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_Size__int__const_CheckContextR(v1.opencv_as_extern(), v2.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_3(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_double_const_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_7(v: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_2(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_float_const_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_5(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_6(v: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_1(v1: size_t, v2: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
+	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_auto_10(v1: &str, ctx: &core::Detail_CheckContext) -> Result<()> {
 	extern_container_arg!(v1);
 	unsafe { sys::cv_detail_check_failed_auto_const_stringR_const_CheckContextR(v1.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_3(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_double_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_7(v: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_2(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_float_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_5(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_int_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_6(v: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
-}
-
-pub fn check_failed_auto_1(v1: size_t, v2: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_size_t_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 /// Returns the determinant of a square floating-point matrix.
@@ -3135,7 +3135,7 @@ pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flag
 /// ## Returns
 /// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromD3DFORMAT_int(i_d3_dformat) }.into_result()
+	unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(i_d3_dformat) }.into_result()
 }
 
 /// Get OpenCV type from DirectX type
@@ -3144,7 +3144,7 @@ pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
 /// ## Returns
 /// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_int(i_dxgi_format) }.into_result()
+	unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format) }.into_result()
 }
 
 /// Performs per-element division of two arrays or a scalar by an array.
@@ -4941,9 +4941,11 @@ pub fn convert_from_image(cl_mem_image: *mut c_void, dst: &mut core::UMat) -> Re
 	unsafe { sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat()) }.into_result()
 }
 
-pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &str) -> Result<String> {
-	extern_container_arg!(mut buf);
-	unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, buf.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &mut String) -> Result<String> {
+	string_arg_output_send!(via buf_via);
+	let out = unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } );
+	string_arg_output_receive!(out, buf_via => buf);
+	out
 }
 
 pub fn finish() -> Result<()> {
@@ -18894,7 +18896,7 @@ impl ProgramSource {
 		extern_container_arg!(module);
 		extern_container_arg!(name);
 		extern_container_arg!(build_options);
-		unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
 	}
 	
 	/// Describe OpenCL program in SPIR format.
@@ -18926,7 +18928,7 @@ impl ProgramSource {
 		extern_container_arg!(module);
 		extern_container_arg!(name);
 		extern_container_arg!(build_options);
-		unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
 	}
 	
 }

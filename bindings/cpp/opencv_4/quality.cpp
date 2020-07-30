@@ -9,7 +9,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityBRISQUE_compute_const__InputArrayR(cv::quality::QualityBRISQUE* instance, const cv::_InputArray* img) {
 		try {
 			cv::Scalar ret = instance->compute(*img);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
@@ -30,7 +30,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(const cv::_InputArray* img, const char* model_file_path, const char* range_file_path) {
 		try {
 			cv::Scalar ret = cv::quality::QualityBRISQUE::compute(*img, std::string(model_file_path), std::string(range_file_path));
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
@@ -44,7 +44,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityBase_compute_const__InputArrayR(cv::quality::QualityBase* instance, const cv::_InputArray* img) {
 		try {
 			cv::Scalar ret = instance->compute(*img);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
@@ -65,7 +65,7 @@ extern "C" {
 	Result<bool> cv_quality_QualityBase_empty_const(const cv::quality::QualityBase* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -75,14 +75,14 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityGMSD_compute_const__InputArrayR(cv::quality::QualityGMSD* instance, const cv::_InputArray* cmp) {
 		try {
 			cv::Scalar ret = instance->compute(*cmp);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
 	Result<bool> cv_quality_QualityGMSD_empty_const(const cv::quality::QualityGMSD* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -103,7 +103,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityGMSD_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* ref, const cv::_InputArray* cmp, const cv::_OutputArray* qualityMap) {
 		try {
 			cv::Scalar ret = cv::quality::QualityGMSD::compute(*ref, *cmp, *qualityMap);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
@@ -113,14 +113,14 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityMSE_compute_const__InputArrayR(cv::quality::QualityMSE* instance, const cv::_InputArray* cmpImgs) {
 		try {
 			cv::Scalar ret = instance->compute(*cmpImgs);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
 	Result<bool> cv_quality_QualityMSE_empty_const(const cv::quality::QualityMSE* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -141,7 +141,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityMSE_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* ref, const cv::_InputArray* cmp, const cv::_OutputArray* qualityMap) {
 		try {
 			cv::Scalar ret = cv::quality::QualityMSE::compute(*ref, *cmp, *qualityMap);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
@@ -158,14 +158,14 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityPSNR_compute_const__InputArrayR(cv::quality::QualityPSNR* instance, const cv::_InputArray* cmp) {
 		try {
 			cv::Scalar ret = instance->compute(*cmp);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
 	Result<bool> cv_quality_QualityPSNR_empty_const(const cv::quality::QualityPSNR* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -179,14 +179,14 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(const cv::_InputArray* ref, const cv::_InputArray* cmp, const cv::_OutputArray* qualityMap, double maxPixelValue) {
 		try {
 			cv::Scalar ret = cv::quality::QualityPSNR::compute(*ref, *cmp, *qualityMap, maxPixelValue);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
 	Result<double> cv_quality_QualityPSNR_getMaxPixelValue_const(const cv::quality::QualityPSNR* instance) {
 		try {
 			double ret = instance->getMaxPixelValue();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -203,14 +203,14 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualitySSIM_compute_const__InputArrayR(cv::quality::QualitySSIM* instance, const cv::_InputArray* cmp) {
 		try {
 			cv::Scalar ret = instance->compute(*cmp);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	
 	Result<bool> cv_quality_QualitySSIM_empty_const(const cv::quality::QualitySSIM* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -231,7 +231,7 @@ extern "C" {
 	Result<cv::Scalar> cv_quality_QualitySSIM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(const cv::_InputArray* ref, const cv::_InputArray* cmp, const cv::_OutputArray* qualityMap) {
 		try {
 			cv::Scalar ret = cv::quality::QualitySSIM::compute(*ref, *cmp, *qualityMap);
-			return Ok(ret);
+			return Ok<cv::Scalar>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Scalar>))
 	}
 	

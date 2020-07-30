@@ -727,7 +727,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 	fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_as_extern()) }.into_result()
+		unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Computes median threshold and exclude bitmaps of given image.

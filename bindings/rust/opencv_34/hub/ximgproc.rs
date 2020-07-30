@@ -757,7 +757,7 @@ pub fn create_right_matcher(mut matcher_left: core::Ptr::<dyn crate::calib3d::St
 /// * how_to_get_features: Ptr<RFFeatureGetter>()
 pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
-	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
+	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
 }
 
 /// Class implementing the LSC (Linear Spectral Clustering) superpixels
@@ -2061,7 +2061,7 @@ pub trait RFFeatureGetter: core::AlgorithmTrait {
 	/// * \param outNum : __rf.options.numberOfOutputChannels
 	/// * \param gradNum : __rf.options.numberOfGradientOrientations
 	fn get_features(&self, src: &core::Mat, features: &mut core::Mat, gnrm_rad: i32, gsmth_rad: i32, shrink: i32, out_num: i32, grad_num: i32) -> Result<()> {
-		unsafe { sys::cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_int_int_int_int_int(self.as_raw_RFFeatureGetter(), src.as_raw_Mat(), features.as_raw_mut_Mat(), gnrm_rad, gsmth_rad, shrink, out_num, grad_num) }.into_result()
+		unsafe { sys::cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_const_int_const_int_const_int_const_int_const_int(self.as_raw_RFFeatureGetter(), src.as_raw_Mat(), features.as_raw_mut_Mat(), gnrm_rad, gsmth_rad, shrink, out_num, grad_num) }.into_result()
 	}
 	
 }

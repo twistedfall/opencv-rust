@@ -1,4 +1,15 @@
 template struct Result<bool>;
+template struct Result<const cv::Affine3<float>>;
+template struct Result<const cv::Ptr<cv::dynafu::Params>*>;
+template struct Result<const cv::Ptr<cv::kinfu::Params>*>;
+template struct Result<const cv::dynafu::Params*>;
+template struct Result<const cv::kinfu::Params*>;
+template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
+template struct Result<const std::vector<cv::linemod::Template>*>;
+template struct Result<const std::vector<float>*>;
+template struct Result<const std::vector<int>*>;
+template struct Result<const std::vector<std::string>*>;
 template struct Result<cv::Affine3<float>>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Matx<float, 3, 3>>;
@@ -24,7 +35,6 @@ template struct Result<cv::Ptr<cv::rgbd::RgbdPlane>*>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::Vec<float, 3>>;
 template struct Result<cv::Vec<int, 3>>;
-template struct Result<cv::dynafu::Params*>;
 template struct Result<cv::kinfu::Params*>;
 template struct Result<cv::kinfu::VolumeType>;
 template struct Result<cv::linemod::ColorGradient*>;
@@ -47,165 +57,256 @@ template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Point3_<float>>*>;
-template struct Result<std::vector<cv::Ptr<cv::linemod::Modality>>*>;
 template struct Result<std::vector<cv::linemod::Feature>*>;
 template struct Result<std::vector<cv::linemod::Match>*>;
-template struct Result<std::vector<cv::linemod::Template>*>;
-template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<std::string>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
-extern "C" void cv_PtrOfDepthCleaner_delete(cv::Ptr<cv::rgbd::DepthCleaner>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::rgbd::DepthCleaner>* cv_PtrOfDepthCleaner_new(cv::rgbd::DepthCleaner* val) {
+		return new cv::Ptr<cv::rgbd::DepthCleaner>(val);
+	}
+	
+	void cv_PtrOfDepthCleaner_delete(cv::Ptr<cv::rgbd::DepthCleaner>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::DepthCleaner* cv_PtrOfDepthCleaner_get_inner_ptr(cv::Ptr<cv::rgbd::DepthCleaner>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::rgbd::DepthCleaner* cv_PtrOfDepthCleaner_get_inner_ptr(cv::Ptr<cv::rgbd::DepthCleaner>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfDynafu_DynaFu_delete(cv::Ptr<cv::dynafu::DynaFu>* instance) {
+		delete instance;
+	}
+
+	cv::dynafu::DynaFu* cv_PtrOfDynafu_DynaFu_get_inner_ptr(cv::Ptr<cv::dynafu::DynaFu>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDynafu_DynaFu_delete(cv::Ptr<cv::dynafu::DynaFu>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::dynafu::Params>* cv_PtrOfDynafu_Params_new(cv::dynafu::Params* val) {
+		return new cv::Ptr<cv::dynafu::Params>(val);
+	}
+	
+	void cv_PtrOfDynafu_Params_delete(cv::Ptr<cv::dynafu::Params>* instance) {
+		delete instance;
+	}
+
+	cv::dynafu::Params* cv_PtrOfDynafu_Params_get_inner_ptr(cv::Ptr<cv::dynafu::Params>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::dynafu::DynaFu* cv_PtrOfDynafu_DynaFu_get_inner_ptr(cv::Ptr<cv::dynafu::DynaFu>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::rgbd::FastICPOdometry>* cv_PtrOfFastICPOdometry_new(cv::rgbd::FastICPOdometry* val) {
+		return new cv::Ptr<cv::rgbd::FastICPOdometry>(val);
+	}
+	
+	void cv_PtrOfFastICPOdometry_delete(cv::Ptr<cv::rgbd::FastICPOdometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::FastICPOdometry* cv_PtrOfFastICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::FastICPOdometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfDynafu_Params_delete(cv::Ptr<cv::dynafu::Params>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::rgbd::ICPOdometry>* cv_PtrOfICPOdometry_new(cv::rgbd::ICPOdometry* val) {
+		return new cv::Ptr<cv::rgbd::ICPOdometry>(val);
+	}
+	
+	void cv_PtrOfICPOdometry_delete(cv::Ptr<cv::rgbd::ICPOdometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::ICPOdometry* cv_PtrOfICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::ICPOdometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::dynafu::Params* cv_PtrOfDynafu_Params_get_inner_ptr(cv::Ptr<cv::dynafu::Params>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfKinfu_KinFu_delete(cv::Ptr<cv::kinfu::KinFu>* instance) {
+		delete instance;
+	}
+
+	cv::kinfu::KinFu* cv_PtrOfKinfu_KinFu_get_inner_ptr(cv::Ptr<cv::kinfu::KinFu>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfFastICPOdometry_delete(cv::Ptr<cv::rgbd::FastICPOdometry>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::kinfu::Params>* cv_PtrOfKinfu_Params_new(cv::kinfu::Params* val) {
+		return new cv::Ptr<cv::kinfu::Params>(val);
+	}
+	
+	void cv_PtrOfKinfu_Params_delete(cv::Ptr<cv::kinfu::Params>* instance) {
+		delete instance;
+	}
+
+	cv::kinfu::Params* cv_PtrOfKinfu_Params_get_inner_ptr(cv::Ptr<cv::kinfu::Params>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::rgbd::FastICPOdometry* cv_PtrOfFastICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::FastICPOdometry>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::linemod::ColorGradient>* cv_PtrOfLinemod_ColorGradient_new(cv::linemod::ColorGradient* val) {
+		return new cv::Ptr<cv::linemod::ColorGradient>(val);
+	}
+	
+	void cv_PtrOfLinemod_ColorGradient_delete(cv::Ptr<cv::linemod::ColorGradient>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::ColorGradient* cv_PtrOfLinemod_ColorGradient_get_inner_ptr(cv::Ptr<cv::linemod::ColorGradient>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfICPOdometry_delete(cv::Ptr<cv::rgbd::ICPOdometry>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::linemod::DepthNormal>* cv_PtrOfLinemod_DepthNormal_new(cv::linemod::DepthNormal* val) {
+		return new cv::Ptr<cv::linemod::DepthNormal>(val);
+	}
+	
+	void cv_PtrOfLinemod_DepthNormal_delete(cv::Ptr<cv::linemod::DepthNormal>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::DepthNormal* cv_PtrOfLinemod_DepthNormal_get_inner_ptr(cv::Ptr<cv::linemod::DepthNormal>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::rgbd::ICPOdometry* cv_PtrOfICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::ICPOdometry>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::linemod::Detector>* cv_PtrOfLinemod_Detector_new(cv::linemod::Detector* val) {
+		return new cv::Ptr<cv::linemod::Detector>(val);
+	}
+	
+	void cv_PtrOfLinemod_Detector_delete(cv::Ptr<cv::linemod::Detector>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(cv::Ptr<cv::linemod::Detector>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfKinfu_KinFu_delete(cv::Ptr<cv::kinfu::KinFu>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfLinemod_Modality_delete(cv::Ptr<cv::linemod::Modality>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(cv::Ptr<cv::linemod::Modality>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::kinfu::KinFu* cv_PtrOfKinfu_KinFu_get_inner_ptr(cv::Ptr<cv::kinfu::KinFu>* instance) {
-	return instance->get();
+extern "C" {
+	void cv_PtrOfLinemod_QuantizedPyramid_delete(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+		delete instance;
+	}
+
+	cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfKinfu_Params_delete(cv::Ptr<cv::kinfu::Params>* instance) {
-	delete instance;
+extern "C" {
+	void cv_PtrOfOdometry_delete(cv::Ptr<cv::rgbd::Odometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::Odometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::kinfu::Params* cv_PtrOfKinfu_Params_get_inner_ptr(cv::Ptr<cv::kinfu::Params>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::rgbd::OdometryFrame>* cv_PtrOfOdometryFrame_new(cv::rgbd::OdometryFrame* val) {
+		return new cv::Ptr<cv::rgbd::OdometryFrame>(val);
+	}
+	
+	void cv_PtrOfOdometryFrame_delete(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfLinemod_ColorGradient_delete(cv::Ptr<cv::linemod::ColorGradient>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::rgbd::RgbdFrame>* cv_PtrOfRgbdFrame_new(cv::rgbd::RgbdFrame* val) {
+		return new cv::Ptr<cv::rgbd::RgbdFrame>(val);
+	}
+	
+	void cv_PtrOfRgbdFrame_delete(cv::Ptr<cv::rgbd::RgbdFrame>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::RgbdFrame* cv_PtrOfRgbdFrame_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdFrame>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::linemod::ColorGradient* cv_PtrOfLinemod_ColorGradient_get_inner_ptr(cv::Ptr<cv::linemod::ColorGradient>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::rgbd::RgbdICPOdometry>* cv_PtrOfRgbdICPOdometry_new(cv::rgbd::RgbdICPOdometry* val) {
+		return new cv::Ptr<cv::rgbd::RgbdICPOdometry>(val);
+	}
+	
+	void cv_PtrOfRgbdICPOdometry_delete(cv::Ptr<cv::rgbd::RgbdICPOdometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::RgbdICPOdometry* cv_PtrOfRgbdICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdICPOdometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfLinemod_DepthNormal_delete(cv::Ptr<cv::linemod::DepthNormal>* instance) {
-	delete instance;
+extern "C" {
+	cv::Ptr<cv::rgbd::RgbdNormals>* cv_PtrOfRgbdNormals_new(cv::rgbd::RgbdNormals* val) {
+		return new cv::Ptr<cv::rgbd::RgbdNormals>(val);
+	}
+	
+	void cv_PtrOfRgbdNormals_delete(cv::Ptr<cv::rgbd::RgbdNormals>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::RgbdNormals* cv_PtrOfRgbdNormals_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdNormals>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" cv::linemod::DepthNormal* cv_PtrOfLinemod_DepthNormal_get_inner_ptr(cv::Ptr<cv::linemod::DepthNormal>* instance) {
-	return instance->get();
+extern "C" {
+	cv::Ptr<cv::rgbd::RgbdOdometry>* cv_PtrOfRgbdOdometry_new(cv::rgbd::RgbdOdometry* val) {
+		return new cv::Ptr<cv::rgbd::RgbdOdometry>(val);
+	}
+	
+	void cv_PtrOfRgbdOdometry_delete(cv::Ptr<cv::rgbd::RgbdOdometry>* instance) {
+		delete instance;
+	}
+
+	cv::rgbd::RgbdOdometry* cv_PtrOfRgbdOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdOdometry>* instance) {
+		return instance->get();
+	}
 }
 
-extern "C" void cv_PtrOfLinemod_Detector_delete(cv::Ptr<cv::linemod::Detector>* instance) {
-	delete instance;
-}
+extern "C" {
+	cv::Ptr<cv::rgbd::RgbdPlane>* cv_PtrOfRgbdPlane_new(cv::rgbd::RgbdPlane* val) {
+		return new cv::Ptr<cv::rgbd::RgbdPlane>(val);
+	}
+	
+	void cv_PtrOfRgbdPlane_delete(cv::Ptr<cv::rgbd::RgbdPlane>* instance) {
+		delete instance;
+	}
 
-extern "C" cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(cv::Ptr<cv::linemod::Detector>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLinemod_Modality_delete(cv::Ptr<cv::linemod::Modality>* instance) {
-	delete instance;
-}
-
-extern "C" cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(cv::Ptr<cv::linemod::Modality>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfLinemod_QuantizedPyramid_delete(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
-	delete instance;
-}
-
-extern "C" cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOdometry_delete(cv::Ptr<cv::rgbd::Odometry>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::Odometry>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfOdometryFrame_delete(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRgbdFrame_delete(cv::Ptr<cv::rgbd::RgbdFrame>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::RgbdFrame* cv_PtrOfRgbdFrame_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdFrame>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRgbdICPOdometry_delete(cv::Ptr<cv::rgbd::RgbdICPOdometry>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::RgbdICPOdometry* cv_PtrOfRgbdICPOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdICPOdometry>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRgbdNormals_delete(cv::Ptr<cv::rgbd::RgbdNormals>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::RgbdNormals* cv_PtrOfRgbdNormals_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdNormals>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRgbdOdometry_delete(cv::Ptr<cv::rgbd::RgbdOdometry>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::RgbdOdometry* cv_PtrOfRgbdOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdOdometry>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfRgbdPlane_delete(cv::Ptr<cv::rgbd::RgbdPlane>* instance) {
-	delete instance;
-}
-
-extern "C" cv::rgbd::RgbdPlane* cv_PtrOfRgbdPlane_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdPlane>* instance) {
-	return instance->get();
+	cv::rgbd::RgbdPlane* cv_PtrOfRgbdPlane_get_inner_ptr(cv::Ptr<cv::rgbd::RgbdPlane>* instance) {
+		return instance->get();
+	}
 }
 
 extern "C" {
@@ -249,11 +350,11 @@ extern "C" {
 		instance->clear();
 	}
 
-	void cv_VectorOfLinemod_Feature_push(std::vector<cv::linemod::Feature>* instance, const cv::linemod::Feature* val) {
+	void cv_VectorOfLinemod_Feature_push(std::vector<cv::linemod::Feature>* instance, cv::linemod::Feature* val) {
 		instance->push_back(*val);
 	}
 
-	void cv_VectorOfLinemod_Feature_insert(std::vector<cv::linemod::Feature>* instance, size_t index, const cv::linemod::Feature* val) {
+	void cv_VectorOfLinemod_Feature_insert(std::vector<cv::linemod::Feature>* instance, size_t index, cv::linemod::Feature* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
 
@@ -261,7 +362,7 @@ extern "C" {
 		return Ok<cv::linemod::Feature>((*instance)[index]);
 	}
 
-	void cv_VectorOfLinemod_Feature_set(std::vector<cv::linemod::Feature>* instance, size_t index, const cv::linemod::Feature* val) {
+	void cv_VectorOfLinemod_Feature_set(std::vector<cv::linemod::Feature>* instance, size_t index, cv::linemod::Feature* val) {
 		(*instance)[index] = *val;
 	}
 

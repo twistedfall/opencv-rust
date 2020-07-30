@@ -815,7 +815,7 @@ pub trait GPCTreeTrait: core::AlgorithmTrait {
 	/// ## C++ default parameters
 	/// * params: GPCTrainingParams()
 	fn train(&mut self, samples: &mut crate::optflow::GPCTrainingSamples, params: crate::optflow::GPCTrainingParams) -> Result<()> {
-		unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern()) }.into_result()
+		unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
@@ -964,7 +964,7 @@ impl OpticalFlowPCAFlow {
 	/// * _damping_factor: 0.00002
 	/// * _clahe_clip: 14
 	pub fn new(_prior: core::Ptr::<crate::optflow::PCAPrior>, _basis_size: core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<crate::optflow::OpticalFlowPCAFlow> {
-		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_PCAPrior__Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip) }.into_result().map(|r| unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(r) } )
+		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip) }.into_result().map(|r| unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(r) } )
 	}
 	
 }

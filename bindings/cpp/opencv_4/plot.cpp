@@ -45,35 +45,35 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotLineColor) {
+	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(cv::plot::Plot2d* instance, cv::Scalar* _plotLineColor) {
 		try {
 			instance->setPlotLineColor(*_plotLineColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotBackgroundColor) {
+	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(cv::plot::Plot2d* instance, cv::Scalar* _plotBackgroundColor) {
 		try {
 			instance->setPlotBackgroundColor(*_plotBackgroundColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotAxisColor) {
+	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(cv::plot::Plot2d* instance, cv::Scalar* _plotAxisColor) {
 		try {
 			instance->setPlotAxisColor(*_plotAxisColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotGridColor) {
+	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(cv::plot::Plot2d* instance, cv::Scalar* _plotGridColor) {
 		try {
 			instance->setPlotGridColor(*_plotGridColor);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotTextColor) {
+	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(cv::plot::Plot2d* instance, cv::Scalar* _plotTextColor) {
 		try {
 			instance->setPlotTextColor(*_plotTextColor);
 			return Ok();

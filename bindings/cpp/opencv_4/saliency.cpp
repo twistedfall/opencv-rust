@@ -9,7 +9,7 @@ extern "C" {
 	Result<cv::saliency::MotionSaliencyBinWangApr2014*> cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014() {
 		try {
 			cv::saliency::MotionSaliencyBinWangApr2014* ret = new cv::saliency::MotionSaliencyBinWangApr2014();
-			return Ok(ret);
+			return Ok<cv::saliency::MotionSaliencyBinWangApr2014*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::saliency::MotionSaliencyBinWangApr2014*>))
 	}
 	
@@ -23,7 +23,7 @@ extern "C" {
 	Result<bool> cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::MotionSaliencyBinWangApr2014* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -37,14 +37,14 @@ extern "C" {
 	Result<bool> cv_saliency_MotionSaliencyBinWangApr2014_init(cv::saliency::MotionSaliencyBinWangApr2014* instance) {
 		try {
 			bool ret = instance->init();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_saliency_MotionSaliencyBinWangApr2014_getImageWidth_const(const cv::saliency::MotionSaliencyBinWangApr2014* instance) {
 		try {
 			int ret = instance->getImageWidth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -58,7 +58,7 @@ extern "C" {
 	Result<int> cv_saliency_MotionSaliencyBinWangApr2014_getImageHeight_const(const cv::saliency::MotionSaliencyBinWangApr2014* instance) {
 		try {
 			int ret = instance->getImageHeight();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -75,7 +75,7 @@ extern "C" {
 	Result<cv::saliency::ObjectnessBING*> cv_saliency_ObjectnessBING_ObjectnessBING() {
 		try {
 			cv::saliency::ObjectnessBING* ret = new cv::saliency::ObjectnessBING();
-			return Ok(ret);
+			return Ok<cv::saliency::ObjectnessBING*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::saliency::ObjectnessBING*>))
 	}
 	
@@ -89,7 +89,7 @@ extern "C" {
 	Result<bool> cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::ObjectnessBING* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -131,7 +131,7 @@ extern "C" {
 	Result<double> cv_saliency_ObjectnessBING_getBase_const(const cv::saliency::ObjectnessBING* instance) {
 		try {
 			double ret = instance->getBase();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -145,7 +145,7 @@ extern "C" {
 	Result<int> cv_saliency_ObjectnessBING_getNSS_const(const cv::saliency::ObjectnessBING* instance) {
 		try {
 			int ret = instance->getNSS();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -159,7 +159,7 @@ extern "C" {
 	Result<int> cv_saliency_ObjectnessBING_getW_const(const cv::saliency::ObjectnessBING* instance) {
 		try {
 			int ret = instance->getW();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -173,14 +173,14 @@ extern "C" {
 	Result<bool> cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::Saliency* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliency* instance, const cv::_InputArray* _saliencyMap, const cv::_OutputArray* _binaryMap) {
 		try {
 			bool ret = instance->computeBinaryMap(*_saliencyMap, *_binaryMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -190,7 +190,7 @@ extern "C" {
 	Result<cv::saliency::StaticSaliencyFineGrained*> cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained() {
 		try {
 			cv::saliency::StaticSaliencyFineGrained* ret = new cv::saliency::StaticSaliencyFineGrained();
-			return Ok(ret);
+			return Ok<cv::saliency::StaticSaliencyFineGrained*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::saliency::StaticSaliencyFineGrained*>))
 	}
 	
@@ -204,7 +204,7 @@ extern "C" {
 	Result<bool> cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliencyFineGrained* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -214,7 +214,7 @@ extern "C" {
 	Result<cv::saliency::StaticSaliencySpectralResidual*> cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual() {
 		try {
 			cv::saliency::StaticSaliencySpectralResidual* ret = new cv::saliency::StaticSaliencySpectralResidual();
-			return Ok(ret);
+			return Ok<cv::saliency::StaticSaliencySpectralResidual*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::saliency::StaticSaliencySpectralResidual*>))
 	}
 	
@@ -228,7 +228,7 @@ extern "C" {
 	Result<bool> cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(cv::saliency::StaticSaliencySpectralResidual* instance, const cv::_InputArray* image, const cv::_OutputArray* saliencyMap) {
 		try {
 			bool ret = instance->computeSaliency(*image, *saliencyMap);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -249,7 +249,7 @@ extern "C" {
 	Result<int> cv_saliency_StaticSaliencySpectralResidual_getImageWidth_const(const cv::saliency::StaticSaliencySpectralResidual* instance) {
 		try {
 			int ret = instance->getImageWidth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -263,7 +263,7 @@ extern "C" {
 	Result<int> cv_saliency_StaticSaliencySpectralResidual_getImageHeight_const(const cv::saliency::StaticSaliencySpectralResidual* instance) {
 		try {
 			int ret = instance->getImageHeight();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

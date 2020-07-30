@@ -13,7 +13,7 @@ extern "C" {
 	Result<bool> cv_cuda_DescriptorMatcher_isMaskSupported_const(const cv::cuda::DescriptorMatcher* instance) {
 		try {
 			bool ret = instance->isMaskSupported();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -24,11 +24,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<cv::cuda::GpuMat>*> cv_cuda_DescriptorMatcher_getTrainDescriptors_const(const cv::cuda::DescriptorMatcher* instance) {
+	Result<const std::vector<cv::cuda::GpuMat>*> cv_cuda_DescriptorMatcher_getTrainDescriptors_const(const cv::cuda::DescriptorMatcher* instance) {
 		try {
-			std::vector<cv::cuda::GpuMat> ret = instance->getTrainDescriptors();
-			return Ok(new std::vector<cv::cuda::GpuMat>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::cuda::GpuMat>*>))
+			const std::vector<cv::cuda::GpuMat> ret = instance->getTrainDescriptors();
+			return Ok(new const std::vector<cv::cuda::GpuMat>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::cuda::GpuMat>*>))
 	}
 	
 	Result_void cv_cuda_DescriptorMatcher_clear(cv::cuda::DescriptorMatcher* instance) {
@@ -41,7 +41,7 @@ extern "C" {
 	Result<bool> cv_cuda_DescriptorMatcher_empty_const(const cv::cuda::DescriptorMatcher* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -174,7 +174,7 @@ extern "C" {
 	Result<int> cv_cuda_FastFeatureDetector_getMaxNumPoints_const(const cv::cuda::FastFeatureDetector* instance) {
 		try {
 			int ret = instance->getMaxNumPoints();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<bool> cv_cuda_ORB_getBlurForDescriptor_const(const cv::cuda::ORB* instance) {
 		try {
 			bool ret = instance->getBlurForDescriptor();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	

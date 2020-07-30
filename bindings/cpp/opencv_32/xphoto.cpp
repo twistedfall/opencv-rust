@@ -45,14 +45,14 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xphoto::SimpleWB>*>))
 	}
 	
-	Result_void cv_xphoto_dctDenoising_const_MatR_MatR_double_int(const cv::Mat* src, cv::Mat* dst, double sigma, int psize) {
+	Result_void cv_xphoto_dctDenoising_const_MatR_MatR_const_double_const_int(const cv::Mat* src, cv::Mat* dst, const double sigma, const int psize) {
 		try {
 			cv::xphoto::dctDenoising(*src, *dst, sigma, psize);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_xphoto_inpaint_const_MatR_const_MatR_MatR_int(const cv::Mat* src, const cv::Mat* mask, cv::Mat* dst, int algorithmType) {
+	Result_void cv_xphoto_inpaint_const_MatR_const_MatR_MatR_const_int(const cv::Mat* src, const cv::Mat* mask, cv::Mat* dst, const int algorithmType) {
 		try {
 			cv::xphoto::inpaint(*src, *mask, *dst, algorithmType);
 			return Ok();
@@ -62,7 +62,7 @@ extern "C" {
 	Result<float> cv_xphoto_GrayworldWB_getSaturationThreshold_const(const cv::xphoto::GrayworldWB* instance) {
 		try {
 			float ret = instance->getSaturationThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<int> cv_xphoto_LearningBasedWB_getRangeMaxVal_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
 			int ret = instance->getRangeMaxVal();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<float> cv_xphoto_LearningBasedWB_getSaturationThreshold_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
 			float ret = instance->getSaturationThreshold();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<int> cv_xphoto_LearningBasedWB_getHistBinNum_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
 			int ret = instance->getHistBinNum();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<float> cv_xphoto_SimpleWB_getInputMin_const(const cv::xphoto::SimpleWB* instance) {
 		try {
 			float ret = instance->getInputMin();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<float> cv_xphoto_SimpleWB_getInputMax_const(const cv::xphoto::SimpleWB* instance) {
 		try {
 			float ret = instance->getInputMax();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<float> cv_xphoto_SimpleWB_getOutputMin_const(const cv::xphoto::SimpleWB* instance) {
 		try {
 			float ret = instance->getOutputMin();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -167,7 +167,7 @@ extern "C" {
 	Result<float> cv_xphoto_SimpleWB_getOutputMax_const(const cv::xphoto::SimpleWB* instance) {
 		try {
 			float ret = instance->getOutputMax();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<float> cv_xphoto_SimpleWB_getP_const(const cv::xphoto::SimpleWB* instance) {
 		try {
 			float ret = instance->getP();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	

@@ -13,7 +13,7 @@ extern "C" {
 	Result<float> cv_hfs_HfsSegment_getSegEgbThresholdI(cv::hfs::HfsSegment* instance) {
 		try {
 			float ret = instance->getSegEgbThresholdI();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -27,7 +27,7 @@ extern "C" {
 	Result<int> cv_hfs_HfsSegment_getMinRegionSizeI(cv::hfs::HfsSegment* instance) {
 		try {
 			int ret = instance->getMinRegionSizeI();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -41,7 +41,7 @@ extern "C" {
 	Result<float> cv_hfs_HfsSegment_getSegEgbThresholdII(cv::hfs::HfsSegment* instance) {
 		try {
 			float ret = instance->getSegEgbThresholdII();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -55,7 +55,7 @@ extern "C" {
 	Result<int> cv_hfs_HfsSegment_getMinRegionSizeII(cv::hfs::HfsSegment* instance) {
 		try {
 			int ret = instance->getMinRegionSizeII();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<float> cv_hfs_HfsSegment_getSpatialWeight(cv::hfs::HfsSegment* instance) {
 		try {
 			float ret = instance->getSpatialWeight();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<int> cv_hfs_HfsSegment_getSlicSpixelSize(cv::hfs::HfsSegment* instance) {
 		try {
 			int ret = instance->getSlicSpixelSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<int> cv_hfs_HfsSegment_getNumSlicIter(cv::hfs::HfsSegment* instance) {
 		try {
 			int ret = instance->getNumSlicIter();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

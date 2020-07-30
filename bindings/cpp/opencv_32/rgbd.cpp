@@ -34,42 +34,42 @@ extern "C" {
 	Result<bool> cv_rgbd_isValidDepth_const_doubleR(const double* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_isValidDepth_const_floatR(const float* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_isValidDepth_const_intR(const int* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_isValidDepth_const_shortR(const short* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_isValidDepth_const_unsigned_intR(const unsigned int* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_isValidDepth_const_unsigned_shortR(const unsigned short* depth) {
 		try {
 			bool ret = cv::rgbd::isValidDepth(*depth);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<float> cv_linemod_ColorGradient_getPropWeak_threshold_const(const cv::linemod::ColorGradient* instance) {
 		try {
 			float ret = instance->weak_threshold;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<size_t> cv_linemod_ColorGradient_getPropNum_features_const(const cv::linemod::ColorGradient* instance) {
 		try {
 			size_t ret = instance->num_features;
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<float> cv_linemod_ColorGradient_getPropStrong_threshold_const(const cv::linemod::ColorGradient* instance) {
 		try {
 			float ret = instance->strong_threshold;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -142,14 +142,14 @@ extern "C" {
 	Result<cv::linemod::ColorGradient*> cv_linemod_ColorGradient_ColorGradient() {
 		try {
 			cv::linemod::ColorGradient* ret = new cv::linemod::ColorGradient();
-			return Ok(ret);
+			return Ok<cv::linemod::ColorGradient*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::ColorGradient*>))
 	}
 	
 	Result<cv::linemod::ColorGradient*> cv_linemod_ColorGradient_ColorGradient_float_size_t_float(float weak_threshold, size_t num_features, float strong_threshold) {
 		try {
 			cv::linemod::ColorGradient* ret = new cv::linemod::ColorGradient(weak_threshold, num_features, strong_threshold);
-			return Ok(ret);
+			return Ok<cv::linemod::ColorGradient*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::ColorGradient*>))
 	}
 	
@@ -177,7 +177,7 @@ extern "C" {
 	Result<int> cv_linemod_DepthNormal_getPropDistance_threshold_const(const cv::linemod::DepthNormal* instance) {
 		try {
 			int ret = instance->distance_threshold;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -191,7 +191,7 @@ extern "C" {
 	Result<int> cv_linemod_DepthNormal_getPropDifference_threshold_const(const cv::linemod::DepthNormal* instance) {
 		try {
 			int ret = instance->difference_threshold;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -205,7 +205,7 @@ extern "C" {
 	Result<size_t> cv_linemod_DepthNormal_getPropNum_features_const(const cv::linemod::DepthNormal* instance) {
 		try {
 			size_t ret = instance->num_features;
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
@@ -219,7 +219,7 @@ extern "C" {
 	Result<int> cv_linemod_DepthNormal_getPropExtract_threshold_const(const cv::linemod::DepthNormal* instance) {
 		try {
 			int ret = instance->extract_threshold;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -236,14 +236,14 @@ extern "C" {
 	Result<cv::linemod::DepthNormal*> cv_linemod_DepthNormal_DepthNormal() {
 		try {
 			cv::linemod::DepthNormal* ret = new cv::linemod::DepthNormal();
-			return Ok(ret);
+			return Ok<cv::linemod::DepthNormal*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::DepthNormal*>))
 	}
 	
 	Result<cv::linemod::DepthNormal*> cv_linemod_DepthNormal_DepthNormal_int_int_size_t_int(int distance_threshold, int difference_threshold, size_t num_features, int extract_threshold) {
 		try {
 			cv::linemod::DepthNormal* ret = new cv::linemod::DepthNormal(distance_threshold, difference_threshold, num_features, extract_threshold);
-			return Ok(ret);
+			return Ok<cv::linemod::DepthNormal*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::DepthNormal*>))
 	}
 	
@@ -274,14 +274,14 @@ extern "C" {
 	Result<cv::linemod::Detector*> cv_linemod_Detector_Detector() {
 		try {
 			cv::linemod::Detector* ret = new cv::linemod::Detector();
-			return Ok(ret);
+			return Ok<cv::linemod::Detector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Detector*>))
 	}
 	
 	Result<cv::linemod::Detector*> cv_linemod_Detector_Detector_const_vector_Ptr_Modality__R_const_vector_int_R(const std::vector<cv::Ptr<cv::linemod::Modality>>* modalities, const std::vector<int>* T_pyramid) {
 		try {
 			cv::linemod::Detector* ret = new cv::linemod::Detector(*modalities, *T_pyramid);
-			return Ok(ret);
+			return Ok<cv::linemod::Detector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Detector*>))
 	}
 	
@@ -295,63 +295,63 @@ extern "C" {
 	Result<int> cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(cv::linemod::Detector* instance, const std::vector<cv::Mat>* sources, const char* class_id, const cv::Mat* object_mask, cv::Rect* bounding_box) {
 		try {
 			int ret = instance->addTemplate(*sources, cv::String(class_id), *object_mask, bounding_box);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(cv::linemod::Detector* instance, const std::vector<cv::linemod::Template>* templates, const char* class_id) {
 		try {
 			int ret = instance->addSyntheticTemplate(*templates, cv::String(class_id));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<std::vector<cv::Ptr<cv::linemod::Modality>>*> cv_linemod_Detector_getModalities_const(const cv::linemod::Detector* instance) {
+	Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*> cv_linemod_Detector_getModalities_const(const cv::linemod::Detector* instance) {
 		try {
-			std::vector<cv::Ptr<cv::linemod::Modality>> ret = instance->getModalities();
-			return Ok(new std::vector<cv::Ptr<cv::linemod::Modality>>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::Ptr<cv::linemod::Modality>>*>))
+			const std::vector<cv::Ptr<cv::linemod::Modality>> ret = instance->getModalities();
+			return Ok(new const std::vector<cv::Ptr<cv::linemod::Modality>>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>))
 	}
 	
 	Result<int> cv_linemod_Detector_getT_const_int(const cv::linemod::Detector* instance, int pyramid_level) {
 		try {
 			int ret = instance->getT(pyramid_level);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_linemod_Detector_pyramidLevels_const(const cv::linemod::Detector* instance) {
 		try {
 			int ret = instance->pyramidLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result<std::vector<cv::linemod::Template>*> cv_linemod_Detector_getTemplates_const_const_StringR_int(const cv::linemod::Detector* instance, const char* class_id, int template_id) {
+	Result<const std::vector<cv::linemod::Template>*> cv_linemod_Detector_getTemplates_const_const_StringR_int(const cv::linemod::Detector* instance, const char* class_id, int template_id) {
 		try {
-			std::vector<cv::linemod::Template> ret = instance->getTemplates(cv::String(class_id), template_id);
-			return Ok(new std::vector<cv::linemod::Template>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::linemod::Template>*>))
+			const std::vector<cv::linemod::Template> ret = instance->getTemplates(cv::String(class_id), template_id);
+			return Ok(new const std::vector<cv::linemod::Template>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::linemod::Template>*>))
 	}
 	
 	Result<int> cv_linemod_Detector_numTemplates_const(const cv::linemod::Detector* instance) {
 		try {
 			int ret = instance->numTemplates();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_linemod_Detector_numTemplates_const_const_StringR(const cv::linemod::Detector* instance, const char* class_id) {
 		try {
 			int ret = instance->numTemplates(cv::String(class_id));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_linemod_Detector_numClasses_const(const cv::linemod::Detector* instance) {
 		try {
 			int ret = instance->numClasses();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -407,7 +407,7 @@ extern "C" {
 	Result<int> cv_linemod_Feature_getPropX_const(const cv::linemod::Feature* instance) {
 		try {
 			int ret = instance->x;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -421,7 +421,7 @@ extern "C" {
 	Result<int> cv_linemod_Feature_getPropY_const(const cv::linemod::Feature* instance) {
 		try {
 			int ret = instance->y;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -435,7 +435,7 @@ extern "C" {
 	Result<int> cv_linemod_Feature_getPropLabel_const(const cv::linemod::Feature* instance) {
 		try {
 			int ret = instance->label;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -452,14 +452,14 @@ extern "C" {
 	Result<cv::linemod::Feature*> cv_linemod_Feature_Feature() {
 		try {
 			cv::linemod::Feature* ret = new cv::linemod::Feature();
-			return Ok(ret);
+			return Ok<cv::linemod::Feature*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Feature*>))
 	}
 	
 	Result<cv::linemod::Feature*> cv_linemod_Feature_Feature_int_int_int(int x, int y, int label) {
 		try {
 			cv::linemod::Feature* ret = new cv::linemod::Feature(x, y, label);
-			return Ok(ret);
+			return Ok<cv::linemod::Feature*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Feature*>))
 	}
 	
@@ -480,7 +480,7 @@ extern "C" {
 	Result<int> cv_linemod_Match_getPropX_const(const cv::linemod::Match* instance) {
 		try {
 			int ret = instance->x;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -494,7 +494,7 @@ extern "C" {
 	Result<int> cv_linemod_Match_getPropY_const(const cv::linemod::Match* instance) {
 		try {
 			int ret = instance->y;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -508,7 +508,7 @@ extern "C" {
 	Result<float> cv_linemod_Match_getPropSimilarity_const(const cv::linemod::Match* instance) {
 		try {
 			float ret = instance->similarity;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -536,7 +536,7 @@ extern "C" {
 	Result<int> cv_linemod_Match_getPropTemplate_id_const(const cv::linemod::Match* instance) {
 		try {
 			int ret = instance->template_id;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -553,14 +553,14 @@ extern "C" {
 	Result<cv::linemod::Match*> cv_linemod_Match_Match() {
 		try {
 			cv::linemod::Match* ret = new cv::linemod::Match();
-			return Ok(ret);
+			return Ok<cv::linemod::Match*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Match*>))
 	}
 	
 	Result<cv::linemod::Match*> cv_linemod_Match_Match_int_int_float_const_StringR_int(int x, int y, float similarity, const char* class_id, int template_id) {
 		try {
 			cv::linemod::Match* ret = new cv::linemod::Match(x, y, similarity, cv::String(class_id), template_id);
-			return Ok(ret);
+			return Ok<cv::linemod::Match*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::linemod::Match*>))
 	}
 	
@@ -616,7 +616,7 @@ extern "C" {
 	Result<bool> cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(const cv::linemod::QuantizedPyramid* instance, cv::linemod::Template* templ) {
 		try {
 			bool ret = instance->extractTemplate(*templ);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -630,7 +630,7 @@ extern "C" {
 	Result<int> cv_linemod_Template_getPropWidth_const(const cv::linemod::Template* instance) {
 		try {
 			int ret = instance->width;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -644,7 +644,7 @@ extern "C" {
 	Result<int> cv_linemod_Template_getPropHeight_const(const cv::linemod::Template* instance) {
 		try {
 			int ret = instance->height;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -658,7 +658,7 @@ extern "C" {
 	Result<int> cv_linemod_Template_getPropPyramid_level_const(const cv::linemod::Template* instance) {
 		try {
 			int ret = instance->pyramid_level;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -706,14 +706,14 @@ extern "C" {
 	Result<cv::rgbd::DepthCleaner*> cv_rgbd_DepthCleaner_DepthCleaner() {
 		try {
 			cv::rgbd::DepthCleaner* ret = new cv::rgbd::DepthCleaner();
-			return Ok(ret);
+			return Ok<cv::rgbd::DepthCleaner*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::DepthCleaner*>))
 	}
 	
 	Result<cv::rgbd::DepthCleaner*> cv_rgbd_DepthCleaner_DepthCleaner_int_int_int(int depth, int window_size, int method) {
 		try {
 			cv::rgbd::DepthCleaner* ret = new cv::rgbd::DepthCleaner(depth, window_size, method);
-			return Ok(ret);
+			return Ok<cv::rgbd::DepthCleaner*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::DepthCleaner*>))
 	}
 	
@@ -727,7 +727,7 @@ extern "C" {
 	Result<int> cv_rgbd_DepthCleaner_getWindowSize_const(const cv::rgbd::DepthCleaner* instance) {
 		try {
 			int ret = instance->getWindowSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -741,7 +741,7 @@ extern "C" {
 	Result<int> cv_rgbd_DepthCleaner_getDepth_const(const cv::rgbd::DepthCleaner* instance) {
 		try {
 			int ret = instance->getDepth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -755,7 +755,7 @@ extern "C" {
 	Result<int> cv_rgbd_DepthCleaner_getMethod_const(const cv::rgbd::DepthCleaner* instance) {
 		try {
 			int ret = instance->getMethod();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -769,63 +769,63 @@ extern "C" {
 	Result<float> cv_rgbd_Odometry_DEFAULT_MIN_DEPTH() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MIN_DEPTH();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_rgbd_Odometry_DEFAULT_MAX_DEPTH() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MAX_DEPTH();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_rgbd_Odometry_DEFAULT_MAX_DEPTH_DIFF() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MAX_DEPTH_DIFF();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_rgbd_Odometry_DEFAULT_MAX_POINTS_PART() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MAX_POINTS_PART();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_rgbd_Odometry_DEFAULT_MAX_TRANSLATION() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MAX_TRANSLATION();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_rgbd_Odometry_DEFAULT_MAX_ROTATION() {
 		try {
 			float ret = cv::rgbd::Odometry::DEFAULT_MAX_ROTATION();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<bool> cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_MatR_const_MatR(const cv::rgbd::Odometry* instance, const cv::Mat* srcImage, const cv::Mat* srcDepth, const cv::Mat* srcMask, const cv::Mat* dstImage, const cv::Mat* dstDepth, const cv::Mat* dstMask, cv::Mat* Rt, const cv::Mat* initRt) {
 		try {
 			bool ret = instance->compute(*srcImage, *srcDepth, *srcMask, *dstImage, *dstDepth, *dstMask, *Rt, *initRt);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_R_Ptr_OdometryFrame_R_MatR_const_MatR(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* srcFrame, cv::Ptr<cv::rgbd::OdometryFrame>* dstFrame, cv::Mat* Rt, const cv::Mat* initRt) {
 		try {
 			bool ret = instance->compute(*srcFrame, *dstFrame, *Rt, *initRt);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<cv::Size> cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::Odometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -853,7 +853,7 @@ extern "C" {
 	Result<int> cv_rgbd_Odometry_getTransformType_const(const cv::rgbd::Odometry* instance) {
 		try {
 			int ret = instance->getTransformType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -996,14 +996,14 @@ extern "C" {
 	Result<cv::rgbd::OdometryFrame*> cv_rgbd_OdometryFrame_OdometryFrame() {
 		try {
 			cv::rgbd::OdometryFrame* ret = new cv::rgbd::OdometryFrame();
-			return Ok(ret);
+			return Ok<cv::rgbd::OdometryFrame*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::OdometryFrame*>))
 	}
 	
 	Result<cv::rgbd::OdometryFrame*> cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::rgbd::OdometryFrame* ret = new cv::rgbd::OdometryFrame(*image, *depth, *mask, *normals, ID);
-			return Ok(ret);
+			return Ok<cv::rgbd::OdometryFrame*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::OdometryFrame*>))
 	}
 	
@@ -1024,7 +1024,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdFrame_getPropID_const(const cv::rgbd::RgbdFrame* instance) {
 		try {
 			int ret = instance->ID;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1097,14 +1097,14 @@ extern "C" {
 	Result<cv::rgbd::RgbdFrame*> cv_rgbd_RgbdFrame_RgbdFrame() {
 		try {
 			cv::rgbd::RgbdFrame* ret = new cv::rgbd::RgbdFrame();
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdFrame*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdFrame*>))
 	}
 	
 	Result<cv::rgbd::RgbdFrame*> cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(const cv::Mat* image, const cv::Mat* depth, const cv::Mat* mask, const cv::Mat* normals, int ID) {
 		try {
 			cv::rgbd::RgbdFrame* ret = new cv::rgbd::RgbdFrame(*image, *depth, *mask, *normals, ID);
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdFrame*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdFrame*>))
 	}
 	
@@ -1121,14 +1121,14 @@ extern "C" {
 	Result<cv::rgbd::RgbdNormals*> cv_rgbd_RgbdNormals_RgbdNormals() {
 		try {
 			cv::rgbd::RgbdNormals* ret = new cv::rgbd::RgbdNormals();
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdNormals*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdNormals*>))
 	}
 	
 	Result<cv::rgbd::RgbdNormals*> cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR_int_int(int rows, int cols, int depth, const cv::_InputArray* K, int window_size, int method) {
 		try {
 			cv::rgbd::RgbdNormals* ret = new cv::rgbd::RgbdNormals(rows, cols, depth, *K, window_size, method);
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdNormals*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdNormals*>))
 	}
 	
@@ -1142,7 +1142,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdNormals_getRows_const(const cv::rgbd::RgbdNormals* instance) {
 		try {
 			int ret = instance->getRows();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1156,7 +1156,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdNormals_getCols_const(const cv::rgbd::RgbdNormals* instance) {
 		try {
 			int ret = instance->getCols();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1170,7 +1170,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdNormals_getWindowSize_const(const cv::rgbd::RgbdNormals* instance) {
 		try {
 			int ret = instance->getWindowSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1184,7 +1184,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdNormals_getDepth_const(const cv::rgbd::RgbdNormals* instance) {
 		try {
 			int ret = instance->getDepth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1212,7 +1212,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdNormals_getMethod_const(const cv::rgbd::RgbdNormals* instance) {
 		try {
 			int ret = instance->getMethod();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1229,21 +1229,21 @@ extern "C" {
 	Result<cv::rgbd::RgbdOdometry*> cv_rgbd_RgbdOdometry_RgbdOdometry() {
 		try {
 			cv::rgbd::RgbdOdometry* ret = new cv::rgbd::RgbdOdometry();
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdOdometry*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdOdometry*>))
 	}
 	
 	Result<cv::rgbd::RgbdOdometry*> cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(const cv::Mat* cameraMatrix, float minDepth, float maxDepth, float maxDepthDiff, const std::vector<int>* iterCounts, const std::vector<float>* minGradientMagnitudes, float maxPointsPart, int transformType) {
 		try {
 			cv::rgbd::RgbdOdometry* ret = new cv::rgbd::RgbdOdometry(*cameraMatrix, minDepth, maxDepth, maxDepthDiff, *iterCounts, *minGradientMagnitudes, maxPointsPart, transformType);
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdOdometry*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdOdometry*>))
 	}
 	
 	Result<cv::Size> cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(const cv::rgbd::RgbdOdometry* instance, cv::Ptr<cv::rgbd::OdometryFrame>* frame, int cacheType) {
 		try {
 			cv::Size ret = instance->prepareFrameCache(*frame, cacheType);
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
@@ -1264,7 +1264,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMinDepth_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMinDepth();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1278,7 +1278,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMaxDepth_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMaxDepth();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1292,7 +1292,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMaxDepthDiff_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMaxDepthDiff();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1334,7 +1334,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMaxPointsPart_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMaxPointsPart();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1348,7 +1348,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdOdometry_getTransformType_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			int ret = instance->getTransformType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1362,7 +1362,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMaxTranslation_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMaxTranslation();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1376,7 +1376,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdOdometry_getMaxRotation_const(const cv::rgbd::RgbdOdometry* instance) {
 		try {
 			double ret = instance->getMaxRotation();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1393,14 +1393,14 @@ extern "C" {
 	Result<cv::rgbd::RgbdPlane*> cv_rgbd_RgbdPlane_RgbdPlane_RGBD_PLANE_METHOD(cv::rgbd::RgbdPlane::RGBD_PLANE_METHOD method) {
 		try {
 			cv::rgbd::RgbdPlane* ret = new cv::rgbd::RgbdPlane(method);
-			return Ok(ret);
+			return Ok<cv::rgbd::RgbdPlane*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::rgbd::RgbdPlane*>))
 	}
 	
 	Result<int> cv_rgbd_RgbdPlane_getBlockSize_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			int ret = instance->getBlockSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1414,7 +1414,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdPlane_getMinSize_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			int ret = instance->getMinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1428,7 +1428,7 @@ extern "C" {
 	Result<int> cv_rgbd_RgbdPlane_getMethod_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			int ret = instance->getMethod();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1442,7 +1442,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdPlane_getThreshold_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1456,7 +1456,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdPlane_getSensorErrorA_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			double ret = instance->getSensorErrorA();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1470,7 +1470,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdPlane_getSensorErrorB_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			double ret = instance->getSensorErrorB();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1484,7 +1484,7 @@ extern "C" {
 	Result<double> cv_rgbd_RgbdPlane_getSensorErrorC_const(const cv::rgbd::RgbdPlane* instance) {
 		try {
 			double ret = instance->getSensorErrorC();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	

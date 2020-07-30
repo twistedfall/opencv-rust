@@ -6,7 +6,7 @@ extern "C" {
 	Result<double> cv_cuda_BroxOpticalFlow_getFlowSmoothness_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			double ret = instance->getFlowSmoothness();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -20,7 +20,7 @@ extern "C" {
 	Result<double> cv_cuda_BroxOpticalFlow_getGradientConstancyImportance_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			double ret = instance->getGradientConstancyImportance();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -34,7 +34,7 @@ extern "C" {
 	Result<double> cv_cuda_BroxOpticalFlow_getPyramidScaleFactor_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			double ret = instance->getPyramidScaleFactor();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -48,7 +48,7 @@ extern "C" {
 	Result<int> cv_cuda_BroxOpticalFlow_getInnerIterations_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			int ret = instance->getInnerIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -62,7 +62,7 @@ extern "C" {
 	Result<int> cv_cuda_BroxOpticalFlow_getOuterIterations_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			int ret = instance->getOuterIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -76,7 +76,7 @@ extern "C" {
 	Result<int> cv_cuda_BroxOpticalFlow_getSolverIterations_const(const cv::cuda::BroxOpticalFlow* instance) {
 		try {
 			int ret = instance->getSolverIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -104,11 +104,11 @@ extern "C" {
 	Result<cv::Size> cv_cuda_DensePyrLKOpticalFlow_getWinSize_const(const cv::cuda::DensePyrLKOpticalFlow* instance) {
 		try {
 			cv::Size ret = instance->getWinSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(cv::cuda::DensePyrLKOpticalFlow* instance, const cv::Size* winSize) {
+	Result_void cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(cv::cuda::DensePyrLKOpticalFlow* instance, cv::Size* winSize) {
 		try {
 			instance->setWinSize(*winSize);
 			return Ok();
@@ -118,7 +118,7 @@ extern "C" {
 	Result<int> cv_cuda_DensePyrLKOpticalFlow_getMaxLevel_const(const cv::cuda::DensePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getMaxLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -132,7 +132,7 @@ extern "C" {
 	Result<int> cv_cuda_DensePyrLKOpticalFlow_getNumIters_const(const cv::cuda::DensePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -146,7 +146,7 @@ extern "C" {
 	Result<bool> cv_cuda_DensePyrLKOpticalFlow_getUseInitialFlow_const(const cv::cuda::DensePyrLKOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseInitialFlow();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -157,7 +157,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>*> cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(const cv::Size* winSize, int maxLevel, int iters, bool useInitialFlow) {
+	Result<cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>*> cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(cv::Size* winSize, int maxLevel, int iters, bool useInitialFlow) {
 		try {
 			cv::Ptr<cv::cuda::DensePyrLKOpticalFlow> ret = cv::cuda::DensePyrLKOpticalFlow::create(*winSize, maxLevel, iters, useInitialFlow);
 			return Ok(new cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>(ret));
@@ -167,7 +167,7 @@ extern "C" {
 	Result<int> cv_cuda_FarnebackOpticalFlow_getNumLevels_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -181,7 +181,7 @@ extern "C" {
 	Result<double> cv_cuda_FarnebackOpticalFlow_getPyrScale_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			double ret = instance->getPyrScale();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -195,7 +195,7 @@ extern "C" {
 	Result<bool> cv_cuda_FarnebackOpticalFlow_getFastPyramids_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			bool ret = instance->getFastPyramids();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -209,7 +209,7 @@ extern "C" {
 	Result<int> cv_cuda_FarnebackOpticalFlow_getWinSize_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getWinSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -223,7 +223,7 @@ extern "C" {
 	Result<int> cv_cuda_FarnebackOpticalFlow_getNumIters_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<int> cv_cuda_FarnebackOpticalFlow_getPolyN_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getPolyN();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<double> cv_cuda_FarnebackOpticalFlow_getPolySigma_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			double ret = instance->getPolySigma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<int> cv_cuda_FarnebackOpticalFlow_getFlags_const(const cv::cuda::FarnebackOpticalFlow* instance) {
 		try {
 			int ret = instance->getFlags();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -286,7 +286,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getTau_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getTau();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -300,7 +300,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getLambda_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getLambda();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -314,7 +314,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getGamma_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -328,7 +328,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getTheta_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getTheta();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -342,7 +342,7 @@ extern "C" {
 	Result<int> cv_cuda_OpticalFlowDual_TVL1_getNumScales_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			int ret = instance->getNumScales();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -356,7 +356,7 @@ extern "C" {
 	Result<int> cv_cuda_OpticalFlowDual_TVL1_getNumWarps_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			int ret = instance->getNumWarps();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -370,7 +370,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getEpsilon_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getEpsilon();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -384,7 +384,7 @@ extern "C" {
 	Result<int> cv_cuda_OpticalFlowDual_TVL1_getNumIterations_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			int ret = instance->getNumIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -398,7 +398,7 @@ extern "C" {
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getScaleStep_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			double ret = instance->getScaleStep();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<bool> cv_cuda_OpticalFlowDual_TVL1_getUseInitialFlow_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {
 		try {
 			bool ret = instance->getUseInitialFlow();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -440,11 +440,11 @@ extern "C" {
 	Result<cv::Size> cv_cuda_SparsePyrLKOpticalFlow_getWinSize_const(const cv::cuda::SparsePyrLKOpticalFlow* instance) {
 		try {
 			cv::Size ret = instance->getWinSize();
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(cv::cuda::SparsePyrLKOpticalFlow* instance, const cv::Size* winSize) {
+	Result_void cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(cv::cuda::SparsePyrLKOpticalFlow* instance, cv::Size* winSize) {
 		try {
 			instance->setWinSize(*winSize);
 			return Ok();
@@ -454,7 +454,7 @@ extern "C" {
 	Result<int> cv_cuda_SparsePyrLKOpticalFlow_getMaxLevel_const(const cv::cuda::SparsePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getMaxLevel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<int> cv_cuda_SparsePyrLKOpticalFlow_getNumIters_const(const cv::cuda::SparsePyrLKOpticalFlow* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -482,7 +482,7 @@ extern "C" {
 	Result<bool> cv_cuda_SparsePyrLKOpticalFlow_getUseInitialFlow_const(const cv::cuda::SparsePyrLKOpticalFlow* instance) {
 		try {
 			bool ret = instance->getUseInitialFlow();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -493,7 +493,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>*> cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(const cv::Size* winSize, int maxLevel, int iters, bool useInitialFlow) {
+	Result<cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>*> cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(cv::Size* winSize, int maxLevel, int iters, bool useInitialFlow) {
 		try {
 			cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow> ret = cv::cuda::SparsePyrLKOpticalFlow::create(*winSize, maxLevel, iters, useInitialFlow);
 			return Ok(new cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>(ret));

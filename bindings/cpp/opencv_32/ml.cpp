@@ -27,7 +27,7 @@ extern "C" {
 	Result<int> cv_ml_ANN_MLP_getTrainMethod_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			int ret = instance->getTrainMethod();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -55,11 +55,11 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_ANN_MLP_getTermCriteria_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_ANN_MLP_setTermCriteria_TermCriteria(cv::ml::ANN_MLP* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_ANN_MLP_setTermCriteria_TermCriteria(cv::ml::ANN_MLP* instance, cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -69,7 +69,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getBackpropWeightScale_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getBackpropWeightScale();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getBackpropMomentumScale_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getBackpropMomentumScale();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getRpropDW0_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getRpropDW0();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getRpropDWPlus_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getRpropDWPlus();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getRpropDWMinus_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getRpropDWMinus();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getRpropDWMin_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getRpropDWMin();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -153,7 +153,7 @@ extern "C" {
 	Result<double> cv_ml_ANN_MLP_getRpropDWMax_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			double ret = instance->getRpropDWMax();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -188,7 +188,7 @@ extern "C" {
 	Result<int> cv_ml_Boost_getBoostType_const(const cv::ml::Boost* instance) {
 		try {
 			int ret = instance->getBoostType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -202,7 +202,7 @@ extern "C" {
 	Result<int> cv_ml_Boost_getWeakCount_const(const cv::ml::Boost* instance) {
 		try {
 			int ret = instance->getWeakCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -216,7 +216,7 @@ extern "C" {
 	Result<double> cv_ml_Boost_getWeightTrimRate_const(const cv::ml::Boost* instance) {
 		try {
 			double ret = instance->getWeightTrimRate();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -237,7 +237,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_getMaxCategories_const(const cv::ml::DTrees* instance) {
 		try {
 			int ret = instance->getMaxCategories();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -251,7 +251,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_getMaxDepth_const(const cv::ml::DTrees* instance) {
 		try {
 			int ret = instance->getMaxDepth();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_getMinSampleCount_const(const cv::ml::DTrees* instance) {
 		try {
 			int ret = instance->getMinSampleCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -279,7 +279,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_getCVFolds_const(const cv::ml::DTrees* instance) {
 		try {
 			int ret = instance->getCVFolds();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -293,7 +293,7 @@ extern "C" {
 	Result<bool> cv_ml_DTrees_getUseSurrogates_const(const cv::ml::DTrees* instance) {
 		try {
 			bool ret = instance->getUseSurrogates();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -307,7 +307,7 @@ extern "C" {
 	Result<bool> cv_ml_DTrees_getUse1SERule_const(const cv::ml::DTrees* instance) {
 		try {
 			bool ret = instance->getUse1SERule();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -321,7 +321,7 @@ extern "C" {
 	Result<bool> cv_ml_DTrees_getTruncatePrunedTree_const(const cv::ml::DTrees* instance) {
 		try {
 			bool ret = instance->getTruncatePrunedTree();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -335,7 +335,7 @@ extern "C" {
 	Result<float> cv_ml_DTrees_getRegressionAccuracy_const(const cv::ml::DTrees* instance) {
 		try {
 			float ret = instance->getRegressionAccuracy();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -360,32 +360,32 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<std::vector<int>*> cv_ml_DTrees_getRoots_const(const cv::ml::DTrees* instance) {
+	Result<const std::vector<int>*> cv_ml_DTrees_getRoots_const(const cv::ml::DTrees* instance) {
 		try {
-			std::vector<int> ret = instance->getRoots();
-			return Ok(new std::vector<int>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<int>*>))
+			const std::vector<int> ret = instance->getRoots();
+			return Ok(new const std::vector<int>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<int>*>))
 	}
 	
-	Result<std::vector<cv::ml::DTrees::Node>*> cv_ml_DTrees_getNodes_const(const cv::ml::DTrees* instance) {
+	Result<const std::vector<cv::ml::DTrees::Node>*> cv_ml_DTrees_getNodes_const(const cv::ml::DTrees* instance) {
 		try {
-			std::vector<cv::ml::DTrees::Node> ret = instance->getNodes();
-			return Ok(new std::vector<cv::ml::DTrees::Node>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::ml::DTrees::Node>*>))
+			const std::vector<cv::ml::DTrees::Node> ret = instance->getNodes();
+			return Ok(new const std::vector<cv::ml::DTrees::Node>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::ml::DTrees::Node>*>))
 	}
 	
-	Result<std::vector<cv::ml::DTrees::Split>*> cv_ml_DTrees_getSplits_const(const cv::ml::DTrees* instance) {
+	Result<const std::vector<cv::ml::DTrees::Split>*> cv_ml_DTrees_getSplits_const(const cv::ml::DTrees* instance) {
 		try {
-			std::vector<cv::ml::DTrees::Split> ret = instance->getSplits();
-			return Ok(new std::vector<cv::ml::DTrees::Split>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::ml::DTrees::Split>*>))
+			const std::vector<cv::ml::DTrees::Split> ret = instance->getSplits();
+			return Ok(new const std::vector<cv::ml::DTrees::Split>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::ml::DTrees::Split>*>))
 	}
 	
-	Result<std::vector<int>*> cv_ml_DTrees_getSubsets_const(const cv::ml::DTrees* instance) {
+	Result<const std::vector<int>*> cv_ml_DTrees_getSubsets_const(const cv::ml::DTrees* instance) {
 		try {
-			std::vector<int> ret = instance->getSubsets();
-			return Ok(new std::vector<int>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<int>*>))
+			const std::vector<int> ret = instance->getSubsets();
+			return Ok(new const std::vector<int>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<int>*>))
 	}
 	
 	Result<cv::Ptr<cv::ml::DTrees>*> cv_ml_DTrees_create() {
@@ -398,7 +398,7 @@ extern "C" {
 	Result<double> cv_ml_DTrees_Node_getPropValue_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			double ret = instance->value;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -412,7 +412,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropClassIdx_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->classIdx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -426,7 +426,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropParent_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->parent;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -440,7 +440,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropLeft_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->left;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -454,7 +454,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropRight_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->right;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -468,7 +468,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropDefaultDir_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->defaultDir;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -482,7 +482,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Node_getPropSplit_const(const cv::ml::DTrees::Node* instance) {
 		try {
 			int ret = instance->split;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -499,14 +499,14 @@ extern "C" {
 	Result<cv::ml::DTrees::Node*> cv_ml_DTrees_Node_Node() {
 		try {
 			cv::ml::DTrees::Node* ret = new cv::ml::DTrees::Node();
-			return Ok(ret);
+			return Ok<cv::ml::DTrees::Node*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ml::DTrees::Node*>))
 	}
 	
 	Result<int> cv_ml_DTrees_Split_getPropVarIdx_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			int ret = instance->varIdx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -520,7 +520,7 @@ extern "C" {
 	Result<bool> cv_ml_DTrees_Split_getPropInversed_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			bool ret = instance->inversed;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -534,7 +534,7 @@ extern "C" {
 	Result<float> cv_ml_DTrees_Split_getPropQuality_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			float ret = instance->quality;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -548,7 +548,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Split_getPropNext_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			int ret = instance->next;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -562,7 +562,7 @@ extern "C" {
 	Result<float> cv_ml_DTrees_Split_getPropC_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			float ret = instance->c;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -576,7 +576,7 @@ extern "C" {
 	Result<int> cv_ml_DTrees_Split_getPropSubsetOfs_const(const cv::ml::DTrees::Split* instance) {
 		try {
 			int ret = instance->subsetOfs;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -593,14 +593,14 @@ extern "C" {
 	Result<cv::ml::DTrees::Split*> cv_ml_DTrees_Split_Split() {
 		try {
 			cv::ml::DTrees::Split* ret = new cv::ml::DTrees::Split();
-			return Ok(ret);
+			return Ok<cv::ml::DTrees::Split*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ml::DTrees::Split*>))
 	}
 	
 	Result<int> cv_ml_EM_getClustersNumber_const(const cv::ml::EM* instance) {
 		try {
 			int ret = instance->getClustersNumber();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -614,7 +614,7 @@ extern "C" {
 	Result<int> cv_ml_EM_getCovarianceMatrixType_const(const cv::ml::EM* instance) {
 		try {
 			int ret = instance->getCovarianceMatrixType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -628,7 +628,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_EM_getTermCriteria_const(const cv::ml::EM* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -663,28 +663,28 @@ extern "C" {
 	Result<cv::Vec2d> cv_ml_EM_predict2_const_const__InputArrayR_const__OutputArrayR(const cv::ml::EM* instance, const cv::_InputArray* sample, const cv::_OutputArray* probs) {
 		try {
 			cv::Vec2d ret = instance->predict2(*sample, *probs);
-			return Ok(ret);
+			return Ok<cv::Vec2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Vec2d>))
 	}
 	
 	Result<bool> cv_ml_EM_trainEM_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainEM(*samples, *logLikelihoods, *labels, *probs);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* means0, const cv::_InputArray* covs0, const cv::_InputArray* weights0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainE(*samples, *means0, *covs0, *weights0, *logLikelihoods, *labels, *probs);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(cv::ml::EM* instance, const cv::_InputArray* samples, const cv::_InputArray* probs0, const cv::_OutputArray* logLikelihoods, const cv::_OutputArray* labels, const cv::_OutputArray* probs) {
 		try {
 			bool ret = instance->trainM(*samples, *probs0, *logLikelihoods, *labels, *probs);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -698,7 +698,7 @@ extern "C" {
 	Result<int> cv_ml_KNearest_getDefaultK_const(const cv::ml::KNearest* instance) {
 		try {
 			int ret = instance->getDefaultK();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -712,7 +712,7 @@ extern "C" {
 	Result<bool> cv_ml_KNearest_getIsClassifier_const(const cv::ml::KNearest* instance) {
 		try {
 			bool ret = instance->getIsClassifier();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -726,7 +726,7 @@ extern "C" {
 	Result<int> cv_ml_KNearest_getEmax_const(const cv::ml::KNearest* instance) {
 		try {
 			int ret = instance->getEmax();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -740,7 +740,7 @@ extern "C" {
 	Result<int> cv_ml_KNearest_getAlgorithmType_const(const cv::ml::KNearest* instance) {
 		try {
 			int ret = instance->getAlgorithmType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -754,7 +754,7 @@ extern "C" {
 	Result<float> cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::ml::KNearest* instance, const cv::_InputArray* samples, int k, const cv::_OutputArray* results, const cv::_OutputArray* neighborResponses, const cv::_OutputArray* dist) {
 		try {
 			float ret = instance->findNearest(*samples, k, *results, *neighborResponses, *dist);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -768,7 +768,7 @@ extern "C" {
 	Result<double> cv_ml_LogisticRegression_getLearningRate_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			double ret = instance->getLearningRate();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -782,7 +782,7 @@ extern "C" {
 	Result<int> cv_ml_LogisticRegression_getIterations_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			int ret = instance->getIterations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -796,7 +796,7 @@ extern "C" {
 	Result<int> cv_ml_LogisticRegression_getRegularization_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			int ret = instance->getRegularization();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -810,7 +810,7 @@ extern "C" {
 	Result<int> cv_ml_LogisticRegression_getTrainMethod_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			int ret = instance->getTrainMethod();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -824,7 +824,7 @@ extern "C" {
 	Result<int> cv_ml_LogisticRegression_getMiniBatchSize_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			int ret = instance->getMiniBatchSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -838,11 +838,11 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_LogisticRegression_getTermCriteria_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
-	Result_void cv_ml_LogisticRegression_setTermCriteria_TermCriteria(cv::ml::LogisticRegression* instance, const cv::TermCriteria* val) {
+	Result_void cv_ml_LogisticRegression_setTermCriteria_TermCriteria(cv::ml::LogisticRegression* instance, cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -852,7 +852,7 @@ extern "C" {
 	Result<float> cv_ml_LogisticRegression_predict_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::LogisticRegression* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			float ret = instance->predict(*samples, *results, flags);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -873,7 +873,7 @@ extern "C" {
 	Result<float> cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(const cv::ml::NormalBayesClassifier* instance, const cv::_InputArray* inputs, const cv::_OutputArray* outputs, const cv::_OutputArray* outputProbs, int flags) {
 		try {
 			float ret = instance->predictProb(*inputs, *outputs, *outputProbs, flags);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -887,7 +887,7 @@ extern "C" {
 	Result<double> cv_ml_ParamGrid_getPropMinVal_const(const cv::ml::ParamGrid* instance) {
 		try {
 			double ret = instance->minVal;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -901,7 +901,7 @@ extern "C" {
 	Result<double> cv_ml_ParamGrid_getPropMaxVal_const(const cv::ml::ParamGrid* instance) {
 		try {
 			double ret = instance->maxVal;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -915,7 +915,7 @@ extern "C" {
 	Result<double> cv_ml_ParamGrid_getPropLogStep_const(const cv::ml::ParamGrid* instance) {
 		try {
 			double ret = instance->logStep;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -932,21 +932,21 @@ extern "C" {
 	Result<cv::ml::ParamGrid*> cv_ml_ParamGrid_ParamGrid() {
 		try {
 			cv::ml::ParamGrid* ret = new cv::ml::ParamGrid();
-			return Ok(ret);
+			return Ok<cv::ml::ParamGrid*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ml::ParamGrid*>))
 	}
 	
 	Result<cv::ml::ParamGrid*> cv_ml_ParamGrid_ParamGrid_double_double_double(double _minVal, double _maxVal, double _logStep) {
 		try {
 			cv::ml::ParamGrid* ret = new cv::ml::ParamGrid(_minVal, _maxVal, _logStep);
-			return Ok(ret);
+			return Ok<cv::ml::ParamGrid*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ml::ParamGrid*>))
 	}
 	
 	Result<bool> cv_ml_RTrees_getCalculateVarImportance_const(const cv::ml::RTrees* instance) {
 		try {
 			bool ret = instance->getCalculateVarImportance();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -960,7 +960,7 @@ extern "C" {
 	Result<int> cv_ml_RTrees_getActiveVarCount_const(const cv::ml::RTrees* instance) {
 		try {
 			int ret = instance->getActiveVarCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -974,7 +974,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_RTrees_getTermCriteria_const(const cv::ml::RTrees* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -1002,7 +1002,7 @@ extern "C" {
 	Result<int> cv_ml_SVM_getType_const(const cv::ml::SVM* instance) {
 		try {
 			int ret = instance->getType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1016,7 +1016,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getGamma_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getGamma();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1030,7 +1030,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getCoef0_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getCoef0();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1044,7 +1044,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getDegree_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getDegree();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1058,7 +1058,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getC_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getC();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1072,7 +1072,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getNu_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getNu();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1086,7 +1086,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getP_const(const cv::ml::SVM* instance) {
 		try {
 			double ret = instance->getP();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1114,7 +1114,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_SVM_getTermCriteria_const(const cv::ml::SVM* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -1128,7 +1128,7 @@ extern "C" {
 	Result<int> cv_ml_SVM_getKernelType_const(const cv::ml::SVM* instance) {
 		try {
 			int ret = instance->getKernelType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1149,7 +1149,7 @@ extern "C" {
 	Result<bool> cv_ml_SVM_trainAuto_const_Ptr_TrainData_R_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(cv::ml::SVM* instance, const cv::Ptr<cv::ml::TrainData>* data, int kFold, cv::ml::ParamGrid* Cgrid, cv::ml::ParamGrid* gammaGrid, cv::ml::ParamGrid* pGrid, cv::ml::ParamGrid* nuGrid, cv::ml::ParamGrid* coeffGrid, cv::ml::ParamGrid* degreeGrid, bool balanced) {
 		try {
 			bool ret = instance->trainAuto(*data, kFold, *Cgrid, *gammaGrid, *pGrid, *nuGrid, *coeffGrid, *degreeGrid, balanced);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1170,7 +1170,7 @@ extern "C" {
 	Result<double> cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayR_const__OutputArrayR(const cv::ml::SVM* instance, int i, const cv::_OutputArray* alpha, const cv::_OutputArray* svidx) {
 		try {
 			double ret = instance->getDecisionFunction(i, *alpha, *svidx);
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1198,7 +1198,7 @@ extern "C" {
 	Result<int> cv_ml_SVM_Kernel_getType_const(const cv::ml::SVM::Kernel* instance) {
 		try {
 			int ret = instance->getType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1219,7 +1219,7 @@ extern "C" {
 	Result<float> cv_ml_SVMSGD_getShift(cv::ml::SVMSGD* instance) {
 		try {
 			float ret = instance->getShift();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1240,7 +1240,7 @@ extern "C" {
 	Result<int> cv_ml_SVMSGD_getSvmsgdType_const(const cv::ml::SVMSGD* instance) {
 		try {
 			int ret = instance->getSvmsgdType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1254,7 +1254,7 @@ extern "C" {
 	Result<int> cv_ml_SVMSGD_getMarginType_const(const cv::ml::SVMSGD* instance) {
 		try {
 			int ret = instance->getMarginType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1268,7 +1268,7 @@ extern "C" {
 	Result<float> cv_ml_SVMSGD_getMarginRegularization_const(const cv::ml::SVMSGD* instance) {
 		try {
 			float ret = instance->getMarginRegularization();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1282,7 +1282,7 @@ extern "C" {
 	Result<float> cv_ml_SVMSGD_getInitialStepSize_const(const cv::ml::SVMSGD* instance) {
 		try {
 			float ret = instance->getInitialStepSize();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1296,7 +1296,7 @@ extern "C" {
 	Result<float> cv_ml_SVMSGD_getStepDecreasingPower_const(const cv::ml::SVMSGD* instance) {
 		try {
 			float ret = instance->getStepDecreasingPower();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1310,7 +1310,7 @@ extern "C" {
 	Result<cv::TermCriteria> cv_ml_SVMSGD_getTermCriteria_const(const cv::ml::SVMSGD* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(ret);
+			return Ok<cv::TermCriteria>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TermCriteria>))
 	}
 	
@@ -1324,105 +1324,105 @@ extern "C" {
 	Result<int> cv_ml_StatModel_getVarCount_const(const cv::ml::StatModel* instance) {
 		try {
 			int ret = instance->getVarCount();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<bool> cv_ml_StatModel_empty_const(const cv::ml::StatModel* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_StatModel_isTrained_const(const cv::ml::StatModel* instance) {
 		try {
 			bool ret = instance->isTrained();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_StatModel_isClassifier_const(const cv::ml::StatModel* instance) {
 		try {
 			bool ret = instance->isClassifier();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_StatModel_train_const_Ptr_TrainData_R_int(cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* trainData, int flags) {
 		try {
 			bool ret = instance->train(*trainData, flags);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ml_StatModel_train_const__InputArrayR_int_const__InputArrayR(cv::ml::StatModel* instance, const cv::_InputArray* samples, int layout, const cv::_InputArray* responses) {
 		try {
 			bool ret = instance->train(*samples, layout, *responses);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<float> cv_ml_StatModel_calcError_const_const_Ptr_TrainData_R_bool_const__OutputArrayR(const cv::ml::StatModel* instance, const cv::Ptr<cv::ml::TrainData>* data, bool test, const cv::_OutputArray* resp) {
 		try {
 			float ret = instance->calcError(*data, test, *resp);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_ml_StatModel_predict_const_const__InputArrayR_const__OutputArrayR_int(const cv::ml::StatModel* instance, const cv::_InputArray* samples, const cv::_OutputArray* results, int flags) {
 		try {
 			float ret = instance->predict(*samples, *results, flags);
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<float> cv_ml_TrainData_missingValue() {
 		try {
 			float ret = cv::ml::TrainData::missingValue();
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
 	Result<int> cv_ml_TrainData_getLayout_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getLayout();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ml_TrainData_getNTrainSamples_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getNTrainSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ml_TrainData_getNTestSamples_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getNTestSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ml_TrainData_getNSamples_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getNSamples();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ml_TrainData_getNVars_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getNVars();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ml_TrainData_getNAllVars_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getNAllVars();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1541,7 +1541,7 @@ extern "C" {
 	Result<int> cv_ml_TrainData_getResponseType_const(const cv::ml::TrainData* instance) {
 		try {
 			int ret = instance->getResponseType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1583,7 +1583,7 @@ extern "C" {
 	Result<int> cv_ml_TrainData_getCatCount_const_int(const cv::ml::TrainData* instance, int vi) {
 		try {
 			int ret = instance->getCatCount(vi);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

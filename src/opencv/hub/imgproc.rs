@@ -4414,7 +4414,7 @@ pub fn get_deriv_kernels(kx: &mut dyn core::ToOutputArray, ky: &mut dyn core::To
 /// ## C++ default parameters
 /// * thickness: 1
 pub fn get_font_scale_from_height(font_face: i32, pixel_height: i32, thickness: i32) -> Result<f64> {
-	unsafe { sys::cv_getFontScaleFromHeight_int_int_int(font_face, pixel_height, thickness) }.into_result()
+	unsafe { sys::cv_getFontScaleFromHeight_const_int_const_int_const_int(font_face, pixel_height, thickness) }.into_result()
 }
 
 /// Returns Gabor filter coefficients.

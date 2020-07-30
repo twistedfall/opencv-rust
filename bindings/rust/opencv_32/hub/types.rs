@@ -9,6 +9,8 @@ mod aruco_types {
 		cv_PtrOfBoard_delete, cv_PtrOfBoard_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::Board, cv_PtrOfBoard_new }
+	
 	impl PtrOfBoard {
 		#[inline] pub fn as_raw_PtrOfBoard(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -24,6 +26,8 @@ mod aruco_types {
 	ptr_extern! { crate::aruco::CharucoBoard,
 		cv_PtrOfCharucoBoard_delete, cv_PtrOfCharucoBoard_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::aruco::CharucoBoard, cv_PtrOfCharucoBoard_new }
 	
 	impl PtrOfCharucoBoard {
 		#[inline] pub fn as_raw_PtrOfCharucoBoard(&self) -> *const c_void { self.as_raw() }
@@ -46,6 +50,8 @@ mod aruco_types {
 		cv_PtrOfDetectorParameters_delete, cv_PtrOfDetectorParameters_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::DetectorParameters, cv_PtrOfDetectorParameters_new }
+	
 	impl PtrOfDetectorParameters {
 		#[inline] pub fn as_raw_PtrOfDetectorParameters(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -62,6 +68,8 @@ mod aruco_types {
 		cv_PtrOfDictionary_delete, cv_PtrOfDictionary_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::Dictionary, cv_PtrOfDictionary_new }
+	
 	impl PtrOfDictionary {
 		#[inline] pub fn as_raw_PtrOfDictionary(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -77,6 +85,8 @@ mod aruco_types {
 	ptr_extern! { crate::aruco::GridBoard,
 		cv_PtrOfGridBoard_delete, cv_PtrOfGridBoard_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::aruco::GridBoard, cv_PtrOfGridBoard_new }
 	
 	impl PtrOfGridBoard {
 		#[inline] pub fn as_raw_PtrOfGridBoard(&self) -> *const c_void { self.as_raw() }
@@ -3648,6 +3658,8 @@ mod face_types {
 		cv_PtrOfStandardCollector_delete, cv_PtrOfStandardCollector_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::face::StandardCollector, cv_PtrOfStandardCollector_new }
+	
 	impl PtrOfStandardCollector {
 		#[inline] pub fn as_raw_PtrOfStandardCollector(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfStandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -3728,6 +3740,8 @@ mod features2d_types {
 		cv_PtrOfBFMatcher_delete, cv_PtrOfBFMatcher_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::BFMatcher, cv_PtrOfBFMatcher_new }
+	
 	impl PtrOfBFMatcher {
 		#[inline] pub fn as_raw_PtrOfBFMatcher(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -3753,6 +3767,8 @@ mod features2d_types {
 	ptr_extern! { crate::features2d::BRISK,
 		cv_PtrOfBRISK_delete, cv_PtrOfBRISK_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::features2d::BRISK, cv_PtrOfBRISK_new }
 	
 	impl PtrOfBRISK {
 		#[inline] pub fn as_raw_PtrOfBRISK(&self) -> *const c_void { self.as_raw() }
@@ -3827,6 +3843,8 @@ mod features2d_types {
 		cv_PtrOfFeature2D_delete, cv_PtrOfFeature2D_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::Feature2D, cv_PtrOfFeature2D_new }
+	
 	impl PtrOfFeature2D {
 		#[inline] pub fn as_raw_PtrOfFeature2D(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -3847,6 +3865,8 @@ mod features2d_types {
 	ptr_extern! { crate::features2d::FlannBasedMatcher,
 		cv_PtrOfFlannBasedMatcher_delete, cv_PtrOfFlannBasedMatcher_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::features2d::FlannBasedMatcher, cv_PtrOfFlannBasedMatcher_new }
 	
 	impl PtrOfFlannBasedMatcher {
 		#[inline] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *const c_void { self.as_raw() }
@@ -3978,6 +3998,8 @@ mod features2d_types {
 		cv_PtrOfSimpleBlobDetector_delete, cv_PtrOfSimpleBlobDetector_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::SimpleBlobDetector, cv_PtrOfSimpleBlobDetector_new }
+	
 	impl PtrOfSimpleBlobDetector {
 		#[inline] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSimpleBlobDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4010,6 +4032,8 @@ mod flann_types {
 		cv_PtrOfIndexParams_delete, cv_PtrOfIndexParams_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::flann::IndexParams, cv_PtrOfIndexParams_new }
+	
 	impl PtrOfIndexParams {
 		#[inline] pub fn as_raw_PtrOfIndexParams(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4025,6 +4049,8 @@ mod flann_types {
 	ptr_extern! { crate::flann::SearchParams,
 		cv_PtrOfSearchParams_delete, cv_PtrOfSearchParams_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::flann::SearchParams, cv_PtrOfSearchParams_new }
 	
 	impl PtrOfSearchParams {
 		#[inline] pub fn as_raw_PtrOfSearchParams(&self) -> *const c_void { self.as_raw() }
@@ -4207,6 +4233,8 @@ mod line_descriptor_types {
 		cv_PtrOfBinaryDescriptor_delete, cv_PtrOfBinaryDescriptor_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptor, cv_PtrOfBinaryDescriptor_new }
+	
 	impl PtrOfBinaryDescriptor {
 		#[inline] pub fn as_raw_PtrOfBinaryDescriptor(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4228,6 +4256,8 @@ mod line_descriptor_types {
 		cv_PtrOfBinaryDescriptorMatcher_delete, cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptorMatcher, cv_PtrOfBinaryDescriptorMatcher_new }
+	
 	impl PtrOfBinaryDescriptorMatcher {
 		#[inline] pub fn as_raw_PtrOfBinaryDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4248,6 +4278,8 @@ mod line_descriptor_types {
 	ptr_extern! { crate::line_descriptor::LSDDetector,
 		cv_PtrOfLSDDetector_delete, cv_PtrOfLSDDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::line_descriptor::LSDDetector, cv_PtrOfLSDDetector_new }
 	
 	impl PtrOfLSDDetector {
 		#[inline] pub fn as_raw_PtrOfLSDDetector(&self) -> *const c_void { self.as_raw() }
@@ -4796,6 +4828,8 @@ mod optflow_types {
 		cv_PtrOfGPCTrainingSamples_delete, cv_PtrOfGPCTrainingSamples_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::optflow::GPCTrainingSamples, cv_PtrOfGPCTrainingSamples_new }
+	
 	impl PtrOfGPCTrainingSamples {
 		#[inline] pub fn as_raw_PtrOfGPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfGPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4811,6 +4845,8 @@ mod optflow_types {
 	ptr_extern! { crate::optflow::GPCTree,
 		cv_PtrOfGPCTree_delete, cv_PtrOfGPCTree_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::optflow::GPCTree, cv_PtrOfGPCTree_new }
 	
 	impl PtrOfGPCTree {
 		#[inline] pub fn as_raw_PtrOfGPCTree(&self) -> *const c_void { self.as_raw() }
@@ -4832,6 +4868,8 @@ mod optflow_types {
 	ptr_extern! { crate::optflow::PCAPrior,
 		cv_PtrOfPCAPrior_delete, cv_PtrOfPCAPrior_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::optflow::PCAPrior, cv_PtrOfPCAPrior_new }
 	
 	impl PtrOfPCAPrior {
 		#[inline] pub fn as_raw_PtrOfPCAPrior(&self) -> *const c_void { self.as_raw() }
@@ -5253,6 +5291,8 @@ mod rgbd_types {
 		cv_PtrOfLinemod_Detector_delete, cv_PtrOfLinemod_Detector_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::Linemod_Detector, cv_PtrOfLinemod_Detector_new }
+	
 	impl PtrOfLinemod_Detector {
 		#[inline] pub fn as_raw_PtrOfLinemod_Detector(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLinemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5321,6 +5361,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::OdometryFrame,
 		cv_PtrOfOdometryFrame_delete, cv_PtrOfOdometryFrame_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::OdometryFrame, cv_PtrOfOdometryFrame_new }
 	
 	impl PtrOfOdometryFrame {
 		#[inline] pub fn as_raw_PtrOfOdometryFrame(&self) -> *const c_void { self.as_raw() }
@@ -5431,6 +5473,8 @@ mod saliency_types {
 		cv_PtrOfMotionSaliencyBinWangApr2014_delete, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::saliency::MotionSaliencyBinWangApr2014, cv_PtrOfMotionSaliencyBinWangApr2014_new }
+	
 	impl PtrOfMotionSaliencyBinWangApr2014 {
 		#[inline] pub fn as_raw_PtrOfMotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfMotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5461,6 +5505,8 @@ mod saliency_types {
 	ptr_extern! { crate::saliency::ObjectnessBING,
 		cv_PtrOfObjectnessBING_delete, cv_PtrOfObjectnessBING_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::saliency::ObjectnessBING, cv_PtrOfObjectnessBING_new }
 	
 	impl PtrOfObjectnessBING {
 		#[inline] pub fn as_raw_PtrOfObjectnessBING(&self) -> *const c_void { self.as_raw() }
@@ -5514,6 +5560,8 @@ mod saliency_types {
 		cv_PtrOfStaticSaliencyFineGrained_delete, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::saliency::StaticSaliencyFineGrained, cv_PtrOfStaticSaliencyFineGrained_new }
+	
 	impl PtrOfStaticSaliencyFineGrained {
 		#[inline] pub fn as_raw_PtrOfStaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfStaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5544,6 +5592,8 @@ mod saliency_types {
 	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
 		cv_PtrOfStaticSaliencySpectralResidual_delete, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::saliency::StaticSaliencySpectralResidual, cv_PtrOfStaticSaliencySpectralResidual_new }
 	
 	impl PtrOfStaticSaliencySpectralResidual {
 		#[inline] pub fn as_raw_PtrOfStaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
@@ -5764,6 +5814,8 @@ mod stitching_types {
 		cv_PtrOfDetail_Blender_delete, cv_PtrOfDetail_Blender_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::stitching::Detail_Blender, cv_PtrOfDetail_Blender_new }
+	
 	impl PtrOfDetail_Blender {
 		#[inline] pub fn as_raw_PtrOfDetail_Blender(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDetail_Blender(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5880,6 +5932,8 @@ mod stitching_types {
 	ptr_extern! { crate::stitching::Stitcher,
 		cv_PtrOfStitcher_delete, cv_PtrOfStitcher_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::stitching::Stitcher, cv_PtrOfStitcher_new }
 	
 	impl PtrOfStitcher {
 		#[inline] pub fn as_raw_PtrOfStitcher(&self) -> *const c_void { self.as_raw() }
@@ -6213,6 +6267,8 @@ mod surface_matching_types {
 		cv_PtrOfPose3D_delete, cv_PtrOfPose3D_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::surface_matching::Pose3D, cv_PtrOfPose3D_new }
+	
 	impl PtrOfPose3D {
 		#[inline] pub fn as_raw_PtrOfPose3D(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6228,6 +6284,8 @@ mod surface_matching_types {
 	ptr_extern! { crate::surface_matching::PoseCluster3D,
 		cv_PtrOfPoseCluster3D_delete, cv_PtrOfPoseCluster3D_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::surface_matching::PoseCluster3D, cv_PtrOfPoseCluster3D_new }
 	
 	impl PtrOfPoseCluster3D {
 		#[inline] pub fn as_raw_PtrOfPoseCluster3D(&self) -> *const c_void { self.as_raw() }
@@ -6310,6 +6368,8 @@ mod text_types {
 		cv_PtrOfOCRBeamSearchDecoder_delete, cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder, cv_PtrOfOCRBeamSearchDecoder_new }
+	
 	impl PtrOfOCRBeamSearchDecoder {
 		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6331,6 +6391,8 @@ mod text_types {
 		cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder_ClassifierCallback, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_new }
+	
 	impl PtrOfOCRBeamSearchDecoder_ClassifierCallback {
 		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6346,6 +6408,8 @@ mod text_types {
 	ptr_extern! { crate::text::OCRHMMDecoder,
 		cv_PtrOfOCRHMMDecoder_delete, cv_PtrOfOCRHMMDecoder_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::text::OCRHMMDecoder, cv_PtrOfOCRHMMDecoder_new }
 	
 	impl PtrOfOCRHMMDecoder {
 		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
@@ -6367,6 +6431,8 @@ mod text_types {
 	ptr_extern! { crate::text::OCRHMMDecoder_ClassifierCallback,
 		cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete, cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::text::OCRHMMDecoder_ClassifierCallback, cv_PtrOfOCRHMMDecoder_ClassifierCallback_new }
 	
 	impl PtrOfOCRHMMDecoder_ClassifierCallback {
 		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
@@ -6452,6 +6518,8 @@ mod tracking_types {
 	ptr_extern! { crate::tracking::CvFeatureParams,
 		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::tracking::CvFeatureParams, cv_PtrOfCvFeatureParams_new }
 	
 	impl PtrOfCvFeatureParams {
 		#[inline] pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
@@ -6709,6 +6777,8 @@ mod tracking_types {
 	ptr_extern! { crate::tracking::TrackerTargetState,
 		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::tracking::TrackerTargetState, cv_PtrOfTrackerTargetState_new }
 	
 	impl PtrOfTrackerTargetState {
 		#[inline] pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
@@ -7134,6 +7204,8 @@ mod xfeatures2d_types {
 		cv_PtrOfBoostDesc_delete, cv_PtrOfBoostDesc_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::BoostDesc, cv_PtrOfBoostDesc_new }
+	
 	impl PtrOfBoostDesc {
 		#[inline] pub fn as_raw_PtrOfBoostDesc(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBoostDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7159,6 +7231,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::BriefDescriptorExtractor,
 		cv_PtrOfBriefDescriptorExtractor_delete, cv_PtrOfBriefDescriptorExtractor_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::BriefDescriptorExtractor, cv_PtrOfBriefDescriptorExtractor_new }
 	
 	impl PtrOfBriefDescriptorExtractor {
 		#[inline] pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
@@ -7212,6 +7286,8 @@ mod xfeatures2d_types {
 		cv_PtrOfFREAK_delete, cv_PtrOfFREAK_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::FREAK, cv_PtrOfFREAK_new }
+	
 	impl PtrOfFREAK {
 		#[inline] pub fn as_raw_PtrOfFREAK(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7237,6 +7313,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::LATCH,
 		cv_PtrOfLATCH_delete, cv_PtrOfLATCH_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::LATCH, cv_PtrOfLATCH_new }
 	
 	impl PtrOfLATCH {
 		#[inline] pub fn as_raw_PtrOfLATCH(&self) -> *const c_void { self.as_raw() }
@@ -7264,6 +7342,8 @@ mod xfeatures2d_types {
 		cv_PtrOfLUCID_delete, cv_PtrOfLUCID_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::LUCID, cv_PtrOfLUCID_new }
+	
 	impl PtrOfLUCID {
 		#[inline] pub fn as_raw_PtrOfLUCID(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7289,6 +7369,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::MSDDetector,
 		cv_PtrOfMSDDetector_delete, cv_PtrOfMSDDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::MSDDetector, cv_PtrOfMSDDetector_new }
 	
 	impl PtrOfMSDDetector {
 		#[inline] pub fn as_raw_PtrOfMSDDetector(&self) -> *const c_void { self.as_raw() }
@@ -7358,6 +7440,8 @@ mod xfeatures2d_types {
 		cv_PtrOfSIFT_delete, cv_PtrOfSIFT_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::SIFT, cv_PtrOfSIFT_new }
+	
 	impl PtrOfSIFT {
 		#[inline] pub fn as_raw_PtrOfSIFT(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7409,6 +7493,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::StarDetector,
 		cv_PtrOfStarDetector_delete, cv_PtrOfStarDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::StarDetector, cv_PtrOfStarDetector_new }
 	
 	impl PtrOfStarDetector {
 		#[inline] pub fn as_raw_PtrOfStarDetector(&self) -> *const c_void { self.as_raw() }

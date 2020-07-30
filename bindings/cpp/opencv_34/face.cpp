@@ -23,7 +23,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::Facemark>*>))
 	}
 	
-	Result_void cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* points, const cv::Scalar* color) {
+	Result_void cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR_Scalar(const cv::_InputOutputArray* image, const cv::_InputArray* points, cv::Scalar* color) {
 		try {
 			cv::face::drawFacemarks(*image, *points, *color);
 			return Ok();
@@ -33,63 +33,63 @@ extern "C" {
 	Result<bool> cv_face_getFacesHAAR_const__InputArrayR_const__OutputArrayR_const_StringR(const cv::_InputArray* image, const cv::_OutputArray* faces, const char* face_cascade_name) {
 		try {
 			bool ret = cv::face::getFacesHAAR(*image, *faces, cv::String(face_cascade_name));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_getFaces_const__InputArrayR_const__OutputArrayR_CParamsX(const cv::_InputArray* image, const cv::_OutputArray* faces, cv::face::CParams* params) {
 		try {
 			bool ret = cv::face::getFaces(*image, *faces, params);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_loadDatasetList_String_String_vector_String_R_vector_String_R(char* imageList, char* annotationList, std::vector<cv::String>* images, std::vector<cv::String>* annotations) {
 		try {
 			bool ret = cv::face::loadDatasetList(cv::String(imageList), cv::String(annotationList), *images, *annotations);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_loadFacePoints_String_const__OutputArrayR_float(char* filename, const cv::_OutputArray* points, float offset) {
 		try {
 			bool ret = cv::face::loadFacePoints(cv::String(filename), *points, offset);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_loadTrainingData_String_String_vector_String_R_const__OutputArrayR_float(char* imageList, char* groundTruth, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, float offset) {
 		try {
 			bool ret = cv::face::loadTrainingData(cv::String(imageList), cv::String(groundTruth), *images, *facePoints, offset);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_loadTrainingData_String_vector_String_R_const__OutputArrayR_char_float(char* filename, std::vector<cv::String>* images, const cv::_OutputArray* facePoints, char delim, float offset) {
 		try {
 			bool ret = cv::face::loadTrainingData(cv::String(filename), *images, *facePoints, delim, offset);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_loadTrainingData_vector_String__vector_vector_Point2f__R_vector_String_R(std::vector<cv::String>* filename, std::vector<std::vector<cv::Point2f>>* trainlandmarks, std::vector<cv::String>* trainimages) {
 		try {
 			bool ret = cv::face::loadTrainingData(*filename, *trainlandmarks, *trainimages);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_face_BIF_getNumBands_const(const cv::face::BIF* instance) {
 		try {
 			int ret = instance->getNumBands();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_face_BIF_getNumRotations_const(const cv::face::BIF* instance) {
 		try {
 			int ret = instance->getNumRotations();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -110,7 +110,7 @@ extern "C" {
 	Result<int> cv_face_BasicFaceRecognizer_getNumComponents_const(const cv::face::BasicFaceRecognizer* instance) {
 		try {
 			int ret = instance->getNumComponents();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -124,7 +124,7 @@ extern "C" {
 	Result<double> cv_face_BasicFaceRecognizer_getThreshold_const(const cv::face::BasicFaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -187,7 +187,7 @@ extern "C" {
 	Result<bool> cv_face_BasicFaceRecognizer_empty_const(const cv::face::BasicFaceRecognizer* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -208,7 +208,7 @@ extern "C" {
 	Result<double> cv_face_CParams_getPropScaleFactor_const(const cv::face::CParams* instance) {
 		try {
 			double ret = instance->scaleFactor;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -222,7 +222,7 @@ extern "C" {
 	Result<int> cv_face_CParams_getPropMinNeighbors_const(const cv::face::CParams* instance) {
 		try {
 			int ret = instance->minNeighbors;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -236,11 +236,11 @@ extern "C" {
 	Result<cv::Size> cv_face_CParams_getPropMinSize_const(const cv::face::CParams* instance) {
 		try {
 			cv::Size ret = instance->minSize;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_face_CParams_setPropMinSize_Size(cv::face::CParams* instance, const cv::Size* val) {
+	Result_void cv_face_CParams_setPropMinSize_Size(cv::face::CParams* instance, cv::Size* val) {
 		try {
 			instance->minSize = *val;
 			return Ok();
@@ -250,11 +250,11 @@ extern "C" {
 	Result<cv::Size> cv_face_CParams_getPropMaxSize_const(const cv::face::CParams* instance) {
 		try {
 			cv::Size ret = instance->maxSize;
-			return Ok(ret);
+			return Ok<cv::Size>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
-	Result_void cv_face_CParams_setPropMaxSize_Size(cv::face::CParams* instance, const cv::Size* val) {
+	Result_void cv_face_CParams_setPropMaxSize_Size(cv::face::CParams* instance, cv::Size* val) {
 		try {
 			instance->maxSize = *val;
 			return Ok();
@@ -278,10 +278,10 @@ extern "C" {
 	void cv_CParams_delete(cv::face::CParams* instance) {
 		delete instance;
 	}
-	Result<cv::face::CParams*> cv_face_CParams_CParams_String_double_int_Size_Size(char* cascade_model, double sf, int minN, const cv::Size* minSz, const cv::Size* maxSz) {
+	Result<cv::face::CParams*> cv_face_CParams_CParams_String_double_int_Size_Size(char* cascade_model, double sf, int minN, cv::Size* minSz, cv::Size* maxSz) {
 		try {
 			cv::face::CParams* ret = new cv::face::CParams(cv::String(cascade_model), sf, minN, *minSz, *maxSz);
-			return Ok(ret);
+			return Ok<cv::face::CParams*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::CParams*>))
 	}
 	
@@ -309,7 +309,7 @@ extern "C" {
 	Result<int> cv_face_FaceRecognizer_predict_const_const__InputArrayR(const cv::face::FaceRecognizer* instance, const cv::_InputArray* src) {
 		try {
 			int ret = instance->predict(*src);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -358,7 +358,7 @@ extern "C" {
 	Result<bool> cv_face_FaceRecognizer_empty_const(const cv::face::FaceRecognizer* instance) {
 		try {
 			bool ret = instance->empty();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -386,7 +386,7 @@ extern "C" {
 	Result<double> cv_face_FaceRecognizer_getThreshold_const(const cv::face::FaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -407,14 +407,14 @@ extern "C" {
 	Result<bool> cv_face_Facemark_fit_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::face::Facemark* instance, const cv::_InputArray* image, const cv::_InputArray* faces, const cv::_OutputArray* landmarks) {
 		try {
 			bool ret = instance->fit(*image, *faces, *landmarks);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vector_Config_R(cv::face::FacemarkAAM* instance, const cv::_InputArray* image, const cv::_InputArray* roi, const cv::_OutputArray* _landmarks, const std::vector<cv::face::FacemarkAAM::Config>* runtime_params) {
 		try {
 			bool ret = instance->fitConfig(*image, *roi, *_landmarks, *runtime_params);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -442,11 +442,11 @@ extern "C" {
 	Result<cv::Point2f> cv_face_FacemarkAAM_Config_getPropT_const(const cv::face::FacemarkAAM::Config* instance) {
 		try {
 			cv::Point2f ret = instance->t;
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result_void cv_face_FacemarkAAM_Config_setPropT_Point2f(cv::face::FacemarkAAM::Config* instance, const cv::Point2f* val) {
+	Result_void cv_face_FacemarkAAM_Config_setPropT_Point2f(cv::face::FacemarkAAM::Config* instance, cv::Point2f* val) {
 		try {
 			instance->t = *val;
 			return Ok();
@@ -456,7 +456,7 @@ extern "C" {
 	Result<float> cv_face_FacemarkAAM_Config_getPropScale_const(const cv::face::FacemarkAAM::Config* instance) {
 		try {
 			float ret = instance->scale;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -470,7 +470,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Config_getPropModel_scale_idx_const(const cv::face::FacemarkAAM::Config* instance) {
 		try {
 			int ret = instance->model_scale_idx;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -484,10 +484,10 @@ extern "C" {
 	void cv_FacemarkAAM_Config_delete(cv::face::FacemarkAAM::Config* instance) {
 		delete instance;
 	}
-	Result<cv::face::FacemarkAAM::Config*> cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(cv::Mat* rot, const cv::Point2f* trans, float scaling, int scale_id) {
+	Result<cv::face::FacemarkAAM::Config*> cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(cv::Mat* rot, cv::Point2f* trans, float scaling, int scale_id) {
 		try {
 			cv::face::FacemarkAAM::Config* ret = new cv::face::FacemarkAAM::Config(*rot, *trans, scaling, scale_id);
-			return Ok(ret);
+			return Ok<cv::face::FacemarkAAM::Config*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkAAM::Config*>))
 	}
 	
@@ -598,7 +598,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Model_Texture_getPropMax_m_const(const cv::face::FacemarkAAM::Model::Texture* instance) {
 		try {
 			int ret = instance->max_m;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -612,11 +612,11 @@ extern "C" {
 	Result<cv::Rect> cv_face_FacemarkAAM_Model_Texture_getPropResolution_const(const cv::face::FacemarkAAM::Model::Texture* instance) {
 		try {
 			cv::Rect ret = instance->resolution;
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_face_FacemarkAAM_Model_Texture_setPropResolution_Rect(cv::face::FacemarkAAM::Model::Texture* instance, const cv::Rect* val) {
+	Result_void cv_face_FacemarkAAM_Model_Texture_setPropResolution_Rect(cv::face::FacemarkAAM::Model::Texture* instance, cv::Rect* val) {
 		try {
 			instance->resolution = *val;
 			return Ok();
@@ -755,7 +755,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropM_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->m;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -769,7 +769,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropN_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->n;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -783,7 +783,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropN_iter_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->n_iter;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -797,7 +797,7 @@ extern "C" {
 	Result<bool> cv_face_FacemarkAAM_Params_getPropVerbose_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			bool ret = instance->verbose;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -811,7 +811,7 @@ extern "C" {
 	Result<bool> cv_face_FacemarkAAM_Params_getPropSave_model_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			bool ret = instance->save_model;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -825,7 +825,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropMax_m_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->max_m;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -839,7 +839,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropMax_n_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->max_n;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -853,7 +853,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkAAM_Params_getPropTexture_max_m_const(const cv::face::FacemarkAAM::Params* instance) {
 		try {
 			int ret = instance->texture_max_m;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -884,7 +884,7 @@ extern "C" {
 	Result<cv::face::FacemarkAAM::Params*> cv_face_FacemarkAAM_Params_Params() {
 		try {
 			cv::face::FacemarkAAM::Params* ret = new cv::face::FacemarkAAM::Params();
-			return Ok(ret);
+			return Ok<cv::face::FacemarkAAM::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkAAM::Params*>))
 	}
 	
@@ -909,31 +909,31 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::face::FacemarkKazemi>*>))
 	}
 	
-	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_R_vector_vector_Point2f__R_string_Size_string(cv::face::FacemarkKazemi* instance, std::vector<cv::Mat>* images, std::vector<std::vector<cv::Point2f>>* landmarks, char* configfile, const cv::Size* scale, char* modelFilename) {
+	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_R_vector_vector_Point2f__R_string_Size_string(cv::face::FacemarkKazemi* instance, std::vector<cv::Mat>* images, std::vector<std::vector<cv::Point2f>>* landmarks, char* configfile, cv::Size* scale, char* modelFilename) {
 		try {
 			bool ret = instance->training(*images, *landmarks, std::string(configfile), *scale, std::string(modelFilename));
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArrayR__const_cv__OutputArrayR__voidX__voidX(cv::face::FacemarkKazemi* instance, bool (*f)(const cv::_InputArray&, const cv::_OutputArray&, void*), void* userData) {
 		try {
 			bool ret = instance->setFaceDetector(f, userData);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_FacemarkKazemi_getFaces_const__InputArrayR_const__OutputArrayR(cv::face::FacemarkKazemi* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
 		try {
 			bool ret = instance->getFaces(*image, *faces);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropCascade_depth_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->cascade_depth;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -947,7 +947,7 @@ extern "C" {
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropTree_depth_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->tree_depth;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -961,7 +961,7 @@ extern "C" {
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropNum_trees_per_cascade_level_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->num_trees_per_cascade_level;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -975,7 +975,7 @@ extern "C" {
 	Result<float> cv_face_FacemarkKazemi_Params_getPropLearning_rate_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			float ret = instance->learning_rate;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -989,7 +989,7 @@ extern "C" {
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropOversampling_amount_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->oversampling_amount;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -1003,7 +1003,7 @@ extern "C" {
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropNum_test_coordinates_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->num_test_coordinates;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -1017,7 +1017,7 @@ extern "C" {
 	Result<float> cv_face_FacemarkKazemi_Params_getPropLambda_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			float ret = instance->lambda;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -1031,7 +1031,7 @@ extern "C" {
 	Result<unsigned long> cv_face_FacemarkKazemi_Params_getPropNum_test_splits_const(const cv::face::FacemarkKazemi::Params* instance) {
 		try {
 			unsigned long ret = instance->num_test_splits;
-			return Ok(ret);
+			return Ok<unsigned long>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned long>))
 	}
 	
@@ -1062,7 +1062,7 @@ extern "C" {
 	Result<cv::face::FacemarkKazemi::Params*> cv_face_FacemarkKazemi_Params_Params() {
 		try {
 			cv::face::FacemarkKazemi::Params* ret = new cv::face::FacemarkKazemi::Params();
-			return Ok(ret);
+			return Ok<cv::face::FacemarkKazemi::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkKazemi::Params*>))
 	}
 	
@@ -1076,7 +1076,7 @@ extern "C" {
 	Result<double> cv_face_FacemarkLBF_Params_getPropShape_offset_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			double ret = instance->shape_offset;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1104,7 +1104,7 @@ extern "C" {
 	Result<bool> cv_face_FacemarkLBF_Params_getPropVerbose_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			bool ret = instance->verbose;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1118,7 +1118,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkLBF_Params_getPropN_landmarks_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			int ret = instance->n_landmarks;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1132,7 +1132,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkLBF_Params_getPropInitShape_n_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			int ret = instance->initShape_n;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1146,7 +1146,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkLBF_Params_getPropStages_n_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			int ret = instance->stages_n;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1160,7 +1160,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkLBF_Params_getPropTree_n_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			int ret = instance->tree_n;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1174,7 +1174,7 @@ extern "C" {
 	Result<int> cv_face_FacemarkLBF_Params_getPropTree_depth_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			int ret = instance->tree_depth;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1188,7 +1188,7 @@ extern "C" {
 	Result<double> cv_face_FacemarkLBF_Params_getPropBagging_overlap_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			double ret = instance->bagging_overlap;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1216,7 +1216,7 @@ extern "C" {
 	Result<bool> cv_face_FacemarkLBF_Params_getPropSave_model_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			bool ret = instance->save_model;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1230,7 +1230,7 @@ extern "C" {
 	Result<unsigned int> cv_face_FacemarkLBF_Params_getPropSeed_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			unsigned int ret = instance->seed;
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -1272,11 +1272,11 @@ extern "C" {
 	Result<cv::Rect> cv_face_FacemarkLBF_Params_getPropDetectROI_const(const cv::face::FacemarkLBF::Params* instance) {
 		try {
 			cv::Rect ret = instance->detectROI;
-			return Ok(ret);
+			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect>))
 	}
 	
-	Result_void cv_face_FacemarkLBF_Params_setPropDetectROI_Rect(cv::face::FacemarkLBF::Params* instance, const cv::Rect* val) {
+	Result_void cv_face_FacemarkLBF_Params_setPropDetectROI_Rect(cv::face::FacemarkLBF::Params* instance, cv::Rect* val) {
 		try {
 			instance->detectROI = *val;
 			return Ok();
@@ -1289,7 +1289,7 @@ extern "C" {
 	Result<cv::face::FacemarkLBF::Params*> cv_face_FacemarkLBF_Params_Params() {
 		try {
 			cv::face::FacemarkLBF::Params* ret = new cv::face::FacemarkLBF::Params();
-			return Ok(ret);
+			return Ok<cv::face::FacemarkLBF::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::FacemarkLBF::Params*>))
 	}
 	
@@ -1310,7 +1310,7 @@ extern "C" {
 	Result<bool> cv_face_FacemarkTrain_addTrainingSample_const__InputArrayR_const__InputArrayR(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_InputArray* landmarks) {
 		try {
 			bool ret = instance->addTrainingSample(*image, *landmarks);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1324,21 +1324,21 @@ extern "C" {
 	Result<bool> cv_face_FacemarkTrain_setFaceDetector_FN_FaceDetector_voidX(cv::face::FacemarkTrain* instance, cv::face::FN_FaceDetector detector, void* userData) {
 		try {
 			bool ret = instance->setFaceDetector(detector, userData);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_FacemarkTrain_getFaces_const__InputArrayR_const__OutputArrayR(cv::face::FacemarkTrain* instance, const cv::_InputArray* image, const cv::_OutputArray* faces) {
 		try {
 			bool ret = instance->getFaces(*image, *faces);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_face_FacemarkTrain_getData_voidX(cv::face::FacemarkTrain* instance, void* items) {
 		try {
 			bool ret = instance->getData(items);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1352,7 +1352,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getGridX_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getGridX();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1366,7 +1366,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getGridY_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getGridY();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1380,7 +1380,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getRadius_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1394,7 +1394,7 @@ extern "C" {
 	Result<int> cv_face_LBPHFaceRecognizer_getNeighbors_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			int ret = instance->getNeighbors();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -1408,7 +1408,7 @@ extern "C" {
 	Result<double> cv_face_LBPHFaceRecognizer_getThreshold_const(const cv::face::LBPHFaceRecognizer* instance) {
 		try {
 			double ret = instance->getThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1457,7 +1457,7 @@ extern "C" {
 	Result<bool> cv_face_MACE_same_const_const__InputArrayR(const cv::face::MACE* instance, const cv::_InputArray* query) {
 		try {
 			bool ret = instance->same(*query);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1485,7 +1485,7 @@ extern "C" {
 	Result<bool> cv_face_PredictCollector_collect_int_double(cv::face::PredictCollector* instance, int label, double dist) {
 		try {
 			bool ret = instance->collect(label, dist);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -1495,7 +1495,7 @@ extern "C" {
 	Result<cv::face::StandardCollector*> cv_face_StandardCollector_StandardCollector_double(double threshold_) {
 		try {
 			cv::face::StandardCollector* ret = new cv::face::StandardCollector(threshold_);
-			return Ok(ret);
+			return Ok<cv::face::StandardCollector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::StandardCollector*>))
 	}
 	
@@ -1509,21 +1509,21 @@ extern "C" {
 	Result<bool> cv_face_StandardCollector_collect_int_double(cv::face::StandardCollector* instance, int label, double dist) {
 		try {
 			bool ret = instance->collect(label, dist);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_face_StandardCollector_getMinLabel_const(const cv::face::StandardCollector* instance) {
 		try {
 			int ret = instance->getMinLabel();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<double> cv_face_StandardCollector_getMinDist_const(const cv::face::StandardCollector* instance) {
 		try {
 			double ret = instance->getMinDist();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -1537,7 +1537,7 @@ extern "C" {
 	Result<cv::face::StandardCollector::PredictResult> cv_face_StandardCollector_PredictResult_PredictResult_int_double(int label_, double distance_) {
 		try {
 			cv::face::StandardCollector::PredictResult ret(label_, distance_);
-			return Ok(ret);
+			return Ok<cv::face::StandardCollector::PredictResult>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::face::StandardCollector::PredictResult>))
 	}
 	

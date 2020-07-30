@@ -55,7 +55,7 @@ extern "C" {
 	Result<int> cv_cuda_DisparityBilateralFilter_getNumDisparities_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			int ret = instance->getNumDisparities();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<int> cv_cuda_DisparityBilateralFilter_getRadius_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			int ret = instance->getRadius();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -83,7 +83,7 @@ extern "C" {
 	Result<int> cv_cuda_DisparityBilateralFilter_getNumIters_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -97,7 +97,7 @@ extern "C" {
 	Result<double> cv_cuda_DisparityBilateralFilter_getEdgeThreshold_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			double ret = instance->getEdgeThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -111,7 +111,7 @@ extern "C" {
 	Result<double> cv_cuda_DisparityBilateralFilter_getMaxDiscThreshold_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			double ret = instance->getMaxDiscThreshold();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -125,7 +125,7 @@ extern "C" {
 	Result<double> cv_cuda_DisparityBilateralFilter_getSigmaRange_const(const cv::cuda::DisparityBilateralFilter* instance) {
 		try {
 			double ret = instance->getSigmaRange();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -160,7 +160,7 @@ extern "C" {
 	Result<int> cv_cuda_StereoBeliefPropagation_getNumIters_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			int ret = instance->getNumIters();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -174,7 +174,7 @@ extern "C" {
 	Result<int> cv_cuda_StereoBeliefPropagation_getNumLevels_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			int ret = instance->getNumLevels();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -188,7 +188,7 @@ extern "C" {
 	Result<double> cv_cuda_StereoBeliefPropagation_getMaxDataTerm_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			double ret = instance->getMaxDataTerm();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -202,7 +202,7 @@ extern "C" {
 	Result<double> cv_cuda_StereoBeliefPropagation_getDataWeight_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			double ret = instance->getDataWeight();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -216,7 +216,7 @@ extern "C" {
 	Result<double> cv_cuda_StereoBeliefPropagation_getMaxDiscTerm_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			double ret = instance->getMaxDiscTerm();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -230,7 +230,7 @@ extern "C" {
 	Result<double> cv_cuda_StereoBeliefPropagation_getDiscSingleJump_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			double ret = instance->getDiscSingleJump();
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -244,7 +244,7 @@ extern "C" {
 	Result<int> cv_cuda_StereoBeliefPropagation_getMsgType_const(const cv::cuda::StereoBeliefPropagation* instance) {
 		try {
 			int ret = instance->getMsgType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -265,7 +265,7 @@ extern "C" {
 	Result<int> cv_cuda_StereoConstantSpaceBP_getNrPlane_const(const cv::cuda::StereoConstantSpaceBP* instance) {
 		try {
 			int ret = instance->getNrPlane();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -279,7 +279,7 @@ extern "C" {
 	Result<bool> cv_cuda_StereoConstantSpaceBP_getUseLocalInitDataCost_const(const cv::cuda::StereoConstantSpaceBP* instance) {
 		try {
 			bool ret = instance->getUseLocalInitDataCost();
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	

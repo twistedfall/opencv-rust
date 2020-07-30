@@ -23,7 +23,7 @@ extern "C" {
 	Result<cv::line_descriptor::BinaryDescriptor*> cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsR(const cv::line_descriptor::BinaryDescriptor::Params* parameters) {
 		try {
 			cv::line_descriptor::BinaryDescriptor* ret = new cv::line_descriptor::BinaryDescriptor(*parameters);
-			return Ok(ret);
+			return Ok<cv::line_descriptor::BinaryDescriptor*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::BinaryDescriptor*>))
 	}
 	
@@ -44,7 +44,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_getNumOfOctaves(cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->getNumOfOctaves();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -58,7 +58,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_getWidthOfBand(cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->getWidthOfBand();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -72,7 +72,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_getReductionRatio(cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->getReductionRatio();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -128,28 +128,28 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_descriptorSize_const(const cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->descriptorSize();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_line_descriptor_BinaryDescriptor_descriptorType_const(const cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->descriptorType();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_line_descriptor_BinaryDescriptor_defaultNorm_const(const cv::line_descriptor::BinaryDescriptor* instance) {
 		try {
 			int ret = instance->defaultNorm();
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_line_descriptor_BinaryDescriptor_Params_getPropNumOfOctave__const(const cv::line_descriptor::BinaryDescriptor::Params* instance) {
 		try {
 			int ret = instance->numOfOctave_;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -163,7 +163,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_Params_getPropWidthOfBand__const(const cv::line_descriptor::BinaryDescriptor::Params* instance) {
 		try {
 			int ret = instance->widthOfBand_;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -177,7 +177,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_Params_getPropReductionRatio_const(const cv::line_descriptor::BinaryDescriptor::Params* instance) {
 		try {
 			int ret = instance->reductionRatio;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -191,7 +191,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_BinaryDescriptor_Params_getPropKsize__const(const cv::line_descriptor::BinaryDescriptor::Params* instance) {
 		try {
 			int ret = instance->ksize_;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -208,7 +208,7 @@ extern "C" {
 	Result<cv::line_descriptor::BinaryDescriptor::Params*> cv_line_descriptor_BinaryDescriptor_Params_Params() {
 		try {
 			cv::line_descriptor::BinaryDescriptor::Params* ret = new cv::line_descriptor::BinaryDescriptor::Params();
-			return Ok(ret);
+			return Ok<cv::line_descriptor::BinaryDescriptor::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::BinaryDescriptor::Params*>))
 	}
 	
@@ -302,7 +302,7 @@ extern "C" {
 	Result<cv::line_descriptor::BinaryDescriptorMatcher*> cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() {
 		try {
 			cv::line_descriptor::BinaryDescriptorMatcher* ret = new cv::line_descriptor::BinaryDescriptorMatcher();
-			return Ok(ret);
+			return Ok<cv::line_descriptor::BinaryDescriptorMatcher*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::BinaryDescriptorMatcher*>))
 	}
 	
@@ -312,7 +312,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropAngle_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->angle;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -326,7 +326,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_KeyLine_getPropClass_id_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			int ret = instance->class_id;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -340,7 +340,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_KeyLine_getPropOctave_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			int ret = instance->octave;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -354,11 +354,11 @@ extern "C" {
 	Result<cv::Point2f> cv_line_descriptor_KeyLine_getPropPt_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			cv::Point2f ret = instance->pt;
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
-	Result_void cv_line_descriptor_KeyLine_setPropPt_Point2f(cv::line_descriptor::KeyLine* instance, const cv::Point2f* val) {
+	Result_void cv_line_descriptor_KeyLine_setPropPt_Point2f(cv::line_descriptor::KeyLine* instance, cv::Point2f* val) {
 		try {
 			instance->pt = *val;
 			return Ok();
@@ -368,7 +368,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropResponse_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->response;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -382,7 +382,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropSize_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->size;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -396,7 +396,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropStartPointX_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->startPointX;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -410,7 +410,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropStartPointY_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->startPointY;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -424,7 +424,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropEndPointX_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->endPointX;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -438,7 +438,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropEndPointY_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->endPointY;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -452,7 +452,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropSPointInOctaveX_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->sPointInOctaveX;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -466,7 +466,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropSPointInOctaveY_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->sPointInOctaveY;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -480,7 +480,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropEPointInOctaveX_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->ePointInOctaveX;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -494,7 +494,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropEPointInOctaveY_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->ePointInOctaveY;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -508,7 +508,7 @@ extern "C" {
 	Result<float> cv_line_descriptor_KeyLine_getPropLineLength_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			float ret = instance->lineLength;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -522,7 +522,7 @@ extern "C" {
 	Result<int> cv_line_descriptor_KeyLine_getPropNumOfPixels_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			int ret = instance->numOfPixels;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -539,35 +539,35 @@ extern "C" {
 	Result<cv::Point2f> cv_line_descriptor_KeyLine_getStartPoint_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			cv::Point2f ret = instance->getStartPoint();
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
 	Result<cv::Point2f> cv_line_descriptor_KeyLine_getEndPoint_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			cv::Point2f ret = instance->getEndPoint();
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
 	Result<cv::Point2f> cv_line_descriptor_KeyLine_getStartPointInOctave_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			cv::Point2f ret = instance->getStartPointInOctave();
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
 	Result<cv::Point2f> cv_line_descriptor_KeyLine_getEndPointInOctave_const(const cv::line_descriptor::KeyLine* instance) {
 		try {
 			cv::Point2f ret = instance->getEndPointInOctave();
-			return Ok(ret);
+			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
 	Result<cv::line_descriptor::KeyLine*> cv_line_descriptor_KeyLine_KeyLine() {
 		try {
 			cv::line_descriptor::KeyLine* ret = new cv::line_descriptor::KeyLine();
-			return Ok(ret);
+			return Ok<cv::line_descriptor::KeyLine*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::KeyLine*>))
 	}
 	
@@ -577,7 +577,7 @@ extern "C" {
 	Result<cv::line_descriptor::LSDDetector*> cv_line_descriptor_LSDDetector_LSDDetector() {
 		try {
 			cv::line_descriptor::LSDDetector* ret = new cv::line_descriptor::LSDDetector();
-			return Ok(ret);
+			return Ok<cv::line_descriptor::LSDDetector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::line_descriptor::LSDDetector*>))
 	}
 	

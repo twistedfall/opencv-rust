@@ -9,28 +9,28 @@ extern "C" {
 	Result<cv::ppf_match_3d::ICP*> cv_ppf_match_3d_ICP_ICP() {
 		try {
 			cv::ppf_match_3d::ICP* ret = new cv::ppf_match_3d::ICP();
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::ICP*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::ICP*>))
 	}
 	
-	Result<cv::ppf_match_3d::ICP*> cv_ppf_match_3d_ICP_ICP_int_float_float_int_ICP_SAMPLING_TYPE_int(int iterations, float tolerence, float rejectionScale, int numLevels, cv::ppf_match_3d::ICP::ICP_SAMPLING_TYPE sampleType, int numMaxCorr) {
+	Result<cv::ppf_match_3d::ICP*> cv_ppf_match_3d_ICP_ICP_const_int_const_float_const_float_const_int_const_ICP_SAMPLING_TYPE_const_int(const int iterations, const float tolerence, const float rejectionScale, const int numLevels, const cv::ppf_match_3d::ICP::ICP_SAMPLING_TYPE sampleType, const int numMaxCorr) {
 		try {
 			cv::ppf_match_3d::ICP* ret = new cv::ppf_match_3d::ICP(iterations, tolerence, rejectionScale, numLevels, sampleType, numMaxCorr);
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::ICP*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::ICP*>))
 	}
 	
 	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_double_X__16_(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, double* residual, double(*pose)[16]) {
 		try {
 			int ret = instance->registerModelToScene(*srcPC, *dstPC, *residual, *pose);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R(cv::ppf_match_3d::ICP* instance, const cv::Mat* srcPC, const cv::Mat* dstPC, std::vector<cv::ppf_match_3d::Pose3DPtr>* poses) {
 		try {
 			int ret = instance->registerModelToScene(*srcPC, *dstPC, *poses);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -40,18 +40,18 @@ extern "C" {
 	Result<cv::ppf_match_3d::PPF3DDetector*> cv_ppf_match_3d_PPF3DDetector_PPF3DDetector() {
 		try {
 			cv::ppf_match_3d::PPF3DDetector* ret = new cv::ppf_match_3d::PPF3DDetector();
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::PPF3DDetector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::PPF3DDetector*>))
 	}
 	
-	Result<cv::ppf_match_3d::PPF3DDetector*> cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_double_double_double(double relativeSamplingStep, double relativeDistanceStep, double numAngles) {
+	Result<cv::ppf_match_3d::PPF3DDetector*> cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(const double relativeSamplingStep, const double relativeDistanceStep, const double numAngles) {
 		try {
 			cv::ppf_match_3d::PPF3DDetector* ret = new cv::ppf_match_3d::PPF3DDetector(relativeSamplingStep, relativeDistanceStep, numAngles);
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::PPF3DDetector*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::PPF3DDetector*>))
 	}
 	
-	Result_void cv_ppf_match_3d_PPF3DDetector_setSearchParams_double_double_bool(cv::ppf_match_3d::PPF3DDetector* instance, double positionThreshold, double rotationThreshold, bool useWeightedClustering) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_setSearchParams_const_double_const_double_const_bool(cv::ppf_match_3d::PPF3DDetector* instance, const double positionThreshold, const double rotationThreshold, const bool useWeightedClustering) {
 		try {
 			instance->setSearchParams(positionThreshold, rotationThreshold, useWeightedClustering);
 			return Ok();
@@ -65,7 +65,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_double_double(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* scene, std::vector<cv::ppf_match_3d::Pose3DPtr>* results, double relativeSceneSampleStep, double relativeSceneDistance) {
+	Result_void cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(cv::ppf_match_3d::PPF3DDetector* instance, const cv::Mat* scene, std::vector<cv::ppf_match_3d::Pose3DPtr>* results, const double relativeSceneSampleStep, const double relativeSceneDistance) {
 		try {
 			instance->match(*scene, *results, relativeSceneSampleStep, relativeSceneDistance);
 			return Ok();
@@ -93,7 +93,7 @@ extern "C" {
 	Result<double> cv_ppf_match_3d_Pose3D_getPropAlpha_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double ret = instance->alpha;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -107,7 +107,7 @@ extern "C" {
 	Result<double> cv_ppf_match_3d_Pose3D_getPropResidual_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double ret = instance->residual;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -121,7 +121,7 @@ extern "C" {
 	Result<unsigned int> cv_ppf_match_3d_Pose3D_getPropModelIndex_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			unsigned int ret = instance->modelIndex;
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -135,7 +135,7 @@ extern "C" {
 	Result<unsigned int> cv_ppf_match_3d_Pose3D_getPropNumVotes_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			unsigned int ret = instance->numVotes;
-			return Ok(ret);
+			return Ok<unsigned int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
@@ -149,14 +149,14 @@ extern "C" {
 	Result<double(*)[16]> cv_ppf_match_3d_Pose3D_getPropPose(cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double(*ret)[16] = &instance->pose;
-			return Ok(ret);
+			return Ok<double(*)[16]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double(*)[16]>))
 	}
 	
 	Result<double> cv_ppf_match_3d_Pose3D_getPropAngle_const(const cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double ret = instance->angle;
-			return Ok(ret);
+			return Ok<double>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
@@ -170,14 +170,14 @@ extern "C" {
 	Result<double(*)[3]> cv_ppf_match_3d_Pose3D_getPropT(cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double(*ret)[3] = &instance->t;
-			return Ok(ret);
+			return Ok<double(*)[3]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double(*)[3]>))
 	}
 	
 	Result<double(*)[4]> cv_ppf_match_3d_Pose3D_getPropQ(cv::ppf_match_3d::Pose3D* instance) {
 		try {
 			double(*ret)[4] = &instance->q;
-			return Ok(ret);
+			return Ok<double(*)[4]>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<double(*)[4]>))
 	}
 	
@@ -187,14 +187,14 @@ extern "C" {
 	Result<cv::ppf_match_3d::Pose3D*> cv_ppf_match_3d_Pose3D_Pose3D() {
 		try {
 			cv::ppf_match_3d::Pose3D* ret = new cv::ppf_match_3d::Pose3D();
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::Pose3D*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::Pose3D*>))
 	}
 	
 	Result<cv::ppf_match_3d::Pose3D*> cv_ppf_match_3d_Pose3D_Pose3D_double_unsigned_int_unsigned_int(double Alpha, unsigned int ModelIndex, unsigned int NumVotes) {
 		try {
 			cv::ppf_match_3d::Pose3D* ret = new cv::ppf_match_3d::Pose3D(Alpha, ModelIndex, NumVotes);
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::Pose3D*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::Pose3D*>))
 	}
 	
@@ -243,14 +243,14 @@ extern "C" {
 	Result<int> cv_ppf_match_3d_Pose3D_writePose_const_stringR(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
 		try {
 			int ret = instance->writePose(std::string(FileName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ppf_match_3d_Pose3D_readPose_const_stringR(cv::ppf_match_3d::Pose3D* instance, const char* FileName) {
 		try {
 			int ret = instance->readPose(std::string(FileName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -271,7 +271,7 @@ extern "C" {
 	Result<int> cv_ppf_match_3d_PoseCluster3D_getPropNumVotes_const(const cv::ppf_match_3d::PoseCluster3D* instance) {
 		try {
 			int ret = instance->numVotes;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -285,7 +285,7 @@ extern "C" {
 	Result<int> cv_ppf_match_3d_PoseCluster3D_getPropId_const(const cv::ppf_match_3d::PoseCluster3D* instance) {
 		try {
 			int ret = instance->id;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -302,21 +302,21 @@ extern "C" {
 	Result<cv::ppf_match_3d::PoseCluster3D*> cv_ppf_match_3d_PoseCluster3D_PoseCluster3D() {
 		try {
 			cv::ppf_match_3d::PoseCluster3D* ret = new cv::ppf_match_3d::PoseCluster3D();
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::PoseCluster3D*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::PoseCluster3D*>))
 	}
 	
 	Result<cv::ppf_match_3d::PoseCluster3D*> cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(cv::ppf_match_3d::Pose3DPtr* newPose) {
 		try {
 			cv::ppf_match_3d::PoseCluster3D* ret = new cv::ppf_match_3d::PoseCluster3D(*newPose);
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::PoseCluster3D*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::PoseCluster3D*>))
 	}
 	
 	Result<cv::ppf_match_3d::PoseCluster3D*> cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(cv::ppf_match_3d::Pose3DPtr* newPose, int newId) {
 		try {
 			cv::ppf_match_3d::PoseCluster3D* ret = new cv::ppf_match_3d::PoseCluster3D(*newPose, newId);
-			return Ok(ret);
+			return Ok<cv::ppf_match_3d::PoseCluster3D*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ppf_match_3d::PoseCluster3D*>))
 	}
 	
@@ -330,14 +330,14 @@ extern "C" {
 	Result<int> cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
 		try {
 			int ret = instance->writePoseCluster(std::string(FileName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(cv::ppf_match_3d::PoseCluster3D* instance, const char* FileName) {
 		try {
 			int ret = instance->readPoseCluster(std::string(FileName));
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	

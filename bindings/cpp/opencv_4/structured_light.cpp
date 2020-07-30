@@ -20,7 +20,7 @@ extern "C" {
 	Result<size_t> cv_structured_light_GrayCodePattern_getNumberOfPatternImages_const(const cv::structured_light::GrayCodePattern* instance) {
 		try {
 			size_t ret = instance->getNumberOfPatternImages();
-			return Ok(ret);
+			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
@@ -48,14 +48,14 @@ extern "C" {
 	Result<bool> cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayR_int_int_PointR(const cv::structured_light::GrayCodePattern* instance, const cv::_InputArray* patternImages, int x, int y, cv::Point* projPix) {
 		try {
 			bool ret = instance->getProjPixel(*patternImages, x, y, *projPix);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<int> cv_structured_light_GrayCodePattern_Params_getPropWidth_const(const cv::structured_light::GrayCodePattern::Params* instance) {
 		try {
 			int ret = instance->width;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -69,7 +69,7 @@ extern "C" {
 	Result<int> cv_structured_light_GrayCodePattern_Params_getPropHeight_const(const cv::structured_light::GrayCodePattern::Params* instance) {
 		try {
 			int ret = instance->height;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -86,7 +86,7 @@ extern "C" {
 	Result<cv::structured_light::GrayCodePattern::Params*> cv_structured_light_GrayCodePattern_Params_Params() {
 		try {
 			cv::structured_light::GrayCodePattern::Params* ret = new cv::structured_light::GrayCodePattern::Params();
-			return Ok(ret);
+			return Ok<cv::structured_light::GrayCodePattern::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::structured_light::GrayCodePattern::Params*>))
 	}
 	
@@ -104,7 +104,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* wrappedPhaseMap, const cv::_OutputArray* unwrappedPhaseMap, const cv::Size* camSize, const cv::_InputArray* shadowMask) {
+	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(cv::structured_light::SinusoidalPattern* instance, const cv::_InputArray* wrappedPhaseMap, const cv::_OutputArray* unwrappedPhaseMap, cv::Size* camSize, const cv::_InputArray* shadowMask) {
 		try {
 			instance->unwrapPhaseMap(*wrappedPhaseMap, *unwrappedPhaseMap, *camSize, *shadowMask);
 			return Ok();
@@ -128,7 +128,7 @@ extern "C" {
 	Result<int> cv_structured_light_SinusoidalPattern_Params_getPropWidth_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			int ret = instance->width;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -142,7 +142,7 @@ extern "C" {
 	Result<int> cv_structured_light_SinusoidalPattern_Params_getPropHeight_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			int ret = instance->height;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -156,7 +156,7 @@ extern "C" {
 	Result<int> cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPeriods_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			int ret = instance->nbrOfPeriods;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -170,7 +170,7 @@ extern "C" {
 	Result<float> cv_structured_light_SinusoidalPattern_Params_getPropShiftValue_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			float ret = instance->shiftValue;
-			return Ok(ret);
+			return Ok<float>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
@@ -184,7 +184,7 @@ extern "C" {
 	Result<int> cv_structured_light_SinusoidalPattern_Params_getPropMethodId_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			int ret = instance->methodId;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -198,7 +198,7 @@ extern "C" {
 	Result<int> cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPixelsBetweenMarkers_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			int ret = instance->nbrOfPixelsBetweenMarkers;
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -212,7 +212,7 @@ extern "C" {
 	Result<bool> cv_structured_light_SinusoidalPattern_Params_getPropHorizontal_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			bool ret = instance->horizontal;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -226,7 +226,7 @@ extern "C" {
 	Result<bool> cv_structured_light_SinusoidalPattern_Params_getPropSetMarkers_const(const cv::structured_light::SinusoidalPattern::Params* instance) {
 		try {
 			bool ret = instance->setMarkers;
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
@@ -257,21 +257,21 @@ extern "C" {
 	Result<cv::structured_light::SinusoidalPattern::Params*> cv_structured_light_SinusoidalPattern_Params_Params() {
 		try {
 			cv::structured_light::SinusoidalPattern::Params* ret = new cv::structured_light::SinusoidalPattern::Params();
-			return Ok(ret);
+			return Ok<cv::structured_light::SinusoidalPattern::Params*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::structured_light::SinusoidalPattern::Params*>))
 	}
 	
 	Result<bool> cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(cv::structured_light::StructuredLightPattern* instance, const cv::_OutputArray* patternImages) {
 		try {
 			bool ret = instance->generate(*patternImages);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__R_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(const cv::structured_light::StructuredLightPattern* instance, const std::vector<std::vector<cv::Mat>>* patternImages, const cv::_OutputArray* disparityMap, const cv::_InputArray* blackImages, const cv::_InputArray* whiteImages, int flags) {
 		try {
 			bool ret = instance->decode(*patternImages, *disparityMap, *blackImages, *whiteImages, flags);
-			return Ok(ret);
+			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	

@@ -9,6 +9,8 @@ mod aruco_types {
 		cv_PtrOfBoard_delete, cv_PtrOfBoard_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::Board, cv_PtrOfBoard_new }
+	
 	impl PtrOfBoard {
 		#[inline] pub fn as_raw_PtrOfBoard(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -24,6 +26,8 @@ mod aruco_types {
 	ptr_extern! { crate::aruco::CharucoBoard,
 		cv_PtrOfCharucoBoard_delete, cv_PtrOfCharucoBoard_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::aruco::CharucoBoard, cv_PtrOfCharucoBoard_new }
 	
 	impl PtrOfCharucoBoard {
 		#[inline] pub fn as_raw_PtrOfCharucoBoard(&self) -> *const c_void { self.as_raw() }
@@ -46,6 +50,8 @@ mod aruco_types {
 		cv_PtrOfDetectorParameters_delete, cv_PtrOfDetectorParameters_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::DetectorParameters, cv_PtrOfDetectorParameters_new }
+	
 	impl PtrOfDetectorParameters {
 		#[inline] pub fn as_raw_PtrOfDetectorParameters(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -62,6 +68,8 @@ mod aruco_types {
 		cv_PtrOfDictionary_delete, cv_PtrOfDictionary_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::aruco::Dictionary, cv_PtrOfDictionary_new }
+	
 	impl PtrOfDictionary {
 		#[inline] pub fn as_raw_PtrOfDictionary(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -77,6 +85,8 @@ mod aruco_types {
 	ptr_extern! { crate::aruco::GridBoard,
 		cv_PtrOfGridBoard_delete, cv_PtrOfGridBoard_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::aruco::GridBoard, cv_PtrOfGridBoard_new }
 	
 	impl PtrOfGridBoard {
 		#[inline] pub fn as_raw_PtrOfGridBoard(&self) -> *const c_void { self.as_raw() }
@@ -236,6 +246,8 @@ mod bgsegm_types {
 	ptr_extern! { crate::bgsegm::SyntheticSequenceGenerator,
 		cv_PtrOfSyntheticSequenceGenerator_delete, cv_PtrOfSyntheticSequenceGenerator_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::bgsegm::SyntheticSequenceGenerator, cv_PtrOfSyntheticSequenceGenerator_new }
 	
 	impl PtrOfSyntheticSequenceGenerator {
 		#[inline] pub fn as_raw_PtrOfSyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
@@ -475,6 +487,8 @@ mod core_types {
 		cv_PtrOfFileStorage_delete, cv_PtrOfFileStorage_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { core::FileStorage, cv_PtrOfFileStorage_new }
+	
 	impl PtrOfFileStorage {
 		#[inline] pub fn as_raw_PtrOfFileStorage(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFileStorage(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -554,6 +568,8 @@ mod core_types {
 	ptr_extern! { f32,
 		cv_PtrOff32_delete, cv_PtrOff32_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { f32, cv_PtrOff32_new }
 	
 	impl PtrOff32 {
 		#[inline] pub fn as_raw_PtrOff32(&self) -> *const c_void { self.as_raw() }
@@ -4165,6 +4181,8 @@ mod dnn_types {
 		cv_PtrOfAccumLayer_delete, cv_PtrOfAccumLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::AccumLayer, cv_PtrOfAccumLayer_new }
+	
 	impl PtrOfAccumLayer {
 		#[inline] pub fn as_raw_PtrOfAccumLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfAccumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4248,6 +4266,8 @@ mod dnn_types {
 		cv_PtrOfBackendNode_delete, cv_PtrOfBackendNode_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::BackendNode, cv_PtrOfBackendNode_new }
+	
 	impl PtrOfBackendNode {
 		#[inline] pub fn as_raw_PtrOfBackendNode(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBackendNode(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4279,6 +4299,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::BaseConvolutionLayer,
 		cv_PtrOfBaseConvolutionLayer_delete, cv_PtrOfBaseConvolutionLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::BaseConvolutionLayer, cv_PtrOfBaseConvolutionLayer_new }
 	
 	impl PtrOfBaseConvolutionLayer {
 		#[inline] pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *const c_void { self.as_raw() }
@@ -4337,6 +4359,8 @@ mod dnn_types {
 		cv_PtrOfConcatLayer_delete, cv_PtrOfConcatLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::ConcatLayer, cv_PtrOfConcatLayer_new }
+	
 	impl PtrOfConcatLayer {
 		#[inline] pub fn as_raw_PtrOfConcatLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfConcatLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4362,6 +4386,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::CorrelationLayer,
 		cv_PtrOfCorrelationLayer_delete, cv_PtrOfCorrelationLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::CorrelationLayer, cv_PtrOfCorrelationLayer_new }
 	
 	impl PtrOfCorrelationLayer {
 		#[inline] pub fn as_raw_PtrOfCorrelationLayer(&self) -> *const c_void { self.as_raw() }
@@ -4389,6 +4415,8 @@ mod dnn_types {
 		cv_PtrOfDataAugmentationLayer_delete, cv_PtrOfDataAugmentationLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::DataAugmentationLayer, cv_PtrOfDataAugmentationLayer_new }
+	
 	impl PtrOfDataAugmentationLayer {
 		#[inline] pub fn as_raw_PtrOfDataAugmentationLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDataAugmentationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4414,6 +4442,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::DetectionOutputLayer,
 		cv_PtrOfDetectionOutputLayer_delete, cv_PtrOfDetectionOutputLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::DetectionOutputLayer, cv_PtrOfDetectionOutputLayer_new }
 	
 	impl PtrOfDetectionOutputLayer {
 		#[inline] pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *const c_void { self.as_raw() }
@@ -4472,6 +4502,8 @@ mod dnn_types {
 		cv_PtrOfEltwiseLayer_delete, cv_PtrOfEltwiseLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::EltwiseLayer, cv_PtrOfEltwiseLayer_new }
+	
 	impl PtrOfEltwiseLayer {
 		#[inline] pub fn as_raw_PtrOfEltwiseLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfEltwiseLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4497,6 +4529,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::FlattenLayer,
 		cv_PtrOfFlattenLayer_delete, cv_PtrOfFlattenLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::FlattenLayer, cv_PtrOfFlattenLayer_new }
 	
 	impl PtrOfFlattenLayer {
 		#[inline] pub fn as_raw_PtrOfFlattenLayer(&self) -> *const c_void { self.as_raw() }
@@ -4524,6 +4558,8 @@ mod dnn_types {
 		cv_PtrOfFlowWarpLayer_delete, cv_PtrOfFlowWarpLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::FlowWarpLayer, cv_PtrOfFlowWarpLayer_new }
+	
 	impl PtrOfFlowWarpLayer {
 		#[inline] pub fn as_raw_PtrOfFlowWarpLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFlowWarpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4550,6 +4586,8 @@ mod dnn_types {
 		cv_PtrOfInnerProductLayer_delete, cv_PtrOfInnerProductLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::InnerProductLayer, cv_PtrOfInnerProductLayer_new }
+	
 	impl PtrOfInnerProductLayer {
 		#[inline] pub fn as_raw_PtrOfInnerProductLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfInnerProductLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4575,6 +4613,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::LRNLayer,
 		cv_PtrOfLRNLayer_delete, cv_PtrOfLRNLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::LRNLayer, cv_PtrOfLRNLayer_new }
 	
 	impl PtrOfLRNLayer {
 		#[inline] pub fn as_raw_PtrOfLRNLayer(&self) -> *const c_void { self.as_raw() }
@@ -4628,6 +4668,8 @@ mod dnn_types {
 		cv_PtrOfLayer_delete, cv_PtrOfLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::Layer, cv_PtrOfLayer_new }
+	
 	impl PtrOfLayer {
 		#[inline] pub fn as_raw_PtrOfLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4648,6 +4690,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::MVNLayer,
 		cv_PtrOfMVNLayer_delete, cv_PtrOfMVNLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::MVNLayer, cv_PtrOfMVNLayer_new }
 	
 	impl PtrOfMVNLayer {
 		#[inline] pub fn as_raw_PtrOfMVNLayer(&self) -> *const c_void { self.as_raw() }
@@ -4674,6 +4718,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::MaxUnpoolLayer,
 		cv_PtrOfMaxUnpoolLayer_delete, cv_PtrOfMaxUnpoolLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::MaxUnpoolLayer, cv_PtrOfMaxUnpoolLayer_new }
 	
 	impl PtrOfMaxUnpoolLayer {
 		#[inline] pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *const c_void { self.as_raw() }
@@ -4732,6 +4778,8 @@ mod dnn_types {
 		cv_PtrOfNormalizeBBoxLayer_delete, cv_PtrOfNormalizeBBoxLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::NormalizeBBoxLayer, cv_PtrOfNormalizeBBoxLayer_new }
+	
 	impl PtrOfNormalizeBBoxLayer {
 		#[inline] pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfNormalizeBBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4757,6 +4805,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::PaddingLayer,
 		cv_PtrOfPaddingLayer_delete, cv_PtrOfPaddingLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::PaddingLayer, cv_PtrOfPaddingLayer_new }
 	
 	impl PtrOfPaddingLayer {
 		#[inline] pub fn as_raw_PtrOfPaddingLayer(&self) -> *const c_void { self.as_raw() }
@@ -4784,6 +4834,8 @@ mod dnn_types {
 		cv_PtrOfPermuteLayer_delete, cv_PtrOfPermuteLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::PermuteLayer, cv_PtrOfPermuteLayer_new }
+	
 	impl PtrOfPermuteLayer {
 		#[inline] pub fn as_raw_PtrOfPermuteLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPermuteLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4809,6 +4861,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::PoolingLayer,
 		cv_PtrOfPoolingLayer_delete, cv_PtrOfPoolingLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::PoolingLayer, cv_PtrOfPoolingLayer_new }
 	
 	impl PtrOfPoolingLayer {
 		#[inline] pub fn as_raw_PtrOfPoolingLayer(&self) -> *const c_void { self.as_raw() }
@@ -4867,6 +4921,8 @@ mod dnn_types {
 		cv_PtrOfPriorBoxLayer_delete, cv_PtrOfPriorBoxLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::PriorBoxLayer, cv_PtrOfPriorBoxLayer_new }
+	
 	impl PtrOfPriorBoxLayer {
 		#[inline] pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPriorBoxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -4892,6 +4948,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::ProposalLayer,
 		cv_PtrOfProposalLayer_delete, cv_PtrOfProposalLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ProposalLayer, cv_PtrOfProposalLayer_new }
 	
 	impl PtrOfProposalLayer {
 		#[inline] pub fn as_raw_PtrOfProposalLayer(&self) -> *const c_void { self.as_raw() }
@@ -5007,6 +5065,8 @@ mod dnn_types {
 		cv_PtrOfRegionLayer_delete, cv_PtrOfRegionLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::RegionLayer, cv_PtrOfRegionLayer_new }
+	
 	impl PtrOfRegionLayer {
 		#[inline] pub fn as_raw_PtrOfRegionLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfRegionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5032,6 +5092,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::ReorgLayer,
 		cv_PtrOfReorgLayer_delete, cv_PtrOfReorgLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ReorgLayer, cv_PtrOfReorgLayer_new }
 	
 	impl PtrOfReorgLayer {
 		#[inline] pub fn as_raw_PtrOfReorgLayer(&self) -> *const c_void { self.as_raw() }
@@ -5059,6 +5121,8 @@ mod dnn_types {
 		cv_PtrOfReshapeLayer_delete, cv_PtrOfReshapeLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::ReshapeLayer, cv_PtrOfReshapeLayer_new }
+	
 	impl PtrOfReshapeLayer {
 		#[inline] pub fn as_raw_PtrOfReshapeLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfReshapeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5085,6 +5149,8 @@ mod dnn_types {
 		cv_PtrOfResizeLayer_delete, cv_PtrOfResizeLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::ResizeLayer, cv_PtrOfResizeLayer_new }
+	
 	impl PtrOfResizeLayer {
 		#[inline] pub fn as_raw_PtrOfResizeLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfResizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5110,6 +5176,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::ScaleLayer,
 		cv_PtrOfScaleLayer_delete, cv_PtrOfScaleLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ScaleLayer, cv_PtrOfScaleLayer_new }
 	
 	impl PtrOfScaleLayer {
 		#[inline] pub fn as_raw_PtrOfScaleLayer(&self) -> *const c_void { self.as_raw() }
@@ -5168,6 +5236,8 @@ mod dnn_types {
 		cv_PtrOfSliceLayer_delete, cv_PtrOfSliceLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::SliceLayer, cv_PtrOfSliceLayer_new }
+	
 	impl PtrOfSliceLayer {
 		#[inline] pub fn as_raw_PtrOfSliceLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSliceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5194,6 +5264,8 @@ mod dnn_types {
 		cv_PtrOfSoftmaxLayer_delete, cv_PtrOfSoftmaxLayer_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::dnn::SoftmaxLayer, cv_PtrOfSoftmaxLayer_new }
+	
 	impl PtrOfSoftmaxLayer {
 		#[inline] pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSoftmaxLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5219,6 +5291,8 @@ mod dnn_types {
 	ptr_extern! { crate::dnn::SplitLayer,
 		cv_PtrOfSplitLayer_delete, cv_PtrOfSplitLayer_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::dnn::SplitLayer, cv_PtrOfSplitLayer_new }
 	
 	impl PtrOfSplitLayer {
 		#[inline] pub fn as_raw_PtrOfSplitLayer(&self) -> *const c_void { self.as_raw() }
@@ -5724,6 +5798,8 @@ mod face_types {
 		cv_PtrOfStandardCollector_delete, cv_PtrOfStandardCollector_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::face::StandardCollector, cv_PtrOfStandardCollector_new }
+	
 	impl PtrOfStandardCollector {
 		#[inline] pub fn as_raw_PtrOfStandardCollector(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfStandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5844,6 +5920,8 @@ mod features2d_types {
 		cv_PtrOfBFMatcher_delete, cv_PtrOfBFMatcher_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::BFMatcher, cv_PtrOfBFMatcher_new }
+	
 	impl PtrOfBFMatcher {
 		#[inline] pub fn as_raw_PtrOfBFMatcher(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5869,6 +5947,8 @@ mod features2d_types {
 	ptr_extern! { crate::features2d::BRISK,
 		cv_PtrOfBRISK_delete, cv_PtrOfBRISK_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::features2d::BRISK, cv_PtrOfBRISK_new }
 	
 	impl PtrOfBRISK {
 		#[inline] pub fn as_raw_PtrOfBRISK(&self) -> *const c_void { self.as_raw() }
@@ -5943,6 +6023,8 @@ mod features2d_types {
 		cv_PtrOfFeature2D_delete, cv_PtrOfFeature2D_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::Feature2D, cv_PtrOfFeature2D_new }
+	
 	impl PtrOfFeature2D {
 		#[inline] pub fn as_raw_PtrOfFeature2D(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFeature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5963,6 +6045,8 @@ mod features2d_types {
 	ptr_extern! { crate::features2d::FlannBasedMatcher,
 		cv_PtrOfFlannBasedMatcher_delete, cv_PtrOfFlannBasedMatcher_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::features2d::FlannBasedMatcher, cv_PtrOfFlannBasedMatcher_new }
 	
 	impl PtrOfFlannBasedMatcher {
 		#[inline] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *const c_void { self.as_raw() }
@@ -6094,6 +6178,8 @@ mod features2d_types {
 		cv_PtrOfSIFT_delete, cv_PtrOfSIFT_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::features2d::SIFT, cv_PtrOfSIFT_new }
+	
 	impl PtrOfSIFT {
 		#[inline] pub fn as_raw_PtrOfSIFT(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6119,6 +6205,8 @@ mod features2d_types {
 	ptr_extern! { crate::features2d::SimpleBlobDetector,
 		cv_PtrOfSimpleBlobDetector_delete, cv_PtrOfSimpleBlobDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::features2d::SimpleBlobDetector, cv_PtrOfSimpleBlobDetector_new }
 	
 	impl PtrOfSimpleBlobDetector {
 		#[inline] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *const c_void { self.as_raw() }
@@ -6152,6 +6240,8 @@ mod flann_types {
 		cv_PtrOfIndexParams_delete, cv_PtrOfIndexParams_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::flann::IndexParams, cv_PtrOfIndexParams_new }
+	
 	impl PtrOfIndexParams {
 		#[inline] pub fn as_raw_PtrOfIndexParams(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6167,6 +6257,8 @@ mod flann_types {
 	ptr_extern! { crate::flann::SearchParams,
 		cv_PtrOfSearchParams_delete, cv_PtrOfSearchParams_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::flann::SearchParams, cv_PtrOfSearchParams_new }
 	
 	impl PtrOfSearchParams {
 		#[inline] pub fn as_raw_PtrOfSearchParams(&self) -> *const c_void { self.as_raw() }
@@ -6278,6 +6370,8 @@ mod img_hash_types {
 		cv_PtrOfAverageHash_delete, cv_PtrOfAverageHash_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::img_hash::AverageHash, cv_PtrOfAverageHash_new }
+	
 	impl PtrOfAverageHash {
 		#[inline] pub fn as_raw_PtrOfAverageHash(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfAverageHash(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6303,6 +6397,8 @@ mod img_hash_types {
 	ptr_extern! { crate::img_hash::BlockMeanHash,
 		cv_PtrOfBlockMeanHash_delete, cv_PtrOfBlockMeanHash_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::img_hash::BlockMeanHash, cv_PtrOfBlockMeanHash_new }
 	
 	impl PtrOfBlockMeanHash {
 		#[inline] pub fn as_raw_PtrOfBlockMeanHash(&self) -> *const c_void { self.as_raw() }
@@ -6330,6 +6426,8 @@ mod img_hash_types {
 		cv_PtrOfColorMomentHash_delete, cv_PtrOfColorMomentHash_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::img_hash::ColorMomentHash, cv_PtrOfColorMomentHash_new }
+	
 	impl PtrOfColorMomentHash {
 		#[inline] pub fn as_raw_PtrOfColorMomentHash(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfColorMomentHash(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6355,6 +6453,8 @@ mod img_hash_types {
 	ptr_extern! { crate::img_hash::MarrHildrethHash,
 		cv_PtrOfMarrHildrethHash_delete, cv_PtrOfMarrHildrethHash_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::img_hash::MarrHildrethHash, cv_PtrOfMarrHildrethHash_new }
 	
 	impl PtrOfMarrHildrethHash {
 		#[inline] pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *const c_void { self.as_raw() }
@@ -6382,6 +6482,8 @@ mod img_hash_types {
 		cv_PtrOfPHash_delete, cv_PtrOfPHash_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::img_hash::PHash, cv_PtrOfPHash_new }
+	
 	impl PtrOfPHash {
 		#[inline] pub fn as_raw_PtrOfPHash(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPHash(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6407,6 +6509,8 @@ mod img_hash_types {
 	ptr_extern! { crate::img_hash::RadialVarianceHash,
 		cv_PtrOfRadialVarianceHash_delete, cv_PtrOfRadialVarianceHash_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::img_hash::RadialVarianceHash, cv_PtrOfRadialVarianceHash_new }
 	
 	impl PtrOfRadialVarianceHash {
 		#[inline] pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *const c_void { self.as_raw() }
@@ -6542,6 +6646,8 @@ mod line_descriptor_types {
 		cv_PtrOfBinaryDescriptor_delete, cv_PtrOfBinaryDescriptor_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptor, cv_PtrOfBinaryDescriptor_new }
+	
 	impl PtrOfBinaryDescriptor {
 		#[inline] pub fn as_raw_PtrOfBinaryDescriptor(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6563,6 +6669,8 @@ mod line_descriptor_types {
 		cv_PtrOfBinaryDescriptorMatcher_delete, cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptorMatcher, cv_PtrOfBinaryDescriptorMatcher_new }
+	
 	impl PtrOfBinaryDescriptorMatcher {
 		#[inline] pub fn as_raw_PtrOfBinaryDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBinaryDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -6583,6 +6691,8 @@ mod line_descriptor_types {
 	ptr_extern! { crate::line_descriptor::LSDDetector,
 		cv_PtrOfLSDDetector_delete, cv_PtrOfLSDDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::line_descriptor::LSDDetector, cv_PtrOfLSDDetector_new }
 	
 	impl PtrOfLSDDetector {
 		#[inline] pub fn as_raw_PtrOfLSDDetector(&self) -> *const c_void { self.as_raw() }
@@ -6841,6 +6951,8 @@ mod ml_types {
 	ptr_extern! { crate::ml::ParamGrid,
 		cv_PtrOfParamGrid_delete, cv_PtrOfParamGrid_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::ml::ParamGrid, cv_PtrOfParamGrid_new }
 	
 	impl PtrOfParamGrid {
 		#[inline] pub fn as_raw_PtrOfParamGrid(&self) -> *const c_void { self.as_raw() }
@@ -7150,6 +7262,8 @@ mod optflow_types {
 		cv_PtrOfGPCTrainingSamples_delete, cv_PtrOfGPCTrainingSamples_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::optflow::GPCTrainingSamples, cv_PtrOfGPCTrainingSamples_new }
+	
 	impl PtrOfGPCTrainingSamples {
 		#[inline] pub fn as_raw_PtrOfGPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfGPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7165,6 +7279,8 @@ mod optflow_types {
 	ptr_extern! { crate::optflow::GPCTree,
 		cv_PtrOfGPCTree_delete, cv_PtrOfGPCTree_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::optflow::GPCTree, cv_PtrOfGPCTree_new }
 	
 	impl PtrOfGPCTree {
 		#[inline] pub fn as_raw_PtrOfGPCTree(&self) -> *const c_void { self.as_raw() }
@@ -7186,6 +7302,8 @@ mod optflow_types {
 	ptr_extern! { crate::optflow::PCAPrior,
 		cv_PtrOfPCAPrior_delete, cv_PtrOfPCAPrior_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::optflow::PCAPrior, cv_PtrOfPCAPrior_new }
 	
 	impl PtrOfPCAPrior {
 		#[inline] pub fn as_raw_PtrOfPCAPrior(&self) -> *const c_void { self.as_raw() }
@@ -7605,6 +7723,8 @@ mod rgbd_types {
 		cv_PtrOfDepthCleaner_delete, cv_PtrOfDepthCleaner_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::DepthCleaner, cv_PtrOfDepthCleaner_new }
+	
 	impl PtrOfDepthCleaner {
 		#[inline] pub fn as_raw_PtrOfDepthCleaner(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDepthCleaner(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7625,6 +7745,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::ICPOdometry,
 		cv_PtrOfICPOdometry_delete, cv_PtrOfICPOdometry_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::ICPOdometry, cv_PtrOfICPOdometry_new }
 	
 	impl PtrOfICPOdometry {
 		#[inline] pub fn as_raw_PtrOfICPOdometry(&self) -> *const c_void { self.as_raw() }
@@ -7652,6 +7774,8 @@ mod rgbd_types {
 		cv_PtrOfLinemod_ColorGradient_delete, cv_PtrOfLinemod_ColorGradient_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::Linemod_ColorGradient, cv_PtrOfLinemod_ColorGradient_new }
+	
 	impl PtrOfLinemod_ColorGradient {
 		#[inline] pub fn as_raw_PtrOfLinemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLinemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7673,6 +7797,8 @@ mod rgbd_types {
 		cv_PtrOfLinemod_DepthNormal_delete, cv_PtrOfLinemod_DepthNormal_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::Linemod_DepthNormal, cv_PtrOfLinemod_DepthNormal_new }
+	
 	impl PtrOfLinemod_DepthNormal {
 		#[inline] pub fn as_raw_PtrOfLinemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLinemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7693,6 +7819,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::Linemod_Detector,
 		cv_PtrOfLinemod_Detector_delete, cv_PtrOfLinemod_Detector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::Linemod_Detector, cv_PtrOfLinemod_Detector_new }
 	
 	impl PtrOfLinemod_Detector {
 		#[inline] pub fn as_raw_PtrOfLinemod_Detector(&self) -> *const c_void { self.as_raw() }
@@ -7763,6 +7891,8 @@ mod rgbd_types {
 		cv_PtrOfOdometryFrame_delete, cv_PtrOfOdometryFrame_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::OdometryFrame, cv_PtrOfOdometryFrame_new }
+	
 	impl PtrOfOdometryFrame {
 		#[inline] pub fn as_raw_PtrOfOdometryFrame(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfOdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7784,6 +7914,8 @@ mod rgbd_types {
 		cv_PtrOfRgbdFrame_delete, cv_PtrOfRgbdFrame_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::RgbdFrame, cv_PtrOfRgbdFrame_new }
+	
 	impl PtrOfRgbdFrame {
 		#[inline] pub fn as_raw_PtrOfRgbdFrame(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfRgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7799,6 +7931,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::RgbdICPOdometry,
 		cv_PtrOfRgbdICPOdometry_delete, cv_PtrOfRgbdICPOdometry_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::RgbdICPOdometry, cv_PtrOfRgbdICPOdometry_new }
 	
 	impl PtrOfRgbdICPOdometry {
 		#[inline] pub fn as_raw_PtrOfRgbdICPOdometry(&self) -> *const c_void { self.as_raw() }
@@ -7826,6 +7960,8 @@ mod rgbd_types {
 		cv_PtrOfRgbdNormals_delete, cv_PtrOfRgbdNormals_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::rgbd::RgbdNormals, cv_PtrOfRgbdNormals_new }
+	
 	impl PtrOfRgbdNormals {
 		#[inline] pub fn as_raw_PtrOfRgbdNormals(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfRgbdNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -7846,6 +7982,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::RgbdOdometry,
 		cv_PtrOfRgbdOdometry_delete, cv_PtrOfRgbdOdometry_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::RgbdOdometry, cv_PtrOfRgbdOdometry_new }
 	
 	impl PtrOfRgbdOdometry {
 		#[inline] pub fn as_raw_PtrOfRgbdOdometry(&self) -> *const c_void { self.as_raw() }
@@ -7872,6 +8010,8 @@ mod rgbd_types {
 	ptr_extern! { crate::rgbd::RgbdPlane,
 		cv_PtrOfRgbdPlane_delete, cv_PtrOfRgbdPlane_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::rgbd::RgbdPlane, cv_PtrOfRgbdPlane_new }
 	
 	impl PtrOfRgbdPlane {
 		#[inline] pub fn as_raw_PtrOfRgbdPlane(&self) -> *const c_void { self.as_raw() }
@@ -7985,6 +8125,8 @@ mod saliency_types {
 		cv_PtrOfMotionSaliencyBinWangApr2014_delete, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::saliency::MotionSaliencyBinWangApr2014, cv_PtrOfMotionSaliencyBinWangApr2014_new }
+	
 	impl PtrOfMotionSaliencyBinWangApr2014 {
 		#[inline] pub fn as_raw_PtrOfMotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfMotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8015,6 +8157,8 @@ mod saliency_types {
 	ptr_extern! { crate::saliency::ObjectnessBING,
 		cv_PtrOfObjectnessBING_delete, cv_PtrOfObjectnessBING_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::saliency::ObjectnessBING, cv_PtrOfObjectnessBING_new }
 	
 	impl PtrOfObjectnessBING {
 		#[inline] pub fn as_raw_PtrOfObjectnessBING(&self) -> *const c_void { self.as_raw() }
@@ -8047,6 +8191,8 @@ mod saliency_types {
 		cv_PtrOfStaticSaliencyFineGrained_delete, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::saliency::StaticSaliencyFineGrained, cv_PtrOfStaticSaliencyFineGrained_new }
+	
 	impl PtrOfStaticSaliencyFineGrained {
 		#[inline] pub fn as_raw_PtrOfStaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfStaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8077,6 +8223,8 @@ mod saliency_types {
 	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
 		cv_PtrOfStaticSaliencySpectralResidual_delete, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::saliency::StaticSaliencySpectralResidual, cv_PtrOfStaticSaliencySpectralResidual_new }
 	
 	impl PtrOfStaticSaliencySpectralResidual {
 		#[inline] pub fn as_raw_PtrOfStaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
@@ -8297,6 +8445,8 @@ mod stitching_types {
 		cv_PtrOfDetail_Blender_delete, cv_PtrOfDetail_Blender_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::stitching::Detail_Blender, cv_PtrOfDetail_Blender_new }
+	
 	impl PtrOfDetail_Blender {
 		#[inline] pub fn as_raw_PtrOfDetail_Blender(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfDetail_Blender(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8413,6 +8563,8 @@ mod stitching_types {
 	ptr_extern! { crate::stitching::Stitcher,
 		cv_PtrOfStitcher_delete, cv_PtrOfStitcher_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::stitching::Stitcher, cv_PtrOfStitcher_new }
 	
 	impl PtrOfStitcher {
 		#[inline] pub fn as_raw_PtrOfStitcher(&self) -> *const c_void { self.as_raw() }
@@ -8564,6 +8716,8 @@ mod structured_light_types {
 	ptr_extern! { crate::structured_light::SinusoidalPattern_Params,
 		cv_PtrOfSinusoidalPattern_Params_delete, cv_PtrOfSinusoidalPattern_Params_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::structured_light::SinusoidalPattern_Params, cv_PtrOfSinusoidalPattern_Params_new }
 	
 	impl PtrOfSinusoidalPattern_Params {
 		#[inline] pub fn as_raw_PtrOfSinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
@@ -8762,6 +8916,8 @@ mod surface_matching_types {
 		cv_PtrOfPose3D_delete, cv_PtrOfPose3D_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::surface_matching::Pose3D, cv_PtrOfPose3D_new }
+	
 	impl PtrOfPose3D {
 		#[inline] pub fn as_raw_PtrOfPose3D(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8777,6 +8933,8 @@ mod surface_matching_types {
 	ptr_extern! { crate::surface_matching::PoseCluster3D,
 		cv_PtrOfPoseCluster3D_delete, cv_PtrOfPoseCluster3D_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::surface_matching::PoseCluster3D, cv_PtrOfPoseCluster3D_new }
 	
 	impl PtrOfPoseCluster3D {
 		#[inline] pub fn as_raw_PtrOfPoseCluster3D(&self) -> *const c_void { self.as_raw() }
@@ -8859,6 +9017,8 @@ mod text_types {
 		cv_PtrOfOCRBeamSearchDecoder_delete, cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder, cv_PtrOfOCRBeamSearchDecoder_new }
+	
 	impl PtrOfOCRBeamSearchDecoder {
 		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8880,6 +9040,8 @@ mod text_types {
 		cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder_ClassifierCallback, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_new }
+	
 	impl PtrOfOCRBeamSearchDecoder_ClassifierCallback {
 		#[inline] pub fn as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfOCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -8895,6 +9057,8 @@ mod text_types {
 	ptr_extern! { crate::text::OCRHMMDecoder,
 		cv_PtrOfOCRHMMDecoder_delete, cv_PtrOfOCRHMMDecoder_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::text::OCRHMMDecoder, cv_PtrOfOCRHMMDecoder_new }
 	
 	impl PtrOfOCRHMMDecoder {
 		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
@@ -8916,6 +9080,8 @@ mod text_types {
 	ptr_extern! { crate::text::OCRHMMDecoder_ClassifierCallback,
 		cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete, cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::text::OCRHMMDecoder_ClassifierCallback, cv_PtrOfOCRHMMDecoder_ClassifierCallback_new }
 	
 	impl PtrOfOCRHMMDecoder_ClassifierCallback {
 		#[inline] pub fn as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
@@ -9044,6 +9210,8 @@ mod tracking_types {
 		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::tracking::CvFeatureParams, cv_PtrOfCvFeatureParams_new }
+	
 	impl PtrOfCvFeatureParams {
 		#[inline] pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfCvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -9059,6 +9227,8 @@ mod tracking_types {
 	ptr_extern! { crate::tracking::MultiTracker,
 		cv_PtrOfMultiTracker_delete, cv_PtrOfMultiTracker_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::tracking::MultiTracker, cv_PtrOfMultiTracker_new }
 	
 	impl PtrOfMultiTracker {
 		#[inline] pub fn as_raw_PtrOfMultiTracker(&self) -> *const c_void { self.as_raw() }
@@ -9357,6 +9527,8 @@ mod tracking_types {
 	ptr_extern! { crate::tracking::TrackerTargetState,
 		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::tracking::TrackerTargetState, cv_PtrOfTrackerTargetState_new }
 	
 	impl PtrOfTrackerTargetState {
 		#[inline] pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
@@ -9863,6 +10035,8 @@ mod xfeatures2d_types {
 		cv_PtrOfBriefDescriptorExtractor_delete, cv_PtrOfBriefDescriptorExtractor_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::BriefDescriptorExtractor, cv_PtrOfBriefDescriptorExtractor_new }
+	
 	impl PtrOfBriefDescriptorExtractor {
 		#[inline] pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -9915,6 +10089,8 @@ mod xfeatures2d_types {
 		cv_PtrOfFREAK_delete, cv_PtrOfFREAK_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::FREAK, cv_PtrOfFREAK_new }
+	
 	impl PtrOfFREAK {
 		#[inline] pub fn as_raw_PtrOfFREAK(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfFREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -9940,6 +10116,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::HarrisLaplaceFeatureDetector,
 		cv_PtrOfHarrisLaplaceFeatureDetector_delete, cv_PtrOfHarrisLaplaceFeatureDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::HarrisLaplaceFeatureDetector, cv_PtrOfHarrisLaplaceFeatureDetector_new }
 	
 	impl PtrOfHarrisLaplaceFeatureDetector {
 		#[inline] pub fn as_raw_PtrOfHarrisLaplaceFeatureDetector(&self) -> *const c_void { self.as_raw() }
@@ -9967,6 +10145,8 @@ mod xfeatures2d_types {
 		cv_PtrOfLATCH_delete, cv_PtrOfLATCH_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::LATCH, cv_PtrOfLATCH_new }
+	
 	impl PtrOfLATCH {
 		#[inline] pub fn as_raw_PtrOfLATCH(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -9993,6 +10173,8 @@ mod xfeatures2d_types {
 		cv_PtrOfLUCID_delete, cv_PtrOfLUCID_get_inner_ptr
 	}
 	
+	ptr_extern_ctor! { crate::xfeatures2d::LUCID, cv_PtrOfLUCID_new }
+	
 	impl PtrOfLUCID {
 		#[inline] pub fn as_raw_PtrOfLUCID(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfLUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -10018,6 +10200,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::MSDDetector,
 		cv_PtrOfMSDDetector_delete, cv_PtrOfMSDDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::MSDDetector, cv_PtrOfMSDDetector_new }
 	
 	impl PtrOfMSDDetector {
 		#[inline] pub fn as_raw_PtrOfMSDDetector(&self) -> *const c_void { self.as_raw() }
@@ -10112,6 +10296,8 @@ mod xfeatures2d_types {
 	ptr_extern! { crate::xfeatures2d::StarDetector,
 		cv_PtrOfStarDetector_delete, cv_PtrOfStarDetector_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::StarDetector, cv_PtrOfStarDetector_new }
 	
 	impl PtrOfStarDetector {
 		#[inline] pub fn as_raw_PtrOfStarDetector(&self) -> *const c_void { self.as_raw() }
@@ -10213,6 +10399,8 @@ mod ximgproc_types {
 	ptr_extern! { crate::ximgproc::ContourFitting,
 		cv_PtrOfContourFitting_delete, cv_PtrOfContourFitting_get_inner_ptr
 	}
+	
+	ptr_extern_ctor! { crate::ximgproc::ContourFitting, cv_PtrOfContourFitting_new }
 	
 	impl PtrOfContourFitting {
 		#[inline] pub fn as_raw_PtrOfContourFitting(&self) -> *const c_void { self.as_raw() }

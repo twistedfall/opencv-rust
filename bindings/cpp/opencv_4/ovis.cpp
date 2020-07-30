@@ -76,7 +76,7 @@ extern "C" {
 	Result<int> cv_ovis_waitKey_int(int delay) {
 		try {
 			int ret = cv::ovis::waitKey(delay);
-			return Ok(ret);
+			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
@@ -139,7 +139,7 @@ extern "C" {
 	Result<cv::Rect2d> cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR(cv::ovis::WindowScene* instance, const char* name, const cv::_InputArray* K, const cv::Size* imsize, float zFar, const cv::_InputArray* tvec, const cv::_InputArray* rot) {
 		try {
 			cv::Rect2d ret = instance->createCameraEntity(std::string(name), *K, *imsize, zFar, *tvec, *rot);
-			return Ok(ret);
+			return Ok<cv::Rect2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect2d>))
 	}
 	
