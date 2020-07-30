@@ -1,3 +1,6 @@
+* 0.44.1
+  * Fix docs.rs build
+
 * 0.44.0
   * Add support for ovis module
   * Add implementation of Ptr::new for non-abstract types

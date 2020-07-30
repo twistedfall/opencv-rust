@@ -1,4 +1,5 @@
-#include "flann.hpp"
+#include "common.hpp"
+#include <opencv2/flann.hpp>
 #include "flann_types.hpp"
 
 extern "C" {
