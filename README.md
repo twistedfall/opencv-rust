@@ -70,10 +70,12 @@ Installing OpenCV is easy through the following sources:
 
 Get OpenCV from homebrew:
 
-* [homebrew](https://brew.sh), be sure to also install `llvm` and `pkg-config` that are required for building:
+* [homebrew](https://brew.sh), be sure to also install `pkg-config` that is required for building:
   ```shell script
-  brew install llvm pkg-config opencv
+  brew install pkg-config opencv
   ```
+  You will also need a working C++ compiler and libclang, you can use the ones from XCode or install `llvm`
+  from brew. You most probably need to also check the item 5 of the troubleshooting below.
 
 ### Manual build
 
@@ -117,6 +119,16 @@ You need to set up the following environment variables to point to the installed
    That often means that Windows can't find the OpenCV library dll. Be sure to set up `PATH` environment
    variable correctly or copy the dll next to the binary you're trying to run. Check
    [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide too.
+
+5. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+
+   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
+   the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
+   found, e.g. for Xcode:
+   
+   ```  
+   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+   ```
 
 ## Reporting issues
 
