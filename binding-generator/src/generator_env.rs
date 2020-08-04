@@ -165,7 +165,14 @@ impl<'tu> GeneratorEnv<'tu> {
 			}
 			(l, line_offset as u32)
 		} else {
-			(entity.get_range().expect("Can't get entity range").get_start().get_spelling_location(), 0)
+			let loc = if let Some(range) = entity.get_range() {
+				range.get_start().get_spelling_location()
+			} else {
+				// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
+				// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
+				entity.get_location().expect("Can't get entity location").get_spelling_location()
+			};
+			(loc, 0)
 		};
 		(loc.file.expect("Can't get exported entry file").get_path(), loc.line, offset)
 	}
