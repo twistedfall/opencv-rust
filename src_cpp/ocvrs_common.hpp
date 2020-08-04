@@ -1,3 +1,6 @@
+#ifndef __OCVRS_COMMON_HPP__
+#define __OCVRS_COMMON_HPP__
+
 #if defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__) \
  || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
 #define OCVRS_TARGET_OS_WINDOWS
@@ -52,3 +55,4 @@ template<typename T> inline T Err(int code, const char* msg) {
 	return ret;
 }
 
+#endif

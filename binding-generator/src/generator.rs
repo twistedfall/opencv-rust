@@ -78,7 +78,7 @@ struct OpenCVWalker<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> {
 
 impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		self.visitor.wants_file(path) || path.ends_with("common.hpp")
+		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {

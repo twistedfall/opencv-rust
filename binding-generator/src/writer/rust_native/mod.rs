@@ -243,7 +243,7 @@ impl Drop for RustNativeBindingWriter<'_> {
 		let includes = if self.src_cpp_dir.join(format!("{}.hpp", self.module)).exists() {
 			format!("#include \"{module}.hpp\"\n", module=self.module)
 		} else {
-			format!("#include \"common.hpp\"\n#include <opencv2/{module}.hpp>", module=self.module)
+			format!("#include \"ocvrs_common.hpp\"\n#include <opencv2/{module}.hpp>", module=self.module)
 		};
 		File::create(&self.cpp_path).expect("Can't create cpp file")
 			.write_all(CPP.interpolate(&hashmap! {

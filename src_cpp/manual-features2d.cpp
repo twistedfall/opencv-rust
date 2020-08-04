@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/features2d.hpp>
 
 template struct Result<void*>;

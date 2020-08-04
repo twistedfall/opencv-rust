@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <vector>
 
 /* Dummy namespace that contains types that will be used in the bindings generator to resolve clang::Type from

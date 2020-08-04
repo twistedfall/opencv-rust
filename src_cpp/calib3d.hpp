@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/calib3d.hpp>
 
 namespace cv {

@@ -4,7 +4,7 @@
 	#define CV_DNN_DONT_ADD_INLINE_NS
 #endif
 
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/dnn.hpp>
 #if CV_VERSION_MAJOR == 4
 	#include <opencv2/dnn/version.hpp>

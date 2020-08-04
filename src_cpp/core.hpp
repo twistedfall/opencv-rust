@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/core/affine.hpp>
 #include <opencv2/core/directx.hpp>
 #include <opencv2/core/ocl.hpp>
