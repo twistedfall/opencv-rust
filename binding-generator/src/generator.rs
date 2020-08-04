@@ -360,6 +360,8 @@ impl Generator {
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
 		args.push("-includeocvrs_resolve_types.hpp".into());
+		// need to have c++14 here because VS headers contain features that require it
+		args.push("-std=c++14".into());
 		args
 	}
 
