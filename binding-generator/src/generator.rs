@@ -8,9 +8,11 @@ use std::{
 
 use clang::{
 	Clang,
+	diagnostic::Severity,
 	Entity,
 	EntityKind,
 	Index,
+	TranslationUnit,
 	Type,
 };
 use dunce::canonicalize;
@@ -361,22 +363,36 @@ impl Generator {
 		args
 	}
 
-	pub fn process_module(&self, module: &str, entity_processor: impl FnOnce(Entity)) {
+	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(Entity)) {
 		let index = Index::new(&self.clang, true, false);
 		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
 		if !module_file.exists() {
 			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
 		}
-		let root_tu = index.parser(module_file)
+		let root_tu: TranslationUnit = index.parser(module_file)
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse().expect("Cannot parse");
+		let diags = root_tu.get_diagnostics();
+		if !diags.is_empty() {
+			let mut has_error = false;
+			eprintln!("=== WARNING: {} diagnostic messages", diags.len());
+			for diag in diags {
+				if !has_error && matches!(diag.get_severity(), Severity::Error | Severity::Fatal) {
+					has_error = true;
+				}
+				eprintln!("===    {}", diag);
+			}
+			if has_error && panic_on_error {
+				panic!("=== Errors during header parsing");
+			}
+		}
 		entity_processor(root_tu.get_entity());
 	}
 
 	pub fn process_opencv_module(&self, module: &str, visitor: impl for<'gtu> GeneratorVisitor<'gtu>) {
-		self.process_module(module, |root_entity| {
+		self.process_module(module, true, |root_entity| {
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCVWalker::new(
 				&self.opencv_include_dir,

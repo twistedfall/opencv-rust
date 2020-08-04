@@ -140,17 +140,17 @@ fn main() {
 		let gen = Generator::new(None, &opencv_header_dir, &src_cpp_dir, clang);
 		for module in modules {
 			println!("  {}", module);
-			gen.process_module(&module, |root_entity| {
-					let gen_env = GeneratorEnv::new(root_entity, &module);
-					let walker = EntityWalker::new(root_entity);
-					walker.walk_opencv_entities(FunctionFinder {
-						gen_env,
-						func_rename_unused: &mut func_rename_unused,
-						func_cfg_attr_unused: &mut func_cfg_attr_unused,
-						func_unsafe_unused: &mut func_unsafe_unused,
-						func_manual_unused: &mut func_manual_unused,
-						func_specialize_unused: &mut func_specialize_unused,
-						slice_argument_unused: &mut slice_argument_unused,
+			gen.process_module(&module, false, |root_entity| {
+				let gen_env = GeneratorEnv::new(root_entity, &module);
+				let walker = EntityWalker::new(root_entity);
+				walker.walk_opencv_entities(FunctionFinder {
+					gen_env,
+					func_rename_unused: &mut func_rename_unused,
+					func_cfg_attr_unused: &mut func_cfg_attr_unused,
+					func_unsafe_unused: &mut func_unsafe_unused,
+					func_manual_unused: &mut func_manual_unused,
+					func_specialize_unused: &mut func_specialize_unused,
+					slice_argument_unused: &mut slice_argument_unused,
 					});
 				});
 		}
