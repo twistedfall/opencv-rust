@@ -204,7 +204,7 @@ jobs:
           toolchain: stable
           default: true
 
-      - name: Run a self-check
+      - name: Run a documentation generation test
         run: ci/docs-rs.sh
         shell: bash
 

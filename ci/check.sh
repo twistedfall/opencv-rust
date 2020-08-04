@@ -2,8 +2,8 @@
 
 set -vex
 
-sudo apt update
-sudo apt -y install clang
+sudo apt-get update
+sudo apt-get -y install clang
 
 # workaround to make clang_sys crate detect installed libclang
 sudo ln -s libclang.so.1 /usr/lib/llvm-10/lib/libclang.so

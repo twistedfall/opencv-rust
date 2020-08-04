@@ -21,12 +21,11 @@ if [[ "$OS_FAMILY" == "windows" ]]; then
 	choco list --local-only
 elif [[ "$OS_FAMILY" == "osx" ]]; then
 	CARGO_FEATURES="$CARGO_FEATURES,contrib"
-	# fixme, enable building with xcode libclang
-#	xcode_path="$(xcode-select --print-path)/"
-#	toolchain_path="$xcode_path/Toolchains/XcodeDefault.xctoolchain/"
-#	export LIBCLANG_PATH="$toolchain_path/usr/lib/libclang.dylib"
-#	export CLANG_PATH="$toolchain_path/usr/bin/clang"
-#	export DYLD_LIBRARY_PATH="$toolchain_path/usr/lib/"
+	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
+	export LIBCLANG_PATH="$toolchain_path/usr/lib/libclang.dylib"
+	export CLANG_PATH="$toolchain_path/usr/bin/clang"
+	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
+	export OPENCV_CLANG_STDLIB_PATH="$(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
 	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
 		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
 			export CMAKE_PREFIX_PATH="$(echo /usr/local/Cellar/opencv@3/3.4.*)"
