@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/xobjdetect.hpp>
 #include "xobjdetect_types.hpp"
 

@@ -1,3 +1,7 @@
+* 0.44.2
+  * Fix building with Apple clang
+  * Show libclang diagnostics during binding generation
+
 * 0.44.1
   * Fix docs.rs build
 

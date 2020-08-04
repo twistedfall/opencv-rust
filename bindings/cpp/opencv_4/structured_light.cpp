@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/structured_light.hpp>
 #include "structured_light_types.hpp"
 

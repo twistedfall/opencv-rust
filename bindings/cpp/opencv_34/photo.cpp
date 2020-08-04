@@ -1,5 +1,4 @@
-#include "common.hpp"
-#include <opencv2/photo.hpp>
+#include "photo.hpp"
 #include "photo_types.hpp"
 
 extern "C" {
@@ -78,6 +77,27 @@ extern "C" {
 			cv::Ptr<cv::Tonemap> ret = cv::createTonemap(gamma);
 			return Ok(new cv::Ptr<cv::Tonemap>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::Tonemap>*>))
+	}
+	
+	Result_void cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, float h_luminance, float photo_render, int search_window, int block_size, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::fastNlMeansDenoisingColored(*src, *dst, h_luminance, photo_render, search_window, block_size, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int search_window, int block_size, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::fastNlMeansDenoising(*src, *dst, h, search_window, block_size, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float_int_int_int_StreamR(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int search_window, int block_size, int borderMode, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::nonLocalMeans(*src, *dst, h, search_window, block_size, borderMode, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result_void cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(const cv::_InputArray* src, const cv::_OutputArray* grayscale, const cv::_OutputArray* color_boost) {

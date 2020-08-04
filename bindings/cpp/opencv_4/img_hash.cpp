@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/img_hash.hpp>
 #include "img_hash_types.hpp"
 

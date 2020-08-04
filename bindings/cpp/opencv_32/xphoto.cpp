@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/xphoto.hpp>
 #include "xphoto_types.hpp"
 

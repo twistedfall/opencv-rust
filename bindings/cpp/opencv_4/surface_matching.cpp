@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/surface_matching.hpp>
 #include "surface_matching_types.hpp"
 

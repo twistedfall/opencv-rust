@@ -7,6 +7,7 @@ template struct Result<const std::vector<float>*>;
 template struct Result<const std::vector<int>*>;
 template struct Result<cv::Matx<float, 2, 3>>;
 template struct Result<cv::Ptr<cv::Feature2D>*>;
+template struct Result<cv::Ptr<cv::cuda::SURF_CUDA>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::BoostDesc>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>*>;
@@ -22,6 +23,8 @@ template struct Result<cv::Ptr<cv::xfeatures2d::SURF>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::StarDetector>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::VGG>*>;
 template struct Result<cv::Size_<float>>;
+template struct Result<cv::cuda::GpuMat*>;
+template struct Result<cv::cuda::SURF_CUDA*>;
 template struct Result<cv::xfeatures2d::Elliptic_KeyPoint*>;
 template struct Result<double>;
 template struct Result<float>;
@@ -174,6 +177,20 @@ extern "C" {
 	}
 
 	cv::xfeatures2d::SURF* cv_PtrOfSURF_get_inner_ptr(cv::Ptr<cv::xfeatures2d::SURF>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::cuda::SURF_CUDA>* cv_PtrOfSURF_CUDA_new(cv::cuda::SURF_CUDA* val) {
+		return new cv::Ptr<cv::cuda::SURF_CUDA>(val);
+	}
+	
+	void cv_PtrOfSURF_CUDA_delete(cv::Ptr<cv::cuda::SURF_CUDA>* instance) {
+		delete instance;
+	}
+
+	cv::cuda::SURF_CUDA* cv_PtrOfSURF_CUDA_get_inner_ptr(cv::Ptr<cv::cuda::SURF_CUDA>* instance) {
 		return instance->get();
 	}
 }

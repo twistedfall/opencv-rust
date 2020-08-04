@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/bgsegm.hpp>
 #include "bgsegm_types.hpp"
 

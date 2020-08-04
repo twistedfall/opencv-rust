@@ -3342,6 +3342,9 @@ mod photo_sys {
 		pub fn cv_createTonemapMantiuk_float_float_float(gamma: f32, scale: f32, saturation: f32) -> Result<*mut c_void>;
 		pub fn cv_createTonemapReinhard_float_float_float_float(gamma: f32, intensity: f32, light_adapt: f32, color_adapt: f32) -> Result<*mut c_void>;
 		pub fn cv_createTonemap_float(gamma: f32) -> Result<*mut c_void>;
+		pub fn cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(src: *const c_void, dst: *const c_void, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: *mut c_void) -> Result_void;
+		pub fn cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(src: *const c_void, dst: *const c_void, h: f32, search_window: i32, block_size: i32, stream: *mut c_void) -> Result_void;
+		pub fn cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float_int_int_int_StreamR(src: *const c_void, dst: *const c_void, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: *mut c_void) -> Result_void;
 		pub fn cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src: *const c_void, grayscale: *const c_void, color_boost: *const c_void) -> Result_void;
 		pub fn cv_denoise_TVL1_const_vector_Mat_R_MatR_double_int(observations: *const c_void, result: *mut c_void, lambda: f64, niters: i32) -> Result_void;
 		pub fn cv_detailEnhance_const__InputArrayR_const__OutputArrayR_float_float(src: *const c_void, dst: *const c_void, sigma_s: f32, sigma_r: f32) -> Result_void;
@@ -5159,6 +5162,38 @@ mod xfeatures2d_sys {
 	use super::*;
 
 	extern "C" {
+		pub fn cv_cuda_SURF_CUDA_getPropHessianThreshold_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_cuda_SURF_CUDA_setPropHessianThreshold_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropNOctaves_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_cuda_SURF_CUDA_setPropNOctaves_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropExtended_const(instance: *const c_void) -> Result<bool>;
+		pub fn cv_cuda_SURF_CUDA_setPropExtended_bool(instance: *mut c_void, val: bool) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropUpright_const(instance: *const c_void) -> Result<bool>;
+		pub fn cv_cuda_SURF_CUDA_setPropUpright_bool(instance: *mut c_void, val: bool) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropSum(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropSum_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropMask1(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropMask1_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropMaskSum(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropDet(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropDet_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropTrace(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropTrace_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_getPropMaxPosBuffer(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_SURF_CUDA() -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<*mut c_void>;
+		pub fn cv_cuda_SURF_CUDA_descriptorSize_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_cuda_SURF_CUDA_defaultNorm_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_cuda_SURF_CUDA_uploadKeypoints_const_vector_KeyPoint_R_GpuMatR(instance: *mut c_void, keypoints: *const c_void, keypoints_gpu: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vector_KeyPoint_R(instance: *mut c_void, keypoints_gpu: *const c_void, keypoints: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vector_float_R(instance: *mut c_void, descriptors_gpu: *const c_void, descriptors: *mut c_void) -> Result_void;
+		pub fn cv_cuda_SURF_CUDA_releaseMemory(instance: *mut c_void) -> Result_void;
 		pub fn cv_xfeatures2d_BoostDesc_create_int_bool_float(desc: i32, use_scale_orientation: bool, scale_factor: f32) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes: i32, use_orientation: bool) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_DAISY_create_float_int_int_int_int_const__InputArrayR_bool_bool(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: i32, h: *const c_void, interpolation: bool, use_orientation: bool) -> Result<*mut c_void>;

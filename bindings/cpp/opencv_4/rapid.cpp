@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/rapid.hpp>
 #include "rapid_types.hpp"
 

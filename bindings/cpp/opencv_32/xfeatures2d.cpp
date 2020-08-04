@@ -1,8 +1,234 @@
-#include "common.hpp"
-#include <opencv2/xfeatures2d.hpp>
+#include "xfeatures2d.hpp"
 #include "xfeatures2d_types.hpp"
 
 extern "C" {
+	Result<double> cv_cuda_SURF_CUDA_getPropHessianThreshold_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			double ret = instance->hessianThreshold;
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropHessianThreshold_double(cv::cuda::SURF_CUDA* instance, double val) {
+		try {
+			instance->hessianThreshold = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_cuda_SURF_CUDA_getPropNOctaves_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			int ret = instance->nOctaves;
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropNOctaves_int(cv::cuda::SURF_CUDA* instance, int val) {
+		try {
+			instance->nOctaves = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			int ret = instance->nOctaveLayers;
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(cv::cuda::SURF_CUDA* instance, int val) {
+		try {
+			instance->nOctaveLayers = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_cuda_SURF_CUDA_getPropExtended_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			bool ret = instance->extended;
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropExtended_bool(cv::cuda::SURF_CUDA* instance, bool val) {
+		try {
+			instance->extended = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_cuda_SURF_CUDA_getPropUpright_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			bool ret = instance->upright;
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropUpright_bool(cv::cuda::SURF_CUDA* instance, bool val) {
+		try {
+			instance->upright = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			float ret = instance->keypointsRatio;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(cv::cuda::SURF_CUDA* instance, float val) {
+		try {
+			instance->keypointsRatio = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropSum(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->sum;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropSum_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->sum = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropMask1(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->mask1;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropMask1_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->mask1 = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropMaskSum(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->maskSum;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->maskSum = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropDet(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->det;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropDet_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->det = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropTrace(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->trace;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropTrace_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->trace = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_SURF_CUDA_getPropMaxPosBuffer(cv::cuda::SURF_CUDA* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->maxPosBuffer;
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(cv::cuda::SURF_CUDA* instance, cv::cuda::GpuMat* val) {
+		try {
+			instance->maxPosBuffer = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_SURF_CUDA_delete(cv::cuda::SURF_CUDA* instance) {
+		delete instance;
+	}
+	Result<cv::cuda::SURF_CUDA*> cv_cuda_SURF_CUDA_SURF_CUDA() {
+		try {
+			cv::cuda::SURF_CUDA* ret = new cv::cuda::SURF_CUDA();
+			return Ok<cv::cuda::SURF_CUDA*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::SURF_CUDA*>))
+	}
+	
+	Result<cv::cuda::SURF_CUDA*> cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(double _hessianThreshold, int _nOctaves, int _nOctaveLayers, bool _extended, float _keypointsRatio, bool _upright) {
+		try {
+			cv::cuda::SURF_CUDA* ret = new cv::cuda::SURF_CUDA(_hessianThreshold, _nOctaves, _nOctaveLayers, _extended, _keypointsRatio, _upright);
+			return Ok<cv::cuda::SURF_CUDA*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::SURF_CUDA*>))
+	}
+	
+	Result<int> cv_cuda_SURF_CUDA_descriptorSize_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			int ret = instance->descriptorSize();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_cuda_SURF_CUDA_defaultNorm_const(const cv::cuda::SURF_CUDA* instance) {
+		try {
+			int ret = instance->defaultNorm();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_uploadKeypoints_const_vector_KeyPoint_R_GpuMatR(cv::cuda::SURF_CUDA* instance, const std::vector<cv::KeyPoint>* keypoints, cv::cuda::GpuMat* keypointsGPU) {
+		try {
+			instance->uploadKeypoints(*keypoints, *keypointsGPU);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vector_KeyPoint_R(cv::cuda::SURF_CUDA* instance, const cv::cuda::GpuMat* keypointsGPU, std::vector<cv::KeyPoint>* keypoints) {
+		try {
+			instance->downloadKeypoints(*keypointsGPU, *keypoints);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vector_float_R(cv::cuda::SURF_CUDA* instance, const cv::cuda::GpuMat* descriptorsGPU, std::vector<float>* descriptors) {
+		try {
+			instance->downloadDescriptors(*descriptorsGPU, *descriptors);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_SURF_CUDA_releaseMemory(cv::cuda::SURF_CUDA* instance) {
+		try {
+			instance->releaseMemory();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	void cv_BoostDesc_delete(cv::xfeatures2d::BoostDesc* instance) {
 		delete instance;
 	}

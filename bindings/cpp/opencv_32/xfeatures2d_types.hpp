@@ -1,4 +1,5 @@
 template struct Result<bool>;
+template struct Result<const std::vector<cv::KeyPoint>*>;
 template struct Result<const std::vector<cv::Mat>*>;
 template struct Result<const std::vector<cv::Point_<float>>*>;
 template struct Result<const std::vector<float>*>;
@@ -16,6 +17,8 @@ template struct Result<cv::Ptr<cv::xfeatures2d::SIFT>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::SURF>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::StarDetector>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::VGG>*>;
+template struct Result<cv::cuda::GpuMat*>;
+template struct Result<cv::cuda::SURF_CUDA*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;

@@ -22,6 +22,8 @@ template struct Result<cv::Ptr<cv::xfeatures2d::SURF>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::StarDetector>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::VGG>*>;
 template struct Result<cv::Size_<float>>;
+template struct Result<cv::cuda::GpuMat*>;
+template struct Result<cv::cuda::SURF_CUDA*>;
 template struct Result<cv::xfeatures2d::Elliptic_KeyPoint*>;
 template struct Result<double>;
 template struct Result<float>;

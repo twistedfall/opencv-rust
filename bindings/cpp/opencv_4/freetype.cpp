@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/freetype.hpp>
 #include "freetype_types.hpp"
 

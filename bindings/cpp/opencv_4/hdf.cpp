@@ -1,4 +1,5 @@
-#include "hdf.hpp"
+#include "ocvrs_common.hpp"
+#include <opencv2/hdf.hpp>
 #include "hdf_types.hpp"
 
 extern "C" {

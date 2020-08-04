@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/quality.hpp>
 #include "quality_types.hpp"
 

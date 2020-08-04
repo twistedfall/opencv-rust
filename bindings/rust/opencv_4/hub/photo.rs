@@ -212,6 +212,93 @@ pub fn create_tonemap(gamma: f32) -> Result<core::Ptr::<dyn crate::photo::Tonema
 	unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::Tonemap>::opencv_from_extern(r) } )
 }
 
+/// Modification of fastNlMeansDenoising function for colored images
+/// 
+/// ## Parameters
+/// * src: Input 8-bit 3-channel image.
+/// * dst: Output image with the same size and type as src .
+/// * h_luminance: Parameter regulating filter strength. Big h value perfectly removes noise but
+/// also removes image details, smaller h value preserves details but also preserves some noise
+/// * photo_render: float The same as h but for color components. For most images value equals 10 will be
+/// enough to remove colored noise and do not distort colors
+/// * search_window: Size in pixels of the window that is used to compute weighted average for
+/// given pixel. Should be odd. Affect performance linearly: greater search_window - greater
+/// denoising time. Recommended value 21 pixels
+/// * block_size: Size in pixels of the template patch that is used to compute weights. Should be
+/// odd. Recommended value 7 pixels
+/// * stream: Stream for the asynchronous invocations.
+/// 
+/// The function converts image to CIELAB colorspace and then separately denoise L and AB components
+/// with given h parameters using FastNonLocalMeansDenoising::simpleMethod function.
+/// ## See also
+/// fastNlMeansDenoisingColored
+/// 
+/// ## C++ default parameters
+/// * search_window: 21
+/// * block_size: 7
+/// * stream: Stream::Null()
+pub fn fast_nl_means_denoising_colored_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream()) }.into_result()
+}
+
+/// Perform image denoising using Non-local Means Denoising algorithm
+/// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising> with several computational
+/// optimizations. Noise expected to be a gaussian white noise
+/// 
+/// ## Parameters
+/// * src: Input 8-bit 1-channel, 2-channel or 3-channel image.
+/// * dst: Output image with the same size and type as src .
+/// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
+/// removes image details, smaller h value preserves details but also preserves some noise
+/// * search_window: Size in pixels of the window that is used to compute weighted average for
+/// given pixel. Should be odd. Affect performance linearly: greater search_window - greater
+/// denoising time. Recommended value 21 pixels
+/// * block_size: Size in pixels of the template patch that is used to compute weights. Should be
+/// odd. Recommended value 7 pixels
+/// * stream: Stream for the asynchronous invocations.
+/// 
+/// This function expected to be applied to grayscale images. For colored images look at
+/// FastNonLocalMeansDenoising::labMethod.
+/// ## See also
+/// fastNlMeansDenoising
+/// 
+/// ## C++ default parameters
+/// * search_window: 21
+/// * block_size: 7
+/// * stream: Stream::Null()
+pub fn fast_nl_means_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, stream.as_raw_mut_Stream()) }.into_result()
+}
+
+/// Performs pure non local means denoising without any simplification, and thus it is not fast.
+/// 
+/// ## Parameters
+/// * src: Source image. Supports only CV_8UC1, CV_8UC2 and CV_8UC3.
+/// * dst: Destination image.
+/// * h: Filter sigma regulating filter strength for color.
+/// * search_window: Size of search window.
+/// * block_size: Size of block used for computing weights.
+/// * borderMode: Border type. See borderInterpolate for details. BORDER_REFLECT101 ,
+/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// fastNlMeansDenoising
+/// 
+/// ## C++ default parameters
+/// * search_window: 21
+/// * block_size: 7
+/// * border_mode: BORDER_DEFAULT
+/// * stream: Stream::Null()
+pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	unsafe { sys::cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float_int_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream()) }.into_result()
+}
+
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 /// black-and-white photograph rendering, and in many single channel image processing applications
 /// [CL12](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_CL12) .

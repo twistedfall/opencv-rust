@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/features2d.hpp>
 #include "features2d_types.hpp"
 

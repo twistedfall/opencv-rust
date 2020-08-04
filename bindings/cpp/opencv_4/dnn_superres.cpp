@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/dnn_superres.hpp>
 #include "dnn_superres_types.hpp"
 

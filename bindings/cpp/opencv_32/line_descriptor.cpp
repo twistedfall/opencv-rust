@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "ocvrs_common.hpp"
 #include <opencv2/line_descriptor.hpp>
 #include "line_descriptor_types.hpp"
 

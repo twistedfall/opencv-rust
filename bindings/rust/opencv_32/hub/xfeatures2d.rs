@@ -10,7 +10,7 @@
 //! known to be patented. Use them at your own risk.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::SIFTTrait, super::SURF, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDescTrait, super::PCTSignatures, super::PCTSignaturesSQFD };
+	pub use { super::SIFTTrait, super::SURF, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDescTrait, super::PCTSignatures, super::PCTSignaturesSQFD, super::SURF_CUDATrait };
 }
 
 pub const BoostDesc_BGM: i32 = 100;
@@ -82,10 +82,267 @@ pub enum PCTSignatures_SimilarityFunction {
 
 opencv_type_enum! { crate::xfeatures2d::PCTSignatures_SimilarityFunction }
 
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum SURF_CUDA_KeypointLayout {
+	X_ROW = 0,
+	Y_ROW = 1,
+	LAPLACIAN_ROW = 2,
+	OCTAVE_ROW = 3,
+	SIZE_ROW = 4,
+	ANGLE_ROW = 5,
+	HESSIAN_ROW = 6,
+	ROWS_COUNT = 7,
+}
+
+opencv_type_enum! { crate::xfeatures2d::SURF_CUDA_KeypointLayout }
+
 pub type SiftDescriptorExtractor = crate::xfeatures2d::SIFT;
 pub type SiftFeatureDetector = crate::xfeatures2d::SIFT;
 pub type SurfDescriptorExtractor = dyn crate::xfeatures2d::SURF;
 pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
+/// Class used for extracting Speeded Up Robust Features (SURF) from an image. :
+/// 
+/// The class SURF_CUDA implements Speeded Up Robust Features descriptor. There is a fast multi-scale
+/// Hessian keypoint detector that can be used to find the keypoints (which is the default option). But
+/// the descriptors can also be computed for the user-specified keypoints. Only 8-bit grayscale images
+/// are supported.
+/// 
+/// The class SURF_CUDA can store results in the GPU and CPU memory. It provides functions to convert
+/// results between CPU and GPU version ( uploadKeypoints, downloadKeypoints, downloadDescriptors ). The
+/// format of CPU results is the same as SURF results. GPU results are stored in GpuMat. The keypoints
+/// matrix is ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BnFeatures%7D%20%5Ctimes%207) matrix with the CV_32FC1 type.
+/// 
+/// *   keypoints.ptr\<float\>(X_ROW)[i] contains x coordinate of the i-th feature.
+/// *   keypoints.ptr\<float\>(Y_ROW)[i] contains y coordinate of the i-th feature.
+/// *   keypoints.ptr\<float\>(LAPLACIAN_ROW)[i] contains the laplacian sign of the i-th feature.
+/// *   keypoints.ptr\<float\>(OCTAVE_ROW)[i] contains the octave of the i-th feature.
+/// *   keypoints.ptr\<float\>(SIZE_ROW)[i] contains the size of the i-th feature.
+/// *   keypoints.ptr\<float\>(ANGLE_ROW)[i] contain orientation of the i-th feature.
+/// *   keypoints.ptr\<float\>(HESSIAN_ROW)[i] contains the response of the i-th feature.
+/// 
+/// The descriptors matrix is ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BnFeatures%7D%20%5Ctimes%20%5Ctexttt%7BdescriptorSize%7D) matrix with the
+/// CV_32FC1 type.
+/// 
+/// The class SURF_CUDA uses some buffers and provides access to it. All buffers can be safely released
+/// between function calls.
+/// ## See also
+/// SURF
+/// 
+/// 
+/// Note:
+///    *   An example for using the SURF keypoint matcher on GPU can be found at
+///        opencv_source_code/samples/gpu/surf_keypoint_matcher.cpp
+pub trait SURF_CUDATrait {
+	fn as_raw_SURF_CUDA(&self) -> *const c_void;
+	fn as_raw_mut_SURF_CUDA(&mut self) -> *mut c_void;
+
+	fn hessian_threshold(&self) -> f64 {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropHessianThreshold_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: hessian_threshold")
+	}
+	
+	fn set_hessian_threshold(&mut self, val: f64) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_hessian_threshold")
+	}
+	
+	fn n_octaves(&self) -> i32 {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaves_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: n_octaves")
+	}
+	
+	fn set_n_octaves(&mut self, val: i32) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_n_octaves")
+	}
+	
+	fn n_octave_layers(&self) -> i32 {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: n_octave_layers")
+	}
+	
+	fn set_n_octave_layers(&mut self, val: i32) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_n_octave_layers")
+	}
+	
+	fn extended(&self) -> bool {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropExtended_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: extended")
+	}
+	
+	fn set_extended(&mut self, val: bool) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropExtended_bool(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_extended")
+	}
+	
+	fn upright(&self) -> bool {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropUpright_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: upright")
+	}
+	
+	fn set_upright(&mut self, val: bool) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropUpright_bool(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_upright")
+	}
+	
+	/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
+	fn keypoints_ratio(&self) -> f32 {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: keypoints_ratio")
+	}
+	
+	/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
+	fn set_keypoints_ratio(&mut self, val: f32) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_keypoints_ratio")
+	}
+	
+	fn sum(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropSum(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: sum")
+	}
+	
+	fn set_sum(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_sum")
+	}
+	
+	fn mask1(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropMask1(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: mask1")
+	}
+	
+	fn set_mask1(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_mask1")
+	}
+	
+	fn mask_sum(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropMaskSum(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: mask_sum")
+	}
+	
+	fn set_mask_sum(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_mask_sum")
+	}
+	
+	fn det(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropDet(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: det")
+	}
+	
+	fn set_det(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_det")
+	}
+	
+	fn trace(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropTrace(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: trace")
+	}
+	
+	fn set_trace(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_trace")
+	}
+	
+	fn max_pos_buffer(&mut self) -> core::GpuMat {
+		unsafe { sys::cv_cuda_SURF_CUDA_getPropMaxPosBuffer(self.as_raw_mut_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: max_pos_buffer")
+	}
+	
+	fn set_max_pos_buffer(&mut self, mut val: core::GpuMat) -> () {
+		unsafe { sys::cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_max_pos_buffer")
+	}
+	
+	/// returns the descriptor size in float's (64 or 128)
+	fn descriptor_size(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_SURF_CUDA_descriptorSize_const(self.as_raw_SURF_CUDA()) }.into_result()
+	}
+	
+	/// returns the default norm type
+	fn default_norm(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_SURF_CUDA_defaultNorm_const(self.as_raw_SURF_CUDA()) }.into_result()
+	}
+	
+	/// upload host keypoints to device memory
+	fn upload_keypoints(&mut self, keypoints: &core::Vector::<core::KeyPoint>, keypoints_gpu: &mut core::GpuMat) -> Result<()> {
+		unsafe { sys::cv_cuda_SURF_CUDA_uploadKeypoints_const_vector_KeyPoint_R_GpuMatR(self.as_raw_mut_SURF_CUDA(), keypoints.as_raw_VectorOfKeyPoint(), keypoints_gpu.as_raw_mut_GpuMat()) }.into_result()
+	}
+	
+	/// download keypoints from device to host memory
+	fn download_keypoints(&mut self, keypoints_gpu: &core::GpuMat, keypoints: &mut core::Vector::<core::KeyPoint>) -> Result<()> {
+		unsafe { sys::cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vector_KeyPoint_R(self.as_raw_mut_SURF_CUDA(), keypoints_gpu.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint()) }.into_result()
+	}
+	
+	/// download descriptors from device to host memory
+	fn download_descriptors(&mut self, descriptors_gpu: &core::GpuMat, descriptors: &mut core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vector_float_R(self.as_raw_mut_SURF_CUDA(), descriptors_gpu.as_raw_GpuMat(), descriptors.as_raw_mut_VectorOff32()) }.into_result()
+	}
+	
+	fn release_memory(&mut self) -> Result<()> {
+		unsafe { sys::cv_cuda_SURF_CUDA_releaseMemory(self.as_raw_mut_SURF_CUDA()) }.into_result()
+	}
+	
+}
+
+/// Class used for extracting Speeded Up Robust Features (SURF) from an image. :
+/// 
+/// The class SURF_CUDA implements Speeded Up Robust Features descriptor. There is a fast multi-scale
+/// Hessian keypoint detector that can be used to find the keypoints (which is the default option). But
+/// the descriptors can also be computed for the user-specified keypoints. Only 8-bit grayscale images
+/// are supported.
+/// 
+/// The class SURF_CUDA can store results in the GPU and CPU memory. It provides functions to convert
+/// results between CPU and GPU version ( uploadKeypoints, downloadKeypoints, downloadDescriptors ). The
+/// format of CPU results is the same as SURF results. GPU results are stored in GpuMat. The keypoints
+/// matrix is ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BnFeatures%7D%20%5Ctimes%207) matrix with the CV_32FC1 type.
+/// 
+/// *   keypoints.ptr\<float\>(X_ROW)[i] contains x coordinate of the i-th feature.
+/// *   keypoints.ptr\<float\>(Y_ROW)[i] contains y coordinate of the i-th feature.
+/// *   keypoints.ptr\<float\>(LAPLACIAN_ROW)[i] contains the laplacian sign of the i-th feature.
+/// *   keypoints.ptr\<float\>(OCTAVE_ROW)[i] contains the octave of the i-th feature.
+/// *   keypoints.ptr\<float\>(SIZE_ROW)[i] contains the size of the i-th feature.
+/// *   keypoints.ptr\<float\>(ANGLE_ROW)[i] contain orientation of the i-th feature.
+/// *   keypoints.ptr\<float\>(HESSIAN_ROW)[i] contains the response of the i-th feature.
+/// 
+/// The descriptors matrix is ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BnFeatures%7D%20%5Ctimes%20%5Ctexttt%7BdescriptorSize%7D) matrix with the
+/// CV_32FC1 type.
+/// 
+/// The class SURF_CUDA uses some buffers and provides access to it. All buffers can be safely released
+/// between function calls.
+/// ## See also
+/// SURF
+/// 
+/// 
+/// Note:
+///    *   An example for using the SURF keypoint matcher on GPU can be found at
+///        opencv_source_code/samples/gpu/surf_keypoint_matcher.cpp
+pub struct SURF_CUDA {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { SURF_CUDA }
+
+impl Drop for SURF_CUDA {
+	fn drop(&mut self) {
+		extern "C" { fn cv_SURF_CUDA_delete(instance: *mut c_void); }
+		unsafe { cv_SURF_CUDA_delete(self.as_raw_mut_SURF_CUDA()) };
+	}
+}
+
+impl SURF_CUDA {
+	#[inline] pub fn as_raw_SURF_CUDA(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_SURF_CUDA(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for SURF_CUDA {}
+
+impl crate::xfeatures2d::SURF_CUDATrait for SURF_CUDA {
+	#[inline] fn as_raw_SURF_CUDA(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SURF_CUDA(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl SURF_CUDA {
+	/// the default constructor
+	pub fn default() -> Result<crate::xfeatures2d::SURF_CUDA> {
+		unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA() }.into_result().map(|r| unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(r) } )
+	}
+	
+	/// the full constructor taking all the necessary parameters
+	/// 
+	/// ## C++ default parameters
+	/// * _n_octaves: 4
+	/// * _n_octave_layers: 2
+	/// * _extended: false
+	/// * _keypoints_ratio: 0.01f
+	/// * _upright: false
+	pub fn new(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<crate::xfeatures2d::SURF_CUDA> {
+		unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright) }.into_result().map(|r| unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(r) } )
+	}
+	
+}
+
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
 /// [Trzcinski13a](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 /// 
