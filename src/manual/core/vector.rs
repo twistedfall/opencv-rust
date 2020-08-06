@@ -216,7 +216,7 @@ impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> wher
 		let s = s.into_iter();
 		let (lo, hi) = s.size_hint();
 		self.reserve(hi.unwrap_or(lo));
-		s.into_iter().for_each(|elem| {
+		s.for_each(|elem| {
 			self.push(elem);
 		});
 	}
@@ -300,7 +300,7 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 }
 
 #[inline(always)]
-pub(crate) fn vector_index_check(index: size_t, len: size_t) -> crate::Result<()> {
+fn vector_index_check(index: size_t, len: size_t) -> crate::Result<()> {
 	if index >= len {
 		Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
 	} else {

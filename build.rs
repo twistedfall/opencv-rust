@@ -745,7 +745,7 @@ impl Library {
 		let explicit_pkg_config = env::var_os("PKG_CONFIG_PATH").is_some() || env::var_os("OPENCV_PKGCONFIG_NAME").is_some();
 		let explicit_cmake = env::var_os("OpenCV_DIR").is_some()
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
-			|| env::var_os("CMAKE_PREFIX_PATH").is_some();
+			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
 		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || cfg!(target_os = "windows");
 

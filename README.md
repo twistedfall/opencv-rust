@@ -65,6 +65,8 @@ Installing OpenCV is easy through the following sources:
   ```shell script
   vcpkg install llvm opencv4[contrib,nonfree]
   ```
+  You most probably want to set environment variable `VCPKGRS_DYNAMIC` to "1" unless you're specifically
+  targeting a static build.
 
 ### macOS package
 
@@ -75,7 +77,7 @@ Get OpenCV from homebrew:
   brew install pkg-config opencv
   ```
   You will also need a working C++ compiler and libclang, you can use the ones from XCode or install `llvm`
-  from brew. You most probably need to also check the item 5 of the troubleshooting below.
+  from brew. You most probably need to also check the item 6 of the troubleshooting below.
 
 ### Manual build
 
@@ -120,7 +122,13 @@ You need to set up the following environment variables to point to the installed
    variable correctly or copy the dll next to the binary you're trying to run. Check
    [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide too.
 
-5. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
+   [this issue](https://github.com/twistedfall/opencv-rust/issues/161).
+   
+   Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
+   "1".
+
+6. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
 
    OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
