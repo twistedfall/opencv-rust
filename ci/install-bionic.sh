@@ -2,6 +2,7 @@
 
 set -vex
 
+sudo apt-get update
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
 	sudo apt-get -y install libopencv-dev=3.2.0*
 else
@@ -103,7 +104,6 @@ else
 		-D OPENCV_ENABLE_MEMALIGN=OFF
 	"
 
-	sudo apt-get update
 	# runtime deps
 	sudo apt-get -y install \
 		libatlas3-base \
