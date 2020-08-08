@@ -1,3 +1,7 @@
+* 0.45.0
+  * Add implementation of `From<Vec<T>>` for `Vector<T>` + misc vector improvements
+  * Enable OpenGL functions and classes from the `core` module
+
 * 0.44.2
   * Fix building with Apple clang
   * Show libclang diagnostics during binding generation

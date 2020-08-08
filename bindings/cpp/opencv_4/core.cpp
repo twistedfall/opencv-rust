@@ -361,6 +361,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result_void cv_cuda_setGlDevice_int(int device) {
+		try {
+			cv::cuda::setGlDevice(device);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_cuda_unregisterPageLocked_MatR(cv::Mat* m) {
 		try {
 			cv::cuda::unregisterPageLocked(*m);
@@ -1270,6 +1277,62 @@ extern "C" {
 			const char* ret = cv::ocl::vecopTypeToStr(t);
 			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(const cv::ogl::Texture2D* texture, const cv::_OutputArray* dst) {
+		try {
+			cv::ogl::convertFromGLTexture2D(*texture, *dst);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(const cv::_InputArray* src, cv::ogl::Texture2D* texture) {
+		try {
+			cv::ogl::convertToGLTexture2D(*src, *texture);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::UMat*> cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(const cv::ogl::Buffer* buffer, cv::AccessFlag accessFlags) {
+		try {
+			cv::UMat ret = cv::ogl::mapGLBuffer(*buffer, accessFlags);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::UMat*>))
+	}
+	
+	Result<cv::ocl::Context*> cv_ogl_ocl_initializeContextFromGL() {
+		try {
+			cv::ocl::Context ret = cv::ogl::ocl::initializeContextFromGL();
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
+	Result_void cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(const cv::ogl::Arrays* arr, const cv::_InputArray* indices, int mode, cv::Scalar* color) {
+		try {
+			cv::ogl::render(*arr, *indices, mode, *color);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_render_const_ArraysR_int_Scalar(const cv::ogl::Arrays* arr, int mode, cv::Scalar* color) {
+		try {
+			cv::ogl::render(*arr, mode, *color);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_render_const_Texture2DR_Rect__double__Rect__double_(const cv::ogl::Texture2D* tex, cv::Rect_<double>* wndRect, cv::Rect_<double>* texRect) {
+		try {
+			cv::ogl::render(*tex, *wndRect, *texRect);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_unmapGLBuffer_UMatR(cv::UMat* u) {
+		try {
+			cv::ogl::unmapGLBuffer(*u);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result<cv::MatExpr*> cv_operatorA_const_MatExprR_const_MatExprR(const cv::MatExpr* e1, const cv::MatExpr* e2) {
@@ -7017,6 +7080,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputArray*>))
 	}
 	
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_BufferR(const cv::ogl::Buffer* buf) {
+		try {
+			cv::_InputArray* ret = new cv::_InputArray(*buf);
+			return Ok<cv::_InputArray*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputArray*>))
+	}
+	
 	Result<cv::_InputArray*> cv__InputArray__InputArray_const_HostMemR(const cv::cuda::HostMem* cuda_mem) {
 		try {
 			cv::_InputArray* ret = new cv::_InputArray(*cuda_mem);
@@ -7085,6 +7155,13 @@ extern "C" {
 			cv::cuda::GpuMat ret = instance->getGpuMat();
 			return Ok(new cv::cuda::GpuMat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv__InputArray_getOGlBuffer_const(const cv::_InputArray* instance) {
+		try {
+			cv::ogl::Buffer ret = instance->getOGlBuffer();
+			return Ok(new cv::ogl::Buffer(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
 	}
 	
 	Result<int> cv__InputArray_getFlags_const(const cv::_InputArray* instance) {
@@ -7328,6 +7405,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputOutputArray*>))
 	}
 	
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_BufferR(cv::ogl::Buffer* buf) {
+		try {
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*buf);
+			return Ok<cv::_InputOutputArray*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputOutputArray*>))
+	}
+	
 	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_HostMemR(cv::cuda::HostMem* cuda_mem) {
 		try {
 			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*cuda_mem);
@@ -7373,6 +7457,13 @@ extern "C" {
 	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R(const std::vector<cv::cuda::GpuMat>* d_mat) {
 		try {
 			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*d_mat);
+			return Ok<cv::_InputOutputArray*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputOutputArray*>))
+	}
+	
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_BufferR(const cv::ogl::Buffer* buf) {
+		try {
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*buf);
 			return Ok<cv::_InputOutputArray*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_InputOutputArray*>))
 	}
@@ -7443,6 +7534,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
 	}
 	
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_BufferR(cv::ogl::Buffer* buf) {
+		try {
+			cv::_OutputArray* ret = new cv::_OutputArray(*buf);
+			return Ok<cv::_OutputArray*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
+	}
+	
 	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_HostMemR(cv::cuda::HostMem* cuda_mem) {
 		try {
 			cv::_OutputArray* ret = new cv::_OutputArray(*cuda_mem);
@@ -7493,6 +7591,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
 	}
 	#endif
+	
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_BufferR(const cv::ogl::Buffer* buf) {
+		try {
+			cv::_OutputArray* ret = new cv::_OutputArray(*buf);
+			return Ok<cv::_OutputArray*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
+	}
 	
 	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_HostMemR(const cv::cuda::HostMem* cuda_mem) {
 		try {
@@ -7562,6 +7667,13 @@ extern "C" {
 			std::vector<cv::cuda::GpuMat> ret = instance->getGpuMatVecRef();
 			return Ok(new std::vector<cv::cuda::GpuMat>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<cv::cuda::GpuMat>*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv__OutputArray_getOGlBufferRef_const(const cv::_OutputArray* instance) {
+		try {
+			cv::ogl::Buffer ret = instance->getOGlBufferRef();
+			return Ok(new cv::ogl::Buffer(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
 	}
 	
 	Result<cv::cuda::HostMem*> cv__OutputArray_getHostMemRef_const(const cv::_OutputArray* instance) {
@@ -10675,6 +10787,477 @@ extern "C" {
 			uint64_t ret = instance->durationNS();
 			return Ok<uint64_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<uint64_t>))
+	}
+	
+	void cv_Arrays_delete(cv::ogl::Arrays* instance) {
+		delete instance;
+	}
+	Result<cv::ogl::Arrays*> cv_ogl_Arrays_Arrays() {
+		try {
+			cv::ogl::Arrays* ret = new cv::ogl::Arrays();
+			return Ok<cv::ogl::Arrays*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Arrays*>))
+	}
+	
+	Result_void cv_ogl_Arrays_setVertexArray_const__InputArrayR(cv::ogl::Arrays* instance, const cv::_InputArray* vertex) {
+		try {
+			instance->setVertexArray(*vertex);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_resetVertexArray(cv::ogl::Arrays* instance) {
+		try {
+			instance->resetVertexArray();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_setColorArray_const__InputArrayR(cv::ogl::Arrays* instance, const cv::_InputArray* color) {
+		try {
+			instance->setColorArray(*color);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_resetColorArray(cv::ogl::Arrays* instance) {
+		try {
+			instance->resetColorArray();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_setNormalArray_const__InputArrayR(cv::ogl::Arrays* instance, const cv::_InputArray* normal) {
+		try {
+			instance->setNormalArray(*normal);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_resetNormalArray(cv::ogl::Arrays* instance) {
+		try {
+			instance->resetNormalArray();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(cv::ogl::Arrays* instance, const cv::_InputArray* texCoord) {
+		try {
+			instance->setTexCoordArray(*texCoord);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_resetTexCoordArray(cv::ogl::Arrays* instance) {
+		try {
+			instance->resetTexCoordArray();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_release(cv::ogl::Arrays* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_setAutoRelease_bool(cv::ogl::Arrays* instance, bool flag) {
+		try {
+			instance->setAutoRelease(flag);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Arrays_bind_const(const cv::ogl::Arrays* instance) {
+		try {
+			instance->bind();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_ogl_Arrays_size_const(const cv::ogl::Arrays* instance) {
+		try {
+			int ret = instance->size();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<bool> cv_ogl_Arrays_empty_const(const cv::ogl::Arrays* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	void cv_Buffer_delete(cv::ogl::Buffer* instance) {
+		delete instance;
+	}
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer() {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer();
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(int arows, int acols, int atype, unsigned int abufId, bool autoRelease) {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer(arows, acols, atype, abufId, autoRelease);
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(cv::Size* asize, int atype, unsigned int abufId, bool autoRelease) {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer(*asize, atype, abufId, autoRelease);
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer_int_int_int_Target_bool(int arows, int acols, int atype, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer(arows, acols, atype, target, autoRelease);
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer_Size_int_Target_bool(cv::Size* asize, int atype, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer(*asize, atype, target, autoRelease);
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(const cv::_InputArray* arr, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			cv::ogl::Buffer* ret = new cv::ogl::Buffer(*arr, target, autoRelease);
+			return Ok<cv::ogl::Buffer*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result_void cv_ogl_Buffer_create_int_int_int_Target_bool(cv::ogl::Buffer* instance, int arows, int acols, int atype, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			instance->create(arows, acols, atype, target, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_create_Size_int_Target_bool(cv::ogl::Buffer* instance, cv::Size* asize, int atype, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			instance->create(*asize, atype, target, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_release(cv::ogl::Buffer* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_setAutoRelease_bool(cv::ogl::Buffer* instance, bool flag) {
+		try {
+			instance->setAutoRelease(flag);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(cv::ogl::Buffer* instance, const cv::_InputArray* arr, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			instance->copyFrom(*arr, target, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(cv::ogl::Buffer* instance, const cv::_InputArray* arr, cv::cuda::Stream* stream, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			instance->copyFrom(*arr, *stream, target, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_copyTo_const_const__OutputArrayR(const cv::ogl::Buffer* instance, const cv::_OutputArray* arr) {
+		try {
+			instance->copyTo(*arr);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(const cv::ogl::Buffer* instance, const cv::_OutputArray* arr, cv::cuda::Stream* stream) {
+		try {
+			instance->copyTo(*arr, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ogl::Buffer*> cv_ogl_Buffer_clone_const_Target_bool(const cv::ogl::Buffer* instance, cv::ogl::Buffer::Target target, bool autoRelease) {
+		try {
+			cv::ogl::Buffer ret = instance->clone(target, autoRelease);
+			return Ok(new cv::ogl::Buffer(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Buffer*>))
+	}
+	
+	Result_void cv_ogl_Buffer_bind_const_Target(const cv::ogl::Buffer* instance, cv::ogl::Buffer::Target target) {
+		try {
+			instance->bind(target);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Buffer_unbind_Target(cv::ogl::Buffer::Target target) {
+		try {
+			cv::ogl::Buffer::unbind(target);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Mat*> cv_ogl_Buffer_mapHost_Access(cv::ogl::Buffer* instance, cv::ogl::Buffer::Access access) {
+		try {
+			cv::Mat ret = instance->mapHost(access);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result_void cv_ogl_Buffer_unmapHost(cv::ogl::Buffer* instance) {
+		try {
+			instance->unmapHost();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_ogl_Buffer_mapDevice(cv::ogl::Buffer* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->mapDevice();
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_ogl_Buffer_unmapDevice(cv::ogl::Buffer* instance) {
+		try {
+			instance->unmapDevice();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_ogl_Buffer_mapDevice_StreamR(cv::ogl::Buffer* instance, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::GpuMat ret = instance->mapDevice(*stream);
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result_void cv_ogl_Buffer_unmapDevice_StreamR(cv::ogl::Buffer* instance, cv::cuda::Stream* stream) {
+		try {
+			instance->unmapDevice(*stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_ogl_Buffer_rows_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->rows();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Buffer_cols_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->cols();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<cv::Size> cv_ogl_Buffer_size_const(const cv::ogl::Buffer* instance) {
+		try {
+			cv::Size ret = instance->size();
+			return Ok<cv::Size>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
+	}
+	
+	Result<bool> cv_ogl_Buffer_empty_const(const cv::ogl::Buffer* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<int> cv_ogl_Buffer_type_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->type();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Buffer_depth_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->depth();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Buffer_channels_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->channels();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Buffer_elemSize_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->elemSize();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Buffer_elemSize1_const(const cv::ogl::Buffer* instance) {
+		try {
+			int ret = instance->elemSize1();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<unsigned int> cv_ogl_Buffer_bufId_const(const cv::ogl::Buffer* instance) {
+		try {
+			unsigned int ret = instance->bufId();
+			return Ok<unsigned int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
+	}
+	
+	void cv_Texture2D_delete(cv::ogl::Texture2D* instance) {
+		delete instance;
+	}
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D() {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D();
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(int arows, int acols, cv::ogl::Texture2D::Format aformat, unsigned int atexId, bool autoRelease) {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D(arows, acols, aformat, atexId, autoRelease);
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(cv::Size* asize, cv::ogl::Texture2D::Format aformat, unsigned int atexId, bool autoRelease) {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D(*asize, aformat, atexId, autoRelease);
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D_int_int_Format_bool(int arows, int acols, cv::ogl::Texture2D::Format aformat, bool autoRelease) {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D(arows, acols, aformat, autoRelease);
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D_Size_Format_bool(cv::Size* asize, cv::ogl::Texture2D::Format aformat, bool autoRelease) {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D(*asize, aformat, autoRelease);
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result<cv::ogl::Texture2D*> cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(const cv::_InputArray* arr, bool autoRelease) {
+		try {
+			cv::ogl::Texture2D* ret = new cv::ogl::Texture2D(*arr, autoRelease);
+			return Ok<cv::ogl::Texture2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D*>))
+	}
+	
+	Result_void cv_ogl_Texture2D_create_int_int_Format_bool(cv::ogl::Texture2D* instance, int arows, int acols, cv::ogl::Texture2D::Format aformat, bool autoRelease) {
+		try {
+			instance->create(arows, acols, aformat, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_create_Size_Format_bool(cv::ogl::Texture2D* instance, cv::Size* asize, cv::ogl::Texture2D::Format aformat, bool autoRelease) {
+		try {
+			instance->create(*asize, aformat, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_release(cv::ogl::Texture2D* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_setAutoRelease_bool(cv::ogl::Texture2D* instance, bool flag) {
+		try {
+			instance->setAutoRelease(flag);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(cv::ogl::Texture2D* instance, const cv::_InputArray* arr, bool autoRelease) {
+		try {
+			instance->copyFrom(*arr, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(const cv::ogl::Texture2D* instance, const cv::_OutputArray* arr, int ddepth, bool autoRelease) {
+		try {
+			instance->copyTo(*arr, ddepth, autoRelease);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ogl_Texture2D_bind_const(const cv::ogl::Texture2D* instance) {
+		try {
+			instance->bind();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_ogl_Texture2D_rows_const(const cv::ogl::Texture2D* instance) {
+		try {
+			int ret = instance->rows();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ogl_Texture2D_cols_const(const cv::ogl::Texture2D* instance) {
+		try {
+			int ret = instance->cols();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<cv::Size> cv_ogl_Texture2D_size_const(const cv::ogl::Texture2D* instance) {
+		try {
+			cv::Size ret = instance->size();
+			return Ok<cv::Size>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
+	}
+	
+	Result<bool> cv_ogl_Texture2D_empty_const(const cv::ogl::Texture2D* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<cv::ogl::Texture2D::Format> cv_ogl_Texture2D_format_const(const cv::ogl::Texture2D* instance) {
+		try {
+			cv::ogl::Texture2D::Format ret = instance->format();
+			return Ok<cv::ogl::Texture2D::Format>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ogl::Texture2D::Format>))
+	}
+	
+	Result<unsigned int> cv_ogl_Texture2D_texId_const(const cv::ogl::Texture2D* instance) {
+		try {
+			unsigned int ret = instance->texId();
+			return Ok<unsigned int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned int>))
 	}
 	
 	Result<void*> cv_utils_logging_LogTag_getPropName_const(const cv::utils::logging::LogTag* instance) {

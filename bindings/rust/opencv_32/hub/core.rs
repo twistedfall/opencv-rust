@@ -23,7 +23,7 @@
 //!            # Private implementation helpers
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::UMatDataAutoLockTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIterator_SeqReaderTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::MutexTrait, super::AutoLockTrait, super::TLSDataContainer, super::CommandLineParserTrait, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait };
+	pub use { super::HammingTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::UMatDataAutoLockTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIterator_SeqReaderTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::MutexTrait, super::AutoLockTrait, super::TLSDataContainer, super::CommandLineParserTrait, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -733,12 +733,15 @@ pub const KernelArg_PTR_ONLY: i32 = 16;
 pub const KernelArg_READ_ONLY: i32 = 2;
 pub const KernelArg_READ_WRITE: i32 = 6;
 pub const KernelArg_WRITE_ONLY: i32 = 4;
+pub const LINES: i32 = 1;
 /// 4-connected line
 pub const LINE_4: i32 = 4;
 /// 8-connected line
 pub const LINE_8: i32 = 8;
 /// antialiased line
 pub const LINE_AA: i32 = 16;
+pub const LINE_LOOP: i32 = 2;
+pub const LINE_STRIP: i32 = 3;
 pub const MaskIsTiled: i32 = -26;
 pub const Mat_AUTO_STEP: usize = 0;
 pub const Mat_CONTINUOUS_FLAG: i32 = 16384;
@@ -769,6 +772,10 @@ pub const OpenCLInitError: i32 = -222;
 pub const OpenCLNoAMDBlasFft: i32 = -223;
 pub const OpenGlApiCallError: i32 = -219;
 pub const OpenGlNotSupported: i32 = -218;
+pub const POINTS: i32 = 0;
+pub const POLYGON: i32 = 9;
+pub const QUADS: i32 = 7;
+pub const QUAD_STRIP: i32 = 8;
 /// the output is the mean vector of all rows/columns of the matrix.
 pub const REDUCE_AVG: i32 = 1;
 /// the output is the maximum (column/row-wise) of all rows/columns of the matrix.
@@ -866,6 +873,9 @@ pub const StsUnmatchedSizes: i32 = -209;
 pub const StsUnsupportedFormat: i32 = -210;
 /// incorrect vector length
 pub const StsVecLengthErr: i32 = -28;
+pub const TRIANGLES: i32 = 4;
+pub const TRIANGLE_FAN: i32 = 6;
+pub const TRIANGLE_STRIP: i32 = 5;
 pub const TYPE_FUN: i32 = 3;
 pub const TYPE_GENERAL: i32 = 0;
 pub const TYPE_MARKER: i32 = 1;
@@ -945,6 +955,32 @@ pub enum BorderTypes {
 }
 
 opencv_type_enum! { core::BorderTypes }
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Buffer_Access {
+	READ_ONLY = 35000,
+	WRITE_ONLY = 35001,
+	READ_WRITE = 35002,
+}
+
+opencv_type_enum! { core::Buffer_Access }
+
+/// The target defines how you intend to use the buffer object.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Buffer_Target {
+	/// The buffer will be used as a source for vertex data
+	ARRAY_BUFFER = 34962,
+	/// The buffer will be used for indices (in glDrawElements, for example)
+	ELEMENT_ARRAY_BUFFER = 34963,
+	/// The buffer will be used for reading from OpenGL textures
+	PIXEL_PACK_BUFFER = 35051,
+	/// The buffer will be used for writing to OpenGL textures
+	PIXEL_UNPACK_BUFFER = 35052,
+}
+
+opencv_type_enum! { core::Buffer_Target }
 
 /// comparison types
 #[repr(C)]
@@ -1502,6 +1538,24 @@ pub enum ReduceTypes {
 
 opencv_type_enum! { core::ReduceTypes }
 
+/// render mode
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum RenderModes {
+	POINTS = 0,
+	LINES = 1,
+	LINE_LOOP = 2,
+	LINE_STRIP = 3,
+	TRIANGLES = 4,
+	TRIANGLE_STRIP = 5,
+	TRIANGLE_FAN = 6,
+	QUADS = 7,
+	QUAD_STRIP = 8,
+	POLYGON = 9,
+}
+
+opencv_type_enum! { core::RenderModes }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RotateFlags {
@@ -1589,6 +1643,21 @@ pub enum TermCriteria_Type {
 }
 
 opencv_type_enum! { core::TermCriteria_Type }
+
+/// An Image Format describes the way that the images in Textures store their data.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Texture2D_Format {
+	NONE = 0,
+	/// Depth
+	DEPTH_COMPONENT = 6402,
+	/// Red, Green, Blue
+	RGB = 6407,
+	/// Red, Green, Blue, Alpha
+	RGBA = 6408,
+}
+
+opencv_type_enum! { core::Texture2D_Format }
 
 /// Usage flags for allocator
 #[repr(C)]
@@ -2594,6 +2663,19 @@ pub fn set_buffer_pool_usage(on: bool) -> Result<()> {
 /// If the call of this function is omitted, a default device is initialized at the fist CUDA usage.
 pub fn set_device(device: i32) -> Result<()> {
 	unsafe { sys::cv_cuda_setDevice_int(device) }.into_result()
+}
+
+/// Sets a CUDA device and initializes it for the current thread with OpenGL interoperability.
+/// 
+/// This function should be explicitly called after OpenGL context creation and before any CUDA calls.
+/// ## Parameters
+/// * device: System index of a CUDA device starting with 0.
+/// @ingroup core_opengl
+/// 
+/// ## C++ default parameters
+/// * device: 0
+pub fn set_gl_device(device: i32) -> Result<()> {
+	unsafe { sys::cv_cuda_setGlDevice_int(device) }.into_result()
 }
 
 /// Unmaps the memory of matrix and makes it pageable again.
@@ -4634,6 +4716,113 @@ pub fn use_opencl() -> Result<bool> {
 
 pub fn vecop_type_to_str(t: i32) -> Result<String> {
 	unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+/// Converts Texture2D object to OutputArray.
+/// ## Parameters
+/// * texture: - source Texture2D object.
+/// * dst: - destination OutputArray.
+pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+	output_array_arg!(dst);
+	unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray()) }.into_result()
+}
+
+/// Converts InputArray to Texture2D object.
+/// ## Parameters
+/// * src: - source InputArray.
+/// * texture: - destination Texture2D object.
+pub fn convert_to_gl_texture_2d(src: &dyn core::ToInputArray, texture: &mut core::Texture2D) -> Result<()> {
+	input_array_arg!(src);
+	unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D()) }.into_result()
+}
+
+/// Maps Buffer object to process on CL side (convert to UMat).
+/// 
+/// Function creates CL buffer from GL one, and then constructs UMat that can be used
+/// to process buffer data with OpenCV functions. Note that in current implementation
+/// UMat constructed this way doesn't own corresponding GL buffer object, so it is
+/// the user responsibility to close down CL/GL buffers relationships by explicitly
+/// calling unmapGLBuffer() function.
+/// ## Parameters
+/// * buffer: - source Buffer object.
+/// * accessFlags: - data access flags (ACCESS_READ|ACCESS_WRITE).
+/// ## Returns
+/// Returns UMat object
+/// 
+/// ## C++ default parameters
+/// * access_flags: ACCESS_READ|ACCESS_WRITE
+pub fn map_gl_buffer(buffer: &core::Buffer, access_flags: i32) -> Result<core::UMat> {
+	unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_int(buffer.as_raw_Buffer(), access_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+}
+
+/// Creates OpenCL context from GL.
+/// ## Returns
+/// Returns reference to OpenCL Context
+pub fn initialize_context_from_gl() -> Result<core::Context> {
+	unsafe { sys::cv_ogl_ocl_initializeContextFromGL() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+}
+
+/// Render OpenGL texture or primitives.
+/// ## Parameters
+/// * tex: Texture to draw.
+/// * wndRect: Region of window, where to draw a texture (normalized coordinates).
+/// * texRect: Region of texture to draw (normalized coordinates).
+/// 
+/// ## Overloaded parameters
+/// 
+/// * arr: Array of privitives vertices.
+/// * indices: Array of vertices indices (host or device memory).
+/// * mode: Render mode. One of cv::ogl::RenderModes
+/// * color: Color for all vertices. Will be used if arr doesn't contain color array.
+/// 
+/// ## C++ default parameters
+/// * mode: POINTS
+/// * color: Scalar::all(255)
+pub fn render_2(arr: &core::Arrays, indices: &dyn core::ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
+	input_array_arg!(indices);
+	unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, color.opencv_as_extern()) }.into_result()
+}
+
+/// Render OpenGL texture or primitives.
+/// ## Parameters
+/// * tex: Texture to draw.
+/// * wndRect: Region of window, where to draw a texture (normalized coordinates).
+/// * texRect: Region of texture to draw (normalized coordinates).
+/// 
+/// ## Overloaded parameters
+/// 
+/// * arr: Array of privitives vertices.
+/// * mode: Render mode. One of cv::ogl::RenderModes
+/// * color: Color for all vertices. Will be used if arr doesn't contain color array.
+/// 
+/// ## C++ default parameters
+/// * mode: POINTS
+/// * color: Scalar::all(255)
+pub fn render_1(arr: &core::Arrays, mode: i32, color: core::Scalar) -> Result<()> {
+	unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, color.opencv_as_extern()) }.into_result()
+}
+
+/// Render OpenGL texture or primitives.
+/// ## Parameters
+/// * tex: Texture to draw.
+/// * wndRect: Region of window, where to draw a texture (normalized coordinates).
+/// * texRect: Region of texture to draw (normalized coordinates).
+/// 
+/// ## C++ default parameters
+/// * wnd_rect: Rect_<double>(0.0,0.0,1.0,1.0)
+/// * tex_rect: Rect_<double>(0.0,0.0,1.0,1.0)
+pub fn render(tex: &core::Texture2D, wnd_rect: core::Rect_<f64>, tex_rect: core::Rect_<f64>) -> Result<()> {
+	unsafe { sys::cv_ogl_render_const_Texture2DR_Rect__double__Rect__double_(tex.as_raw_Texture2D(), wnd_rect.opencv_as_extern(), tex_rect.opencv_as_extern()) }.into_result()
+}
+
+/// Unmaps Buffer object (releases UMat, previously mapped from Buffer).
+/// 
+/// Function must be called explicitly by the user for each UMat previously constructed
+/// by the call to mapGLBuffer() function.
+/// ## Parameters
+/// * u: - source UMat, created by mapGLBuffer().
+pub fn unmap_gl_buffer(u: &mut core::UMat) -> Result<()> {
+	unsafe { sys::cv_ogl_unmapGLBuffer_UMatR(u.as_raw_mut_UMat()) }.into_result()
 }
 
 pub fn add_matexpr_matexpr(e1: &core::MatExpr, e2: &core::MatExpr) -> Result<core::MatExpr> {
@@ -14153,6 +14342,10 @@ pub trait _InputArrayTrait {
 		unsafe { sys::cv__InputArray_getGpuMat_const(self.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
 	}
 	
+	fn get_o_gl_buffer(&self) -> Result<core::Buffer> {
+		unsafe { sys::cv__InputArray_getOGlBuffer_const(self.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
 	fn get_flags(&self) -> Result<i32> {
 		unsafe { sys::cv__InputArray_getFlags_const(self.as_raw__InputArray()) }.into_result()
 	}
@@ -14439,6 +14632,10 @@ impl _InputArray {
 		unsafe { sys::cv__InputArray__InputArray_const_vector_GpuMat_R(d_mat_array.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
 	}
 	
+	pub fn new_1(buf: &core::Buffer) -> Result<core::_InputArray> {
+		unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+	}
+	
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_InputArray> {
 		unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
 	}
@@ -14516,11 +14713,15 @@ impl _InputOutputArray {
 		unsafe { sys::cv__InputOutputArray__InputOutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
 	}
 	
+	pub fn new_1(buf: &mut core::Buffer) -> Result<core::_InputOutputArray> {
+		unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+	}
+	
 	pub fn from_hostmem_mut(cuda_mem: &mut core::HostMem) -> Result<core::_InputOutputArray> {
 		unsafe { sys::cv__InputOutputArray__InputOutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
 	}
 	
-	pub fn new_1(vec: &mut core::Vector::<bool>) -> Result<core::_InputOutputArray> {
+	pub fn new_2(vec: &mut core::Vector::<bool>) -> Result<core::_InputOutputArray> {
 		unsafe { sys::cv__InputOutputArray__InputOutputArray_vector_bool_R(vec.as_raw_mut_VectorOfbool()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
 	}
 	
@@ -14546,6 +14747,10 @@ impl _InputOutputArray {
 	
 	pub fn from_gpumat_vec(d_mat: &core::Vector::<core::GpuMat>) -> Result<core::_InputOutputArray> {
 		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R(d_mat.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+	}
+	
+	pub fn new_3(buf: &core::Buffer) -> Result<core::_InputOutputArray> {
+		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_InputOutputArray> {
@@ -14621,6 +14826,10 @@ pub trait _OutputArrayTrait: core::_InputArrayTrait {
 	
 	fn get_gpu_mat_vec_ref(&self) -> Result<core::Vector::<core::GpuMat>> {
 		unsafe { sys::cv__OutputArray_getGpuMatVecRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Vector::<core::GpuMat>::opencv_from_extern(r) } )
+	}
+	
+	fn get_o_gl_buffer_ref(&self) -> Result<core::Buffer> {
+		unsafe { sys::cv__OutputArray_getOGlBufferRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
 	}
 	
 	fn get_host_mem_ref(&self) -> Result<core::HostMem> {
@@ -14763,11 +14972,15 @@ impl _OutputArray {
 		unsafe { sys::cv__OutputArray__OutputArray_vector_GpuMat_R(d_mat.as_raw_mut_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
 	}
 	
+	pub fn new_1(buf: &mut core::Buffer) -> Result<core::_OutputArray> {
+		unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+	}
+	
 	pub fn from_hostmem_mut(cuda_mem: &mut core::HostMem) -> Result<core::_OutputArray> {
 		unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
 	}
 	
-	pub fn new_1(vec: &mut core::Vector::<bool>) -> Result<core::_OutputArray> {
+	pub fn new_2(vec: &mut core::Vector::<bool>) -> Result<core::_OutputArray> {
 		unsafe { sys::cv__OutputArray__OutputArray_vector_bool_R(vec.as_raw_mut_VectorOfbool()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
 	}
 	
@@ -14794,6 +15007,10 @@ impl _OutputArray {
 	#[cfg(not(target_os = "windows"))]
 	pub fn from_gpumat_vec(d_mat: &core::Vector::<core::GpuMat>) -> Result<core::_OutputArray> {
 		unsafe { sys::cv__OutputArray__OutputArray_const_vector_GpuMat_R(d_mat.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+	}
+	
+	pub fn new_3(buf: &core::Buffer) -> Result<core::_OutputArray> {
+		unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
 	}
 	
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_OutputArray> {
@@ -17500,6 +17717,756 @@ impl Queue {
 	
 	pub fn get_default() -> Result<core::Queue> {
 		unsafe { sys::cv_ocl_Queue_getDefault() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// Wrapper for OpenGL Client-Side Vertex arrays.
+/// 
+/// ogl::Arrays stores vertex data in ogl::Buffer objects.
+pub trait ArraysTrait {
+	fn as_raw_Arrays(&self) -> *const c_void;
+	fn as_raw_mut_Arrays(&mut self) -> *mut c_void;
+
+	/// Sets an array of vertex coordinates.
+	/// ## Parameters
+	/// * vertex: array with vertex coordinates, can be both host and device memory.
+	fn set_vertex_array(&mut self, vertex: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(vertex);
+		unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray()) }.into_result()
+	}
+	
+	/// Resets vertex coordinates.
+	fn reset_vertex_array(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_Arrays()) }.into_result()
+	}
+	
+	/// Sets an array of vertex colors.
+	/// ## Parameters
+	/// * color: array with vertex colors, can be both host and device memory.
+	fn set_color_array(&mut self, color: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(color);
+		unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray()) }.into_result()
+	}
+	
+	/// Resets vertex colors.
+	fn reset_color_array(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_Arrays()) }.into_result()
+	}
+	
+	/// Sets an array of vertex normals.
+	/// ## Parameters
+	/// * normal: array with vertex normals, can be both host and device memory.
+	fn set_normal_array(&mut self, normal: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(normal);
+		unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray()) }.into_result()
+	}
+	
+	/// Resets vertex normals.
+	fn reset_normal_array(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_Arrays()) }.into_result()
+	}
+	
+	/// Sets an array of vertex texture coordinates.
+	/// ## Parameters
+	/// * texCoord: array with vertex texture coordinates, can be both host and device memory.
+	fn set_tex_coord_array(&mut self, tex_coord: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(tex_coord);
+		unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray()) }.into_result()
+	}
+	
+	/// Resets vertex texture coordinates.
+	fn reset_tex_coord_array(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_Arrays()) }.into_result()
+	}
+	
+	/// Releases all inner buffers.
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_Arrays()) }.into_result()
+	}
+	
+	/// Sets auto release mode all inner buffers.
+	/// ## Parameters
+	/// * flag: Auto release mode.
+	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_Arrays(), flag) }.into_result()
+	}
+	
+	/// Binds all vertex arrays.
+	fn bind(&self) -> Result<()> {
+		unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_Arrays()) }.into_result()
+	}
+	
+	/// Returns the vertex count.
+	fn size(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_Arrays()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_Arrays()) }.into_result()
+	}
+	
+}
+
+/// Wrapper for OpenGL Client-Side Vertex arrays.
+/// 
+/// ogl::Arrays stores vertex data in ogl::Buffer objects.
+pub struct Arrays {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Arrays }
+
+impl Drop for Arrays {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Arrays_delete(instance: *mut c_void); }
+		unsafe { cv_Arrays_delete(self.as_raw_mut_Arrays()) };
+	}
+}
+
+impl Arrays {
+	#[inline] pub fn as_raw_Arrays(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Arrays(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for Arrays {}
+
+impl core::ArraysTrait for Arrays {
+	#[inline] fn as_raw_Arrays(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Arrays(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Arrays {
+	/// Default constructor
+	pub fn default() -> Result<core::Arrays> {
+		unsafe { sys::cv_ogl_Arrays_Arrays() }.into_result().map(|r| unsafe { core::Arrays::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// Smart pointer for OpenGL buffer object with reference counting.
+/// 
+/// Buffer Objects are OpenGL objects that store an array of unformatted memory allocated by the OpenGL
+/// context. These can be used to store vertex data, pixel data retrieved from images or the
+/// framebuffer, and a variety of other things.
+/// 
+/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
+/// 
+/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
+pub trait BufferTrait {
+	fn as_raw_Buffer(&self) -> *const c_void;
+	fn as_raw_mut_Buffer(&mut self) -> *mut c_void;
+
+	/// Allocates memory for ogl::Buffer object.
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows in a 2D array.
+	/// * acols: Number of columns in a 2D array.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	fn create(&mut self, arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_Buffer(), arows, acols, atype, target, auto_release) }.into_result()
+	}
+	
+	/// Allocates memory for ogl::Buffer object.
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows in a 2D array.
+	/// * acols: Number of columns in a 2D array.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * asize: 2D array size.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	fn create_1(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, target, auto_release) }.into_result()
+	}
+	
+	/// Decrements the reference counter and destroys the buffer object if needed.
+	/// 
+	/// The function will call setAutoRelease(true) .
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_Buffer()) }.into_result()
+	}
+	
+	/// Sets auto release mode.
+	/// 
+	/// The lifetime of the OpenGL object is tied to the lifetime of the context. If OpenGL context was
+	/// bound to a window it could be released at any time (user can close a window). If object's destructor
+	/// is called after destruction of the context it will cause an error. Thus ogl::Buffer doesn't destroy
+	/// OpenGL object in destructor by default (all OpenGL resources will be released with OpenGL context).
+	/// This function can force ogl::Buffer destructor to destroy OpenGL object.
+	/// ## Parameters
+	/// * flag: Auto release mode (if true, release will be called in object's destructor).
+	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_Buffer(), flag) }.into_result()
+	}
+	
+	/// Copies from host/device memory to OpenGL buffer.
+	/// ## Parameters
+	/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	fn copy_from(&mut self, arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		input_array_arg!(arr);
+		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release) }.into_result()
+	}
+	
+	/// Copies from host/device memory to OpenGL buffer.
+	/// ## Parameters
+	/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	fn copy_from_1(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		input_array_arg!(arr);
+		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release) }.into_result()
+	}
+	
+	/// Copies from OpenGL buffer to host/device memory or another OpenGL buffer object.
+	/// 
+	/// ## Parameters
+	/// * arr: Destination array (host or device memory, can be Mat , cuda::GpuMat , std::vector or
+	/// ogl::Buffer ).
+	fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(arr);
+		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Copies from OpenGL buffer to host/device memory or another OpenGL buffer object.
+	/// 
+	/// ## Parameters
+	/// * arr: Destination array (host or device memory, can be Mat , cuda::GpuMat , std::vector or
+	/// ogl::Buffer ).
+	/// 
+	/// ## Overloaded parameters
+	fn copy_to_1(&self, arr: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		output_array_arg!(arr);
+		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	}
+	
+	/// Creates a full copy of the buffer object and the underlying data.
+	/// 
+	/// ## Parameters
+	/// * target: Buffer usage for destination buffer.
+	/// * autoRelease: Auto release mode for destination buffer.
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	fn clone(&self, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_Buffer(), target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// Binds OpenGL buffer to the specified buffer binding point.
+	/// 
+	/// ## Parameters
+	/// * target: Binding point. See cv::ogl::Buffer::Target .
+	fn bind(&self, target: core::Buffer_Target) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_Buffer(), target) }.into_result()
+	}
+	
+	/// Maps OpenGL buffer to host memory.
+	/// 
+	/// mapHost maps to the client's address space the entire data store of the buffer object. The data can
+	/// then be directly read and/or written relative to the returned pointer, depending on the specified
+	/// access policy.
+	/// 
+	/// A mapped data store must be unmapped with ogl::Buffer::unmapHost before its buffer object is used.
+	/// 
+	/// This operation can lead to memory transfers between host and device.
+	/// 
+	/// Only one buffer object can be mapped at a time.
+	/// ## Parameters
+	/// * access: Access policy, indicating whether it will be possible to read from, write to, or both
+	/// read from and write to the buffer object's mapped data store. The symbolic constant must be
+	/// ogl::Buffer::READ_ONLY , ogl::Buffer::WRITE_ONLY or ogl::Buffer::READ_WRITE .
+	fn map_host(&mut self, access: core::Buffer_Access) -> Result<core::Mat> {
+		unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_Buffer(), access) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	/// Unmaps OpenGL buffer.
+	fn unmap_host(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_Buffer()) }.into_result()
+	}
+	
+	/// map to device memory (blocking)
+	fn map_device(&mut self) -> Result<core::GpuMat> {
+		unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+	}
+	
+	fn unmap_device(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_Buffer()) }.into_result()
+	}
+	
+	/// Maps OpenGL buffer to CUDA device memory.
+	/// 
+	/// This operatation doesn't copy data. Several buffer objects can be mapped to CUDA memory at a time.
+	/// 
+	/// A mapped data store must be unmapped with ogl::Buffer::unmapDevice before its buffer object is used.
+	fn map_device_1(&mut self, stream: &mut core::Stream) -> Result<core::GpuMat> {
+		unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+	}
+	
+	/// Unmaps OpenGL buffer.
+	fn unmap_device_1(&mut self, stream: &mut core::Stream) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result()
+	}
+	
+	fn rows(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn cols(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn size(&self) -> Result<core::Size> {
+		unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn typ(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn depth(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn channels(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn elem_size(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	fn elem_size1(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+	/// get OpenGL opject id
+	fn buf_id(&self) -> Result<u32> {
+		unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_Buffer()) }.into_result()
+	}
+	
+}
+
+/// Smart pointer for OpenGL buffer object with reference counting.
+/// 
+/// Buffer Objects are OpenGL objects that store an array of unformatted memory allocated by the OpenGL
+/// context. These can be used to store vertex data, pixel data retrieved from images or the
+/// framebuffer, and a variety of other things.
+/// 
+/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
+/// 
+/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
+pub struct Buffer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Buffer }
+
+impl Drop for Buffer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Buffer_delete(instance: *mut c_void); }
+		unsafe { cv_Buffer_delete(self.as_raw_mut_Buffer()) };
+	}
+}
+
+impl Buffer {
+	#[inline] pub fn as_raw_Buffer(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Buffer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for Buffer {}
+
+impl core::BufferTrait for Buffer {
+	#[inline] fn as_raw_Buffer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Buffer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Buffer {
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	pub fn default() -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_Buffer() }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows in a 2D array.
+	/// * acols: Number of columns in a 2D array.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * abufId: Buffer object name.
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * asize: 2D array size.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * abufId: Buffer object name.
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(asize.opencv_as_extern(), atype, abuf_id, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows in a 2D array.
+	/// * acols: Number of columns in a 2D array.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * asize: 2D array size.
+	/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(asize.opencv_as_extern(), atype, target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+	/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * target: ARRAY_BUFFER
+	/// * auto_release: false
+	pub fn new_4(arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		input_array_arg!(arr);
+		unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+	}
+	
+	/// Unbind any buffers from the specified binding point.
+	/// 
+	/// ## Parameters
+	/// * target: Binding point. See cv::ogl::Buffer::Target .
+	pub fn unbind(target: core::Buffer_Target) -> Result<()> {
+		unsafe { sys::cv_ogl_Buffer_unbind_Target(target) }.into_result()
+	}
+	
+}
+
+/// Smart pointer for OpenGL 2D texture memory with reference counting.
+pub trait Texture2DTrait {
+	fn as_raw_Texture2D(&self) -> *const c_void;
+	fn as_raw_mut_Texture2D(&mut self) -> *mut c_void;
+
+	/// Allocates memory for ogl::Texture2D object.
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows.
+	/// * acols: Number of columns.
+	/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	fn create(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_Texture2D(), arows, acols, aformat, auto_release) }.into_result()
+	}
+	
+	/// Allocates memory for ogl::Texture2D object.
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows.
+	/// * acols: Number of columns.
+	/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * asize: 2D array size.
+	/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	fn create_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), asize.opencv_as_extern(), aformat, auto_release) }.into_result()
+	}
+	
+	/// Decrements the reference counter and destroys the texture object if needed.
+	/// 
+	/// The function will call setAutoRelease(true) .
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_Texture2D()) }.into_result()
+	}
+	
+	/// Sets auto release mode.
+	/// 
+	/// ## Parameters
+	/// * flag: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// The lifetime of the OpenGL object is tied to the lifetime of the context. If OpenGL context was
+	/// bound to a window it could be released at any time (user can close a window). If object's destructor
+	/// is called after destruction of the context it will cause an error. Thus ogl::Texture2D doesn't
+	/// destroy OpenGL object in destructor by default (all OpenGL resources will be released with OpenGL
+	/// context). This function can force ogl::Texture2D destructor to destroy OpenGL object.
+	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+		unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_Texture2D(), flag) }.into_result()
+	}
+	
+	/// Copies from host/device memory to OpenGL texture.
+	/// 
+	/// ## Parameters
+	/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	fn copy_from(&mut self, arr: &dyn core::ToInputArray, auto_release: bool) -> Result<()> {
+		input_array_arg!(arr);
+		unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release) }.into_result()
+	}
+	
+	/// Copies from OpenGL texture to host/device memory or another OpenGL texture object.
+	/// 
+	/// ## Parameters
+	/// * arr: Destination array (host or device memory, can be Mat , cuda::GpuMat , ogl::Buffer or
+	/// ogl::Texture2D ).
+	/// * ddepth: Destination depth.
+	/// * autoRelease: Auto release mode for destination buffer (if arr is OpenGL buffer or texture).
+	/// 
+	/// ## C++ default parameters
+	/// * ddepth: CV_32F
+	/// * auto_release: false
+	fn copy_to(&self, arr: &mut dyn core::ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
+		output_array_arg!(arr);
+		unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release) }.into_result()
+	}
+	
+	/// Binds texture to current active texture unit for GL_TEXTURE_2D target.
+	fn bind(&self) -> Result<()> {
+		unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	fn rows(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	fn cols(&self) -> Result<i32> {
+		unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	fn size(&self) -> Result<core::Size> {
+		unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	fn format(&self) -> Result<core::Texture2D_Format> {
+		unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+	/// get OpenGL opject id
+	fn tex_id(&self) -> Result<u32> {
+		unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_Texture2D()) }.into_result()
+	}
+	
+}
+
+/// Smart pointer for OpenGL 2D texture memory with reference counting.
+pub struct Texture2D {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Texture2D }
+
+impl Drop for Texture2D {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Texture2D_delete(instance: *mut c_void); }
+		unsafe { cv_Texture2D_delete(self.as_raw_mut_Texture2D()) };
+	}
+}
+
+impl Texture2D {
+	#[inline] pub fn as_raw_Texture2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Texture2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for Texture2D {}
+
+impl core::Texture2DTrait for Texture2D {
+	#[inline] fn as_raw_Texture2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Texture2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Texture2D {
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	pub fn default() -> Result<core::Texture2D> {
+		unsafe { sys::cv_ogl_Texture2D_Texture2D() }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+		unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+		unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(asize.opencv_as_extern(), aformat, atex_id, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * arows: Number of rows.
+	/// * acols: Number of columns.
+	/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+		unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * asize: 2D array size.
+	/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+		unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(asize.opencv_as_extern(), aformat, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+	}
+	
+	/// The constructors.
+	/// 
+	/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+	/// host/device memory.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+	/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+	/// 
+	/// ## C++ default parameters
+	/// * auto_release: false
+	pub fn new_4(arr: &dyn core::ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
+		input_array_arg!(arr);
+		unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
 	}
 	
 }
