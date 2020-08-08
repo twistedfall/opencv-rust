@@ -41,7 +41,9 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 
 	/// Create a Vector from iterator
 	pub fn from_iter<'a>(s: impl IntoIterator<Item=<T as OpenCVType<'a>>::Arg>) -> Self {
-		<Self as FromIterator<_>>::from_iter(s)
+		let mut out = Self::new();
+		out.extend(s);
+		out
 	}
 
 	/// Return Vector length
@@ -145,12 +147,20 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		VectorRefIterator::new(self)
 	}
 
+	/// Return slice to the elements of the array.
+	///
+	/// This method is only available for OpenCV types that are Copy, with the exception of bool
+	/// because bool is handled in a special way on the C++ side.
 	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			slice::from_raw_parts(self.extern_data(), self.len())
 		}
 	}
 
+	/// Return mutable slice to the elements of the array.
+	///
+	/// This method is only available for OpenCV types that are Copy, with the exception of bool
+	/// because bool is handled in a special way on the C++ side.
 	pub fn as_mut_slice(&mut self) -> &mut [T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			slice::from_raw_parts_mut(self.extern_data_mut(), self.len())
@@ -158,7 +168,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	pub fn to_vec(&self) -> Vec<T> {
-		T::convert_to_vec(self)
+		T::opencv_vector_to_vec(self)
 	}
 }
 
@@ -176,11 +186,17 @@ impl<T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<
 	}
 }
 
+impl<T: VectorElement> From<Vec<<T as OpenCVType<'_>>::Arg>> for Vector<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
+	fn from(from: Vec<<T as OpenCVType<'_>>::Arg>) -> Self {
+		Self::from_iter(from)
+	}
+}
+
 impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
+	#[inline]
 	fn from_iter<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
-		let mut out = Self::new();
-		out.extend(s);
-		out
+		Self::from_iter(s)
 	}
 }
 

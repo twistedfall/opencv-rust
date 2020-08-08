@@ -7,9 +7,12 @@ use crate::{
 	traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
-#[doc(hidden)]
+/// This trait is implemented by any type that can be stored inside `Vector`.
+///
+/// It is mostly used internally, feasibility of implementing it for your own types hasn't been
+/// considered. Use is mostly for external type constraints.
 pub trait VectorElement: for<'a> OpenCVType<'a> where Vector<Self>: VectorExtern<Self> {
-	#[doc(hidden)] fn convert_to_vec(v: &Vector<Self>) -> Vec<Self>;
+	#[doc(hidden)] fn opencv_vector_to_vec(v: &Vector<Self>) -> Vec<Self>;
 }
 
 #[doc(hidden)]
@@ -172,7 +175,7 @@ macro_rules! vector_copy_non_bool {
 
 		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
 			#[inline(always)]
-			fn convert_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
+			fn opencv_vector_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
 				v.as_slice().to_vec()
 			}
 		}
@@ -215,7 +218,7 @@ macro_rules! vector_non_copy_or_bool {
 	($type: ty) => {
 		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
 			#[inline(always)]
-			fn convert_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
+			fn opencv_vector_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
 				(0..v.len()).map(|x| unsafe { v.get_unchecked(x) }).collect()
 			}
 		}
