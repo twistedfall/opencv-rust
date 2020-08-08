@@ -553,7 +553,6 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashm
 pub static ELEMENT_EXCLUDE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
 	"^cv::String$",
 	"^cv::internal::format$", // 3.2 duplicate definition
-	"^cv::ogl::",
 	"^cv::face::FacemarkLBF::BBox$", // not used, not exported in windows dll
 ].iter()).expect("Can't compile regexes"));
 
@@ -570,7 +569,6 @@ pub static ELEMENT_IGNORE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
 	"^cv::MatAllocator$", // doesn't handle cpp part too well
 	"^cv::NAryMatIterator", // uses pointers of pointers
 	"^cv::Node$", // template class
-	"^cv::ogl::",
 	"^std::exception_ptr$",
 	"^std::random_access_iterator_tag$",
 ].iter()).expect("Can't compile regexes"));

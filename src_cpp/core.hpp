@@ -4,7 +4,7 @@
 #include <opencv2/core/ocl.hpp>
 #include <opencv2/core/va_intel.hpp>
 #include <opencv2/core/cuda.hpp>
-//#include <opencv2/core/opengl.hpp> // todo
+#include <opencv2/core/opengl.hpp>
 #if !(CV_VERSION_MAJOR == 3 && CV_VERSION_MINOR == 2)
 	#include <opencv2/core/async.hpp>
 	#include <opencv2/core/bindings_utils.hpp>
