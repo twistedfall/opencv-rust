@@ -1,7 +1,7 @@
 use matches::assert_matches;
 
 use opencv::{
-	core::{self, Matx22d, Matx23f, Matx32f, Matx33d, Matx44d, Matx66f, Point2f, Scalar},
+	core::{self, Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Point2f, Scalar},
 	imgproc,
 	prelude::*,
 	Result,
@@ -51,7 +51,7 @@ fn matx_return() -> Result<()> {
 #[cfg(all(feature = "contrib", not(feature = "opencv-32")))]
 #[test]
 fn matx_arg() -> Result<()> {
-	use opencv::surface_matching::Pose3D;
+	use opencv::{core::Matx44d, surface_matching::Pose3D};
 
 	let mut pose = Pose3D::default()?;
 	assert!(&pose.pose().val.iter().all(|&x| x == 0.));

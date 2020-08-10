@@ -710,11 +710,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn is_bool(&self) -> bool {
-		if let Kind::Primitive("bool", _) = self.canonical().kind() {
-			true
-		} else {
-			false
-		}
+		matches!(self.canonical().kind(), Kind::Primitive("bool", _))
 	}
 
 	pub fn as_pointer(&self) -> Option<TypeRef<'tu>> {
@@ -1906,11 +1902,8 @@ impl<'tu> TypeRef<'tu> {
 	// return value is actually one of the arguments and if we free it (in post_call phase) before converting
 	// to string (in return statement) it will result in UB
 	pub fn cpp_arg_cleanup(&self, name: &str) -> String {
-		match self.as_string() {
-			Some(Dir::Out(StrType::CharPtr)) => {
-				return format!("delete[] {name}_out", name=name);
-			}
-			_ => {}
+		if let Some(Dir::Out(StrType::CharPtr)) = self.as_string() {
+			return format!("delete[] {name}_out", name=name);
 		}
 		"".to_string()
 	}

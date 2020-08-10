@@ -24,7 +24,6 @@ impl RustNativeGeneratedElement for Typedef<'_> {
 			|| include_str!("tpl/typedef/tpl.rs").compile_interpolation()
 		);
 		let underlying_type = self.underlying_type_ref();
-
 		let lifetimes = underlying_type.rust_lifetimes();
 		let generic_args = if lifetimes.is_empty() {
 			"".to_string()

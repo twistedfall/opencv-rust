@@ -97,7 +97,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 				format!("new {typ}(val)", typ=pointee_type.cpp_full()).into()
 			} else {
 				let mut out = pointee_type.cpp_arg_func_call("val");
-				if out.starts_with("*") {
+				if out.starts_with('*') {
 					out.to_mut().drain(..1);
 				}
 				out

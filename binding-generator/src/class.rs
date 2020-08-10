@@ -283,7 +283,7 @@ impl<'tu> EntityElement<'tu> for Class<'tu> {
 impl Element for Class<'_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
-			|| match self.kind() { Kind::Excluded => true, _ => false }
+			|| matches!(self.kind(), Kind::Excluded)
 			|| self.cpp_namespace() == "" // we don't process out of namespace (legacy C) items, so mark them as excluded
 	}
 
