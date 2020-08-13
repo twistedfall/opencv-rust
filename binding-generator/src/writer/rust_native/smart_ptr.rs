@@ -80,16 +80,26 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 		let pointee_type = self.pointee();
 
 		let mut inner_cpp_extern = pointee_type.cpp_extern_return();
+		let mut extern_return_const_renderer = type_ref::CppExternReturnRenderer::new();
+		extern_return_const_renderer.constness_override = ConstnessOverride::Yes(Constness::Const);
+		let mut inner_cpp_extern_const = pointee_type.render(extern_return_const_renderer);
 		if !pointee_type.is_by_ptr() {
 			inner_cpp_extern.to_mut().push('*');
+			inner_cpp_extern_const.to_mut().push('*');
 		}
+
+		let mut const_renderer = type_ref::CppReferenceRenderer::new("", true);
+		const_renderer.constness_override = ConstnessOverride::Yes(Constness::Const);
+		let cpp_full_const = type_ref.render(const_renderer);
 
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
+			"cpp_full_const" => cpp_full_const.into(),
 			"inner_cpp_full" => pointee_type.cpp_full(),
 			"inner_cpp_extern" => inner_cpp_extern,
+			"inner_cpp_extern_const" => inner_cpp_extern_const,
 		};
 
 		let pointee_primitive = pointee_type.is_primitive();
