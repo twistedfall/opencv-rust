@@ -87,7 +87,7 @@ impl Element for Function<'_> {
 
 	fn cpp_localname(&self) -> Cow<str> {
 		let args = self.arguments().into_iter()
-			.map(|a| a.type_ref().cpp_full_native("").into_owned())
+			.map(|a| a.type_ref().cpp_full_ext("", false).into_owned())
 			.join(", ");
 		let ret = self.return_type();
 		format!("{ret} (*)({args})", args=args, ret=ret.cpp_full()).into()

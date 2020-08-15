@@ -36,7 +36,7 @@ impl RustNativeGeneratedElement for Typedef<'_> {
 			"debug" => get_debug(self).into(),
 			"rust_local" => self.rust_localname(),
 			"generic_args" => generic_args.into(),
-			"definition" => underlying_type.rust_full_ext(true, false),
+			"definition" => underlying_type.rust_full_ext(false, false),
 		})
 	}
 }

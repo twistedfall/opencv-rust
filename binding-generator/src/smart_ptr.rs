@@ -104,7 +104,7 @@ impl Element for SmartPtr<'_> {
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		format!("Ptr::<{typ}>", typ=self.pointee().rust_full()).into()
+		format!("Ptr::<{typ}>", typ=self.pointee().rust_full_ext(true, true)).into()
 	}
 
 	fn rust_localname(&self) -> Cow<str> {

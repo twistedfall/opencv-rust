@@ -254,7 +254,7 @@ impl<'tu> Class<'tu> {
 				iter::from_fn({
 					let fld_type_ref = fld.type_ref();
 					let mut need_to_yield_read = true;
-					let mut need_to_yield_write = !fld_type_ref.is_const() && !fld_type_ref.as_fixed_array().is_some();
+					let mut need_to_yield_write = !fld_type_ref.constness().is_const() && !fld_type_ref.as_fixed_array().is_some();
 					move || {
 						if need_to_yield_read {
 							need_to_yield_read = false;

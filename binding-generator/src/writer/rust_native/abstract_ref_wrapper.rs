@@ -1,10 +1,9 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{AbstractRefWrapper, CompiledInterpolation, StrExt};
+use crate::{AbstractRefWrapper, CompiledInterpolation, Constness, ConstnessOverride, StrExt};
 
 use super::RustNativeGeneratedElement;
-use crate::type_ref::Constness;
 
 impl RustNativeGeneratedElement for AbstractRefWrapper<'_> {
 	fn element_order(&self) -> u8 {
@@ -29,8 +28,8 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_> {
 		RUST.interpolate(&hashmap! {
 			"rust_full" => rust_full.into(),
 			"rust_local" => type_ref.rust_local(),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
-			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
 		})
 	}
 }

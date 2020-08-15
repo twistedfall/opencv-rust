@@ -11,6 +11,18 @@ use once_cell::{
 };
 use regex::{Captures, Regex};
 
+pub use renderer::{
+	Constness,
+	ConstnessOverride,
+	CppDeclarationRenderer,
+	CppExternReturnRenderer,
+	CppReferenceRenderer,
+	Lifetime,
+	RustDeclarationRenderer,
+	RustReferenceRenderer,
+	TypeRefRenderer,
+};
+
 use crate::{
 	AbstractRefWrapper,
 	Class,
@@ -31,47 +43,12 @@ use crate::{
 	Vector,
 };
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Lifetime {
-	number: u8
-}
-
-impl Default for Lifetime {
-	fn default() -> Self {
-		Self { number: 0 }
-	}
-}
-
-impl Lifetime {
-	pub fn next(self) -> Self {
-		Self { number: self.number + 1 }
-	}
-}
-
-impl fmt::Display for Lifetime {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let c = (b'a' + self.number) as char;
-		write!(f, "'{}", c)
-	}
-}
+mod renderer;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum DependentTypeMode {
 	None,
 	ForReturn(DefinitionLocation),
-}
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub enum Constness {
-	Auto,
-	Const,
-	Mut,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-enum Form {
-	Declaration,
-	Reference(Option<Lifetime>, bool),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -85,73 +62,6 @@ pub enum StrType {
 pub enum Dir<T> {
 	In(T),
 	Out(T),
-}
-
-impl Form {
-	pub fn is_full(self) -> bool {
-		match self {
-			Form::Declaration => false,
-			Form::Reference(..) => true,
-		}
-	}
-
-	pub fn is_turbo_fish(self) -> bool {
-		match self {
-			Form::Declaration => false,
-			Form::Reference(_, turbo_fish) => turbo_fish,
-		}
-	}
-
-	pub fn recurse(self) -> Self {
-		match self {
-			Form::Declaration => {
-				self
-			},
-			Form::Reference(lt, turbo_fish) => {
-				Form::Reference(lt.map(Lifetime::next), turbo_fish)
-			},
-		}
-	}
-}
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-enum CppForm<'s> {
-	Declaration(bool),
-	Reference(&'s str, bool),
-}
-
-impl CppForm<'_> {
-	pub fn is_full(self) -> bool {
-		match self {
-			CppForm::Declaration(..) => false,
-			CppForm::Reference(..) => true,
-		}
-	}
-
-	pub fn recurse(self) -> Self {
-		match self {
-			CppForm::Declaration(extern_types) => CppForm::Declaration(extern_types),
-			CppForm::Reference(_name, extern_types) => CppForm::Reference("", extern_types),
-		}
-	}
-}
-
-impl Constness {
-	pub fn is_const(self, type_ref: &TypeRef) -> bool {
-		match self {
-			Constness::Auto => type_ref.is_const(),
-			Constness::Const => true,
-			Constness::Mut => false,
-		}
-	}
-
-	pub fn is_mut(self, type_ref: &TypeRef) -> bool {
-		match self {
-			Constness::Auto => !type_ref.is_const(),
-			Constness::Const => false,
-			Constness::Mut => true,
-		}
-	}
 }
 
 #[derive(Clone, Debug)]
@@ -205,7 +115,7 @@ impl<'tu> TypeRef<'tu> {
 	fn format_as_array(&self, elem_type: &str, size: Option<usize>) -> String {
 		format!(
 			"&{cnst}[{typ}{size}]",
-			cnst=self.rust_const_qual(false),
+			cnst=self.constness().rust_qual(false),
 			typ=elem_type,
 			size=size.map_or_else(|| "".to_string(), |s| format!("; {}", s))
 		)
@@ -520,40 +430,49 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn is_const(&self) -> bool {
-		self.is_clang_const() || match self.kind() {
-			Kind::Primitive(..) | Kind::Generic(..) | Kind::Enum(..)
-			| Kind::Class(..) | Kind::Function(..) | Kind::Ignored => {
-				false
-			}
-			Kind::Array(elem, ..) => {
-				elem.is_clang_const()
-			}
-			Kind::StdVector(vec) => {
-				vec.element_type().is_clang_const()
-			}
-			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				inner.is_clang_const()
-			}
-			Kind::SmartPtr(ptr) => {
-				ptr.pointee().is_clang_const()
-			}
-			Kind::Typedef(decl) => {
-				decl.underlying_type_ref().is_const()
+	pub fn constness(&self) -> Constness {
+		if let Constness::Const = self.clang_constness() {
+			Constness::Const
+		} else {
+			match self.kind() {
+				Kind::Primitive(..) | Kind::Generic(..) | Kind::Enum(..)
+				| Kind::Class(..) | Kind::Function(..) | Kind::Ignored => {
+					Constness::Mut
+				}
+				Kind::Array(elem, ..) => {
+					elem.clang_constness()
+				}
+				Kind::StdVector(vec) => {
+					vec.element_type().clang_constness()
+				}
+				Kind::Pointer(inner) | Kind::Reference(inner) => {
+					inner.clang_constness()
+				}
+				Kind::SmartPtr(ptr) => {
+					ptr.pointee().clang_constness()
+				}
+				Kind::Typedef(decl) => {
+					decl.underlying_type_ref().constness()
+				}
 			}
 		}
 	}
 
-	pub fn is_clang_const(&self) -> bool {
-		self.type_ref.is_const_qualified()
+	pub fn clang_constness(&self) -> Constness {
+		if self.type_ref.is_const_qualified() {
+			Constness::Const
+		} else {
+			Constness::Mut
+		}
 	}
 
-	fn get_const_hint(&self, type_ref: &TypeRef) -> Option<bool> {
-		let is_const = self.is_const();
-		if is_const && !type_ref.is_clang_const() {
-			Some(is_const)
-		} else {
-			None
+	fn get_const_hint(&self, type_ref: &TypeRef) -> ConstnessOverride {
+		let constness = self.constness();
+		match constness {
+			Constness::Const if type_ref.clang_constness().is_mut() => {
+				ConstnessOverride::Yes(constness)
+			},
+			_ => ConstnessOverride::No,
 		}
 	}
 
@@ -599,7 +518,7 @@ impl<'tu> TypeRef<'tu> {
 			}
 			Kind::Reference(inner) => {
 				if let Some(typ) = inner.as_class().and_then(class_string_type) {
-					return if inner.is_clang_const() {
+					return if inner.clang_constness().is_const() {
 						Some(Dir::In(typ))
 					} else {
 						Some(Dir::Out(typ))
@@ -608,7 +527,7 @@ impl<'tu> TypeRef<'tu> {
 			}
 			Kind::Pointer(inner) => {
 				if let Some(typ) = inner.as_class().and_then(class_string_type) {
-					return if inner.is_clang_const() {
+					return if inner.clang_constness().is_const() {
 						Some(Dir::In(typ))
 					} else {
 						Some(Dir::Out(typ))
@@ -616,7 +535,7 @@ impl<'tu> TypeRef<'tu> {
 				} else {
 					let inner_cpp_full = inner.cpp_full();
 					if inner_cpp_full == "char" || inner_cpp_full == "const char" {
-						return if inner.is_clang_const() {
+						return if inner.clang_constness().is_const() {
 							Some(Dir::In(StrType::CharPtr))
 						} else {
 							Some(Dir::Out(StrType::CharPtr))
@@ -874,46 +793,6 @@ impl<'tu> TypeRef<'tu> {
 		settings::DATA_TYPES.contains(self.cpp_full().as_ref())
 	}
 
-	pub fn rust_const_qual(&self, pointer: bool) -> &'static str {
-		if self.is_const() {
-			if pointer {
-				"const "
-			} else {
-				""
-			}
-		} else {
-			"mut "
-		}
-	}
-
-	pub fn rust_clang_const_qual(&self, pointer: bool) -> &'static str {
-		if self.is_clang_const() {
-			if pointer {
-				"const "
-			} else {
-				""
-			}
-		} else {
-			"mut "
-		}
-	}
-
-	pub fn cpp_const_qual(&self) -> &'static str {
-		if self.is_const() {
-			"const "
-		} else {
-			""
-		}
-	}
-
-	pub fn cpp_clang_const_qual(&self) -> &'static str {
-		if self.is_clang_const() {
-			"const "
-		} else {
-			""
-		}
-	}
-
 	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
@@ -950,7 +829,7 @@ impl<'tu> TypeRef<'tu> {
 	pub fn rust_safe_id_ext(&self, add_const: bool) -> Cow<str> {
 		let mut out = String::with_capacity(64);
 		let kind = self.kind();
-		if add_const && self.is_clang_const() {
+		if add_const && self.clang_constness().is_const() {
 			out.push_str("const_");
 		}
 		out.push_str(&match kind {
@@ -1018,131 +897,17 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	fn rust_type_ref(&self, form: Form) -> Cow<str> {
-		if self.as_string().is_some() {
-			#[allow(clippy::if_same_then_else)]
-			return if self.is_const() {
-				"String" // todo implement receiving const str's
-			} else {
-				"String"
-			}.into();
-		}
-		match self.kind() {
-			Kind::Primitive(rust, _) => {
-				rust.into()
-			}
-			Kind::Array(elem, size) => {
-				self.format_as_array(&elem.rust_type_ref(form.recurse()), size).into()
-			}
-			Kind::StdVector(vec) => {
-				vec.rust_name(form.is_full()).into_owned().into()
-			}
-			Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_const() => {
-				// const references to simple classes are passed by value for performance
-				// fixme: it kind of works now, but probably it's not the best idea
-				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
-				inner.rust_type_ref(form.recurse()).into_owned().into()
-			}
-			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				if inner.is_void() {
-					format!(
-						"*{cnst}c_void",
-						cnst=self.rust_const_qual(true),
-					).into()
-				} else {
-					let lt = match form {
-						Form::Reference(Some(lt), ..) => format!("{} ", lt),
-						_ => "".to_string()
-					};
-					format!(
-						"&{lt}{cnst}{typ}",
-						cnst=self.rust_const_qual(false),
-						lt=lt,
-						typ=inner.rust_type_ref(form.recurse())
-					).into()
-				}
-			}
-			Kind::SmartPtr(ptr) => {
-				ptr.rust_name(form.is_full()).into_owned().into()
-			}
-			Kind::Class(cls) => {
-				format!(
-					"{dyn}{name}{generic}",
-					dyn=if form.is_full() && cls.is_abstract() { "dyn " } else { "" },
-					name=cls.rust_name(form.is_full()),
-					generic=self.rust_tpl_decl(form),
-				).into()
-			}
-			Kind::Enum(enm) => {
-				enm.rust_name(form.is_full()).into_owned().into()
-			}
-			Kind::Typedef(decl) => {
-				let mut out: String = decl.rust_name(form.is_full()).into_owned();
-				let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
-				if lifetime_count >= 1 {
-					if lifetime_count >= 2 {
-						unimplemented!("Support for lifetime count >= 2 is not implemented yet");
-					}
-					if let Form::Reference(Some(lt), _) = form {
-						out.write_fmt(format_args!("<{}>", lt)).expect("Impossible");
-					}
-				}
-				out.into()
-			}
-			Kind::Generic(name) => {
-				name.into()
-			}
-			Kind::Function(func) => {
-				func.rust_name(form.is_full()).into_owned().into()
-			}
-			Kind::Ignored => {
-				"<ignored>".into()
-			}
-		}
-	}
-
 	pub fn rust_local(&self) -> Cow<str> {
-		self.rust_type_ref(Form::Declaration)
+		self.render(RustDeclarationRenderer::new()).into()
 	}
 
 	pub fn rust_full(&self) -> Cow<str> {
-		self.rust_type_ref(Form::Reference(None, false))
+		self.rust_full_ext(true, false)
 	}
 
-	pub fn rust_full_ext(&self, lifetimes: bool, turbofish: bool) -> Cow<str> {
-		let lifetimes = if lifetimes { Some(Lifetime::default()) } else { None };
-		self.rust_type_ref(Form::Reference(lifetimes, turbofish))
-	}
-
-	fn rust_tpl_decl(&self, form: Form) -> String {
-		let generic_types = self.template_specialization_args();
-		if !generic_types.is_empty() {
-			let mut constant_suffix = String::new();
-			let generic_types = generic_types.iter()
-				.filter_map(|t| {
-					match t {
-						TemplateArg::Typename(type_ref) => {
-							Some(type_ref.rust_type_ref(form.recurse()))
-						}
-						TemplateArg::Constant(literal) => {
-							if let Some(cnst) = self.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
-								constant_suffix += &cnst.to_string();
-							} else {
-								constant_suffix += literal;
-							}
-							None
-						}
-						TemplateArg::Unknown => {
-							None
-						}
-					}
-				})
-				.collect::<Vec<_>>();
-			let fish = if form.is_turbo_fish() { "::" } else { "" };
-			format!("{cnst}{fish}<{typ}>", cnst=constant_suffix, fish=fish, typ=generic_types.join(", "))
-		} else {
-			"".to_string()
-		}
+	pub fn rust_full_ext(&self, elided_lifetimes: bool, use_turbo_fish: bool) -> Cow<str> {
+		let lifetimes = if !elided_lifetimes && self.rust_lifetime_count() > 0 { Some(Lifetime::default()) } else { None };
+		self.render(RustReferenceRenderer::new(lifetimes, use_turbo_fish)).into()
 	}
 
 	fn rust_lifetime_count(&self) -> usize {
@@ -1158,7 +923,7 @@ impl<'tu> TypeRef<'tu> {
 					}
 				}
 				Kind::Reference(inner) => {
-					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_clang_const()) {
+					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.clang_constness().is_const()) {
 						1 + inner.rust_lifetime_count()
 					} else {
 						0
@@ -1186,16 +951,17 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_extern(&self) -> Cow<str> {
-		self.rust_extern_with_const(Constness::Auto)
+		self.rust_extern_with_const(ConstnessOverride::No)
 	}
 
-	pub fn rust_extern_with_const(&self, constness: Constness) -> Cow<str> {
+	pub fn rust_extern_with_const(&self, constness: ConstnessOverride) -> Cow<str> {
+		let constness = constness.with(self.constness());
 		#[allow(clippy::never_loop)] // fixme use named block when stable
 		'typ: loop {
 			if let Some(dir) = self.as_string() {
 				match dir {
 					Dir::In(_) => {
-						break 'typ if constness.is_const(self) {
+						break 'typ if constness.is_const() {
 							"*const c_char".into()
 						} else {
 							"*mut c_char".into()
@@ -1207,7 +973,7 @@ impl<'tu> TypeRef<'tu> {
 				}
 			}
 			if self.is_by_ptr() {
-				break 'typ if constness.is_const(self) {
+				break 'typ if constness.is_const() {
 					"*const c_void"
 				} else {
 					"*mut c_void"
@@ -1215,21 +981,21 @@ impl<'tu> TypeRef<'tu> {
 			}
 			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 				let mut out = String::with_capacity(64);
-				out.write_fmt(format_args!("*{}", self.rust_const_qual(true))).expect("Impossible");
+				out.write_fmt(format_args!("*{}", self.constness().rust_qual(true))).expect("Impossible");
 				if inner.is_void() {
 					out += "c_void";
 				} else if self.as_string().is_some() {
 					out += "c_char";
 				} else {
-					out += &inner.rust_extern_with_const(constness)
+					out += &inner.rust_extern_with_const(ConstnessOverride::Yes(constness))
 				}
 				break 'typ out.into();
 			}
 			if let Some((elem, len)) = self.as_fixed_array() {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
-					cnst=self.rust_const_qual(true),
-					typ=elem.rust_extern_with_const(constness),
+					cnst=self.constness().rust_qual(true),
+					typ=elem.rust_extern_with_const(ConstnessOverride::Yes(constness)),
 					len=len,
 				).into();
 			}
@@ -1237,13 +1003,13 @@ impl<'tu> TypeRef<'tu> {
 				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
 					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
-					format!("*{cnst}c_char", cnst=elem.rust_clang_const_qual(true)).into()
+					format!("*{cnst}c_char", cnst=elem.clang_constness().rust_qual(true)).into()
 				} else {
-					elem.rust_extern_with_const(constness)
+					elem.rust_extern_with_const(ConstnessOverride::Yes(constness))
 				};
 				break 'typ format!(
 					"*{cnst}{typ}",
-					cnst=self.rust_const_qual(true),
+					cnst=self.constness().rust_qual(true),
 					typ=typ,
 				).into()
 			}
@@ -1285,7 +1051,7 @@ impl<'tu> TypeRef<'tu> {
 			}
 			break 'decl_type self.rust_full();
 		};
-		let mutable = if self.is_by_ptr() && !self.is_const() && !self.as_pointer().is_some() && !self.as_reference().is_some() {
+		let mutable = if self.is_by_ptr() && !self.constness().is_const() && !self.as_pointer().is_some() && !self.as_reference().is_some() {
 			"mut "
 		} else {
 			""
@@ -1297,15 +1063,15 @@ impl<'tu> TypeRef<'tu> {
 		if self.as_abstract_class_ptr().is_some() {
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
-				mut_suf=if self.is_const() { "" } else { "Mut" },
+				mut_suf=if self.constness().is_const() { "" } else { "Mut" },
 				fish=if with_turbofish { "::" } else { "" },
 				lt=if is_static_func { "'static, " } else { "" },
-				typ=self.source().rust_full_ext(false, with_turbofish),
+				typ=self.source().rust_full_ext(true, with_turbofish),
 			).into()
 		} else if self.is_by_ptr() {
-			self.source().rust_full_ext(false, with_turbofish).into_owned().into()
+			self.source().rust_full_ext(true, with_turbofish).into_owned().into()
 		} else {
-			self.rust_full_ext(false, with_turbofish)
+			self.rust_full_ext(true, with_turbofish)
 		}
 	}
 
@@ -1318,7 +1084,7 @@ impl<'tu> TypeRef<'tu> {
 				typ=self.rust_return_func_decl(true, is_static_func),
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
-			let ptr_call = if self.is_const() { "ref" } else { "mut" };
+			let ptr_call = if self.constness().is_const() { "ref" } else { "mut" };
 			format!(
 				".and_then(|x| {unsafety_call}{{ x.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())))",
 				unsafety_call=unsafety_call,
@@ -1337,7 +1103,7 @@ impl<'tu> TypeRef<'tu> {
 					if is_function_infallible {
 						flags.push("nofail")
 					}
-					if !self.is_const() {
+					if self.constness().is_mut() {
 						flags.push("mut")
 					}
 					let mut flags = flags.join(" ");
@@ -1357,7 +1123,7 @@ impl<'tu> TypeRef<'tu> {
 		} else if self.is_input_output_array() {
 			return format!("input_output_array_arg!({name})", name=name);
 		} else if self.as_string_array().is_some() {
-			return if self.is_const() {
+			return if self.constness().is_const() {
 				format!("string_array_arg!({name})", name=name)
 			} else {
 				format!("string_array_arg_mut!({name})", name=name)
@@ -1367,10 +1133,10 @@ impl<'tu> TypeRef<'tu> {
 			if let Some((userdata_name, _)) = args.iter().find(|(_, f)| f.is_user_data()).cloned() {
 				let ret = func.return_type();
 				let tramp_args = args.into_iter()
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, Constness::Auto))
+					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 					.join(", ");
 				let fw_args = Field::rust_disambiguate_names(func.rust_arguments())
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, Constness::Auto))
+					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 					.join(", ");
 				return format!(
 					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {tramp_userdata_arg} in callbacks => {name}({fw_args}) -> {fw_ret})",
@@ -1395,13 +1161,13 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_self_func_call(&self, is_method_const: bool) -> String {
-		self.rust_arg_func_call("self", is_method_const)
+		self.rust_arg_func_call("self", if is_method_const { ConstnessOverride::Yes(Constness::Const) } else { ConstnessOverride::No })
 	}
 
-	pub fn rust_arg_func_call(&self, name: &str, is_const: bool) -> String {
+	pub fn rust_arg_func_call(&self, name: &str, constness: ConstnessOverride) -> String {
 		if let Some(dir) = self.as_string() {
 			return match dir {
-				Dir::In(_) => if self.is_const() || is_const {
+				Dir::In(_) => if constness.with(self.constness()).is_const() {
 					format!("{name}.opencv_as_extern()", name=name)
 				} else {
 					format!("{name}.opencv_as_extern_mut()", name=name)
@@ -1409,7 +1175,7 @@ impl<'tu> TypeRef<'tu> {
 				Dir::Out(_) => format!("&mut {name}_via", name=name),
 			};
 		}
-		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const)) {
+		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (constness.with(inner.constness()).is_const())) {
 			return format!("&{name}", name=name);
 		}
 		if self.as_simple_class().is_some() {
@@ -1417,14 +1183,14 @@ impl<'tu> TypeRef<'tu> {
 		}
 		if self.is_by_ptr() {
 			let typ = self.source();
-			return if self.is_const() || is_const {
+			return if constness.with(self.constness()).is_const() {
 				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			} else {
 				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			};
 		}
 		if self.as_variable_array().is_some() || self.as_abstract_class_ptr().is_some() {
-			return if self.is_const() || is_const {
+			return if constness.with(self.constness()).is_const() {
 				format!("{name}.as_ptr()", name=name)
 			} else {
 				format!("{name}.as_mut_ptr()", name=name)
@@ -1440,8 +1206,8 @@ impl<'tu> TypeRef<'tu> {
 				return format!(
 					"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
 					name=name,
-					cnst=self.rust_clang_const_qual(true),
-					const_inner=inner.rust_clang_const_qual(true)
+					cnst=self.clang_constness().rust_qual(true),
+					const_inner=inner.clang_constness().rust_qual(true)
 				);
 			}
 		}
@@ -1454,14 +1220,14 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn rust_extern_self_func_decl(&self, is_method_const: bool) -> String {
 		let method_constness = if is_method_const {
-			Constness::Const
+			ConstnessOverride::Yes(Constness::Const)
 		} else {
-			Constness::Mut
+			ConstnessOverride::Yes(Constness::Mut)
 		};
 		self.rust_extern_arg_func_decl("instance", method_constness)
 	}
 
-	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: Constness) -> String {
+	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
 		let mut typ = self.rust_extern_with_const(constness);
 		if self.as_simple_class().is_some() {
 			*typ.to_mut() = format!("*const {}", typ)
@@ -1473,7 +1239,7 @@ impl<'tu> TypeRef<'tu> {
 		if self.as_string().is_some() {
 			"*mut c_void".into()
 		} else {
-			self.rust_extern_with_const(Constness::Mut)
+			self.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut))
 		}
 	}
 
@@ -1603,186 +1369,30 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_safe_id(&self) -> Cow<str> {
-		let mut out: String = self.cpp_local_native().into_owned();
+		let mut out: String = self.cpp_local_ext(false).into_owned();
 		out.cleanup_name();
 		out.into()
 	}
 
-	fn cpp_type_ref(&self, form: CppForm) -> Cow<str> {
-		let name = match form {
-			CppForm::Reference(name, _) => name,
-			_ => "",
-		};
-		let extern_types = match form {
-			CppForm::Declaration(extern_types) => extern_types,
-			CppForm::Reference(_, extern_types) => extern_types,
-		};
-		let cnst = self.cpp_clang_const_qual();
-		let (space_name, space_const_name) = if name.is_empty() {
-			("".to_string(), "".to_string())
-		} else {
-			(format!(" {}", name), format!(" {}{}", cnst, name))
-		};
-		match self.kind() {
-			Kind::Primitive(_, cpp) => {
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=cpp.to_string(),
-					name=space_name,
-				)
-			}
-			Kind::Array(inner, size) => {
-				if let Some(size) = size {
-					format!(
-						"{typ}(*{name})[{size}]",
-						typ=inner.cpp_type_ref(form.recurse()),
-						name=name,
-						size=size,
-					)
-				} else {
-					format!(
-						"{typ}*{name}",
-						typ=inner.cpp_type_ref(form.recurse()),
-						name=space_name,
-					)
-				}
-			}
-			Kind::StdVector(vec) => {
-				format!(
-					"{cnst}{vec_type}<{elem_type}>{name}",
-					cnst=cnst,
-					vec_type=vec.cpp_name(form.is_full()),
-					elem_type=vec.element_type().cpp_type_ref(form.recurse()),
-					name=space_name,
-				)
-			}
-			Kind::Reference(inner) if !extern_types => {
-				format!(
-					"{typ}&{name}",
-					typ=inner.cpp_type_ref(form.recurse()),
-					name=space_const_name,
-				)
-			}
-			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				format!(
-					"{typ}*{name}",
-					typ=inner.cpp_type_ref(form.recurse()),
-					name=space_const_name,
-				)
-			}
-			Kind::SmartPtr(ptr) => {
-				format!(
-					"{cnst}{ptr_type}<{inner_type}>{name}",
-					cnst=cnst,
-					ptr_type=ptr.cpp_name(form.is_full()),
-					inner_type=ptr.pointee().cpp_type_ref(form.recurse()),
-					name=space_name,
-				)
-			}
-			Kind::Class(cls) => {
-				let mut out: String = cls.cpp_name(form.is_full()).into_owned();
-				if !self.is_std_string() { // fixme prevents emission of std::string<char>
-					out += &self.cpp_tpl_decl(form);
-				}
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=out,
-					name=space_name,
-				)
-			}
-			Kind::Enum(enm) => {
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=enm.cpp_name(form.is_full()),
-					name=space_name,
-				)
-			}
-			Kind::Typedef(tdef) => {
-				let underlying_type = tdef.underlying_type_ref();
-				let typ = if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
-					underlying_type.cpp_type_ref(form.recurse())
-				} else {
-					tdef.cpp_name(form.is_full())
-				};
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=typ,
-					name=space_name,
-				)
-			}
-			Kind::Generic(generic_name) => {
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=generic_name,
-					name=space_name,
-				)
-			}
-			Kind::Function(func) => {
-				let mut typ = func.cpp_name(form.is_full());
-				if typ.contains("(*)") {
-					typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=name));
-					typ.into_owned()
-				} else {
-					format!("{typ}{name}", typ=typ, name=space_name)
-				}
-			}
-			Kind::Ignored => {
-				format!("<ignored>{name}", name=space_name)
-			}
-		}.into()
+	#[inline]
+	pub fn render(&self, renderer: impl TypeRefRenderer) -> Cow<str> {
+		renderer.render(self)
 	}
 
 	pub fn cpp_local(&self) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Declaration(true))
+		self.cpp_local_ext(true)
 	}
 
-	pub fn cpp_local_native(&self) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Declaration(false))
+	pub fn cpp_local_ext(&self, extern_types: bool) -> Cow<str> {
+		self.render(CppDeclarationRenderer::new(extern_types)).into()
 	}
 
 	pub fn cpp_full(&self) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Reference("", true))
+		self.cpp_full_ext("", true)
 	}
 
-	pub fn cpp_full_with_name(&self, name: &str) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Reference(name, true))
-	}
-
-	pub fn cpp_full_native(&self, name: &str) -> Cow<str> {
-		self.cpp_type_ref(CppForm::Reference(name, false))
-	}
-
-	fn cpp_tpl_decl(&self, form: CppForm) -> String {
-		let generic_types = self.template_specialization_args();
-		if !generic_types.is_empty() {
-			let generic_types = generic_types.iter()
-				.filter_map(|t| {
-					match t {
-						TemplateArg::Typename(type_ref) => {
-							Some(type_ref.cpp_type_ref(form.recurse()))
-						}
-						TemplateArg::Constant(literal) => {
-							if let Some(cnst) = self.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
-								Some(cnst.to_string().into())
-							} else {
-								Some(literal.into())
-							}
-						}
-						TemplateArg::Unknown => {
-							None
-						}
-					}
-				})
-				.collect::<Vec<_>>();
-			format!("<{}>", generic_types.join(", "))
-		} else {
-			"".to_string()
-		}
+	pub fn cpp_full_ext(&self, name: &str, extern_types: bool) -> Cow<str> {
+		self.render(CppReferenceRenderer::new(name, extern_types)).into()
 	}
 
 	pub fn cpp_extern(&self) -> Cow<str> {
@@ -1793,8 +1403,8 @@ impl<'tu> TypeRef<'tu> {
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
 		if let Some(dir) = self.as_string() {
 			match dir {
-				Dir::In(_) => format!("{cnst}char*{name}", cnst=self.cpp_const_qual(), name=space_name).into(),
-				Dir::Out(_) => format!("{cnst}void*{name}", cnst=self.cpp_const_qual(), name=space_name).into(),
+				Dir::In(_) => format!("{cnst}char*{name}", cnst=self.constness().cpp_qual(), name=space_name).into(),
+				Dir::Out(_) => format!("{cnst}void*{name}", cnst=self.constness().cpp_qual(), name=space_name).into(),
 			}
 		} else if self.is_by_ptr() {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
@@ -1803,7 +1413,7 @@ impl<'tu> TypeRef<'tu> {
 				format!("{typ}*{name}", typ=self.cpp_full(), name=space_name).into()
 			}
 		} else {
-			self.cpp_full_with_name(name)
+			self.cpp_full_ext(name, true)
 		}
 	}
 
@@ -1873,13 +1483,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_extern_return(&self) -> Cow<str> {
-		if self.as_string().is_some() {
-			"void*".into()
-		} else if self.is_by_ptr() && !self.as_abstract_class_ptr().is_some() {
-			format!("{typ}*", typ=self.cpp_full()).into()
-		} else {
-			self.cpp_full()
-		}
+		self.render(CppExternReturnRenderer::new()).into()
 	}
 
 	pub fn cpp_extern_return_wrapper_full(&self) -> Cow<str> {
@@ -1931,12 +1535,6 @@ impl fmt::Debug for TypeRef<'_> {
 		}
 		if self.is_template() {
 			props.push("template");
-		}
-		if self.is_const() {
-			props.push("const");
-		}
-		if self.is_clang_const() {
-			props.push("clang_const");
 		}
 		if self.is_primitive() {
 			props.push("primitive");
@@ -1995,6 +1593,8 @@ impl fmt::Debug for TypeRef<'_> {
 			.field("cpp_full", &self.cpp_full())
 			.field("cpp_extern", &self.cpp_extern())
 			.field("props", &props)
+			.field("constness", &self.constness())
+			.field("clang_constness", &self.clang_constness())
 			.field("kind", &self.kind())
 			.field("type_hint", &self.type_hint)
 			.field("template_types", &self.template_specialization_args())

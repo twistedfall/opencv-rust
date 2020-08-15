@@ -6,7 +6,7 @@ use once_cell::sync::Lazy;
 use crate::{
 	Class,
 	CompiledInterpolation,
-	Constness,
+	ConstnessOverride,
 	DefaultElement,
 	Element,
 	Field,
@@ -73,7 +73,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 			};
 			call_args.push(slice_call);
 		} else {
-			call_args.push(type_ref.rust_arg_func_call(&name, false));
+			call_args.push(type_ref.rust_arg_func_call(&name, ConstnessOverride::No));
 		}
 		forward_args.push(type_ref.rust_arg_forward(&name));
 		pre_post_arg_handle(type_ref.rust_arg_post_call(&name, is_infallible), &mut post_call_args);
@@ -237,7 +237,7 @@ fn cpp_call_invoke(f: &Func) -> String {
 	let ret_type = if f.as_constructor().is_some() {
 		return_type.cpp_full()
 	} else {
-		return_type.cpp_full_with_name("ret")
+		return_type.cpp_full_ext("ret", true)
 	};
 	let doref = if return_type.as_fixed_array().is_some() {
 		"&"
@@ -316,7 +316,7 @@ impl RustNativeGeneratedElement for Func<'_> {
 			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
 		}
 		for arg in self.arguments() {
-			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname(), Constness::Auto))
+			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname(), ConstnessOverride::No))
 		}
 		let return_type = self.return_type();
 		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();

@@ -8,6 +8,7 @@ use crate::{
 	class::Kind,
 	CompiledInterpolation,
 	Constness,
+	ConstnessOverride,
 	Element,
 	Func,
 	get_debug,
@@ -110,8 +111,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"debug" => get_debug(c).into(),
 			"rust_trait_local" => c.rust_trait_localname(),
 			"rust_local" => type_ref.rust_local(),
-			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"bases" => trait_bases.into(),
 			"trait_methods" => trait_methods.into(),
 			"dyn_impl" => dyn_impl.into(),
@@ -138,8 +139,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					"base_rust_full" => base.rust_trait_fullname(),
 					"rust_local" => type_ref.rust_local(),
 					"base_rust_local" => base_type_ref.rust_local(),
-					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(Constness::Const),
-					"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(Constness::Mut),
+					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
+					"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 				})
 			})
 			.collect::<Vec<_>>();
@@ -214,8 +215,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
 			"rust_full" => c.rust_fullname(),
-			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"fields" => fields.join("").into(),
 			"bases" => bases.join("").into(),
 			"impl" => IMPL_TPL.interpolate(&hashmap! {

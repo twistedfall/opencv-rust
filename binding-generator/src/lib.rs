@@ -50,7 +50,7 @@ use name_pool::NamePool;
 use return_type_wrapper::{DefinitionLocation, ReturnTypeWrapper};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
-use type_ref::{Constness, DependentTypeMode, TypeRef, TypeRefTypeHint};
+use type_ref::{Constness, ConstnessOverride, DependentTypeMode, TypeRef, TypeRefTypeHint};
 pub use typedef::Typedef;
 use vector::Vector;
 pub use walker::{EntityWalker, EntityWalkerVisitor};

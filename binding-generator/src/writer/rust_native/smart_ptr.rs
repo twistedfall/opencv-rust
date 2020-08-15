@@ -4,9 +4,11 @@ use once_cell::sync::Lazy;
 use crate::{
 	CompiledInterpolation,
 	Constness,
+	ConstnessOverride,
 	Element,
 	SmartPtr,
 	StrExt,
+	type_ref,
 };
 
 use super::RustNativeGeneratedElement;
@@ -30,14 +32,13 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 		);
 
 		let type_ref = self.type_ref();
-		let pointee = self.pointee();
-		let pointee_type = pointee.canonical();
+		let pointee_type = self.pointee();
 
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_fullname(),
-			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"inner_rust_full" => pointee_type.rust_full(),
 		};
 

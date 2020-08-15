@@ -249,7 +249,7 @@ impl<'tu> Func<'tu> {
 		else if let Some(fld) = self.as_field_accessor() {
 			self.type_hint != FunctionTypeHint::FieldSetter && {
 				let type_ref = fld.type_ref();
-				type_ref.is_const() || type_ref.is_copy() || matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
+				type_ref.constness().is_const() || type_ref.is_copy() || matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
 			}
 		} else {
 			self.entity.is_const_method()
@@ -596,7 +596,7 @@ impl Element for Func<'_> {
 					});
 					if let Some(other) = class_arg {
 						if cls == other {
-							break 'ctor_name if arg_typeref.is_const() {
+							break 'ctor_name if arg_typeref.constness().is_const() {
 								"copy"
 							} else {
 								"copy_mut"
