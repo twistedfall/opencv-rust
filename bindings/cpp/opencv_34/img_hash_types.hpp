@@ -18,7 +18,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::AverageHash* cv_PtrOfAverageHash_get_inner_ptr(cv::Ptr<cv::img_hash::AverageHash>* instance) {
+	const cv::img_hash::AverageHash* cv_PtrOfAverageHash_get_inner_ptr(const cv::Ptr<cv::img_hash::AverageHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::AverageHash* cv_PtrOfAverageHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::AverageHash>* instance) {
 		return instance->get();
 	}
 }
@@ -32,7 +36,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::BlockMeanHash* cv_PtrOfBlockMeanHash_get_inner_ptr(cv::Ptr<cv::img_hash::BlockMeanHash>* instance) {
+	const cv::img_hash::BlockMeanHash* cv_PtrOfBlockMeanHash_get_inner_ptr(const cv::Ptr<cv::img_hash::BlockMeanHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::BlockMeanHash* cv_PtrOfBlockMeanHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::BlockMeanHash>* instance) {
 		return instance->get();
 	}
 }
@@ -46,7 +54,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::ColorMomentHash* cv_PtrOfColorMomentHash_get_inner_ptr(cv::Ptr<cv::img_hash::ColorMomentHash>* instance) {
+	const cv::img_hash::ColorMomentHash* cv_PtrOfColorMomentHash_get_inner_ptr(const cv::Ptr<cv::img_hash::ColorMomentHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::ColorMomentHash* cv_PtrOfColorMomentHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::ColorMomentHash>* instance) {
 		return instance->get();
 	}
 }
@@ -60,7 +72,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::MarrHildrethHash* cv_PtrOfMarrHildrethHash_get_inner_ptr(cv::Ptr<cv::img_hash::MarrHildrethHash>* instance) {
+	const cv::img_hash::MarrHildrethHash* cv_PtrOfMarrHildrethHash_get_inner_ptr(const cv::Ptr<cv::img_hash::MarrHildrethHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::MarrHildrethHash* cv_PtrOfMarrHildrethHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::MarrHildrethHash>* instance) {
 		return instance->get();
 	}
 }
@@ -74,7 +90,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::PHash* cv_PtrOfPHash_get_inner_ptr(cv::Ptr<cv::img_hash::PHash>* instance) {
+	const cv::img_hash::PHash* cv_PtrOfPHash_get_inner_ptr(const cv::Ptr<cv::img_hash::PHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::PHash* cv_PtrOfPHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::PHash>* instance) {
 		return instance->get();
 	}
 }
@@ -88,7 +108,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::img_hash::RadialVarianceHash* cv_PtrOfRadialVarianceHash_get_inner_ptr(cv::Ptr<cv::img_hash::RadialVarianceHash>* instance) {
+	const cv::img_hash::RadialVarianceHash* cv_PtrOfRadialVarianceHash_get_inner_ptr(const cv::Ptr<cv::img_hash::RadialVarianceHash>* instance) {
+		return instance->get();
+	}
+
+	cv::img_hash::RadialVarianceHash* cv_PtrOfRadialVarianceHash_get_inner_ptr_mut(cv::Ptr<cv::img_hash::RadialVarianceHash>* instance) {
 		return instance->get();
 	}
 }

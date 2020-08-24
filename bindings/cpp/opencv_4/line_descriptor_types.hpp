@@ -1,7 +1,6 @@
-template struct Result<const std::vector<char>*>;
-template struct Result<const std::vector<cv::DMatch>*>;
-template struct Result<const std::vector<cv::Mat>*>;
-template struct Result<const std::vector<cv::line_descriptor::KeyLine>*>;
+template struct Result<char>;
+template struct Result<cv::DMatch>;
+template struct Result<cv::Mat*>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Ptr<cv::line_descriptor::BinaryDescriptorMatcher>*>;
 template struct Result<cv::Ptr<cv::line_descriptor::BinaryDescriptor>*>;
@@ -16,10 +15,7 @@ template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::DMatch>*>;
-template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::line_descriptor::KeyLine>*>;
-template struct Result<std::vector<std::vector<cv::DMatch>>*>;
-template struct Result<std::vector<std::vector<cv::line_descriptor::KeyLine>>*>;
 extern "C" {
 	cv::Ptr<cv::line_descriptor::BinaryDescriptor>* cv_PtrOfBinaryDescriptor_new(cv::line_descriptor::BinaryDescriptor* val) {
 		return new cv::Ptr<cv::line_descriptor::BinaryDescriptor>(val);
@@ -29,7 +25,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::line_descriptor::BinaryDescriptor* cv_PtrOfBinaryDescriptor_get_inner_ptr(cv::Ptr<cv::line_descriptor::BinaryDescriptor>* instance) {
+	const cv::line_descriptor::BinaryDescriptor* cv_PtrOfBinaryDescriptor_get_inner_ptr(const cv::Ptr<cv::line_descriptor::BinaryDescriptor>* instance) {
+		return instance->get();
+	}
+
+	cv::line_descriptor::BinaryDescriptor* cv_PtrOfBinaryDescriptor_get_inner_ptr_mut(cv::Ptr<cv::line_descriptor::BinaryDescriptor>* instance) {
 		return instance->get();
 	}
 }
@@ -43,7 +43,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::line_descriptor::BinaryDescriptorMatcher* cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr(cv::Ptr<cv::line_descriptor::BinaryDescriptorMatcher>* instance) {
+	const cv::line_descriptor::BinaryDescriptorMatcher* cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr(const cv::Ptr<cv::line_descriptor::BinaryDescriptorMatcher>* instance) {
+		return instance->get();
+	}
+
+	cv::line_descriptor::BinaryDescriptorMatcher* cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr_mut(cv::Ptr<cv::line_descriptor::BinaryDescriptorMatcher>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +61,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::line_descriptor::LSDDetector* cv_PtrOfLSDDetector_get_inner_ptr(cv::Ptr<cv::line_descriptor::LSDDetector>* instance) {
+	const cv::line_descriptor::LSDDetector* cv_PtrOfLSDDetector_get_inner_ptr(const cv::Ptr<cv::line_descriptor::LSDDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::line_descriptor::LSDDetector* cv_PtrOfLSDDetector_get_inner_ptr_mut(cv::Ptr<cv::line_descriptor::LSDDetector>* instance) {
 		return instance->get();
 	}
 }

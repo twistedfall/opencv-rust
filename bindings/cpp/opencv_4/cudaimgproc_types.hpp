@@ -17,7 +17,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::CLAHE* cv_PtrOfCUDA_CLAHE_get_inner_ptr(cv::Ptr<cv::cuda::CLAHE>* instance) {
+	const cv::cuda::CLAHE* cv_PtrOfCUDA_CLAHE_get_inner_ptr(const cv::Ptr<cv::cuda::CLAHE>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::CLAHE* cv_PtrOfCUDA_CLAHE_get_inner_ptr_mut(cv::Ptr<cv::cuda::CLAHE>* instance) {
 		return instance->get();
 	}
 }
@@ -27,7 +31,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::CannyEdgeDetector* cv_PtrOfCUDA_CannyEdgeDetector_get_inner_ptr(cv::Ptr<cv::cuda::CannyEdgeDetector>* instance) {
+	const cv::cuda::CannyEdgeDetector* cv_PtrOfCUDA_CannyEdgeDetector_get_inner_ptr(const cv::Ptr<cv::cuda::CannyEdgeDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::CannyEdgeDetector* cv_PtrOfCUDA_CannyEdgeDetector_get_inner_ptr_mut(cv::Ptr<cv::cuda::CannyEdgeDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -37,7 +45,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::CornernessCriteria* cv_PtrOfCUDA_CornernessCriteria_get_inner_ptr(cv::Ptr<cv::cuda::CornernessCriteria>* instance) {
+	const cv::cuda::CornernessCriteria* cv_PtrOfCUDA_CornernessCriteria_get_inner_ptr(const cv::Ptr<cv::cuda::CornernessCriteria>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::CornernessCriteria* cv_PtrOfCUDA_CornernessCriteria_get_inner_ptr_mut(cv::Ptr<cv::cuda::CornernessCriteria>* instance) {
 		return instance->get();
 	}
 }
@@ -47,7 +59,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::CornersDetector* cv_PtrOfCUDA_CornersDetector_get_inner_ptr(cv::Ptr<cv::cuda::CornersDetector>* instance) {
+	const cv::cuda::CornersDetector* cv_PtrOfCUDA_CornersDetector_get_inner_ptr(const cv::Ptr<cv::cuda::CornersDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::CornersDetector* cv_PtrOfCUDA_CornersDetector_get_inner_ptr_mut(cv::Ptr<cv::cuda::CornersDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +73,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::HoughCirclesDetector* cv_PtrOfCUDA_HoughCirclesDetector_get_inner_ptr(cv::Ptr<cv::cuda::HoughCirclesDetector>* instance) {
+	const cv::cuda::HoughCirclesDetector* cv_PtrOfCUDA_HoughCirclesDetector_get_inner_ptr(const cv::Ptr<cv::cuda::HoughCirclesDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::HoughCirclesDetector* cv_PtrOfCUDA_HoughCirclesDetector_get_inner_ptr_mut(cv::Ptr<cv::cuda::HoughCirclesDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -67,7 +87,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::HoughLinesDetector* cv_PtrOfCUDA_HoughLinesDetector_get_inner_ptr(cv::Ptr<cv::cuda::HoughLinesDetector>* instance) {
+	const cv::cuda::HoughLinesDetector* cv_PtrOfCUDA_HoughLinesDetector_get_inner_ptr(const cv::Ptr<cv::cuda::HoughLinesDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::HoughLinesDetector* cv_PtrOfCUDA_HoughLinesDetector_get_inner_ptr_mut(cv::Ptr<cv::cuda::HoughLinesDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -77,7 +101,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::HoughSegmentDetector* cv_PtrOfCUDA_HoughSegmentDetector_get_inner_ptr(cv::Ptr<cv::cuda::HoughSegmentDetector>* instance) {
+	const cv::cuda::HoughSegmentDetector* cv_PtrOfCUDA_HoughSegmentDetector_get_inner_ptr(const cv::Ptr<cv::cuda::HoughSegmentDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::HoughSegmentDetector* cv_PtrOfCUDA_HoughSegmentDetector_get_inner_ptr_mut(cv::Ptr<cv::cuda::HoughSegmentDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -87,7 +115,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::TemplateMatching* cv_PtrOfCUDA_TemplateMatching_get_inner_ptr(cv::Ptr<cv::cuda::TemplateMatching>* instance) {
+	const cv::cuda::TemplateMatching* cv_PtrOfCUDA_TemplateMatching_get_inner_ptr(const cv::Ptr<cv::cuda::TemplateMatching>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::TemplateMatching* cv_PtrOfCUDA_TemplateMatching_get_inner_ptr_mut(cv::Ptr<cv::cuda::TemplateMatching>* instance) {
 		return instance->get();
 	}
 }

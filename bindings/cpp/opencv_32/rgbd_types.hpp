@@ -1,15 +1,10 @@
 template struct Result<bool>;
-template struct Result<const std::vector<cv::Mat>*>;
 template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
-template struct Result<const std::vector<cv::String>*>;
 template struct Result<const std::vector<cv::linemod::Template>*>;
-template struct Result<const std::vector<float>*>;
-template struct Result<const std::vector<int>*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::linemod::Detector>*>;
 template struct Result<cv::Ptr<cv::linemod::Modality>*>;
 template struct Result<cv::Ptr<cv::linemod::QuantizedPyramid>*>;
-template struct Result<cv::Ptr<cv::rgbd::OdometryFrame>*>;
 template struct Result<cv::Ptr<cv::rgbd::Odometry>*>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::linemod::ColorGradient*>;
@@ -30,7 +25,6 @@ template struct Result<int>;
 template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<cv::linemod::Feature>*>;
-template struct Result<std::vector<cv::linemod::Match>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
 extern "C" {
@@ -42,7 +36,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(cv::Ptr<cv::linemod::Detector>* instance) {
+	const cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr(const cv::Ptr<cv::linemod::Detector>* instance) {
+		return instance->get();
+	}
+
+	cv::linemod::Detector* cv_PtrOfLinemod_Detector_get_inner_ptr_mut(cv::Ptr<cv::linemod::Detector>* instance) {
 		return instance->get();
 	}
 }
@@ -52,7 +50,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(cv::Ptr<cv::linemod::Modality>* instance) {
+	const cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr(const cv::Ptr<cv::linemod::Modality>* instance) {
+		return instance->get();
+	}
+
+	cv::linemod::Modality* cv_PtrOfLinemod_Modality_get_inner_ptr_mut(cv::Ptr<cv::linemod::Modality>* instance) {
 		return instance->get();
 	}
 }
@@ -62,7 +64,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+	const cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr(const cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
+		return instance->get();
+	}
+
+	cv::linemod::QuantizedPyramid* cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr_mut(cv::Ptr<cv::linemod::QuantizedPyramid>* instance) {
 		return instance->get();
 	}
 }
@@ -72,7 +78,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(cv::Ptr<cv::rgbd::Odometry>* instance) {
+	const cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr(const cv::Ptr<cv::rgbd::Odometry>* instance) {
+		return instance->get();
+	}
+
+	cv::rgbd::Odometry* cv_PtrOfOdometry_get_inner_ptr_mut(cv::Ptr<cv::rgbd::Odometry>* instance) {
 		return instance->get();
 	}
 }
@@ -86,7 +96,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+	const cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr(const cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		return instance->get();
+	}
+
+	cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr_mut(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
 		return instance->get();
 	}
 }

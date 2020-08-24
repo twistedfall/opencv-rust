@@ -1,17 +1,20 @@
-template struct Result<const std::vector<cv::cuda::GpuMat>*>;
 template struct Result<cv::Ptr<cv::cuda::Convolution>*>;
 template struct Result<cv::Ptr<cv::cuda::DFT>*>;
 template struct Result<cv::Ptr<cv::cuda::LookUpTable>*>;
 template struct Result<cv::Scalar_<double>>;
+template struct Result<cv::cuda::GpuMat*>;
 template struct Result<double>;
 template struct Result<int>;
-template struct Result<std::vector<cv::cuda::GpuMat>*>;
 extern "C" {
 	void cv_PtrOfConvolution_delete(cv::Ptr<cv::cuda::Convolution>* instance) {
 		delete instance;
 	}
 
-	cv::cuda::Convolution* cv_PtrOfConvolution_get_inner_ptr(cv::Ptr<cv::cuda::Convolution>* instance) {
+	const cv::cuda::Convolution* cv_PtrOfConvolution_get_inner_ptr(const cv::Ptr<cv::cuda::Convolution>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::Convolution* cv_PtrOfConvolution_get_inner_ptr_mut(cv::Ptr<cv::cuda::Convolution>* instance) {
 		return instance->get();
 	}
 }
@@ -21,7 +24,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::DFT* cv_PtrOfDFT_get_inner_ptr(cv::Ptr<cv::cuda::DFT>* instance) {
+	const cv::cuda::DFT* cv_PtrOfDFT_get_inner_ptr(const cv::Ptr<cv::cuda::DFT>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::DFT* cv_PtrOfDFT_get_inner_ptr_mut(cv::Ptr<cv::cuda::DFT>* instance) {
 		return instance->get();
 	}
 }
@@ -31,7 +38,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::LookUpTable* cv_PtrOfLookUpTable_get_inner_ptr(cv::Ptr<cv::cuda::LookUpTable>* instance) {
+	const cv::cuda::LookUpTable* cv_PtrOfLookUpTable_get_inner_ptr(const cv::Ptr<cv::cuda::LookUpTable>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::LookUpTable* cv_PtrOfLookUpTable_get_inner_ptr_mut(cv::Ptr<cv::cuda::LookUpTable>* instance) {
 		return instance->get();
 	}
 }

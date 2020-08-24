@@ -1,12 +1,11 @@
 template struct Result<bool>;
-template struct Result<const std::vector<cv::String>*>;
 template struct Result<cv::Mat*>;
-template struct Result<cv::Ptr<const cv::optflow::PCAPrior>*>;
 template struct Result<cv::Ptr<cv::DenseOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::DISOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::GPCTrainingSamples>*>;
 template struct Result<cv::Ptr<cv::optflow::GPCTree>*>;
 template struct Result<cv::Ptr<cv::optflow::VariationalRefinement>*>;
+template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Vec<double, 18>>;
 template struct Result<cv::optflow::GPCMatchingParams>;
 template struct Result<cv::optflow::GPCPatchDescriptor*>;
@@ -16,8 +15,6 @@ template struct Result<cv::optflow::PCAPrior*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::optflow::GPCPatchDescriptor>*>;
 template struct Result<unsigned int>;
 template struct Result<unsigned long>;
 extern "C" {
@@ -25,7 +22,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::DISOpticalFlow* cv_PtrOfDISOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DISOpticalFlow>* instance) {
+	const cv::optflow::DISOpticalFlow* cv_PtrOfDISOpticalFlow_get_inner_ptr(const cv::Ptr<cv::optflow::DISOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::DISOpticalFlow* cv_PtrOfDISOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::optflow::DISOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -39,7 +40,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+	const cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(const cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr_mut(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
 		return instance->get();
 	}
 }
@@ -53,7 +58,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(cv::Ptr<cv::optflow::GPCTree>* instance) {
+	const cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(const cv::Ptr<cv::optflow::GPCTree>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr_mut(cv::Ptr<cv::optflow::GPCTree>* instance) {
 		return instance->get();
 	}
 }
@@ -67,7 +76,11 @@ extern "C" {
 		delete instance;
 	}
 
-	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(const cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+		return instance->get();
+	}
+
+	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr_mut(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
 		return instance->get();
 	}
 }
@@ -77,7 +90,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::VariationalRefinement* cv_PtrOfVariationalRefinement_get_inner_ptr(cv::Ptr<cv::optflow::VariationalRefinement>* instance) {
+	const cv::optflow::VariationalRefinement* cv_PtrOfVariationalRefinement_get_inner_ptr(const cv::Ptr<cv::optflow::VariationalRefinement>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::VariationalRefinement* cv_PtrOfVariationalRefinement_get_inner_ptr_mut(cv::Ptr<cv::optflow::VariationalRefinement>* instance) {
 		return instance->get();
 	}
 }

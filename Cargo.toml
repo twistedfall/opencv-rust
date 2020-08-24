@@ -6,7 +6,7 @@ repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = ["opencv", "vision"]
 license = "MIT"
-version = "0.45.0"
+version = "0.45.1"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 autoexamples = false # cuda example doesn't compile on just any system
@@ -57,7 +57,7 @@ contrib = []
 docs-only = []
 
 [build-dependencies]
-binding-generator = { package = "opencv-binding-generator", version = "0.19.0", path = "binding-generator", optional = true }
+binding-generator = { package = "opencv-binding-generator", version = "0.20.0", path = "binding-generator", optional = true }
 cc = { version = "1.0", features = ["parallel"] }
 clang = { version = "1.0", features = ["clang_6_0"], optional = true }
 glob = "0.3"

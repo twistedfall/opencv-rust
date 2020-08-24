@@ -4,7 +4,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::plot::Plot2d* cv_PtrOfPlot2d_get_inner_ptr(cv::Ptr<cv::plot::Plot2d>* instance) {
+	const cv::plot::Plot2d* cv_PtrOfPlot2d_get_inner_ptr(const cv::Ptr<cv::plot::Plot2d>* instance) {
+		return instance->get();
+	}
+
+	cv::plot::Plot2d* cv_PtrOfPlot2d_get_inner_ptr_mut(cv::Ptr<cv::plot::Plot2d>* instance) {
 		return instance->get();
 	}
 }

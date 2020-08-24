@@ -1,31 +1,22 @@
 template struct Result<bool>;
+template struct Result<char>;
 template struct Result<const cv::Mat*>;
-template struct Result<const cv::Ptr<cv::DescriptorMatcher>*>;
-template struct Result<const cv::Ptr<cv::Feature2D>*>;
-template struct Result<const cv::Ptr<cv::FileStorage>*>;
-template struct Result<const cv::Ptr<cv::flann::IndexParams>*>;
-template struct Result<const cv::Ptr<cv::flann::SearchParams>*>;
-template struct Result<const std::vector<char>*>;
-template struct Result<const std::vector<cv::DMatch>*>;
-template struct Result<const std::vector<cv::KeyPoint>*>;
 template struct Result<const std::vector<cv::Mat>*>;
-template struct Result<const std::vector<cv::Point_<float>>*>;
-template struct Result<const std::vector<float>*>;
-template struct Result<const std::vector<int>*>;
-template struct Result<const std::vector<std::vector<char>>*>;
-template struct Result<const std::vector<std::vector<cv::DMatch>>*>;
-template struct Result<const std::vector<std::vector<unsigned char>>*>;
 template struct Result<cv::AKAZE::DescriptorType>;
 template struct Result<cv::AgastFeatureDetector::DetectorType>;
 template struct Result<cv::BFMatcher*>;
 template struct Result<cv::BOWImgDescriptorExtractor*>;
 template struct Result<cv::BOWKMeansTrainer*>;
+template struct Result<cv::DMatch>;
 template struct Result<cv::FastFeatureDetector::DetectorType>;
 template struct Result<cv::FlannBasedMatcher*>;
 template struct Result<cv::KAZE::DiffusivityType>;
+template struct Result<cv::KeyPoint>;
 template struct Result<cv::KeyPointsFilter*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::ORB::ScoreType>;
+template struct Result<cv::Point_<float>>;
+template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::AKAZE>*>;
 template struct Result<cv::Ptr<cv::AgastFeatureDetector>*>;
 template struct Result<cv::Ptr<cv::BFMatcher>*>;
@@ -39,6 +30,7 @@ template struct Result<cv::Ptr<cv::MSER>*>;
 template struct Result<cv::Ptr<cv::ORB>*>;
 template struct Result<cv::Ptr<cv::SIFT>*>;
 template struct Result<cv::Ptr<cv::SimpleBlobDetector>*>;
+template struct Result<cv::Rect_<int>>;
 template struct Result<cv::SimpleBlobDetector::Params>;
 template struct Result<double>;
 template struct Result<float>;
@@ -46,14 +38,8 @@ template struct Result<int>;
 template struct Result<std::vector<char>*>;
 template struct Result<std::vector<cv::DMatch>*>;
 template struct Result<std::vector<cv::KeyPoint>*>;
-template struct Result<std::vector<cv::Point_<float>>*>;
 template struct Result<std::vector<cv::Point_<int>>*>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::vector<cv::DMatch>>*>;
-template struct Result<std::vector<std::vector<cv::KeyPoint>>*>;
-template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
-template struct Result<std::vector<std::vector<int>>*>;
 template struct Result<std::vector<unsigned char>*>;
 template struct Result<unsigned char>;
 template struct Result<unsigned long>;
@@ -63,7 +49,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::AKAZE* cv_PtrOfAKAZE_get_inner_ptr(cv::Ptr<cv::AKAZE>* instance) {
+	const cv::AKAZE* cv_PtrOfAKAZE_get_inner_ptr(const cv::Ptr<cv::AKAZE>* instance) {
+		return instance->get();
+	}
+
+	cv::AKAZE* cv_PtrOfAKAZE_get_inner_ptr_mut(cv::Ptr<cv::AKAZE>* instance) {
 		return instance->get();
 	}
 }
@@ -73,7 +63,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::AgastFeatureDetector* cv_PtrOfAgastFeatureDetector_get_inner_ptr(cv::Ptr<cv::AgastFeatureDetector>* instance) {
+	const cv::AgastFeatureDetector* cv_PtrOfAgastFeatureDetector_get_inner_ptr(const cv::Ptr<cv::AgastFeatureDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::AgastFeatureDetector* cv_PtrOfAgastFeatureDetector_get_inner_ptr_mut(cv::Ptr<cv::AgastFeatureDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -87,7 +81,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BFMatcher* cv_PtrOfBFMatcher_get_inner_ptr(cv::Ptr<cv::BFMatcher>* instance) {
+	const cv::BFMatcher* cv_PtrOfBFMatcher_get_inner_ptr(const cv::Ptr<cv::BFMatcher>* instance) {
+		return instance->get();
+	}
+
+	cv::BFMatcher* cv_PtrOfBFMatcher_get_inner_ptr_mut(cv::Ptr<cv::BFMatcher>* instance) {
 		return instance->get();
 	}
 }
@@ -101,7 +99,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BRISK* cv_PtrOfBRISK_get_inner_ptr(cv::Ptr<cv::BRISK>* instance) {
+	const cv::BRISK* cv_PtrOfBRISK_get_inner_ptr(const cv::Ptr<cv::BRISK>* instance) {
+		return instance->get();
+	}
+
+	cv::BRISK* cv_PtrOfBRISK_get_inner_ptr_mut(cv::Ptr<cv::BRISK>* instance) {
 		return instance->get();
 	}
 }
@@ -111,7 +113,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::DescriptorMatcher* cv_PtrOfDescriptorMatcher_get_inner_ptr(cv::Ptr<cv::DescriptorMatcher>* instance) {
+	const cv::DescriptorMatcher* cv_PtrOfDescriptorMatcher_get_inner_ptr(const cv::Ptr<cv::DescriptorMatcher>* instance) {
+		return instance->get();
+	}
+
+	cv::DescriptorMatcher* cv_PtrOfDescriptorMatcher_get_inner_ptr_mut(cv::Ptr<cv::DescriptorMatcher>* instance) {
 		return instance->get();
 	}
 }
@@ -121,7 +127,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::FastFeatureDetector* cv_PtrOfFastFeatureDetector_get_inner_ptr(cv::Ptr<cv::FastFeatureDetector>* instance) {
+	const cv::FastFeatureDetector* cv_PtrOfFastFeatureDetector_get_inner_ptr(const cv::Ptr<cv::FastFeatureDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::FastFeatureDetector* cv_PtrOfFastFeatureDetector_get_inner_ptr_mut(cv::Ptr<cv::FastFeatureDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -135,7 +145,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::Feature2D* cv_PtrOfFeature2D_get_inner_ptr(cv::Ptr<cv::Feature2D>* instance) {
+	const cv::Feature2D* cv_PtrOfFeature2D_get_inner_ptr(const cv::Ptr<cv::Feature2D>* instance) {
+		return instance->get();
+	}
+
+	cv::Feature2D* cv_PtrOfFeature2D_get_inner_ptr_mut(cv::Ptr<cv::Feature2D>* instance) {
 		return instance->get();
 	}
 }
@@ -149,7 +163,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::FlannBasedMatcher* cv_PtrOfFlannBasedMatcher_get_inner_ptr(cv::Ptr<cv::FlannBasedMatcher>* instance) {
+	const cv::FlannBasedMatcher* cv_PtrOfFlannBasedMatcher_get_inner_ptr(const cv::Ptr<cv::FlannBasedMatcher>* instance) {
+		return instance->get();
+	}
+
+	cv::FlannBasedMatcher* cv_PtrOfFlannBasedMatcher_get_inner_ptr_mut(cv::Ptr<cv::FlannBasedMatcher>* instance) {
 		return instance->get();
 	}
 }
@@ -159,7 +177,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::GFTTDetector* cv_PtrOfGFTTDetector_get_inner_ptr(cv::Ptr<cv::GFTTDetector>* instance) {
+	const cv::GFTTDetector* cv_PtrOfGFTTDetector_get_inner_ptr(const cv::Ptr<cv::GFTTDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::GFTTDetector* cv_PtrOfGFTTDetector_get_inner_ptr_mut(cv::Ptr<cv::GFTTDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -169,7 +191,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::KAZE* cv_PtrOfKAZE_get_inner_ptr(cv::Ptr<cv::KAZE>* instance) {
+	const cv::KAZE* cv_PtrOfKAZE_get_inner_ptr(const cv::Ptr<cv::KAZE>* instance) {
+		return instance->get();
+	}
+
+	cv::KAZE* cv_PtrOfKAZE_get_inner_ptr_mut(cv::Ptr<cv::KAZE>* instance) {
 		return instance->get();
 	}
 }
@@ -179,7 +205,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::MSER* cv_PtrOfMSER_get_inner_ptr(cv::Ptr<cv::MSER>* instance) {
+	const cv::MSER* cv_PtrOfMSER_get_inner_ptr(const cv::Ptr<cv::MSER>* instance) {
+		return instance->get();
+	}
+
+	cv::MSER* cv_PtrOfMSER_get_inner_ptr_mut(cv::Ptr<cv::MSER>* instance) {
 		return instance->get();
 	}
 }
@@ -189,7 +219,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ORB* cv_PtrOfORB_get_inner_ptr(cv::Ptr<cv::ORB>* instance) {
+	const cv::ORB* cv_PtrOfORB_get_inner_ptr(const cv::Ptr<cv::ORB>* instance) {
+		return instance->get();
+	}
+
+	cv::ORB* cv_PtrOfORB_get_inner_ptr_mut(cv::Ptr<cv::ORB>* instance) {
 		return instance->get();
 	}
 }
@@ -203,7 +237,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::SIFT* cv_PtrOfSIFT_get_inner_ptr(cv::Ptr<cv::SIFT>* instance) {
+	const cv::SIFT* cv_PtrOfSIFT_get_inner_ptr(const cv::Ptr<cv::SIFT>* instance) {
+		return instance->get();
+	}
+
+	cv::SIFT* cv_PtrOfSIFT_get_inner_ptr_mut(cv::Ptr<cv::SIFT>* instance) {
 		return instance->get();
 	}
 }
@@ -217,7 +255,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::SimpleBlobDetector* cv_PtrOfSimpleBlobDetector_get_inner_ptr(cv::Ptr<cv::SimpleBlobDetector>* instance) {
+	const cv::SimpleBlobDetector* cv_PtrOfSimpleBlobDetector_get_inner_ptr(const cv::Ptr<cv::SimpleBlobDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::SimpleBlobDetector* cv_PtrOfSimpleBlobDetector_get_inner_ptr_mut(cv::Ptr<cv::SimpleBlobDetector>* instance) {
 		return instance->get();
 	}
 }

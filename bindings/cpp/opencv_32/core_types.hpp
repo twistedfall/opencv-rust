@@ -2,7 +2,6 @@ template struct Result<bool>;
 template struct Result<char>;
 template struct Result<const cv::MatOp*>;
 template struct Result<const cv::Mat**>;
-template struct Result<const cv::Ptr<cv::MinProblemSolver::Function>*>;
 template struct Result<const cv::SparseMat**>;
 template struct Result<const cv::SparseMat::Node**>;
 template struct Result<const cv::_InputOutputArray*>;
@@ -10,15 +9,6 @@ template struct Result<const cv::ocl::Device*>;
 template struct Result<const cv::ocl::ProgramSource*>;
 template struct Result<const int>;
 template struct Result<const int*>;
-template struct Result<const std::vector<bool>*>;
-template struct Result<const std::vector<cv::DMatch>*>;
-template struct Result<const std::vector<cv::KeyPoint>*>;
-template struct Result<const std::vector<cv::Mat>*>;
-template struct Result<const std::vector<cv::Point_<float>>*>;
-template struct Result<const std::vector<cv::Range>*>;
-template struct Result<const std::vector<cv::UMat>*>;
-template struct Result<const std::vector<cv::cuda::GpuMat>*>;
-template struct Result<const std::vector<int>*>;
 template struct Result<const unsigned char*>;
 template struct Result<const unsigned long>;
 template struct Result<const void*>;
@@ -122,22 +112,17 @@ template struct Result<long>;
 template struct Result<short>;
 template struct Result<signed char>;
 template struct Result<signed char*>;
-template struct Result<std::vector<bool>*>;
 template struct Result<std::vector<char>*>;
 template struct Result<std::vector<cv::DMatch>*>;
 template struct Result<std::vector<cv::KeyPoint>*>;
-template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Point3_<double>>*>;
 template struct Result<std::vector<cv::Point3_<float>>*>;
 template struct Result<std::vector<cv::Point3_<int>>*>;
 template struct Result<std::vector<cv::Point_<float>>*>;
 template struct Result<std::vector<cv::Point_<int>>*>;
 template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::String>*>;
-template struct Result<std::vector<cv::UMat>*>;
 template struct Result<std::vector<cv::Vec<int, 2>>*>;
 template struct Result<std::vector<cv::cuda::GpuMat>*>;
-template struct Result<std::vector<cv::ocl::PlatformInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<unsigned char>*>;
@@ -155,7 +140,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
+	const cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(const cv::Ptr<cv::ConjGradSolver>* instance) {
+		return instance->get();
+	}
+
+	cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr_mut(cv::Ptr<cv::ConjGradSolver>* instance) {
 		return instance->get();
 	}
 }
@@ -165,7 +154,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr(cv::Ptr<cv::DownhillSolver>* instance) {
+	const cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr(const cv::Ptr<cv::DownhillSolver>* instance) {
+		return instance->get();
+	}
+
+	cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr_mut(cv::Ptr<cv::DownhillSolver>* instance) {
 		return instance->get();
 	}
 }
@@ -175,7 +168,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::Formatted* cv_PtrOfFormatted_get_inner_ptr(cv::Ptr<cv::Formatted>* instance) {
+	const cv::Formatted* cv_PtrOfFormatted_get_inner_ptr(const cv::Ptr<cv::Formatted>* instance) {
+		return instance->get();
+	}
+
+	cv::Formatted* cv_PtrOfFormatted_get_inner_ptr_mut(cv::Ptr<cv::Formatted>* instance) {
 		return instance->get();
 	}
 }
@@ -185,7 +182,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::Formatter* cv_PtrOfFormatter_get_inner_ptr(cv::Ptr<cv::Formatter>* instance) {
+	const cv::Formatter* cv_PtrOfFormatter_get_inner_ptr(const cv::Ptr<cv::Formatter>* instance) {
+		return instance->get();
+	}
+
+	cv::Formatter* cv_PtrOfFormatter_get_inner_ptr_mut(cv::Ptr<cv::Formatter>* instance) {
 		return instance->get();
 	}
 }
@@ -195,7 +196,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
+	const cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(const cv::Ptr<cv::MinProblemSolver::Function>* instance) {
+		return instance->get();
+	}
+
+	cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr_mut(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
 		return instance->get();
 	}
 }
@@ -3156,7 +3161,7 @@ extern "C" {
 	}
 
 	void cv_VectorOfbool_swap(std::vector<bool>* instance, size_t index1, size_t index2) {
-		std::swap((*instance)[index1], (*instance)[index2]);
+		instance->swap((*instance)[index1], (*instance)[index2]);
 	}
 
 	void cv_VectorOfbool_clear(std::vector<bool>* instance) {

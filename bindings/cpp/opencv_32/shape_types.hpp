@@ -1,6 +1,5 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::HistogramCostExtractor>*>;
-template struct Result<const cv::Ptr<cv::ShapeTransformer>*>;
+template struct Result<cv::DMatch>;
 template struct Result<cv::Ptr<cv::AffineTransformer>*>;
 template struct Result<cv::Ptr<cv::HausdorffDistanceExtractor>*>;
 template struct Result<cv::Ptr<cv::HistogramCostExtractor>*>;
@@ -10,13 +9,16 @@ template struct Result<cv::Ptr<cv::ThinPlateSplineShapeTransformer>*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::DMatch>*>;
 extern "C" {
 	void cv_PtrOfAffineTransformer_delete(cv::Ptr<cv::AffineTransformer>* instance) {
 		delete instance;
 	}
 
-	cv::AffineTransformer* cv_PtrOfAffineTransformer_get_inner_ptr(cv::Ptr<cv::AffineTransformer>* instance) {
+	const cv::AffineTransformer* cv_PtrOfAffineTransformer_get_inner_ptr(const cv::Ptr<cv::AffineTransformer>* instance) {
+		return instance->get();
+	}
+
+	cv::AffineTransformer* cv_PtrOfAffineTransformer_get_inner_ptr_mut(cv::Ptr<cv::AffineTransformer>* instance) {
 		return instance->get();
 	}
 }
@@ -26,7 +28,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::HausdorffDistanceExtractor* cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr(cv::Ptr<cv::HausdorffDistanceExtractor>* instance) {
+	const cv::HausdorffDistanceExtractor* cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr(const cv::Ptr<cv::HausdorffDistanceExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::HausdorffDistanceExtractor* cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr_mut(cv::Ptr<cv::HausdorffDistanceExtractor>* instance) {
 		return instance->get();
 	}
 }
@@ -36,7 +42,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::HistogramCostExtractor* cv_PtrOfHistogramCostExtractor_get_inner_ptr(cv::Ptr<cv::HistogramCostExtractor>* instance) {
+	const cv::HistogramCostExtractor* cv_PtrOfHistogramCostExtractor_get_inner_ptr(const cv::Ptr<cv::HistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::HistogramCostExtractor* cv_PtrOfHistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::HistogramCostExtractor>* instance) {
 		return instance->get();
 	}
 }
@@ -46,7 +56,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ShapeContextDistanceExtractor* cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr(cv::Ptr<cv::ShapeContextDistanceExtractor>* instance) {
+	const cv::ShapeContextDistanceExtractor* cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr(const cv::Ptr<cv::ShapeContextDistanceExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::ShapeContextDistanceExtractor* cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr_mut(cv::Ptr<cv::ShapeContextDistanceExtractor>* instance) {
 		return instance->get();
 	}
 }
@@ -56,7 +70,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ShapeTransformer* cv_PtrOfShapeTransformer_get_inner_ptr(cv::Ptr<cv::ShapeTransformer>* instance) {
+	const cv::ShapeTransformer* cv_PtrOfShapeTransformer_get_inner_ptr(const cv::Ptr<cv::ShapeTransformer>* instance) {
+		return instance->get();
+	}
+
+	cv::ShapeTransformer* cv_PtrOfShapeTransformer_get_inner_ptr_mut(cv::Ptr<cv::ShapeTransformer>* instance) {
 		return instance->get();
 	}
 }
@@ -66,7 +84,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ThinPlateSplineShapeTransformer* cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr(cv::Ptr<cv::ThinPlateSplineShapeTransformer>* instance) {
+	const cv::ThinPlateSplineShapeTransformer* cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr(const cv::Ptr<cv::ThinPlateSplineShapeTransformer>* instance) {
+		return instance->get();
+	}
+
+	cv::ThinPlateSplineShapeTransformer* cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr_mut(cv::Ptr<cv::ThinPlateSplineShapeTransformer>* instance) {
 		return instance->get();
 	}
 }

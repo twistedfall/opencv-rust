@@ -8,7 +8,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::bgsegm::BackgroundSubtractorGMG* cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr(cv::Ptr<cv::bgsegm::BackgroundSubtractorGMG>* instance) {
+	const cv::bgsegm::BackgroundSubtractorGMG* cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr(const cv::Ptr<cv::bgsegm::BackgroundSubtractorGMG>* instance) {
+		return instance->get();
+	}
+
+	cv::bgsegm::BackgroundSubtractorGMG* cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr_mut(cv::Ptr<cv::bgsegm::BackgroundSubtractorGMG>* instance) {
 		return instance->get();
 	}
 }
@@ -18,7 +22,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::bgsegm::BackgroundSubtractorMOG* cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr(cv::Ptr<cv::bgsegm::BackgroundSubtractorMOG>* instance) {
+	const cv::bgsegm::BackgroundSubtractorMOG* cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr(const cv::Ptr<cv::bgsegm::BackgroundSubtractorMOG>* instance) {
+		return instance->get();
+	}
+
+	cv::bgsegm::BackgroundSubtractorMOG* cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr_mut(cv::Ptr<cv::bgsegm::BackgroundSubtractorMOG>* instance) {
 		return instance->get();
 	}
 }

@@ -6,7 +6,7 @@ mod aruco_types {
 	pub type PtrOfBoard = core::Ptr::<crate::aruco::Board>;
 	
 	ptr_extern! { crate::aruco::Board,
-		cv_PtrOfBoard_delete, cv_PtrOfBoard_get_inner_ptr
+		cv_PtrOfBoard_delete, cv_PtrOfBoard_get_inner_ptr, cv_PtrOfBoard_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::aruco::Board, cv_PtrOfBoard_new }
@@ -24,7 +24,7 @@ mod aruco_types {
 	pub type PtrOfCharucoBoard = core::Ptr::<crate::aruco::CharucoBoard>;
 	
 	ptr_extern! { crate::aruco::CharucoBoard,
-		cv_PtrOfCharucoBoard_delete, cv_PtrOfCharucoBoard_get_inner_ptr
+		cv_PtrOfCharucoBoard_delete, cv_PtrOfCharucoBoard_get_inner_ptr, cv_PtrOfCharucoBoard_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::aruco::CharucoBoard, cv_PtrOfCharucoBoard_new }
@@ -47,7 +47,7 @@ mod aruco_types {
 	pub type PtrOfDetectorParameters = core::Ptr::<crate::aruco::DetectorParameters>;
 	
 	ptr_extern! { crate::aruco::DetectorParameters,
-		cv_PtrOfDetectorParameters_delete, cv_PtrOfDetectorParameters_get_inner_ptr
+		cv_PtrOfDetectorParameters_delete, cv_PtrOfDetectorParameters_get_inner_ptr, cv_PtrOfDetectorParameters_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::aruco::DetectorParameters, cv_PtrOfDetectorParameters_new }
@@ -65,7 +65,7 @@ mod aruco_types {
 	pub type PtrOfDictionary = core::Ptr::<crate::aruco::Dictionary>;
 	
 	ptr_extern! { crate::aruco::Dictionary,
-		cv_PtrOfDictionary_delete, cv_PtrOfDictionary_get_inner_ptr
+		cv_PtrOfDictionary_delete, cv_PtrOfDictionary_get_inner_ptr, cv_PtrOfDictionary_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::aruco::Dictionary, cv_PtrOfDictionary_new }
@@ -83,7 +83,7 @@ mod aruco_types {
 	pub type PtrOfGridBoard = core::Ptr::<crate::aruco::GridBoard>;
 	
 	ptr_extern! { crate::aruco::GridBoard,
-		cv_PtrOfGridBoard_delete, cv_PtrOfGridBoard_get_inner_ptr
+		cv_PtrOfGridBoard_delete, cv_PtrOfGridBoard_get_inner_ptr, cv_PtrOfGridBoard_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::aruco::GridBoard, cv_PtrOfGridBoard_new }
@@ -114,7 +114,7 @@ mod bgsegm_types {
 	pub type PtrOfBackgroundSubtractorGMG = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>;
 	
 	ptr_extern! { dyn crate::bgsegm::BackgroundSubtractorGMG,
-		cv_PtrOfBackgroundSubtractorGMG_delete, cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr
+		cv_PtrOfBackgroundSubtractorGMG_delete, cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr, cv_PtrOfBackgroundSubtractorGMG_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBackgroundSubtractorGMG {
@@ -140,7 +140,7 @@ mod bgsegm_types {
 	pub type PtrOfBackgroundSubtractorMOG = core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>;
 	
 	ptr_extern! { dyn crate::bgsegm::BackgroundSubtractorMOG,
-		cv_PtrOfBackgroundSubtractorMOG_delete, cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr
+		cv_PtrOfBackgroundSubtractorMOG_delete, cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr, cv_PtrOfBackgroundSubtractorMOG_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBackgroundSubtractorMOG {
@@ -174,7 +174,7 @@ mod bioinspired_types {
 	pub type PtrOfRetina = core::Ptr::<dyn crate::bioinspired::Retina>;
 	
 	ptr_extern! { dyn crate::bioinspired::Retina,
-		cv_PtrOfRetina_delete, cv_PtrOfRetina_get_inner_ptr
+		cv_PtrOfRetina_delete, cv_PtrOfRetina_get_inner_ptr, cv_PtrOfRetina_get_inner_ptr_mut
 	}
 	
 	impl PtrOfRetina {
@@ -195,7 +195,7 @@ mod bioinspired_types {
 	pub type PtrOfRetinaFastToneMapping = core::Ptr::<dyn crate::bioinspired::RetinaFastToneMapping>;
 	
 	ptr_extern! { dyn crate::bioinspired::RetinaFastToneMapping,
-		cv_PtrOfRetinaFastToneMapping_delete, cv_PtrOfRetinaFastToneMapping_get_inner_ptr
+		cv_PtrOfRetinaFastToneMapping_delete, cv_PtrOfRetinaFastToneMapping_get_inner_ptr, cv_PtrOfRetinaFastToneMapping_get_inner_ptr_mut
 	}
 	
 	impl PtrOfRetinaFastToneMapping {
@@ -216,7 +216,7 @@ mod bioinspired_types {
 	pub type PtrOfTransientAreasSegmentationModule = core::Ptr::<dyn crate::bioinspired::TransientAreasSegmentationModule>;
 	
 	ptr_extern! { dyn crate::bioinspired::TransientAreasSegmentationModule,
-		cv_PtrOfTransientAreasSegmentationModule_delete, cv_PtrOfTransientAreasSegmentationModule_get_inner_ptr
+		cv_PtrOfTransientAreasSegmentationModule_delete, cv_PtrOfTransientAreasSegmentationModule_get_inner_ptr, cv_PtrOfTransientAreasSegmentationModule_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTransientAreasSegmentationModule {
@@ -244,7 +244,7 @@ mod calib3d_types {
 	pub type PtrOfStereoBM = core::Ptr::<dyn crate::calib3d::StereoBM>;
 	
 	ptr_extern! { dyn crate::calib3d::StereoBM,
-		cv_PtrOfStereoBM_delete, cv_PtrOfStereoBM_get_inner_ptr
+		cv_PtrOfStereoBM_delete, cv_PtrOfStereoBM_get_inner_ptr, cv_PtrOfStereoBM_get_inner_ptr_mut
 	}
 	
 	impl PtrOfStereoBM {
@@ -270,7 +270,7 @@ mod calib3d_types {
 	pub type PtrOfStereoMatcher = core::Ptr::<dyn crate::calib3d::StereoMatcher>;
 	
 	ptr_extern! { dyn crate::calib3d::StereoMatcher,
-		cv_PtrOfStereoMatcher_delete, cv_PtrOfStereoMatcher_get_inner_ptr
+		cv_PtrOfStereoMatcher_delete, cv_PtrOfStereoMatcher_get_inner_ptr, cv_PtrOfStereoMatcher_get_inner_ptr_mut
 	}
 	
 	impl PtrOfStereoMatcher {
@@ -291,7 +291,7 @@ mod calib3d_types {
 	pub type PtrOfStereoSGBM = core::Ptr::<dyn crate::calib3d::StereoSGBM>;
 	
 	ptr_extern! { dyn crate::calib3d::StereoSGBM,
-		cv_PtrOfStereoSGBM_delete, cv_PtrOfStereoSGBM_get_inner_ptr
+		cv_PtrOfStereoSGBM_delete, cv_PtrOfStereoSGBM_get_inner_ptr, cv_PtrOfStereoSGBM_get_inner_ptr_mut
 	}
 	
 	impl PtrOfStereoSGBM {
@@ -331,7 +331,7 @@ mod core_types {
 	pub type PtrOfConjGradSolver = core::Ptr::<dyn core::ConjGradSolver>;
 	
 	ptr_extern! { dyn core::ConjGradSolver,
-		cv_PtrOfConjGradSolver_delete, cv_PtrOfConjGradSolver_get_inner_ptr
+		cv_PtrOfConjGradSolver_delete, cv_PtrOfConjGradSolver_get_inner_ptr, cv_PtrOfConjGradSolver_get_inner_ptr_mut
 	}
 	
 	impl PtrOfConjGradSolver {
@@ -357,7 +357,7 @@ mod core_types {
 	pub type PtrOfDownhillSolver = core::Ptr::<dyn core::DownhillSolver>;
 	
 	ptr_extern! { dyn core::DownhillSolver,
-		cv_PtrOfDownhillSolver_delete, cv_PtrOfDownhillSolver_get_inner_ptr
+		cv_PtrOfDownhillSolver_delete, cv_PtrOfDownhillSolver_get_inner_ptr, cv_PtrOfDownhillSolver_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDownhillSolver {
@@ -383,7 +383,7 @@ mod core_types {
 	pub type PtrOfFormatted = core::Ptr::<dyn core::Formatted>;
 	
 	ptr_extern! { dyn core::Formatted,
-		cv_PtrOfFormatted_delete, cv_PtrOfFormatted_get_inner_ptr
+		cv_PtrOfFormatted_delete, cv_PtrOfFormatted_get_inner_ptr, cv_PtrOfFormatted_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFormatted {
@@ -399,7 +399,7 @@ mod core_types {
 	pub type PtrOfFormatter = core::Ptr::<dyn core::Formatter>;
 	
 	ptr_extern! { dyn core::Formatter,
-		cv_PtrOfFormatter_delete, cv_PtrOfFormatter_get_inner_ptr
+		cv_PtrOfFormatter_delete, cv_PtrOfFormatter_get_inner_ptr, cv_PtrOfFormatter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFormatter {
@@ -415,7 +415,7 @@ mod core_types {
 	pub type PtrOfMinProblemSolver_Function = core::Ptr::<dyn core::MinProblemSolver_Function>;
 	
 	ptr_extern! { dyn core::MinProblemSolver_Function,
-		cv_PtrOfMinProblemSolver_Function_delete, cv_PtrOfMinProblemSolver_Function_get_inner_ptr
+		cv_PtrOfMinProblemSolver_Function_delete, cv_PtrOfMinProblemSolver_Function_get_inner_ptr, cv_PtrOfMinProblemSolver_Function_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMinProblemSolver_Function {
@@ -3022,7 +3022,7 @@ mod dnn_types {
 	pub type PtrOfAbsLayer = core::Ptr::<dyn crate::dnn::AbsLayer>;
 	
 	ptr_extern! { dyn crate::dnn::AbsLayer,
-		cv_PtrOfAbsLayer_delete, cv_PtrOfAbsLayer_get_inner_ptr
+		cv_PtrOfAbsLayer_delete, cv_PtrOfAbsLayer_get_inner_ptr, cv_PtrOfAbsLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAbsLayer {
@@ -3043,7 +3043,7 @@ mod dnn_types {
 	pub type PtrOfBNLLLayer = core::Ptr::<dyn crate::dnn::BNLLLayer>;
 	
 	ptr_extern! { dyn crate::dnn::BNLLLayer,
-		cv_PtrOfBNLLLayer_delete, cv_PtrOfBNLLLayer_get_inner_ptr
+		cv_PtrOfBNLLLayer_delete, cv_PtrOfBNLLLayer_get_inner_ptr, cv_PtrOfBNLLLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBNLLLayer {
@@ -3064,7 +3064,7 @@ mod dnn_types {
 	pub type PtrOfBaseConvolutionLayer = core::Ptr::<dyn crate::dnn::BaseConvolutionLayer>;
 	
 	ptr_extern! { dyn crate::dnn::BaseConvolutionLayer,
-		cv_PtrOfBaseConvolutionLayer_delete, cv_PtrOfBaseConvolutionLayer_get_inner_ptr
+		cv_PtrOfBaseConvolutionLayer_delete, cv_PtrOfBaseConvolutionLayer_get_inner_ptr, cv_PtrOfBaseConvolutionLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBaseConvolutionLayer {
@@ -3085,7 +3085,7 @@ mod dnn_types {
 	pub type PtrOfConcatLayer = core::Ptr::<dyn crate::dnn::ConcatLayer>;
 	
 	ptr_extern! { dyn crate::dnn::ConcatLayer,
-		cv_PtrOfConcatLayer_delete, cv_PtrOfConcatLayer_get_inner_ptr
+		cv_PtrOfConcatLayer_delete, cv_PtrOfConcatLayer_get_inner_ptr, cv_PtrOfConcatLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfConcatLayer {
@@ -3106,7 +3106,7 @@ mod dnn_types {
 	pub type PtrOfCropLayer = core::Ptr::<dyn crate::dnn::CropLayer>;
 	
 	ptr_extern! { dyn crate::dnn::CropLayer,
-		cv_PtrOfCropLayer_delete, cv_PtrOfCropLayer_get_inner_ptr
+		cv_PtrOfCropLayer_delete, cv_PtrOfCropLayer_get_inner_ptr, cv_PtrOfCropLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfCropLayer {
@@ -3127,7 +3127,7 @@ mod dnn_types {
 	pub type PtrOfEltwiseLayer = core::Ptr::<dyn crate::dnn::EltwiseLayer>;
 	
 	ptr_extern! { dyn crate::dnn::EltwiseLayer,
-		cv_PtrOfEltwiseLayer_delete, cv_PtrOfEltwiseLayer_get_inner_ptr
+		cv_PtrOfEltwiseLayer_delete, cv_PtrOfEltwiseLayer_get_inner_ptr, cv_PtrOfEltwiseLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfEltwiseLayer {
@@ -3148,7 +3148,7 @@ mod dnn_types {
 	pub type PtrOfImporter = core::Ptr::<dyn crate::dnn::Importer>;
 	
 	ptr_extern! { dyn crate::dnn::Importer,
-		cv_PtrOfImporter_delete, cv_PtrOfImporter_get_inner_ptr
+		cv_PtrOfImporter_delete, cv_PtrOfImporter_get_inner_ptr, cv_PtrOfImporter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfImporter {
@@ -3164,7 +3164,7 @@ mod dnn_types {
 	pub type PtrOfInnerProductLayer = core::Ptr::<dyn crate::dnn::InnerProductLayer>;
 	
 	ptr_extern! { dyn crate::dnn::InnerProductLayer,
-		cv_PtrOfInnerProductLayer_delete, cv_PtrOfInnerProductLayer_get_inner_ptr
+		cv_PtrOfInnerProductLayer_delete, cv_PtrOfInnerProductLayer_get_inner_ptr, cv_PtrOfInnerProductLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfInnerProductLayer {
@@ -3185,7 +3185,7 @@ mod dnn_types {
 	pub type PtrOfLRNLayer = core::Ptr::<dyn crate::dnn::LRNLayer>;
 	
 	ptr_extern! { dyn crate::dnn::LRNLayer,
-		cv_PtrOfLRNLayer_delete, cv_PtrOfLRNLayer_get_inner_ptr
+		cv_PtrOfLRNLayer_delete, cv_PtrOfLRNLayer_get_inner_ptr, cv_PtrOfLRNLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLRNLayer {
@@ -3206,7 +3206,7 @@ mod dnn_types {
 	pub type PtrOfLSTMLayer = core::Ptr::<dyn crate::dnn::LSTMLayer>;
 	
 	ptr_extern! { dyn crate::dnn::LSTMLayer,
-		cv_PtrOfLSTMLayer_delete, cv_PtrOfLSTMLayer_get_inner_ptr
+		cv_PtrOfLSTMLayer_delete, cv_PtrOfLSTMLayer_get_inner_ptr, cv_PtrOfLSTMLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLSTMLayer {
@@ -3227,7 +3227,7 @@ mod dnn_types {
 	pub type PtrOfLayer = core::Ptr::<dyn crate::dnn::Layer>;
 	
 	ptr_extern! { dyn crate::dnn::Layer,
-		cv_PtrOfLayer_delete, cv_PtrOfLayer_get_inner_ptr
+		cv_PtrOfLayer_delete, cv_PtrOfLayer_get_inner_ptr, cv_PtrOfLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLayer {
@@ -3243,7 +3243,7 @@ mod dnn_types {
 	pub type PtrOfMVNLayer = core::Ptr::<dyn crate::dnn::MVNLayer>;
 	
 	ptr_extern! { dyn crate::dnn::MVNLayer,
-		cv_PtrOfMVNLayer_delete, cv_PtrOfMVNLayer_get_inner_ptr
+		cv_PtrOfMVNLayer_delete, cv_PtrOfMVNLayer_get_inner_ptr, cv_PtrOfMVNLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMVNLayer {
@@ -3264,7 +3264,7 @@ mod dnn_types {
 	pub type PtrOfPoolingLayer = core::Ptr::<dyn crate::dnn::PoolingLayer>;
 	
 	ptr_extern! { dyn crate::dnn::PoolingLayer,
-		cv_PtrOfPoolingLayer_delete, cv_PtrOfPoolingLayer_get_inner_ptr
+		cv_PtrOfPoolingLayer_delete, cv_PtrOfPoolingLayer_get_inner_ptr, cv_PtrOfPoolingLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPoolingLayer {
@@ -3285,7 +3285,7 @@ mod dnn_types {
 	pub type PtrOfPowerLayer = core::Ptr::<dyn crate::dnn::PowerLayer>;
 	
 	ptr_extern! { dyn crate::dnn::PowerLayer,
-		cv_PtrOfPowerLayer_delete, cv_PtrOfPowerLayer_get_inner_ptr
+		cv_PtrOfPowerLayer_delete, cv_PtrOfPowerLayer_get_inner_ptr, cv_PtrOfPowerLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPowerLayer {
@@ -3306,7 +3306,7 @@ mod dnn_types {
 	pub type PtrOfRNNLayer = core::Ptr::<dyn crate::dnn::RNNLayer>;
 	
 	ptr_extern! { dyn crate::dnn::RNNLayer,
-		cv_PtrOfRNNLayer_delete, cv_PtrOfRNNLayer_get_inner_ptr
+		cv_PtrOfRNNLayer_delete, cv_PtrOfRNNLayer_get_inner_ptr, cv_PtrOfRNNLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfRNNLayer {
@@ -3327,7 +3327,7 @@ mod dnn_types {
 	pub type PtrOfReLULayer = core::Ptr::<dyn crate::dnn::ReLULayer>;
 	
 	ptr_extern! { dyn crate::dnn::ReLULayer,
-		cv_PtrOfReLULayer_delete, cv_PtrOfReLULayer_get_inner_ptr
+		cv_PtrOfReLULayer_delete, cv_PtrOfReLULayer_get_inner_ptr, cv_PtrOfReLULayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfReLULayer {
@@ -3348,7 +3348,7 @@ mod dnn_types {
 	pub type PtrOfReshapeLayer = core::Ptr::<dyn crate::dnn::ReshapeLayer>;
 	
 	ptr_extern! { dyn crate::dnn::ReshapeLayer,
-		cv_PtrOfReshapeLayer_delete, cv_PtrOfReshapeLayer_get_inner_ptr
+		cv_PtrOfReshapeLayer_delete, cv_PtrOfReshapeLayer_get_inner_ptr, cv_PtrOfReshapeLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfReshapeLayer {
@@ -3369,7 +3369,7 @@ mod dnn_types {
 	pub type PtrOfSigmoidLayer = core::Ptr::<dyn crate::dnn::SigmoidLayer>;
 	
 	ptr_extern! { dyn crate::dnn::SigmoidLayer,
-		cv_PtrOfSigmoidLayer_delete, cv_PtrOfSigmoidLayer_get_inner_ptr
+		cv_PtrOfSigmoidLayer_delete, cv_PtrOfSigmoidLayer_get_inner_ptr, cv_PtrOfSigmoidLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSigmoidLayer {
@@ -3390,7 +3390,7 @@ mod dnn_types {
 	pub type PtrOfSliceLayer = core::Ptr::<dyn crate::dnn::SliceLayer>;
 	
 	ptr_extern! { dyn crate::dnn::SliceLayer,
-		cv_PtrOfSliceLayer_delete, cv_PtrOfSliceLayer_get_inner_ptr
+		cv_PtrOfSliceLayer_delete, cv_PtrOfSliceLayer_get_inner_ptr, cv_PtrOfSliceLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSliceLayer {
@@ -3411,7 +3411,7 @@ mod dnn_types {
 	pub type PtrOfSoftmaxLayer = core::Ptr::<dyn crate::dnn::SoftmaxLayer>;
 	
 	ptr_extern! { dyn crate::dnn::SoftmaxLayer,
-		cv_PtrOfSoftmaxLayer_delete, cv_PtrOfSoftmaxLayer_get_inner_ptr
+		cv_PtrOfSoftmaxLayer_delete, cv_PtrOfSoftmaxLayer_get_inner_ptr, cv_PtrOfSoftmaxLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSoftmaxLayer {
@@ -3432,7 +3432,7 @@ mod dnn_types {
 	pub type PtrOfSplitLayer = core::Ptr::<dyn crate::dnn::SplitLayer>;
 	
 	ptr_extern! { dyn crate::dnn::SplitLayer,
-		cv_PtrOfSplitLayer_delete, cv_PtrOfSplitLayer_get_inner_ptr
+		cv_PtrOfSplitLayer_delete, cv_PtrOfSplitLayer_get_inner_ptr, cv_PtrOfSplitLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSplitLayer {
@@ -3453,7 +3453,7 @@ mod dnn_types {
 	pub type PtrOfTanHLayer = core::Ptr::<dyn crate::dnn::TanHLayer>;
 	
 	ptr_extern! { dyn crate::dnn::TanHLayer,
-		cv_PtrOfTanHLayer_delete, cv_PtrOfTanHLayer_get_inner_ptr
+		cv_PtrOfTanHLayer_delete, cv_PtrOfTanHLayer_get_inner_ptr, cv_PtrOfTanHLayer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTanHLayer {
@@ -3522,7 +3522,7 @@ mod dpm_types {
 	pub type PtrOfDPMDetector = core::Ptr::<dyn crate::dpm::DPMDetector>;
 	
 	ptr_extern! { dyn crate::dpm::DPMDetector,
-		cv_PtrOfDPMDetector_delete, cv_PtrOfDPMDetector_get_inner_ptr
+		cv_PtrOfDPMDetector_delete, cv_PtrOfDPMDetector_get_inner_ptr, cv_PtrOfDPMDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDPMDetector {
@@ -3566,7 +3566,7 @@ mod face_types {
 	pub type PtrOfBIF = core::Ptr::<dyn crate::face::BIF>;
 	
 	ptr_extern! { dyn crate::face::BIF,
-		cv_PtrOfBIF_delete, cv_PtrOfBIF_get_inner_ptr
+		cv_PtrOfBIF_delete, cv_PtrOfBIF_get_inner_ptr, cv_PtrOfBIF_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBIF {
@@ -3587,7 +3587,7 @@ mod face_types {
 	pub type PtrOfBasicFaceRecognizer = core::Ptr::<dyn crate::face::BasicFaceRecognizer>;
 	
 	ptr_extern! { dyn crate::face::BasicFaceRecognizer,
-		cv_PtrOfBasicFaceRecognizer_delete, cv_PtrOfBasicFaceRecognizer_get_inner_ptr
+		cv_PtrOfBasicFaceRecognizer_delete, cv_PtrOfBasicFaceRecognizer_get_inner_ptr, cv_PtrOfBasicFaceRecognizer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBasicFaceRecognizer {
@@ -3613,7 +3613,7 @@ mod face_types {
 	pub type PtrOfLBPHFaceRecognizer = core::Ptr::<dyn crate::face::LBPHFaceRecognizer>;
 	
 	ptr_extern! { dyn crate::face::LBPHFaceRecognizer,
-		cv_PtrOfLBPHFaceRecognizer_delete, cv_PtrOfLBPHFaceRecognizer_get_inner_ptr
+		cv_PtrOfLBPHFaceRecognizer_delete, cv_PtrOfLBPHFaceRecognizer_get_inner_ptr, cv_PtrOfLBPHFaceRecognizer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLBPHFaceRecognizer {
@@ -3639,7 +3639,7 @@ mod face_types {
 	pub type PtrOfPredictCollector = core::Ptr::<dyn crate::face::PredictCollector>;
 	
 	ptr_extern! { dyn crate::face::PredictCollector,
-		cv_PtrOfPredictCollector_delete, cv_PtrOfPredictCollector_get_inner_ptr
+		cv_PtrOfPredictCollector_delete, cv_PtrOfPredictCollector_get_inner_ptr, cv_PtrOfPredictCollector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPredictCollector {
@@ -3655,7 +3655,7 @@ mod face_types {
 	pub type PtrOfStandardCollector = core::Ptr::<crate::face::StandardCollector>;
 	
 	ptr_extern! { crate::face::StandardCollector,
-		cv_PtrOfStandardCollector_delete, cv_PtrOfStandardCollector_get_inner_ptr
+		cv_PtrOfStandardCollector_delete, cv_PtrOfStandardCollector_get_inner_ptr, cv_PtrOfStandardCollector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::face::StandardCollector, cv_PtrOfStandardCollector_new }
@@ -3685,7 +3685,7 @@ mod features2d_types {
 	pub type PtrOfAKAZE = core::Ptr::<dyn crate::features2d::AKAZE>;
 	
 	ptr_extern! { dyn crate::features2d::AKAZE,
-		cv_PtrOfAKAZE_delete, cv_PtrOfAKAZE_get_inner_ptr
+		cv_PtrOfAKAZE_delete, cv_PtrOfAKAZE_get_inner_ptr, cv_PtrOfAKAZE_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAKAZE {
@@ -3711,7 +3711,7 @@ mod features2d_types {
 	pub type PtrOfAgastFeatureDetector = core::Ptr::<dyn crate::features2d::AgastFeatureDetector>;
 	
 	ptr_extern! { dyn crate::features2d::AgastFeatureDetector,
-		cv_PtrOfAgastFeatureDetector_delete, cv_PtrOfAgastFeatureDetector_get_inner_ptr
+		cv_PtrOfAgastFeatureDetector_delete, cv_PtrOfAgastFeatureDetector_get_inner_ptr, cv_PtrOfAgastFeatureDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAgastFeatureDetector {
@@ -3737,7 +3737,7 @@ mod features2d_types {
 	pub type PtrOfBFMatcher = core::Ptr::<crate::features2d::BFMatcher>;
 	
 	ptr_extern! { crate::features2d::BFMatcher,
-		cv_PtrOfBFMatcher_delete, cv_PtrOfBFMatcher_get_inner_ptr
+		cv_PtrOfBFMatcher_delete, cv_PtrOfBFMatcher_get_inner_ptr, cv_PtrOfBFMatcher_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::features2d::BFMatcher, cv_PtrOfBFMatcher_new }
@@ -3765,7 +3765,7 @@ mod features2d_types {
 	pub type PtrOfBRISK = core::Ptr::<crate::features2d::BRISK>;
 	
 	ptr_extern! { crate::features2d::BRISK,
-		cv_PtrOfBRISK_delete, cv_PtrOfBRISK_get_inner_ptr
+		cv_PtrOfBRISK_delete, cv_PtrOfBRISK_get_inner_ptr, cv_PtrOfBRISK_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::features2d::BRISK, cv_PtrOfBRISK_new }
@@ -3793,7 +3793,7 @@ mod features2d_types {
 	pub type PtrOfDescriptorMatcher = core::Ptr::<dyn crate::features2d::DescriptorMatcher>;
 	
 	ptr_extern! { dyn crate::features2d::DescriptorMatcher,
-		cv_PtrOfDescriptorMatcher_delete, cv_PtrOfDescriptorMatcher_get_inner_ptr
+		cv_PtrOfDescriptorMatcher_delete, cv_PtrOfDescriptorMatcher_get_inner_ptr, cv_PtrOfDescriptorMatcher_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDescriptorMatcher {
@@ -3814,7 +3814,7 @@ mod features2d_types {
 	pub type PtrOfFastFeatureDetector = core::Ptr::<dyn crate::features2d::FastFeatureDetector>;
 	
 	ptr_extern! { dyn crate::features2d::FastFeatureDetector,
-		cv_PtrOfFastFeatureDetector_delete, cv_PtrOfFastFeatureDetector_get_inner_ptr
+		cv_PtrOfFastFeatureDetector_delete, cv_PtrOfFastFeatureDetector_get_inner_ptr, cv_PtrOfFastFeatureDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFastFeatureDetector {
@@ -3840,7 +3840,7 @@ mod features2d_types {
 	pub type PtrOfFeature2D = core::Ptr::<crate::features2d::Feature2D>;
 	
 	ptr_extern! { crate::features2d::Feature2D,
-		cv_PtrOfFeature2D_delete, cv_PtrOfFeature2D_get_inner_ptr
+		cv_PtrOfFeature2D_delete, cv_PtrOfFeature2D_get_inner_ptr, cv_PtrOfFeature2D_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::features2d::Feature2D, cv_PtrOfFeature2D_new }
@@ -3863,7 +3863,7 @@ mod features2d_types {
 	pub type PtrOfFlannBasedMatcher = core::Ptr::<crate::features2d::FlannBasedMatcher>;
 	
 	ptr_extern! { crate::features2d::FlannBasedMatcher,
-		cv_PtrOfFlannBasedMatcher_delete, cv_PtrOfFlannBasedMatcher_get_inner_ptr
+		cv_PtrOfFlannBasedMatcher_delete, cv_PtrOfFlannBasedMatcher_get_inner_ptr, cv_PtrOfFlannBasedMatcher_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::features2d::FlannBasedMatcher, cv_PtrOfFlannBasedMatcher_new }
@@ -3891,7 +3891,7 @@ mod features2d_types {
 	pub type PtrOfGFTTDetector = core::Ptr::<dyn crate::features2d::GFTTDetector>;
 	
 	ptr_extern! { dyn crate::features2d::GFTTDetector,
-		cv_PtrOfGFTTDetector_delete, cv_PtrOfGFTTDetector_get_inner_ptr
+		cv_PtrOfGFTTDetector_delete, cv_PtrOfGFTTDetector_get_inner_ptr, cv_PtrOfGFTTDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGFTTDetector {
@@ -3917,7 +3917,7 @@ mod features2d_types {
 	pub type PtrOfKAZE = core::Ptr::<dyn crate::features2d::KAZE>;
 	
 	ptr_extern! { dyn crate::features2d::KAZE,
-		cv_PtrOfKAZE_delete, cv_PtrOfKAZE_get_inner_ptr
+		cv_PtrOfKAZE_delete, cv_PtrOfKAZE_get_inner_ptr, cv_PtrOfKAZE_get_inner_ptr_mut
 	}
 	
 	impl PtrOfKAZE {
@@ -3943,7 +3943,7 @@ mod features2d_types {
 	pub type PtrOfMSER = core::Ptr::<dyn crate::features2d::MSER>;
 	
 	ptr_extern! { dyn crate::features2d::MSER,
-		cv_PtrOfMSER_delete, cv_PtrOfMSER_get_inner_ptr
+		cv_PtrOfMSER_delete, cv_PtrOfMSER_get_inner_ptr, cv_PtrOfMSER_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMSER {
@@ -3969,7 +3969,7 @@ mod features2d_types {
 	pub type PtrOfORB = core::Ptr::<dyn crate::features2d::ORB>;
 	
 	ptr_extern! { dyn crate::features2d::ORB,
-		cv_PtrOfORB_delete, cv_PtrOfORB_get_inner_ptr
+		cv_PtrOfORB_delete, cv_PtrOfORB_get_inner_ptr, cv_PtrOfORB_get_inner_ptr_mut
 	}
 	
 	impl PtrOfORB {
@@ -3995,7 +3995,7 @@ mod features2d_types {
 	pub type PtrOfSimpleBlobDetector = core::Ptr::<crate::features2d::SimpleBlobDetector>;
 	
 	ptr_extern! { crate::features2d::SimpleBlobDetector,
-		cv_PtrOfSimpleBlobDetector_delete, cv_PtrOfSimpleBlobDetector_get_inner_ptr
+		cv_PtrOfSimpleBlobDetector_delete, cv_PtrOfSimpleBlobDetector_get_inner_ptr, cv_PtrOfSimpleBlobDetector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::features2d::SimpleBlobDetector, cv_PtrOfSimpleBlobDetector_new }
@@ -4029,7 +4029,7 @@ mod flann_types {
 	pub type PtrOfIndexParams = core::Ptr::<crate::flann::IndexParams>;
 	
 	ptr_extern! { crate::flann::IndexParams,
-		cv_PtrOfIndexParams_delete, cv_PtrOfIndexParams_get_inner_ptr
+		cv_PtrOfIndexParams_delete, cv_PtrOfIndexParams_get_inner_ptr, cv_PtrOfIndexParams_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::flann::IndexParams, cv_PtrOfIndexParams_new }
@@ -4047,7 +4047,7 @@ mod flann_types {
 	pub type PtrOfSearchParams = core::Ptr::<crate::flann::SearchParams>;
 	
 	ptr_extern! { crate::flann::SearchParams,
-		cv_PtrOfSearchParams_delete, cv_PtrOfSearchParams_get_inner_ptr
+		cv_PtrOfSearchParams_delete, cv_PtrOfSearchParams_get_inner_ptr, cv_PtrOfSearchParams_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::flann::SearchParams, cv_PtrOfSearchParams_new }
@@ -4077,7 +4077,7 @@ mod freetype_types {
 	pub type PtrOfFreeType2 = core::Ptr::<dyn crate::freetype::FreeType2>;
 	
 	ptr_extern! { dyn crate::freetype::FreeType2,
-		cv_PtrOfFreeType2_delete, cv_PtrOfFreeType2_get_inner_ptr
+		cv_PtrOfFreeType2_delete, cv_PtrOfFreeType2_get_inner_ptr, cv_PtrOfFreeType2_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFreeType2 {
@@ -4106,7 +4106,7 @@ mod hdf_types {
 	pub type PtrOfHDF5 = core::Ptr::<dyn crate::hdf::HDF5>;
 	
 	ptr_extern! { dyn crate::hdf::HDF5,
-		cv_PtrOfHDF5_delete, cv_PtrOfHDF5_get_inner_ptr
+		cv_PtrOfHDF5_delete, cv_PtrOfHDF5_get_inner_ptr, cv_PtrOfHDF5_get_inner_ptr_mut
 	}
 	
 	impl PtrOfHDF5 {
@@ -4129,7 +4129,7 @@ mod imgproc_types {
 	pub type PtrOfCLAHE = core::Ptr::<dyn crate::imgproc::CLAHE>;
 	
 	ptr_extern! { dyn crate::imgproc::CLAHE,
-		cv_PtrOfCLAHE_delete, cv_PtrOfCLAHE_get_inner_ptr
+		cv_PtrOfCLAHE_delete, cv_PtrOfCLAHE_get_inner_ptr, cv_PtrOfCLAHE_get_inner_ptr_mut
 	}
 	
 	impl PtrOfCLAHE {
@@ -4150,7 +4150,7 @@ mod imgproc_types {
 	pub type PtrOfGeneralizedHoughBallard = core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>;
 	
 	ptr_extern! { dyn crate::imgproc::GeneralizedHoughBallard,
-		cv_PtrOfGeneralizedHoughBallard_delete, cv_PtrOfGeneralizedHoughBallard_get_inner_ptr
+		cv_PtrOfGeneralizedHoughBallard_delete, cv_PtrOfGeneralizedHoughBallard_get_inner_ptr, cv_PtrOfGeneralizedHoughBallard_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGeneralizedHoughBallard {
@@ -4176,7 +4176,7 @@ mod imgproc_types {
 	pub type PtrOfGeneralizedHoughGuil = core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>;
 	
 	ptr_extern! { dyn crate::imgproc::GeneralizedHoughGuil,
-		cv_PtrOfGeneralizedHoughGuil_delete, cv_PtrOfGeneralizedHoughGuil_get_inner_ptr
+		cv_PtrOfGeneralizedHoughGuil_delete, cv_PtrOfGeneralizedHoughGuil_get_inner_ptr, cv_PtrOfGeneralizedHoughGuil_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGeneralizedHoughGuil {
@@ -4202,7 +4202,7 @@ mod imgproc_types {
 	pub type PtrOfLineSegmentDetector = core::Ptr::<dyn crate::imgproc::LineSegmentDetector>;
 	
 	ptr_extern! { dyn crate::imgproc::LineSegmentDetector,
-		cv_PtrOfLineSegmentDetector_delete, cv_PtrOfLineSegmentDetector_get_inner_ptr
+		cv_PtrOfLineSegmentDetector_delete, cv_PtrOfLineSegmentDetector_get_inner_ptr, cv_PtrOfLineSegmentDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLineSegmentDetector {
@@ -4230,7 +4230,7 @@ mod line_descriptor_types {
 	pub type PtrOfBinaryDescriptor = core::Ptr::<crate::line_descriptor::BinaryDescriptor>;
 	
 	ptr_extern! { crate::line_descriptor::BinaryDescriptor,
-		cv_PtrOfBinaryDescriptor_delete, cv_PtrOfBinaryDescriptor_get_inner_ptr
+		cv_PtrOfBinaryDescriptor_delete, cv_PtrOfBinaryDescriptor_get_inner_ptr, cv_PtrOfBinaryDescriptor_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptor, cv_PtrOfBinaryDescriptor_new }
@@ -4253,7 +4253,7 @@ mod line_descriptor_types {
 	pub type PtrOfBinaryDescriptorMatcher = core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>;
 	
 	ptr_extern! { crate::line_descriptor::BinaryDescriptorMatcher,
-		cv_PtrOfBinaryDescriptorMatcher_delete, cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr
+		cv_PtrOfBinaryDescriptorMatcher_delete, cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr, cv_PtrOfBinaryDescriptorMatcher_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::line_descriptor::BinaryDescriptorMatcher, cv_PtrOfBinaryDescriptorMatcher_new }
@@ -4276,7 +4276,7 @@ mod line_descriptor_types {
 	pub type PtrOfLSDDetector = core::Ptr::<crate::line_descriptor::LSDDetector>;
 	
 	ptr_extern! { crate::line_descriptor::LSDDetector,
-		cv_PtrOfLSDDetector_delete, cv_PtrOfLSDDetector_get_inner_ptr
+		cv_PtrOfLSDDetector_delete, cv_PtrOfLSDDetector_get_inner_ptr, cv_PtrOfLSDDetector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::line_descriptor::LSDDetector, cv_PtrOfLSDDetector_new }
@@ -4346,7 +4346,7 @@ mod ml_types {
 	pub type PtrOfANN_MLP = core::Ptr::<dyn crate::ml::ANN_MLP>;
 	
 	ptr_extern! { dyn crate::ml::ANN_MLP,
-		cv_PtrOfANN_MLP_delete, cv_PtrOfANN_MLP_get_inner_ptr
+		cv_PtrOfANN_MLP_delete, cv_PtrOfANN_MLP_get_inner_ptr, cv_PtrOfANN_MLP_get_inner_ptr_mut
 	}
 	
 	impl PtrOfANN_MLP {
@@ -4372,7 +4372,7 @@ mod ml_types {
 	pub type PtrOfBoost = core::Ptr::<dyn crate::ml::Boost>;
 	
 	ptr_extern! { dyn crate::ml::Boost,
-		cv_PtrOfBoost_delete, cv_PtrOfBoost_get_inner_ptr
+		cv_PtrOfBoost_delete, cv_PtrOfBoost_get_inner_ptr, cv_PtrOfBoost_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBoost {
@@ -4403,7 +4403,7 @@ mod ml_types {
 	pub type PtrOfDTrees = core::Ptr::<dyn crate::ml::DTrees>;
 	
 	ptr_extern! { dyn crate::ml::DTrees,
-		cv_PtrOfDTrees_delete, cv_PtrOfDTrees_get_inner_ptr
+		cv_PtrOfDTrees_delete, cv_PtrOfDTrees_get_inner_ptr, cv_PtrOfDTrees_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDTrees {
@@ -4429,7 +4429,7 @@ mod ml_types {
 	pub type PtrOfEM = core::Ptr::<dyn crate::ml::EM>;
 	
 	ptr_extern! { dyn crate::ml::EM,
-		cv_PtrOfEM_delete, cv_PtrOfEM_get_inner_ptr
+		cv_PtrOfEM_delete, cv_PtrOfEM_get_inner_ptr, cv_PtrOfEM_get_inner_ptr_mut
 	}
 	
 	impl PtrOfEM {
@@ -4455,7 +4455,7 @@ mod ml_types {
 	pub type PtrOfKNearest = core::Ptr::<dyn crate::ml::KNearest>;
 	
 	ptr_extern! { dyn crate::ml::KNearest,
-		cv_PtrOfKNearest_delete, cv_PtrOfKNearest_get_inner_ptr
+		cv_PtrOfKNearest_delete, cv_PtrOfKNearest_get_inner_ptr, cv_PtrOfKNearest_get_inner_ptr_mut
 	}
 	
 	impl PtrOfKNearest {
@@ -4481,7 +4481,7 @@ mod ml_types {
 	pub type PtrOfLogisticRegression = core::Ptr::<dyn crate::ml::LogisticRegression>;
 	
 	ptr_extern! { dyn crate::ml::LogisticRegression,
-		cv_PtrOfLogisticRegression_delete, cv_PtrOfLogisticRegression_get_inner_ptr
+		cv_PtrOfLogisticRegression_delete, cv_PtrOfLogisticRegression_get_inner_ptr, cv_PtrOfLogisticRegression_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLogisticRegression {
@@ -4507,7 +4507,7 @@ mod ml_types {
 	pub type PtrOfNormalBayesClassifier = core::Ptr::<dyn crate::ml::NormalBayesClassifier>;
 	
 	ptr_extern! { dyn crate::ml::NormalBayesClassifier,
-		cv_PtrOfNormalBayesClassifier_delete, cv_PtrOfNormalBayesClassifier_get_inner_ptr
+		cv_PtrOfNormalBayesClassifier_delete, cv_PtrOfNormalBayesClassifier_get_inner_ptr, cv_PtrOfNormalBayesClassifier_get_inner_ptr_mut
 	}
 	
 	impl PtrOfNormalBayesClassifier {
@@ -4533,7 +4533,7 @@ mod ml_types {
 	pub type PtrOfRTrees = core::Ptr::<dyn crate::ml::RTrees>;
 	
 	ptr_extern! { dyn crate::ml::RTrees,
-		cv_PtrOfRTrees_delete, cv_PtrOfRTrees_get_inner_ptr
+		cv_PtrOfRTrees_delete, cv_PtrOfRTrees_get_inner_ptr, cv_PtrOfRTrees_get_inner_ptr_mut
 	}
 	
 	impl PtrOfRTrees {
@@ -4564,7 +4564,7 @@ mod ml_types {
 	pub type PtrOfSVM = core::Ptr::<dyn crate::ml::SVM>;
 	
 	ptr_extern! { dyn crate::ml::SVM,
-		cv_PtrOfSVM_delete, cv_PtrOfSVM_get_inner_ptr
+		cv_PtrOfSVM_delete, cv_PtrOfSVM_get_inner_ptr, cv_PtrOfSVM_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSVM {
@@ -4590,7 +4590,7 @@ mod ml_types {
 	pub type PtrOfSVMSGD = core::Ptr::<dyn crate::ml::SVMSGD>;
 	
 	ptr_extern! { dyn crate::ml::SVMSGD,
-		cv_PtrOfSVMSGD_delete, cv_PtrOfSVMSGD_get_inner_ptr
+		cv_PtrOfSVMSGD_delete, cv_PtrOfSVMSGD_get_inner_ptr, cv_PtrOfSVMSGD_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSVMSGD {
@@ -4616,7 +4616,7 @@ mod ml_types {
 	pub type PtrOfSVM_Kernel = core::Ptr::<dyn crate::ml::SVM_Kernel>;
 	
 	ptr_extern! { dyn crate::ml::SVM_Kernel,
-		cv_PtrOfSVM_Kernel_delete, cv_PtrOfSVM_Kernel_get_inner_ptr
+		cv_PtrOfSVM_Kernel_delete, cv_PtrOfSVM_Kernel_get_inner_ptr, cv_PtrOfSVM_Kernel_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSVM_Kernel {
@@ -4637,7 +4637,7 @@ mod ml_types {
 	pub type PtrOfTrainData = core::Ptr::<dyn crate::ml::TrainData>;
 	
 	ptr_extern! { dyn crate::ml::TrainData,
-		cv_PtrOfTrainData_delete, cv_PtrOfTrainData_get_inner_ptr
+		cv_PtrOfTrainData_delete, cv_PtrOfTrainData_get_inner_ptr, cv_PtrOfTrainData_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrainData {
@@ -4699,7 +4699,7 @@ mod objdetect_types {
 	pub type PtrOfBaseCascadeClassifier = core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier>;
 	
 	ptr_extern! { dyn crate::objdetect::BaseCascadeClassifier,
-		cv_PtrOfBaseCascadeClassifier_delete, cv_PtrOfBaseCascadeClassifier_get_inner_ptr
+		cv_PtrOfBaseCascadeClassifier_delete, cv_PtrOfBaseCascadeClassifier_get_inner_ptr, cv_PtrOfBaseCascadeClassifier_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBaseCascadeClassifier {
@@ -4720,7 +4720,7 @@ mod objdetect_types {
 	pub type PtrOfBaseCascadeClassifier_MaskGenerator = core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>;
 	
 	ptr_extern! { dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator,
-		cv_PtrOfBaseCascadeClassifier_MaskGenerator_delete, cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr
+		cv_PtrOfBaseCascadeClassifier_MaskGenerator_delete, cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr, cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBaseCascadeClassifier_MaskGenerator {
@@ -4736,7 +4736,7 @@ mod objdetect_types {
 	pub type PtrOfDetectionBasedTracker_IDetector = core::Ptr::<dyn crate::objdetect::DetectionBasedTracker_IDetector>;
 	
 	ptr_extern! { dyn crate::objdetect::DetectionBasedTracker_IDetector,
-		cv_PtrOfDetectionBasedTracker_IDetector_delete, cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr
+		cv_PtrOfDetectionBasedTracker_IDetector_delete, cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr, cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetectionBasedTracker_IDetector {
@@ -4799,7 +4799,7 @@ mod optflow_types {
 	pub type PtrOfDISOpticalFlow = core::Ptr::<dyn crate::optflow::DISOpticalFlow>;
 	
 	ptr_extern! { dyn crate::optflow::DISOpticalFlow,
-		cv_PtrOfDISOpticalFlow_delete, cv_PtrOfDISOpticalFlow_get_inner_ptr
+		cv_PtrOfDISOpticalFlow_delete, cv_PtrOfDISOpticalFlow_get_inner_ptr, cv_PtrOfDISOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDISOpticalFlow {
@@ -4825,7 +4825,7 @@ mod optflow_types {
 	pub type PtrOfGPCTrainingSamples = core::Ptr::<crate::optflow::GPCTrainingSamples>;
 	
 	ptr_extern! { crate::optflow::GPCTrainingSamples,
-		cv_PtrOfGPCTrainingSamples_delete, cv_PtrOfGPCTrainingSamples_get_inner_ptr
+		cv_PtrOfGPCTrainingSamples_delete, cv_PtrOfGPCTrainingSamples_get_inner_ptr, cv_PtrOfGPCTrainingSamples_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::optflow::GPCTrainingSamples, cv_PtrOfGPCTrainingSamples_new }
@@ -4843,7 +4843,7 @@ mod optflow_types {
 	pub type PtrOfGPCTree = core::Ptr::<crate::optflow::GPCTree>;
 	
 	ptr_extern! { crate::optflow::GPCTree,
-		cv_PtrOfGPCTree_delete, cv_PtrOfGPCTree_get_inner_ptr
+		cv_PtrOfGPCTree_delete, cv_PtrOfGPCTree_get_inner_ptr, cv_PtrOfGPCTree_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::optflow::GPCTree, cv_PtrOfGPCTree_new }
@@ -4866,7 +4866,7 @@ mod optflow_types {
 	pub type PtrOfPCAPrior = core::Ptr::<crate::optflow::PCAPrior>;
 	
 	ptr_extern! { crate::optflow::PCAPrior,
-		cv_PtrOfPCAPrior_delete, cv_PtrOfPCAPrior_get_inner_ptr
+		cv_PtrOfPCAPrior_delete, cv_PtrOfPCAPrior_get_inner_ptr, cv_PtrOfPCAPrior_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::optflow::PCAPrior, cv_PtrOfPCAPrior_new }
@@ -4884,7 +4884,7 @@ mod optflow_types {
 	pub type PtrOfVariationalRefinement = core::Ptr::<dyn crate::optflow::VariationalRefinement>;
 	
 	ptr_extern! { dyn crate::optflow::VariationalRefinement,
-		cv_PtrOfVariationalRefinement_delete, cv_PtrOfVariationalRefinement_get_inner_ptr
+		cv_PtrOfVariationalRefinement_delete, cv_PtrOfVariationalRefinement_get_inner_ptr, cv_PtrOfVariationalRefinement_get_inner_ptr_mut
 	}
 	
 	impl PtrOfVariationalRefinement {
@@ -4938,7 +4938,7 @@ mod phase_unwrapping_types {
 	pub type PtrOfHistogramPhaseUnwrapping = core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>;
 	
 	ptr_extern! { dyn crate::phase_unwrapping::HistogramPhaseUnwrapping,
-		cv_PtrOfHistogramPhaseUnwrapping_delete, cv_PtrOfHistogramPhaseUnwrapping_get_inner_ptr
+		cv_PtrOfHistogramPhaseUnwrapping_delete, cv_PtrOfHistogramPhaseUnwrapping_get_inner_ptr, cv_PtrOfHistogramPhaseUnwrapping_get_inner_ptr_mut
 	}
 	
 	impl PtrOfHistogramPhaseUnwrapping {
@@ -4971,7 +4971,7 @@ mod photo_types {
 	pub type PtrOfAlignMTB = core::Ptr::<dyn crate::photo::AlignMTB>;
 	
 	ptr_extern! { dyn crate::photo::AlignMTB,
-		cv_PtrOfAlignMTB_delete, cv_PtrOfAlignMTB_get_inner_ptr
+		cv_PtrOfAlignMTB_delete, cv_PtrOfAlignMTB_get_inner_ptr, cv_PtrOfAlignMTB_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAlignMTB {
@@ -4997,7 +4997,7 @@ mod photo_types {
 	pub type PtrOfCalibrateDebevec = core::Ptr::<dyn crate::photo::CalibrateDebevec>;
 	
 	ptr_extern! { dyn crate::photo::CalibrateDebevec,
-		cv_PtrOfCalibrateDebevec_delete, cv_PtrOfCalibrateDebevec_get_inner_ptr
+		cv_PtrOfCalibrateDebevec_delete, cv_PtrOfCalibrateDebevec_get_inner_ptr, cv_PtrOfCalibrateDebevec_get_inner_ptr_mut
 	}
 	
 	impl PtrOfCalibrateDebevec {
@@ -5023,7 +5023,7 @@ mod photo_types {
 	pub type PtrOfCalibrateRobertson = core::Ptr::<dyn crate::photo::CalibrateRobertson>;
 	
 	ptr_extern! { dyn crate::photo::CalibrateRobertson,
-		cv_PtrOfCalibrateRobertson_delete, cv_PtrOfCalibrateRobertson_get_inner_ptr
+		cv_PtrOfCalibrateRobertson_delete, cv_PtrOfCalibrateRobertson_get_inner_ptr, cv_PtrOfCalibrateRobertson_get_inner_ptr_mut
 	}
 	
 	impl PtrOfCalibrateRobertson {
@@ -5049,7 +5049,7 @@ mod photo_types {
 	pub type PtrOfMergeDebevec = core::Ptr::<dyn crate::photo::MergeDebevec>;
 	
 	ptr_extern! { dyn crate::photo::MergeDebevec,
-		cv_PtrOfMergeDebevec_delete, cv_PtrOfMergeDebevec_get_inner_ptr
+		cv_PtrOfMergeDebevec_delete, cv_PtrOfMergeDebevec_get_inner_ptr, cv_PtrOfMergeDebevec_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMergeDebevec {
@@ -5075,7 +5075,7 @@ mod photo_types {
 	pub type PtrOfMergeMertens = core::Ptr::<dyn crate::photo::MergeMertens>;
 	
 	ptr_extern! { dyn crate::photo::MergeMertens,
-		cv_PtrOfMergeMertens_delete, cv_PtrOfMergeMertens_get_inner_ptr
+		cv_PtrOfMergeMertens_delete, cv_PtrOfMergeMertens_get_inner_ptr, cv_PtrOfMergeMertens_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMergeMertens {
@@ -5101,7 +5101,7 @@ mod photo_types {
 	pub type PtrOfMergeRobertson = core::Ptr::<dyn crate::photo::MergeRobertson>;
 	
 	ptr_extern! { dyn crate::photo::MergeRobertson,
-		cv_PtrOfMergeRobertson_delete, cv_PtrOfMergeRobertson_get_inner_ptr
+		cv_PtrOfMergeRobertson_delete, cv_PtrOfMergeRobertson_get_inner_ptr, cv_PtrOfMergeRobertson_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMergeRobertson {
@@ -5127,7 +5127,7 @@ mod photo_types {
 	pub type PtrOfTonemap = core::Ptr::<dyn crate::photo::Tonemap>;
 	
 	ptr_extern! { dyn crate::photo::Tonemap,
-		cv_PtrOfTonemap_delete, cv_PtrOfTonemap_get_inner_ptr
+		cv_PtrOfTonemap_delete, cv_PtrOfTonemap_get_inner_ptr, cv_PtrOfTonemap_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTonemap {
@@ -5148,7 +5148,7 @@ mod photo_types {
 	pub type PtrOfTonemapDrago = core::Ptr::<dyn crate::photo::TonemapDrago>;
 	
 	ptr_extern! { dyn crate::photo::TonemapDrago,
-		cv_PtrOfTonemapDrago_delete, cv_PtrOfTonemapDrago_get_inner_ptr
+		cv_PtrOfTonemapDrago_delete, cv_PtrOfTonemapDrago_get_inner_ptr, cv_PtrOfTonemapDrago_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTonemapDrago {
@@ -5174,7 +5174,7 @@ mod photo_types {
 	pub type PtrOfTonemapDurand = core::Ptr::<dyn crate::photo::TonemapDurand>;
 	
 	ptr_extern! { dyn crate::photo::TonemapDurand,
-		cv_PtrOfTonemapDurand_delete, cv_PtrOfTonemapDurand_get_inner_ptr
+		cv_PtrOfTonemapDurand_delete, cv_PtrOfTonemapDurand_get_inner_ptr, cv_PtrOfTonemapDurand_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTonemapDurand {
@@ -5200,7 +5200,7 @@ mod photo_types {
 	pub type PtrOfTonemapMantiuk = core::Ptr::<dyn crate::photo::TonemapMantiuk>;
 	
 	ptr_extern! { dyn crate::photo::TonemapMantiuk,
-		cv_PtrOfTonemapMantiuk_delete, cv_PtrOfTonemapMantiuk_get_inner_ptr
+		cv_PtrOfTonemapMantiuk_delete, cv_PtrOfTonemapMantiuk_get_inner_ptr, cv_PtrOfTonemapMantiuk_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTonemapMantiuk {
@@ -5226,7 +5226,7 @@ mod photo_types {
 	pub type PtrOfTonemapReinhard = core::Ptr::<dyn crate::photo::TonemapReinhard>;
 	
 	ptr_extern! { dyn crate::photo::TonemapReinhard,
-		cv_PtrOfTonemapReinhard_delete, cv_PtrOfTonemapReinhard_get_inner_ptr
+		cv_PtrOfTonemapReinhard_delete, cv_PtrOfTonemapReinhard_get_inner_ptr, cv_PtrOfTonemapReinhard_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTonemapReinhard {
@@ -5259,7 +5259,7 @@ mod plot_types {
 	pub type PtrOfPlot2d = core::Ptr::<dyn crate::plot::Plot2d>;
 	
 	ptr_extern! { dyn crate::plot::Plot2d,
-		cv_PtrOfPlot2d_delete, cv_PtrOfPlot2d_get_inner_ptr
+		cv_PtrOfPlot2d_delete, cv_PtrOfPlot2d_get_inner_ptr, cv_PtrOfPlot2d_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPlot2d {
@@ -5288,7 +5288,7 @@ mod rgbd_types {
 	pub type PtrOfLinemod_Detector = core::Ptr::<crate::rgbd::Linemod_Detector>;
 	
 	ptr_extern! { crate::rgbd::Linemod_Detector,
-		cv_PtrOfLinemod_Detector_delete, cv_PtrOfLinemod_Detector_get_inner_ptr
+		cv_PtrOfLinemod_Detector_delete, cv_PtrOfLinemod_Detector_get_inner_ptr, cv_PtrOfLinemod_Detector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::rgbd::Linemod_Detector, cv_PtrOfLinemod_Detector_new }
@@ -5306,7 +5306,7 @@ mod rgbd_types {
 	pub type PtrOfLinemod_Modality = core::Ptr::<dyn crate::rgbd::Linemod_Modality>;
 	
 	ptr_extern! { dyn crate::rgbd::Linemod_Modality,
-		cv_PtrOfLinemod_Modality_delete, cv_PtrOfLinemod_Modality_get_inner_ptr
+		cv_PtrOfLinemod_Modality_delete, cv_PtrOfLinemod_Modality_get_inner_ptr, cv_PtrOfLinemod_Modality_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLinemod_Modality {
@@ -5322,7 +5322,7 @@ mod rgbd_types {
 	pub type PtrOfLinemod_QuantizedPyramid = core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>;
 	
 	ptr_extern! { dyn crate::rgbd::Linemod_QuantizedPyramid,
-		cv_PtrOfLinemod_QuantizedPyramid_delete, cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr
+		cv_PtrOfLinemod_QuantizedPyramid_delete, cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr, cv_PtrOfLinemod_QuantizedPyramid_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLinemod_QuantizedPyramid {
@@ -5338,7 +5338,7 @@ mod rgbd_types {
 	pub type PtrOfOdometry = core::Ptr::<dyn crate::rgbd::Odometry>;
 	
 	ptr_extern! { dyn crate::rgbd::Odometry,
-		cv_PtrOfOdometry_delete, cv_PtrOfOdometry_get_inner_ptr
+		cv_PtrOfOdometry_delete, cv_PtrOfOdometry_get_inner_ptr, cv_PtrOfOdometry_get_inner_ptr_mut
 	}
 	
 	impl PtrOfOdometry {
@@ -5359,7 +5359,7 @@ mod rgbd_types {
 	pub type PtrOfOdometryFrame = core::Ptr::<crate::rgbd::OdometryFrame>;
 	
 	ptr_extern! { crate::rgbd::OdometryFrame,
-		cv_PtrOfOdometryFrame_delete, cv_PtrOfOdometryFrame_get_inner_ptr
+		cv_PtrOfOdometryFrame_delete, cv_PtrOfOdometryFrame_get_inner_ptr, cv_PtrOfOdometryFrame_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::rgbd::OdometryFrame, cv_PtrOfOdometryFrame_new }
@@ -5470,7 +5470,7 @@ mod saliency_types {
 	pub type PtrOfMotionSaliencyBinWangApr2014 = core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>;
 	
 	ptr_extern! { crate::saliency::MotionSaliencyBinWangApr2014,
-		cv_PtrOfMotionSaliencyBinWangApr2014_delete, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr
+		cv_PtrOfMotionSaliencyBinWangApr2014_delete, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr, cv_PtrOfMotionSaliencyBinWangApr2014_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::saliency::MotionSaliencyBinWangApr2014, cv_PtrOfMotionSaliencyBinWangApr2014_new }
@@ -5503,7 +5503,7 @@ mod saliency_types {
 	pub type PtrOfObjectnessBING = core::Ptr::<crate::saliency::ObjectnessBING>;
 	
 	ptr_extern! { crate::saliency::ObjectnessBING,
-		cv_PtrOfObjectnessBING_delete, cv_PtrOfObjectnessBING_get_inner_ptr
+		cv_PtrOfObjectnessBING_delete, cv_PtrOfObjectnessBING_get_inner_ptr, cv_PtrOfObjectnessBING_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::saliency::ObjectnessBING, cv_PtrOfObjectnessBING_new }
@@ -5536,7 +5536,7 @@ mod saliency_types {
 	pub type PtrOfSaliency = core::Ptr::<dyn crate::saliency::Saliency>;
 	
 	ptr_extern! { dyn crate::saliency::Saliency,
-		cv_PtrOfSaliency_delete, cv_PtrOfSaliency_get_inner_ptr
+		cv_PtrOfSaliency_delete, cv_PtrOfSaliency_get_inner_ptr, cv_PtrOfSaliency_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSaliency {
@@ -5557,7 +5557,7 @@ mod saliency_types {
 	pub type PtrOfStaticSaliencyFineGrained = core::Ptr::<crate::saliency::StaticSaliencyFineGrained>;
 	
 	ptr_extern! { crate::saliency::StaticSaliencyFineGrained,
-		cv_PtrOfStaticSaliencyFineGrained_delete, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr
+		cv_PtrOfStaticSaliencyFineGrained_delete, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr, cv_PtrOfStaticSaliencyFineGrained_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::saliency::StaticSaliencyFineGrained, cv_PtrOfStaticSaliencyFineGrained_new }
@@ -5590,7 +5590,7 @@ mod saliency_types {
 	pub type PtrOfStaticSaliencySpectralResidual = core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>;
 	
 	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
-		cv_PtrOfStaticSaliencySpectralResidual_delete, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr
+		cv_PtrOfStaticSaliencySpectralResidual_delete, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr, cv_PtrOfStaticSaliencySpectralResidual_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::saliency::StaticSaliencySpectralResidual, cv_PtrOfStaticSaliencySpectralResidual_new }
@@ -5631,7 +5631,7 @@ mod sfm_types {
 	pub type PtrOfSFMLibmvEuclideanReconstruction = core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>;
 	
 	ptr_extern! { dyn crate::sfm::SFMLibmvEuclideanReconstruction,
-		cv_PtrOfSFMLibmvEuclideanReconstruction_delete, cv_PtrOfSFMLibmvEuclideanReconstruction_get_inner_ptr
+		cv_PtrOfSFMLibmvEuclideanReconstruction_delete, cv_PtrOfSFMLibmvEuclideanReconstruction_get_inner_ptr, cv_PtrOfSFMLibmvEuclideanReconstruction_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSFMLibmvEuclideanReconstruction {
@@ -5659,7 +5659,7 @@ mod shape_types {
 	pub type PtrOfAffineTransformer = core::Ptr::<dyn crate::shape::AffineTransformer>;
 	
 	ptr_extern! { dyn crate::shape::AffineTransformer,
-		cv_PtrOfAffineTransformer_delete, cv_PtrOfAffineTransformer_get_inner_ptr
+		cv_PtrOfAffineTransformer_delete, cv_PtrOfAffineTransformer_get_inner_ptr, cv_PtrOfAffineTransformer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAffineTransformer {
@@ -5685,7 +5685,7 @@ mod shape_types {
 	pub type PtrOfHausdorffDistanceExtractor = core::Ptr::<dyn crate::shape::HausdorffDistanceExtractor>;
 	
 	ptr_extern! { dyn crate::shape::HausdorffDistanceExtractor,
-		cv_PtrOfHausdorffDistanceExtractor_delete, cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr
+		cv_PtrOfHausdorffDistanceExtractor_delete, cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr, cv_PtrOfHausdorffDistanceExtractor_get_inner_ptr_mut
 	}
 	
 	impl PtrOfHausdorffDistanceExtractor {
@@ -5711,7 +5711,7 @@ mod shape_types {
 	pub type PtrOfHistogramCostExtractor = core::Ptr::<dyn crate::shape::HistogramCostExtractor>;
 	
 	ptr_extern! { dyn crate::shape::HistogramCostExtractor,
-		cv_PtrOfHistogramCostExtractor_delete, cv_PtrOfHistogramCostExtractor_get_inner_ptr
+		cv_PtrOfHistogramCostExtractor_delete, cv_PtrOfHistogramCostExtractor_get_inner_ptr, cv_PtrOfHistogramCostExtractor_get_inner_ptr_mut
 	}
 	
 	impl PtrOfHistogramCostExtractor {
@@ -5732,7 +5732,7 @@ mod shape_types {
 	pub type PtrOfShapeContextDistanceExtractor = core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>;
 	
 	ptr_extern! { dyn crate::shape::ShapeContextDistanceExtractor,
-		cv_PtrOfShapeContextDistanceExtractor_delete, cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr
+		cv_PtrOfShapeContextDistanceExtractor_delete, cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr, cv_PtrOfShapeContextDistanceExtractor_get_inner_ptr_mut
 	}
 	
 	impl PtrOfShapeContextDistanceExtractor {
@@ -5758,7 +5758,7 @@ mod shape_types {
 	pub type PtrOfShapeTransformer = core::Ptr::<dyn crate::shape::ShapeTransformer>;
 	
 	ptr_extern! { dyn crate::shape::ShapeTransformer,
-		cv_PtrOfShapeTransformer_delete, cv_PtrOfShapeTransformer_get_inner_ptr
+		cv_PtrOfShapeTransformer_delete, cv_PtrOfShapeTransformer_get_inner_ptr, cv_PtrOfShapeTransformer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfShapeTransformer {
@@ -5779,7 +5779,7 @@ mod shape_types {
 	pub type PtrOfThinPlateSplineShapeTransformer = core::Ptr::<dyn crate::shape::ThinPlateSplineShapeTransformer>;
 	
 	ptr_extern! { dyn crate::shape::ThinPlateSplineShapeTransformer,
-		cv_PtrOfThinPlateSplineShapeTransformer_delete, cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr
+		cv_PtrOfThinPlateSplineShapeTransformer_delete, cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr, cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfThinPlateSplineShapeTransformer {
@@ -5811,7 +5811,7 @@ mod stitching_types {
 	pub type PtrOfDetail_Blender = core::Ptr::<crate::stitching::Detail_Blender>;
 	
 	ptr_extern! { crate::stitching::Detail_Blender,
-		cv_PtrOfDetail_Blender_delete, cv_PtrOfDetail_Blender_get_inner_ptr
+		cv_PtrOfDetail_Blender_delete, cv_PtrOfDetail_Blender_get_inner_ptr, cv_PtrOfDetail_Blender_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::stitching::Detail_Blender, cv_PtrOfDetail_Blender_new }
@@ -5829,7 +5829,7 @@ mod stitching_types {
 	pub type PtrOfDetail_BundleAdjusterBase = core::Ptr::<dyn crate::stitching::Detail_BundleAdjusterBase>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_BundleAdjusterBase,
-		cv_PtrOfDetail_BundleAdjusterBase_delete, cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr
+		cv_PtrOfDetail_BundleAdjusterBase_delete, cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr, cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_BundleAdjusterBase {
@@ -5850,7 +5850,7 @@ mod stitching_types {
 	pub type PtrOfDetail_ExposureCompensator = core::Ptr::<dyn crate::stitching::Detail_ExposureCompensator>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_ExposureCompensator,
-		cv_PtrOfDetail_ExposureCompensator_delete, cv_PtrOfDetail_ExposureCompensator_get_inner_ptr
+		cv_PtrOfDetail_ExposureCompensator_delete, cv_PtrOfDetail_ExposureCompensator_get_inner_ptr, cv_PtrOfDetail_ExposureCompensator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_ExposureCompensator {
@@ -5866,7 +5866,7 @@ mod stitching_types {
 	pub type PtrOfDetail_FeaturesFinder = core::Ptr::<dyn crate::stitching::Detail_FeaturesFinder>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_FeaturesFinder,
-		cv_PtrOfDetail_FeaturesFinder_delete, cv_PtrOfDetail_FeaturesFinder_get_inner_ptr
+		cv_PtrOfDetail_FeaturesFinder_delete, cv_PtrOfDetail_FeaturesFinder_get_inner_ptr, cv_PtrOfDetail_FeaturesFinder_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_FeaturesFinder {
@@ -5882,7 +5882,7 @@ mod stitching_types {
 	pub type PtrOfDetail_FeaturesMatcher = core::Ptr::<dyn crate::stitching::Detail_FeaturesMatcher>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_FeaturesMatcher,
-		cv_PtrOfDetail_FeaturesMatcher_delete, cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr
+		cv_PtrOfDetail_FeaturesMatcher_delete, cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr, cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_FeaturesMatcher {
@@ -5898,7 +5898,7 @@ mod stitching_types {
 	pub type PtrOfDetail_RotationWarper = core::Ptr::<dyn crate::stitching::Detail_RotationWarper>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_RotationWarper,
-		cv_PtrOfDetail_RotationWarper_delete, cv_PtrOfDetail_RotationWarper_get_inner_ptr
+		cv_PtrOfDetail_RotationWarper_delete, cv_PtrOfDetail_RotationWarper_get_inner_ptr, cv_PtrOfDetail_RotationWarper_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_RotationWarper {
@@ -5914,7 +5914,7 @@ mod stitching_types {
 	pub type PtrOfDetail_SeamFinder = core::Ptr::<dyn crate::stitching::Detail_SeamFinder>;
 	
 	ptr_extern! { dyn crate::stitching::Detail_SeamFinder,
-		cv_PtrOfDetail_SeamFinder_delete, cv_PtrOfDetail_SeamFinder_get_inner_ptr
+		cv_PtrOfDetail_SeamFinder_delete, cv_PtrOfDetail_SeamFinder_get_inner_ptr, cv_PtrOfDetail_SeamFinder_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDetail_SeamFinder {
@@ -5930,7 +5930,7 @@ mod stitching_types {
 	pub type PtrOfStitcher = core::Ptr::<crate::stitching::Stitcher>;
 	
 	ptr_extern! { crate::stitching::Stitcher,
-		cv_PtrOfStitcher_delete, cv_PtrOfStitcher_get_inner_ptr
+		cv_PtrOfStitcher_delete, cv_PtrOfStitcher_get_inner_ptr, cv_PtrOfStitcher_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::stitching::Stitcher, cv_PtrOfStitcher_new }
@@ -5948,7 +5948,7 @@ mod stitching_types {
 	pub type PtrOfWarperCreator = core::Ptr::<dyn crate::stitching::WarperCreator>;
 	
 	ptr_extern! { dyn crate::stitching::WarperCreator,
-		cv_PtrOfWarperCreator_delete, cv_PtrOfWarperCreator_get_inner_ptr
+		cv_PtrOfWarperCreator_delete, cv_PtrOfWarperCreator_get_inner_ptr, cv_PtrOfWarperCreator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfWarperCreator {
@@ -6031,7 +6031,7 @@ mod structured_light_types {
 	pub type PtrOfGrayCodePattern = core::Ptr::<dyn crate::structured_light::GrayCodePattern>;
 	
 	ptr_extern! { dyn crate::structured_light::GrayCodePattern,
-		cv_PtrOfGrayCodePattern_delete, cv_PtrOfGrayCodePattern_get_inner_ptr
+		cv_PtrOfGrayCodePattern_delete, cv_PtrOfGrayCodePattern_get_inner_ptr, cv_PtrOfGrayCodePattern_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGrayCodePattern {
@@ -6057,7 +6057,7 @@ mod structured_light_types {
 	pub type PtrOfSinusoidalPattern = core::Ptr::<dyn crate::structured_light::SinusoidalPattern>;
 	
 	ptr_extern! { dyn crate::structured_light::SinusoidalPattern,
-		cv_PtrOfSinusoidalPattern_delete, cv_PtrOfSinusoidalPattern_get_inner_ptr
+		cv_PtrOfSinusoidalPattern_delete, cv_PtrOfSinusoidalPattern_get_inner_ptr, cv_PtrOfSinusoidalPattern_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSinusoidalPattern {
@@ -6090,7 +6090,7 @@ mod superres_types {
 	pub type PtrOfSuperres_BroxOpticalFlow = core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>;
 	
 	ptr_extern! { dyn crate::superres::Superres_BroxOpticalFlow,
-		cv_PtrOfSuperres_BroxOpticalFlow_delete, cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr
+		cv_PtrOfSuperres_BroxOpticalFlow_delete, cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr, cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_BroxOpticalFlow {
@@ -6116,7 +6116,7 @@ mod superres_types {
 	pub type PtrOfSuperres_DenseOpticalFlowExt = core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>;
 	
 	ptr_extern! { dyn crate::superres::Superres_DenseOpticalFlowExt,
-		cv_PtrOfSuperres_DenseOpticalFlowExt_delete, cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr
+		cv_PtrOfSuperres_DenseOpticalFlowExt_delete, cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr, cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_DenseOpticalFlowExt {
@@ -6137,7 +6137,7 @@ mod superres_types {
 	pub type PtrOfSuperres_DualTVL1OpticalFlow = core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>;
 	
 	ptr_extern! { dyn crate::superres::Superres_DualTVL1OpticalFlow,
-		cv_PtrOfSuperres_DualTVL1OpticalFlow_delete, cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr
+		cv_PtrOfSuperres_DualTVL1OpticalFlow_delete, cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr, cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_DualTVL1OpticalFlow {
@@ -6163,7 +6163,7 @@ mod superres_types {
 	pub type PtrOfSuperres_FarnebackOpticalFlow = core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>;
 	
 	ptr_extern! { dyn crate::superres::Superres_FarnebackOpticalFlow,
-		cv_PtrOfSuperres_FarnebackOpticalFlow_delete, cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr
+		cv_PtrOfSuperres_FarnebackOpticalFlow_delete, cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr, cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_FarnebackOpticalFlow {
@@ -6189,7 +6189,7 @@ mod superres_types {
 	pub type PtrOfSuperres_FrameSource = core::Ptr::<dyn crate::superres::Superres_FrameSource>;
 	
 	ptr_extern! { dyn crate::superres::Superres_FrameSource,
-		cv_PtrOfSuperres_FrameSource_delete, cv_PtrOfSuperres_FrameSource_get_inner_ptr
+		cv_PtrOfSuperres_FrameSource_delete, cv_PtrOfSuperres_FrameSource_get_inner_ptr, cv_PtrOfSuperres_FrameSource_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_FrameSource {
@@ -6205,7 +6205,7 @@ mod superres_types {
 	pub type PtrOfSuperres_PyrLKOpticalFlow = core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>;
 	
 	ptr_extern! { dyn crate::superres::Superres_PyrLKOpticalFlow,
-		cv_PtrOfSuperres_PyrLKOpticalFlow_delete, cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr
+		cv_PtrOfSuperres_PyrLKOpticalFlow_delete, cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr, cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_PyrLKOpticalFlow {
@@ -6231,7 +6231,7 @@ mod superres_types {
 	pub type PtrOfSuperres_SuperResolution = core::Ptr::<dyn crate::superres::Superres_SuperResolution>;
 	
 	ptr_extern! { dyn crate::superres::Superres_SuperResolution,
-		cv_PtrOfSuperres_SuperResolution_delete, cv_PtrOfSuperres_SuperResolution_get_inner_ptr
+		cv_PtrOfSuperres_SuperResolution_delete, cv_PtrOfSuperres_SuperResolution_get_inner_ptr, cv_PtrOfSuperres_SuperResolution_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperres_SuperResolution {
@@ -6264,7 +6264,7 @@ mod surface_matching_types {
 	pub type PtrOfPose3D = core::Ptr::<crate::surface_matching::Pose3D>;
 	
 	ptr_extern! { crate::surface_matching::Pose3D,
-		cv_PtrOfPose3D_delete, cv_PtrOfPose3D_get_inner_ptr
+		cv_PtrOfPose3D_delete, cv_PtrOfPose3D_get_inner_ptr, cv_PtrOfPose3D_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::surface_matching::Pose3D, cv_PtrOfPose3D_new }
@@ -6282,7 +6282,7 @@ mod surface_matching_types {
 	pub type PtrOfPoseCluster3D = core::Ptr::<crate::surface_matching::PoseCluster3D>;
 	
 	ptr_extern! { crate::surface_matching::PoseCluster3D,
-		cv_PtrOfPoseCluster3D_delete, cv_PtrOfPoseCluster3D_get_inner_ptr
+		cv_PtrOfPoseCluster3D_delete, cv_PtrOfPoseCluster3D_get_inner_ptr, cv_PtrOfPoseCluster3D_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::surface_matching::PoseCluster3D, cv_PtrOfPoseCluster3D_new }
@@ -6328,7 +6328,7 @@ mod text_types {
 	pub type PtrOfERFilter = core::Ptr::<dyn crate::text::ERFilter>;
 	
 	ptr_extern! { dyn crate::text::ERFilter,
-		cv_PtrOfERFilter_delete, cv_PtrOfERFilter_get_inner_ptr
+		cv_PtrOfERFilter_delete, cv_PtrOfERFilter_get_inner_ptr, cv_PtrOfERFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfERFilter {
@@ -6349,7 +6349,7 @@ mod text_types {
 	pub type PtrOfERFilter_Callback = core::Ptr::<dyn crate::text::ERFilter_Callback>;
 	
 	ptr_extern! { dyn crate::text::ERFilter_Callback,
-		cv_PtrOfERFilter_Callback_delete, cv_PtrOfERFilter_Callback_get_inner_ptr
+		cv_PtrOfERFilter_Callback_delete, cv_PtrOfERFilter_Callback_get_inner_ptr, cv_PtrOfERFilter_Callback_get_inner_ptr_mut
 	}
 	
 	impl PtrOfERFilter_Callback {
@@ -6365,7 +6365,7 @@ mod text_types {
 	pub type PtrOfOCRBeamSearchDecoder = core::Ptr::<crate::text::OCRBeamSearchDecoder>;
 	
 	ptr_extern! { crate::text::OCRBeamSearchDecoder,
-		cv_PtrOfOCRBeamSearchDecoder_delete, cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr
+		cv_PtrOfOCRBeamSearchDecoder_delete, cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr, cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder, cv_PtrOfOCRBeamSearchDecoder_new }
@@ -6388,7 +6388,7 @@ mod text_types {
 	pub type PtrOfOCRBeamSearchDecoder_ClassifierCallback = core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>;
 	
 	ptr_extern! { crate::text::OCRBeamSearchDecoder_ClassifierCallback,
-		cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr
+		cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_delete, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::text::OCRBeamSearchDecoder_ClassifierCallback, cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_new }
@@ -6406,7 +6406,7 @@ mod text_types {
 	pub type PtrOfOCRHMMDecoder = core::Ptr::<crate::text::OCRHMMDecoder>;
 	
 	ptr_extern! { crate::text::OCRHMMDecoder,
-		cv_PtrOfOCRHMMDecoder_delete, cv_PtrOfOCRHMMDecoder_get_inner_ptr
+		cv_PtrOfOCRHMMDecoder_delete, cv_PtrOfOCRHMMDecoder_get_inner_ptr, cv_PtrOfOCRHMMDecoder_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::text::OCRHMMDecoder, cv_PtrOfOCRHMMDecoder_new }
@@ -6429,7 +6429,7 @@ mod text_types {
 	pub type PtrOfOCRHMMDecoder_ClassifierCallback = core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>;
 	
 	ptr_extern! { crate::text::OCRHMMDecoder_ClassifierCallback,
-		cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete, cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr
+		cv_PtrOfOCRHMMDecoder_ClassifierCallback_delete, cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr, cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::text::OCRHMMDecoder_ClassifierCallback, cv_PtrOfOCRHMMDecoder_ClassifierCallback_new }
@@ -6447,7 +6447,7 @@ mod text_types {
 	pub type PtrOfOCRTesseract = core::Ptr::<dyn crate::text::OCRTesseract>;
 	
 	ptr_extern! { dyn crate::text::OCRTesseract,
-		cv_PtrOfOCRTesseract_delete, cv_PtrOfOCRTesseract_get_inner_ptr
+		cv_PtrOfOCRTesseract_delete, cv_PtrOfOCRTesseract_get_inner_ptr, cv_PtrOfOCRTesseract_get_inner_ptr_mut
 	}
 	
 	impl PtrOfOCRTesseract {
@@ -6516,7 +6516,7 @@ mod tracking_types {
 	pub type PtrOfCvFeatureParams = core::Ptr::<crate::tracking::CvFeatureParams>;
 	
 	ptr_extern! { crate::tracking::CvFeatureParams,
-		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr
+		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr, cv_PtrOfCvFeatureParams_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::tracking::CvFeatureParams, cv_PtrOfCvFeatureParams_new }
@@ -6534,7 +6534,7 @@ mod tracking_types {
 	pub type PtrOfTracker = core::Ptr::<dyn crate::tracking::Tracker>;
 	
 	ptr_extern! { dyn crate::tracking::Tracker,
-		cv_PtrOfTracker_delete, cv_PtrOfTracker_get_inner_ptr
+		cv_PtrOfTracker_delete, cv_PtrOfTracker_get_inner_ptr, cv_PtrOfTracker_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTracker {
@@ -6555,7 +6555,7 @@ mod tracking_types {
 	pub type PtrOfTrackerBoosting = core::Ptr::<dyn crate::tracking::TrackerBoosting>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerBoosting,
-		cv_PtrOfTrackerBoosting_delete, cv_PtrOfTrackerBoosting_get_inner_ptr
+		cv_PtrOfTrackerBoosting_delete, cv_PtrOfTrackerBoosting_get_inner_ptr, cv_PtrOfTrackerBoosting_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerBoosting {
@@ -6581,7 +6581,7 @@ mod tracking_types {
 	pub type PtrOfTrackerFeature = core::Ptr::<dyn crate::tracking::TrackerFeature>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerFeature,
-		cv_PtrOfTrackerFeature_delete, cv_PtrOfTrackerFeature_get_inner_ptr
+		cv_PtrOfTrackerFeature_delete, cv_PtrOfTrackerFeature_get_inner_ptr, cv_PtrOfTrackerFeature_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerFeature {
@@ -6597,7 +6597,7 @@ mod tracking_types {
 	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::tracking::TrackerGOTURN>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerGOTURN,
-		cv_PtrOfTrackerGOTURN_delete, cv_PtrOfTrackerGOTURN_get_inner_ptr
+		cv_PtrOfTrackerGOTURN_delete, cv_PtrOfTrackerGOTURN_get_inner_ptr, cv_PtrOfTrackerGOTURN_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerGOTURN {
@@ -6623,7 +6623,7 @@ mod tracking_types {
 	pub type PtrOfTrackerKCF = core::Ptr::<dyn crate::tracking::TrackerKCF>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerKCF,
-		cv_PtrOfTrackerKCF_delete, cv_PtrOfTrackerKCF_get_inner_ptr
+		cv_PtrOfTrackerKCF_delete, cv_PtrOfTrackerKCF_get_inner_ptr, cv_PtrOfTrackerKCF_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerKCF {
@@ -6649,7 +6649,7 @@ mod tracking_types {
 	pub type PtrOfTrackerMIL = core::Ptr::<dyn crate::tracking::TrackerMIL>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerMIL,
-		cv_PtrOfTrackerMIL_delete, cv_PtrOfTrackerMIL_get_inner_ptr
+		cv_PtrOfTrackerMIL_delete, cv_PtrOfTrackerMIL_get_inner_ptr, cv_PtrOfTrackerMIL_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerMIL {
@@ -6675,7 +6675,7 @@ mod tracking_types {
 	pub type PtrOfTrackerMedianFlow = core::Ptr::<dyn crate::tracking::TrackerMedianFlow>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerMedianFlow,
-		cv_PtrOfTrackerMedianFlow_delete, cv_PtrOfTrackerMedianFlow_get_inner_ptr
+		cv_PtrOfTrackerMedianFlow_delete, cv_PtrOfTrackerMedianFlow_get_inner_ptr, cv_PtrOfTrackerMedianFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerMedianFlow {
@@ -6701,7 +6701,7 @@ mod tracking_types {
 	pub type PtrOfTrackerModel = core::Ptr::<dyn crate::tracking::TrackerModel>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerModel,
-		cv_PtrOfTrackerModel_delete, cv_PtrOfTrackerModel_get_inner_ptr
+		cv_PtrOfTrackerModel_delete, cv_PtrOfTrackerModel_get_inner_ptr, cv_PtrOfTrackerModel_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerModel {
@@ -6717,7 +6717,7 @@ mod tracking_types {
 	pub type PtrOfTrackerSamplerAlgorithm = core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerSamplerAlgorithm,
-		cv_PtrOfTrackerSamplerAlgorithm_delete, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr
+		cv_PtrOfTrackerSamplerAlgorithm_delete, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerSamplerAlgorithm {
@@ -6733,7 +6733,7 @@ mod tracking_types {
 	pub type PtrOfTrackerStateEstimator = core::Ptr::<dyn crate::tracking::TrackerStateEstimator>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerStateEstimator,
-		cv_PtrOfTrackerStateEstimator_delete, cv_PtrOfTrackerStateEstimator_get_inner_ptr
+		cv_PtrOfTrackerStateEstimator_delete, cv_PtrOfTrackerStateEstimator_get_inner_ptr, cv_PtrOfTrackerStateEstimator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerStateEstimator {
@@ -6749,7 +6749,7 @@ mod tracking_types {
 	pub type PtrOfTrackerTLD = core::Ptr::<dyn crate::tracking::TrackerTLD>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerTLD,
-		cv_PtrOfTrackerTLD_delete, cv_PtrOfTrackerTLD_get_inner_ptr
+		cv_PtrOfTrackerTLD_delete, cv_PtrOfTrackerTLD_get_inner_ptr, cv_PtrOfTrackerTLD_get_inner_ptr_mut
 	}
 	
 	impl PtrOfTrackerTLD {
@@ -6775,7 +6775,7 @@ mod tracking_types {
 	pub type PtrOfTrackerTargetState = core::Ptr::<crate::tracking::TrackerTargetState>;
 	
 	ptr_extern! { crate::tracking::TrackerTargetState,
-		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr
+		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr, cv_PtrOfTrackerTargetState_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::tracking::TrackerTargetState, cv_PtrOfTrackerTargetState_new }
@@ -6840,7 +6840,7 @@ mod video_types {
 	pub type PtrOfBackgroundSubtractorKNN = core::Ptr::<dyn crate::video::BackgroundSubtractorKNN>;
 	
 	ptr_extern! { dyn crate::video::BackgroundSubtractorKNN,
-		cv_PtrOfBackgroundSubtractorKNN_delete, cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr
+		cv_PtrOfBackgroundSubtractorKNN_delete, cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr, cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBackgroundSubtractorKNN {
@@ -6866,7 +6866,7 @@ mod video_types {
 	pub type PtrOfBackgroundSubtractorMOG2 = core::Ptr::<dyn crate::video::BackgroundSubtractorMOG2>;
 	
 	ptr_extern! { dyn crate::video::BackgroundSubtractorMOG2,
-		cv_PtrOfBackgroundSubtractorMOG2_delete, cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr
+		cv_PtrOfBackgroundSubtractorMOG2_delete, cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr, cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr_mut
 	}
 	
 	impl PtrOfBackgroundSubtractorMOG2 {
@@ -6892,7 +6892,7 @@ mod video_types {
 	pub type PtrOfDenseOpticalFlow = core::Ptr::<dyn crate::video::DenseOpticalFlow>;
 	
 	ptr_extern! { dyn crate::video::DenseOpticalFlow,
-		cv_PtrOfDenseOpticalFlow_delete, cv_PtrOfDenseOpticalFlow_get_inner_ptr
+		cv_PtrOfDenseOpticalFlow_delete, cv_PtrOfDenseOpticalFlow_get_inner_ptr, cv_PtrOfDenseOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDenseOpticalFlow {
@@ -6913,7 +6913,7 @@ mod video_types {
 	pub type PtrOfDualTVL1OpticalFlow = core::Ptr::<dyn crate::video::DualTVL1OpticalFlow>;
 	
 	ptr_extern! { dyn crate::video::DualTVL1OpticalFlow,
-		cv_PtrOfDualTVL1OpticalFlow_delete, cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr
+		cv_PtrOfDualTVL1OpticalFlow_delete, cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr, cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDualTVL1OpticalFlow {
@@ -6939,7 +6939,7 @@ mod video_types {
 	pub type PtrOfFarnebackOpticalFlow = core::Ptr::<dyn crate::video::FarnebackOpticalFlow>;
 	
 	ptr_extern! { dyn crate::video::FarnebackOpticalFlow,
-		cv_PtrOfFarnebackOpticalFlow_delete, cv_PtrOfFarnebackOpticalFlow_get_inner_ptr
+		cv_PtrOfFarnebackOpticalFlow_delete, cv_PtrOfFarnebackOpticalFlow_get_inner_ptr, cv_PtrOfFarnebackOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFarnebackOpticalFlow {
@@ -6965,7 +6965,7 @@ mod video_types {
 	pub type PtrOfSparsePyrLKOpticalFlow = core::Ptr::<dyn crate::video::SparsePyrLKOpticalFlow>;
 	
 	ptr_extern! { dyn crate::video::SparsePyrLKOpticalFlow,
-		cv_PtrOfSparsePyrLKOpticalFlow_delete, cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr
+		cv_PtrOfSparsePyrLKOpticalFlow_delete, cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr, cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSparsePyrLKOpticalFlow {
@@ -6997,7 +6997,7 @@ mod videostab_types {
 	pub type PtrOfDeblurerBase = core::Ptr::<dyn crate::videostab::DeblurerBase>;
 	
 	ptr_extern! { dyn crate::videostab::DeblurerBase,
-		cv_PtrOfDeblurerBase_delete, cv_PtrOfDeblurerBase_get_inner_ptr
+		cv_PtrOfDeblurerBase_delete, cv_PtrOfDeblurerBase_get_inner_ptr, cv_PtrOfDeblurerBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDeblurerBase {
@@ -7013,7 +7013,7 @@ mod videostab_types {
 	pub type PtrOfIDenseOptFlowEstimator = core::Ptr::<dyn crate::videostab::IDenseOptFlowEstimator>;
 	
 	ptr_extern! { dyn crate::videostab::IDenseOptFlowEstimator,
-		cv_PtrOfIDenseOptFlowEstimator_delete, cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr
+		cv_PtrOfIDenseOptFlowEstimator_delete, cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr, cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfIDenseOptFlowEstimator {
@@ -7029,7 +7029,7 @@ mod videostab_types {
 	pub type PtrOfIFrameSource = core::Ptr::<dyn crate::videostab::IFrameSource>;
 	
 	ptr_extern! { dyn crate::videostab::IFrameSource,
-		cv_PtrOfIFrameSource_delete, cv_PtrOfIFrameSource_get_inner_ptr
+		cv_PtrOfIFrameSource_delete, cv_PtrOfIFrameSource_get_inner_ptr, cv_PtrOfIFrameSource_get_inner_ptr_mut
 	}
 	
 	impl PtrOfIFrameSource {
@@ -7045,7 +7045,7 @@ mod videostab_types {
 	pub type PtrOfILog = core::Ptr::<dyn crate::videostab::ILog>;
 	
 	ptr_extern! { dyn crate::videostab::ILog,
-		cv_PtrOfILog_delete, cv_PtrOfILog_get_inner_ptr
+		cv_PtrOfILog_delete, cv_PtrOfILog_get_inner_ptr, cv_PtrOfILog_get_inner_ptr_mut
 	}
 	
 	impl PtrOfILog {
@@ -7061,7 +7061,7 @@ mod videostab_types {
 	pub type PtrOfIMotionStabilizer = core::Ptr::<dyn crate::videostab::IMotionStabilizer>;
 	
 	ptr_extern! { dyn crate::videostab::IMotionStabilizer,
-		cv_PtrOfIMotionStabilizer_delete, cv_PtrOfIMotionStabilizer_get_inner_ptr
+		cv_PtrOfIMotionStabilizer_delete, cv_PtrOfIMotionStabilizer_get_inner_ptr, cv_PtrOfIMotionStabilizer_get_inner_ptr_mut
 	}
 	
 	impl PtrOfIMotionStabilizer {
@@ -7077,7 +7077,7 @@ mod videostab_types {
 	pub type PtrOfIOutlierRejector = core::Ptr::<dyn crate::videostab::IOutlierRejector>;
 	
 	ptr_extern! { dyn crate::videostab::IOutlierRejector,
-		cv_PtrOfIOutlierRejector_delete, cv_PtrOfIOutlierRejector_get_inner_ptr
+		cv_PtrOfIOutlierRejector_delete, cv_PtrOfIOutlierRejector_get_inner_ptr, cv_PtrOfIOutlierRejector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfIOutlierRejector {
@@ -7093,7 +7093,7 @@ mod videostab_types {
 	pub type PtrOfISparseOptFlowEstimator = core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>;
 	
 	ptr_extern! { dyn crate::videostab::ISparseOptFlowEstimator,
-		cv_PtrOfISparseOptFlowEstimator_delete, cv_PtrOfISparseOptFlowEstimator_get_inner_ptr
+		cv_PtrOfISparseOptFlowEstimator_delete, cv_PtrOfISparseOptFlowEstimator_get_inner_ptr, cv_PtrOfISparseOptFlowEstimator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfISparseOptFlowEstimator {
@@ -7109,7 +7109,7 @@ mod videostab_types {
 	pub type PtrOfImageMotionEstimatorBase = core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>;
 	
 	ptr_extern! { dyn crate::videostab::ImageMotionEstimatorBase,
-		cv_PtrOfImageMotionEstimatorBase_delete, cv_PtrOfImageMotionEstimatorBase_get_inner_ptr
+		cv_PtrOfImageMotionEstimatorBase_delete, cv_PtrOfImageMotionEstimatorBase_get_inner_ptr, cv_PtrOfImageMotionEstimatorBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfImageMotionEstimatorBase {
@@ -7125,7 +7125,7 @@ mod videostab_types {
 	pub type PtrOfInpainterBase = core::Ptr::<dyn crate::videostab::InpainterBase>;
 	
 	ptr_extern! { dyn crate::videostab::InpainterBase,
-		cv_PtrOfInpainterBase_delete, cv_PtrOfInpainterBase_get_inner_ptr
+		cv_PtrOfInpainterBase_delete, cv_PtrOfInpainterBase_get_inner_ptr, cv_PtrOfInpainterBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfInpainterBase {
@@ -7141,7 +7141,7 @@ mod videostab_types {
 	pub type PtrOfMotionEstimatorBase = core::Ptr::<dyn crate::videostab::MotionEstimatorBase>;
 	
 	ptr_extern! { dyn crate::videostab::MotionEstimatorBase,
-		cv_PtrOfMotionEstimatorBase_delete, cv_PtrOfMotionEstimatorBase_get_inner_ptr
+		cv_PtrOfMotionEstimatorBase_delete, cv_PtrOfMotionEstimatorBase_get_inner_ptr, cv_PtrOfMotionEstimatorBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMotionEstimatorBase {
@@ -7157,7 +7157,7 @@ mod videostab_types {
 	pub type PtrOfMotionFilterBase = core::Ptr::<dyn crate::videostab::MotionFilterBase>;
 	
 	ptr_extern! { dyn crate::videostab::MotionFilterBase,
-		cv_PtrOfMotionFilterBase_delete, cv_PtrOfMotionFilterBase_get_inner_ptr
+		cv_PtrOfMotionFilterBase_delete, cv_PtrOfMotionFilterBase_get_inner_ptr, cv_PtrOfMotionFilterBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfMotionFilterBase {
@@ -7178,7 +7178,7 @@ mod videostab_types {
 	pub type PtrOfWobbleSuppressorBase = core::Ptr::<dyn crate::videostab::WobbleSuppressorBase>;
 	
 	ptr_extern! { dyn crate::videostab::WobbleSuppressorBase,
-		cv_PtrOfWobbleSuppressorBase_delete, cv_PtrOfWobbleSuppressorBase_get_inner_ptr
+		cv_PtrOfWobbleSuppressorBase_delete, cv_PtrOfWobbleSuppressorBase_get_inner_ptr, cv_PtrOfWobbleSuppressorBase_get_inner_ptr_mut
 	}
 	
 	impl PtrOfWobbleSuppressorBase {
@@ -7201,7 +7201,7 @@ mod xfeatures2d_types {
 	pub type PtrOfBoostDesc = core::Ptr::<crate::xfeatures2d::BoostDesc>;
 	
 	ptr_extern! { crate::xfeatures2d::BoostDesc,
-		cv_PtrOfBoostDesc_delete, cv_PtrOfBoostDesc_get_inner_ptr
+		cv_PtrOfBoostDesc_delete, cv_PtrOfBoostDesc_get_inner_ptr, cv_PtrOfBoostDesc_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::BoostDesc, cv_PtrOfBoostDesc_new }
@@ -7229,7 +7229,7 @@ mod xfeatures2d_types {
 	pub type PtrOfBriefDescriptorExtractor = core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>;
 	
 	ptr_extern! { crate::xfeatures2d::BriefDescriptorExtractor,
-		cv_PtrOfBriefDescriptorExtractor_delete, cv_PtrOfBriefDescriptorExtractor_get_inner_ptr
+		cv_PtrOfBriefDescriptorExtractor_delete, cv_PtrOfBriefDescriptorExtractor_get_inner_ptr, cv_PtrOfBriefDescriptorExtractor_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::BriefDescriptorExtractor, cv_PtrOfBriefDescriptorExtractor_new }
@@ -7257,7 +7257,7 @@ mod xfeatures2d_types {
 	pub type PtrOfDAISY = core::Ptr::<dyn crate::xfeatures2d::DAISY>;
 	
 	ptr_extern! { dyn crate::xfeatures2d::DAISY,
-		cv_PtrOfDAISY_delete, cv_PtrOfDAISY_get_inner_ptr
+		cv_PtrOfDAISY_delete, cv_PtrOfDAISY_get_inner_ptr, cv_PtrOfDAISY_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDAISY {
@@ -7283,7 +7283,7 @@ mod xfeatures2d_types {
 	pub type PtrOfFREAK = core::Ptr::<crate::xfeatures2d::FREAK>;
 	
 	ptr_extern! { crate::xfeatures2d::FREAK,
-		cv_PtrOfFREAK_delete, cv_PtrOfFREAK_get_inner_ptr
+		cv_PtrOfFREAK_delete, cv_PtrOfFREAK_get_inner_ptr, cv_PtrOfFREAK_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::FREAK, cv_PtrOfFREAK_new }
@@ -7311,7 +7311,7 @@ mod xfeatures2d_types {
 	pub type PtrOfLATCH = core::Ptr::<crate::xfeatures2d::LATCH>;
 	
 	ptr_extern! { crate::xfeatures2d::LATCH,
-		cv_PtrOfLATCH_delete, cv_PtrOfLATCH_get_inner_ptr
+		cv_PtrOfLATCH_delete, cv_PtrOfLATCH_get_inner_ptr, cv_PtrOfLATCH_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::LATCH, cv_PtrOfLATCH_new }
@@ -7339,7 +7339,7 @@ mod xfeatures2d_types {
 	pub type PtrOfLUCID = core::Ptr::<crate::xfeatures2d::LUCID>;
 	
 	ptr_extern! { crate::xfeatures2d::LUCID,
-		cv_PtrOfLUCID_delete, cv_PtrOfLUCID_get_inner_ptr
+		cv_PtrOfLUCID_delete, cv_PtrOfLUCID_get_inner_ptr, cv_PtrOfLUCID_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::LUCID, cv_PtrOfLUCID_new }
@@ -7367,7 +7367,7 @@ mod xfeatures2d_types {
 	pub type PtrOfMSDDetector = core::Ptr::<crate::xfeatures2d::MSDDetector>;
 	
 	ptr_extern! { crate::xfeatures2d::MSDDetector,
-		cv_PtrOfMSDDetector_delete, cv_PtrOfMSDDetector_get_inner_ptr
+		cv_PtrOfMSDDetector_delete, cv_PtrOfMSDDetector_get_inner_ptr, cv_PtrOfMSDDetector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::MSDDetector, cv_PtrOfMSDDetector_new }
@@ -7395,7 +7395,7 @@ mod xfeatures2d_types {
 	pub type PtrOfPCTSignatures = core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>;
 	
 	ptr_extern! { dyn crate::xfeatures2d::PCTSignatures,
-		cv_PtrOfPCTSignatures_delete, cv_PtrOfPCTSignatures_get_inner_ptr
+		cv_PtrOfPCTSignatures_delete, cv_PtrOfPCTSignatures_get_inner_ptr, cv_PtrOfPCTSignatures_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPCTSignatures {
@@ -7416,7 +7416,7 @@ mod xfeatures2d_types {
 	pub type PtrOfPCTSignaturesSQFD = core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>;
 	
 	ptr_extern! { dyn crate::xfeatures2d::PCTSignaturesSQFD,
-		cv_PtrOfPCTSignaturesSQFD_delete, cv_PtrOfPCTSignaturesSQFD_get_inner_ptr
+		cv_PtrOfPCTSignaturesSQFD_delete, cv_PtrOfPCTSignaturesSQFD_get_inner_ptr, cv_PtrOfPCTSignaturesSQFD_get_inner_ptr_mut
 	}
 	
 	impl PtrOfPCTSignaturesSQFD {
@@ -7437,7 +7437,7 @@ mod xfeatures2d_types {
 	pub type PtrOfSIFT = core::Ptr::<crate::xfeatures2d::SIFT>;
 	
 	ptr_extern! { crate::xfeatures2d::SIFT,
-		cv_PtrOfSIFT_delete, cv_PtrOfSIFT_get_inner_ptr
+		cv_PtrOfSIFT_delete, cv_PtrOfSIFT_get_inner_ptr, cv_PtrOfSIFT_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::SIFT, cv_PtrOfSIFT_new }
@@ -7465,7 +7465,7 @@ mod xfeatures2d_types {
 	pub type PtrOfSURF = core::Ptr::<dyn crate::xfeatures2d::SURF>;
 	
 	ptr_extern! { dyn crate::xfeatures2d::SURF,
-		cv_PtrOfSURF_delete, cv_PtrOfSURF_get_inner_ptr
+		cv_PtrOfSURF_delete, cv_PtrOfSURF_get_inner_ptr, cv_PtrOfSURF_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSURF {
@@ -7491,7 +7491,7 @@ mod xfeatures2d_types {
 	pub type PtrOfStarDetector = core::Ptr::<crate::xfeatures2d::StarDetector>;
 	
 	ptr_extern! { crate::xfeatures2d::StarDetector,
-		cv_PtrOfStarDetector_delete, cv_PtrOfStarDetector_get_inner_ptr
+		cv_PtrOfStarDetector_delete, cv_PtrOfStarDetector_get_inner_ptr, cv_PtrOfStarDetector_get_inner_ptr_mut
 	}
 	
 	ptr_extern_ctor! { crate::xfeatures2d::StarDetector, cv_PtrOfStarDetector_new }
@@ -7519,7 +7519,7 @@ mod xfeatures2d_types {
 	pub type PtrOfVGG = core::Ptr::<dyn crate::xfeatures2d::VGG>;
 	
 	ptr_extern! { dyn crate::xfeatures2d::VGG,
-		cv_PtrOfVGG_delete, cv_PtrOfVGG_get_inner_ptr
+		cv_PtrOfVGG_delete, cv_PtrOfVGG_get_inner_ptr, cv_PtrOfVGG_get_inner_ptr_mut
 	}
 	
 	impl PtrOfVGG {
@@ -7553,7 +7553,7 @@ mod ximgproc_types {
 	pub type PtrOfAdaptiveManifoldFilter = core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>;
 	
 	ptr_extern! { dyn crate::ximgproc::AdaptiveManifoldFilter,
-		cv_PtrOfAdaptiveManifoldFilter_delete, cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr
+		cv_PtrOfAdaptiveManifoldFilter_delete, cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr, cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfAdaptiveManifoldFilter {
@@ -7574,7 +7574,7 @@ mod ximgproc_types {
 	pub type PtrOfDTFilter = core::Ptr::<dyn crate::ximgproc::DTFilter>;
 	
 	ptr_extern! { dyn crate::ximgproc::DTFilter,
-		cv_PtrOfDTFilter_delete, cv_PtrOfDTFilter_get_inner_ptr
+		cv_PtrOfDTFilter_delete, cv_PtrOfDTFilter_get_inner_ptr, cv_PtrOfDTFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDTFilter {
@@ -7595,7 +7595,7 @@ mod ximgproc_types {
 	pub type PtrOfDisparityWLSFilter = core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>;
 	
 	ptr_extern! { dyn crate::ximgproc::DisparityWLSFilter,
-		cv_PtrOfDisparityWLSFilter_delete, cv_PtrOfDisparityWLSFilter_get_inner_ptr
+		cv_PtrOfDisparityWLSFilter_delete, cv_PtrOfDisparityWLSFilter_get_inner_ptr, cv_PtrOfDisparityWLSFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfDisparityWLSFilter {
@@ -7621,7 +7621,7 @@ mod ximgproc_types {
 	pub type PtrOfEdgeAwareInterpolator = core::Ptr::<dyn crate::ximgproc::EdgeAwareInterpolator>;
 	
 	ptr_extern! { dyn crate::ximgproc::EdgeAwareInterpolator,
-		cv_PtrOfEdgeAwareInterpolator_delete, cv_PtrOfEdgeAwareInterpolator_get_inner_ptr
+		cv_PtrOfEdgeAwareInterpolator_delete, cv_PtrOfEdgeAwareInterpolator_get_inner_ptr, cv_PtrOfEdgeAwareInterpolator_get_inner_ptr_mut
 	}
 	
 	impl PtrOfEdgeAwareInterpolator {
@@ -7647,7 +7647,7 @@ mod ximgproc_types {
 	pub type PtrOfFastGlobalSmootherFilter = core::Ptr::<dyn crate::ximgproc::FastGlobalSmootherFilter>;
 	
 	ptr_extern! { dyn crate::ximgproc::FastGlobalSmootherFilter,
-		cv_PtrOfFastGlobalSmootherFilter_delete, cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr
+		cv_PtrOfFastGlobalSmootherFilter_delete, cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr, cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFastGlobalSmootherFilter {
@@ -7668,7 +7668,7 @@ mod ximgproc_types {
 	pub type PtrOfFastLineDetector = core::Ptr::<dyn crate::ximgproc::FastLineDetector>;
 	
 	ptr_extern! { dyn crate::ximgproc::FastLineDetector,
-		cv_PtrOfFastLineDetector_delete, cv_PtrOfFastLineDetector_get_inner_ptr
+		cv_PtrOfFastLineDetector_delete, cv_PtrOfFastLineDetector_get_inner_ptr, cv_PtrOfFastLineDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfFastLineDetector {
@@ -7689,7 +7689,7 @@ mod ximgproc_types {
 	pub type PtrOfGraphSegmentation = core::Ptr::<dyn crate::ximgproc::GraphSegmentation>;
 	
 	ptr_extern! { dyn crate::ximgproc::GraphSegmentation,
-		cv_PtrOfGraphSegmentation_delete, cv_PtrOfGraphSegmentation_get_inner_ptr
+		cv_PtrOfGraphSegmentation_delete, cv_PtrOfGraphSegmentation_get_inner_ptr, cv_PtrOfGraphSegmentation_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGraphSegmentation {
@@ -7710,7 +7710,7 @@ mod ximgproc_types {
 	pub type PtrOfGuidedFilter = core::Ptr::<dyn crate::ximgproc::GuidedFilter>;
 	
 	ptr_extern! { dyn crate::ximgproc::GuidedFilter,
-		cv_PtrOfGuidedFilter_delete, cv_PtrOfGuidedFilter_get_inner_ptr
+		cv_PtrOfGuidedFilter_delete, cv_PtrOfGuidedFilter_get_inner_ptr, cv_PtrOfGuidedFilter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGuidedFilter {
@@ -7731,7 +7731,7 @@ mod ximgproc_types {
 	pub type PtrOfRFFeatureGetter = core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>;
 	
 	ptr_extern! { dyn crate::ximgproc::RFFeatureGetter,
-		cv_PtrOfRFFeatureGetter_delete, cv_PtrOfRFFeatureGetter_get_inner_ptr
+		cv_PtrOfRFFeatureGetter_delete, cv_PtrOfRFFeatureGetter_get_inner_ptr, cv_PtrOfRFFeatureGetter_get_inner_ptr_mut
 	}
 	
 	impl PtrOfRFFeatureGetter {
@@ -7752,7 +7752,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentation = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentation>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentation,
-		cv_PtrOfSelectiveSearchSegmentation_delete, cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentation_delete, cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentation {
@@ -7773,7 +7773,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategy = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategy,
-		cv_PtrOfSelectiveSearchSegmentationStrategy_delete, cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategy_delete, cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategy {
@@ -7794,7 +7794,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategyColor = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor,
-		cv_PtrOfSelectiveSearchSegmentationStrategyColor_delete, cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategyColor_delete, cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyColor {
@@ -7820,7 +7820,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategyFill = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill,
-		cv_PtrOfSelectiveSearchSegmentationStrategyFill_delete, cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategyFill_delete, cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyFill {
@@ -7846,7 +7846,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategyMultiple = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple,
-		cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_delete, cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_delete, cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyMultiple {
@@ -7872,7 +7872,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategySize = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize,
-		cv_PtrOfSelectiveSearchSegmentationStrategySize_delete, cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategySize_delete, cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategySize {
@@ -7898,7 +7898,7 @@ mod ximgproc_types {
 	pub type PtrOfSelectiveSearchSegmentationStrategyTexture = core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>;
 	
 	ptr_extern! { dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture,
-		cv_PtrOfSelectiveSearchSegmentationStrategyTexture_delete, cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr
+		cv_PtrOfSelectiveSearchSegmentationStrategyTexture_delete, cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr, cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSelectiveSearchSegmentationStrategyTexture {
@@ -7924,7 +7924,7 @@ mod ximgproc_types {
 	pub type PtrOfStructuredEdgeDetection = core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>;
 	
 	ptr_extern! { dyn crate::ximgproc::StructuredEdgeDetection,
-		cv_PtrOfStructuredEdgeDetection_delete, cv_PtrOfStructuredEdgeDetection_get_inner_ptr
+		cv_PtrOfStructuredEdgeDetection_delete, cv_PtrOfStructuredEdgeDetection_get_inner_ptr, cv_PtrOfStructuredEdgeDetection_get_inner_ptr_mut
 	}
 	
 	impl PtrOfStructuredEdgeDetection {
@@ -7945,7 +7945,7 @@ mod ximgproc_types {
 	pub type PtrOfSuperpixelLSC = core::Ptr::<dyn crate::ximgproc::SuperpixelLSC>;
 	
 	ptr_extern! { dyn crate::ximgproc::SuperpixelLSC,
-		cv_PtrOfSuperpixelLSC_delete, cv_PtrOfSuperpixelLSC_get_inner_ptr
+		cv_PtrOfSuperpixelLSC_delete, cv_PtrOfSuperpixelLSC_get_inner_ptr, cv_PtrOfSuperpixelLSC_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperpixelLSC {
@@ -7966,7 +7966,7 @@ mod ximgproc_types {
 	pub type PtrOfSuperpixelSEEDS = core::Ptr::<dyn crate::ximgproc::SuperpixelSEEDS>;
 	
 	ptr_extern! { dyn crate::ximgproc::SuperpixelSEEDS,
-		cv_PtrOfSuperpixelSEEDS_delete, cv_PtrOfSuperpixelSEEDS_get_inner_ptr
+		cv_PtrOfSuperpixelSEEDS_delete, cv_PtrOfSuperpixelSEEDS_get_inner_ptr, cv_PtrOfSuperpixelSEEDS_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperpixelSEEDS {
@@ -7987,7 +7987,7 @@ mod ximgproc_types {
 	pub type PtrOfSuperpixelSLIC = core::Ptr::<dyn crate::ximgproc::SuperpixelSLIC>;
 	
 	ptr_extern! { dyn crate::ximgproc::SuperpixelSLIC,
-		cv_PtrOfSuperpixelSLIC_delete, cv_PtrOfSuperpixelSLIC_get_inner_ptr
+		cv_PtrOfSuperpixelSLIC_delete, cv_PtrOfSuperpixelSLIC_get_inner_ptr, cv_PtrOfSuperpixelSLIC_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSuperpixelSLIC {
@@ -8016,7 +8016,7 @@ mod xobjdetect_types {
 	pub type PtrOfWBDetector = core::Ptr::<dyn crate::xobjdetect::WBDetector>;
 	
 	ptr_extern! { dyn crate::xobjdetect::WBDetector,
-		cv_PtrOfWBDetector_delete, cv_PtrOfWBDetector_get_inner_ptr
+		cv_PtrOfWBDetector_delete, cv_PtrOfWBDetector_get_inner_ptr, cv_PtrOfWBDetector_get_inner_ptr_mut
 	}
 	
 	impl PtrOfWBDetector {
@@ -8040,7 +8040,7 @@ mod xphoto_types {
 	pub type PtrOfGrayworldWB = core::Ptr::<dyn crate::xphoto::GrayworldWB>;
 	
 	ptr_extern! { dyn crate::xphoto::GrayworldWB,
-		cv_PtrOfGrayworldWB_delete, cv_PtrOfGrayworldWB_get_inner_ptr
+		cv_PtrOfGrayworldWB_delete, cv_PtrOfGrayworldWB_get_inner_ptr, cv_PtrOfGrayworldWB_get_inner_ptr_mut
 	}
 	
 	impl PtrOfGrayworldWB {
@@ -8066,7 +8066,7 @@ mod xphoto_types {
 	pub type PtrOfLearningBasedWB = core::Ptr::<dyn crate::xphoto::LearningBasedWB>;
 	
 	ptr_extern! { dyn crate::xphoto::LearningBasedWB,
-		cv_PtrOfLearningBasedWB_delete, cv_PtrOfLearningBasedWB_get_inner_ptr
+		cv_PtrOfLearningBasedWB_delete, cv_PtrOfLearningBasedWB_get_inner_ptr, cv_PtrOfLearningBasedWB_get_inner_ptr_mut
 	}
 	
 	impl PtrOfLearningBasedWB {
@@ -8092,7 +8092,7 @@ mod xphoto_types {
 	pub type PtrOfSimpleWB = core::Ptr::<dyn crate::xphoto::SimpleWB>;
 	
 	ptr_extern! { dyn crate::xphoto::SimpleWB,
-		cv_PtrOfSimpleWB_delete, cv_PtrOfSimpleWB_get_inner_ptr
+		cv_PtrOfSimpleWB_delete, cv_PtrOfSimpleWB_get_inner_ptr, cv_PtrOfSimpleWB_get_inner_ptr_mut
 	}
 	
 	impl PtrOfSimpleWB {

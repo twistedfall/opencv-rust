@@ -1,3 +1,8 @@
+* 0.45.1
+  * Internal improvements in const handling
+  * Fix warnings in beta 
+  * Misc CI improvements
+
 * 0.45.0
   * Add implementation of `From<Vec<T>>` for `Vector<T>` + misc vector improvements
   * Enable OpenGL functions and classes from the `core` module

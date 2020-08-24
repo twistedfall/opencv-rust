@@ -1,7 +1,6 @@
 template struct Result<bool>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Matx<double, 2, 3>>;
-template struct Result<cv::Ptr<const cv::ximgproc::RFFeatureGetter>*>;
 template struct Result<cv::Ptr<cv::StereoMatcher>*>;
 template struct Result<cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::ContourFitting>*>;
@@ -25,7 +24,6 @@ template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmen
 template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple>*>;
 template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize>*>;
 template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture>*>;
-template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy>*>;
 template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation>*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Vec<int, 4>>;
@@ -33,13 +31,16 @@ template struct Result<cv::ximgproc::ContourFitting*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
 extern "C" {
 	void cv_PtrOfAdaptiveManifoldFilter_delete(cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>* instance) {
 		delete instance;
 	}
 
-	cv::ximgproc::AdaptiveManifoldFilter* cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>* instance) {
+	const cv::ximgproc::AdaptiveManifoldFilter* cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::AdaptiveManifoldFilter* cv_PtrOfAdaptiveManifoldFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -53,7 +54,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::ContourFitting* cv_PtrOfContourFitting_get_inner_ptr(cv::Ptr<cv::ximgproc::ContourFitting>* instance) {
+	const cv::ximgproc::ContourFitting* cv_PtrOfContourFitting_get_inner_ptr(const cv::Ptr<cv::ximgproc::ContourFitting>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::ContourFitting* cv_PtrOfContourFitting_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::ContourFitting>* instance) {
 		return instance->get();
 	}
 }
@@ -63,7 +68,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::DTFilter* cv_PtrOfDTFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::DTFilter>* instance) {
+	const cv::ximgproc::DTFilter* cv_PtrOfDTFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::DTFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::DTFilter* cv_PtrOfDTFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::DTFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -73,7 +82,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::DisparityWLSFilter* cv_PtrOfDisparityWLSFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::DisparityWLSFilter>* instance) {
+	const cv::ximgproc::DisparityWLSFilter* cv_PtrOfDisparityWLSFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::DisparityWLSFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::DisparityWLSFilter* cv_PtrOfDisparityWLSFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::DisparityWLSFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -83,7 +96,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::EdgeAwareInterpolator* cv_PtrOfEdgeAwareInterpolator_get_inner_ptr(cv::Ptr<cv::ximgproc::EdgeAwareInterpolator>* instance) {
+	const cv::ximgproc::EdgeAwareInterpolator* cv_PtrOfEdgeAwareInterpolator_get_inner_ptr(const cv::Ptr<cv::ximgproc::EdgeAwareInterpolator>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::EdgeAwareInterpolator* cv_PtrOfEdgeAwareInterpolator_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::EdgeAwareInterpolator>* instance) {
 		return instance->get();
 	}
 }
@@ -93,7 +110,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::EdgeBoxes* cv_PtrOfEdgeBoxes_get_inner_ptr(cv::Ptr<cv::ximgproc::EdgeBoxes>* instance) {
+	const cv::ximgproc::EdgeBoxes* cv_PtrOfEdgeBoxes_get_inner_ptr(const cv::Ptr<cv::ximgproc::EdgeBoxes>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::EdgeBoxes* cv_PtrOfEdgeBoxes_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::EdgeBoxes>* instance) {
 		return instance->get();
 	}
 }
@@ -103,7 +124,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::FastBilateralSolverFilter* cv_PtrOfFastBilateralSolverFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>* instance) {
+	const cv::ximgproc::FastBilateralSolverFilter* cv_PtrOfFastBilateralSolverFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::FastBilateralSolverFilter* cv_PtrOfFastBilateralSolverFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -113,7 +138,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::FastGlobalSmootherFilter* cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>* instance) {
+	const cv::ximgproc::FastGlobalSmootherFilter* cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::FastGlobalSmootherFilter* cv_PtrOfFastGlobalSmootherFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -123,7 +152,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::FastLineDetector* cv_PtrOfFastLineDetector_get_inner_ptr(cv::Ptr<cv::ximgproc::FastLineDetector>* instance) {
+	const cv::ximgproc::FastLineDetector* cv_PtrOfFastLineDetector_get_inner_ptr(const cv::Ptr<cv::ximgproc::FastLineDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::FastLineDetector* cv_PtrOfFastLineDetector_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::FastLineDetector>* instance) {
 		return instance->get();
 	}
 }
@@ -133,7 +166,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::GraphSegmentation* cv_PtrOfGraphSegmentation_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>* instance) {
+	const cv::ximgproc::segmentation::GraphSegmentation* cv_PtrOfGraphSegmentation_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::GraphSegmentation* cv_PtrOfGraphSegmentation_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>* instance) {
 		return instance->get();
 	}
 }
@@ -143,7 +180,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::GuidedFilter* cv_PtrOfGuidedFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::GuidedFilter>* instance) {
+	const cv::ximgproc::GuidedFilter* cv_PtrOfGuidedFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::GuidedFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::GuidedFilter* cv_PtrOfGuidedFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::GuidedFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -153,7 +194,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::RFFeatureGetter* cv_PtrOfRFFeatureGetter_get_inner_ptr(cv::Ptr<cv::ximgproc::RFFeatureGetter>* instance) {
+	const cv::ximgproc::RFFeatureGetter* cv_PtrOfRFFeatureGetter_get_inner_ptr(const cv::Ptr<cv::ximgproc::RFFeatureGetter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::RFFeatureGetter* cv_PtrOfRFFeatureGetter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::RFFeatureGetter>* instance) {
 		return instance->get();
 	}
 }
@@ -163,7 +208,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::RidgeDetectionFilter* cv_PtrOfRidgeDetectionFilter_get_inner_ptr(cv::Ptr<cv::ximgproc::RidgeDetectionFilter>* instance) {
+	const cv::ximgproc::RidgeDetectionFilter* cv_PtrOfRidgeDetectionFilter_get_inner_ptr(const cv::Ptr<cv::ximgproc::RidgeDetectionFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::RidgeDetectionFilter* cv_PtrOfRidgeDetectionFilter_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::RidgeDetectionFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -173,7 +222,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentation* cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentation* cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentation* cv_PtrOfSelectiveSearchSegmentation_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation>* instance) {
 		return instance->get();
 	}
 }
@@ -183,7 +236,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy* cv_PtrOfSelectiveSearchSegmentationStrategy_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategy>* instance) {
 		return instance->get();
 	}
 }
@@ -193,7 +250,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor* cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor* cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor* cv_PtrOfSelectiveSearchSegmentationStrategyColor_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor>* instance) {
 		return instance->get();
 	}
 }
@@ -203,7 +264,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill* cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill* cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill* cv_PtrOfSelectiveSearchSegmentationStrategyFill_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyFill>* instance) {
 		return instance->get();
 	}
 }
@@ -213,7 +278,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple* cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple* cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple* cv_PtrOfSelectiveSearchSegmentationStrategyMultiple_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple>* instance) {
 		return instance->get();
 	}
 }
@@ -223,7 +292,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize* cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize* cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize* cv_PtrOfSelectiveSearchSegmentationStrategySize_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategySize>* instance) {
 		return instance->get();
 	}
 }
@@ -233,7 +306,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture* cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture>* instance) {
+	const cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture* cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr(const cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture* cv_PtrOfSelectiveSearchSegmentationStrategyTexture_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture>* instance) {
 		return instance->get();
 	}
 }
@@ -243,7 +320,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::StructuredEdgeDetection* cv_PtrOfStructuredEdgeDetection_get_inner_ptr(cv::Ptr<cv::ximgproc::StructuredEdgeDetection>* instance) {
+	const cv::ximgproc::StructuredEdgeDetection* cv_PtrOfStructuredEdgeDetection_get_inner_ptr(const cv::Ptr<cv::ximgproc::StructuredEdgeDetection>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::StructuredEdgeDetection* cv_PtrOfStructuredEdgeDetection_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::StructuredEdgeDetection>* instance) {
 		return instance->get();
 	}
 }
@@ -253,7 +334,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::SuperpixelLSC* cv_PtrOfSuperpixelLSC_get_inner_ptr(cv::Ptr<cv::ximgproc::SuperpixelLSC>* instance) {
+	const cv::ximgproc::SuperpixelLSC* cv_PtrOfSuperpixelLSC_get_inner_ptr(const cv::Ptr<cv::ximgproc::SuperpixelLSC>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::SuperpixelLSC* cv_PtrOfSuperpixelLSC_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::SuperpixelLSC>* instance) {
 		return instance->get();
 	}
 }
@@ -263,7 +348,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::SuperpixelSEEDS* cv_PtrOfSuperpixelSEEDS_get_inner_ptr(cv::Ptr<cv::ximgproc::SuperpixelSEEDS>* instance) {
+	const cv::ximgproc::SuperpixelSEEDS* cv_PtrOfSuperpixelSEEDS_get_inner_ptr(const cv::Ptr<cv::ximgproc::SuperpixelSEEDS>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::SuperpixelSEEDS* cv_PtrOfSuperpixelSEEDS_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::SuperpixelSEEDS>* instance) {
 		return instance->get();
 	}
 }
@@ -273,7 +362,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ximgproc::SuperpixelSLIC* cv_PtrOfSuperpixelSLIC_get_inner_ptr(cv::Ptr<cv::ximgproc::SuperpixelSLIC>* instance) {
+	const cv::ximgproc::SuperpixelSLIC* cv_PtrOfSuperpixelSLIC_get_inner_ptr(const cv::Ptr<cv::ximgproc::SuperpixelSLIC>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::SuperpixelSLIC* cv_PtrOfSuperpixelSLIC_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::SuperpixelSLIC>* instance) {
 		return instance->get();
 	}
 }

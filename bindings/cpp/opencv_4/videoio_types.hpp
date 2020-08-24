@@ -1,13 +1,10 @@
 template struct Result<bool>;
-template struct Result<const std::vector<cv::VideoCapture>*>;
-template struct Result<const std::vector<int>*>;
 template struct Result<cv::VideoCaptureAPIs>;
 template struct Result<cv::VideoCapture*>;
 template struct Result<cv::VideoWriter*>;
 template struct Result<double>;
 template struct Result<int>;
 template struct Result<std::vector<cv::VideoCaptureAPIs>*>;
-template struct Result<std::vector<int>*>;
 template struct Result<void*>;
 extern "C" {
 	void cv_VectorOfVideoCapture_delete(std::vector<cv::VideoCapture>* instance) {

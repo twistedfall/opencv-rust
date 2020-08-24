@@ -1,6 +1,4 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::superres::DenseOpticalFlowExt>*>;
-template struct Result<const cv::Ptr<cv::superres::FrameSource>*>;
 template struct Result<cv::Ptr<cv::superres::BroxOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::superres::DenseOpticalFlowExt>*>;
 template struct Result<cv::Ptr<cv::superres::DualTVL1OpticalFlow>*>;
@@ -15,7 +13,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::BroxOpticalFlow* cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr(cv::Ptr<cv::superres::BroxOpticalFlow>* instance) {
+	const cv::superres::BroxOpticalFlow* cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr(const cv::Ptr<cv::superres::BroxOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::BroxOpticalFlow* cv_PtrOfSuperres_BroxOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::superres::BroxOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -25,7 +27,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::DenseOpticalFlowExt* cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr(cv::Ptr<cv::superres::DenseOpticalFlowExt>* instance) {
+	const cv::superres::DenseOpticalFlowExt* cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr(const cv::Ptr<cv::superres::DenseOpticalFlowExt>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::DenseOpticalFlowExt* cv_PtrOfSuperres_DenseOpticalFlowExt_get_inner_ptr_mut(cv::Ptr<cv::superres::DenseOpticalFlowExt>* instance) {
 		return instance->get();
 	}
 }
@@ -35,7 +41,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::DualTVL1OpticalFlow* cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr(cv::Ptr<cv::superres::DualTVL1OpticalFlow>* instance) {
+	const cv::superres::DualTVL1OpticalFlow* cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr(const cv::Ptr<cv::superres::DualTVL1OpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::DualTVL1OpticalFlow* cv_PtrOfSuperres_DualTVL1OpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::superres::DualTVL1OpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -45,7 +55,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::FarnebackOpticalFlow* cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr(cv::Ptr<cv::superres::FarnebackOpticalFlow>* instance) {
+	const cv::superres::FarnebackOpticalFlow* cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr(const cv::Ptr<cv::superres::FarnebackOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::FarnebackOpticalFlow* cv_PtrOfSuperres_FarnebackOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::superres::FarnebackOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -55,7 +69,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::FrameSource* cv_PtrOfSuperres_FrameSource_get_inner_ptr(cv::Ptr<cv::superres::FrameSource>* instance) {
+	const cv::superres::FrameSource* cv_PtrOfSuperres_FrameSource_get_inner_ptr(const cv::Ptr<cv::superres::FrameSource>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::FrameSource* cv_PtrOfSuperres_FrameSource_get_inner_ptr_mut(cv::Ptr<cv::superres::FrameSource>* instance) {
 		return instance->get();
 	}
 }
@@ -65,7 +83,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::PyrLKOpticalFlow* cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr(cv::Ptr<cv::superres::PyrLKOpticalFlow>* instance) {
+	const cv::superres::PyrLKOpticalFlow* cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr(const cv::Ptr<cv::superres::PyrLKOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::PyrLKOpticalFlow* cv_PtrOfSuperres_PyrLKOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::superres::PyrLKOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -75,7 +97,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::superres::SuperResolution* cv_PtrOfSuperres_SuperResolution_get_inner_ptr(cv::Ptr<cv::superres::SuperResolution>* instance) {
+	const cv::superres::SuperResolution* cv_PtrOfSuperres_SuperResolution_get_inner_ptr(const cv::Ptr<cv::superres::SuperResolution>* instance) {
+		return instance->get();
+	}
+
+	cv::superres::SuperResolution* cv_PtrOfSuperres_SuperResolution_get_inner_ptr_mut(cv::Ptr<cv::superres::SuperResolution>* instance) {
 		return instance->get();
 	}
 }

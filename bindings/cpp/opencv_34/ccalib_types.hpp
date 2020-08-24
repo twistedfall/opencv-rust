@@ -1,6 +1,6 @@
 template struct Result<bool>;
-template struct Result<const std::vector<cv::KeyPoint>*>;
 template struct Result<const std::vector<cv::Mat>*>;
+template struct Result<cv::KeyPoint>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Ptr<cv::DescriptorMatcher>*>;
 template struct Result<cv::Ptr<cv::Feature2D>*>;
@@ -12,5 +12,4 @@ template struct Result<cv::randpattern::RandomPatternCornerFinder*>;
 template struct Result<cv::randpattern::RandomPatternGenerator*>;
 template struct Result<double>;
 template struct Result<int>;
-template struct Result<std::vector<cv::KeyPoint>*>;
 template struct Result<std::vector<cv::Mat>*>;

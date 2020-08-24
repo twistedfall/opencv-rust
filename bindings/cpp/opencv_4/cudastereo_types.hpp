@@ -10,7 +10,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::DisparityBilateralFilter* cv_PtrOfCUDA_DisparityBilateralFilter_get_inner_ptr(cv::Ptr<cv::cuda::DisparityBilateralFilter>* instance) {
+	const cv::cuda::DisparityBilateralFilter* cv_PtrOfCUDA_DisparityBilateralFilter_get_inner_ptr(const cv::Ptr<cv::cuda::DisparityBilateralFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::DisparityBilateralFilter* cv_PtrOfCUDA_DisparityBilateralFilter_get_inner_ptr_mut(cv::Ptr<cv::cuda::DisparityBilateralFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -20,7 +24,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::StereoBM* cv_PtrOfCUDA_StereoBM_get_inner_ptr(cv::Ptr<cv::cuda::StereoBM>* instance) {
+	const cv::cuda::StereoBM* cv_PtrOfCUDA_StereoBM_get_inner_ptr(const cv::Ptr<cv::cuda::StereoBM>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::StereoBM* cv_PtrOfCUDA_StereoBM_get_inner_ptr_mut(cv::Ptr<cv::cuda::StereoBM>* instance) {
 		return instance->get();
 	}
 }
@@ -30,7 +38,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::StereoBeliefPropagation* cv_PtrOfCUDA_StereoBeliefPropagation_get_inner_ptr(cv::Ptr<cv::cuda::StereoBeliefPropagation>* instance) {
+	const cv::cuda::StereoBeliefPropagation* cv_PtrOfCUDA_StereoBeliefPropagation_get_inner_ptr(const cv::Ptr<cv::cuda::StereoBeliefPropagation>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::StereoBeliefPropagation* cv_PtrOfCUDA_StereoBeliefPropagation_get_inner_ptr_mut(cv::Ptr<cv::cuda::StereoBeliefPropagation>* instance) {
 		return instance->get();
 	}
 }
@@ -40,7 +52,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::StereoConstantSpaceBP* cv_PtrOfCUDA_StereoConstantSpaceBP_get_inner_ptr(cv::Ptr<cv::cuda::StereoConstantSpaceBP>* instance) {
+	const cv::cuda::StereoConstantSpaceBP* cv_PtrOfCUDA_StereoConstantSpaceBP_get_inner_ptr(const cv::Ptr<cv::cuda::StereoConstantSpaceBP>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::StereoConstantSpaceBP* cv_PtrOfCUDA_StereoConstantSpaceBP_get_inner_ptr_mut(cv::Ptr<cv::cuda::StereoConstantSpaceBP>* instance) {
 		return instance->get();
 	}
 }

@@ -1,7 +1,5 @@
 template struct Result<bool>;
 template struct Result<const cv::DetectionBasedTracker::Parameters*>;
-template struct Result<const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>;
-template struct Result<const std::vector<cv::Point_<int>>*>;
 template struct Result<cv::CascadeClassifier*>;
 template struct Result<cv::DetectionBasedTracker*>;
 template struct Result<cv::DetectionBasedTracker::ExtObject*>;
@@ -10,9 +8,9 @@ template struct Result<cv::DetectionBasedTracker::Parameters*>;
 template struct Result<cv::DetectionROI*>;
 template struct Result<cv::HOGDescriptor*>;
 template struct Result<cv::Mat*>;
+template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>;
 template struct Result<cv::Ptr<cv::BaseCascadeClassifier>*>;
-template struct Result<cv::Ptr<cv::DetectionBasedTracker::IDetector>*>;
 template struct Result<cv::QRCodeDetector*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::SimilarRects*>;
@@ -21,15 +19,9 @@ template struct Result<cv::UMat*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::DetectionBasedTracker::ExtObject>*>;
-template struct Result<std::vector<cv::DetectionROI>*>;
 template struct Result<std::vector<cv::Point_<int>>*>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<float>*>;
-template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::string>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
 extern "C" {
@@ -37,7 +29,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
+	const cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(const cv::Ptr<cv::BaseCascadeClassifier>* instance) {
+		return instance->get();
+	}
+
+	cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr_mut(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
 		return instance->get();
 	}
 }
@@ -47,7 +43,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
+	const cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(const cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
+		return instance->get();
+	}
+
+	cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr_mut(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +57,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
+	const cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(const cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
+		return instance->get();
+	}
+
+	cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr_mut(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
 		return instance->get();
 	}
 }

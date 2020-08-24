@@ -1,6 +1,4 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::ml::SVM::Kernel>*>;
-template struct Result<const cv::Ptr<cv::ml::TrainData>*>;
 template struct Result<const std::vector<cv::ml::DTrees::Node>*>;
 template struct Result<const std::vector<cv::ml::DTrees::Split>*>;
 template struct Result<const std::vector<int>*>;
@@ -24,14 +22,16 @@ template struct Result<cv::ml::ParamGrid*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::Mat>*>;
-template struct Result<std::vector<cv::String>*>;
 extern "C" {
 	void cv_PtrOfANN_MLP_delete(cv::Ptr<cv::ml::ANN_MLP>* instance) {
 		delete instance;
 	}
 
-	cv::ml::ANN_MLP* cv_PtrOfANN_MLP_get_inner_ptr(cv::Ptr<cv::ml::ANN_MLP>* instance) {
+	const cv::ml::ANN_MLP* cv_PtrOfANN_MLP_get_inner_ptr(const cv::Ptr<cv::ml::ANN_MLP>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::ANN_MLP* cv_PtrOfANN_MLP_get_inner_ptr_mut(cv::Ptr<cv::ml::ANN_MLP>* instance) {
 		return instance->get();
 	}
 }
@@ -41,7 +41,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::Boost* cv_PtrOfBoost_get_inner_ptr(cv::Ptr<cv::ml::Boost>* instance) {
+	const cv::ml::Boost* cv_PtrOfBoost_get_inner_ptr(const cv::Ptr<cv::ml::Boost>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::Boost* cv_PtrOfBoost_get_inner_ptr_mut(cv::Ptr<cv::ml::Boost>* instance) {
 		return instance->get();
 	}
 }
@@ -51,7 +55,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::DTrees* cv_PtrOfDTrees_get_inner_ptr(cv::Ptr<cv::ml::DTrees>* instance) {
+	const cv::ml::DTrees* cv_PtrOfDTrees_get_inner_ptr(const cv::Ptr<cv::ml::DTrees>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::DTrees* cv_PtrOfDTrees_get_inner_ptr_mut(cv::Ptr<cv::ml::DTrees>* instance) {
 		return instance->get();
 	}
 }
@@ -61,7 +69,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::EM* cv_PtrOfEM_get_inner_ptr(cv::Ptr<cv::ml::EM>* instance) {
+	const cv::ml::EM* cv_PtrOfEM_get_inner_ptr(const cv::Ptr<cv::ml::EM>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::EM* cv_PtrOfEM_get_inner_ptr_mut(cv::Ptr<cv::ml::EM>* instance) {
 		return instance->get();
 	}
 }
@@ -71,7 +83,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::KNearest* cv_PtrOfKNearest_get_inner_ptr(cv::Ptr<cv::ml::KNearest>* instance) {
+	const cv::ml::KNearest* cv_PtrOfKNearest_get_inner_ptr(const cv::Ptr<cv::ml::KNearest>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::KNearest* cv_PtrOfKNearest_get_inner_ptr_mut(cv::Ptr<cv::ml::KNearest>* instance) {
 		return instance->get();
 	}
 }
@@ -81,7 +97,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::LogisticRegression* cv_PtrOfLogisticRegression_get_inner_ptr(cv::Ptr<cv::ml::LogisticRegression>* instance) {
+	const cv::ml::LogisticRegression* cv_PtrOfLogisticRegression_get_inner_ptr(const cv::Ptr<cv::ml::LogisticRegression>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::LogisticRegression* cv_PtrOfLogisticRegression_get_inner_ptr_mut(cv::Ptr<cv::ml::LogisticRegression>* instance) {
 		return instance->get();
 	}
 }
@@ -91,7 +111,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::NormalBayesClassifier* cv_PtrOfNormalBayesClassifier_get_inner_ptr(cv::Ptr<cv::ml::NormalBayesClassifier>* instance) {
+	const cv::ml::NormalBayesClassifier* cv_PtrOfNormalBayesClassifier_get_inner_ptr(const cv::Ptr<cv::ml::NormalBayesClassifier>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::NormalBayesClassifier* cv_PtrOfNormalBayesClassifier_get_inner_ptr_mut(cv::Ptr<cv::ml::NormalBayesClassifier>* instance) {
 		return instance->get();
 	}
 }
@@ -101,7 +125,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::RTrees* cv_PtrOfRTrees_get_inner_ptr(cv::Ptr<cv::ml::RTrees>* instance) {
+	const cv::ml::RTrees* cv_PtrOfRTrees_get_inner_ptr(const cv::Ptr<cv::ml::RTrees>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::RTrees* cv_PtrOfRTrees_get_inner_ptr_mut(cv::Ptr<cv::ml::RTrees>* instance) {
 		return instance->get();
 	}
 }
@@ -111,7 +139,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::SVM* cv_PtrOfSVM_get_inner_ptr(cv::Ptr<cv::ml::SVM>* instance) {
+	const cv::ml::SVM* cv_PtrOfSVM_get_inner_ptr(const cv::Ptr<cv::ml::SVM>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::SVM* cv_PtrOfSVM_get_inner_ptr_mut(cv::Ptr<cv::ml::SVM>* instance) {
 		return instance->get();
 	}
 }
@@ -121,7 +153,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::SVMSGD* cv_PtrOfSVMSGD_get_inner_ptr(cv::Ptr<cv::ml::SVMSGD>* instance) {
+	const cv::ml::SVMSGD* cv_PtrOfSVMSGD_get_inner_ptr(const cv::Ptr<cv::ml::SVMSGD>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::SVMSGD* cv_PtrOfSVMSGD_get_inner_ptr_mut(cv::Ptr<cv::ml::SVMSGD>* instance) {
 		return instance->get();
 	}
 }
@@ -131,7 +167,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::SVM::Kernel* cv_PtrOfSVM_Kernel_get_inner_ptr(cv::Ptr<cv::ml::SVM::Kernel>* instance) {
+	const cv::ml::SVM::Kernel* cv_PtrOfSVM_Kernel_get_inner_ptr(const cv::Ptr<cv::ml::SVM::Kernel>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::SVM::Kernel* cv_PtrOfSVM_Kernel_get_inner_ptr_mut(cv::Ptr<cv::ml::SVM::Kernel>* instance) {
 		return instance->get();
 	}
 }
@@ -141,7 +181,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ml::TrainData* cv_PtrOfTrainData_get_inner_ptr(cv::Ptr<cv::ml::TrainData>* instance) {
+	const cv::ml::TrainData* cv_PtrOfTrainData_get_inner_ptr(const cv::Ptr<cv::ml::TrainData>* instance) {
+		return instance->get();
+	}
+
+	cv::ml::TrainData* cv_PtrOfTrainData_get_inner_ptr_mut(cv::Ptr<cv::ml::TrainData>* instance) {
 		return instance->get();
 	}
 }

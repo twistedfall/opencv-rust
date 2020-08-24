@@ -1,9 +1,6 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::text::ERFilter::Callback>*>;
-template struct Result<const cv::Ptr<cv::text::ERFilter>*>;
-template struct Result<const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>*>;
-template struct Result<const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>*>;
 template struct Result<cv::Mat*>;
+template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::text::ERFilter::Callback>*>;
 template struct Result<cv::Ptr<cv::text::ERFilter>*>;
 template struct Result<cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>*>;
@@ -12,6 +9,7 @@ template struct Result<cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>*>;
 template struct Result<cv::Ptr<cv::text::OCRHMMDecoder>*>;
 template struct Result<cv::Ptr<cv::text::OCRTesseract>*>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::Vec<int, 2>>;
 template struct Result<cv::text::ERStat*>;
 template struct Result<cv::text::ERStat**>;
 template struct Result<double>;
@@ -20,25 +18,21 @@ template struct Result<double(*)[3]>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<std::vector<cv::Point_<int>>*>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::String>*>;
 template struct Result<std::vector<cv::Vec<int, 2>>*>;
 template struct Result<std::vector<cv::text::ERStat>*>;
 template struct Result<std::vector<double>*>;
-template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::string>*>;
-template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
-template struct Result<std::vector<std::vector<cv::Vec<int, 2>>>*>;
-template struct Result<std::vector<std::vector<cv::text::ERStat>>*>;
-template struct Result<std::vector<std::vector<double>>*>;
 template struct Result<void*>;
 extern "C" {
 	void cv_PtrOfERFilter_delete(cv::Ptr<cv::text::ERFilter>* instance) {
 		delete instance;
 	}
 
-	cv::text::ERFilter* cv_PtrOfERFilter_get_inner_ptr(cv::Ptr<cv::text::ERFilter>* instance) {
+	const cv::text::ERFilter* cv_PtrOfERFilter_get_inner_ptr(const cv::Ptr<cv::text::ERFilter>* instance) {
+		return instance->get();
+	}
+
+	cv::text::ERFilter* cv_PtrOfERFilter_get_inner_ptr_mut(cv::Ptr<cv::text::ERFilter>* instance) {
 		return instance->get();
 	}
 }
@@ -48,7 +42,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::ERFilter::Callback* cv_PtrOfERFilter_Callback_get_inner_ptr(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
+	const cv::text::ERFilter::Callback* cv_PtrOfERFilter_Callback_get_inner_ptr(const cv::Ptr<cv::text::ERFilter::Callback>* instance) {
+		return instance->get();
+	}
+
+	cv::text::ERFilter::Callback* cv_PtrOfERFilter_Callback_get_inner_ptr_mut(cv::Ptr<cv::text::ERFilter::Callback>* instance) {
 		return instance->get();
 	}
 }
@@ -62,7 +60,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::OCRBeamSearchDecoder* cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
+	const cv::text::OCRBeamSearchDecoder* cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr(const cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
+		return instance->get();
+	}
+
+	cv::text::OCRBeamSearchDecoder* cv_PtrOfOCRBeamSearchDecoder_get_inner_ptr_mut(cv::Ptr<cv::text::OCRBeamSearchDecoder>* instance) {
 		return instance->get();
 	}
 }
@@ -76,7 +78,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::OCRBeamSearchDecoder::ClassifierCallback* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
+	const cv::text::OCRBeamSearchDecoder::ClassifierCallback* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
+		return instance->get();
+	}
+
+	cv::text::OCRBeamSearchDecoder::ClassifierCallback* cv_PtrOfOCRBeamSearchDecoder_ClassifierCallback_get_inner_ptr_mut(cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* instance) {
 		return instance->get();
 	}
 }
@@ -90,7 +96,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::OCRHMMDecoder* cv_PtrOfOCRHMMDecoder_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
+	const cv::text::OCRHMMDecoder* cv_PtrOfOCRHMMDecoder_get_inner_ptr(const cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
+		return instance->get();
+	}
+
+	cv::text::OCRHMMDecoder* cv_PtrOfOCRHMMDecoder_get_inner_ptr_mut(cv::Ptr<cv::text::OCRHMMDecoder>* instance) {
 		return instance->get();
 	}
 }
@@ -104,7 +114,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::OCRHMMDecoder::ClassifierCallback* cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
+	const cv::text::OCRHMMDecoder::ClassifierCallback* cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr(const cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
+		return instance->get();
+	}
+
+	cv::text::OCRHMMDecoder::ClassifierCallback* cv_PtrOfOCRHMMDecoder_ClassifierCallback_get_inner_ptr_mut(cv::Ptr<cv::text::OCRHMMDecoder::ClassifierCallback>* instance) {
 		return instance->get();
 	}
 }
@@ -114,7 +128,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::text::OCRTesseract* cv_PtrOfOCRTesseract_get_inner_ptr(cv::Ptr<cv::text::OCRTesseract>* instance) {
+	const cv::text::OCRTesseract* cv_PtrOfOCRTesseract_get_inner_ptr(const cv::Ptr<cv::text::OCRTesseract>* instance) {
+		return instance->get();
+	}
+
+	cv::text::OCRTesseract* cv_PtrOfOCRTesseract_get_inner_ptr_mut(cv::Ptr<cv::text::OCRTesseract>* instance) {
 		return instance->get();
 	}
 }

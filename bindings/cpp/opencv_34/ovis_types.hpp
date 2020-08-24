@@ -1,4 +1,3 @@
-template struct Result<const std::vector<cv::String>*>;
 template struct Result<cv::Ptr<cv::ovis::WindowScene>*>;
 template struct Result<cv::Rect_<double>>;
 template struct Result<int>;
@@ -7,7 +6,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::ovis::WindowScene* cv_PtrOfWindowScene_get_inner_ptr(cv::Ptr<cv::ovis::WindowScene>* instance) {
+	const cv::ovis::WindowScene* cv_PtrOfWindowScene_get_inner_ptr(const cv::Ptr<cv::ovis::WindowScene>* instance) {
+		return instance->get();
+	}
+
+	cv::ovis::WindowScene* cv_PtrOfWindowScene_get_inner_ptr_mut(cv::Ptr<cv::ovis::WindowScene>* instance) {
 		return instance->get();
 	}
 }

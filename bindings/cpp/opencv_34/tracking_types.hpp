@@ -1,11 +1,9 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::TrackerTargetState>*>;
 template struct Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*>;
 template struct Result<const std::vector<cv::Mat>*>;
 template struct Result<const std::vector<cv::Rect_<double>>*>;
 template struct Result<const std::vector<cv::Rect_<int>>*>;
 template struct Result<const std::vector<float>*>;
-template struct Result<const std::vector<int>*>;
 template struct Result<cv::ClfMilBoost*>;
 template struct Result<cv::ClfMilBoost::Params*>;
 template struct Result<cv::CvFeatureParams*>;
@@ -32,6 +30,7 @@ template struct Result<cv::Ptr<cv::TrackerTargetState>*>;
 template struct Result<cv::Ptr<cv::Tracker>*>;
 template struct Result<cv::Rect_<double>>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::Scalar_<double>>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::TermCriteria>;
 template struct Result<cv::TrackerBoosting::Params*>;
@@ -62,7 +61,6 @@ template struct Result<cv::TrackerTLD::Params*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Ptr<cv::Tracker>>*>;
 template struct Result<std::vector<cv::Rect_<double>>*>;
 template struct Result<std::vector<cv::Scalar_<double>>*>;
@@ -78,7 +76,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::CvFeatureParams* cv_PtrOfCvFeatureParams_get_inner_ptr(cv::Ptr<cv::CvFeatureParams>* instance) {
+	const cv::CvFeatureParams* cv_PtrOfCvFeatureParams_get_inner_ptr(const cv::Ptr<cv::CvFeatureParams>* instance) {
+		return instance->get();
+	}
+
+	cv::CvFeatureParams* cv_PtrOfCvFeatureParams_get_inner_ptr_mut(cv::Ptr<cv::CvFeatureParams>* instance) {
 		return instance->get();
 	}
 }
@@ -92,7 +94,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::MultiTracker* cv_PtrOfMultiTracker_get_inner_ptr(cv::Ptr<cv::MultiTracker>* instance) {
+	const cv::MultiTracker* cv_PtrOfMultiTracker_get_inner_ptr(const cv::Ptr<cv::MultiTracker>* instance) {
+		return instance->get();
+	}
+
+	cv::MultiTracker* cv_PtrOfMultiTracker_get_inner_ptr_mut(cv::Ptr<cv::MultiTracker>* instance) {
 		return instance->get();
 	}
 }
@@ -102,7 +108,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::Tracker* cv_PtrOfTracker_get_inner_ptr(cv::Ptr<cv::Tracker>* instance) {
+	const cv::Tracker* cv_PtrOfTracker_get_inner_ptr(const cv::Ptr<cv::Tracker>* instance) {
+		return instance->get();
+	}
+
+	cv::Tracker* cv_PtrOfTracker_get_inner_ptr_mut(cv::Ptr<cv::Tracker>* instance) {
 		return instance->get();
 	}
 }
@@ -112,7 +122,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerBoosting* cv_PtrOfTrackerBoosting_get_inner_ptr(cv::Ptr<cv::TrackerBoosting>* instance) {
+	const cv::TrackerBoosting* cv_PtrOfTrackerBoosting_get_inner_ptr(const cv::Ptr<cv::TrackerBoosting>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerBoosting* cv_PtrOfTrackerBoosting_get_inner_ptr_mut(cv::Ptr<cv::TrackerBoosting>* instance) {
 		return instance->get();
 	}
 }
@@ -122,7 +136,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerCSRT* cv_PtrOfTrackerCSRT_get_inner_ptr(cv::Ptr<cv::TrackerCSRT>* instance) {
+	const cv::TrackerCSRT* cv_PtrOfTrackerCSRT_get_inner_ptr(const cv::Ptr<cv::TrackerCSRT>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerCSRT* cv_PtrOfTrackerCSRT_get_inner_ptr_mut(cv::Ptr<cv::TrackerCSRT>* instance) {
 		return instance->get();
 	}
 }
@@ -132,7 +150,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerFeature* cv_PtrOfTrackerFeature_get_inner_ptr(cv::Ptr<cv::TrackerFeature>* instance) {
+	const cv::TrackerFeature* cv_PtrOfTrackerFeature_get_inner_ptr(const cv::Ptr<cv::TrackerFeature>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerFeature* cv_PtrOfTrackerFeature_get_inner_ptr_mut(cv::Ptr<cv::TrackerFeature>* instance) {
 		return instance->get();
 	}
 }
@@ -142,7 +164,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr(cv::Ptr<cv::TrackerGOTURN>* instance) {
+	const cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr(const cv::Ptr<cv::TrackerGOTURN>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr_mut(cv::Ptr<cv::TrackerGOTURN>* instance) {
 		return instance->get();
 	}
 }
@@ -152,7 +178,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerKCF* cv_PtrOfTrackerKCF_get_inner_ptr(cv::Ptr<cv::TrackerKCF>* instance) {
+	const cv::TrackerKCF* cv_PtrOfTrackerKCF_get_inner_ptr(const cv::Ptr<cv::TrackerKCF>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerKCF* cv_PtrOfTrackerKCF_get_inner_ptr_mut(cv::Ptr<cv::TrackerKCF>* instance) {
 		return instance->get();
 	}
 }
@@ -162,7 +192,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr(cv::Ptr<cv::TrackerMIL>* instance) {
+	const cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr(const cv::Ptr<cv::TrackerMIL>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr_mut(cv::Ptr<cv::TrackerMIL>* instance) {
 		return instance->get();
 	}
 }
@@ -172,7 +206,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerMOSSE* cv_PtrOfTrackerMOSSE_get_inner_ptr(cv::Ptr<cv::TrackerMOSSE>* instance) {
+	const cv::TrackerMOSSE* cv_PtrOfTrackerMOSSE_get_inner_ptr(const cv::Ptr<cv::TrackerMOSSE>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerMOSSE* cv_PtrOfTrackerMOSSE_get_inner_ptr_mut(cv::Ptr<cv::TrackerMOSSE>* instance) {
 		return instance->get();
 	}
 }
@@ -182,7 +220,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerMedianFlow* cv_PtrOfTrackerMedianFlow_get_inner_ptr(cv::Ptr<cv::TrackerMedianFlow>* instance) {
+	const cv::TrackerMedianFlow* cv_PtrOfTrackerMedianFlow_get_inner_ptr(const cv::Ptr<cv::TrackerMedianFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerMedianFlow* cv_PtrOfTrackerMedianFlow_get_inner_ptr_mut(cv::Ptr<cv::TrackerMedianFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -192,7 +234,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerSamplerAlgorithm* cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
+	const cv::TrackerSamplerAlgorithm* cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr(const cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerSamplerAlgorithm* cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr_mut(cv::Ptr<cv::TrackerSamplerAlgorithm>* instance) {
 		return instance->get();
 	}
 }
@@ -202,7 +248,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerStateEstimator* cv_PtrOfTrackerStateEstimator_get_inner_ptr(cv::Ptr<cv::TrackerStateEstimator>* instance) {
+	const cv::TrackerStateEstimator* cv_PtrOfTrackerStateEstimator_get_inner_ptr(const cv::Ptr<cv::TrackerStateEstimator>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerStateEstimator* cv_PtrOfTrackerStateEstimator_get_inner_ptr_mut(cv::Ptr<cv::TrackerStateEstimator>* instance) {
 		return instance->get();
 	}
 }
@@ -212,7 +262,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerTLD* cv_PtrOfTrackerTLD_get_inner_ptr(cv::Ptr<cv::TrackerTLD>* instance) {
+	const cv::TrackerTLD* cv_PtrOfTrackerTLD_get_inner_ptr(const cv::Ptr<cv::TrackerTLD>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerTLD* cv_PtrOfTrackerTLD_get_inner_ptr_mut(cv::Ptr<cv::TrackerTLD>* instance) {
 		return instance->get();
 	}
 }
@@ -226,7 +280,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::TrackerTargetState* cv_PtrOfTrackerTargetState_get_inner_ptr(cv::Ptr<cv::TrackerTargetState>* instance) {
+	const cv::TrackerTargetState* cv_PtrOfTrackerTargetState_get_inner_ptr(const cv::Ptr<cv::TrackerTargetState>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerTargetState* cv_PtrOfTrackerTargetState_get_inner_ptr_mut(cv::Ptr<cv::TrackerTargetState>* instance) {
 		return instance->get();
 	}
 }

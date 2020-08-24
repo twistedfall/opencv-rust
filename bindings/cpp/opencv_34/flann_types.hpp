@@ -14,9 +14,6 @@ template struct Result<cvflann::flann_algorithm_t>;
 template struct Result<cvflann::flann_distance_t>;
 template struct Result<double>;
 template struct Result<int>;
-template struct Result<std::vector<cv::String>*>;
-template struct Result<std::vector<double>*>;
-template struct Result<std::vector<int>*>;
 template struct Result<void*>;
 extern "C" {
 	cv::Ptr<cv::flann::IndexParams>* cv_PtrOfIndexParams_new(cv::flann::IndexParams* val) {
@@ -27,7 +24,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::flann::IndexParams* cv_PtrOfIndexParams_get_inner_ptr(cv::Ptr<cv::flann::IndexParams>* instance) {
+	const cv::flann::IndexParams* cv_PtrOfIndexParams_get_inner_ptr(const cv::Ptr<cv::flann::IndexParams>* instance) {
+		return instance->get();
+	}
+
+	cv::flann::IndexParams* cv_PtrOfIndexParams_get_inner_ptr_mut(cv::Ptr<cv::flann::IndexParams>* instance) {
 		return instance->get();
 	}
 }
@@ -41,7 +42,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::flann::SearchParams* cv_PtrOfSearchParams_get_inner_ptr(cv::Ptr<cv::flann::SearchParams>* instance) {
+	const cv::flann::SearchParams* cv_PtrOfSearchParams_get_inner_ptr(const cv::Ptr<cv::flann::SearchParams>* instance) {
+		return instance->get();
+	}
+
+	cv::flann::SearchParams* cv_PtrOfSearchParams_get_inner_ptr_mut(cv::Ptr<cv::flann::SearchParams>* instance) {
 		return instance->get();
 	}
 }

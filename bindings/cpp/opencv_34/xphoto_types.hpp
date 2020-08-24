@@ -9,7 +9,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::xphoto::GrayworldWB* cv_PtrOfGrayworldWB_get_inner_ptr(cv::Ptr<cv::xphoto::GrayworldWB>* instance) {
+	const cv::xphoto::GrayworldWB* cv_PtrOfGrayworldWB_get_inner_ptr(const cv::Ptr<cv::xphoto::GrayworldWB>* instance) {
+		return instance->get();
+	}
+
+	cv::xphoto::GrayworldWB* cv_PtrOfGrayworldWB_get_inner_ptr_mut(cv::Ptr<cv::xphoto::GrayworldWB>* instance) {
 		return instance->get();
 	}
 }
@@ -19,7 +23,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::xphoto::LearningBasedWB* cv_PtrOfLearningBasedWB_get_inner_ptr(cv::Ptr<cv::xphoto::LearningBasedWB>* instance) {
+	const cv::xphoto::LearningBasedWB* cv_PtrOfLearningBasedWB_get_inner_ptr(const cv::Ptr<cv::xphoto::LearningBasedWB>* instance) {
+		return instance->get();
+	}
+
+	cv::xphoto::LearningBasedWB* cv_PtrOfLearningBasedWB_get_inner_ptr_mut(cv::Ptr<cv::xphoto::LearningBasedWB>* instance) {
 		return instance->get();
 	}
 }
@@ -29,7 +37,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::xphoto::SimpleWB* cv_PtrOfSimpleWB_get_inner_ptr(cv::Ptr<cv::xphoto::SimpleWB>* instance) {
+	const cv::xphoto::SimpleWB* cv_PtrOfSimpleWB_get_inner_ptr(const cv::Ptr<cv::xphoto::SimpleWB>* instance) {
+		return instance->get();
+	}
+
+	cv::xphoto::SimpleWB* cv_PtrOfSimpleWB_get_inner_ptr_mut(cv::Ptr<cv::xphoto::SimpleWB>* instance) {
 		return instance->get();
 	}
 }
@@ -39,7 +51,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::xphoto::TonemapDurand* cv_PtrOfTonemapDurand_get_inner_ptr(cv::Ptr<cv::xphoto::TonemapDurand>* instance) {
+	const cv::xphoto::TonemapDurand* cv_PtrOfTonemapDurand_get_inner_ptr(const cv::Ptr<cv::xphoto::TonemapDurand>* instance) {
+		return instance->get();
+	}
+
+	cv::xphoto::TonemapDurand* cv_PtrOfTonemapDurand_get_inner_ptr_mut(cv::Ptr<cv::xphoto::TonemapDurand>* instance) {
 		return instance->get();
 	}
 }

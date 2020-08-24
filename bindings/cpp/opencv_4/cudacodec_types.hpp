@@ -1,6 +1,4 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::cudacodec::EncoderCallBack>*>;
-template struct Result<const cv::Ptr<cv::cudacodec::RawVideoSource>*>;
 template struct Result<cv::Ptr<cv::cudacodec::VideoReader>*>;
 template struct Result<cv::Ptr<cv::cudacodec::VideoWriter>*>;
 template struct Result<cv::cudacodec::ChromaFormat>;
@@ -14,7 +12,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cudacodec::EncoderCallBack* cv_PtrOfEncoderCallBack_get_inner_ptr(cv::Ptr<cv::cudacodec::EncoderCallBack>* instance) {
+	const cv::cudacodec::EncoderCallBack* cv_PtrOfEncoderCallBack_get_inner_ptr(const cv::Ptr<cv::cudacodec::EncoderCallBack>* instance) {
+		return instance->get();
+	}
+
+	cv::cudacodec::EncoderCallBack* cv_PtrOfEncoderCallBack_get_inner_ptr_mut(cv::Ptr<cv::cudacodec::EncoderCallBack>* instance) {
 		return instance->get();
 	}
 }
@@ -24,7 +26,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cudacodec::RawVideoSource* cv_PtrOfRawVideoSource_get_inner_ptr(cv::Ptr<cv::cudacodec::RawVideoSource>* instance) {
+	const cv::cudacodec::RawVideoSource* cv_PtrOfRawVideoSource_get_inner_ptr(const cv::Ptr<cv::cudacodec::RawVideoSource>* instance) {
+		return instance->get();
+	}
+
+	cv::cudacodec::RawVideoSource* cv_PtrOfRawVideoSource_get_inner_ptr_mut(cv::Ptr<cv::cudacodec::RawVideoSource>* instance) {
 		return instance->get();
 	}
 }
@@ -34,7 +40,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cudacodec::VideoReader* cv_PtrOfVideoReader_get_inner_ptr(cv::Ptr<cv::cudacodec::VideoReader>* instance) {
+	const cv::cudacodec::VideoReader* cv_PtrOfVideoReader_get_inner_ptr(const cv::Ptr<cv::cudacodec::VideoReader>* instance) {
+		return instance->get();
+	}
+
+	cv::cudacodec::VideoReader* cv_PtrOfVideoReader_get_inner_ptr_mut(cv::Ptr<cv::cudacodec::VideoReader>* instance) {
 		return instance->get();
 	}
 }
@@ -44,7 +54,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cudacodec::VideoWriter* cv_PtrOfVideoWriter_get_inner_ptr(cv::Ptr<cv::cudacodec::VideoWriter>* instance) {
+	const cv::cudacodec::VideoWriter* cv_PtrOfVideoWriter_get_inner_ptr(const cv::Ptr<cv::cudacodec::VideoWriter>* instance) {
+		return instance->get();
+	}
+
+	cv::cudacodec::VideoWriter* cv_PtrOfVideoWriter_get_inner_ptr_mut(cv::Ptr<cv::cudacodec::VideoWriter>* instance) {
 		return instance->get();
 	}
 }

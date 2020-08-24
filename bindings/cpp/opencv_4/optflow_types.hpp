@@ -1,6 +1,4 @@
 template struct Result<bool>;
-template struct Result<const std::vector<std::string>*>;
-template struct Result<cv::Ptr<const cv::optflow::PCAPrior>*>;
 template struct Result<cv::Ptr<cv::DenseOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::SparseOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>*>;
@@ -9,6 +7,7 @@ template struct Result<cv::Ptr<cv::optflow::GPCTrainingSamples>*>;
 template struct Result<cv::Ptr<cv::optflow::GPCTree>*>;
 template struct Result<cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>*>;
 template struct Result<cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>*>;
+template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::Vec<double, 18>>;
 template struct Result<cv::optflow::GPCMatchingParams>;
@@ -23,8 +22,6 @@ template struct Result<cv::optflow::SupportRegionType>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
-template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::optflow::GPCPatchDescriptor>*>;
 template struct Result<unsigned int>;
 template struct Result<unsigned long>;
 extern "C" {
@@ -32,7 +29,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::DenseRLOFOpticalFlow* cv_PtrOfDenseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
+	const cv::optflow::DenseRLOFOpticalFlow* cv_PtrOfDenseRLOFOpticalFlow_get_inner_ptr(const cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::DenseRLOFOpticalFlow* cv_PtrOfDenseRLOFOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::optflow::DenseRLOFOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -42,7 +43,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
+	const cv::optflow::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(const cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::optflow::DualTVL1OpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -56,7 +61,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+	const cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr(const cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::GPCTrainingSamples* cv_PtrOfGPCTrainingSamples_get_inner_ptr_mut(cv::Ptr<cv::optflow::GPCTrainingSamples>* instance) {
 		return instance->get();
 	}
 }
@@ -70,7 +79,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(cv::Ptr<cv::optflow::GPCTree>* instance) {
+	const cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr(const cv::Ptr<cv::optflow::GPCTree>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::GPCTree* cv_PtrOfGPCTree_get_inner_ptr_mut(cv::Ptr<cv::optflow::GPCTree>* instance) {
 		return instance->get();
 	}
 }
@@ -84,7 +97,11 @@ extern "C" {
 		delete instance;
 	}
 
-	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr(const cv::Ptr<const cv::optflow::PCAPrior>* instance) {
+		return instance->get();
+	}
+
+	const cv::optflow::PCAPrior* cv_PtrOfPCAPrior_get_inner_ptr_mut(cv::Ptr<const cv::optflow::PCAPrior>* instance) {
 		return instance->get();
 	}
 }
@@ -98,7 +115,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::RLOFOpticalFlowParameter* cv_PtrOfRLOFOpticalFlowParameter_get_inner_ptr(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
+	const cv::optflow::RLOFOpticalFlowParameter* cv_PtrOfRLOFOpticalFlowParameter_get_inner_ptr(const cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::RLOFOpticalFlowParameter* cv_PtrOfRLOFOpticalFlowParameter_get_inner_ptr_mut(cv::Ptr<cv::optflow::RLOFOpticalFlowParameter>* instance) {
 		return instance->get();
 	}
 }
@@ -108,7 +129,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::optflow::SparseRLOFOpticalFlow* cv_PtrOfSparseRLOFOpticalFlow_get_inner_ptr(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
+	const cv::optflow::SparseRLOFOpticalFlow* cv_PtrOfSparseRLOFOpticalFlow_get_inner_ptr(const cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::optflow::SparseRLOFOpticalFlow* cv_PtrOfSparseRLOFOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::optflow::SparseRLOFOpticalFlow>* instance) {
 		return instance->get();
 	}
 }

@@ -1,7 +1,7 @@
 template struct Result<bool>;
-template struct Result<const std::vector<std::vector<cv::Mat>>*>;
+template struct Result<cv::Mat*>;
+template struct Result<cv::Point_<float>>;
 template struct Result<cv::Ptr<cv::structured_light::GrayCodePattern>*>;
-template struct Result<cv::Ptr<cv::structured_light::SinusoidalPattern::Params>*>;
 template struct Result<cv::Ptr<cv::structured_light::SinusoidalPattern>*>;
 template struct Result<cv::structured_light::GrayCodePattern::Params*>;
 template struct Result<cv::structured_light::SinusoidalPattern::Params*>;
@@ -15,7 +15,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::structured_light::GrayCodePattern* cv_PtrOfGrayCodePattern_get_inner_ptr(cv::Ptr<cv::structured_light::GrayCodePattern>* instance) {
+	const cv::structured_light::GrayCodePattern* cv_PtrOfGrayCodePattern_get_inner_ptr(const cv::Ptr<cv::structured_light::GrayCodePattern>* instance) {
+		return instance->get();
+	}
+
+	cv::structured_light::GrayCodePattern* cv_PtrOfGrayCodePattern_get_inner_ptr_mut(cv::Ptr<cv::structured_light::GrayCodePattern>* instance) {
 		return instance->get();
 	}
 }
@@ -25,7 +29,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::structured_light::SinusoidalPattern* cv_PtrOfSinusoidalPattern_get_inner_ptr(cv::Ptr<cv::structured_light::SinusoidalPattern>* instance) {
+	const cv::structured_light::SinusoidalPattern* cv_PtrOfSinusoidalPattern_get_inner_ptr(const cv::Ptr<cv::structured_light::SinusoidalPattern>* instance) {
+		return instance->get();
+	}
+
+	cv::structured_light::SinusoidalPattern* cv_PtrOfSinusoidalPattern_get_inner_ptr_mut(cv::Ptr<cv::structured_light::SinusoidalPattern>* instance) {
 		return instance->get();
 	}
 }
@@ -39,7 +47,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::structured_light::SinusoidalPattern::Params* cv_PtrOfSinusoidalPattern_Params_get_inner_ptr(cv::Ptr<cv::structured_light::SinusoidalPattern::Params>* instance) {
+	const cv::structured_light::SinusoidalPattern::Params* cv_PtrOfSinusoidalPattern_Params_get_inner_ptr(const cv::Ptr<cv::structured_light::SinusoidalPattern::Params>* instance) {
+		return instance->get();
+	}
+
+	cv::structured_light::SinusoidalPattern::Params* cv_PtrOfSinusoidalPattern_Params_get_inner_ptr_mut(cv::Ptr<cv::structured_light::SinusoidalPattern::Params>* instance) {
 		return instance->get();
 	}
 }

@@ -17,7 +17,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BackgroundSubtractorKNN* cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr(cv::Ptr<cv::BackgroundSubtractorKNN>* instance) {
+	const cv::BackgroundSubtractorKNN* cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr(const cv::Ptr<cv::BackgroundSubtractorKNN>* instance) {
+		return instance->get();
+	}
+
+	cv::BackgroundSubtractorKNN* cv_PtrOfBackgroundSubtractorKNN_get_inner_ptr_mut(cv::Ptr<cv::BackgroundSubtractorKNN>* instance) {
 		return instance->get();
 	}
 }
@@ -27,7 +31,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::BackgroundSubtractorMOG2* cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr(cv::Ptr<cv::BackgroundSubtractorMOG2>* instance) {
+	const cv::BackgroundSubtractorMOG2* cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr(const cv::Ptr<cv::BackgroundSubtractorMOG2>* instance) {
+		return instance->get();
+	}
+
+	cv::BackgroundSubtractorMOG2* cv_PtrOfBackgroundSubtractorMOG2_get_inner_ptr_mut(cv::Ptr<cv::BackgroundSubtractorMOG2>* instance) {
 		return instance->get();
 	}
 }
@@ -37,7 +45,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::DenseOpticalFlow* cv_PtrOfDenseOpticalFlow_get_inner_ptr(cv::Ptr<cv::DenseOpticalFlow>* instance) {
+	const cv::DenseOpticalFlow* cv_PtrOfDenseOpticalFlow_get_inner_ptr(const cv::Ptr<cv::DenseOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::DenseOpticalFlow* cv_PtrOfDenseOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::DenseOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -47,7 +59,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(cv::Ptr<cv::DualTVL1OpticalFlow>* instance) {
+	const cv::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr(const cv::Ptr<cv::DualTVL1OpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::DualTVL1OpticalFlow* cv_PtrOfDualTVL1OpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::DualTVL1OpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +73,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::FarnebackOpticalFlow* cv_PtrOfFarnebackOpticalFlow_get_inner_ptr(cv::Ptr<cv::FarnebackOpticalFlow>* instance) {
+	const cv::FarnebackOpticalFlow* cv_PtrOfFarnebackOpticalFlow_get_inner_ptr(const cv::Ptr<cv::FarnebackOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::FarnebackOpticalFlow* cv_PtrOfFarnebackOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::FarnebackOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -67,7 +87,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::SparsePyrLKOpticalFlow* cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr(cv::Ptr<cv::SparsePyrLKOpticalFlow>* instance) {
+	const cv::SparsePyrLKOpticalFlow* cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr(const cv::Ptr<cv::SparsePyrLKOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::SparsePyrLKOpticalFlow* cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::SparsePyrLKOpticalFlow>* instance) {
 		return instance->get();
 	}
 }

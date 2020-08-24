@@ -8,13 +8,10 @@ template struct Result<const cv::Ptr<cv::detail::FeaturesFinder>*>;
 template struct Result<const cv::Ptr<cv::detail::FeaturesMatcher>*>;
 template struct Result<const cv::Ptr<cv::detail::SeamFinder>*>;
 template struct Result<const cv::UMat*>;
-template struct Result<const std::vector<cv::Point_<int>>*>;
-template struct Result<const std::vector<cv::Size_<int>>*>;
-template struct Result<const std::vector<cv::UMat>*>;
-template struct Result<const std::vector<cv::detail::MatchesInfo>*>;
-template struct Result<const std::vector<std::vector<cv::Rect_<int>>>*>;
 template struct Result<cv::CompressedRectilinearPortraitWarper*>;
 template struct Result<cv::CompressedRectilinearWarper*>;
+template struct Result<cv::DMatch>;
+template struct Result<cv::KeyPoint>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::PaniniPortraitWarper*>;
 template struct Result<cv::PaniniWarper*>;
@@ -86,16 +83,12 @@ template struct Result<float(*)[9]>;
 template struct Result<int>;
 template struct Result<std::vector<cv::DMatch>*>;
 template struct Result<std::vector<cv::KeyPoint>*>;
-template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Rect_<int>>*>;
-template struct Result<std::vector<cv::String>*>;
-template struct Result<std::vector<cv::UMat>*>;
 template struct Result<std::vector<cv::detail::CameraParams>*>;
-template struct Result<std::vector<cv::detail::ImageFeatures>*>;
-template struct Result<std::vector<cv::detail::MatchesInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<unsigned char>*>;
+template struct Result<unsigned char>;
 template struct Result<void*>;
 extern "C" {
 	cv::Ptr<cv::detail::Blender>* cv_PtrOfDetail_Blender_new(cv::detail::Blender* val) {
@@ -106,7 +99,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr(cv::Ptr<cv::detail::Blender>* instance) {
+	const cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr(const cv::Ptr<cv::detail::Blender>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr_mut(cv::Ptr<cv::detail::Blender>* instance) {
 		return instance->get();
 	}
 }
@@ -116,7 +113,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
+	const cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(const cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr_mut(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
 		return instance->get();
 	}
 }
@@ -126,7 +127,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
+	const cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(const cv::Ptr<cv::detail::ExposureCompensator>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr_mut(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
 		return instance->get();
 	}
 }
@@ -136,7 +141,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
+	const cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(const cv::Ptr<cv::detail::FeaturesFinder>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr_mut(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
 		return instance->get();
 	}
 }
@@ -146,7 +155,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
+	const cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(const cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr_mut(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
 		return instance->get();
 	}
 }
@@ -156,7 +169,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr(cv::Ptr<cv::detail::RotationWarper>* instance) {
+	const cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr(const cv::Ptr<cv::detail::RotationWarper>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr_mut(cv::Ptr<cv::detail::RotationWarper>* instance) {
 		return instance->get();
 	}
 }
@@ -166,7 +183,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr(cv::Ptr<cv::detail::SeamFinder>* instance) {
+	const cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr(const cv::Ptr<cv::detail::SeamFinder>* instance) {
+		return instance->get();
+	}
+
+	cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr_mut(cv::Ptr<cv::detail::SeamFinder>* instance) {
 		return instance->get();
 	}
 }
@@ -180,7 +201,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr(cv::Ptr<cv::Stitcher>* instance) {
+	const cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr(const cv::Ptr<cv::Stitcher>* instance) {
+		return instance->get();
+	}
+
+	cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr_mut(cv::Ptr<cv::Stitcher>* instance) {
 		return instance->get();
 	}
 }
@@ -190,7 +215,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr(cv::Ptr<cv::WarperCreator>* instance) {
+	const cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr(const cv::Ptr<cv::WarperCreator>* instance) {
+		return instance->get();
+	}
+
+	cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr_mut(cv::Ptr<cv::WarperCreator>* instance) {
 		return instance->get();
 	}
 }

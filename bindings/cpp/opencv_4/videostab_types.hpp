@@ -1,5 +1,4 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::videostab::IFrameSource>*>;
 template struct Result<const std::vector<cv::Mat>*>;
 template struct Result<const std::vector<float>*>;
 template struct Result<cv::Mat*>;
@@ -13,7 +12,6 @@ template struct Result<cv::Ptr<cv::videostab::IOutlierRejector>*>;
 template struct Result<cv::Ptr<cv::videostab::ISparseOptFlowEstimator>*>;
 template struct Result<cv::Ptr<cv::videostab::ImageMotionEstimatorBase>*>;
 template struct Result<cv::Ptr<cv::videostab::InpainterBase>*>;
-template struct Result<cv::Ptr<cv::videostab::MotionEstimatorBase>*>;
 template struct Result<cv::Ptr<cv::videostab::MotionFilterBase>*>;
 template struct Result<cv::Ptr<cv::videostab::WobbleSuppressorBase>*>;
 template struct Result<cv::Size_<int>>;
@@ -47,7 +45,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::DeblurerBase* cv_PtrOfDeblurerBase_get_inner_ptr(cv::Ptr<cv::videostab::DeblurerBase>* instance) {
+	const cv::videostab::DeblurerBase* cv_PtrOfDeblurerBase_get_inner_ptr(const cv::Ptr<cv::videostab::DeblurerBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::DeblurerBase* cv_PtrOfDeblurerBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::DeblurerBase>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +59,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::IDenseOptFlowEstimator* cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr(cv::Ptr<cv::videostab::IDenseOptFlowEstimator>* instance) {
+	const cv::videostab::IDenseOptFlowEstimator* cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr(const cv::Ptr<cv::videostab::IDenseOptFlowEstimator>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::IDenseOptFlowEstimator* cv_PtrOfIDenseOptFlowEstimator_get_inner_ptr_mut(cv::Ptr<cv::videostab::IDenseOptFlowEstimator>* instance) {
 		return instance->get();
 	}
 }
@@ -67,7 +73,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::IFrameSource* cv_PtrOfIFrameSource_get_inner_ptr(cv::Ptr<cv::videostab::IFrameSource>* instance) {
+	const cv::videostab::IFrameSource* cv_PtrOfIFrameSource_get_inner_ptr(const cv::Ptr<cv::videostab::IFrameSource>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::IFrameSource* cv_PtrOfIFrameSource_get_inner_ptr_mut(cv::Ptr<cv::videostab::IFrameSource>* instance) {
 		return instance->get();
 	}
 }
@@ -77,7 +87,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::ILog* cv_PtrOfILog_get_inner_ptr(cv::Ptr<cv::videostab::ILog>* instance) {
+	const cv::videostab::ILog* cv_PtrOfILog_get_inner_ptr(const cv::Ptr<cv::videostab::ILog>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::ILog* cv_PtrOfILog_get_inner_ptr_mut(cv::Ptr<cv::videostab::ILog>* instance) {
 		return instance->get();
 	}
 }
@@ -87,7 +101,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::IMotionStabilizer* cv_PtrOfIMotionStabilizer_get_inner_ptr(cv::Ptr<cv::videostab::IMotionStabilizer>* instance) {
+	const cv::videostab::IMotionStabilizer* cv_PtrOfIMotionStabilizer_get_inner_ptr(const cv::Ptr<cv::videostab::IMotionStabilizer>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::IMotionStabilizer* cv_PtrOfIMotionStabilizer_get_inner_ptr_mut(cv::Ptr<cv::videostab::IMotionStabilizer>* instance) {
 		return instance->get();
 	}
 }
@@ -97,7 +115,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::IOutlierRejector* cv_PtrOfIOutlierRejector_get_inner_ptr(cv::Ptr<cv::videostab::IOutlierRejector>* instance) {
+	const cv::videostab::IOutlierRejector* cv_PtrOfIOutlierRejector_get_inner_ptr(const cv::Ptr<cv::videostab::IOutlierRejector>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::IOutlierRejector* cv_PtrOfIOutlierRejector_get_inner_ptr_mut(cv::Ptr<cv::videostab::IOutlierRejector>* instance) {
 		return instance->get();
 	}
 }
@@ -107,7 +129,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::ISparseOptFlowEstimator* cv_PtrOfISparseOptFlowEstimator_get_inner_ptr(cv::Ptr<cv::videostab::ISparseOptFlowEstimator>* instance) {
+	const cv::videostab::ISparseOptFlowEstimator* cv_PtrOfISparseOptFlowEstimator_get_inner_ptr(const cv::Ptr<cv::videostab::ISparseOptFlowEstimator>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::ISparseOptFlowEstimator* cv_PtrOfISparseOptFlowEstimator_get_inner_ptr_mut(cv::Ptr<cv::videostab::ISparseOptFlowEstimator>* instance) {
 		return instance->get();
 	}
 }
@@ -117,7 +143,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::ImageMotionEstimatorBase* cv_PtrOfImageMotionEstimatorBase_get_inner_ptr(cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* instance) {
+	const cv::videostab::ImageMotionEstimatorBase* cv_PtrOfImageMotionEstimatorBase_get_inner_ptr(const cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::ImageMotionEstimatorBase* cv_PtrOfImageMotionEstimatorBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::ImageMotionEstimatorBase>* instance) {
 		return instance->get();
 	}
 }
@@ -127,7 +157,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::InpainterBase* cv_PtrOfInpainterBase_get_inner_ptr(cv::Ptr<cv::videostab::InpainterBase>* instance) {
+	const cv::videostab::InpainterBase* cv_PtrOfInpainterBase_get_inner_ptr(const cv::Ptr<cv::videostab::InpainterBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::InpainterBase* cv_PtrOfInpainterBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::InpainterBase>* instance) {
 		return instance->get();
 	}
 }
@@ -137,7 +171,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::MotionEstimatorBase* cv_PtrOfMotionEstimatorBase_get_inner_ptr(cv::Ptr<cv::videostab::MotionEstimatorBase>* instance) {
+	const cv::videostab::MotionEstimatorBase* cv_PtrOfMotionEstimatorBase_get_inner_ptr(const cv::Ptr<cv::videostab::MotionEstimatorBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::MotionEstimatorBase* cv_PtrOfMotionEstimatorBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::MotionEstimatorBase>* instance) {
 		return instance->get();
 	}
 }
@@ -147,7 +185,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::MotionFilterBase* cv_PtrOfMotionFilterBase_get_inner_ptr(cv::Ptr<cv::videostab::MotionFilterBase>* instance) {
+	const cv::videostab::MotionFilterBase* cv_PtrOfMotionFilterBase_get_inner_ptr(const cv::Ptr<cv::videostab::MotionFilterBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::MotionFilterBase* cv_PtrOfMotionFilterBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::MotionFilterBase>* instance) {
 		return instance->get();
 	}
 }
@@ -157,7 +199,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::videostab::WobbleSuppressorBase* cv_PtrOfWobbleSuppressorBase_get_inner_ptr(cv::Ptr<cv::videostab::WobbleSuppressorBase>* instance) {
+	const cv::videostab::WobbleSuppressorBase* cv_PtrOfWobbleSuppressorBase_get_inner_ptr(const cv::Ptr<cv::videostab::WobbleSuppressorBase>* instance) {
+		return instance->get();
+	}
+
+	cv::videostab::WobbleSuppressorBase* cv_PtrOfWobbleSuppressorBase_get_inner_ptr_mut(cv::Ptr<cv::videostab::WobbleSuppressorBase>* instance) {
 		return instance->get();
 	}
 }

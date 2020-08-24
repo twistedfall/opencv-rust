@@ -5,7 +5,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::freetype::FreeType2* cv_PtrOfFreeType2_get_inner_ptr(cv::Ptr<cv::freetype::FreeType2>* instance) {
+	const cv::freetype::FreeType2* cv_PtrOfFreeType2_get_inner_ptr(const cv::Ptr<cv::freetype::FreeType2>* instance) {
+		return instance->get();
+	}
+
+	cv::freetype::FreeType2* cv_PtrOfFreeType2_get_inner_ptr_mut(cv::Ptr<cv::freetype::FreeType2>* instance) {
 		return instance->get();
 	}
 }

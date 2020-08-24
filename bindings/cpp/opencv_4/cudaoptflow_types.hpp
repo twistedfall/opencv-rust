@@ -13,7 +13,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::BroxOpticalFlow* cv_PtrOfCUDA_BroxOpticalFlow_get_inner_ptr(cv::Ptr<cv::cuda::BroxOpticalFlow>* instance) {
+	const cv::cuda::BroxOpticalFlow* cv_PtrOfCUDA_BroxOpticalFlow_get_inner_ptr(const cv::Ptr<cv::cuda::BroxOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::BroxOpticalFlow* cv_PtrOfCUDA_BroxOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::cuda::BroxOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -23,7 +27,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::DensePyrLKOpticalFlow* cv_PtrOfCUDA_DensePyrLKOpticalFlow_get_inner_ptr(cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>* instance) {
+	const cv::cuda::DensePyrLKOpticalFlow* cv_PtrOfCUDA_DensePyrLKOpticalFlow_get_inner_ptr(const cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::DensePyrLKOpticalFlow* cv_PtrOfCUDA_DensePyrLKOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -33,7 +41,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::FarnebackOpticalFlow* cv_PtrOfCUDA_FarnebackOpticalFlow_get_inner_ptr(cv::Ptr<cv::cuda::FarnebackOpticalFlow>* instance) {
+	const cv::cuda::FarnebackOpticalFlow* cv_PtrOfCUDA_FarnebackOpticalFlow_get_inner_ptr(const cv::Ptr<cv::cuda::FarnebackOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::FarnebackOpticalFlow* cv_PtrOfCUDA_FarnebackOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::cuda::FarnebackOpticalFlow>* instance) {
 		return instance->get();
 	}
 }
@@ -43,7 +55,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::NvidiaOpticalFlow_1_0* cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_get_inner_ptr(cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>* instance) {
+	const cv::cuda::NvidiaOpticalFlow_1_0* cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_get_inner_ptr(const cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::NvidiaOpticalFlow_1_0* cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_get_inner_ptr_mut(cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>* instance) {
 		return instance->get();
 	}
 }
@@ -53,7 +69,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::OpticalFlowDual_TVL1* cv_PtrOfCUDA_OpticalFlowDual_TVL1_get_inner_ptr(cv::Ptr<cv::cuda::OpticalFlowDual_TVL1>* instance) {
+	const cv::cuda::OpticalFlowDual_TVL1* cv_PtrOfCUDA_OpticalFlowDual_TVL1_get_inner_ptr(const cv::Ptr<cv::cuda::OpticalFlowDual_TVL1>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::OpticalFlowDual_TVL1* cv_PtrOfCUDA_OpticalFlowDual_TVL1_get_inner_ptr_mut(cv::Ptr<cv::cuda::OpticalFlowDual_TVL1>* instance) {
 		return instance->get();
 	}
 }
@@ -63,7 +83,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::cuda::SparsePyrLKOpticalFlow* cv_PtrOfCUDA_SparsePyrLKOpticalFlow_get_inner_ptr(cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>* instance) {
+	const cv::cuda::SparsePyrLKOpticalFlow* cv_PtrOfCUDA_SparsePyrLKOpticalFlow_get_inner_ptr(const cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::SparsePyrLKOpticalFlow* cv_PtrOfCUDA_SparsePyrLKOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>* instance) {
 		return instance->get();
 	}
 }

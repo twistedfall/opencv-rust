@@ -1,8 +1,8 @@
 template struct Result<bool>;
-template struct Result<const std::vector<cv::face::FacemarkAAM::Config>*>;
 template struct Result<cv::CascadeClassifier*>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Point_<float>>;
+template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::face::BIF>*>;
 template struct Result<cv::Ptr<cv::face::EigenFaceRecognizer>*>;
 template struct Result<cv::Ptr<cv::face::FacemarkAAM>*>;
@@ -12,10 +12,10 @@ template struct Result<cv::Ptr<cv::face::Facemark>*>;
 template struct Result<cv::Ptr<cv::face::FisherFaceRecognizer>*>;
 template struct Result<cv::Ptr<cv::face::LBPHFaceRecognizer>*>;
 template struct Result<cv::Ptr<cv::face::MACE>*>;
-template struct Result<cv::Ptr<cv::face::PredictCollector>*>;
 template struct Result<cv::Ptr<cv::face::StandardCollector>*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::Vec<int, 3>>;
 template struct Result<cv::face::CParams*>;
 template struct Result<cv::face::FacemarkAAM::Config*>;
 template struct Result<cv::face::FacemarkAAM::Model::Texture*>;
@@ -36,8 +36,6 @@ template struct Result<std::vector<double>*>;
 template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<int>(*)[2]>;
-template struct Result<std::vector<std::string>*>;
-template struct Result<std::vector<std::vector<cv::Point_<float>>>*>;
 template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
 template struct Result<unsigned int>;
 template struct Result<unsigned long>;
@@ -47,7 +45,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::BIF* cv_PtrOfBIF_get_inner_ptr(cv::Ptr<cv::face::BIF>* instance) {
+	const cv::face::BIF* cv_PtrOfBIF_get_inner_ptr(const cv::Ptr<cv::face::BIF>* instance) {
+		return instance->get();
+	}
+
+	cv::face::BIF* cv_PtrOfBIF_get_inner_ptr_mut(cv::Ptr<cv::face::BIF>* instance) {
 		return instance->get();
 	}
 }
@@ -57,7 +59,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::EigenFaceRecognizer* cv_PtrOfEigenFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::EigenFaceRecognizer>* instance) {
+	const cv::face::EigenFaceRecognizer* cv_PtrOfEigenFaceRecognizer_get_inner_ptr(const cv::Ptr<cv::face::EigenFaceRecognizer>* instance) {
+		return instance->get();
+	}
+
+	cv::face::EigenFaceRecognizer* cv_PtrOfEigenFaceRecognizer_get_inner_ptr_mut(cv::Ptr<cv::face::EigenFaceRecognizer>* instance) {
 		return instance->get();
 	}
 }
@@ -67,7 +73,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::Facemark* cv_PtrOfFacemark_get_inner_ptr(cv::Ptr<cv::face::Facemark>* instance) {
+	const cv::face::Facemark* cv_PtrOfFacemark_get_inner_ptr(const cv::Ptr<cv::face::Facemark>* instance) {
+		return instance->get();
+	}
+
+	cv::face::Facemark* cv_PtrOfFacemark_get_inner_ptr_mut(cv::Ptr<cv::face::Facemark>* instance) {
 		return instance->get();
 	}
 }
@@ -77,7 +87,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::FacemarkAAM* cv_PtrOfFacemarkAAM_get_inner_ptr(cv::Ptr<cv::face::FacemarkAAM>* instance) {
+	const cv::face::FacemarkAAM* cv_PtrOfFacemarkAAM_get_inner_ptr(const cv::Ptr<cv::face::FacemarkAAM>* instance) {
+		return instance->get();
+	}
+
+	cv::face::FacemarkAAM* cv_PtrOfFacemarkAAM_get_inner_ptr_mut(cv::Ptr<cv::face::FacemarkAAM>* instance) {
 		return instance->get();
 	}
 }
@@ -87,7 +101,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::FacemarkKazemi* cv_PtrOfFacemarkKazemi_get_inner_ptr(cv::Ptr<cv::face::FacemarkKazemi>* instance) {
+	const cv::face::FacemarkKazemi* cv_PtrOfFacemarkKazemi_get_inner_ptr(const cv::Ptr<cv::face::FacemarkKazemi>* instance) {
+		return instance->get();
+	}
+
+	cv::face::FacemarkKazemi* cv_PtrOfFacemarkKazemi_get_inner_ptr_mut(cv::Ptr<cv::face::FacemarkKazemi>* instance) {
 		return instance->get();
 	}
 }
@@ -97,7 +115,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::FacemarkLBF* cv_PtrOfFacemarkLBF_get_inner_ptr(cv::Ptr<cv::face::FacemarkLBF>* instance) {
+	const cv::face::FacemarkLBF* cv_PtrOfFacemarkLBF_get_inner_ptr(const cv::Ptr<cv::face::FacemarkLBF>* instance) {
+		return instance->get();
+	}
+
+	cv::face::FacemarkLBF* cv_PtrOfFacemarkLBF_get_inner_ptr_mut(cv::Ptr<cv::face::FacemarkLBF>* instance) {
 		return instance->get();
 	}
 }
@@ -107,7 +129,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::FisherFaceRecognizer* cv_PtrOfFisherFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::FisherFaceRecognizer>* instance) {
+	const cv::face::FisherFaceRecognizer* cv_PtrOfFisherFaceRecognizer_get_inner_ptr(const cv::Ptr<cv::face::FisherFaceRecognizer>* instance) {
+		return instance->get();
+	}
+
+	cv::face::FisherFaceRecognizer* cv_PtrOfFisherFaceRecognizer_get_inner_ptr_mut(cv::Ptr<cv::face::FisherFaceRecognizer>* instance) {
 		return instance->get();
 	}
 }
@@ -117,7 +143,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::LBPHFaceRecognizer* cv_PtrOfLBPHFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::LBPHFaceRecognizer>* instance) {
+	const cv::face::LBPHFaceRecognizer* cv_PtrOfLBPHFaceRecognizer_get_inner_ptr(const cv::Ptr<cv::face::LBPHFaceRecognizer>* instance) {
+		return instance->get();
+	}
+
+	cv::face::LBPHFaceRecognizer* cv_PtrOfLBPHFaceRecognizer_get_inner_ptr_mut(cv::Ptr<cv::face::LBPHFaceRecognizer>* instance) {
 		return instance->get();
 	}
 }
@@ -127,7 +157,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::MACE* cv_PtrOfMACE_get_inner_ptr(cv::Ptr<cv::face::MACE>* instance) {
+	const cv::face::MACE* cv_PtrOfMACE_get_inner_ptr(const cv::Ptr<cv::face::MACE>* instance) {
+		return instance->get();
+	}
+
+	cv::face::MACE* cv_PtrOfMACE_get_inner_ptr_mut(cv::Ptr<cv::face::MACE>* instance) {
 		return instance->get();
 	}
 }
@@ -137,7 +171,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::PredictCollector* cv_PtrOfPredictCollector_get_inner_ptr(cv::Ptr<cv::face::PredictCollector>* instance) {
+	const cv::face::PredictCollector* cv_PtrOfPredictCollector_get_inner_ptr(const cv::Ptr<cv::face::PredictCollector>* instance) {
+		return instance->get();
+	}
+
+	cv::face::PredictCollector* cv_PtrOfPredictCollector_get_inner_ptr_mut(cv::Ptr<cv::face::PredictCollector>* instance) {
 		return instance->get();
 	}
 }
@@ -151,7 +189,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::face::StandardCollector* cv_PtrOfStandardCollector_get_inner_ptr(cv::Ptr<cv::face::StandardCollector>* instance) {
+	const cv::face::StandardCollector* cv_PtrOfStandardCollector_get_inner_ptr(const cv::Ptr<cv::face::StandardCollector>* instance) {
+		return instance->get();
+	}
+
+	cv::face::StandardCollector* cv_PtrOfStandardCollector_get_inner_ptr_mut(cv::Ptr<cv::face::StandardCollector>* instance) {
 		return instance->get();
 	}
 }

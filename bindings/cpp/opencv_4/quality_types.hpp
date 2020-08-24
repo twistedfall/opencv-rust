@@ -1,5 +1,4 @@
 template struct Result<bool>;
-template struct Result<const cv::Ptr<cv::ml::SVM>*>;
 template struct Result<cv::Ptr<cv::quality::QualityBRISQUE>*>;
 template struct Result<cv::Ptr<cv::quality::QualityGMSD>*>;
 template struct Result<cv::Ptr<cv::quality::QualityMSE>*>;
@@ -16,7 +15,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::quality::QualityBRISQUE* cv_PtrOfQualityBRISQUE_get_inner_ptr(cv::Ptr<cv::quality::QualityBRISQUE>* instance) {
+	const cv::quality::QualityBRISQUE* cv_PtrOfQualityBRISQUE_get_inner_ptr(const cv::Ptr<cv::quality::QualityBRISQUE>* instance) {
+		return instance->get();
+	}
+
+	cv::quality::QualityBRISQUE* cv_PtrOfQualityBRISQUE_get_inner_ptr_mut(cv::Ptr<cv::quality::QualityBRISQUE>* instance) {
 		return instance->get();
 	}
 }
@@ -30,7 +33,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::quality::QualityGMSD* cv_PtrOfQualityGMSD_get_inner_ptr(cv::Ptr<cv::quality::QualityGMSD>* instance) {
+	const cv::quality::QualityGMSD* cv_PtrOfQualityGMSD_get_inner_ptr(const cv::Ptr<cv::quality::QualityGMSD>* instance) {
+		return instance->get();
+	}
+
+	cv::quality::QualityGMSD* cv_PtrOfQualityGMSD_get_inner_ptr_mut(cv::Ptr<cv::quality::QualityGMSD>* instance) {
 		return instance->get();
 	}
 }
@@ -44,7 +51,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::quality::QualityMSE* cv_PtrOfQualityMSE_get_inner_ptr(cv::Ptr<cv::quality::QualityMSE>* instance) {
+	const cv::quality::QualityMSE* cv_PtrOfQualityMSE_get_inner_ptr(const cv::Ptr<cv::quality::QualityMSE>* instance) {
+		return instance->get();
+	}
+
+	cv::quality::QualityMSE* cv_PtrOfQualityMSE_get_inner_ptr_mut(cv::Ptr<cv::quality::QualityMSE>* instance) {
 		return instance->get();
 	}
 }
@@ -58,7 +69,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::quality::QualityPSNR* cv_PtrOfQualityPSNR_get_inner_ptr(cv::Ptr<cv::quality::QualityPSNR>* instance) {
+	const cv::quality::QualityPSNR* cv_PtrOfQualityPSNR_get_inner_ptr(const cv::Ptr<cv::quality::QualityPSNR>* instance) {
+		return instance->get();
+	}
+
+	cv::quality::QualityPSNR* cv_PtrOfQualityPSNR_get_inner_ptr_mut(cv::Ptr<cv::quality::QualityPSNR>* instance) {
 		return instance->get();
 	}
 }
@@ -72,7 +87,11 @@ extern "C" {
 		delete instance;
 	}
 
-	cv::quality::QualitySSIM* cv_PtrOfQualitySSIM_get_inner_ptr(cv::Ptr<cv::quality::QualitySSIM>* instance) {
+	const cv::quality::QualitySSIM* cv_PtrOfQualitySSIM_get_inner_ptr(const cv::Ptr<cv::quality::QualitySSIM>* instance) {
+		return instance->get();
+	}
+
+	cv::quality::QualitySSIM* cv_PtrOfQualitySSIM_get_inner_ptr_mut(cv::Ptr<cv::quality::QualitySSIM>* instance) {
 		return instance->get();
 	}
 }
