@@ -61,7 +61,7 @@ impl<'tu> Vector<'tu> {
 				self.gen_env,
 			)));
 		} else {
-			out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(element_type.canonical_clang(), DefinitionLocation::Type, self.gen_env)));
+			out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(element_type.canonical_clang(), DefinitionLocation::Module, self.gen_env)));
 		}
 		if is_data_type {
 			out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(

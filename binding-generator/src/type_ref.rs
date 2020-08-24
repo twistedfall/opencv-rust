@@ -1513,18 +1513,20 @@ impl<'tu> TypeRef<'tu> {
 					// vector<std::string> if not - both.
 					let vec_cv_string = self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>");
 					let vec_std_string = self.gen_env.resolve_type("std::vector<std::string>").expect("Can't resolve std::vector<std::string>");
-					let vec_type_ref = if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
-						TypeRef::new(vec_std_string, self.gen_env)
-					} else {
-						vec.type_ref()
-					};
-					let const_hint = self.get_const_hint(&vec_type_ref);
-					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-						vec_type_ref,
-						const_hint,
-						DefinitionLocation::Module,
-						self.gen_env,
-					)));
+					if let DependentTypeMode::ForReturn(def_location) = mode {
+						let vec_type_ref = if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
+							TypeRef::new(vec_std_string, self.gen_env)
+						} else {
+							vec.type_ref()
+						};
+						let const_hint = self.get_const_hint(&vec_type_ref);
+						out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+							vec_type_ref,
+							const_hint,
+							def_location,
+							self.gen_env,
+						)));
+					}
 					// implement workaround for race when type with std::string gets generated first
 					// we only want vector<cv::String> because it's more compatible across OpenCV versions
 					if str_type == StrType::StdString {
@@ -1537,28 +1539,31 @@ impl<'tu> TypeRef<'tu> {
 						out.push(D::from_vector(vec))
 					}
 				} else {
-					let vec_type_ref = vec.type_ref().canonical_clang();
-					let const_hint = self.get_const_hint(&vec_type_ref);
-					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-						vec_type_ref,
-						const_hint,
-						DefinitionLocation::Module,
-						self.gen_env,
-					)));
+					if let DependentTypeMode::ForReturn(def_location) = mode {
+						let vec_type_ref = vec.type_ref().canonical_clang();
+						let const_hint = self.get_const_hint(&vec_type_ref);
+						out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+							vec_type_ref,
+							const_hint,
+							def_location,
+							self.gen_env,
+						)));
+					}
 					out.push(D::from_vector(vec));
 				}
 			},
 			Kind::SmartPtr(ptr) => {
 				out = ptr.dependent_types();
-				out.reserve(2);
-				let ptr_type_ref = ptr.type_ref().canonical_clang();
-				let const_hint = self.get_const_hint(&ptr_type_ref);
-				out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-					ptr_type_ref,
-					const_hint,
-					DefinitionLocation::Module,
-					self.gen_env,
-				)));
+				if let DependentTypeMode::ForReturn(def_location) = mode {
+					let ptr_type_ref = ptr.type_ref().canonical_clang();
+					let const_hint = self.get_const_hint(&ptr_type_ref);
+					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+						ptr_type_ref,
+						const_hint,
+						def_location,
+						self.gen_env,
+					)));
+				}
 				out.push(D::from_smart_ptr(ptr))
 			},
 			Kind::Typedef(typedef) => {
