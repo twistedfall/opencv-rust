@@ -167,31 +167,42 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 	fn visit_dependent_type(&mut self, typ: Self::D) {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
-		let rust_path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
-		let cpp_path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
-		let files = if self.debug {
-			(
-				OpenOptions::new().create(true).write(true).truncate(true).open(&rust_path),
-				OpenOptions::new().create(true).write(true).truncate(true).open(&cpp_path),
-			)
-		} else {
-			(
-				OpenOptions::new().create_new(true).write(true).open(&rust_path),
-				OpenOptions::new().create_new(true).write(true).open(&cpp_path),
-			)
-		};
-		match files {
-			(Ok(mut rust), Ok(mut cpp)) => {
-				rust.write_all(typ.gen_rust(self.opencv_version).as_bytes()).expect("Can't write to rust file");
-				cpp.write_all(typ.gen_cpp().as_bytes()).expect("Can't write to cpp file");
+
+		let mut gen = typ.gen_rust(self.opencv_version);
+		if !gen.is_empty() {
+			let path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
+			let file = if self.debug {
+				OpenOptions::new().create(true).write(true).truncate(true).open(&path)
+			} else {
+				OpenOptions::new().create_new(true).write(true).open(&path)
+			};
+			match file {
+				Ok(mut file) => {
+					file.write_all(gen.as_bytes()).expect("Can't write to rust file");
+				},
+				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+				Err(e) =>{
+					panic!("Error while creating file for rust dependent type: {}", e)
+				},
 			}
-			(Err(e), _) | (_, Err(e)) => {
-				match e.kind() {
-					ErrorKind::AlreadyExists => {} // expected, we need to exclusively create file
-					_ => {
-						panic!("Error while creating file for dependent type: {}", e)
-					}
-				}
+		}
+
+		gen = typ.gen_cpp();
+		if !gen.is_empty() {
+			let path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
+			let file = if self.debug {
+				OpenOptions::new().create(true).write(true).truncate(true).open(&path)
+			} else {
+				OpenOptions::new().create_new(true).write(true).open(&path)
+			};
+			match file {
+				Ok(mut file) => {
+					file.write_all(gen.as_bytes()).expect("Can't write to cpp file");
+				},
+				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+				Err(e) =>{
+					panic!("Error while creating file for cpp dependent type: {}", e)
+				},
 			}
 		}
 	}
