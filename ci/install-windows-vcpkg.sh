@@ -8,7 +8,6 @@ if [ ! -e "$VCPKG_ROOT" ]; then
 fi
 pushd "$VCPKG_ROOT"
 git pull
-git pull --depth=100; git checkout 077c0746be3773fdd443af52cbe5c3cc26379a15 # until https://github.com/microsoft/vcpkg/issues/12565 is fixed
 cmd "/C bootstrap-vcpkg.bat -disableMetrics"
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows.cmake
