@@ -60,10 +60,7 @@ cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES,clang-runtime"
 
-# on windows clang through `cc` crate fails because of -fPIC flag
-if [[ "$OS_FAMILY" != "windows" ]]; then
-	export CXX=clang++
-	touch build.rs
-	cargo test -vv --no-default-features --features "$CARGO_FEATURES"
-	cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
-fi
+export CXX=clang++
+touch build.rs
+cargo test -vv --no-default-features --features "$CARGO_FEATURES"
+cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"

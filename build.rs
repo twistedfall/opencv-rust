@@ -974,6 +974,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag_if_supported("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
 			.flag_if_supported("-EHsc")
 			.flag_if_supported("-bigobj")
+			.pic(false)
 		;
 	} else {
 		out.flag("-std=c++11")
