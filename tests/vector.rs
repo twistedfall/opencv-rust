@@ -305,6 +305,18 @@ fn swap() -> Result<()> {
 		assert_eq!("123", vec.get(2)?);
 	}
 
+	{
+		let mut vec = VectorOfbool::new();
+		vec.push(true);
+		vec.push(false);
+		vec.push(true);
+		vec.swap(0, 1)?;
+		assert_eq!(false, vec.get(0)?);
+		assert_eq!(true, vec.get(1)?);
+		vec.swap(1, 2)?;
+		assert_eq!(true, vec.get(2)?);
+	}
+
 	Ok(())
 }
 

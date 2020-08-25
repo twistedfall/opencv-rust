@@ -96,6 +96,13 @@ impl RustNativeGeneratedElement for Vector<'_> {
 
 		let vec_type = self.type_ref();
 		let element_type = self.element_type();
+		let element_is_bool = element_type.is_bool();
+		// https://stackoverflow.com/questions/58660207/why-doesnt-stdswap-work-on-vectorbool-elements-under-clang-win
+		let swap_func = if element_is_bool {
+			"instance->swap"
+		} else {
+			"std::swap"
+		};
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_full" => vec_type.cpp_full(),
@@ -105,6 +112,7 @@ impl RustNativeGeneratedElement for Vector<'_> {
 			"inner_cpp_func_call" => element_type.cpp_arg_func_call("val"),
 			"inner_cpp_extern_return" => element_type.cpp_extern_return(),
 			"inner_cpp_extern_return_wrapper" => element_type.cpp_extern_return_wrapper_full(),
+			"swap_func" => swap_func.into(),
 		};
 
 		let mut prefix = Cow::Borrowed("");
@@ -119,7 +127,7 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		inter_vars.insert("prefix", prefix);
 		inter_vars.insert("suffix", suffix);
 		let mut exports = String::new();
-		if element_type.is_copy() && !element_type.is_bool() {
+		if element_type.is_copy() && !element_is_bool {
 			exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 		}
 		if self.is_data_type(&element_type) {

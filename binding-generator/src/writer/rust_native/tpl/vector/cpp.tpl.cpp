@@ -32,7 +32,7 @@ extern "C" {
 	}
 
 	void cv_{{rust_localalias}}_swap({{cpp_full}}* instance, size_t index1, size_t index2) {
-		std::swap((*instance)[index1], (*instance)[index2]);
+		{{swap_func}}((*instance)[index1], (*instance)[index2]);
 	}
 
 	void cv_{{rust_localalias}}_clear({{cpp_full}}* instance) {
