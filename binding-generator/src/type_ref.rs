@@ -1375,7 +1375,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	#[inline]
-	pub fn render(&self, renderer: impl TypeRefRenderer) -> Cow<str> {
+	pub fn render<'a>(&self, renderer: impl TypeRefRenderer<'a>) -> Cow<str> {
 		renderer.render(self)
 	}
 

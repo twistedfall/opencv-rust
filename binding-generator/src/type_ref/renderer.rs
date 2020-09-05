@@ -7,9 +7,11 @@ use crate::{Element, StringExt};
 
 use super::{Kind, TemplateArg, TypeRef};
 
-pub trait TypeRefRenderer {
+pub trait TypeRefRenderer<'a> {
+	type Recursed: TypeRefRenderer<'a> + Sized;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str>;
-	fn recurse(&self) -> Self where Self: Sized;
+	fn recurse(&self) -> Self::Recursed;
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -93,7 +95,7 @@ impl ConstnessOverride {
 	}
 }
 
-fn render_rust<'t>(renderer: impl TypeRefRenderer, type_ref: &'t TypeRef, is_full: bool, lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Cow<'t, str> {
+fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, is_full: bool, lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Cow<'t, str> {
 	if type_ref.as_string().is_some() {
 		#[allow(clippy::if_same_then_else)]
 		return if type_ref.constness().is_const() {
@@ -176,7 +178,7 @@ fn render_rust<'t>(renderer: impl TypeRefRenderer, type_ref: &'t TypeRef, is_ful
 	}
 }
 
-fn render_rust_tpl_decl(renderer: impl TypeRefRenderer, type_ref: &TypeRef, use_turbo_fish: bool) -> String {
+fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, use_turbo_fish: bool) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
 		let mut constant_suffix = String::new();
@@ -207,7 +209,7 @@ fn render_rust_tpl_decl(renderer: impl TypeRefRenderer, type_ref: &TypeRef, use_
 	}
 }
 
-fn render_cpp<'t>(renderer: impl TypeRefRenderer, type_ref: &'t TypeRef, is_full: bool, name: &str, extern_types: bool, constness: ConstnessOverride) -> Cow<'t, str> {
+fn render_cpp<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, is_full: bool, name: &str, extern_types: bool, constness: ConstnessOverride) -> Cow<'t, str> {
 	let cnst = constness.with(type_ref.clang_constness()).cpp_qual();
 	let (space_name, space_const_name) = if name.is_empty() {
 		("".to_string(), "".to_string())
@@ -328,7 +330,7 @@ fn render_cpp<'t>(renderer: impl TypeRefRenderer, type_ref: &'t TypeRef, is_full
 	}
 }
 
-fn render_cpp_tpl_decl(renderer: impl TypeRefRenderer, type_ref: &TypeRef) -> String {
+fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
 		let generic_types = generic_types.into_iter()
@@ -365,7 +367,9 @@ impl RustDeclarationRenderer {
 	}
 }
 
-impl TypeRefRenderer for RustDeclarationRenderer {
+impl<'a> TypeRefRenderer<'a> for RustDeclarationRenderer {
+	type Recursed = Self;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		render_rust(self, type_ref, false, None, false)
 	}
@@ -387,7 +391,9 @@ impl RustReferenceRenderer {
 	}
 }
 
-impl TypeRefRenderer for RustReferenceRenderer {
+impl<'a> TypeRefRenderer<'a> for RustReferenceRenderer {
+	type Recursed = Self;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		let lifetimes = self.lifetimes;
 		let use_turbo_fish = self.use_turbo_fish;
@@ -413,7 +419,9 @@ impl CppDeclarationRenderer {
 	}
 }
 
-impl TypeRefRenderer for CppDeclarationRenderer {
+impl<'a> TypeRefRenderer<'a> for CppDeclarationRenderer {
+	type Recursed = Self;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		let extern_types = self.extern_types;
 		render_cpp(self, type_ref, false, "", extern_types, ConstnessOverride::No)
@@ -437,7 +445,9 @@ impl<'s> CppReferenceRenderer<'s> {
 	}
 }
 
-impl TypeRefRenderer for CppReferenceRenderer<'_> {
+impl<'a> TypeRefRenderer<'a> for CppReferenceRenderer<'_> {
+	type Recursed = Self;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		let name = self.name;
 		let extern_types = self.extern_types;
@@ -465,24 +475,22 @@ impl<'s> CppExternReturnRenderer {
 	}
 }
 
-impl TypeRefRenderer for CppExternReturnRenderer {
+impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
+	type Recursed = CppReferenceRenderer<'a>;
+
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		if type_ref.as_string().is_some() {
 			"void*".into()
 		} else if type_ref.is_by_ptr() && !type_ref.as_abstract_class_ptr().is_some() {
-			let mut subrenderer = CppReferenceRenderer::new("", true);
-			subrenderer.constness_override = self.constness_override;
-			format!("{typ}*", typ=subrenderer.render(type_ref)).into()
+			format!("{typ}*", typ=self.recurse().render(type_ref)).into()
 		} else {
-			let mut subrenderer = CppReferenceRenderer::new("", true);
-			subrenderer.constness_override = self.constness_override;
-			subrenderer.render(type_ref)
+			self.recurse().render(type_ref)
 		}
 	}
 
-	fn recurse(&self) -> Self {
-		Self {
-			constness_override: ConstnessOverride::No,
-		}
+	fn recurse(&self) -> Self::Recursed {
+		let mut out = CppReferenceRenderer::new("", true);
+		out.constness_override = self.constness_override;
+		out
 	}
 }
