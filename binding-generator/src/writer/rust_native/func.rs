@@ -315,8 +315,8 @@ impl RustNativeGeneratedElement for Func<'_> {
 		if let Some(cls) = self.as_instance_method() {
 			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
 		}
-		for arg in self.arguments() {
-			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname(), ConstnessOverride::No))
+		for (name, arg) in Field::rust_disambiguate_names(self.arguments()) {
+			args.push(arg.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 		}
 		let return_type = self.return_type();
 		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();
