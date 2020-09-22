@@ -64,6 +64,9 @@ cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES,clang-runtime"
+pushd ci/test-proj-clang-runtime
+cargo run -vv --features="$CARGO_FEATURES"
+popd
 
 export CXX=clang++
 touch build.rs

@@ -8,6 +8,7 @@ use std::{
 	io::{BufRead, BufReader},
 	iter::{self, FromIterator},
 	path::{Path, PathBuf},
+	process::Command,
 };
 
 use dunce::canonicalize;
@@ -788,16 +789,13 @@ fn main() -> Result<()> {
 
 	#[cfg(feature = "buildtime-bindgen")]
 	let generator_build = if cfg!(feature = "clang-runtime") { // start building binding generator as early as possible
-		None
-		// fixme, https://github.com/twistedfall/opencv-rust/issues/145
-		// let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or("cargo".into()));
-		// let mut cargo = Command::new(cargo_bin);
-		// // generator script is quite slow in debug mode, so we force it to be built in release mode
-		// cargo
-		// 	.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
-		// 	.env("CARGO_TARGET_DIR", &*OUT_DIR);
-		// println!("running: {:?}", &cargo);
-		// Some(cargo.spawn()?)
+		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
+		let mut cargo = Command::new(cargo_bin);
+		// generator script is quite slow in debug mode, so we force it to be built in release mode
+		cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
+			.env("CARGO_TARGET_DIR", &*OUT_DIR);
+		println!("running: {:?}", &cargo);
+		Some(cargo.spawn()?)
 	} else {
 		None
 	};

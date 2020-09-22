@@ -4,7 +4,7 @@ use std::{
 	fs::{self, DirEntry, File, OpenOptions},
 	io::{self, BufRead, BufReader, Write},
 	path::{Path, PathBuf},
-	process::Child,
+	process::{Child, Command},
 	sync::Arc,
 	thread,
 	time::Instant,
@@ -90,63 +90,45 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 	let job_server = jobserver::Client::new(num_jobs).expect("Can't create job server");
 	let mut join_handles = Vec::with_capacity(modules.len());
 	let start;
+	let clang = clang::Clang::new().expect("Cannot initialize clang");
+	println!("=== Clang: {}", clang::get_version());
+	let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
+	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 	if cfg!(feature = "clang-runtime") {
-		let clang = clang::Clang::new().expect("Cannot initialize clang");
-		println!("=== Clang: {}", clang::get_version());
-		let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
-		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+		let status = generator_build.expect("Impossible").wait()?;
+		if !status.success() {
+			return Err("Failed to build the bindings generator".into());
+		}
+		let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
 		start = Instant::now();
 		modules.iter().for_each(|module| {
-			let bindings_writer = binding_generator::writer::RustNativeBindingWriter::new(
-				&*SRC_CPP_DIR,
-				&*OUT_DIR,
-				&module,
-				version,
-				false,
-			);
-			gen.process_opencv_module(&module, bindings_writer);
-			println!("Generated: {}", module);
+			let token = job_server.acquire().expect("Can't acquire token from job server");
+			let join_handle = thread::spawn({
+				let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
+				let opencv_header_dir = Arc::clone(&opencv_header_dir);
+				move || {
+					let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
+						.and_then(|p| p.to_str())
+						.unwrap_or("None");
+					let mut bin_generator = Command::new(OUT_DIR.join("release/binding-generator"));
+					bin_generator.arg(&*opencv_header_dir)
+						.arg(&*SRC_CPP_DIR)
+						.arg(&*OUT_DIR)
+						.arg(&module)
+						.arg(version)
+						.arg(clang_stdlib_include_dir);
+					eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
+					let res = bin_generator.status().expect("Can't run bindings generator");
+					if !res.success() {
+						panic!("Failed to run the bindings generator");
+					}
+					eprintln!("=== Generated: {}", module);
+					drop(token); // needed to move the token to the thread
+				}
+			});
+			join_handles.push(join_handle);
 		});
-		drop(generator_build); // fixme, prevent unused var warning
-		// fixme, https://github.com/twistedfall/opencv-rust/issues/145
-		// let status = generator_build.expect("Impossible").wait()?;
-		// if !status.success() {
-		// 	return Err("Failed to build the bindings generator".into());
-		// }
-		// let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
-		// start = Instant::now();
-		// modules.iter().for_each(|module| {
-		// 	let token = job_server.acquire().expect("Can't acquire token from job server");
-		// 	let join_handle = thread::spawn({
-		// 		let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
-		// 		let opencv_header_dir = Arc::clone(&opencv_header_dir);
-		// 		move || {
-		// 			let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
-		// 				.and_then(|p| p.to_str())
-		// 				.unwrap_or("None");
-		// 			let mut bin_generator = std::process::Command::new(OUT_DIR.join("release/binding-generator"));
-		// 			bin_generator.arg(&*opencv_header_dir)
-		// 				.arg(&*SRC_CPP_DIR)
-		// 				.arg(&*OUT_DIR)
-		// 				.arg(&module)
-		// 				.arg(version)
-		// 				.arg(clang_stdlib_include_dir);
-		// 			eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
-		// 			let res = bin_generator.status().expect("Can't run bindings generator");
-		// 			if !res.success() {
-		// 				panic!("Failed to run the bindings generator");
-		// 			}
-		// 			eprintln!("=== Generated: {}", module);
-		// 			drop(token); // needed to move the token to the thread
-		// 		}
-		// 	});
-		// 	join_handles.push(join_handle);
-		// });
 	} else {
-		let clang = clang::Clang::new().expect("Cannot initialize clang");
-		println!("=== Clang: {}", clang::get_version());
-		let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
-		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 		let gen = Arc::new(gen);
 		start = Instant::now();
 		modules.iter().for_each(|module| {

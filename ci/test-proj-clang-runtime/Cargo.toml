@@ -1,0 +1,18 @@
+[package]
+name = "test-proj-clang-runtime"
+description = "Helper to test whether project using opencv dependency compiles"
+version = "0.1.0"
+authors = ["Pro"]
+edition = "2018"
+
+[dependencies]
+opencv = { path = "../..", default-features = false, features = ["clang-runtime"] }
+
+[workspace]
+
+[features]
+buildtime-bindgen = ["opencv/buildtime-bindgen"]
+opencv-32 = ["opencv/opencv-32"]
+opencv-34 = ["opencv/opencv-34"]
+opencv-4 = ["opencv/opencv-4"]
+contrib = ["opencv/contrib"]
