@@ -499,45 +499,44 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### videostab ###
 	"cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatR_const_MatR_boolX" => "+_mat",
+
+	// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
+	// ### core ###
+	"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX" => "-",
+	"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX" => "-",
+	"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => "-",
+	"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR" => "-",
+	"cv_getImpl_vector_int_R_vector_String_R" => "-",
+	// ### dnn ###
+	"cv_dnn_BackendNode_BackendNode_int" => "-",
+	// ### stitching ###
+	"cv_createStitcherScans_bool" => "-",
+	"cv_createStitcher_bool" => "-",
+	// ### surface_matching ###
+	"cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR" => "-",
+	"cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR" => "-",
+	// ### tracking ###
+	"cv_CvFeatureParams_CvFeatureParams" => "-",
+	"cv_CvFeatureParams_create_FeatureType" => "-",
+	"cv_CvFeatureParams_create_int" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_getAreas_const" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_getInitMean_const" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_getNumAreas" => "-",
+	"cv_CvHaarEvaluator_FeatureHaar_getWeights_const" => "-",
+	"cv_CvHaarEvaluator_getFeatures_const" => "-",
+	"cv_CvHaarEvaluator_setWinSize_Size" => "-",
+	"cv_CvHaarEvaluator_setWinSize_const" => "-",
+	"cv_CvHaarEvaluator_writeFeature_const_FileStorageR" => "-",
 });
 
 pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashmap! {
-	// ### core ###
-	"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv_getImpl_vector_int_R_vector_String_R" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-
-	// ### dnn ###
-	"cv_dnn_BackendNode_BackendNode_int" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-
 	// ### imgproc ###
-	"cv_getRotationMatrix2D__Point2f_double_double" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-
-	// ### stitching ###
-	"cv_createStitcherScans_bool" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv_createStitcher_bool" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-
-	// ### surface_matching ###
-	"cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
-	"cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"), // missing in windows dll
+	"cv_getRotationMatrix2D__Point2f_double_double" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 
 	// ### tracking ###
-	"cv_CvFeatureParams_CvFeatureParams" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvFeatureParams_create_FeatureType" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvFeatureParams_create_int" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_getAreas_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_getInitMean_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_getNumAreas" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_FeatureHaar_getWeights_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_getFeatures_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_setWinSize_Size" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_setWinSize_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
-	"cv_CvHaarEvaluator_writeFeature_const_FileStorageR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 	"cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_TrackerAdaBoostingTargetState_const_Point2fR_int_int_bool_const_MatR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 	"cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_getTargetResponses_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 	"cv_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState_isTargetFg_const" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
