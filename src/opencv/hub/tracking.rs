@@ -498,16 +498,6 @@ impl crate::tracking::CvFeatureParamsTrait for CvFeatureParams {
 }
 
 impl CvFeatureParams {
-	#[cfg(not(target_os = "windows"))]
-	pub fn default() -> Result<crate::tracking::CvFeatureParams> {
-		unsafe { sys::cv_CvFeatureParams_CvFeatureParams() }.into_result().map(|r| unsafe { crate::tracking::CvFeatureParams::opencv_from_extern(r) } )
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	pub fn create(feature_type: crate::tracking::CvFeatureParams_FeatureType) -> Result<core::Ptr::<crate::tracking::CvFeatureParams>> {
-		unsafe { sys::cv_CvFeatureParams_create_FeatureType(feature_type) }.into_result().map(|r| unsafe { core::Ptr::<crate::tracking::CvFeatureParams>::opencv_from_extern(r) } )
-	}
-	
 }
 
 pub trait CvHaarEvaluatorTrait {
@@ -529,28 +519,8 @@ pub trait CvHaarEvaluatorTrait {
 		unsafe { sys::cv_CvHaarEvaluator_writeFeatures_const_FileStorageR_const_MatR(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage(), feature_map.as_raw_Mat()) }.into_result()
 	}
 	
-	#[cfg(not(target_os = "windows"))]
-	fn write_feature(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_writeFeature_const_FileStorageR(self.as_raw_CvHaarEvaluator(), fs.as_raw_mut_FileStorage()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_features(&self) -> Result<core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar>> {
-		unsafe { sys::cv_CvHaarEvaluator_getFeatures_const(self.as_raw_CvHaarEvaluator()) }.into_result().map(|r| unsafe { core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar>::opencv_from_extern(r) } )
-	}
-	
-	fn get_features_1(&mut self, idx: i32) -> Result<crate::tracking::CvHaarEvaluator_FeatureHaar> {
+	fn get_features(&mut self, idx: i32) -> Result<crate::tracking::CvHaarEvaluator_FeatureHaar> {
 		unsafe { sys::cv_CvHaarEvaluator_getFeatures_int(self.as_raw_mut_CvHaarEvaluator(), idx) }.into_result().map(|r| unsafe { crate::tracking::CvHaarEvaluator_FeatureHaar::opencv_from_extern(r) } )
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn set_win_size(&mut self, patch_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_CvHaarEvaluator_setWinSize_Size(self.as_raw_mut_CvHaarEvaluator(), patch_size.opencv_as_extern()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn set_win_size_1(&self) -> Result<core::Size> {
-		unsafe { sys::cv_CvHaarEvaluator_setWinSize_const(self.as_raw_CvHaarEvaluator()) }.into_result()
 	}
 	
 	fn generate_features(&mut self) -> Result<()> {
@@ -599,38 +569,8 @@ pub trait CvHaarEvaluator_FeatureHaarTrait {
 	fn as_raw_CvHaarEvaluator_FeatureHaar(&self) -> *const c_void;
 	fn as_raw_mut_CvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void;
 
-	#[cfg(not(target_os = "windows"))]
-	fn eval(&self, image: &core::Mat, roi: core::Rect, result: &mut f32) -> Result<bool> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(self.as_raw_CvHaarEvaluator_FeatureHaar(), image.as_raw_Mat(), roi.opencv_as_extern(), result) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_num_areas(&mut self) -> Result<i32> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_getNumAreas(self.as_raw_mut_CvHaarEvaluator_FeatureHaar()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_weights(&self) -> Result<core::Vector::<f32>> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_getWeights_const(self.as_raw_CvHaarEvaluator_FeatureHaar()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_areas(&self) -> Result<core::Vector::<core::Rect>> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_getAreas_const(self.as_raw_CvHaarEvaluator_FeatureHaar()) }.into_result().map(|r| unsafe { core::Vector::<core::Rect>::opencv_from_extern(r) } )
-	}
-	
 	fn write(&self, mut unnamed: core::FileStorage) -> Result<()> {
 		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_write_const_FileStorage(self.as_raw_CvHaarEvaluator_FeatureHaar(), unnamed.as_raw_mut_FileStorage()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_init_mean(&self) -> Result<f32> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_getInitMean_const(self.as_raw_CvHaarEvaluator_FeatureHaar()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn get_init_sigma(&self) -> Result<f32> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const(self.as_raw_CvHaarEvaluator_FeatureHaar()) }.into_result()
 	}
 	
 }
@@ -661,11 +601,6 @@ impl crate::tracking::CvHaarEvaluator_FeatureHaarTrait for CvHaarEvaluator_Featu
 }
 
 impl CvHaarEvaluator_FeatureHaar {
-	#[cfg(not(target_os = "windows"))]
-	pub fn new(patch_size: core::Size) -> Result<crate::tracking::CvHaarEvaluator_FeatureHaar> {
-		unsafe { sys::cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(patch_size.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::tracking::CvHaarEvaluator_FeatureHaar::opencv_from_extern(r) } )
-	}
-	
 }
 
 /// ********************************** MultiTracker Class ---By Laksono Kurnianggoro---) ***********************************

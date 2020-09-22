@@ -480,8 +480,6 @@ mod core_sys {
 		pub fn cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src: *const c_void, dst: *const c_void, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: *const core::Scalar) -> Result_void;
 		pub fn cv_countNonZero_const__InputArrayR(src: *const c_void) -> Result<i32>;
 		pub fn cv_cubeRoot_float(val: f32) -> Result<f32>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR(_src: *const c_void, _dst: *const c_void, stream: *mut c_void) -> Result_void;
 		pub fn cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows: i32, cols: i32, typ: i32, arr: *const c_void) -> Result_void;
 		pub fn cv_cuda_deviceSupports_FeatureSet(feature_set: core::FeatureSet) -> Result<bool>;
 		pub fn cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows: i32, cols: i32, typ: i32, arr: *const c_void) -> Result_void;
@@ -538,8 +536,6 @@ mod core_sys {
 		pub fn cv_getCPUTickCount() -> Result<i64>;
 		pub fn cv_getElemSize_int(typ: i32) -> Result<size_t>;
 		pub fn cv_getHardwareFeatureName_int(feature: i32) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_getImpl_vector_int_R_vector_String_R(impl_: *mut c_void, fun_name: *mut c_void) -> Result<i32>;
 		pub fn cv_getNumThreads() -> Result<i32>;
 		pub fn cv_getNumberOfCPUs() -> Result<i32>;
 		pub fn cv_getOptimalDFTSize_int(vecsize: i32) -> Result<i32>;
@@ -1039,8 +1035,6 @@ mod core_sys {
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX(_m: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m: *const c_void, _row: i32, _col: i32) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m: *const c_void, _pt: *const core::Point) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(_m: *const c_void, _idx: *const i32) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_MatConstIterator_operatorX_const(instance: *const c_void) -> Result<*const u8>;
 		pub fn cv_MatConstIterator_operator___const_ptrdiff_t(instance: *const c_void, i: ptrdiff_t) -> Result<*const u8>;
@@ -1310,8 +1304,6 @@ mod core_sys {
 		pub fn cv_SparseMatConstIterator_seekEnd(instance: *mut c_void) -> Result_void;
 		pub fn cv_SparseMatIterator_SparseMatIterator() -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m: *mut c_void) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(_m: *mut c_void, idx: *const i32) -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SparseMatIterator_node_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TLSDataContainer_getPropKey__const(instance: *const c_void) -> Result<i32>;
@@ -1529,8 +1521,6 @@ mod core_sys {
 		pub fn cv__OutputArray__OutputArray_const_MatR(m: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_vector_Mat_R(vec: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_GpuMatR(d_mat: *const c_void) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv__OutputArray__OutputArray_const_vector_GpuMat_R(d_mat: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_BufferR(buf: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_HostMemR(cuda_mem: *const c_void) -> Result<*mut c_void>;
 		pub fn cv__OutputArray__OutputArray_const_UMatR(m: *const c_void) -> Result<*mut c_void>;
@@ -2660,8 +2650,6 @@ mod dnn_sys {
 		pub fn cv_dnn_BNLLLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_BackendNode_getPropBackendId_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_BackendNode_setPropBackendId_int(instance: *mut c_void, val: i32) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_dnn_BackendNode_BackendNode_int(backend_id: i32) -> Result<*mut c_void>;
 		pub fn cv_dnn_BackendWrapper_getPropBackendId_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_BackendWrapper_setPropBackendId_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_BackendWrapper_getPropTargetId_const(instance: *const c_void) -> Result<i32>;
@@ -5178,10 +5166,6 @@ mod stitching_sys {
 	use super::*;
 
 	extern "C" {
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_createStitcherScans_bool(try_use_gpu: bool) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_createStitcher_bool(try_use_gpu: bool) -> Result<*mut c_void>;
 		pub fn cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vector_UMat_R(img: *const c_void, num_levels: i32, pyr: *mut c_void) -> Result_void;
 		pub fn cv_detail_createLaplacePyr_const__InputArrayR_int_vector_UMat_R(img: *const c_void, num_levels: i32, pyr: *mut c_void) -> Result_void;
 		pub fn cv_detail_createWeightMap_const__InputArrayR_float_const__InputOutputArrayR(mask: *const c_void, sharpness: f32, weight: *const c_void) -> Result_void;
@@ -5412,8 +5396,8 @@ mod stitching_sys {
 		pub fn cv_detail_MultiBandBlender_feed_const__InputArrayR_const__InputArrayR_Point(instance: *mut c_void, img: *const c_void, mask: *const c_void, tl: *const core::Point) -> Result_void;
 		pub fn cv_detail_MultiBandBlender_blend_const__InputOutputArrayR_const__InputOutputArrayR(instance: *mut c_void, dst: *const c_void, dst_mask: *const c_void) -> Result_void;
 		pub fn cv_detail_NoBundleAdjuster_NoBundleAdjuster() -> Result<*mut c_void>;
-		pub fn cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(instance: *mut c_void, unnamed: i32, unnamed: *const core::Point, unnamed: *const c_void, unnamed: *const c_void) -> Result_void;
-		pub fn cv_detail_NoSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(instance: *mut c_void, unnamed: *const c_void, unnamed: *const c_void, unnamed: *mut c_void) -> Result_void;
+		pub fn cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(instance: *mut c_void, unnamed: i32, unnamed_1: *const core::Point, unnamed_2: *const c_void, unnamed_3: *const c_void) -> Result_void;
+		pub fn cv_detail_NoSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(instance: *mut c_void, unnamed: *const c_void, unnamed_1: *const c_void, unnamed_2: *mut c_void) -> Result_void;
 		pub fn cv_detail_OrbFeaturesFinder_OrbFeaturesFinder_Size_int_float_int(_grid_size: *const core::Size, nfeatures: i32, scale_factor: f32, nlevels: i32) -> Result<*mut c_void>;
 		pub fn cv_detail_PairwiseSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(instance: *mut c_void, src: *const c_void, corners: *const c_void, masks: *mut c_void) -> Result_void;
 		pub fn cv_detail_PaniniPortraitProjector_getPropA_const(instance: *const c_void) -> Result<f32>;
@@ -5656,10 +5640,6 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_PPF3DDetector_setSearchParams_const_double_const_double_const_bool(instance: *mut c_void, position_threshold: f64, rotation_threshold: f64, use_weighted_clustering: bool) -> Result_void;
 		pub fn cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatR(instance: *mut c_void, model: *const c_void) -> Result_void;
 		pub fn cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(instance: *mut c_void, scene: *const c_void, results: *mut c_void, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR(instance: *mut c_void, fn_: *const c_void) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR(instance: *const c_void, fs: *mut c_void) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_getPropAlpha_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_ppf_match_3d_Pose3D_setPropAlpha_double(instance: *mut c_void, val: f64) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_getPropResidual_const(instance: *const c_void) -> Result<f64>;
@@ -5838,42 +5818,16 @@ mod tracking_sys {
 		pub fn cv_CvFeatureParams_setPropFeatSize_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_CvFeatureParams_getPropNumFeatures_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_CvFeatureParams_setPropNumFeatures_int(instance: *mut c_void, val: i32) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvFeatureParams_CvFeatureParams() -> Result<*mut c_void>;
 		pub fn cv_CvFeatureParams_init_const_CvFeatureParamsR(instance: *mut c_void, fp: *const c_void) -> Result_void;
 		pub fn cv_CvFeatureParams_write_const_FileStorageR(instance: *const c_void, fs: *mut c_void) -> Result_void;
 		pub fn cv_CvFeatureParams_read_const_FileNodeR(instance: *mut c_void, node: *const c_void) -> Result<bool>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvFeatureParams_create_int(feature_type: i32) -> Result<*mut c_void>;
 		pub fn cv_CvHaarEvaluator_init_const_CvFeatureParamsX_int_Size(instance: *mut c_void, _feature_params: *const c_void, _max_sample_count: i32, _win_size: *const core::Size) -> Result_void;
 		pub fn cv_CvHaarEvaluator_setImage_const_MatR_unsigned_char_int(instance: *mut c_void, img: *const c_void, cls_label: u8, idx: i32) -> Result_void;
 		pub fn cv_CvHaarEvaluator_writeFeatures_const_FileStorageR_const_MatR(instance: *const c_void, fs: *mut c_void, feature_map: *const c_void) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_writeFeature_const_FileStorageR(instance: *const c_void, fs: *mut c_void) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_getFeatures_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_CvHaarEvaluator_getFeatures_int(instance: *mut c_void, idx: i32) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_setWinSize_Size(instance: *mut c_void, patch_size: *const core::Size) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_setWinSize_const(instance: *const c_void) -> Result<core::Size>;
 		pub fn cv_CvHaarEvaluator_generateFeatures(instance: *mut c_void) -> Result_void;
 		pub fn cv_CvHaarEvaluator_generateFeatures_int(instance: *mut c_void, num_features: i32) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(patch_size: *const core::Size) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(instance: *const c_void, image: *const c_void, roi: *const core::Rect, result: *mut f32) -> Result<bool>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_getNumAreas(instance: *mut c_void) -> Result<i32>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_getWeights_const(instance: *const c_void) -> Result<*mut c_void>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_getAreas_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_CvHaarEvaluator_FeatureHaar_write_const_FileStorage(instance: *const c_void, unnamed: *mut c_void) -> Result_void;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_getInitMean_const(instance: *const c_void) -> Result<f32>;
-		#[cfg(not(target_os = "windows"))]
-		pub fn cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_MultiTracker_MultiTracker() -> Result<*mut c_void>;
 		pub fn cv_MultiTracker_add_Ptr_Tracker__const__InputArrayR_const_Rect2dR(instance: *mut c_void, new_tracker: *mut c_void, image: *const c_void, bounding_box: *const core::Rect2d) -> Result<bool>;
 		pub fn cv_MultiTracker_add_vector_Ptr_Tracker___const__InputArrayR_vector_Rect2d_(instance: *mut c_void, new_trackers: *mut c_void, image: *const c_void, bounding_box: *mut c_void) -> Result<bool>;
@@ -6499,10 +6453,10 @@ mod videostab_sys {
 		pub fn cv_videostab_MotionInpainter_inpaint_int_MatR_MatR(instance: *mut c_void, idx: i32, frame: *mut c_void, mask: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionStabilizationPipeline_pushBack_Ptr_IMotionStabilizer_(instance: *mut c_void, stabilizer: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionStabilizationPipeline_empty_const(instance: *const c_void) -> Result<bool>;
-		pub fn cv_videostab_NullDeblurer_deblur_int_MatR(instance: *mut c_void, unnamed: i32, unnamed: *mut c_void) -> Result_void;
+		pub fn cv_videostab_NullDeblurer_deblur_int_MatR(instance: *mut c_void, unnamed: i32, unnamed_1: *mut c_void) -> Result_void;
 		pub fn cv_videostab_NullFrameSource_reset(instance: *mut c_void) -> Result_void;
 		pub fn cv_videostab_NullFrameSource_nextFrame(instance: *mut c_void) -> Result<*mut c_void>;
-		pub fn cv_videostab_NullInpainter_inpaint_int_MatR_MatR(instance: *mut c_void, unnamed: i32, unnamed: *mut c_void, unnamed: *mut c_void) -> Result_void;
+		pub fn cv_videostab_NullInpainter_inpaint_int_MatR_MatR(instance: *mut c_void, unnamed: i32, unnamed_1: *mut c_void, unnamed_2: *mut c_void) -> Result_void;
 		pub fn cv_videostab_NullLog_print_const_charX(instance: *mut c_void, unnamed: *const c_char) -> Result_void;
 		pub fn cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, frame_size: *const core::Size, points0: *const c_void, points1: *const c_void, mask: *const c_void) -> Result_void;
 		pub fn cv_videostab_NullWobbleSuppressor_suppress_int_const_MatR_MatR(instance: *mut c_void, idx: i32, frame: *const c_void, result: *mut c_void) -> Result_void;

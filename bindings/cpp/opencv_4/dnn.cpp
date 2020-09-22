@@ -414,15 +414,6 @@ extern "C" {
 	void cv_BackendNode_delete(cv::dnn::BackendNode* instance) {
 		delete instance;
 	}
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::dnn::BackendNode*> cv_dnn_BackendNode_BackendNode_int(int backendId) {
-		try {
-			cv::dnn::BackendNode* ret = new cv::dnn::BackendNode(backendId);
-			return Ok<cv::dnn::BackendNode*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::BackendNode*>))
-	}
-	#endif
-	
 	Result<int> cv_dnn_BackendWrapper_getPropBackendId_const(const cv::dnn::BackendWrapper* instance) {
 		try {
 			int ret = instance->backendId;

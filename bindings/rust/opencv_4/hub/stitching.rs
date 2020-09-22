@@ -112,28 +112,6 @@ pub enum Stitcher_Status {
 
 opencv_type_enum! { crate::stitching::Stitcher_Status }
 
-#[cfg(not(target_os = "windows"))]
-/// 
-/// **Deprecated**: use Stitcher::create
-/// 
-/// ## C++ default parameters
-/// * try_use_gpu: false
-#[deprecated = "use Stitcher::create"]
-pub fn create_stitcher_scans(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-	unsafe { sys::cv_createStitcherScans_bool(try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
-}
-
-#[cfg(not(target_os = "windows"))]
-/// 
-/// **Deprecated**: use Stitcher::create
-/// 
-/// ## C++ default parameters
-/// * try_use_gpu: false
-#[deprecated = "use Stitcher::create"]
-pub fn create_stitcher(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-	unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
-}
-
 /// @brief
 /// 
 /// ## Parameters

@@ -541,16 +541,6 @@ pub trait PPF3DDetectorTrait {
 		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()
 	}
 	
-	#[cfg(not(target_os = "windows"))]
-	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR(self.as_raw_mut_PPF3DDetector(), fn_.as_raw_FileNode()) }.into_result()
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR(self.as_raw_PPF3DDetector(), fs.as_raw_mut_FileStorage()) }.into_result()
-	}
-	
 }
 
 /// Class, allowing the load and matching 3D models.

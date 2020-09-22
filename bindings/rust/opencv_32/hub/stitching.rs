@@ -108,13 +108,6 @@ pub enum Stitcher_Status {
 
 opencv_type_enum! { crate::stitching::Stitcher_Status }
 
-#[cfg(not(target_os = "windows"))]
-/// ## C++ default parameters
-/// * try_use_gpu: false
-pub fn create_stitcher(try_use_gpu: bool) -> Result<core::Ptr::<crate::stitching::Stitcher>> {
-	unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|r| unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(r) } )
-}
-
 pub fn create_laplace_pyr_gpu(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector::<core::UMat>) -> Result<()> {
 	input_array_arg!(img);
 	unsafe { sys::cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vector_UMat_R(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat()) }.into_result()

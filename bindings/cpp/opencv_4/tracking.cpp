@@ -152,15 +152,6 @@ extern "C" {
 	void cv_CvFeatureParams_delete(cv::CvFeatureParams* instance) {
 		delete instance;
 	}
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::CvFeatureParams*> cv_CvFeatureParams_CvFeatureParams() {
-		try {
-			cv::CvFeatureParams* ret = new cv::CvFeatureParams();
-			return Ok<cv::CvFeatureParams*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CvFeatureParams*>))
-	}
-	#endif
-	
 	Result_void cv_CvFeatureParams_init_const_CvFeatureParamsR(cv::CvFeatureParams* instance, const cv::CvFeatureParams* fp) {
 		try {
 			instance->init(*fp);
@@ -181,15 +172,6 @@ extern "C" {
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::Ptr<cv::CvFeatureParams>*> cv_CvFeatureParams_create_FeatureType(cv::CvFeatureParams::FeatureType featureType) {
-		try {
-			cv::Ptr<cv::CvFeatureParams> ret = cv::CvFeatureParams::create(featureType);
-			return Ok(new cv::Ptr<cv::CvFeatureParams>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::CvFeatureParams>*>))
-	}
-	#endif
 	
 	void cv_CvHaarEvaluator_delete(cv::CvHaarEvaluator* instance) {
 		delete instance;
@@ -215,48 +197,12 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_CvHaarEvaluator_writeFeature_const_FileStorageR(const cv::CvHaarEvaluator* instance, cv::FileStorage* fs) {
-		try {
-			instance->writeFeature(*fs);
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*> cv_CvHaarEvaluator_getFeatures_const(const cv::CvHaarEvaluator* instance) {
-		try {
-			const std::vector<cv::CvHaarEvaluator::FeatureHaar> ret = instance->getFeatures();
-			return Ok(new const std::vector<cv::CvHaarEvaluator::FeatureHaar>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::CvHaarEvaluator::FeatureHaar>*>))
-	}
-	#endif
-	
 	Result<cv::CvHaarEvaluator::FeatureHaar*> cv_CvHaarEvaluator_getFeatures_int(cv::CvHaarEvaluator* instance, int idx) {
 		try {
 			cv::CvHaarEvaluator::FeatureHaar ret = instance->getFeatures(idx);
 			return Ok(new cv::CvHaarEvaluator::FeatureHaar(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CvHaarEvaluator::FeatureHaar*>))
 	}
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_CvHaarEvaluator_setWinSize_Size(cv::CvHaarEvaluator* instance, cv::Size* patchSize) {
-		try {
-			instance->setWinSize(*patchSize);
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::Size> cv_CvHaarEvaluator_setWinSize_const(const cv::CvHaarEvaluator* instance) {
-		try {
-			cv::Size ret = instance->setWinSize();
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	#endif
 	
 	Result_void cv_CvHaarEvaluator_generateFeatures(cv::CvHaarEvaluator* instance) {
 		try {
@@ -275,75 +221,12 @@ extern "C" {
 	void cv_CvHaarEvaluator_FeatureHaar_delete(cv::CvHaarEvaluator::FeatureHaar* instance) {
 		delete instance;
 	}
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::CvHaarEvaluator::FeatureHaar*> cv_CvHaarEvaluator_FeatureHaar_FeatureHaar_Size(cv::Size* patchSize) {
-		try {
-			cv::CvHaarEvaluator::FeatureHaar* ret = new cv::CvHaarEvaluator::FeatureHaar(*patchSize);
-			return Ok<cv::CvHaarEvaluator::FeatureHaar*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::CvHaarEvaluator::FeatureHaar*>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<bool> cv_CvHaarEvaluator_FeatureHaar_eval_const_const_MatR_Rect_floatX(const cv::CvHaarEvaluator::FeatureHaar* instance, const cv::Mat* image, cv::Rect* ROI, float* result) {
-		try {
-			bool ret = instance->eval(*image, *ROI, result);
-			return Ok<bool>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<int> cv_CvHaarEvaluator_FeatureHaar_getNumAreas(cv::CvHaarEvaluator::FeatureHaar* instance) {
-		try {
-			int ret = instance->getNumAreas();
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<const std::vector<float>*> cv_CvHaarEvaluator_FeatureHaar_getWeights_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
-		try {
-			const std::vector<float> ret = instance->getWeights();
-			return Ok(new const std::vector<float>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<float>*>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<const std::vector<cv::Rect>*> cv_CvHaarEvaluator_FeatureHaar_getAreas_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
-		try {
-			const std::vector<cv::Rect> ret = instance->getAreas();
-			return Ok(new const std::vector<cv::Rect>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<cv::Rect>*>))
-	}
-	#endif
-	
 	Result_void cv_CvHaarEvaluator_FeatureHaar_write_const_FileStorage(const cv::CvHaarEvaluator::FeatureHaar* instance, cv::FileStorage* unnamed) {
 		try {
 			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<float> cv_CvHaarEvaluator_FeatureHaar_getInitMean_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
-		try {
-			float ret = instance->getInitMean();
-			return Ok<float>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<float> cv_CvHaarEvaluator_FeatureHaar_getInitSigma_const(const cv::CvHaarEvaluator::FeatureHaar* instance) {
-		try {
-			float ret = instance->getInitSigma();
-			return Ok<float>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
-	}
-	#endif
 	
 	void cv_MultiTracker_delete(cv::MultiTracker* instance) {
 		delete instance;

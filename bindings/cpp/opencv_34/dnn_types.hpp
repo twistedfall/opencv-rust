@@ -57,7 +57,6 @@ template struct Result<cv::Size_<int>>;
 template struct Result<cv::_InputArray*>;
 template struct Result<cv::_InputOutputArray*>;
 template struct Result<cv::_OutputArray*>;
-template struct Result<cv::dnn::BackendNode*>;
 template struct Result<cv::dnn::DictValue*>;
 template struct Result<cv::dnn::DictValue**>;
 template struct Result<cv::dnn::Layer*>;

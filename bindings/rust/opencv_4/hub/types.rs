@@ -9632,24 +9632,6 @@ pub use text_types::*;
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
-	pub type PtrOfCvFeatureParams = core::Ptr::<crate::tracking::CvFeatureParams>;
-	
-	ptr_extern! { crate::tracking::CvFeatureParams,
-		cv_PtrOfCvFeatureParams_delete, cv_PtrOfCvFeatureParams_get_inner_ptr, cv_PtrOfCvFeatureParams_get_inner_ptr_mut
-	}
-	
-	ptr_extern_ctor! { crate::tracking::CvFeatureParams, cv_PtrOfCvFeatureParams_new }
-	
-	impl PtrOfCvFeatureParams {
-		#[inline] pub fn as_raw_PtrOfCvFeatureParams(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfCvFeatureParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::tracking::CvFeatureParamsTrait for PtrOfCvFeatureParams {
-		#[inline] fn as_raw_CvFeatureParams(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_CvFeatureParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
 	pub type PtrOfMultiTracker = core::Ptr::<crate::tracking::MultiTracker>;
 	
 	ptr_extern! { crate::tracking::MultiTracker,
@@ -9967,26 +9949,6 @@ mod tracking_types {
 		#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
-	
-	pub type VectorOfCvHaarEvaluator_FeatureHaar = core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar>;
-	
-	impl VectorOfCvHaarEvaluator_FeatureHaar {
-		pub fn as_raw_VectorOfCvHaarEvaluator_FeatureHaar(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_VectorOfCvHaarEvaluator_FeatureHaar(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	vector_extern! { crate::tracking::CvHaarEvaluator_FeatureHaar, *const c_void, *mut c_void,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_new, cv_VectorOfCvHaarEvaluator_FeatureHaar_delete,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_len, cv_VectorOfCvHaarEvaluator_FeatureHaar_is_empty,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_capacity, cv_VectorOfCvHaarEvaluator_FeatureHaar_shrink_to_fit,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_reserve, cv_VectorOfCvHaarEvaluator_FeatureHaar_remove,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_swap, cv_VectorOfCvHaarEvaluator_FeatureHaar_clear,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_get, cv_VectorOfCvHaarEvaluator_FeatureHaar_set,
-		cv_VectorOfCvHaarEvaluator_FeatureHaar_push, cv_VectorOfCvHaarEvaluator_FeatureHaar_insert,
-	}
-	vector_non_copy_or_bool! { crate::tracking::CvHaarEvaluator_FeatureHaar }
-	
-	unsafe impl Send for core::Vector::<crate::tracking::CvHaarEvaluator_FeatureHaar> {}
 	
 	pub type VectorOfPtrOfTracker = core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>>;
 	

@@ -247,15 +247,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result_void cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR(const cv::_InputArray* _src, const cv::_OutputArray* _dst, cv::cuda::Stream* stream) {
-		try {
-			cv::cuda::convertFp16(*_src, *_dst, *stream);
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	#endif
-	
 	Result_void cv_cuda_createContinuous_int_int_int_const__OutputArrayR(int rows, int cols, int type, const cv::_OutputArray* arr) {
 		try {
 			cv::cuda::createContinuous(rows, cols, type, *arr);
@@ -500,15 +491,6 @@ extern "C" {
 			return Ok<size_t>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<int> cv_getImpl_vector_int_R_vector_String_R(std::vector<int>* impl, std::vector<cv::String>* funName) {
-		try {
-			int ret = cv::getImpl(*impl, *funName);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	#endif
 	
 	Result<int> cv_getNumThreads() {
 		try {
@@ -3613,15 +3595,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MatConstIterator*>))
 	}
 	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(const cv::Mat* _m, const int* _idx) {
-		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(_m, _idx);
-			return Ok<cv::MatConstIterator*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::MatConstIterator*>))
-	}
-	#endif
-	
 	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(const cv::MatConstIterator* it) {
 		try {
 			cv::MatConstIterator* ret = new cv::MatConstIterator(*it);
@@ -5459,15 +5432,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::SparseMatIterator*>))
 	}
 	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(cv::SparseMat* _m, const int* idx) {
-		try {
-			cv::SparseMatIterator* ret = new cv::SparseMatIterator(_m, idx);
-			return Ok<cv::SparseMatIterator*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::SparseMatIterator*>))
-	}
-	#endif
-	
 	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(const cv::SparseMatIterator* it) {
 		try {
 			cv::SparseMatIterator* ret = new cv::SparseMatIterator(*it);
@@ -6986,15 +6950,6 @@ extern "C" {
 			return Ok<cv::_OutputArray*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
 	}
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_vector_GpuMat_R(const std::vector<cv::cuda::GpuMat>* d_mat) {
-		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*d_mat);
-			return Ok<cv::_OutputArray*>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::_OutputArray*>))
-	}
-	#endif
 	
 	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_BufferR(const cv::ogl::Buffer* buf) {
 		try {

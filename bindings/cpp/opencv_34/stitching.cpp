@@ -3,24 +3,6 @@
 #include "stitching_types.hpp"
 
 extern "C" {
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::Ptr<cv::Stitcher>*> cv_createStitcherScans_bool(bool try_use_gpu) {
-		try {
-			cv::Ptr<cv::Stitcher> ret = cv::createStitcherScans(try_use_gpu);
-			return Ok(new cv::Ptr<cv::Stitcher>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::Stitcher>*>))
-	}
-	#endif
-	
-	#if !defined(OCVRS_TARGET_OS_WINDOWS)
-	Result<cv::Ptr<cv::Stitcher>*> cv_createStitcher_bool(bool try_use_gpu) {
-		try {
-			cv::Ptr<cv::Stitcher> ret = cv::createStitcher(try_use_gpu);
-			return Ok(new cv::Ptr<cv::Stitcher>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::Stitcher>*>))
-	}
-	#endif
-	
 	Result_void cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vector_UMat_R(const cv::_InputArray* img, int num_levels, std::vector<cv::UMat>* pyr) {
 		try {
 			cv::detail::createLaplacePyrGpu(*img, num_levels, *pyr);

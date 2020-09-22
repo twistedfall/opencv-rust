@@ -2556,24 +2556,6 @@ pub fn cube_root(val: f32) -> Result<f32> {
 	unsafe { sys::cv_cubeRoot_float(val) }.into_result()
 }
 
-#[cfg(not(target_os = "windows"))]
-/// Converts an array to half precision floating number.
-/// 
-/// ## Parameters
-/// * _src: input array.
-/// * _dst: output array.
-/// * stream: Stream for the asynchronous version.
-/// ## See also
-/// convertFp16
-/// 
-/// ## C++ default parameters
-/// * stream: Stream::Null()
-pub fn convert_fp16_1(_src: &dyn core::ToInputArray, _dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-	input_array_arg!(_src);
-	output_array_arg!(_dst);
-	unsafe { sys::cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
-}
-
 /// Creates a continuous matrix.
 /// 
 /// ## Parameters
@@ -3245,11 +3227,6 @@ pub fn get_cpu_tick_count() -> Result<i64> {
 
 pub fn get_elem_size(typ: i32) -> Result<size_t> {
 	unsafe { sys::cv_getElemSize_int(typ) }.into_result()
-}
-
-#[cfg(not(target_os = "windows"))]
-pub fn get_impl(impl_: &mut core::Vector::<i32>, fun_name: &mut core::Vector::<String>) -> Result<i32> {
-	unsafe { sys::cv_getImpl_vector_int_R_vector_String_R(impl_.as_raw_mut_VectorOfi32(), fun_name.as_raw_mut_VectorOfString()) }.into_result()
 }
 
 /// Returns the number of threads used by OpenCV for parallel regions.
@@ -10271,12 +10248,6 @@ impl MatConstIterator {
 		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), _pt.opencv_as_extern()) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
 	}
 	
-	#[cfg(not(target_os = "windows"))]
-	/// constructor that sets the iterator to the specified element of the matrix
-	pub fn new_slice(_m: &core::Mat, _idx: &i32) -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(_m.as_raw_Mat(), _idx) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
-	}
-	
 	/// copy constructor
 	pub fn copy(it: &core::MatConstIterator) -> Result<core::MatConstIterator> {
 		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator()) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
@@ -13355,12 +13326,6 @@ impl SparseMatIterator {
 		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
 	}
 	
-	#[cfg(not(target_os = "windows"))]
-	/// the full constructor setting the iterator to the specified sparse matrix element
-	pub fn new_1(_m: &mut core::SparseMat, idx: &i32) -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(_m.as_raw_mut_SparseMat(), idx) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
-	}
-	
 	/// the copy constructor
 	pub fn copy(it: &core::SparseMatIterator) -> Result<core::SparseMatIterator> {
 		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
@@ -15002,11 +14967,6 @@ impl _OutputArray {
 	
 	pub fn from_gpumat(d_mat: &core::GpuMat) -> Result<core::_OutputArray> {
 		unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
-	}
-	
-	#[cfg(not(target_os = "windows"))]
-	pub fn from_gpumat_vec(d_mat: &core::Vector::<core::GpuMat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_vector_GpuMat_R(d_mat.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
 	}
 	
 	pub fn new_3(buf: &core::Buffer) -> Result<core::_OutputArray> {

@@ -1,3 +1,7 @@
+* 0.46.0
+  * Fix linking in some configurations (https://github.com/twistedfall/opencv-rust/issues/164)
+  * Fix argument name clashing in external functions
+
 * 0.45.1
   * Internal improvements in const handling
   * Fix warnings in beta 
