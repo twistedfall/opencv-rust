@@ -152,7 +152,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					let mut typ = type_ref.rust_full();
 					// hack for converting the references to array types in struct definitions
 					if type_ref.as_fixed_array().is_some() {
-						if let Some(new_typ) = typ.strip_str_prefix("&mut ") {
+						if let Some(new_typ) = typ.strip_prefix("&mut ") {
 							typ = new_typ.to_string().into()
 						}
 					}

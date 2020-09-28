@@ -443,18 +443,6 @@ fn trim_index() {
 }
 
 #[test]
-fn strip_prefix() {
-	assert_eq!(None, "абвгд".strip_str_prefix("123"));
-	assert_eq!(None, "".strip_str_prefix("123"));
-	assert_eq!(Some("абвгд"), "абвгд".strip_str_prefix(""));
-	assert_eq!(Some("вгд"), "абвгд".strip_str_prefix("аб"));
-	assert_eq!(None, "абвгд".strip_str_prefix("бв"));
-	assert_eq!(None, "абвгд".strip_str_prefix("гд"));
-	assert_eq!(Some(""), "абвгд".strip_str_prefix("абвгд"));
-	assert_eq!(Some("d"), "аbвd".strip_str_prefix("аbв"));
-}
-
-#[test]
 fn localname() {
 	assert_eq!("test", "namespace::test".localname());
 	assert_eq!("test", "test".localname());

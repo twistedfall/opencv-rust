@@ -26,7 +26,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 			if line_clean.starts_with(MULTILINE_PREFIX) {
 				singleline_delimited = false;
 				line = &line_clean[MULTILINE_PREFIX.len()..];
-				if let Some(new_line) = line.strip_str_prefix(MULTILINE_CONT) {
+				if let Some(new_line) = line.strip_prefix(MULTILINE_CONT) {
 					line = new_line;
 					asterisk_indented = true;
 				} else {
@@ -37,7 +37,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 				singleline_delimited = true;
 				asterisk_indented = false;
 			}
-		} else if let Some(line_clean) = line_clean.strip_str_prefix(MULTILINE_PREFIX) {
+		} else if let Some(line_clean) = line_clean.strip_prefix(MULTILINE_PREFIX) {
 			line = line_clean
 				.trim_start_matches(DETAIL)
 				.trim_start_matches(MULTILINE_CONT)
@@ -45,12 +45,12 @@ pub fn strip_comment_markers(comment: &str) -> String {
 		}
 		if singleline_delimited && line_clean.starts_with(SINGLELINE) {
 			line = &line_clean[SINGLELINE.len()..];
-			if let Some(new_line) = line.strip_str_prefix(SINGLELINE_DETAIL) {
+			if let Some(new_line) = line.strip_prefix(SINGLELINE_DETAIL) {
 				line = new_line;
-			} else if let Some(new_line) = line.strip_str_prefix(DETAIL) {
+			} else if let Some(new_line) = line.strip_prefix(DETAIL) {
 				line = new_line;
 			}
-			if let Some(new_line) = line.strip_str_prefix(SINGLELINE_SIDE) {
+			if let Some(new_line) = line.strip_prefix(SINGLELINE_SIDE) {
 				line = new_line;
 			}
 		} else if asterisk_indented && i == 1 && !line_clean.starts_with(MULTILINE_CONT) {
@@ -87,7 +87,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	for line in &mut lines {
 		if !singleline_delimited && asterisk_indented {
 			let line_trimmed = line.trim_start();
-			if let Some(line_trimmed) = line_trimmed.strip_str_prefix(MULTILINE_CONT) {
+			if let Some(line_trimmed) = line_trimmed.strip_prefix(MULTILINE_CONT) {
 				*line = line_trimmed;
 			} else {
 				let trim_start = line.trim_start_idx().min(2);
