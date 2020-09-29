@@ -1,4 +1,4 @@
-#![allow(intra_doc_link_resolution_failure)]
+#![allow(broken_intra_doc_links)]
 
 pub use error::{Error, Result};
 

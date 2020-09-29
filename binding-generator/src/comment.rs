@@ -23,9 +23,9 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	for (i, mut line) in comment.lines_with_nl().enumerate() {
 		let mut line_clean = line.trim_start();
 		if i == 0 {
-			if line_clean.starts_with(MULTILINE_PREFIX) {
+			if let Some(new_line) = line_clean.strip_prefix(MULTILINE_PREFIX) {
+				line = new_line;
 				singleline_delimited = false;
-				line = &line_clean[MULTILINE_PREFIX.len()..];
 				if let Some(new_line) = line.strip_prefix(MULTILINE_CONT) {
 					line = new_line;
 					asterisk_indented = true;

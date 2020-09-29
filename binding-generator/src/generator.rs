@@ -104,12 +104,10 @@ impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for Open
 						self.gen_env.make_export_config(entity).simple = true;
 					} else if name == "CV_EXPORTS_AS" || name == "CV_WRAP_AS" {
 						let definition = get_definition_text(entity);
-						const CV_EXPORTS_AS: &str = "CV_EXPORTS_AS(";
-						const CV_WRAP_AS: &str = "CV_WRAP_AS(";
-						let definition = if definition.starts_with(CV_EXPORTS_AS) && definition.ends_with(')') {
-							definition[CV_EXPORTS_AS.len()..definition.len() - 1].trim()
-						} else if definition.starts_with(CV_WRAP_AS) && definition.ends_with(')') {
-							definition[CV_WRAP_AS.len()..definition.len() - 1].trim()
+						let definition = if let Some(d) = definition.strip_prefix("CV_EXPORTS_AS(").and_then(|d| d.strip_suffix(')')) {
+							d.trim()
+						} else if let Some(d) = definition.strip_prefix("CV_WRAP_AS(").and_then(|d| d.strip_suffix(')')) {
+							d.trim()
 						} else {
 							unreachable!("Incorrect CV_EXPORTS_AS(..) or CV_WRAP_AS(..) usage")
 						};

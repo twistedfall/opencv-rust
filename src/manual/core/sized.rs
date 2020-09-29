@@ -48,6 +48,7 @@ sized_array_impl!(SizedArray43, 4, 3);
 sized_array_impl!(SizedArray44, 4, 4);
 
 // fixme workaround for missing standard derives in stdlib for arrays with len > 32
+// in stable since 1.47 replace until "endfixme" with ```sized_array_impl!(SizedArray66, 6, 6);``` around rust 1.49
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Array66<T>([T; 6 * 6]);
@@ -91,3 +92,4 @@ impl<T: Copy> SizedArray<T> for SizedArray66 {
 		Array66([alpha; 6 * 6])
 	}
 }
+// endfixme

@@ -52,7 +52,7 @@ impl<'tu> Class<'tu> {
 	}
 
 	pub fn kind(&self) -> Kind {
-		if settings::ELEMENT_EXCLUDE.is_match(self.cpp_fullname().as_ref()) {
+		if settings::ELEMENT_EXCLUDE.contains(self.cpp_fullname().as_ref()) {
 			return Kind::Excluded
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {

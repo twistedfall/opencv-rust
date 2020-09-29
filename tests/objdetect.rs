@@ -1,6 +1,6 @@
 #![cfg(not(feature = "opencv-32"))]
 
-use std::path::PathBuf;
+use std::path::Path;
 
 use opencv::{
     imgcodecs,
@@ -12,7 +12,7 @@ use opencv::{
 
 #[test]
 fn qr_code() -> Result<()> {
-    let qr_path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
+    let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
     {
         let mut detector = objdetect::QRCodeDetector::default()?;

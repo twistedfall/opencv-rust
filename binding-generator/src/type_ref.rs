@@ -392,7 +392,7 @@ impl<'tu> TypeRef<'tu> {
 				true
 			}
 			_ => {
-				settings::ELEMENT_IGNORE.is_match(self.cpp_full().as_ref())
+				settings::ELEMENT_IGNORE.contains(self.cpp_full().as_ref())
 			}
 		}
 	}

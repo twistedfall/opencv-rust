@@ -168,42 +168,48 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 
-		let mut gen = typ.gen_rust(self.opencv_version);
-		if !gen.is_empty() {
-			let path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
-			let file = if self.debug {
-				OpenOptions::new().create(true).write(true).truncate(true).open(&path)
-			} else {
-				OpenOptions::new().create_new(true).write(true).open(&path)
-			};
-			match file {
-				Ok(mut file) => {
+		let path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
+		let file = if self.debug {
+			OpenOptions::new().create(true).write(true).truncate(true).open(&path)
+		} else {
+			OpenOptions::new().create_new(true).write(true).open(&path)
+		};
+		match file {
+			Ok(mut file) => {
+				let gen = typ.gen_rust(self.opencv_version);
+				if !gen.is_empty() {
 					file.write_all(gen.as_bytes()).expect("Can't write to rust file");
-				},
-				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
-				Err(e) =>{
-					panic!("Error while creating file for rust dependent type: {}", e)
-				},
-			}
+				} else {
+					drop(file);
+					fs::remove_file(&path).expect("Can't remove empty file");
+				}
+			},
+			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+			Err(e) => {
+				panic!("Error while creating file for rust dependent type: {}", e)
+			},
 		}
 
-		gen = typ.gen_cpp();
-		if !gen.is_empty() {
-			let path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
-			let file = if self.debug {
-				OpenOptions::new().create(true).write(true).truncate(true).open(&path)
-			} else {
-				OpenOptions::new().create_new(true).write(true).open(&path)
-			};
-			match file {
-				Ok(mut file) => {
+		let path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
+		let file = if self.debug {
+			OpenOptions::new().create(true).write(true).truncate(true).open(&path)
+		} else {
+			OpenOptions::new().create_new(true).write(true).open(&path)
+		};
+		match file {
+			Ok(mut file) => {
+				let gen = typ.gen_cpp();
+				if !gen.is_empty() {
 					file.write_all(gen.as_bytes()).expect("Can't write to cpp file");
-				},
-				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
-				Err(e) =>{
-					panic!("Error while creating file for cpp dependent type: {}", e)
-				},
-			}
+				} else {
+					drop(file);
+					fs::remove_file(&path).expect("Can't remove empty file");
+				}
+			},
+			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+			Err(e) => {
+				panic!("Error while creating file for cpp dependent type: {}", e)
+			},
 		}
 	}
 }

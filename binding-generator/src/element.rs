@@ -23,11 +23,11 @@ pub struct DefaultElement;
 
 impl DefaultElement {
 	pub fn is_excluded(this: &(impl Element + ?Sized)) -> bool {
-		this.is_ignored() || this.is_system() || settings::ELEMENT_EXCLUDE.is_match(&this.cpp_fullname())
+		this.is_ignored() || this.is_system() || settings::ELEMENT_EXCLUDE.contains(this.cpp_fullname().as_ref())
 	}
 
 	pub fn is_ignored(this: &(impl Element + ?Sized)) -> bool {
-		!this.is_public() || settings::ELEMENT_IGNORE.is_match(&this.cpp_fullname())
+		!this.is_public() || settings::ELEMENT_IGNORE.contains(this.cpp_fullname().as_ref())
 	}
 
 	pub fn is_system<'tu>(this: &impl EntityElement<'tu>) -> bool {

@@ -5,7 +5,6 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use maplit::{btreeset, hashmap, hashset};
 use once_cell::sync::Lazy;
-use regex::RegexSet;
 
 use crate::{CompiledInterpolation, ExportConfig, StrExt};
 
@@ -549,28 +548,28 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashm
 	"cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setTargetFg_bool" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 });
 
-pub static ELEMENT_EXCLUDE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
-	"^cv::String$",
-	"^cv::internal::format$", // 3.2 duplicate definition
-	"^cv::face::FacemarkLBF::BBox$", // not used, not exported in windows dll
-].iter()).expect("Can't compile regexes"));
+pub static ELEMENT_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
+	"cv::String",
+	"cv::internal::format", // 3.2 duplicate definition
+	"cv::face::FacemarkLBF::BBox", // not used, not exported in windows dll
+});
 
-pub static ELEMENT_IGNORE: Lazy<RegexSet> = Lazy::new(|| RegexSet::new([
-	"^CV_DEPRECATED$",
-	"^CV_EXPORTS$",
-	"^CV_IMPL$", // 3.2
-	"^CV_MAKE_TYPE$",
-	"^CvFileNode$", // 3.2 3.4 C struct
-	"^CvSeq$", // 3.2 C struct
-	"^FILE$",
-	"^HG_AUTOSIZE$", // 3.2
-	"^cv::ErrorCallback$",
-	"^cv::MatAllocator$", // doesn't handle cpp part too well
-	"^cv::NAryMatIterator", // uses pointers of pointers
-	"^cv::Node$", // template class
-	"^std::exception_ptr$",
-	"^std::random_access_iterator_tag$",
-].iter()).expect("Can't compile regexes"));
+pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
+	"CV_DEPRECATED",
+	"CV_EXPORTS",
+	"CV_IMPL", // 3.2
+	"CV_MAKE_TYPE",
+	"CvFileNode", // 3.2 3.4 C struct
+	"CvSeq", // 3.2 C struct
+	"FILE",
+	"HG_AUTOSIZE", // 3.2
+	"cv::ErrorCallback",
+	"cv::MatAllocator", // doesn't handle cpp part too well
+	"cv::NAryMatIterator", // uses pointers of pointers
+	"cv::Node", // template class
+	"std::exception_ptr",
+	"std::random_access_iterator_tag",
+});
 
 pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hashmap! {
 	"VADisplay" => ExportConfig::default(),

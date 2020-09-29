@@ -375,11 +375,7 @@ impl StrExt for str {
 		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\{\{\s*([^{}]+?)\s*}}"#).expect("Can't compile regex"));
 
 		// trim leading newline
-		let tpl = if self.starts_with('\n') {
-			&self[1..]
-		} else {
-			self
-		};
+		let tpl = self.strip_prefix("\n").unwrap_or(self);
 
 		// find minimum common indent
 		let mut common_indent_len: Option<usize> = None;
