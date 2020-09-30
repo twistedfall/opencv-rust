@@ -40,11 +40,11 @@ struct Result_void {
 };
 
 template<typename T> inline Result<T> Ok(T result) {
-	return Result<T> { .error_code = 0, .error_msg = 0, .result = result };
+	return Result<T> { 0, 0, result };
 }
 
 inline Result_void Ok() {
-	return Result_void { .error_code = 0, .error_msg = 0 };
+	return Result_void { 0, 0 };
 }
 
 template<typename T> inline T Err(int code, const char* msg) {
