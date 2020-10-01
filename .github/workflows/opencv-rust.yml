@@ -16,17 +16,13 @@ jobs:
         os:
           - image: ubuntu-18.04
             family: linux
-          - image: windows-2019
-            family: windows
         rust:
           - stable
           - beta
         version:
           - opencv: 3.4.11
-            vcpkg: 3
             features: opencv-34
           - opencv: 4.4.0
-            vcpkg: 4
             features: opencv-4
     runs-on: ${{ matrix.os.image }}
     env:
@@ -34,7 +30,6 @@ jobs:
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
       OPENCV_VERSION: ${{ matrix.version.opencv }}
-      VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
       CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
@@ -64,6 +59,60 @@ jobs:
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
+          path: bindings
+
+  vcpkg:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - image: ubuntu-18.04
+            family: linux
+          - image: windows-2019
+            family: windows
+        rust:
+          - stable
+          - beta
+        version:
+          - vcpkg: 3
+            features: opencv-34
+          - vcpkg: 4
+            features: opencv-4
+    runs-on: ${{ matrix.os.image }}
+    env:
+      OS_FAMILY: ${{ matrix.os.family }}
+      RUST_TOOLCHAIN: ${{ matrix.rust }}
+      Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
+      VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
+      CARGO_FEATURES: ${{ matrix.version.features }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/build
+          key: ${{ runner.os }}-${{ matrix.version.vcpkg }}-build
+
+      - name: Install dependencies
+        run: ci/install.sh
+        shell: bash
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          default: true
+
+      - name: Test project
+        run: ci/script.sh
+        shell: bash
+
+      - name: Upload bindings if test failed
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: generated-failed-bindings-${{ runner.os }}-vcpkg-${{ matrix.version.vcpkg }}
           path: bindings
 
   framework:

@@ -5,7 +5,11 @@ set -vex
 ci_dir="$(dirname "$0")"
 
 if [[ "$OS_FAMILY" == "linux" ]]; then
-	"$ci_dir/install-bionic.sh"
+	if [[ "$VCPKG_OPENCV_VERSION" != "" ]]; then # vcpkg build
+		"$ci_dir/install-bionic-vcpkg.sh"
+	else
+		"$ci_dir/install-bionic.sh"
+	fi
 elif [[ "$OS_FAMILY" == "osx" ]]; then
 	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
 		"$ci_dir/install-macos-brew.sh"

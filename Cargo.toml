@@ -60,6 +60,7 @@ docs-only = []
 binding-generator = { package = "opencv-binding-generator", version = "0.21.0", path = "binding-generator", optional = true }
 cc = { version = "1.0", features = ["parallel"] }
 clang = { version = "1.0", features = ["clang_6_0"], optional = true }
+dunce = "1.0"
 glob = "0.3"
 jobserver = { version = "0.1", optional = true }
 once_cell = "1.0"

@@ -42,6 +42,11 @@ elif [[ "$OS_FAMILY" == "linux" ]]; then
 		# 3.2.0 version from the repository doesn't have dnn module, that's why contrib feature is not enabled
 		CARGO_FEATURES="$CARGO_FEATURES,contrib"
 	fi
+	if [[ "$VCPKG_OPENCV_VERSION" != "" ]]; then # vcpkg build
+		export VCPKG_ROOT="$HOME/build/vcpkg"
+		echo "=== Installed vcpkg packages:"
+		"$VCPKG_ROOT/vcpkg" list
+	fi
 fi
 
 echo "=== Current directory: $(pwd)"

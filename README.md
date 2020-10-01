@@ -162,14 +162,24 @@ on any platform, the specified values will override those automatically discover
   specify the ".framework" extension then build script will link a macOS framework instead of plain shared
   library.
   E.g. "opencv_world411".
+  
+  If this list starts with '+' (plus sign) then the specified items will be appended to whatever the system
+  probe returned. E.g. a value of "+dc1394" will do a system discovery of the OpenCV library and its linked
+  libraries and then will additionally link `dc1394` library at the end. Can be useful if the system probe
+  produces a mostly working setup, but has incomplete link list, or the order is wrong (especially important
+  during static linking).
 
 * `OPENCV_LINK_PATHS`
   Comma separated list of paths to search for libraries to link. E.g. "C:\tools\opencv\build\x64\vc15\lib".
+  The path list can start with '+', see `OPENCV_LINK_LIBS` for a detailed explanation (e.g.
+  "+/usr/local/lib").
 
 * `OPENCV_INCLUDE_PATHS`
   Comma separated list of paths to search for system include files during compilation. E.g.
   "C:\tools\opencv\build\include". One of the directories specified therein must contain
   "opencv2/core/version.hpp" or "core/version.hpp" file, it's used to detect the version of the headers.
+  The path list can start with '+', see `OPENCV_LINK_LIBS` for a detailed explanation (e.g.
+  "+/opt/cuda/targets/x86_64-linux/include/").
 
 The following variables are rarely used, but you might need them under some circumstances:
 
@@ -196,8 +206,12 @@ The following variables are rarely used, but you might need them under some circ
 * `OPENCV_DISABLE_PROBES`
   Comma separated list of OpenCV package auto-discovery systems to exclude from running. Might be useful if
   one of the higher priority systems is producing incorrect results. Can contain the following values:
+    * environment - reads data only from the `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS`
+      environment variables
     * pkg_config
     * cmake
+    * vcpkg_cmake - like vcpkg, but only uses vcpkg for path discovery, the actual OpenCV probe is done using
+      cmake (cmake related environment variables are applicable with this probe)
     * vcpkg
 
 * `OPENCV_CLANG_STDLIB_PATH`

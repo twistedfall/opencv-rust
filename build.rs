@@ -8,14 +8,15 @@ use std::{
 	io::{BufRead, BufReader},
 	iter::{self, FromIterator},
 	path::{Path, PathBuf},
-	process::Command,
 };
 
+use dunce::canonicalize;
 use glob::glob;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
-use shlex::Shlex;
 
+#[path = "build_cmake_probe.rs"]
+mod cmake_probe;
 #[cfg(feature = "buildtime-bindgen")]
 #[path = "build_generator.rs"]
 mod generator;
@@ -60,7 +61,7 @@ static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CAR
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 
-static ENV_VARS: [&str; 15] = [
+static ENV_VARS: [&str; 16] = [
 	"OPENCV_HEADER_DIR",
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
@@ -76,7 +77,41 @@ static ENV_VARS: [&str; 15] = [
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
+	"VCPKGRS_DYNAMIC",
 ];
+
+
+fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
+	let mut strip_performed = false;
+	let mut filename_path = Path::new(filename);
+	const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
+	if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
+		if LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
+			filename_path = Path::new(stem);
+			strip_performed = true;
+		}
+	}
+
+	// same, but with dots therearound
+	const LIB_EXTS_INNER: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
+	if let Some(mut file) = filename_path.file_name().and_then(OsStr::to_str) {
+		let orig_len = file.len();
+		file = file.strip_prefix("lib").unwrap_or(file);
+		LIB_EXTS_INNER.iter()
+			.for_each(|&inner_ext| if let Some(inner_ext_idx) = file.find(inner_ext) {
+				file = &file[..inner_ext_idx];
+			});
+		if orig_len != file.len() {
+			strip_performed = true;
+			filename_path = Path::new(file);
+		}
+	}
+	if strip_performed {
+		Some(filename_path.as_os_str())
+	} else {
+		None
+	}
+}
 
 struct PackageName;
 
@@ -175,39 +210,17 @@ struct Library {
 }
 
 impl Library {
-	fn strip_lib_file_decorations(path: &mut PathBuf) {
-		const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
-		// same, but with dots therearound
-		const LIB_EXTS_INNER: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
-		if let Some(extension) = path.extension().and_then(OsStr::to_str) {
-			if LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
-				path.set_extension("");
-			}
-		}
-		if let Some(mut file) = path.file_name().and_then(OsStr::to_str).map(str::to_owned) {
-			let orig_len = file.len();
-			const LIB_PREFIX: &str = "lib";
-			if file.starts_with(LIB_PREFIX) {
-				file.drain(..LIB_PREFIX.len());
-			}
-			LIB_EXTS_INNER.iter()
-				.for_each(|&inner_ext| if let Some(inner_ext_idx) = file.find(inner_ext) {
-					file.drain(inner_ext_idx..);
-				});
-			if orig_len != file.len() {
-				path.set_file_name(file);
-			}
-		}
-	}
-
 	fn process_library_list(libs: impl IntoIterator<Item=impl Into<PathBuf>>) -> impl Iterator<Item=String> {
 		libs.into_iter()
-			.map(|x| {
+			.filter_map(|x| {
 				let mut path: PathBuf = x.into();
 				let is_framework = path.extension()
 					.and_then(OsStr::to_str)
 					.map_or(false, |e| e.eq_ignore_ascii_case("framework"));
-				Self::strip_lib_file_decorations(&mut path);
+				if let Some(filename) = path.file_name().and_then(cleanup_lib_filename) {
+					let filename = filename.to_owned();
+					path.set_file_name(filename);
+				}
 				path.file_name()
 					.and_then(|f| f.to_str()
 						.map(|f| if is_framework {
@@ -215,7 +228,7 @@ impl Library {
 						} else {
 							f.to_owned()
 						})
-					).expect("Invalid library name")
+					)
 			})
 	}
 
@@ -327,120 +340,44 @@ impl Library {
 		})
 	}
 
-	pub fn probe_cmake(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
-		eprintln!("=== Probing OpenCV library using cmake");
-		let cmake_pkg = PackageName::cmake();
-		let cmake_bin = env::var_os("OPENCV_CMAKE_BIN").unwrap_or_else(|| "cmake".into());
+	pub fn probe_cmake(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>, toolchain: Option<&Path>, cmake_bin: Option<&Path>, ninja_bin: Option<&Path>) -> Result<Self> {
+		eprintln!(
+			"=== Probing OpenCV library using cmake{}",
+			toolchain.map(|tc| format!(" with toolchain: {}", tc.display())).unwrap_or_else(|| "".to_string())
+		);
 
-		let include_paths = include_paths
-			.map(|paths| Self::list(paths)
+		let src_dir = MANIFEST_DIR.join("cmake");
+		let package_name = PackageName::cmake();
+		let cmake = cmake_probe::CmakeProbe::new(
+			env::var_os("OPENCV_CMAKE_BIN")
 				.map(PathBuf::from)
-				.collect::<Vec<_>>()
-			)
-			.ok_or_else(|| "Nobody is going to see that")
-			.or_else(|_| Command::new(&cmake_bin)
-				.current_dir(&*OUT_DIR)
-				.args(&[
-					"--find-package",
-					"-DCOMPILER_ID=GNU",
-					"-DLANGUAGE=CXX",
-					"-DMODE=COMPILE",
-				])
-				.arg(format!("-DNAME={}", cmake_pkg))
-				.output()
-				.map_err(Box::<dyn std::error::Error>::from)
-				.and_then(|output| {
-					if output.status.success() {
-						let mut include_paths = Vec::with_capacity(4);
-						let stdout = String::from_utf8(output.stdout)?;
-						eprintln!("=== cmake include arguments: {:#?}", stdout);
-						for mut arg in Shlex::new(stdout.trim()) {
-							const INCLUDE_PREFIX: &str = "-I";
-							if arg.starts_with(INCLUDE_PREFIX) {
-								arg.drain(..INCLUDE_PREFIX.len());
-								// todo possibly handle leading whitespace
-								include_paths.push(PathBuf::from(arg));
-							} else {
-								eprintln!("=== Unexpected cmake compile argument found: {}", arg);
-							}
-						}
-						Ok(include_paths)
-					} else {
-						Err(format!(
-							"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
-							String::from_utf8_lossy(&output.stdout),
-							String::from_utf8_lossy(&output.stderr)
-						).into())
-					}
-				})
-			)?;
+				.or_else(|| cmake_bin.map(PathBuf::from)),
+			&OUT_DIR,
+			&src_dir,
+			package_name.as_ref(),
+			toolchain,
+			env::var_os("PROFILE").map_or(false, |p| p == "release"),
+		);
+		let (
+			version,
+			opencv_include_paths,
+			opencv_link_paths,
+			opencv_link_libs,
+		) = cmake.probe_ninja(ninja_bin)
+			.or_else(|e| {
+				eprintln!("=== Probing with cmake ninja generator failed, will try makefile generator, error: {}", e);
+				cmake.probe_makefile()
+			})?;
 
-		if let Some(version) = Self::version_from_include_paths(include_paths.iter()) {
-			let mut cargo_metadata = Vec::with_capacity(64);
-			link_paths.map(|link_paths| Self::process_manual_link_search(&mut cargo_metadata, link_paths));
-			link_libs.map(|link_libs| Self::process_manual_link_libs(&mut cargo_metadata, link_libs));
-			if link_paths.is_none() || link_libs.is_none() {
-				Command::new(&cmake_bin)
-					.current_dir(&*OUT_DIR)
-					.args(&[
-						"--find-package",
-						"-DCOMPILER_ID=GNU",
-						"-DLANGUAGE=CXX",
-						"-DMODE=LINK",
-					])
-					.arg(format!("-DNAME={}", cmake_pkg))
-					.output()
-					.map_err(Box::<dyn std::error::Error>::from)
-					.and_then(|output| if output.status.success() {
-						let mut cmake_link_paths = if link_paths.is_some() { HashSet::new() } else { HashSet::with_capacity(4) };
-						let stdout = String::from_utf8(output.stdout)?;
-						eprintln!("=== cmake link arguments: {:#?}", stdout);
-						for mut arg in Shlex::new(stdout.trim()) {
-							const RPATH_PREFIX: &str = "-Wl,-rpath,";
-							if arg.starts_with(RPATH_PREFIX) {
-								arg.drain(..RPATH_PREFIX.len());
-								cmake_link_paths.insert(PathBuf::from(arg));
-							} else if arg.starts_with("-") {
-								eprintln!("=== Unexpected cmake link argument found: {}", arg);
-							} else {
-								let mut path = PathBuf::from(arg);
-								if link_paths.is_none() {
-									if let Some(parent) = path.parent() {
-										cmake_link_paths.insert(parent.to_owned());
-									}
-								}
-								if link_libs.is_none() {
-									Self::strip_lib_file_decorations(&mut path);
-									if let Some(file) = path.file_name().and_then(OsStr::to_str) {
-										cargo_metadata.push(Self::emit_link_lib(file, None));
-									}
-								}
-							}
-						}
-						cargo_metadata.extend(
-							cmake_link_paths.into_iter()
-								.map(|link_path|
-									Self::emit_link_search(link_path.to_str().expect("Invalid link path"), Some("native"))
-								)
-						);
-						Ok(())
-					} else {
-						Err(format!(
-							"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
-							String::from_utf8_lossy(&output.stdout),
-							String::from_utf8_lossy(&output.stderr)
-						).into())
-					})?
-			};
+		let mut cargo_metadata = Vec::with_capacity(opencv_link_paths.len() + opencv_link_libs.len());
+		cargo_metadata.extend(Self::process_link_paths(link_paths, opencv_link_paths.into_iter().collect(), None));
+		cargo_metadata.extend(Self::process_link_libs(link_libs, opencv_link_libs, None));
 
-			Ok(Self {
-				include_paths,
-				cargo_metadata,
-				version,
-			})
-		} else {
-			Err(format!("cmake discovery problem: OpenCV version not found in include paths: {:?}", include_paths).into())
-		}
+		Ok(Self {
+			include_paths: Self::process_env_var_list(include_paths, opencv_include_paths),
+			version: version.unwrap_or_else(|| "0.0.0".to_string()),
+			cargo_metadata,
+		})
 	}
 
 	pub fn probe_vcpkg(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
@@ -451,17 +388,75 @@ impl Library {
 
 		let version = Self::version_from_include_paths(&opencv.include_paths);
 
+		let include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
+
+		let mut cargo_metadata = opencv.cargo_metadata;
+
+		if let Some(link_paths) = link_paths {
+			if !link_paths.is_extend() {
+				cargo_metadata = cargo_metadata.into_iter()
+					.filter(|p| !p.starts_with("cargo:rustc-link-search="))
+					.collect();
+			}
+			cargo_metadata.extend(link_paths.iter().map(|s| Self::emit_link_search(&Path::new(s), None)))
+		}
+
+		if let Some(link_libs) = link_libs {
+			if !link_libs.is_extend() {
+				cargo_metadata = cargo_metadata.into_iter()
+					.filter(|p| !p.starts_with("cargo:rustc-link-lib="))
+					.collect();
+			}
+			cargo_metadata.extend(link_libs.iter().map(|s| Self::emit_link_lib(s, None)))
+		}
+
 		Ok(Self {
-			include_paths: opencv.include_paths,
-			version: version.unwrap_or_else(|| "0.0.0".to_owned()),
-			cargo_metadata: opencv.cargo_metadata,
+			include_paths,
+			version: version.unwrap_or_else(|| "0.0.0".to_string()),
+			cargo_metadata,
 		})
+	}
+
+	pub fn probe_vcpkg_cmake(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
+		eprintln!("=== Probing OpenCV library using vcpkg");
+		let mut config = vcpkg::Config::new();
+		config.cargo_metadata(false);
+		// don't care about the error here, only need to have dlls copied to outdir
+		let _ = config.find_package(&PackageName::vcpkg());
+
+		let vcpkg_root = canonicalize(vcpkg::find_vcpkg_root(&mut config)?)?;
+		eprintln!("=== Discovered vcpkg root: {}", vcpkg_root.display());
+		let vcpkg_cmake = vcpkg_root.to_str()
+			.and_then(|vcpkg_root| {
+				glob(&format!("{}/downloads/tools/cmake*/*/bin/cmake", vcpkg_root)).ok()
+					.and_then(|cmake_iter| glob(&format!("{}/downloads/tools/cmake*/*/bin/cmake.exe", vcpkg_root)).ok()
+						.map(|cmake_exe_iter| cmake_iter.chain(cmake_exe_iter))
+					)
+			})
+			.and_then(|paths| paths.filter_map(|r| r.ok())
+				.filter_map(|p| canonicalize(p).ok())
+				.find(|p| p.is_file())
+			);
+		let vcpkg_ninja = vcpkg_root.to_str()
+			.and_then(|vcpkg_root| {
+				glob(&format!("{}/downloads/tools/ninja*/ninja", vcpkg_root)).ok()
+					.and_then(|ninja_iter| glob(&format!("{}/downloads/tools/ninja*/*/ninja.exe", vcpkg_root)).ok()
+						.map(|ninja_exe_iter| ninja_iter.chain(ninja_exe_iter))
+					)
+			})
+			.and_then(|paths| paths.filter_map(|r| r.ok())
+				.filter_map(|p| canonicalize(p).ok())
+				.find(|p| p.is_file())
+			);
+		let toolchain = vcpkg_root.join("scripts/buildsystems/vcpkg.cmake");
+		Self::probe_cmake(include_paths, link_paths, link_libs, Some(&toolchain), vcpkg_cmake.as_deref(), vcpkg_ninja.as_deref())
 	}
 
 	pub fn probe_system(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
 		let probe_paths = || Self::probe_from_paths(include_paths, link_paths, link_libs);
 		let probe_pkg_config = || Self::probe_pkg_config(include_paths, link_paths, link_libs);
-		let probe_cmake = || Self::probe_cmake(include_paths, link_paths, link_libs);
+		let probe_cmake = || Self::probe_cmake(include_paths, link_paths, link_libs, None, None, None);
+		let probe_vcpkg_cmake = || Self::probe_vcpkg_cmake(include_paths, link_paths, link_libs);
 		let probe_vcpkg = || Self::probe_vcpkg(include_paths, link_paths, link_libs);
 
 		let explicit_pkg_config = env::var_os("PKG_CONFIG_PATH").is_some() || env::var_os("OPENCV_PKGCONFIG_NAME").is_some();
@@ -480,21 +475,27 @@ impl Library {
 			("environment", &probe_paths as &dyn Fn() -> Result<Self>),
 			("pkg_config", &probe_pkg_config),
 			("cmake", &probe_cmake),
+			("vcpkg_cmake", &probe_vcpkg_cmake),
 			("vcpkg", &probe_vcpkg),
 		];
 
 		if explicit_pkg_config {
 			if explicit_vcpkg {
 				probes.swap(2, 3);
+				probes.swap(3, 4);
 			}
 		} else if explicit_cmake {
 			probes.swap(1, 2);
 			if explicit_vcpkg {
 				probes.swap(2, 3);
+				probes.swap(3, 4);
 			}
 		} else if explicit_vcpkg {
 			probes.swap(2, 3);
+			probes.swap(3, 4);
+
 			probes.swap(1, 2);
+			probes.swap(2, 3);
 		}
 
 		let probe_list = probes.iter()
