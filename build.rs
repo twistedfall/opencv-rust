@@ -3,6 +3,7 @@ use std::{
 	collections::HashSet,
 	env,
 	ffi::OsStr,
+	fmt,
 	fs::{self, File},
 	io::{BufRead, BufReader},
 	iter::{self, FromIterator},
@@ -135,6 +136,37 @@ impl PackageName {
 	}
 }
 
+#[derive(Clone, Copy, Debug)]
+struct EnvList<'s> {
+	src: &'s str,
+}
+
+impl<'s> EnvList<'s> {
+	pub fn is_extend(&self) -> bool {
+		self.src.starts_with('+')
+	}
+
+	pub fn iter(&self) -> impl Iterator<Item=&'s str> {
+		if self.is_extend() {
+			&self.src[1..]
+		} else {
+			self.src
+		}.split(',')
+	}
+}
+
+impl<'s> From<&'s str> for EnvList<'s> {
+	fn from(src: &'s str) -> Self {
+		Self { src }
+	}
+}
+
+impl fmt::Display for EnvList<'_> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Display::fmt(self.src, f)
+	}
+}
+
 #[derive(Debug)]
 struct Library {
 	pub include_paths: Vec<PathBuf>,
@@ -187,112 +219,107 @@ impl Library {
 			})
 	}
 
-	fn list(link_paths: &str) -> impl Iterator<Item=&str> {
-		link_paths.split(',')
-			.map(str::trim)
-			.filter(|&x| !x.is_empty())
-	}
-
 	fn version_from_include_paths(include_paths: impl IntoIterator<Item=impl AsRef<Path>>) -> Option<String> {
 		include_paths.into_iter().find_map(|x| get_version_from_headers(x.as_ref()))
 	}
 
 	#[inline]
-	fn emit_link_search(path: &str, typ: Option<&str>) -> String {
-		format!("cargo:rustc-link-search={}{}", typ.map_or("".to_string(), |t| format!("{}=", t)), path)
+	fn emit_link_search(path: &Path, typ: Option<&str>) -> String {
+		format!(
+			"cargo:rustc-link-search={}{}",
+			typ.map_or_else(|| "".to_string(), |t| format!("{}=", t)),
+			path.to_str().expect("Link search path can't be converted to UTF-8 string")
+		)
 	}
 
 	#[inline]
-	fn emit_link_lib(path: &str, typ: Option<&str>) -> String {
-		format!("cargo:rustc-link-lib={}{}", typ.map_or("".to_string(), |t| format!("{}=", t)), path)
+	fn emit_link_lib(lib: &str, typ: Option<&str>) -> String {
+		format!("cargo:rustc-link-lib={}{}", typ.map_or_else(|| "".to_string(), |t| format!("{}=", t)), lib)
 	}
 
-	fn process_manual_link_search(cargo_metadata: &mut Vec<String>, link_paths: &str) {
-		cargo_metadata.extend(
-			Self::list(link_paths)
-				.map(|path| {
-					let out = iter::once(Self::emit_link_search(path, None));
-					#[cfg(target_os = "macos")] {
-						out.chain(
-							iter::once(Self::emit_link_search(path, Some("framework")))
-						)
-					}
-					#[cfg(not(target_os = "macos"))] {
-						out
-					}
-				})
-				.flatten()
-		);
+	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
+		if let Some(include_paths) = env_list {
+			let mut includes = if include_paths.is_extend() {
+				sys_list
+			} else {
+				vec![]
+			};
+			includes.extend(include_paths.iter().map(T::from));
+			includes
+		} else {
+			sys_list
+		}
 	}
 
-	fn process_manual_link_libs(cargo_metadata: &mut Vec<String>, link_libs: &str) {
-		cargo_metadata.extend(
-			Self::process_library_list(Self::list(&link_libs))
-				.map(|l| Self::emit_link_lib(&l, None))
-		);
+	fn process_link_paths<'a>(link_paths: Option<EnvList>, sys_link_paths: Vec<PathBuf>, typ: Option<&'a str>) -> impl Iterator<Item=String> + 'a {
+		Self::process_env_var_list(link_paths, sys_link_paths).into_iter()
+			.map(move |path| {
+				let out = iter::once(Self::emit_link_search(&path, typ));
+				#[cfg(target_os = "macos")] {
+					out.chain(
+						iter::once(Self::emit_link_search(&path, Some("framework")))
+					)
+				}
+				#[cfg(not(target_os = "macos"))] {
+					out
+				}
+			})
+			.flatten()
 	}
 
-	pub fn probe_from_paths(include_paths: &str, link_paths: &str, link_libs: &str) -> Result<Self> {
-		eprintln!("=== Configuring OpenCV library from the environment:");
-		eprintln!("===   include_paths: {}", include_paths);
-		eprintln!("===   link_paths: {}", link_paths);
-		eprintln!("===   link_libs: {}", link_libs);
-		let mut cargo_metadata = Vec::with_capacity(64);
-		let include_paths: Vec<_> = Self::list(&include_paths)
-			.map(PathBuf::from)
-			.collect();
+	fn process_link_libs<'a>(link_libs: Option<EnvList>, sys_link_libs: Vec<String>, typ: Option<&'a str>) -> impl Iterator<Item=String> + 'a {
+		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs).into_iter())
+			.map(move |l| Self::emit_link_lib(&l, typ))
+	}
+
+	pub fn probe_from_paths(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
+		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (include_paths, link_paths, link_libs) {
+			if include_paths.is_extend() || link_paths.is_extend() || link_libs.is_extend() {
+				return Err("Some environment variables extend the system default paths (i.e. start with '+')".into())
+			}
+			eprintln!("=== Configuring OpenCV library from the environment:");
+			eprintln!("===   include_paths: {}", include_paths);
+			eprintln!("===   link_paths: {}", link_paths);
+			eprintln!("===   link_libs: {}", link_libs);
+			let mut cargo_metadata = Vec::with_capacity(64);
+			let include_paths: Vec<_> = include_paths.iter()
+				.map(PathBuf::from)
+				.collect();
 
 		let version = Self::version_from_include_paths(&include_paths);
 
-		Self::process_manual_link_search(&mut cargo_metadata, link_paths);
-		Self::process_manual_link_libs(&mut cargo_metadata, link_libs);
+			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![], None));
+			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![], None));
 
-		Ok(Self {
-			include_paths,
-			version: version.unwrap_or_else(|| "0.0.0".to_owned()),
-			cargo_metadata,
-		})
+			Ok(Self {
+				include_paths,
+				version: version.unwrap_or_else(|| "0.0.0".to_owned()),
+				cargo_metadata,
+			})
+		} else {
+			Err("Some environment variables are missing".into())
+		}
 	}
 
-	pub fn probe_pkg_config(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+	pub fn probe_pkg_config(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
 		eprintln!("=== Probing OpenCV library using pkg_config");
 		let mut config = pkg_config::Config::new();
 		config.cargo_metadata(false);
 		let opencv = config.probe(&PackageName::pkg_config())?;
 		let mut cargo_metadata = Vec::with_capacity(64);
-		if let Some(link_paths) = link_paths {
-			Self::process_manual_link_search(&mut cargo_metadata, link_paths);
-		} else {
-			cargo_metadata.extend(
-				opencv.link_paths.into_iter()
-					.map(|link_path|
-						Self::emit_link_search(link_path.to_str().expect("Invalid link path"), Some("native"))
-					)
-			);
-			cargo_metadata.extend(
-				opencv.framework_paths.into_iter()
-					.map(|fw_path|
-						Self::emit_link_search(fw_path.to_str().expect("Invalid framework path"), Some("framework"))
-					)
-			);
+
+		cargo_metadata.extend(Self::process_link_paths(link_paths, opencv.link_paths, None));
+		if link_paths.map_or(true, |link_paths| link_paths.is_extend()) {
+			cargo_metadata.extend(Self::process_link_paths(None, opencv.framework_paths, Some("framework")));
 		}
-		if let Some(link_libs) = link_libs {
-			Self::process_manual_link_libs(&mut cargo_metadata, link_libs);
-		} else {
-			cargo_metadata.extend(
-				opencv.libs.into_iter()
-					.map(|lib| Self::emit_link_lib(&lib, None))
-			);
-			cargo_metadata.extend(
-				opencv.frameworks.into_iter()
-					.map(|fw| Self::emit_link_lib(&fw, Some("framework")))
-			);
+
+		cargo_metadata.extend(Self::process_link_libs(link_libs, opencv.libs, None));
+		if link_libs.map_or(false, |link_libs| link_libs.is_extend()) {
+			cargo_metadata.extend(Self::process_link_libs(None, opencv.frameworks, Some("framework")));
 		}
-		let include_paths = include_paths.map_or(opencv.include_paths, |include_paths| {
-			Self::list(include_paths)
-				.map(PathBuf::from)
-				.collect()
-		});
+
+		let include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
+
 		Ok(Self {
 			include_paths,
 			version: opencv.version,
@@ -300,7 +327,7 @@ impl Library {
 		})
 	}
 
-	pub fn probe_cmake(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+	pub fn probe_cmake(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
 		eprintln!("=== Probing OpenCV library using cmake");
 		let cmake_pkg = PackageName::cmake();
 		let cmake_bin = env::var_os("OPENCV_CMAKE_BIN").unwrap_or_else(|| "cmake".into());
@@ -416,7 +443,7 @@ impl Library {
 		}
 	}
 
-	pub fn probe_vcpkg() -> Result<Self> {
+	pub fn probe_vcpkg(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
 		eprintln!("=== Probing OpenCV library using vcpkg");
 		let mut config = vcpkg::Config::new();
 		config.cargo_metadata(false);
@@ -431,10 +458,11 @@ impl Library {
 		})
 	}
 
-	pub fn probe_system(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+	pub fn probe_system(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
+		let probe_paths = || Self::probe_from_paths(include_paths, link_paths, link_libs);
 		let probe_pkg_config = || Self::probe_pkg_config(include_paths, link_paths, link_libs);
 		let probe_cmake = || Self::probe_cmake(include_paths, link_paths, link_libs);
-		let probe_vcpkg = || Self::probe_vcpkg();
+		let probe_vcpkg = || Self::probe_vcpkg(include_paths, link_paths, link_libs);
 
 		let explicit_pkg_config = env::var_os("PKG_CONFIG_PATH").is_some() || env::var_os("OPENCV_PKGCONFIG_NAME").is_some();
 		let explicit_cmake = env::var_os("OpenCV_DIR").is_some()
@@ -445,27 +473,28 @@ impl Library {
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
 		let disabled_probes = disabled_probes.as_ref()
-			.map(|s| HashSet::from_iter(Self::list(s)))
+			.map(|s| HashSet::from_iter(EnvList::from(s.as_str()).iter()))
 			.unwrap_or_else(|_| HashSet::new());
 
 		let mut probes = [
-			("pkg_config", &probe_pkg_config as &dyn Fn() -> Result<Self>),
+			("environment", &probe_paths as &dyn Fn() -> Result<Self>),
+			("pkg_config", &probe_pkg_config),
 			("cmake", &probe_cmake),
 			("vcpkg", &probe_vcpkg),
 		];
 
 		if explicit_pkg_config {
 			if explicit_vcpkg {
-				probes.swap(1, 2);
+				probes.swap(2, 3);
 			}
 		} else if explicit_cmake {
-			probes.swap(0, 1);
+			probes.swap(1, 2);
 			if explicit_vcpkg {
-				probes.swap(1, 2);
+				probes.swap(2, 3);
 			}
 		} else if explicit_vcpkg {
+			probes.swap(2, 3);
 			probes.swap(1, 2);
-			probes.swap(0, 1);
 		}
 
 		let probe_list = probes.iter()
@@ -509,13 +538,12 @@ impl Library {
 
 	pub fn probe() -> Result<Self> {
 		let include_paths = env::var("OPENCV_INCLUDE_PATHS").ok();
+		let include_paths = include_paths.as_deref().map(EnvList::from);
 		let link_paths = env::var("OPENCV_LINK_PATHS").ok();
+		let link_paths = link_paths.as_deref().map(EnvList::from);
 		let link_libs = env::var("OPENCV_LINK_LIBS").ok();
-		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (&include_paths, &link_paths, &link_libs) {
-			Self::probe_from_paths(include_paths, link_paths, link_libs)
-		} else {
-			Self::probe_system(include_paths.as_deref(), link_paths.as_deref(), link_libs.as_deref())
-		}
+		let link_libs = link_libs.as_deref().map(EnvList::from);
+		Self::probe_system(include_paths, link_paths, link_libs)
 	}
 
 	pub fn emit_cargo_metadata(&self) {
@@ -805,7 +833,7 @@ fn main() -> Result<()> {
 		panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
 	};
 	let opencv = if cfg!(feature = "docs-only") {
-		Library::probe_from_paths(opencv_header_dir.to_string_lossy().as_ref(), "", "")?
+		Library::probe_from_paths(Some(opencv_header_dir.to_string_lossy().as_ref().into()), Some("".into()), Some("".into()))?
 	} else {
 		Library::probe()?
 	};
