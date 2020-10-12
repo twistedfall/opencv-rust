@@ -1,5 +1,30 @@
 #![allow(unused_parens)]
 //! # OGRE 3D Visualiser
+//! 
+//! ovis is a simplified rendering wrapper around [ogre3d](https://www.ogre3d.org/).
+//! The [Ogre terminology](https://ogrecave.github.io/ogre/api/latest/_the-_core-_objects.html) is used in the API
+//! and [Ogre Script](https://ogrecave.github.io/ogre/api/latest/_scripts.html) is assumed to be used for advanced customization.
+//! 
+//! Besides the API you see here, there are several environment variables that control the behavior of ovis.
+//! They are documented in @ref createWindow.
+//! 
+//! ## Loading geometry
+//! 
+//! You can create geometry [on the fly](@ref createTriangleMesh) or by loading Ogre `.mesh` files.
+//! 
+//! ### Blender
+//! For converting/ creating geometry [Blender](https://www.blender.org/) is recommended.
+//! - Blender 2.7x is better tested, but Blender 2.8x should work too
+//! - install [blender2ogre](https://github.com/OGRECave/blender2ogre) matching your Blender version
+//! - download the [Ogre MSVC SDK](https://www.ogre3d.org/download/sdk/sdk-ogre) which contains `OgreXMLConverter.exe` (in `bin/`) and set the path in the blender2ogre settings
+//! - get [ogre-meshviewer](https://github.com/OGRECave/ogre-meshviewer) to enable the preview function in blender2ogre as well as for verifying the exported files
+//! - in case the exported materials are not exactly how you want them, consult the [Ogre Manual](https://ogrecave.github.io/ogre/api/latest/_material-_scripts.html)
+//! 
+//! ### Assimp
+//! When using Ogre 1.12.9 or later, enabling the Assimp plugin allows to load arbitrary geometry.
+//! Simply pass `bunny.obj` instead of `bunny.mesh` as `meshname` in @ref WindowScene::createEntity.
+//! 
+//! You should still use ogre-meshviewer to verify that the geometry is converted correctly.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::WindowScene };
@@ -102,7 +127,7 @@ pub fn create_grid_mesh(name: &str, size: core::Size2f, segments: core::Size) ->
 
 /// create a 2D plane, X right, Y down, Z up
 /// 
-/// creates a material and a texture with the same name
+/// creates a material with the same name
 /// ## Parameters
 /// * name: name of the mesh
 /// * size: size in world units
@@ -205,12 +230,20 @@ pub fn set_material_property_1(name: &str, prop: i32, value: &str) -> Result<()>
 	unsafe { sys::cv_ovis_setMaterialProperty_const_StringR_int_const_StringR(name.opencv_as_extern(), prop, value.opencv_as_extern()) }.into_result()
 }
 
-/// updates an existing texture
-/// 
-/// A new texture can be created with @ref createPlaneMesh
+/// set the texture of a material to the given value
 /// ## Parameters
-/// * name: name of the texture
-/// * image: the image data
+/// * name: material name
+/// * prop: @ref MaterialProperty
+/// * value: the texture data
+pub fn set_material_texture(name: &str, prop: i32, value: &dyn core::ToInputArray) -> Result<()> {
+	extern_container_arg!(name);
+	input_array_arg!(value);
+	unsafe { sys::cv_ovis_setMaterialProperty_const_StringR_int_const__InputArrayR(name.opencv_as_extern(), prop, value.as_raw__InputArray()) }.into_result()
+}
+
+/// 
+/// **Deprecated**: use setMaterialProperty
+#[deprecated = "use setMaterialProperty"]
 pub fn update_texture(name: &str, image: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(image);
@@ -237,8 +270,6 @@ pub trait WindowScene {
 	fn as_raw_mut_WindowScene(&mut self) -> *mut c_void;
 
 	/// set window background to custom image
-	/// 
-	/// creates a texture named "<title>_Background"
 	/// ## Parameters
 	/// * image: 
 	fn set_background(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
@@ -247,8 +278,6 @@ pub trait WindowScene {
 	}
 	
 	/// set window background to custom image
-	/// 
-	/// creates a texture named "<title>_Background"
 	/// ## Parameters
 	/// * image: 
 	/// 
@@ -339,7 +368,6 @@ pub trait WindowScene {
 	
 	/// convenience method to visualize a camera position
 	/// 
-	/// the entity uses a material with the same name that can be used to change the line color.
 	/// ## Parameters
 	/// * name: entity name
 	/// * K: intrinsic matrix
@@ -347,6 +375,7 @@ pub trait WindowScene {
 	/// * zFar: far plane in camera coordinates
 	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * color: line color
 	/// ## Returns
 	/// the extents of the Frustum at far plane, where the top left corner denotes the principal
 	/// point offset
@@ -354,12 +383,13 @@ pub trait WindowScene {
 	/// ## C++ default parameters
 	/// * tvec: noArray()
 	/// * rot: noArray()
-	fn create_camera_entity(&mut self, name: &str, k: &dyn core::ToInputArray, imsize: core::Size, z_far: f32, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray) -> Result<core::Rect2d> {
+	/// * color: Scalar::all(1)
+	fn create_camera_entity(&mut self, name: &str, k: &dyn core::ToInputArray, imsize: core::Size, z_far: f32, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray, color: core::Scalar) -> Result<core::Rect2d> {
 		extern_container_arg!(name);
 		input_array_arg!(k);
 		input_array_arg!(tvec);
 		input_array_arg!(rot);
-		unsafe { sys::cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), k.as_raw__InputArray(), &imsize, z_far, tvec.as_raw__InputArray(), rot.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR_const_ScalarR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), k.as_raw__InputArray(), &imsize, z_far, tvec.as_raw__InputArray(), rot.as_raw__InputArray(), &color) }.into_result()
 	}
 	
 	/// creates a point light in the scene

@@ -57,6 +57,8 @@ pub mod imgproc;
 pub mod intensity_transform;
 #[cfg(feature = "contrib")]
 pub mod line_descriptor;
+#[cfg(feature = "contrib")]
+pub mod mcc;
 pub mod ml;
 pub mod objdetect;
 #[cfg(feature = "contrib")]
@@ -169,6 +171,8 @@ pub mod hub_prelude {
 	pub use super::intensity_transform::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::line_descriptor::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::mcc::prelude::*;
 	pub use super::ml::prelude::*;
 	pub use super::objdetect::prelude::*;
 	#[cfg(feature = "contrib")]

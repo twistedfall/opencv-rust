@@ -2,6 +2,7 @@ template struct Result<bool>;
 template struct Result<const cv::Affine3<float>>;
 template struct Result<const cv::dynafu::Params*>;
 template struct Result<const cv::kinfu::Params*>;
+template struct Result<const float>;
 template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
 template struct Result<const std::vector<cv::linemod::Template>*>;
 template struct Result<cv::Affine3<float>>;
@@ -12,6 +13,7 @@ template struct Result<cv::Ptr<cv::dynafu::DynaFu>*>;
 template struct Result<cv::Ptr<cv::dynafu::Params>*>;
 template struct Result<cv::Ptr<cv::kinfu::KinFu>*>;
 template struct Result<cv::Ptr<cv::kinfu::Params>*>;
+template struct Result<cv::Ptr<cv::kinfu::Volume>*>;
 template struct Result<cv::Ptr<cv::linemod::ColorGradient>*>;
 template struct Result<cv::Ptr<cv::linemod::DepthNormal>*>;
 template struct Result<cv::Ptr<cv::linemod::Detector>*>;
@@ -30,6 +32,9 @@ template struct Result<cv::Ptr<cv::rgbd::RgbdPlane>*>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::Vec<float, 3>>;
 template struct Result<cv::Vec<int, 3>>;
+template struct Result<cv::kinfu::Intr>;
+template struct Result<cv::kinfu::Intr::Projector>;
+template struct Result<cv::kinfu::Intr::Reprojector>;
 template struct Result<cv::kinfu::Params*>;
 template struct Result<cv::kinfu::VolumeType>;
 template struct Result<cv::linemod::ColorGradient*>;
@@ -171,6 +176,20 @@ extern "C" {
 	}
 
 	cv::kinfu::Params* cv_PtrOfKinfu_Params_get_inner_ptr_mut(cv::Ptr<cv::kinfu::Params>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfKinfu_Volume_delete(cv::Ptr<cv::kinfu::Volume>* instance) {
+		delete instance;
+	}
+
+	const cv::kinfu::Volume* cv_PtrOfKinfu_Volume_get_inner_ptr(const cv::Ptr<cv::kinfu::Volume>* instance) {
+		return instance->get();
+	}
+
+	cv::kinfu::Volume* cv_PtrOfKinfu_Volume_get_inner_ptr_mut(cv::Ptr<cv::kinfu::Volume>* instance) {
 		return instance->get();
 	}
 }

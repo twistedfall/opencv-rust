@@ -29,7 +29,7 @@
 //!        # Low-level API for external libraries / plugins
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
+	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::OpenCLExecutionContextTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -164,6 +164,7 @@ pub const CPU_MMX: i32 = 1;
 pub const CPU_MSA: i32 = 150;
 pub const CPU_NEON: i32 = 100;
 pub const CPU_POPCNT: i32 = 8;
+pub const CPU_RVV: i32 = 210;
 pub const CPU_SSE: i32 = 2;
 pub const CPU_SSE2: i32 = 3;
 pub const CPU_SSE3: i32 = 4;
@@ -272,6 +273,7 @@ pub const CV_CPU_MSA: i32 = 150;
 pub const CV_CPU_NEON: i32 = 100;
 pub const CV_CPU_NONE: i32 = 0;
 pub const CV_CPU_POPCNT: i32 = 8;
+pub const CV_CPU_RVV: i32 = 210;
 pub const CV_CPU_SSE: i32 = 2;
 pub const CV_CPU_SSE2: i32 = 3;
 pub const CV_CPU_SSE3: i32 = 4;
@@ -346,6 +348,7 @@ pub const CV_MSA: i32 = 0;
 pub const CV_NEON: i32 = 0;
 pub const CV_PI: f64 = 3.1415926535897932384626433832795;
 pub const CV_POPCNT: i32 = 0;
+pub const CV_RVV: i32 = 0;
 pub const CV_SSE: i32 = 1;
 pub const CV_SSE2: i32 = 1;
 pub const CV_SSE3: i32 = 0;
@@ -356,9 +359,9 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &'static str = "4.4.0";
+pub const CV_VERSION: &'static str = "4.5.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
-pub const CV_VERSION_MINOR: i32 = 4;
+pub const CV_VERSION_MINOR: i32 = 5;
 pub const CV_VERSION_REVISION: i32 = 0;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const CV_VSX: i32 = 0;
@@ -997,6 +1000,7 @@ pub enum CpuFeatures {
 	CPU_MSA = 150,
 	CPU_VSX = 200,
 	CPU_VSX3 = 201,
+	CPU_RVV = 210,
 	/// Skylake-X with AVX-512F/CD/BW/DQ/VL
 	CPU_AVX512_SKX = 256,
 	/// Common instructions AVX-512F/CD for all CPUs that support AVX-512
@@ -5052,7 +5056,10 @@ pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nst
 	unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes) }.into_result()
 }
 
-/// converts NaN's to the given number
+/// converts NaNs to the given number
+/// ## Parameters
+/// * a: input/output matrix (CV_32F type).
+/// * val: value to convert the NaNs
 /// 
 /// ## C++ default parameters
 /// * val: 0
@@ -17528,10 +17535,12 @@ pub trait ContextTrait {
 	fn as_raw_Context(&self) -> *const c_void;
 	fn as_raw_mut_Context(&mut self) -> *mut c_void;
 
+	/// @deprecated
 	fn create(&mut self) -> Result<bool> {
 		unsafe { sys::cv_ocl_Context_create(self.as_raw_mut_Context()) }.into_result()
 	}
 	
+	/// @deprecated
 	fn create_with_type(&mut self, dtype: i32) -> Result<bool> {
 		unsafe { sys::cv_ocl_Context_create_int(self.as_raw_mut_Context(), dtype) }.into_result()
 	}
@@ -17556,6 +17565,8 @@ pub trait ContextTrait {
 		unsafe { sys::cv_ocl_Context_unloadProg_ProgramR(self.as_raw_mut_Context(), prog.as_raw_mut_Program()) }.into_result()
 	}
 	
+	/// ## Returns
+	/// cl_context value
 	fn ptr(&self) -> Result<*mut c_void> {
 		unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result()
 	}
@@ -17566,6 +17577,14 @@ pub trait ContextTrait {
 	
 	fn set_use_svm(&mut self, enabled: bool) -> Result<()> {
 		unsafe { sys::cv_ocl_Context_setUseSVM_bool(self.as_raw_mut_Context(), enabled) }.into_result()
+	}
+	
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_ocl_Context_release(self.as_raw_mut_Context()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_Context_empty_const(self.as_raw_Context()) }.into_result()
 	}
 	
 }
@@ -17612,6 +17631,21 @@ impl Context {
 	/// * initialize: true
 	pub fn get_default(initialize: bool) -> Result<core::Context> {
 		unsafe { sys::cv_ocl_Context_getDefault_bool(initialize) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	}
+	
+	/// ## Parameters
+	/// * context: OpenCL handle (cl_context). clRetainContext() is called on success
+	pub fn from_handle(context: *mut c_void) -> Result<core::Context> {
+		unsafe { sys::cv_ocl_Context_fromHandle_voidX(context) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	}
+	
+	pub fn from_device(device: &core::Device) -> Result<core::Context> {
+		unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	}
+	
+	pub fn create(configuration: &str) -> Result<core::Context> {
+		extern_container_arg!(configuration);
+		unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
 	}
 	
 }
@@ -17922,6 +17956,10 @@ pub trait DeviceTrait {
 		unsafe { sys::cv_ocl_Device_profilingTimerResolution_const(self.as_raw_Device()) }.into_result()
 	}
 	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_Device_empty_const(self.as_raw_Device()) }.into_result()
+	}
+	
 }
 
 pub struct Device {
@@ -17964,6 +18002,12 @@ impl Device {
 	
 	pub fn get_default() -> Result<core::Device> {
 		unsafe { sys::cv_ocl_Device_getDefault() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+	}
+	
+	/// ## Parameters
+	/// * d: OpenCL handle (cl_device_id). clRetainDevice() is called on success.
+	pub fn from_handle(d: *mut c_void) -> Result<core::Device> {
+		unsafe { sys::cv_ocl_Device_fromHandle_voidX(d) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
 	}
 	
 }
@@ -18340,6 +18384,166 @@ impl KernelArg {
 	
 }
 
+pub trait OpenCLExecutionContextTrait {
+	fn as_raw_OpenCLExecutionContext(&self) -> *const c_void;
+	fn as_raw_mut_OpenCLExecutionContext(&mut self) -> *mut c_void;
+
+	/// Get associated ocl::Context
+	fn get_context(&self) -> Result<core::Context> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_getContext_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	}
+	
+	/// Get associated ocl::Device
+	fn get_device(&self) -> Result<core::Device> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_getDevice_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+	}
+	
+	/// Get associated ocl::Queue
+	fn get_queue(&self) -> Result<core::Queue> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_getQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	}
+	
+	fn use_opencl(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_useOpenCL_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+	}
+	
+	fn set_use_opencl(&mut self, flag: bool) -> Result<()> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(self.as_raw_mut_OpenCLExecutionContext(), flag) }.into_result()
+	}
+	
+	/// Bind this OpenCL execution context to current thread.
+	/// 
+	/// Context can't be empty.
+	/// 
+	/// 
+	/// Note: clFinish is not called for queue of previous execution context
+	fn bind(&self) -> Result<()> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_bind_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+	}
+	
+	/// Creates new execution context with same OpenCV context and device
+	/// 
+	/// ## Parameters
+	/// * q: OpenCL queue
+	fn clone_with_new_queue(&self, q: &core::Queue) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(self.as_raw_OpenCLExecutionContext(), q.as_raw_Queue()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Creates new execution context with same OpenCV context and device
+	/// 
+	/// ## Parameters
+	/// * q: OpenCL queue
+	/// 
+	/// ## Overloaded parameters
+	fn clone_with_new_queue_1(&self) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_empty_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+	}
+	
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_release(self.as_raw_mut_OpenCLExecutionContext()) }.into_result()
+	}
+	
+}
+
+pub struct OpenCLExecutionContext {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { OpenCLExecutionContext }
+
+impl Drop for OpenCLExecutionContext {
+	fn drop(&mut self) {
+		extern "C" { fn cv_OpenCLExecutionContext_delete(instance: *mut c_void); }
+		unsafe { cv_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
+	}
+}
+
+impl OpenCLExecutionContext {
+	#[inline] pub fn as_raw_OpenCLExecutionContext(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_OpenCLExecutionContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for OpenCLExecutionContext {}
+
+impl core::OpenCLExecutionContextTrait for OpenCLExecutionContext {
+	#[inline] fn as_raw_OpenCLExecutionContext(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OpenCLExecutionContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl OpenCLExecutionContext {
+	pub fn default() -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy(unnamed: &core::OpenCLExecutionContext) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(unnamed: &mut core::OpenCLExecutionContext) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed.as_raw_mut_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Get OpenCL execution context of current thread.
+	/// 
+	/// Initialize OpenCL execution context if it is empty
+	/// - create new
+	/// - reuse context of the main thread (threadID = 0)
+	pub fn get_current() -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Get OpenCL execution context of current thread (can be empty)
+	pub fn get_current_ref() -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Creates OpenCL execution context
+	/// OpenCV will check if available OpenCL platform has platformName name, then assign context to
+	/// OpenCV and call `clRetainContext` function. The deviceID device will be used as target device and
+	/// new command queue will be created.
+	/// 
+	/// 
+	/// Note: Lifetime of passed handles is transferred to OpenCV wrappers on success
+	/// 
+	/// ## Parameters
+	/// * platformName: name of OpenCL platform to attach, this string is used to check if platform is available to OpenCV at runtime
+	/// * platformID: ID of platform attached context was created for (cl_platform_id)
+	/// * context: OpenCL context to be attached to OpenCV (cl_context)
+	/// * deviceID: OpenCL device (cl_device_id)
+	pub fn create(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<core::OpenCLExecutionContext> {
+		extern_container_arg!(platform_name);
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Creates OpenCL execution context
+	/// 
+	/// ## Parameters
+	/// * context: non-empty OpenCL context
+	/// * device: non-empty OpenCL device (must be a part of context)
+	/// * queue: non-empty OpenCL queue for provided context and device
+	pub fn create_1(context: &core::Context, device: &core::Device, queue: &core::Queue) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+	/// Creates OpenCL execution context
+	/// 
+	/// ## Parameters
+	/// * context: non-empty OpenCL context
+	/// * device: non-empty OpenCL device (must be a part of context)
+	/// * queue: non-empty OpenCL queue for provided context and device
+	/// 
+	/// ## Overloaded parameters
+	pub fn create_2(context: &core::Context, device: &core::Device) -> Result<core::OpenCLExecutionContext> {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// @deprecated
 pub trait PlatformTrait {
 	fn as_raw_Platform(&self) -> *const c_void;
 	fn as_raw_mut_Platform(&mut self) -> *mut c_void;
@@ -18348,8 +18552,13 @@ pub trait PlatformTrait {
 		unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result()
 	}
 	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_Platform_empty_const(self.as_raw_Platform()) }.into_result()
+	}
+	
 }
 
+/// @deprecated
 pub struct Platform {
 	ptr: *mut c_void
 }
@@ -18384,6 +18593,7 @@ impl Platform {
 		unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform()) }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
 	}
 	
+	/// @deprecated
 	pub fn get_default() -> Result<core::Platform> {
 		unsafe { sys::cv_ocl_Platform_getDefault() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
 	}
@@ -18412,6 +18622,10 @@ pub trait PlatformInfoTrait {
 	
 	fn get_device(&self, device: &mut core::Device, d: i32) -> Result<()> {
 		unsafe { sys::cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(self.as_raw_PlatformInfo(), device.as_raw_mut_Device(), d) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_PlatformInfo_empty_const(self.as_raw_PlatformInfo()) }.into_result()
 	}
 	
 }
@@ -18446,6 +18660,8 @@ impl PlatformInfo {
 		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
 	}
 	
+	/// ## Parameters
+	/// * id: pointer cl_platform_id (cl_platform_id*)
 	pub fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
 		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
 	}
@@ -18482,6 +18698,10 @@ pub trait ProgramTrait {
 	/// * binary:[out] output buffer
 	fn get_binary(&self, binary: &mut core::Vector::<i8>) -> Result<()> {
 		unsafe { sys::cv_ocl_Program_getBinary_const_vector_char_R(self.as_raw_Program(), binary.as_raw_mut_VectorOfi8()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_Program_empty_const(self.as_raw_Program()) }.into_result()
 	}
 	
 	fn read(&mut self, buf: &str, buildflags: &str) -> Result<bool> {
@@ -18566,6 +18786,10 @@ pub trait ProgramSourceTrait {
 	
 	fn hash(&self) -> Result<core::ProgramSource_hash_t> {
 		unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource()) }.into_result()
 	}
 	
 }
@@ -18698,6 +18922,10 @@ pub trait QueueTrait {
 	/// Returns OpenCL command queue with enable profiling mode support
 	fn get_profiling_queue(&self) -> Result<core::Queue> {
 		unsafe { sys::cv_ocl_Queue_getProfilingQueue_const(self.as_raw_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_ocl_Queue_empty_const(self.as_raw_Queue()) }.into_result()
 	}
 	
 }

@@ -9456,11 +9456,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
 	}
 	
-	Result<const cv::ocl::Device*> cv_ocl_Context_device_const_size_t(const cv::ocl::Context* instance, size_t idx) {
+	Result<cv::ocl::Device*> cv_ocl_Context_device_const_size_t(const cv::ocl::Context* instance, size_t idx) {
 		try {
-			const cv::ocl::Device ret = instance->device(idx);
-			return Ok(new const cv::ocl::Device(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::ocl::Device*>))
+			cv::ocl::Device ret = instance->device(idx);
+			return Ok(new cv::ocl::Device(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Device*>))
 	}
 	
 	Result<cv::ocl::Program*> cv_ocl_Context_getProg_const_ProgramSourceR_const_StringR_StringR(cv::ocl::Context* instance, const cv::ocl::ProgramSource* prog, const char* buildopt, void** errmsg) {
@@ -9505,6 +9505,41 @@ extern "C" {
 			instance->setUseSVM(enabled);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ocl::Context*> cv_ocl_Context_fromHandle_voidX(void* context) {
+		try {
+			cv::ocl::Context ret = cv::ocl::Context::fromHandle(context);
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
+	Result<cv::ocl::Context*> cv_ocl_Context_fromDevice_const_DeviceR(const cv::ocl::Device* device) {
+		try {
+			cv::ocl::Context ret = cv::ocl::Context::fromDevice(*device);
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
+	Result<cv::ocl::Context*> cv_ocl_Context_create_const_stringR(const char* configuration) {
+		try {
+			cv::ocl::Context ret = cv::ocl::Context::create(std::string(configuration));
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
+	Result_void cv_ocl_Context_release(cv::ocl::Context* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_ocl_Context_empty_const(const cv::ocl::Context* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	void cv_Device_delete(cv::ocl::Device* instance) {
@@ -10063,6 +10098,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::ocl::Device*>))
 	}
 	
+	Result<cv::ocl::Device*> cv_ocl_Device_fromHandle_voidX(void* d) {
+		try {
+			cv::ocl::Device ret = cv::ocl::Device::fromHandle(d);
+			return Ok(new cv::ocl::Device(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Device*>))
+	}
+	
+	Result<bool> cv_ocl_Device_empty_const(const cv::ocl::Device* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	void cv_Image2D_delete(cv::ocl::Image2D* instance) {
 		delete instance;
 	}
@@ -10419,6 +10468,135 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::KernelArg*>))
 	}
 	
+	void cv_OpenCLExecutionContext_delete(cv::ocl::OpenCLExecutionContext* instance) {
+		delete instance;
+	}
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() {
+		try {
+			cv::ocl::OpenCLExecutionContext* ret = new cv::ocl::OpenCLExecutionContext();
+			return Ok<cv::ocl::OpenCLExecutionContext*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(const cv::ocl::OpenCLExecutionContext* unnamed) {
+		try {
+			cv::ocl::OpenCLExecutionContext* ret = new cv::ocl::OpenCLExecutionContext(*unnamed);
+			return Ok<cv::ocl::OpenCLExecutionContext*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(cv::ocl::OpenCLExecutionContext* unnamed) {
+		try {
+			cv::ocl::OpenCLExecutionContext* ret = new cv::ocl::OpenCLExecutionContext(*unnamed);
+			return Ok<cv::ocl::OpenCLExecutionContext*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::Context*> cv_ocl_OpenCLExecutionContext_getContext_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			cv::ocl::Context ret = instance->getContext();
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
+	Result<cv::ocl::Device*> cv_ocl_OpenCLExecutionContext_getDevice_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			cv::ocl::Device ret = instance->getDevice();
+			return Ok(new cv::ocl::Device(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Device*>))
+	}
+	
+	Result<cv::ocl::Queue*> cv_ocl_OpenCLExecutionContext_getQueue_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			cv::ocl::Queue ret = instance->getQueue();
+			return Ok(new cv::ocl::Queue(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Queue*>))
+	}
+	
+	Result<bool> cv_ocl_OpenCLExecutionContext_useOpenCL_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			bool ret = instance->useOpenCL();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result_void cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(cv::ocl::OpenCLExecutionContext* instance, bool flag) {
+		try {
+			instance->setUseOpenCL(flag);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_getCurrent() {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = cv::ocl::OpenCLExecutionContext::getCurrent();
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_getCurrentRef() {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = cv::ocl::OpenCLExecutionContext::getCurrentRef();
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result_void cv_ocl_OpenCLExecutionContext_bind_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			instance->bind();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(const cv::ocl::OpenCLExecutionContext* instance, const cv::ocl::Queue* q) {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = instance->cloneWithNewQueue(*q);
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = instance->cloneWithNewQueue();
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(const char* platformName, void* platformID, void* context, void* deviceID) {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = cv::ocl::OpenCLExecutionContext::create(std::string(platformName), platformID, context, deviceID);
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(const cv::ocl::Context* context, const cv::ocl::Device* device, const cv::ocl::Queue* queue) {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = cv::ocl::OpenCLExecutionContext::create(*context, *device, *queue);
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<cv::ocl::OpenCLExecutionContext*> cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(const cv::ocl::Context* context, const cv::ocl::Device* device) {
+		try {
+			cv::ocl::OpenCLExecutionContext ret = cv::ocl::OpenCLExecutionContext::create(*context, *device);
+			return Ok(new cv::ocl::OpenCLExecutionContext(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::OpenCLExecutionContext*>))
+	}
+	
+	Result<bool> cv_ocl_OpenCLExecutionContext_empty_const(const cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result_void cv_ocl_OpenCLExecutionContext_release(cv::ocl::OpenCLExecutionContext* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	void cv_Platform_delete(cv::ocl::Platform* instance) {
 		delete instance;
 	}
@@ -10448,6 +10626,13 @@ extern "C" {
 			cv::ocl::Platform ret = cv::ocl::Platform::getDefault();
 			return Ok(new cv::ocl::Platform(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Platform*>))
+	}
+	
+	Result<bool> cv_ocl_Platform_empty_const(const cv::ocl::Platform* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	void cv_PlatformInfo_delete(cv::ocl::PlatformInfo* instance) {
@@ -10509,6 +10694,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<bool> cv_ocl_PlatformInfo_empty_const(const cv::ocl::PlatformInfo* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	void cv_Program_delete(cv::ocl::Program* instance) {
 		delete instance;
 	}
@@ -10556,6 +10748,13 @@ extern "C" {
 			instance->getBinary(*binary);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_ocl_Program_empty_const(const cv::ocl::Program* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result<bool> cv_ocl_Program_read_const_StringR_const_StringR(cv::ocl::Program* instance, const char* buf, const char* buildflags) {
@@ -10654,6 +10853,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::ProgramSource*>))
 	}
 	
+	Result<bool> cv_ocl_ProgramSource_empty_const(const cv::ocl::ProgramSource* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	void cv_Queue_delete(cv::ocl::Queue* instance) {
 		delete instance;
 	}
@@ -10711,6 +10917,13 @@ extern "C" {
 			const cv::ocl::Queue ret = instance->getProfilingQueue();
 			return Ok(new const cv::ocl::Queue(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::ocl::Queue*>))
+	}
+	
+	Result<bool> cv_ocl_Queue_empty_const(const cv::ocl::Queue* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	void cv_Timer_delete(cv::ocl::Timer* instance) {

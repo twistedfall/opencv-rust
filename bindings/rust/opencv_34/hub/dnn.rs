@@ -1571,12 +1571,24 @@ impl DeconvolutionLayer {
 	
 }
 
+/// Detection output layer.
+/// 
+/// The layer size is: @f$ (1 \times 1 \times N \times 7) @f$
+///    where N is [keep_top_k] parameter multiplied by batch size. Each row is:
+///    [image_id, label, confidence, xmin, ymin, xmax, ymax]
+///    where image_id is the index of image input in the batch.
 pub trait DetectionOutputLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_DetectionOutputLayer(&self) -> *const c_void;
 	fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void;
 
 }
 
+/// Detection output layer.
+/// 
+/// The layer size is: @f$ (1 \times 1 \times N \times 7) @f$
+///    where N is [keep_top_k] parameter multiplied by batch size. Each row is:
+///    [image_id, label, confidence, xmin, ymin, xmax, ymax]
+///    where image_id is the index of image input in the batch.
 pub struct DetectionOutputLayer {
 	ptr: *mut c_void
 }

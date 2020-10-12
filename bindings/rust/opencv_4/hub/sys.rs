@@ -275,6 +275,7 @@ mod calib3d_sys {
 		pub fn cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvecs: *const c_void, tvecs: *const c_void, std_deviations_intrinsics: *const c_void, std_deviations_extrinsics: *const c_void, per_view_errors: *const c_void, flags: i32, criteria: *const core::TermCriteria) -> Result<f64>;
 		pub fn cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvecs: *const c_void, tvecs: *const c_void, flags: i32, criteria: *const core::TermCriteria) -> Result<f64>;
 		pub fn cv_calibrateHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_HandEyeCalibrationMethod(r_gripper2base: *const c_void, t_gripper2base: *const c_void, r_target2cam: *const c_void, t_target2cam: *const c_void, r_cam2gripper: *const c_void, t_cam2gripper: *const c_void, method: crate::calib3d::HandEyeCalibrationMethod) -> Result_void;
+		pub fn cv_calibrateRobotWorldHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_RobotWorldHandEyeCalibrationMethod(r_world2cam: *const c_void, t_world2cam: *const c_void, r_base2gripper: *const c_void, t_base2gripper: *const c_void, r_base2world: *const c_void, t_base2world: *const c_void, r_gripper2cam: *const c_void, t_gripper2cam: *const c_void, method: crate::calib3d::RobotWorldHandEyeCalibrationMethod) -> Result_void;
 		pub fn cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix: *const c_void, image_size: *const core::Size, aperture_width: f64, aperture_height: f64, fovx: *mut f64, fovy: *mut f64, focal_length: *mut f64, principal_point: *mut core::Point2d, aspect_ratio: *mut f64) -> Result_void;
 		pub fn cv_checkChessboard_const__InputArrayR_Size(img: *const c_void, size: *const core::Size) -> Result<bool>;
 		pub fn cv_composeRT_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(rvec1: *const c_void, tvec1: *const c_void, rvec2: *const c_void, tvec2: *const c_void, rvec3: *const c_void, tvec3: *const c_void, dr3dr1: *const c_void, dr3dt1: *const c_void, dr3dr2: *const c_void, dr3dt2: *const c_void, dt3dr1: *const c_void, dt3dt1: *const c_void, dt3dr2: *const c_void, dt3dt2: *const c_void) -> Result_void;
@@ -288,6 +289,7 @@ mod calib3d_sys {
 		pub fn cv_decomposeProjectionMatrix_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(proj_matrix: *const c_void, camera_matrix: *const c_void, rot_matrix: *const c_void, trans_vect: *const c_void, rot_matrix_x: *const c_void, rot_matrix_y: *const c_void, rot_matrix_z: *const c_void, euler_angles: *const c_void) -> Result_void;
 		pub fn cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image: *const c_void, pattern_size: *const core::Size, corners: *const c_void, pattern_was_found: bool) -> Result_void;
 		pub fn cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_int(image: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, length: f32, thickness: i32) -> Result_void;
+		pub fn cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(pts1: *const c_void, pts2: *const c_void, inliers: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from: *const c_void, to: *const c_void, inliers: *const c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
 		pub fn cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src: *const c_void, dst: *const c_void, out: *const c_void, inliers: *const c_void, ransac_threshold: f64, confidence: f64) -> Result<i32>;
 		pub fn cv_estimateAffinePartial2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from: *const c_void, to: *const c_void, inliers: *const c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
@@ -301,11 +303,15 @@ mod calib3d_sys {
 		pub fn cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image: *const c_void, pattern_size: *const core::Size, corners: *const c_void, flags: i32) -> Result<bool>;
 		pub fn cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R(image: *const c_void, pattern_size: *const core::Size, centers: *const c_void, flags: i32, blob_detector: *const c_void) -> Result<bool>;
 		pub fn cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R_const_CirclesGridFinderParametersR(image: *const c_void, pattern_size: *const core::Size, centers: *const c_void, flags: i32, blob_detector: *const c_void, parameters: *const crate::calib3d::CirclesGridFinderParameters) -> Result<bool>;
+		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1: *const c_void, points2: *const c_void, camera_matrix1: *const c_void, camera_matrix2: *const c_void, dist_coeff1: *const c_void, dist_coeff2: *const c_void, mask: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
+		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, camera_matrix1: *const c_void, dist_coeffs1: *const c_void, camera_matrix2: *const c_void, dist_coeffs2: *const c_void, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, camera_matrix: *const c_void, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, focal: f64, pp: *const core::Point2d, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1: *const c_void, points2: *const c_void, mask: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(points1: *const c_void, points2: *const c_void, mask: *const c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1: *const c_void, points2: *const c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(src_points: *const c_void, dst_points: *const c_void, mask: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(src_points: *const c_void, dst_points: *const c_void, mask: *const c_void, method: i32, ransac_reproj_threshold: f64) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double(src_points: *const c_void, dst_points: *const c_void, method: i32, ransac_reproj_threshold: f64, mask: *const c_void, max_iters: i32, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, k: *const c_void, d: *const c_void, rvecs: *const c_void, tvecs: *const c_void, flags: i32, criteria: *const core::TermCriteria) -> Result<f64>;
@@ -335,6 +341,7 @@ mod calib3d_sys {
 		pub fn cv_solveP3P_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvecs: *const c_void, tvecs: *const c_void, flags: i32) -> Result<i32>;
 		pub fn cv_solvePnPGeneric_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_SolvePnPMethod_const__InputArrayR_const__InputArrayR_const__OutputArrayR(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvecs: *const c_void, tvecs: *const c_void, use_extrinsic_guess: bool, flags: crate::calib3d::SolvePnPMethod, rvec: *const c_void, tvec: *const c_void, reprojection_error: *const c_void) -> Result<i32>;
 		pub fn cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: *const c_void, flags: i32) -> Result<bool>;
+		pub fn cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_UsacParamsR(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, inliers: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<bool>;
 		pub fn cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, criteria: *const core::TermCriteria) -> Result_void;
 		pub fn cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, criteria: *const core::TermCriteria, vv_slambda: f64) -> Result_void;
 		pub fn cv_solvePnP_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(object_points: *const c_void, image_points: *const c_void, camera_matrix: *const c_void, dist_coeffs: *const c_void, rvec: *const c_void, tvec: *const c_void, use_extrinsic_guess: bool, flags: i32) -> Result<bool>;
@@ -1806,6 +1813,11 @@ mod core_sys {
 		pub fn cv_ocl_Context_ptr_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Context_useSVM_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Context_setUseSVM_bool(instance: *mut c_void, enabled: bool) -> Result_void;
+		pub fn cv_ocl_Context_fromHandle_voidX(context: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_Context_fromDevice_const_DeviceR(device: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_Context_create_const_stringR(configuration: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_ocl_Context_release(instance: *mut c_void) -> Result_void;
+		pub fn cv_ocl_Context_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Device_Device() -> Result<*mut c_void>;
 		pub fn cv_ocl_Device_Device_voidX(d: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Device_Device_const_DeviceR(d: *const c_void) -> Result<*mut c_void>;
@@ -1885,6 +1897,8 @@ mod core_sys {
 		pub fn cv_ocl_Device_printfBufferSize_const(instance: *const c_void) -> Result<size_t>;
 		pub fn cv_ocl_Device_profilingTimerResolution_const(instance: *const c_void) -> Result<size_t>;
 		pub fn cv_ocl_Device_getDefault() -> Result<*mut c_void>;
+		pub fn cv_ocl_Device_fromHandle_voidX(d: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_Device_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Image2D_Image2D() -> Result<*mut c_void>;
 		pub fn cv_ocl_Image2D_Image2D_const_UMatR_bool_bool(src: *const c_void, norm: bool, alias: bool) -> Result<*mut c_void>;
 		pub fn cv_ocl_Image2D_Image2D_const_Image2DR(i: *const c_void) -> Result<*mut c_void>;
@@ -1934,10 +1948,29 @@ mod core_sys {
 		pub fn cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR_int_int(m: *const c_void, wscale: i32, iwscale: i32) -> Result<*mut c_void>;
 		pub fn cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR_int_int(m: *const c_void, wscale: i32, iwscale: i32) -> Result<*mut c_void>;
 		pub fn cv_ocl_KernelArg_Constant_const_MatR(m: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_getContext_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_getDevice_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_getQueue_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_useOpenCL_const(instance: *const c_void) -> Result<bool>;
+		pub fn cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(instance: *mut c_void, flag: bool) -> Result_void;
+		pub fn cv_ocl_OpenCLExecutionContext_getCurrent() -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_getCurrentRef() -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_bind_const(instance: *const c_void) -> Result_void;
+		pub fn cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(instance: *const c_void, q: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name: *const c_char, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context: *const c_void, device: *const c_void, queue: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context: *const c_void, device: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_OpenCLExecutionContext_empty_const(instance: *const c_void) -> Result<bool>;
+		pub fn cv_ocl_OpenCLExecutionContext_release(instance: *mut c_void) -> Result_void;
 		pub fn cv_ocl_Platform_Platform() -> Result<*mut c_void>;
 		pub fn cv_ocl_Platform_Platform_const_PlatformR(p: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Platform_ptr_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Platform_getDefault() -> Result<*mut c_void>;
+		pub fn cv_ocl_Platform_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_PlatformInfo_PlatformInfo() -> Result<*mut c_void>;
 		pub fn cv_ocl_PlatformInfo_PlatformInfo_voidX(id: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i: *const c_void) -> Result<*mut c_void>;
@@ -1946,12 +1979,14 @@ mod core_sys {
 		pub fn cv_ocl_PlatformInfo_version_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_PlatformInfo_deviceNumber_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(instance: *const c_void, device: *mut c_void, d: i32) -> Result_void;
+		pub fn cv_ocl_PlatformInfo_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Program_Program() -> Result<*mut c_void>;
 		pub fn cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src: *const c_void, buildflags: *const c_char, errmsg: *mut *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Program_Program_const_ProgramR(prog: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(instance: *mut c_void, src: *const c_void, buildflags: *const c_char, errmsg: *mut *mut c_void) -> Result<bool>;
 		pub fn cv_ocl_Program_ptr_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Program_getBinary_const_vector_char_R(instance: *const c_void, binary: *mut c_void) -> Result_void;
+		pub fn cv_ocl_Program_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Program_read_const_StringR_const_StringR(instance: *mut c_void, buf: *const c_char, buildflags: *const c_char) -> Result<bool>;
 		pub fn cv_ocl_Program_write_const_StringR(instance: *const c_void, buf: *mut *mut c_void) -> Result<bool>;
 		pub fn cv_ocl_Program_source_const(instance: *const c_void) -> Result<*mut c_void>;
@@ -1965,6 +2000,7 @@ mod core_sys {
 		pub fn cv_ocl_ProgramSource_hash_const(instance: *const c_void) -> Result<core::ProgramSource_hash_t>;
 		pub fn cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module: *const c_char, name: *const c_char, binary: *const u8, size: size_t, build_options: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module: *const c_char, name: *const c_char, binary: *const u8, size: size_t, build_options: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_ocl_ProgramSource_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Queue_Queue() -> Result<*mut c_void>;
 		pub fn cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c: *const c_void, d: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Queue_Queue_const_QueueR(q: *const c_void) -> Result<*mut c_void>;
@@ -1973,6 +2009,7 @@ mod core_sys {
 		pub fn cv_ocl_Queue_ptr_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Queue_getDefault() -> Result<*mut c_void>;
 		pub fn cv_ocl_Queue_getProfilingQueue_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_Queue_empty_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Timer_Timer_const_QueueR(q: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_Timer_start(instance: *mut c_void) -> Result_void;
 		pub fn cv_ocl_Timer_stop(instance: *mut c_void) -> Result_void;
@@ -3341,6 +3378,10 @@ mod features2d_sys {
 		pub fn cv_AKAZE_setDiffusivity_DiffusivityType(instance: *mut c_void, diff: crate::features2d::KAZE_DiffusivityType) -> Result_void;
 		pub fn cv_AKAZE_getDiffusivity_const(instance: *const c_void) -> Result<crate::features2d::KAZE_DiffusivityType>;
 		pub fn cv_AKAZE_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_AffineFeature_create_const_Ptr_Feature2D_R_int_int_float_float(backend: *const c_void, max_tilt: i32, min_tilt: i32, tilt_step: f32, rotate_step_base: f32) -> Result<*mut c_void>;
+		pub fn cv_AffineFeature_setViewParams_const_vector_float_R_const_vector_float_R(instance: *mut c_void, tilts: *const c_void, rolls: *const c_void) -> Result_void;
+		pub fn cv_AffineFeature_getViewParams_const_vector_float_R_vector_float_R(instance: *const c_void, tilts: *mut c_void, rolls: *mut c_void) -> Result_void;
+		pub fn cv_AffineFeature_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_AgastFeatureDetector_create_int_bool_DetectorType(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<*mut c_void>;
 		pub fn cv_AgastFeatureDetector_setThreshold_int(instance: *mut c_void, threshold: i32) -> Result_void;
 		pub fn cv_AgastFeatureDetector_getThreshold_const(instance: *const c_void) -> Result<i32>;
@@ -3499,6 +3540,7 @@ mod features2d_sys {
 		pub fn cv_ORB_getFastThreshold_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ORB_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SIFT_create_int_int_double_double_double(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<*mut c_void>;
+		pub fn cv_SIFT_create_int_int_double_double_double_int(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<*mut c_void>;
 		pub fn cv_SIFT_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_create_const_ParamsR(parameters: *const crate::features2d::SimpleBlobDetector_Params) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
@@ -3546,6 +3588,7 @@ mod flann_sys {
 		pub fn cv_flann_LinearIndexParams_LinearIndexParams() -> Result<*mut c_void>;
 		pub fn cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number: i32, key_size: i32, multi_probe_level: i32) -> Result<*mut c_void>;
 		pub fn cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(filename: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_flann_SearchParams_SearchParams_int_float_bool_bool(checks: i32, eps: f32, sorted: bool, explore_all_trees: bool) -> Result<*mut c_void>;
 		pub fn cv_flann_SearchParams_SearchParams_int_float_bool(checks: i32, eps: f32, sorted: bool) -> Result<*mut c_void>;
 	}
 }
@@ -4116,6 +4159,75 @@ mod line_descriptor_sys {
 #[cfg(feature = "contrib")]
 pub use line_descriptor_sys::*;
 
+#[cfg(feature = "contrib")]
+mod mcc_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_mcc_CChecker_create() -> Result<*mut c_void>;
+		pub fn cv_mcc_CChecker_setTarget_TYPECHART(instance: *mut c_void, _target: crate::mcc::MCC_TYPECHART) -> Result_void;
+		pub fn cv_mcc_CChecker_setBox_vector_Point2f_(instance: *mut c_void, _box: *mut c_void) -> Result_void;
+		pub fn cv_mcc_CChecker_setChartsRGB_Mat(instance: *mut c_void, _charts_rgb: *mut c_void) -> Result_void;
+		pub fn cv_mcc_CChecker_setChartsYCbCr_Mat(instance: *mut c_void, _charts_y_cb_cr: *mut c_void) -> Result_void;
+		pub fn cv_mcc_CChecker_setCost_float(instance: *mut c_void, _cost: f32) -> Result_void;
+		pub fn cv_mcc_CChecker_setCenter_Point2f(instance: *mut c_void, _center: *const core::Point2f) -> Result_void;
+		pub fn cv_mcc_CChecker_getTarget(instance: *mut c_void) -> Result<crate::mcc::MCC_TYPECHART>;
+		pub fn cv_mcc_CChecker_getBox(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_mcc_CChecker_getChartsRGB(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_mcc_CChecker_getChartsYCbCr(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_mcc_CChecker_getCost(instance: *mut c_void) -> Result<f32>;
+		pub fn cv_mcc_CChecker_getCenter(instance: *mut c_void) -> Result<core::Point2f>;
+		pub fn cv_mcc_CCheckerDetector_setNet_Net(instance: *mut c_void, net: *mut c_void) -> Result<bool>;
+		pub fn cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vector_Rect_R_const_int_bool_const_Ptr_DetectorParameters_R(instance: *mut c_void, image: *const c_void, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: *const c_void, nc: i32, use_net: bool, params: *const c_void) -> Result<bool>;
+		pub fn cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_Ptr_DetectorParameters_R(instance: *mut c_void, image: *const c_void, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: *const c_void) -> Result<bool>;
+		pub fn cv_mcc_CCheckerDetector_getBestColorChecker(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_mcc_CCheckerDetector_getListColorChecker(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_mcc_CCheckerDetector_create() -> Result<*mut c_void>;
+		pub fn cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(instance: *mut c_void, img: *const c_void) -> Result_void;
+		pub fn cv_mcc_CCheckerDraw_create_Ptr_CChecker__Scalar_int(p_checker: *mut c_void, color: *const core::Scalar, thickness: i32) -> Result<*mut c_void>;
+		pub fn cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMin_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMin_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMax_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMax_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeStep_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeStep_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropAdaptiveThreshConstant_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropAdaptiveThreshConstant_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinContoursAreaRate_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropMinContoursAreaRate_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinContoursArea_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropMinContoursArea_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropConfidenceThreshold_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropConfidenceThreshold_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinContourSolidity_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropMinContourSolidity_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropFindCandidatesApproxPolyDPEpsMultiplier_const(instance: *const c_void) -> Result<f64>;
+		pub fn cv_mcc_DetectorParameters_setPropFindCandidatesApproxPolyDPEpsMultiplier_double(instance: *mut c_void, val: f64) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropBorderWidth_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropBorderWidth_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropB0factor_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_mcc_DetectorParameters_setPropB0factor_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMaxError_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_mcc_DetectorParameters_setPropMaxError_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinContourPointsAllowed_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinContourPointsAllowed_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinContourLengthAllowed_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinContourLengthAllowed_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinInterContourDistance_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinInterContourDistance_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinInterCheckerDistance_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinInterCheckerDistance_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinImageSize_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinImageSize_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_getPropMinGroupSize_const(instance: *const c_void) -> Result<u32>;
+		pub fn cv_mcc_DetectorParameters_setPropMinGroupSize_unsigned_int(instance: *mut c_void, val: u32) -> Result_void;
+		pub fn cv_mcc_DetectorParameters_DetectorParameters() -> Result<*mut c_void>;
+		pub fn cv_mcc_DetectorParameters_create() -> Result<*mut c_void>;
+	}
+}
+#[cfg(feature = "contrib")]
+pub use mcc_sys::*;
+
 mod ml_sys {
 	use super::*;
 
@@ -4278,6 +4390,7 @@ mod ml_sys {
 		pub fn cv_ml_RTrees_setTermCriteria_const_TermCriteriaR(instance: *mut c_void, val: *const core::TermCriteria) -> Result_void;
 		pub fn cv_ml_RTrees_getVarImportance_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(instance: *const c_void, samples: *const c_void, results: *const c_void, flags: i32) -> Result_void;
+		pub fn cv_ml_RTrees_getOOBError_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_ml_RTrees_create() -> Result<*mut c_void>;
 		pub fn cv_ml_RTrees_load_const_StringR_const_StringR(filepath: *const c_char, node_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_ml_SVM_getType_const(instance: *const c_void) -> Result<i32>;
@@ -4724,6 +4837,7 @@ mod ovis_sys {
 		pub fn cv_ovis_setMaterialProperty_const_StringR_const_StringR_const_ScalarR(name: *const c_char, prop: *const c_char, value: *const core::Scalar) -> Result_void;
 		pub fn cv_ovis_setMaterialProperty_const_StringR_int_const_ScalarR(name: *const c_char, prop: i32, value: *const core::Scalar) -> Result_void;
 		pub fn cv_ovis_setMaterialProperty_const_StringR_int_const_StringR(name: *const c_char, prop: i32, value: *const c_char) -> Result_void;
+		pub fn cv_ovis_setMaterialProperty_const_StringR_int_const__InputArrayR(name: *const c_char, prop: i32, value: *const c_void) -> Result_void;
 		pub fn cv_ovis_updateTexture_const_StringR_const__InputArrayR(name: *const c_char, image: *const c_void) -> Result_void;
 		pub fn cv_ovis_waitKey_int(delay: i32) -> Result<i32>;
 		pub fn cv_ovis_WindowScene_setBackground_const__InputArrayR(instance: *mut c_void, image: *const c_void) -> Result_void;
@@ -4734,7 +4848,7 @@ mod ovis_sys {
 		pub fn cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_ScalarR(instance: *mut c_void, name: *const c_char, prop: i32, value: *const core::Scalar) -> Result_void;
 		pub fn cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR_int(instance: *mut c_void, name: *const c_char, prop: i32, value: *const c_char, sub_entity_idx: i32) -> Result_void;
 		pub fn cv_ovis_WindowScene_getEntityProperty_const_StringR_int_const__OutputArrayR(instance: *mut c_void, name: *const c_char, prop: i32, value: *const c_void) -> Result_void;
-		pub fn cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR(instance: *mut c_void, name: *const c_char, k: *const c_void, imsize: *const core::Size, z_far: f32, tvec: *const c_void, rot: *const c_void) -> Result<core::Rect2d>;
+		pub fn cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR_const_ScalarR(instance: *mut c_void, name: *const c_char, k: *const c_void, imsize: *const core::Size, z_far: f32, tvec: *const c_void, rot: *const c_void, color: *const core::Scalar) -> Result<core::Rect2d>;
 		pub fn cv_ovis_WindowScene_createLightEntity_const_StringR_const__InputArrayR_const__InputArrayR_const_ScalarR_const_ScalarR(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void, diffuse_color: *const core::Scalar, specular_color: *const core::Scalar) -> Result_void;
 		pub fn cv_ovis_WindowScene_updateEntityPose_const_StringR_const__InputArrayR_const__InputArrayR(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void) -> Result_void;
 		pub fn cv_ovis_WindowScene_setEntityPose_const_StringR_const__InputArrayR_const__InputArrayR_bool(instance: *mut c_void, name: *const c_char, tvec: *const c_void, rot: *const c_void, invert: bool) -> Result_void;
@@ -4961,6 +5075,7 @@ mod rgbd_sys {
 	use super::*;
 
 	extern "C" {
+		pub fn cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: *const core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: *const core::Vec3i) -> Result<*mut c_void>;
 		pub fn cv_linemod_colormap_const_MatR_MatR(quantized: *const c_void, dst: *mut c_void) -> Result_void;
 		pub fn cv_linemod_drawFeatures_const__InputOutputArrayR_const_vector_Template_R_const_Point2iR_int(img: *const c_void, templates: *const c_void, tl: *const core::Point2i, size: i32) -> Result_void;
 		pub fn cv_linemod_getDefaultLINE() -> Result<*mut c_void>;
@@ -5028,6 +5143,16 @@ mod rgbd_sys {
 		pub fn cv_dynafu_Params_setPropTruncateThreshold_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_dynafu_Params_defaultParams() -> Result<*mut c_void>;
 		pub fn cv_dynafu_Params_coarseParams() -> Result<*mut c_void>;
+		pub fn cv_kinfu_Intr_Intr() -> Result<crate::rgbd::Kinfu_Intr>;
+		pub fn cv_kinfu_Intr_Intr_float_float_float_float(_fx: f32, _fy: f32, _cx: f32, _cy: f32) -> Result<crate::rgbd::Kinfu_Intr>;
+		pub fn cv_kinfu_Intr_Intr_Matx33f(m: *const core::Matx33f) -> Result<crate::rgbd::Kinfu_Intr>;
+		pub fn cv_kinfu_Intr_scale_const_int(instance: *const crate::rgbd::Kinfu_Intr, pyr: i32) -> Result<crate::rgbd::Kinfu_Intr>;
+		pub fn cv_kinfu_Intr_makeReprojector_const(instance: *const crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Reprojector>;
+		pub fn cv_kinfu_Intr_makeProjector_const(instance: *const crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Projector>;
+		pub fn cv_kinfu_Intr_getMat_const(instance: *const crate::rgbd::Kinfu_Intr) -> Result<core::Matx33f>;
+		pub fn cv_kinfu_Intr_Projector_Projector_Intr(intr: *const crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Projector>;
+		pub fn cv_kinfu_Intr_Reprojector_Reprojector() -> Result<crate::rgbd::Kinfu_Intr_Reprojector>;
+		pub fn cv_kinfu_Intr_Reprojector_Reprojector_Intr(intr: *const crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Reprojector>;
 		pub fn cv_kinfu_KinFu_create_const_Ptr_Params_R(_params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_kinfu_KinFu_getParams_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_kinfu_KinFu_render_const_const__OutputArrayR_const_Matx44fR(instance: *const c_void, image: *const c_void, camera_pose: *const core::Matx44f) -> Result_void;
@@ -5085,6 +5210,15 @@ mod rgbd_sys {
 		pub fn cv_kinfu_Params_defaultParams() -> Result<*mut c_void>;
 		pub fn cv_kinfu_Params_coarseParams() -> Result<*mut c_void>;
 		pub fn cv_kinfu_Params_hashTSDFParams_bool(is_coarse: bool) -> Result<*mut c_void>;
+		pub fn cv_kinfu_Volume_getPropVoxelSize_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_kinfu_Volume_getPropVoxelSizeInv_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_kinfu_Volume_getPropPose_const(instance: *const c_void) -> Result<core::Affine3f>;
+		pub fn cv_kinfu_Volume_getPropRaycastStepFactor_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR(instance: *mut c_void, _depth: *const c_void, depth_factor: f32, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr) -> Result_void;
+		pub fn cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_Size_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr, frame_size: *const core::Size, points: *const c_void, normals: *const c_void) -> Result_void;
+		pub fn cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, _normals: *const c_void) -> Result_void;
+		pub fn cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
+		pub fn cv_kinfu_Volume_reset(instance: *mut c_void) -> Result_void;
 		pub fn cv_linemod_ColorGradient_getPropWeak_threshold_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_linemod_ColorGradient_setPropWeak_threshold_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_linemod_ColorGradient_getPropNum_features_const(instance: *const c_void) -> Result<size_t>;
@@ -6445,6 +6579,10 @@ mod tracking_sys {
 		pub fn cv_TrackerFeatureSet_getResponses_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_create_const_ParamsR(parameters: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_create() -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_getPropModelTxt_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_setPropModelTxt_String(instance: *mut c_void, val: *mut c_char) -> Result_void;
+		pub fn cv_TrackerGOTURN_Params_getPropModelBin_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_setPropModelBin_String(instance: *mut c_void, val: *mut c_char) -> Result_void;
 		pub fn cv_TrackerGOTURN_Params_Params() -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_Params_read_const_FileNodeR(instance: *mut c_void, unnamed: *const c_void) -> Result_void;
 		pub fn cv_TrackerGOTURN_Params_write_const_FileStorageR(instance: *const c_void, unnamed: *mut c_void) -> Result_void;

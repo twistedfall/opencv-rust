@@ -14,17 +14,17 @@
 //! ![block formula](https://latex.codecogs.com/png.latex?s%20%5C%3B%20p%20%3D%20A%20%5Cbegin%7Bbmatrix%7D%20R%7Ct%20%5Cend%7Bbmatrix%7D%20P%5Fw%2C)
 //! 
 //! where ![inline formula](https://latex.codecogs.com/png.latex?P%5Fw) is a 3D point expressed with respect to the world coordinate system,
-//! ![inline formula](https://latex.codecogs.com/png.latex?p) is a 2D pixel in the image plane, ![inline formula](https://latex.codecogs.com/png.latex?A) is the intrinsic camera matrix,
+//! ![inline formula](https://latex.codecogs.com/png.latex?p) is a 2D pixel in the image plane, ![inline formula](https://latex.codecogs.com/png.latex?A) is the camera intrinsic matrix,
 //! ![inline formula](https://latex.codecogs.com/png.latex?R) and ![inline formula](https://latex.codecogs.com/png.latex?t) are the rotation and translation that describe the change of coordinates from
 //! world to camera coordinate systems (or camera frame) and ![inline formula](https://latex.codecogs.com/png.latex?s) is the projective transformation's
 //! arbitrary scaling and not part of the camera model.
 //! 
-//! The intrinsic camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
+//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
 //! as ![inline formula](https://latex.codecogs.com/png.latex?K)) projects 3D points given in the camera coordinate system to 2D pixel coordinates, i.e.
 //! 
 //! ![block formula](https://latex.codecogs.com/png.latex?p%20%3D%20A%20P%5Fc%2E)
 //! 
-//! The camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A) is composed of the focal lengths ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy), which are
+//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) is composed of the focal lengths ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy), which are
 //! expressed in pixel units, and the principal point ![inline formula](https://latex.codecogs.com/png.latex?%28c%5Fx%2C%20c%5Fy%29), that is usually close to the
 //! image center:
 //! 
@@ -195,9 +195,9 @@
 //! 
 //! 
 //! Note:
-//!    *   Many functions in this module take a camera matrix as an input parameter. Although all
+//!    *   Many functions in this module take a camera intrinsic matrix as an input parameter. Although all
 //!        functions assume the same structure of this parameter, they may name it differently. The
-//!        parameter's description, however, will be clear in that a camera matrix with the structure
+//!        parameter's description, however, will be clear in that a camera intrinsic matrix with the structure
 //!        shown above is required.
 //!    *   A calibration sample for 3 cameras in a horizontal position can be found at
 //!        opencv_source_code/samples/cpp/3calibration.cpp
@@ -352,7 +352,9 @@ pub const RANSAC: i32 = 8;
 pub const RHO: i32 = 16;
 /// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)
 pub const SOLVEPNP_AP3P: i32 = 5;
-/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)
+/// **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
+/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)
 pub const SOLVEPNP_DLS: i32 = 3;
 /// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 pub const SOLVEPNP_EPNP: i32 = 1;
@@ -375,6 +377,8 @@ pub const SOLVEPNP_ITERATIVE: i32 = 0;
 pub const SOLVEPNP_MAX_COUNT: i32 = 8;
 /// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
+/// **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
 /// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
@@ -419,8 +423,12 @@ pub enum SolvePnPMethod {
 	SOLVEPNP_EPNP = 1,
 	/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)
 	SOLVEPNP_P3P = 2,
-	/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)
+	/// **Broken implementation. Using this flag will fallback to EPnP.** 
+	/// 
+	/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)
 	SOLVEPNP_DLS = 3,
+	/// **Broken implementation. Using this flag will fallback to EPnP.** 
+	/// 
 	/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 	SOLVEPNP_UPNP = 4,
 	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)
@@ -535,14 +543,13 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 /// respectively. In the old interface all the vectors of object points from different views are
 /// concatenated together.
-/// * imageSize: Size of the image used only to initialize the intrinsic camera matrix.
-/// * cameraMatrix: Input/output 3x3 floating-point camera matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
+/// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
+/// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
 /// and/or CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
 /// initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
 /// * rvecs: Output vector of rotation vectors (@ref Rodrigues ) estimated for each pattern view
 /// (e.g. std::vector<cv::Mat>>). That is, each i-th rotation vector together with the corresponding
 /// i-th translation vector (see the next output parameter description) brings the calibration pattern
@@ -669,14 +676,13 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 /// respectively. In the old interface all the vectors of object points from different views are
 /// concatenated together.
-/// * imageSize: Size of the image used only to initialize the intrinsic camera matrix.
-/// * cameraMatrix: Input/output 3x3 floating-point camera matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
+/// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
+/// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
 /// and/or CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
 /// initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
 /// * rvecs: Output vector of rotation vectors (@ref Rodrigues ) estimated for each pattern view
 /// (e.g. std::vector<cv::Mat>>). That is, each i-th rotation vector together with the corresponding
 /// i-th translation vector (see the next output parameter description) brings the calibration pattern
@@ -796,23 +802,23 @@ pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &d
 /// ## Parameters
 /// * R_gripper2base: Rotation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the gripper frame to the robot base frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bb%7D%5Ctextrm%7BT%7D%5Fg)).
-/// This is a vector (`vector<Mat>`) that contains the rotation matrices for all the transformations
-/// from gripper frame to robot base frame.
+/// This is a vector (`vector<Mat>`) that contains the rotation, `(3x3)` rotation matrices or `(3x1)` rotation vectors,
+/// for all the transformations from gripper frame to robot base frame.
 /// * t_gripper2base: Translation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the gripper frame to the robot base frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bb%7D%5Ctextrm%7BT%7D%5Fg)).
-/// This is a vector (`vector<Mat>`) that contains the translation vectors for all the transformations
+/// This is a vector (`vector<Mat>`) that contains the `(3x1)` translation vectors for all the transformations
 /// from gripper frame to robot base frame.
 /// * R_target2cam: Rotation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the target frame to the camera frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bc%7D%5Ctextrm%7BT%7D%5Ft)).
-/// This is a vector (`vector<Mat>`) that contains the rotation matrices for all the transformations
-/// from calibration target frame to camera frame.
+/// This is a vector (`vector<Mat>`) that contains the rotation, `(3x3)` rotation matrices or `(3x1)` rotation vectors,
+/// for all the transformations from calibration target frame to camera frame.
 /// * t_target2cam: Rotation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the target frame to the camera frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bc%7D%5Ctextrm%7BT%7D%5Ft)).
-/// This is a vector (`vector<Mat>`) that contains the translation vectors for all the transformations
+/// This is a vector (`vector<Mat>`) that contains the `(3x1)` translation vectors for all the transformations
 /// from calibration target frame to camera frame.
-/// * R_cam2gripper:[out] Estimated rotation part extracted from the homogeneous matrix that transforms a point
+/// * R_cam2gripper:[out] Estimated `(3x3)` rotation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the camera frame to the gripper frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bg%7D%5Ctextrm%7BT%7D%5Fc)).
-/// * t_cam2gripper:[out] Estimated translation part extracted from the homogeneous matrix that transforms a point
+/// * t_cam2gripper:[out] Estimated `(3x1)` translation part extracted from the homogeneous matrix that transforms a point
 /// expressed in the camera frame to the gripper frame (![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bg%7D%5Ctextrm%7BT%7D%5Fc)).
 /// * method: One of the implemented Hand-Eye calibration method, see cv::HandEyeCalibrationMethod
 /// 
@@ -867,10 +873,10 @@ pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2bas
 	unsafe { sys::cv_calibrateHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_HandEyeCalibrationMethod(r_gripper2base.as_raw__InputArray(), t_gripper2base.as_raw__InputArray(), r_target2cam.as_raw__InputArray(), t_target2cam.as_raw__InputArray(), r_cam2gripper.as_raw__OutputArray(), t_cam2gripper.as_raw__OutputArray(), method) }.into_result()
 }
 
-/// Computes useful camera characteristics from the camera matrix.
+/// Computes useful camera characteristics from the camera intrinsic matrix.
 /// 
 /// ## Parameters
-/// * cameraMatrix: Input camera matrix that can be estimated by calibrateCamera or
+/// * cameraMatrix: Input camera intrinsic matrix that can be estimated by calibrateCamera or
 /// stereoCalibrate .
 /// * imageSize: Input image size in pixels.
 /// * apertureWidth: Physical width in mm of the sensor.
@@ -1080,7 +1086,7 @@ pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::To
 /// 
 /// ## Parameters
 /// * H: The input homography matrix between two images.
-/// * K: The input intrinsic camera calibration matrix.
+/// * K: The input camera intrinsic matrix.
 /// * rotations: Array of rotation matrices.
 /// * translations: Array of translation matrices.
 /// * normals: Array of plane normal matrices.
@@ -1107,11 +1113,11 @@ pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInpu
 	unsafe { sys::cv_decomposeHomographyMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(h.as_raw__InputArray(), k.as_raw__InputArray(), rotations.as_raw__OutputArray(), translations.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
 }
 
-/// Decomposes a projection matrix into a rotation matrix and a camera matrix.
+/// Decomposes a projection matrix into a rotation matrix and a camera intrinsic matrix.
 /// 
 /// ## Parameters
 /// * projMatrix: 3x4 input projection matrix P.
-/// * cameraMatrix: Output 3x3 camera matrix K.
+/// * cameraMatrix: Output 3x3 camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D).
 /// * rotMatrix: Output 3x3 external rotation matrix R.
 /// * transVect: Output 4x1 translation vector T.
 /// * rotMatrixX: Optional 3x3 rotation matrix around x-axis.
@@ -1170,10 +1176,9 @@ pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern
 /// ## Parameters
 /// * image: Input/output image. It must have 1 or 3 channels. The number of channels is not altered.
 /// * cameraMatrix: Input 3x3 floating-point matrix of camera intrinsic parameters.
-/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D)
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is empty, the zero distortion coefficients are assumed.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is empty, the zero distortion coefficients are assumed.
 /// * rvec: Rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Translation vector.
@@ -1554,11 +1559,11 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
+/// same camera intrinsic matrix. If this assumption does not hold for your use case, use
 /// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
@@ -1600,11 +1605,11 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
+/// same camera intrinsic matrix. If this assumption does not hold for your use case, use
 /// `undistortPoints()` with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
 /// *   **RANSAC** for the RANSAC algorithm.
@@ -1647,10 +1652,10 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function differs from the one above that it computes camera matrix from focal length and
+/// This function differs from the one above that it computes camera intrinsic matrix from focal length and
 /// principal point:
 /// 
-/// ![block formula](https://latex.codecogs.com/png.latex?K%20%3D%0A%5Cbegin%7Bbmatrix%7D%0Af%20%26%200%20%26%20x%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%20f%20%26%20y%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D)
+/// ![block formula](https://latex.codecogs.com/png.latex?A%20%3D%0A%5Cbegin%7Bbmatrix%7D%0Af%20%26%200%20%26%20x%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%20f%20%26%20y%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D)
 /// 
 /// ## C++ default parameters
 /// * focal: 1.0
@@ -1683,7 +1688,7 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// point localization, image resolution, and the image noise.
 /// * confidence: Parameter used for the RANSAC and LMedS methods only. It specifies a desirable level
 /// of confidence (probability) that the estimated matrix is correct.
-/// * mask: 
+/// * mask:[out] optional output mask
 /// * maxIters: The maximum number of robust method iterations.
 /// 
 /// The epipolar geometry is described by the following equation:
@@ -1749,7 +1754,7 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 /// point localization, image resolution, and the image noise.
 /// * confidence: Parameter used for the RANSAC and LMedS methods only. It specifies a desirable level
 /// of confidence (probability) that the estimated matrix is correct.
-/// * mask: 
+/// * mask:[out] optional output mask
 /// * maxIters: The maximum number of robust method iterations.
 /// 
 /// The epipolar geometry is described by the following equation:
@@ -1816,7 +1821,7 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 /// point localization, image resolution, and the image noise.
 /// * confidence: Parameter used for the RANSAC and LMedS methods only. It specifies a desirable level
 /// of confidence (probability) that the estimated matrix is correct.
-/// * mask: 
+/// * mask:[out] optional output mask
 /// * maxIters: The maximum number of robust method iterations.
 /// 
 /// The epipolar geometry is described by the following equation:
@@ -2012,12 +2017,12 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 /// * imagePoints: vector of vectors of the projections of calibration pattern points.
 ///    imagePoints.size() and objectPoints.size() and imagePoints[i].size() must be equal to
 ///    objectPoints[i].size() for each i.
-/// * image_size: Size of the image used only to initialize the intrinsic camera matrix.
-/// * K: Output 3x3 floating-point camera matrix
-///    ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) . If
+/// * image_size: Size of the image used only to initialize the camera intrinsic matrix.
+/// * K: Output 3x3 floating-point camera intrinsic matrix
+///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If
 ///    fisheye::CALIB_USE_INTRINSIC_GUESS/ is specified, some or all of fx, fy, cx, cy must be
 ///    initialized before calling the function.
-/// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each pattern view.
 ///    That is, each k-th rotation vector together with the corresponding k-th translation vector (see
 ///    the next output parameter description) brings the calibration pattern from the model coordinate
@@ -2056,12 +2061,12 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// ## Parameters
 /// * undistorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is
 /// the number of points in the view.
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * alpha: The skew coefficient.
 /// * distorted: Output array of image points, 1xN/Nx1 2-channel, or vector\<Point2f\> .
 /// 
-/// Note that the function assumes the camera matrix of the undistorted points to be identity.
+/// Note that the function assumes the camera intrinsic matrix of the undistorted points to be identity.
 /// This means if you want to transform back points undistorted with undistortPoints() you have to
 /// multiply them with ![inline formula](https://latex.codecogs.com/png.latex?P%5E%7B%2D1%7D).
 /// 
@@ -2075,15 +2080,15 @@ pub fn distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn 
 	unsafe { sys::cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted.as_raw__InputArray(), distorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha) }.into_result()
 }
 
-/// Estimates new camera matrix for undistortion or rectification.
+/// Estimates new camera intrinsic matrix for undistortion or rectification.
 /// 
 /// ## Parameters
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
 /// * image_size: Size of the image
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
-/// * P: New camera matrix (3x3) or new projection matrix (3x4)
+/// * P: New camera intrinsic matrix (3x3) or new projection matrix (3x4)
 /// * balance: Sets the new focal length in range between the min focal length and the max focal
 /// length. Balance is in range of [0, 1].
 /// * new_size: the new size
@@ -2105,11 +2110,11 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &dyn core::ToInputArr
 /// distortion is used, if R or P is empty identity matrixes are used.
 /// 
 /// ## Parameters
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
-/// * P: New camera matrix (3x3) or new projection matrix (3x4)
+/// * P: New camera intrinsic matrix (3x3) or new projection matrix (3x4)
 /// * size: Undistorted image size.
 /// * m1type: Type of the first output map that can be CV_32FC1 or CV_16SC2 . See convertMaps()
 /// for details.
@@ -2133,8 +2138,8 @@ pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn co
 /// * imagePoints: Output array of image points, 2xN/Nx2 1-channel or 1xN/Nx1 2-channel, or
 /// vector\<Point2f\>.
 /// * affine: 
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * alpha: The skew coefficient.
 /// * jacobian: Optional output 2Nx15 jacobian matrix of derivatives of image points with respect
 /// to components of the focal lengths, coordinates of the principal point, distortion coefficients,
@@ -2166,8 +2171,8 @@ pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_poin
 /// * imagePoints: Output array of image points, 2xN/Nx2 1-channel or 1xN/Nx1 2-channel, or
 /// vector\<Point2f\>.
 /// * affine: 
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * alpha: The skew coefficient.
 /// * jacobian: Optional output 2Nx15 jacobian matrix of derivatives of image points with respect
 /// to components of the focal lengths, coordinates of the principal point, distortion coefficients,
@@ -2203,15 +2208,15 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// observed by the first camera.
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
 /// observed by the second camera.
-/// * K1: Input/output first camera matrix:
+/// * K1: Input/output first camera intrinsic matrix:
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
 /// any of fisheye::CALIB_USE_INTRINSIC_GUESS , fisheye::CALIB_FIX_INTRINSIC are specified,
 /// some or all of the matrix components must be initialized.
-/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29) of 4 elements.
-/// * K2: Input/output second camera matrix. The parameter is similar to K1 .
+/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
+/// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
 /// * D2: Input/output lens distortion coefficients for the second camera. The parameter is
 /// similar to D1 .
-/// * imageSize: Size of the image used only to initialize intrinsic camera matrix.
+/// * imageSize: Size of the image used only to initialize camera intrinsic matrix.
 /// * R: Output rotation matrix between the 1st and the 2nd camera coordinate systems.
 /// * T: Output translation vector between the coordinate systems of the cameras.
 /// * flags: Different flags that may be zero or a combination of the following values:
@@ -2247,9 +2252,9 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 /// Stereo rectification for fisheye camera model
 /// 
 /// ## Parameters
-/// * K1: First camera matrix.
+/// * K1: First camera intrinsic matrix.
 /// * D1: First camera distortion parameters.
-/// * K2: Second camera matrix.
+/// * K2: Second camera intrinsic matrix.
 /// * D2: Second camera distortion parameters.
 /// * imageSize: Size of the image used for stereo calibration.
 /// * R: Rotation matrix between the coordinate systems of the first and the second
@@ -2299,9 +2304,9 @@ pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInpu
 /// ## Parameters
 /// * distorted: image with fisheye lens distortion.
 /// * undistorted: Output image with compensated fisheye lens distortion.
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
-/// * Knew: Camera matrix of the distorted image. By default, it is the identity matrix but you
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
+/// * Knew: Camera intrinsic matrix of the distorted image. By default, it is the identity matrix but you
 /// may additionally scale and shift the result by using a different matrix.
 /// * new_size: the new size
 /// 
@@ -2340,11 +2345,11 @@ pub fn fisheye_undistort_image(distorted: &dyn core::ToInputArray, undistorted: 
 /// ## Parameters
 /// * distorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is the
 /// number of points in the view.
-/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
-/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
-/// * P: New camera matrix (3x3) or new projection matrix (3x4)
+/// * P: New camera intrinsic matrix (3x3) or new projection matrix (3x4)
 /// * undistorted: Output array of image points, 1xN/Nx1 2-channel, or vector\<Point2f\> .
 /// 
 /// ## C++ default parameters
@@ -2360,13 +2365,12 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 	unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()
 }
 
-/// Returns the new camera matrix based on the free scaling parameter.
+/// Returns the new camera intrinsic matrix based on the free scaling parameter.
 /// 
 /// ## Parameters
-/// * cameraMatrix: Input camera matrix.
+/// * cameraMatrix: Input camera intrinsic matrix.
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * imageSize: Original image size.
 /// * alpha: Free scaling parameter between 0 (when all the pixels in the undistorted image are
@@ -2375,18 +2379,18 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 /// * newImgSize: Image size after rectification. By default, it is set to imageSize .
 /// * validPixROI: Optional output rectangle that outlines all-good-pixels region in the
 /// undistorted image. See roi1, roi2 description in stereoRectify .
-/// * centerPrincipalPoint: Optional flag that indicates whether in the new camera matrix the
+/// * centerPrincipalPoint: Optional flag that indicates whether in the new camera intrinsic matrix the
 /// principal point should be at the image center or not. By default, the principal point is chosen to
 /// best fit a subset of the source image (determined by alpha) to the corrected image.
 /// ## Returns
-/// new_camera_matrix Output new camera matrix.
+/// new_camera_matrix Output new camera intrinsic matrix.
 /// 
-/// The function computes and returns the optimal new camera matrix based on the free scaling parameter.
+/// The function computes and returns the optimal new camera intrinsic matrix based on the free scaling parameter.
 /// By varying this parameter, you may retrieve only sensible pixels alpha=0 , keep all the original
 /// image pixels if there is valuable information in the corners alpha=1 , or get something in between.
 /// When alpha\>0 , the undistorted result is likely to have some black pixels corresponding to
-/// "virtual" pixels outside of the captured distorted image. The original camera matrix, distortion
-/// coefficients, the computed new camera matrix, and newImageSize should be passed to
+/// "virtual" pixels outside of the captured distorted image. The original camera intrinsic matrix, distortion
+/// coefficients, the computed new camera intrinsic matrix, and newImageSize should be passed to
 /// initUndistortRectifyMap to produce the maps for remap .
 /// 
 /// ## C++ default parameters
@@ -2404,7 +2408,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 	unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1.opencv_as_extern(), roi2.opencv_as_extern(), min_disparity, number_of_disparities, block_size) }.into_result()
 }
 
-/// Finds an initial camera matrix from 3D-2D point correspondences.
+/// Finds an initial camera intrinsic matrix from 3D-2D point correspondences.
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points in the calibration pattern
@@ -2416,7 +2420,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 /// * aspectRatio: If it is zero or negative, both ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) are estimated independently.
 /// Otherwise, ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%2A%20%5Ctexttt%7BaspectRatio%7D) .
 /// 
-/// The function estimates and returns an initial camera matrix for the camera calibration process.
+/// The function estimates and returns an initial camera intrinsic matrix for the camera calibration process.
 /// Currently, the function only supports planar calibration patterns, which are patterns where each
 /// object point has z-coordinate =0.
 /// 
@@ -2457,10 +2461,9 @@ pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a
 /// * rvec: The rotation vector (@ref Rodrigues) that, together with tvec, performs a change of
 /// basis from world to camera coordinate system, see @ref calibrateCamera for details.
 /// * tvec: The translation vector, see parameter description above.
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is empty, the zero distortion coefficients are assumed.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs) . If the vector is empty, the zero distortion coefficients are assumed.
 /// * imagePoints: Output array of image points, 1xN/Nx1 2-channel, or
 /// vector\<Point2f\> .
 /// * jacobian: Optional output 2Nx(10+\<numDistCoeffs\>) jacobian matrix of derivatives of image
@@ -2508,9 +2511,9 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera intrinsic matrix.
 /// * R: Output rotation matrix. Together with the translation vector, this matrix makes up a tuple
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
@@ -2573,9 +2576,9 @@ pub fn recover_pose_camera(e: &dyn core::ToInputArray, points1: &dyn core::ToInp
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera intrinsic matrix.
 /// * R: Output rotation matrix. Together with the translation vector, this matrix makes up a tuple
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
@@ -2622,9 +2625,9 @@ pub fn recover_pose_camera(e: &dyn core::ToInputArray, points1: &dyn core::ToInp
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1.
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera intrinsic matrix.
 /// * R: Output rotation matrix. Together with the translation vector, this matrix makes up a tuple
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
@@ -2666,9 +2669,9 @@ pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix.
+/// same camera intrinsic matrix.
 /// * R: Output rotation matrix. Together with the translation vector, this matrix makes up a tuple
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
@@ -2729,7 +2732,7 @@ pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn
 /// inliers in points1 and points2 for then given essential matrix E. Only these inliers will be used to
 /// recover pose. In the output mask only inliers which pass the cheirality check.
 /// 
-/// This function differs from the one above that it computes camera matrix from focal length and
+/// This function differs from the one above that it computes camera intrinsic matrix from focal length and
 /// principal point:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?A%20%3D%0A%5Cbegin%7Bbmatrix%7D%0Af%20%26%200%20%26%20x%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%20f%20%26%20y%5F%7Bpp%7D%20%20%5C%5C%0A0%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D)
@@ -2836,10 +2839,9 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// 1x3/3x1 3-channel. vector\<Point3f\> can be also passed here.
 /// * imagePoints: Array of corresponding image points, 3x2 1-channel or 1x3/3x1 2-channel.
 ///  vector\<Point2f\> can be also passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvecs: Output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
 /// the model coordinate system to the camera coordinate system. A P3P problem has up to 4 solutions.
@@ -2851,7 +2853,7 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)).
 /// 
 /// The function estimates the object pose given 3 object points, their corresponding image
-/// projections, as well as the camera matrix and the distortion coefficients.
+/// projections, as well as the camera intrinsic matrix and the distortion coefficients.
 /// 
 /// 
 /// Note:
@@ -2885,10 +2887,9 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can be also passed here.
 /// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
 /// where N is the number of points. vector\<Point2d\> can be also passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvecs: Vector of output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
 /// the model coordinate system to the camera coordinate system.
@@ -2909,9 +2910,13 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// In this case the function requires exactly four object and image points.
 /// *   **SOLVEPNP_EPNP** Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
 /// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   **SOLVEPNP_DLS** Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
+/// *   **SOLVEPNP_DLS** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
+/// Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
 /// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   **SOLVEPNP_UPNP** Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
+/// *   **SOLVEPNP_UPNP** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
+/// Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
 /// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
 /// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
@@ -2934,7 +2939,7 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// and the 3D object points projected with the estimated pose.
 /// 
 /// The function estimates the object pose given a set of object points, their corresponding image
-/// projections, as well as the camera matrix and the distortion coefficients, see the figure below
+/// projections, as well as the camera intrinsic matrix and the distortion coefficients, see the figure below
 /// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
 /// and the Z-axis forward).
 /// 
@@ -3007,10 +3012,9 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 /// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can be also passed here.
 /// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
 /// where N is the number of points. vector\<Point2d\> can be also passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20fx%20%26%200%20%26%20cx%5C%5C%200%20%26%20fy%20%26%20cy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
@@ -3027,7 +3031,7 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 /// * flags: Method for solving a PnP problem (see @ref solvePnP ).
 /// 
 /// The function estimates an object pose given a set of object points, their corresponding image
-/// projections, as well as the camera matrix and the distortion coefficients. This function finds such
+/// projections, as well as the camera intrinsic matrix and the distortion coefficients. This function finds such
 /// a pose that minimizes reprojection error, that is, the sum of squared distances between the observed
 /// projections imagePoints and the projected (using @ref projectPoints ) objectPoints. The use of RANSAC
 /// makes the function resistant to outliers.
@@ -3070,10 +3074,9 @@ pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &d
 /// where N is the number of points. vector\<Point3d\> can also be passed here.
 /// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
 /// where N is the number of points. vector\<Point2d\> can also be passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
@@ -3082,7 +3085,7 @@ pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &d
 /// 
 /// The function refines the object pose given at least 3 object points, their corresponding image
 /// projections, an initial solution for the rotation and translation vector,
-/// as well as the camera matrix and the distortion coefficients.
+/// as well as the camera intrinsic matrix and the distortion coefficients.
 /// The function minimizes the projection error with respect to the rotation and the translation vectors, according
 /// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Eade13) process.
 /// 
@@ -3106,10 +3109,9 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// where N is the number of points. vector\<Point3d\> can also be passed here.
 /// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
 /// where N is the number of points. vector\<Point2d\> can also be passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
@@ -3120,7 +3122,7 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// 
 /// The function refines the object pose given at least 3 object points, their corresponding image
 /// projections, an initial solution for the rotation and translation vector,
-/// as well as the camera matrix and the distortion coefficients.
+/// as well as the camera intrinsic matrix and the distortion coefficients.
 /// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
 /// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 /// 
@@ -3155,10 +3157,9 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can be also passed here.
 /// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
 /// where N is the number of points. vector\<Point2d\> can be also passed here.
-/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29) of
-/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
 /// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
@@ -3170,7 +3171,7 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// *   **SOLVEPNP_ITERATIVE** Iterative method is based on a Levenberg-Marquardt optimization. In
 /// this case the function finds such a pose that minimizes reprojection error, that is the sum
 /// of squared distances between the observed projections imagePoints and the projected (using
-/// projectPoints ) objectPoints .
+/// @ref projectPoints ) objectPoints .
 /// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// In this case the function requires exactly four object and image points.
@@ -3179,9 +3180,13 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// In this case the function requires exactly four object and image points.
 /// *   **SOLVEPNP_EPNP** Method has been introduced by F. Moreno-Noguer, V. Lepetit and P. Fua in the
 /// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   **SOLVEPNP_DLS** Method is based on the paper of J. Hesch and S. Roumeliotis.
+/// *   **SOLVEPNP_DLS** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
+/// Method is based on the paper of J. Hesch and S. Roumeliotis.
 /// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   **SOLVEPNP_UPNP** Method is based on the paper of A. Penate-Sanchez, J. Andrade-Cetto,
+/// *   **SOLVEPNP_UPNP** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// 
+/// Method is based on the paper of A. Penate-Sanchez, J. Andrade-Cetto,
 /// F. Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
 /// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
@@ -3197,7 +3202,7 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 ///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 /// 
 /// The function estimates the object pose given a set of object points, their corresponding image
-/// projections, as well as the camera matrix and the distortion coefficients, see the figure below
+/// projections, as well as the camera intrinsic matrix and the distortion coefficients, see the figure below
 /// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
 /// and the Z-axis forward).
 /// 
@@ -3270,15 +3275,15 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// observed by the first camera. The same structure as in @ref calibrateCamera.
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
 /// observed by the second camera. The same structure as in @ref calibrateCamera.
-/// * cameraMatrix1: Input/output camera matrix for the first camera, the same as in
+/// * cameraMatrix1: Input/output camera intrinsic matrix for the first camera, the same as in
 /// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
 /// @ref calibrateCamera.
-/// * cameraMatrix2: Input/output second camera matrix for the second camera. See description for
+/// * cameraMatrix2: Input/output second camera intrinsic matrix for the second camera. See description for
 /// cameraMatrix1.
 /// * distCoeffs2: Input/output lens distortion coefficients for the second camera. See
 /// description for distCoeffs1.
-/// * imageSize: Size of the image used only to initialize the intrinsic camera matrices.
+/// * imageSize: Size of the image used only to initialize the camera intrinsic matrices.
 /// * R: Output rotation matrix. Together with the translation vector T, this matrix brings
 /// points given in the first camera's coordinate system to points in the second camera's
 /// coordinate system. In more technical terms, the tuple of R and T performs a change of basis
@@ -3399,15 +3404,15 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// observed by the first camera. The same structure as in @ref calibrateCamera.
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
 /// observed by the second camera. The same structure as in @ref calibrateCamera.
-/// * cameraMatrix1: Input/output camera matrix for the first camera, the same as in
+/// * cameraMatrix1: Input/output camera intrinsic matrix for the first camera, the same as in
 /// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
 /// @ref calibrateCamera.
-/// * cameraMatrix2: Input/output second camera matrix for the second camera. See description for
+/// * cameraMatrix2: Input/output second camera intrinsic matrix for the second camera. See description for
 /// cameraMatrix1.
 /// * distCoeffs2: Input/output lens distortion coefficients for the second camera. See
 /// description for distCoeffs1.
-/// * imageSize: Size of the image used only to initialize the intrinsic camera matrices.
+/// * imageSize: Size of the image used only to initialize the camera intrinsic matrices.
 /// * R: Output rotation matrix. Together with the translation vector T, this matrix brings
 /// points given in the first camera's coordinate system to points in the second camera's
 /// coordinate system. In more technical terms, the tuple of R and T performs a change of basis
@@ -3561,9 +3566,9 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// Computes rectification transforms for each head of a calibrated stereo camera.
 /// 
 /// ## Parameters
-/// * cameraMatrix1: First camera matrix.
+/// * cameraMatrix1: First camera intrinsic matrix.
 /// * distCoeffs1: First camera distortion parameters.
-/// * cameraMatrix2: Second camera matrix.
+/// * cameraMatrix2: Second camera intrinsic matrix.
 /// * distCoeffs2: Second camera distortion parameters.
 /// * imageSize: Size of the image used for stereo calibration.
 /// * R: Rotation matrix from the coordinate system of the first camera to the second camera,

@@ -3,6 +3,13 @@
 #include "rgbd_types.hpp"
 
 extern "C" {
+	Result<cv::Ptr<cv::kinfu::Volume>*> cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(cv::kinfu::VolumeType _volumeType, float _voxelSize, cv::Matx44f* _pose, float _raycastStepFactor, float _truncDist, int _maxWeight, float _truncateThreshold, cv::Vec3i* _resolution) {
+		try {
+			cv::Ptr<cv::kinfu::Volume> ret = cv::kinfu::makeVolume(_volumeType, _voxelSize, *_pose, _raycastStepFactor, _truncDist, _maxWeight, _truncateThreshold, *_resolution);
+			return Ok(new cv::Ptr<cv::kinfu::Volume>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::Volume>*>))
+	}
+	
 	Result_void cv_linemod_colormap_const_MatR_MatR(const cv::Mat* quantized, cv::Mat* dst) {
 		try {
 			cv::linemod::colormap(*quantized, *dst);
@@ -475,6 +482,76 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dynafu::Params>*>))
 	}
 	
+	Result<cv::kinfu::Intr> cv_kinfu_Intr_Intr() {
+		try {
+			cv::kinfu::Intr ret;
+			return Ok<cv::kinfu::Intr>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr>))
+	}
+	
+	Result<cv::kinfu::Intr> cv_kinfu_Intr_Intr_float_float_float_float(float _fx, float _fy, float _cx, float _cy) {
+		try {
+			cv::kinfu::Intr ret(_fx, _fy, _cx, _cy);
+			return Ok<cv::kinfu::Intr>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr>))
+	}
+	
+	Result<cv::kinfu::Intr> cv_kinfu_Intr_Intr_Matx33f(cv::Matx33f* m) {
+		try {
+			cv::kinfu::Intr ret(*m);
+			return Ok<cv::kinfu::Intr>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr>))
+	}
+	
+	Result<cv::kinfu::Intr> cv_kinfu_Intr_scale_const_int(const cv::kinfu::Intr instance, int pyr) {
+		try {
+			cv::kinfu::Intr ret = instance.scale(pyr);
+			return Ok<cv::kinfu::Intr>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr>))
+	}
+	
+	Result<cv::kinfu::Intr::Reprojector> cv_kinfu_Intr_makeReprojector_const(const cv::kinfu::Intr instance) {
+		try {
+			cv::kinfu::Intr::Reprojector ret = instance.makeReprojector();
+			return Ok<cv::kinfu::Intr::Reprojector>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr::Reprojector>))
+	}
+	
+	Result<cv::kinfu::Intr::Projector> cv_kinfu_Intr_makeProjector_const(const cv::kinfu::Intr instance) {
+		try {
+			cv::kinfu::Intr::Projector ret = instance.makeProjector();
+			return Ok<cv::kinfu::Intr::Projector>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr::Projector>))
+	}
+	
+	Result<cv::Matx33f> cv_kinfu_Intr_getMat_const(const cv::kinfu::Intr instance) {
+		try {
+			cv::Matx33f ret = instance.getMat();
+			return Ok<cv::Matx33f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Matx33f>))
+	}
+	
+	Result<cv::kinfu::Intr::Projector> cv_kinfu_Intr_Projector_Projector_Intr(cv::kinfu::Intr* intr) {
+		try {
+			cv::kinfu::Intr::Projector ret(*intr);
+			return Ok<cv::kinfu::Intr::Projector>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr::Projector>))
+	}
+	
+	Result<cv::kinfu::Intr::Reprojector> cv_kinfu_Intr_Reprojector_Reprojector() {
+		try {
+			cv::kinfu::Intr::Reprojector ret;
+			return Ok<cv::kinfu::Intr::Reprojector>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr::Reprojector>))
+	}
+	
+	Result<cv::kinfu::Intr::Reprojector> cv_kinfu_Intr_Reprojector_Reprojector_Intr(cv::kinfu::Intr* intr) {
+		try {
+			cv::kinfu::Intr::Reprojector ret(*intr);
+			return Ok<cv::kinfu::Intr::Reprojector>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::kinfu::Intr::Reprojector>))
+	}
+	
 	Result<cv::Ptr<cv::kinfu::KinFu>*> cv_kinfu_KinFu_create_const_Ptr_Params_R(const cv::Ptr<cv::kinfu::Params>* _params) {
 		try {
 			cv::Ptr<cv::kinfu::KinFu> ret = cv::kinfu::KinFu::create(*_params);
@@ -875,6 +952,69 @@ extern "C" {
 			cv::Ptr<cv::kinfu::Params> ret = cv::kinfu::Params::hashTSDFParams(isCoarse);
 			return Ok(new cv::Ptr<cv::kinfu::Params>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::Params>*>))
+	}
+	
+	Result<const float> cv_kinfu_Volume_getPropVoxelSize_const(const cv::kinfu::Volume* instance) {
+		try {
+			const float ret = instance->voxelSize;
+			return Ok<const float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const float>))
+	}
+	
+	Result<const float> cv_kinfu_Volume_getPropVoxelSizeInv_const(const cv::kinfu::Volume* instance) {
+		try {
+			const float ret = instance->voxelSizeInv;
+			return Ok<const float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const float>))
+	}
+	
+	Result<const cv::Affine3f> cv_kinfu_Volume_getPropPose_const(const cv::kinfu::Volume* instance) {
+		try {
+			const cv::Affine3f ret = instance->pose;
+			return Ok<const cv::Affine3f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const cv::Affine3f>))
+	}
+	
+	Result<const float> cv_kinfu_Volume_getPropRaycastStepFactor_const(const cv::kinfu::Volume* instance) {
+		try {
+			const float ret = instance->raycastStepFactor;
+			return Ok<const float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const float>))
+	}
+	
+	Result_void cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR(cv::kinfu::Volume* instance, const cv::_InputArray* _depth, float depthFactor, const cv::Matx44f* cameraPose, const cv::kinfu::Intr* intrinsics) {
+		try {
+			instance->integrate(*_depth, depthFactor, *cameraPose, *intrinsics);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_Size_const__OutputArrayR_const__OutputArrayR(const cv::kinfu::Volume* instance, const cv::Matx44f* cameraPose, const cv::kinfu::Intr* intrinsics, cv::Size* frameSize, const cv::_OutputArray* points, const cv::_OutputArray* normals) {
+		try {
+			instance->raycast(*cameraPose, *intrinsics, *frameSize, *points, *normals);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(const cv::kinfu::Volume* instance, const cv::_InputArray* points, const cv::_OutputArray* _normals) {
+		try {
+			instance->fetchNormals(*points, *_normals);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(const cv::kinfu::Volume* instance, const cv::_OutputArray* points, const cv::_OutputArray* normals) {
+		try {
+			instance->fetchPointsNormals(*points, *normals);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_kinfu_Volume_reset(cv::kinfu::Volume* instance) {
+		try {
+			instance->reset();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result<float> cv_linemod_ColorGradient_getPropWeak_threshold_const(const cv::linemod::ColorGradient* instance) {

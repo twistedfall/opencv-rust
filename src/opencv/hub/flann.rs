@@ -11,6 +11,7 @@ pub mod prelude {
 }
 
 pub const AUTOTUNED: i32 = 255;
+pub const BITS_PER_BASE: i32 = 2;
 pub const BITS_PER_CHAR: i32 = 8;
 pub const BLOCKSIZE: u32 = 8192;
 pub const CENTERS_GONZALES: i32 = 1;
@@ -27,6 +28,7 @@ pub const FLANN_CHECKS_AUTOTUNED: i32 = -2;
 pub const FLANN_CHECKS_UNLIMITED: i32 = -1;
 pub const FLANN_DIST_CHI_SQUARE: i32 = 7;
 pub const FLANN_DIST_CS: i32 = 7;
+pub const FLANN_DIST_DNAMMING: i32 = 10;
 pub const FLANN_DIST_EUCLIDEAN: i32 = 1;
 pub const FLANN_DIST_HAMMING: i32 = 9;
 pub const FLANN_DIST_HELLINGER: i32 = 6;
@@ -189,6 +191,7 @@ pub enum flann_distance_t {
 	FLANN_DIST_KULLBACK_LEIBLER = 8,
 	// FLANN_DIST_KL = 8 as isize, // duplicate discriminant
 	FLANN_DIST_HAMMING = 9,
+	FLANN_DIST_DNAMMING = 10,
 	// EUCLIDEAN = 1 as isize, // duplicate discriminant
 	// MANHATTAN = 2 as isize, // duplicate discriminant
 	// MINKOWSKI = 3 as isize, // duplicate discriminant
@@ -826,11 +829,15 @@ impl crate::flann::SearchParamsTrait for SearchParams {
 }
 
 impl SearchParams {
+	pub fn new(checks: i32, eps: f32, sorted: bool, explore_all_trees: bool) -> Result<crate::flann::SearchParams> {
+		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool_bool(checks, eps, sorted, explore_all_trees) }.into_result().map(|r| unsafe { crate::flann::SearchParams::opencv_from_extern(r) } )
+	}
+	
 	/// ## C++ default parameters
 	/// * checks: 32
 	/// * eps: 0
 	/// * sorted: true
-	pub fn new(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
+	pub fn new_1(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
 		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted) }.into_result().map(|r| unsafe { crate::flann::SearchParams::opencv_from_extern(r) } )
 	}
 	

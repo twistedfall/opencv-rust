@@ -192,6 +192,34 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<cv::Ptr<cv::AffineFeature>*> cv_AffineFeature_create_const_Ptr_Feature2D_R_int_int_float_float(const cv::Ptr<cv::Feature2D>* backend, int maxTilt, int minTilt, float tiltStep, float rotateStepBase) {
+		try {
+			cv::Ptr<cv::AffineFeature> ret = cv::AffineFeature::create(*backend, maxTilt, minTilt, tiltStep, rotateStepBase);
+			return Ok(new cv::Ptr<cv::AffineFeature>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::AffineFeature>*>))
+	}
+	
+	Result_void cv_AffineFeature_setViewParams_const_vector_float_R_const_vector_float_R(cv::AffineFeature* instance, const std::vector<float>* tilts, const std::vector<float>* rolls) {
+		try {
+			instance->setViewParams(*tilts, *rolls);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_AffineFeature_getViewParams_const_vector_float_R_vector_float_R(const cv::AffineFeature* instance, std::vector<float>* tilts, std::vector<float>* rolls) {
+		try {
+			instance->getViewParams(*tilts, *rolls);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<void*> cv_AffineFeature_getDefaultName_const(const cv::AffineFeature* instance) {
+		try {
+			cv::String ret = instance->getDefaultName();
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	Result<cv::Ptr<cv::AgastFeatureDetector>*> cv_AgastFeatureDetector_create_int_bool_int(int threshold, bool nonmaxSuppression, int type) {
 		try {
 			cv::Ptr<cv::AgastFeatureDetector> ret = cv::AgastFeatureDetector::create(threshold, nonmaxSuppression, type);
@@ -1293,6 +1321,13 @@ extern "C" {
 	Result<cv::Ptr<cv::SIFT>*> cv_SIFT_create_int_int_double_double_double(int nfeatures, int nOctaveLayers, double contrastThreshold, double edgeThreshold, double sigma) {
 		try {
 			cv::Ptr<cv::SIFT> ret = cv::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
+			return Ok(new cv::Ptr<cv::SIFT>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::SIFT>*>))
+	}
+	
+	Result<cv::Ptr<cv::SIFT>*> cv_SIFT_create_int_int_double_double_double_int(int nfeatures, int nOctaveLayers, double contrastThreshold, double edgeThreshold, double sigma, int descriptorType) {
+		try {
+			cv::Ptr<cv::SIFT> ret = cv::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma, descriptorType);
 			return Ok(new cv::Ptr<cv::SIFT>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::SIFT>*>))
 	}

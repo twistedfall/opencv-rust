@@ -18,6 +18,7 @@ template struct Result<cv::ORB::ScoreType>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::AKAZE>*>;
+template struct Result<cv::Ptr<cv::AffineFeature>*>;
 template struct Result<cv::Ptr<cv::AgastFeatureDetector>*>;
 template struct Result<cv::Ptr<cv::BFMatcher>*>;
 template struct Result<cv::Ptr<cv::BRISK>*>;
@@ -54,6 +55,20 @@ extern "C" {
 	}
 
 	cv::AKAZE* cv_PtrOfAKAZE_get_inner_ptr_mut(cv::Ptr<cv::AKAZE>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfAffineFeature_delete(cv::Ptr<cv::AffineFeature>* instance) {
+		delete instance;
+	}
+
+	const cv::AffineFeature* cv_PtrOfAffineFeature_get_inner_ptr(const cv::Ptr<cv::AffineFeature>* instance) {
+		return instance->get();
+	}
+
+	cv::AffineFeature* cv_PtrOfAffineFeature_get_inner_ptr_mut(cv::Ptr<cv::AffineFeature>* instance) {
 		return instance->get();
 	}
 }

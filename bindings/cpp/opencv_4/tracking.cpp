@@ -1171,6 +1171,34 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerGOTURN>*>))
 	}
 	
+	Result<void*> cv_TrackerGOTURN_Params_getPropModelTxt_const(const cv::TrackerGOTURN::Params* instance) {
+		try {
+			cv::String ret = instance->modelTxt;
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_TrackerGOTURN_Params_setPropModelTxt_String(cv::TrackerGOTURN::Params* instance, char* val) {
+		try {
+			instance->modelTxt = std::string(val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<void*> cv_TrackerGOTURN_Params_getPropModelBin_const(const cv::TrackerGOTURN::Params* instance) {
+		try {
+			cv::String ret = instance->modelBin;
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_TrackerGOTURN_Params_setPropModelBin_String(cv::TrackerGOTURN::Params* instance, char* val) {
+		try {
+			instance->modelBin = std::string(val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	void cv_TrackerGOTURN_Params_delete(cv::TrackerGOTURN::Params* instance) {
 		delete instance;
 	}

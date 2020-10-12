@@ -632,10 +632,10 @@ pub const CV_TYPE_NAME_SEQ: &'static str = "opencv-sequence";
 pub const CV_TYPE_NAME_SEQ_TREE: &'static str = "opencv-sequence-tree";
 pub const CV_TYPE_NAME_SPARSE_MAT: &'static str = "opencv-sparse-matrix";
 pub const CV_USRTYPE1: i32 = 7;
-pub const CV_VERSION: &'static str = "3.4.11";
+pub const CV_VERSION: &'static str = "3.4.12";
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 11;
+pub const CV_VERSION_REVISION: i32 = 12;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -5361,7 +5361,10 @@ pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nst
 	unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes) }.into_result()
 }
 
-/// converts NaN's to the given number
+/// converts NaNs to the given number
+/// ## Parameters
+/// * a: input/output matrix (CV_32F type).
+/// * val: value to convert the NaNs
 /// 
 /// ## C++ default parameters
 /// * val: 0

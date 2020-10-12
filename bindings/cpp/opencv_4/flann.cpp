@@ -267,6 +267,13 @@ extern "C" {
 	void cv_SearchParams_delete(cv::flann::SearchParams* instance) {
 		delete instance;
 	}
+	Result<cv::flann::SearchParams*> cv_flann_SearchParams_SearchParams_int_float_bool_bool(int checks, float eps, bool sorted, bool explore_all_trees) {
+		try {
+			cv::flann::SearchParams* ret = new cv::flann::SearchParams(checks, eps, sorted, explore_all_trees);
+			return Ok<cv::flann::SearchParams*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::flann::SearchParams*>))
+	}
+	
 	Result<cv::flann::SearchParams*> cv_flann_SearchParams_SearchParams_int_float_bool(int checks, float eps, bool sorted) {
 		try {
 			cv::flann::SearchParams* ret = new cv::flann::SearchParams(checks, eps, sorted);

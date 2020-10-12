@@ -2131,6 +2131,10 @@ pub trait RTrees: crate::ml::DTrees {
 		unsafe { sys::cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_RTrees(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags) }.into_result()
 	}
 	
+	fn get_oob_error(&self) -> Result<f64> {
+		unsafe { sys::cv_ml_RTrees_getOOBError_const(self.as_raw_RTrees()) }.into_result()
+	}
+	
 }
 
 impl dyn RTrees + '_ {

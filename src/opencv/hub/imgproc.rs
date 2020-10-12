@@ -157,7 +157,7 @@ pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
 pub const CCL_DEFAULT: i32 = -1;
 /// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 pub const CCL_GRANA: i32 = 1;
-/// SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 pub const CCL_WU: i32 = 0;
 /// The total area (in pixels) of the connected component
 pub const CC_STAT_AREA: i32 = 4;
@@ -716,6 +716,9 @@ pub const INTER_LINEAR_EXACT: i32 = 5;
 pub const INTER_MAX: i32 = 7;
 /// nearest neighbor interpolation
 pub const INTER_NEAREST: i32 = 0;
+/// Bit exact nearest neighbor interpolation. This will produce same results as
+/// the nearest neighbor method in PIL, scikit-image or Matlab.
+pub const INTER_NEAREST_EXACT: i32 = 6;
 pub const INTER_TAB_SIZE: i32 = 32;
 pub const INTER_TAB_SIZE2: i32 = 1024;
 /// 4-connected line
@@ -1286,7 +1289,7 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
-	/// SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+	/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 	CCL_WU = 0,
 	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 	CCL_DEFAULT = -1,
@@ -1543,6 +1546,9 @@ pub enum InterpolationFlags {
 	INTER_LANCZOS4 = 4,
 	/// Bit exact bilinear interpolation
 	INTER_LINEAR_EXACT = 5,
+	/// Bit exact nearest neighbor interpolation. This will produce same results as
+	/// the nearest neighbor method in PIL, scikit-image or Matlab.
+	INTER_NEAREST_EXACT = 6,
 	/// mask for interpolation codes
 	INTER_MAX = 7,
 	/// flag, fills all of the destination image pixels. If some of them correspond to outliers in the
@@ -2857,7 +2863,7 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Grana's (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+/// Grana's (BBDT) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 /// This function uses parallel version of both Grana and Wu's algorithms (statistics included) if at least one allowed
 /// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
@@ -2903,7 +2909,7 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Grana's (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+/// Grana's (BBDT) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 /// This function uses parallel version of both Grana and Wu's algorithms (statistics included) if at least one allowed
 /// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
@@ -2933,7 +2939,7 @@ pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputA
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Grana (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+/// Grana (BBDT) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 /// This function uses parallel version of both Grana and Wu's algorithms if at least one allowed
 /// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
@@ -2968,7 +2974,7 @@ pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn cor
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Grana (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+/// Grana (BBDT) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 /// This function uses parallel version of both Grana and Wu's algorithms if at least one allowed
 /// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
@@ -3215,8 +3221,8 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 
 /// Refines the corner locations.
 /// 
-/// The function iterates to find the sub-pixel accurate location of corners or radial saddle points, as
-/// shown on the figure below.
+/// The function iterates to find the sub-pixel accurate location of corners or radial saddle
+/// points as described in [forstner1987fast](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
 /// 
 /// ![image](https://docs.opencv.org/4.3.0/cornersubpix.png)
 /// 

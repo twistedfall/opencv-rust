@@ -51,6 +51,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result_void cv_calibrateRobotWorldHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_RobotWorldHandEyeCalibrationMethod(const cv::_InputArray* R_world2cam, const cv::_InputArray* t_world2cam, const cv::_InputArray* R_base2gripper, const cv::_InputArray* t_base2gripper, const cv::_OutputArray* R_base2world, const cv::_OutputArray* t_base2world, const cv::_OutputArray* R_gripper2cam, const cv::_OutputArray* t_gripper2cam, cv::RobotWorldHandEyeCalibrationMethod method) {
+		try {
+			cv::calibrateRobotWorldHandEye(*R_world2cam, *t_world2cam, *R_base2gripper, *t_base2gripper, *R_base2world, *t_base2world, *R_gripper2cam, *t_gripper2cam, method);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(const cv::_InputArray* cameraMatrix, cv::Size* imageSize, double apertureWidth, double apertureHeight, double* fovx, double* fovy, double* focalLength, cv::Point2d* principalPoint, double* aspectRatio) {
 		try {
 			cv::calibrationMatrixValues(*cameraMatrix, *imageSize, apertureWidth, apertureHeight, *fovx, *fovy, *focalLength, *principalPoint, *aspectRatio);
@@ -140,6 +147,13 @@ extern "C" {
 			cv::drawFrameAxes(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, length, thickness);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Mat*> cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(const cv::_InputArray* pts1, const cv::_InputArray* pts2, const cv::_OutputArray* inliers, const cv::UsacParams* params) {
+		try {
+			cv::Mat ret = cv::estimateAffine2D(*pts1, *pts2, *inliers, *params);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
 	Result<cv::Mat*> cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(const cv::_InputArray* from, const cv::_InputArray* to, const cv::_OutputArray* inliers, int method, double ransacReprojThreshold, size_t maxIters, double confidence, size_t refineIters) {
@@ -233,6 +247,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
+	Result<cv::Mat*> cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(const cv::_InputArray* points1, const cv::_InputArray* points2, const cv::_InputArray* cameraMatrix1, const cv::_InputArray* cameraMatrix2, const cv::_InputArray* dist_coeff1, const cv::_InputArray* dist_coeff2, const cv::_OutputArray* mask, const cv::UsacParams* params) {
+		try {
+			cv::Mat ret = cv::findEssentialMat(*points1, *points2, *cameraMatrix1, *cameraMatrix2, *dist_coeff1, *dist_coeff2, *mask, *params);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(const cv::_InputArray* points1, const cv::_InputArray* points2, const cv::_InputArray* cameraMatrix1, const cv::_InputArray* distCoeffs1, const cv::_InputArray* cameraMatrix2, const cv::_InputArray* distCoeffs2, int method, double prob, double threshold, const cv::_OutputArray* mask) {
+		try {
+			cv::Mat ret = cv::findEssentialMat(*points1, *points2, *cameraMatrix1, *distCoeffs1, *cameraMatrix2, *distCoeffs2, method, prob, threshold, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
 	Result<cv::Mat*> cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(const cv::_InputArray* points1, const cv::_InputArray* points2, const cv::_InputArray* cameraMatrix, int method, double prob, double threshold, const cv::_OutputArray* mask) {
 		try {
 			cv::Mat ret = cv::findEssentialMat(*points1, *points2, *cameraMatrix, method, prob, threshold, *mask);
@@ -243,6 +271,13 @@ extern "C" {
 	Result<cv::Mat*> cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(const cv::_InputArray* points1, const cv::_InputArray* points2, double focal, cv::Point2d* pp, int method, double prob, double threshold, const cv::_OutputArray* mask) {
 		try {
 			cv::Mat ret = cv::findEssentialMat(*points1, *points2, focal, *pp, method, prob, threshold, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(const cv::_InputArray* points1, const cv::_InputArray* points2, const cv::_OutputArray* mask, const cv::UsacParams* params) {
+		try {
+			cv::Mat ret = cv::findFundamentalMat(*points1, *points2, *mask, *params);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
@@ -264,6 +299,13 @@ extern "C" {
 	Result<cv::Mat*> cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(const cv::_InputArray* points1, const cv::_InputArray* points2, int method, double ransacReprojThreshold, double confidence, int maxIters, const cv::_OutputArray* mask) {
 		try {
 			cv::Mat ret = cv::findFundamentalMat(*points1, *points2, method, ransacReprojThreshold, confidence, maxIters, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(const cv::_InputArray* srcPoints, const cv::_InputArray* dstPoints, const cv::_OutputArray* mask, const cv::UsacParams* params) {
+		try {
+			cv::Mat ret = cv::findHomography(*srcPoints, *dstPoints, *mask, *params);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
@@ -467,6 +509,13 @@ extern "C" {
 	Result<bool> cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int(const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, double confidence, const cv::_OutputArray* inliers, int flags) {
 		try {
 			bool ret = cv::solvePnPRansac(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, iterationsCount, reprojectionError, confidence, *inliers, flags);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_UsacParamsR(const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputOutputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, const cv::_OutputArray* inliers, const cv::UsacParams* params) {
+		try {
+			bool ret = cv::solvePnPRansac(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, *inliers, *params);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}

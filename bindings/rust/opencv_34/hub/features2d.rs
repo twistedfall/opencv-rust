@@ -33,7 +33,7 @@
 //!        # Interface
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::KeyPointsFilterTrait, super::Feature2DTrait, super::SIFTTrait, super::BRISKTrait, super::ORB, super::MSER, super::FastFeatureDetector, super::AgastFeatureDetector, super::GFTTDetector, super::SimpleBlobDetectorTrait, super::KAZE, super::AKAZE, super::DescriptorMatcher, super::BFMatcherTrait, super::FlannBasedMatcherTrait, super::DrawMatchesFlagsTrait, super::BOWTrainer, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTrait };
+	pub use { super::KeyPointsFilterTrait, super::Feature2DTrait, super::AffineFeature, super::SIFTTrait, super::BRISKTrait, super::ORB, super::MSER, super::FastFeatureDetector, super::AgastFeatureDetector, super::GFTTDetector, super::SimpleBlobDetectorTrait, super::KAZE, super::AKAZE, super::DescriptorMatcher, super::BFMatcherTrait, super::FlannBasedMatcherTrait, super::DrawMatchesFlagsTrait, super::BOWTrainer, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTrait };
 }
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
@@ -81,6 +81,8 @@ pub const KAZE_DIFF_WEICKERT: i32 = 2;
 pub const ORB_FAST_SCORE: i32 = 1;
 pub const ORB_HARRIS_SCORE: i32 = 0;
 pub const ORB_kBytes: i32 = 32;
+pub type AffineDescriptorExtractor = dyn crate::features2d::AffineFeature;
+pub type AffineFeatureDetector = dyn crate::features2d::AffineFeature;
 /// Extractors of keypoint descriptors in OpenCV have wrappers with a common interface that enables you
 /// to easily switch between different algorithms solving the same problem. This section is devoted to
 /// computing descriptors represented as vectors in a multidimensional space. All objects that implement
@@ -421,6 +423,44 @@ impl dyn AKAZE + '_ {
 	/// * diffusivity: KAZE::DIFF_PM_G2
 	pub fn create(descriptor_type: i32, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: i32) -> Result<core::Ptr::<dyn crate::features2d::AKAZE>> {
 		unsafe { sys::cv_AKAZE_create_int_int_int_float_int_int_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::features2d::AKAZE>::opencv_from_extern(r) } )
+	}
+	
+}
+/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
+/// described as ASIFT in [YM11](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_YM11) .
+pub trait AffineFeature: crate::features2d::Feature2DTrait {
+	fn as_raw_AffineFeature(&self) -> *const c_void;
+	fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void;
+
+	fn set_view_params(&mut self, tilts: &core::Vector::<f32>, rolls: &core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_AffineFeature_setViewParams_const_vector_float_R_const_vector_float_R(self.as_raw_mut_AffineFeature(), tilts.as_raw_VectorOff32(), rolls.as_raw_VectorOff32()) }.into_result()
+	}
+	
+	fn get_view_params(&self, tilts: &mut core::Vector::<f32>, rolls: &mut core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_AffineFeature_getViewParams_const_vector_float_R_vector_float_R(self.as_raw_AffineFeature(), tilts.as_raw_mut_VectorOff32(), rolls.as_raw_mut_VectorOff32()) }.into_result()
+	}
+	
+	fn get_default_name(&self) -> Result<String> {
+		unsafe { sys::cv_AffineFeature_getDefaultName_const(self.as_raw_AffineFeature()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+}
+
+impl dyn AffineFeature + '_ {
+	/// ## Parameters
+	/// * backend: The detector/extractor you want to use as backend.
+	/// * maxTilt: The highest power index of tilt factor. 5 is used in the paper as tilt sampling range n.
+	/// * minTilt: The lowest power index of tilt factor. 0 is used in the paper.
+	/// * tiltStep: Tilt sampling step ![inline formula](https://latex.codecogs.com/png.latex?%5Cdelta%5Ft) in Algorithm 1 in the paper.
+	/// * rotateStepBase: Rotation sampling step factor b in Algorithm 1 in the paper.
+	/// 
+	/// ## C++ default parameters
+	/// * max_tilt: 5
+	/// * min_tilt: 0
+	/// * tilt_step: 1.4142135623730951f
+	/// * rotate_step_base: 72
+	pub fn create(backend: &core::Ptr::<crate::features2d::Feature2D>, max_tilt: i32, min_tilt: i32, tilt_step: f32, rotate_step_base: f32) -> Result<core::Ptr::<dyn crate::features2d::AffineFeature>> {
+		unsafe { sys::cv_AffineFeature_create_const_Ptr_Feature2D_R_int_int_float_float(backend.as_raw_PtrOfFeature2D(), max_tilt, min_tilt, tilt_step, rotate_step_base) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::features2d::AffineFeature>::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2172,6 +2212,34 @@ impl SIFT {
 	/// * sigma: 1.6
 	pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<core::Ptr::<crate::features2d::SIFT>> {
 		unsafe { sys::cv_SIFT_create_int_int_double_double_double(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(r) } )
+	}
+	
+	/// Create SIFT with specified descriptorType.
+	/// ## Parameters
+	/// * nfeatures: The number of best features to retain. The features are ranked by their scores
+	/// (measured in SIFT algorithm as the local contrast)
+	/// 
+	/// * nOctaveLayers: The number of layers in each octave. 3 is the value used in D. Lowe paper. The
+	/// number of octaves is computed automatically from the image resolution.
+	/// 
+	/// * contrastThreshold: The contrast threshold used to filter out weak features in semi-uniform
+	/// (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+	/// 
+	/// 
+	/// Note: The contrast threshold will be divided by nOctaveLayers when the filtering is applied. When
+	/// nOctaveLayers is set to default and if you want to use the value used in D. Lowe paper, 0.03, set
+	/// this argument to 0.09.
+	/// 
+	/// * edgeThreshold: The threshold used to filter out edge-like features. Note that the its meaning
+	/// is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are
+	/// filtered out (more features are retained).
+	/// 
+	/// * sigma: The sigma of the Gaussian applied to the input image at the octave \#0. If your image
+	/// is captured with a weak camera with soft lenses, you might want to reduce the number.
+	/// 
+	/// * descriptorType: The type of descriptors. Only CV_32F and CV_8U are supported.
+	pub fn create_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr::<crate::features2d::SIFT>> {
+		unsafe { sys::cv_SIFT_create_int_int_double_double_double_int(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(r) } )
 	}
 	
 }

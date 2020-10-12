@@ -2,7 +2,7 @@
 //! # RGB-Depth Processing
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_ParamsTrait, super::Dynafu_DynaFu };
+	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_Volume, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_ParamsTrait, super::Dynafu_DynaFu };
 }
 
 pub const Kinfu_VolumeType_HASHTSDF: i32 = 1;
@@ -50,6 +50,10 @@ pub enum RgbdPlane_RGBD_PLANE_METHOD {
 }
 
 opencv_type_enum! { crate::rgbd::RgbdPlane_RGBD_PLANE_METHOD }
+
+pub fn make_volume(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: core::Vec3i) -> Result<core::Ptr::<dyn crate::rgbd::Kinfu_Volume>> {
+	unsafe { sys::cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(_volume_type, _voxel_size, _pose.opencv_as_extern(), _raycast_step_factor, _trunc_dist, _max_weight, _truncate_threshold, _resolution.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_Volume>::opencv_from_extern(r) } )
+}
 
 /// \brief Debug function to colormap a quantized image for viewing.
 pub fn colormap(quantized: &core::Mat, dst: &mut core::Mat) -> Result<()> {
@@ -621,6 +625,91 @@ impl Dynafu_Params {
 	
 }
 
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct Kinfu_Intr {
+	pub fx: f32,
+	pub fy: f32,
+	pub cx: f32,
+	pub cy: f32,
+}
+
+opencv_type_simple! { crate::rgbd::Kinfu_Intr }
+
+impl Kinfu_Intr {
+	pub fn default() -> Result<crate::rgbd::Kinfu_Intr> {
+		unsafe { sys::cv_kinfu_Intr_Intr() }.into_result()
+	}
+	
+	pub fn new(_fx: f32, _fy: f32, _cx: f32, _cy: f32) -> Result<crate::rgbd::Kinfu_Intr> {
+		unsafe { sys::cv_kinfu_Intr_Intr_float_float_float_float(_fx, _fy, _cx, _cy) }.into_result()
+	}
+	
+	pub fn new_1(m: core::Matx33f) -> Result<crate::rgbd::Kinfu_Intr> {
+		unsafe { sys::cv_kinfu_Intr_Intr_Matx33f(m.opencv_as_extern()) }.into_result()
+	}
+	
+	pub fn scale(self, pyr: i32) -> Result<crate::rgbd::Kinfu_Intr> {
+		unsafe { sys::cv_kinfu_Intr_scale_const_int(self.opencv_as_extern(), pyr) }.into_result()
+	}
+	
+	pub fn make_reprojector(self) -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
+		unsafe { sys::cv_kinfu_Intr_makeReprojector_const(self.opencv_as_extern()) }.into_result()
+	}
+	
+	pub fn make_projector(self) -> Result<crate::rgbd::Kinfu_Intr_Projector> {
+		unsafe { sys::cv_kinfu_Intr_makeProjector_const(self.opencv_as_extern()) }.into_result()
+	}
+	
+	pub fn get_mat(self) -> Result<core::Matx33f> {
+		unsafe { sys::cv_kinfu_Intr_getMat_const(self.opencv_as_extern()) }.into_result()
+	}
+	
+}
+
+/// Projects camera space vector onto screen
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct Kinfu_Intr_Projector {
+	pub fx: f32,
+	pub fy: f32,
+	pub cx: f32,
+	pub cy: f32,
+}
+
+opencv_type_simple! { crate::rgbd::Kinfu_Intr_Projector }
+
+impl Kinfu_Intr_Projector {
+	pub fn new(intr: crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Projector> {
+		unsafe { sys::cv_kinfu_Intr_Projector_Projector_Intr(intr.opencv_as_extern()) }.into_result()
+	}
+	
+}
+
+/// Camera intrinsics
+/// Reprojects screen point to camera space given z coord.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct Kinfu_Intr_Reprojector {
+	pub fxinv: f32,
+	pub fyinv: f32,
+	pub cx: f32,
+	pub cy: f32,
+}
+
+opencv_type_simple! { crate::rgbd::Kinfu_Intr_Reprojector }
+
+impl Kinfu_Intr_Reprojector {
+	pub fn default() -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
+		unsafe { sys::cv_kinfu_Intr_Reprojector_Reprojector() }.into_result()
+	}
+	
+	pub fn new(intr: crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
+		unsafe { sys::cv_kinfu_Intr_Reprojector_Reprojector_Intr(intr.opencv_as_extern()) }.into_result()
+	}
+	
+}
+
 /// KinectFusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm described in
@@ -1058,6 +1147,55 @@ impl Kinfu_Params {
 	/// A set of parameters suitable for use with HashTSDFVolume
 	pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr::<crate::rgbd::Kinfu_Params>> {
 		unsafe { sys::cv_kinfu_Params_hashTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait Kinfu_Volume {
+	fn as_raw_Kinfu_Volume(&self) -> *const c_void;
+	fn as_raw_mut_Kinfu_Volume(&mut self) -> *mut c_void;
+
+	fn voxel_size(&self) -> f32 {
+		unsafe { sys::cv_kinfu_Volume_getPropVoxelSize_const(self.as_raw_Kinfu_Volume()) }.into_result().expect("Infallible function failed: voxel_size")
+	}
+	
+	fn voxel_size_inv(&self) -> f32 {
+		unsafe { sys::cv_kinfu_Volume_getPropVoxelSizeInv_const(self.as_raw_Kinfu_Volume()) }.into_result().expect("Infallible function failed: voxel_size_inv")
+	}
+	
+	fn pose(&self) -> core::Affine3f {
+		unsafe { sys::cv_kinfu_Volume_getPropPose_const(self.as_raw_Kinfu_Volume()) }.into_result().expect("Infallible function failed: pose")
+	}
+	
+	fn raycast_step_factor(&self) -> f32 {
+		unsafe { sys::cv_kinfu_Volume_getPropRaycastStepFactor_const(self.as_raw_Kinfu_Volume()) }.into_result().expect("Infallible function failed: raycast_step_factor")
+	}
+	
+	fn integrate(&mut self, _depth: &dyn core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr) -> Result<()> {
+		input_array_arg!(_depth);
+		unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics) }.into_result()
+	}
+	
+	fn raycast(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(points);
+		output_array_arg!(normals);
+		unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_Size_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, frame_size.opencv_as_extern(), points.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn fetch_normals(&self, points: &dyn core::ToInputArray, _normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(_normals);
+		unsafe { sys::cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__InputArray(), _normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn fetch_points_normals(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(points);
+		output_array_arg!(normals);
+		unsafe { sys::cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn reset(&mut self) -> Result<()> {
+		unsafe { sys::cv_kinfu_Volume_reset(self.as_raw_mut_Kinfu_Volume()) }.into_result()
 	}
 	
 }

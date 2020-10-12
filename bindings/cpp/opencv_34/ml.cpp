@@ -1181,6 +1181,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<double> cv_ml_RTrees_getOOBError_const(const cv::ml::RTrees* instance) {
+		try {
+			double ret = instance->getOOBError();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
 	Result<cv::Ptr<cv::ml::RTrees>*> cv_ml_RTrees_create() {
 		try {
 			cv::Ptr<cv::ml::RTrees> ret = cv::ml::RTrees::create();

@@ -3254,6 +3254,10 @@ mod features2d_sys {
 		pub fn cv_AKAZE_setDiffusivity_int(instance: *mut c_void, diff: i32) -> Result_void;
 		pub fn cv_AKAZE_getDiffusivity_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_AKAZE_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_AffineFeature_create_const_Ptr_Feature2D_R_int_int_float_float(backend: *const c_void, max_tilt: i32, min_tilt: i32, tilt_step: f32, rotate_step_base: f32) -> Result<*mut c_void>;
+		pub fn cv_AffineFeature_setViewParams_const_vector_float_R_const_vector_float_R(instance: *mut c_void, tilts: *const c_void, rolls: *const c_void) -> Result_void;
+		pub fn cv_AffineFeature_getViewParams_const_vector_float_R_vector_float_R(instance: *const c_void, tilts: *mut c_void, rolls: *mut c_void) -> Result_void;
+		pub fn cv_AffineFeature_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_AgastFeatureDetector_create_int_bool_int(threshold: i32, nonmax_suppression: bool, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_AgastFeatureDetector_setThreshold_int(instance: *mut c_void, threshold: i32) -> Result_void;
 		pub fn cv_AgastFeatureDetector_getThreshold_const(instance: *const c_void) -> Result<i32>;
@@ -3408,6 +3412,7 @@ mod features2d_sys {
 		pub fn cv_ORB_getFastThreshold_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ORB_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SIFT_create_int_int_double_double_double(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<*mut c_void>;
+		pub fn cv_SIFT_create_int_int_double_double_double_int(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<*mut c_void>;
 		pub fn cv_SIFT_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_create_const_ParamsR(parameters: *const crate::features2d::SimpleBlobDetector_Params) -> Result<*mut c_void>;
 		pub fn cv_SimpleBlobDetector_getDefaultName_const(instance: *const c_void) -> Result<*mut c_void>;
@@ -4170,6 +4175,7 @@ mod ml_sys {
 		pub fn cv_ml_RTrees_setTermCriteria_const_TermCriteriaR(instance: *mut c_void, val: *const core::TermCriteria) -> Result_void;
 		pub fn cv_ml_RTrees_getVarImportance_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(instance: *const c_void, samples: *const c_void, results: *const c_void, flags: i32) -> Result_void;
+		pub fn cv_ml_RTrees_getOOBError_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_ml_RTrees_create() -> Result<*mut c_void>;
 		pub fn cv_ml_RTrees_load_const_StringR_const_StringR(filepath: *const c_char, node_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_ml_SVM_getType_const(instance: *const c_void) -> Result<i32>;
@@ -5958,6 +5964,10 @@ mod tracking_sys {
 		pub fn cv_TrackerFeatureSet_getResponses_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_create_const_ParamsR(parameters: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_create() -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_getPropModelTxt_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_setPropModelTxt_String(instance: *mut c_void, val: *mut c_char) -> Result_void;
+		pub fn cv_TrackerGOTURN_Params_getPropModelBin_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerGOTURN_Params_setPropModelBin_String(instance: *mut c_void, val: *mut c_char) -> Result_void;
 		pub fn cv_TrackerGOTURN_Params_Params() -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_Params_read_const_FileNodeR(instance: *mut c_void, unnamed: *const c_void) -> Result_void;
 		pub fn cv_TrackerGOTURN_Params_write_const_FileStorageR(instance: *const c_void, unnamed: *mut c_void) -> Result_void;

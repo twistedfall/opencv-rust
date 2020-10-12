@@ -1916,6 +1916,24 @@ pub trait TrackerGOTURN_ParamsTrait {
 	fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void;
 	fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void;
 
+	fn model_txt(&self) -> String {
+		unsafe { sys::cv_TrackerGOTURN_Params_getPropModelTxt_const(self.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_txt")
+	}
+	
+	fn set_model_txt(&mut self, val: &str) -> () {
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_TrackerGOTURN_Params_setPropModelTxt_String(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_txt")
+	}
+	
+	fn model_bin(&self) -> String {
+		unsafe { sys::cv_TrackerGOTURN_Params_getPropModelBin_const(self.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_bin")
+	}
+	
+	fn set_model_bin(&mut self, val: &str) -> () {
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_TrackerGOTURN_Params_setPropModelBin_String(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_bin")
+	}
+	
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_TrackerGOTURN_Params_read_const_FileNodeR(self.as_raw_mut_TrackerGOTURN_Params(), unnamed.as_raw_FileNode()) }.into_result()
 	}

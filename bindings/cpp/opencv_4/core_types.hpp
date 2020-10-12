@@ -106,6 +106,7 @@ template struct Result<cv::ocl::Device*>;
 template struct Result<cv::ocl::Image2D*>;
 template struct Result<cv::ocl::KernelArg*>;
 template struct Result<cv::ocl::Kernel*>;
+template struct Result<cv::ocl::OpenCLExecutionContext*>;
 template struct Result<cv::ocl::PlatformInfo*>;
 template struct Result<cv::ocl::Platform*>;
 template struct Result<cv::ocl::ProgramSource*>;

@@ -5874,6 +5874,32 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfAffineFeature = core::Ptr::<dyn crate::features2d::AffineFeature>;
+	
+	ptr_extern! { dyn crate::features2d::AffineFeature,
+		cv_PtrOfAffineFeature_delete, cv_PtrOfAffineFeature_get_inner_ptr, cv_PtrOfAffineFeature_get_inner_ptr_mut
+	}
+	
+	impl PtrOfAffineFeature {
+		#[inline] pub fn as_raw_PtrOfAffineFeature(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAffineFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::features2d::AffineFeature for PtrOfAffineFeature {
+		#[inline] fn as_raw_AffineFeature(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAffineFeature {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for PtrOfAffineFeature {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfAgastFeatureDetector = core::Ptr::<dyn crate::features2d::AgastFeatureDetector>;
 	
 	ptr_extern! { dyn crate::features2d::AgastFeatureDetector,
@@ -6764,6 +6790,105 @@ mod line_descriptor_types {
 }
 #[cfg(feature = "contrib")]
 pub use line_descriptor_types::*;
+
+#[cfg(feature = "contrib")]
+mod mcc_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type PtrOfMCC_CChecker = core::Ptr::<dyn crate::mcc::MCC_CChecker>;
+	
+	ptr_extern! { dyn crate::mcc::MCC_CChecker,
+		cv_PtrOfMCC_CChecker_delete, cv_PtrOfMCC_CChecker_get_inner_ptr, cv_PtrOfMCC_CChecker_get_inner_ptr_mut
+	}
+	
+	impl PtrOfMCC_CChecker {
+		#[inline] pub fn as_raw_PtrOfMCC_CChecker(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMCC_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::mcc::MCC_CChecker for PtrOfMCC_CChecker {
+		#[inline] fn as_raw_MCC_CChecker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfMCC_CCheckerDetector = core::Ptr::<dyn crate::mcc::MCC_CCheckerDetector>;
+	
+	ptr_extern! { dyn crate::mcc::MCC_CCheckerDetector,
+		cv_PtrOfMCC_CCheckerDetector_delete, cv_PtrOfMCC_CCheckerDetector_get_inner_ptr, cv_PtrOfMCC_CCheckerDetector_get_inner_ptr_mut
+	}
+	
+	impl PtrOfMCC_CCheckerDetector {
+		#[inline] pub fn as_raw_PtrOfMCC_CCheckerDetector(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMCC_CCheckerDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfMCC_CCheckerDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerDetector for PtrOfMCC_CCheckerDetector {
+		#[inline] fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfMCC_CCheckerDraw = core::Ptr::<dyn crate::mcc::MCC_CCheckerDraw>;
+	
+	ptr_extern! { dyn crate::mcc::MCC_CCheckerDraw,
+		cv_PtrOfMCC_CCheckerDraw_delete, cv_PtrOfMCC_CCheckerDraw_get_inner_ptr, cv_PtrOfMCC_CCheckerDraw_get_inner_ptr_mut
+	}
+	
+	impl PtrOfMCC_CCheckerDraw {
+		#[inline] pub fn as_raw_PtrOfMCC_CCheckerDraw(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerDraw for PtrOfMCC_CCheckerDraw {
+		#[inline] fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfMCC_DetectorParameters = core::Ptr::<crate::mcc::MCC_DetectorParameters>;
+	
+	ptr_extern! { crate::mcc::MCC_DetectorParameters,
+		cv_PtrOfMCC_DetectorParameters_delete, cv_PtrOfMCC_DetectorParameters_get_inner_ptr, cv_PtrOfMCC_DetectorParameters_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::mcc::MCC_DetectorParameters, cv_PtrOfMCC_DetectorParameters_new }
+	
+	impl PtrOfMCC_DetectorParameters {
+		#[inline] pub fn as_raw_PtrOfMCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::mcc::MCC_DetectorParametersTrait for PtrOfMCC_DetectorParameters {
+		#[inline] fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type VectorOfPtrOfMCC_CChecker = core::Vector::<core::Ptr::<dyn crate::mcc::MCC_CChecker>>;
+	
+	impl VectorOfPtrOfMCC_CChecker {
+		pub fn as_raw_VectorOfPtrOfMCC_CChecker(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfMCC_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Ptr::<dyn crate::mcc::MCC_CChecker>, *const c_void, *mut c_void,
+		cv_VectorOfPtrOfMCC_CChecker_new, cv_VectorOfPtrOfMCC_CChecker_delete,
+		cv_VectorOfPtrOfMCC_CChecker_len, cv_VectorOfPtrOfMCC_CChecker_is_empty,
+		cv_VectorOfPtrOfMCC_CChecker_capacity, cv_VectorOfPtrOfMCC_CChecker_shrink_to_fit,
+		cv_VectorOfPtrOfMCC_CChecker_reserve, cv_VectorOfPtrOfMCC_CChecker_remove,
+		cv_VectorOfPtrOfMCC_CChecker_swap, cv_VectorOfPtrOfMCC_CChecker_clear,
+		cv_VectorOfPtrOfMCC_CChecker_get, cv_VectorOfPtrOfMCC_CChecker_set,
+		cv_VectorOfPtrOfMCC_CChecker_push, cv_VectorOfPtrOfMCC_CChecker_insert,
+	}
+	vector_non_copy_or_bool! { core::Ptr::<dyn crate::mcc::MCC_CChecker> }
+	
+	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::mcc::MCC_CChecker>> {}
+	
+}
+#[cfg(feature = "contrib")]
+pub use mcc_types::*;
 
 mod ml_types {
 	use crate::{mod_prelude::*, core, types, sys};
@@ -8123,6 +8248,22 @@ mod rgbd_types {
 	impl crate::rgbd::Kinfu_ParamsTrait for PtrOfKinfu_Params {
 		#[inline] fn as_raw_Kinfu_Params(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Kinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfKinfu_Volume = core::Ptr::<dyn crate::rgbd::Kinfu_Volume>;
+	
+	ptr_extern! { dyn crate::rgbd::Kinfu_Volume,
+		cv_PtrOfKinfu_Volume_delete, cv_PtrOfKinfu_Volume_get_inner_ptr, cv_PtrOfKinfu_Volume_get_inner_ptr_mut
+	}
+	
+	impl PtrOfKinfu_Volume {
+		#[inline] pub fn as_raw_PtrOfKinfu_Volume(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKinfu_Volume(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Kinfu_Volume for PtrOfKinfu_Volume {
+		#[inline] fn as_raw_Kinfu_Volume(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Kinfu_Volume(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_ColorGradient = core::Ptr::<crate::rgbd::Linemod_ColorGradient>;

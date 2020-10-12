@@ -66,6 +66,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result_void cv_ovis_setMaterialProperty_const_StringR_int_const__InputArrayR(const char* name, int prop, const cv::_InputArray* value) {
+		try {
+			cv::ovis::setMaterialProperty(std::string(name), prop, *value);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_ovis_updateTexture_const_StringR_const__InputArrayR(const char* name, const cv::_InputArray* image) {
 		try {
 			cv::ovis::updateTexture(std::string(name), *image);
@@ -136,9 +143,9 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Rect2d> cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR(cv::ovis::WindowScene* instance, const char* name, const cv::_InputArray* K, const cv::Size* imsize, float zFar, const cv::_InputArray* tvec, const cv::_InputArray* rot) {
+	Result<cv::Rect2d> cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float_const__InputArrayR_const__InputArrayR_const_ScalarR(cv::ovis::WindowScene* instance, const char* name, const cv::_InputArray* K, const cv::Size* imsize, float zFar, const cv::_InputArray* tvec, const cv::_InputArray* rot, const cv::Scalar* color) {
 		try {
-			cv::Rect2d ret = instance->createCameraEntity(std::string(name), *K, *imsize, zFar, *tvec, *rot);
+			cv::Rect2d ret = instance->createCameraEntity(std::string(name), *K, *imsize, zFar, *tvec, *rot, *color);
 			return Ok<cv::Rect2d>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Rect2d>))
 	}

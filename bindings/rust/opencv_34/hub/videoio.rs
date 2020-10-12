@@ -227,6 +227,10 @@ pub const CAP_PROP_OPENNI_OUTPUT_MODE: i32 = 100;
 /// sets this view point to its normal one (if the flag is "off").
 pub const CAP_PROP_OPENNI_REGISTRATION: i32 = 104;
 pub const CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 104;
+/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg back-end only) (https://github.com/opencv/opencv/issues/15499)
+pub const CAP_PROP_ORIENTATION_AUTO: i32 = 49;
+/// (read-only) Frame rotation defined by stream meta (applicable for FFmpeg back-end only)
+pub const CAP_PROP_ORIENTATION_META: i32 = 48;
 pub const CAP_PROP_PAN: i32 = 33;
 /// Relative position of the video file: 0=start of the film, 1=end of the film.
 pub const CAP_PROP_POS_AVI_RATIO: i32 = 2;
@@ -626,7 +630,7 @@ pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
-pub const CV__CAP_PROP_LATEST: i32 = 48;
+pub const CV__CAP_PROP_LATEST: i32 = 50;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 /// Number of stripes for parallel encoding. -1 for auto detection.
@@ -817,7 +821,11 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_CODEC_PIXEL_FORMAT = 46,
 	/// (read-only) Video bitrate in kbits/s
 	CAP_PROP_BITRATE = 47,
-	CV__CAP_PROP_LATEST = 48,
+	/// (read-only) Frame rotation defined by stream meta (applicable for FFmpeg back-end only)
+	CAP_PROP_ORIENTATION_META = 48,
+	/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg back-end only) (https://github.com/opencv/opencv/issues/15499)
+	CAP_PROP_ORIENTATION_AUTO = 49,
+	CV__CAP_PROP_LATEST = 50,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureProperties }
