@@ -20,9 +20,9 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.11
+          - opencv: 3.4.12
             features: opencv-34
-          - opencv: 4.4.0
+          - opencv: 4.5.0
             features: opencv-4
     runs-on: ${{ matrix.os.image }}
     env:
@@ -123,7 +123,7 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 4.4.0
+          - opencv: 4.5.0
             features: opencv-4
     runs-on: macos-10.15
     env:

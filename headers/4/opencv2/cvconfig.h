@@ -11,10 +11,10 @@
 /* #undef CV_DISABLE_OPTIMIZATION */
 
 /* Compile for 'real' NVIDIA GPU architectures */
-#define CUDA_ARCH_BIN " 30 35 37 50 52 60 61 70 75"
+#define CUDA_ARCH_BIN " 35 37 50 52 60 61 70 75 80"
 
 /* NVIDIA GPU features are used */
-#define CUDA_ARCH_FEATURES " 30 35 37 50 52 60 61 70 75"
+#define CUDA_ARCH_FEATURES " 35 37 50 52 60 61 70 75 80"
 
 /* Compile for 'virtual' NVIDIA PTX architectures */
 #define CUDA_ARCH_PTX ""
@@ -147,7 +147,7 @@
 #define HAVE_VA
 
 /* Intel VA-API/OpenCL */
-/* #undef HAVE_VA_INTEL */
+#define HAVE_VA_INTEL
 
 /* Lapack */
 #define HAVE_LAPACK

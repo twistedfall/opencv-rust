@@ -26,8 +26,8 @@
 
 namespace cv {
 
-using GSpecs = std::vector<cv::detail::ArgSpec>;
 using GShapes = std::vector<GShape>;
+using GKinds = std::vector<cv::detail::OpaqueKind>;
 
 // GKernel describes kernel API to the system
 // FIXME: add attributes of a kernel, (e.g. number and types
@@ -36,13 +36,13 @@ struct GAPI_EXPORTS GKernel
 {
     using M = std::function<GMetaArgs(const GMetaArgs &, const GArgs &)>;
 
-    const std::string name;       // kernel ID, defined by its API (signature)
-    const std::string tag;        // some (implementation-specific) tag
-    const M           outMeta;    // generic adaptor to API::outMeta(...)
-    const GSpecs      inSpecs;    // specs of kernel's inputs (FIXME: below)
-    const GShapes     outShapes;  // types (shapes) kernel's outputs
+    std::string name;       // kernel ID, defined by its API (signature)
+    std::string tag;        // some (implementation-specific) tag
+    M           outMeta;    // generic adaptor to API::outMeta(...)
+    GShapes     outShapes;  // types (shapes) kernel's outputs
+    GKinds      inKinds;    // kinds of kernel's inputs (fixme: below)
 };
-// TODO: It's questionable if inSpecs should really be here. Instead,
+// TODO: It's questionable if inKinds should really be here. Instead,
 // this information could come from meta.
 
 // GKernelImpl describes particular kernel implementation to the system
@@ -95,11 +95,12 @@ namespace detail
     template<typename T> struct MetaType;
     template<> struct MetaType<cv::GMat>    { using type = GMatDesc; };
     template<> struct MetaType<cv::GMatP>   { using type = GMatDesc; };
-    template<> struct MetaType<cv::GFrame>  { using type = GMatDesc; };
+    template<> struct MetaType<cv::GFrame>  { using type = GFrameDesc; };
     template<> struct MetaType<cv::GScalar> { using type = GScalarDesc; };
     template<typename U> struct MetaType<cv::GArray<U> >  { using type = GArrayDesc; };
     template<typename U> struct MetaType<cv::GOpaque<U> > { using type = GOpaqueDesc; };
     template<typename T> struct MetaType    { using type = T; }; // opaque args passed as-is
+    // FIXME: Move it to type traits?
 
     // 2. Hacky test based on MetaType to check if we operate on G-* type or not
     template<typename T> using is_nongapi_type = std::is_same<T, typename MetaType<T>::type>;
@@ -213,8 +214,8 @@ public:
         cv::GCall call(GKernel{ K::id()
                               , K::tag()
                               , &K::getOutMeta
-                              , {detail::GTypeTraits<Args>::spec...}
-                              , {detail::GTypeTraits<R>::shape...}});
+                              , {detail::GTypeTraits<R>::shape...}
+                              , {detail::GTypeTraits<Args>::op_kind...}});
         call.pass(args...); // TODO: std::forward() here?
         return yield(call, typename detail::MkSeq<sizeof...(R)>::type());
     }
@@ -238,8 +239,8 @@ public:
         cv::GCall call(GKernel{ K::id()
                               , K::tag()
                               , &K::getOutMeta
-                              , {detail::GTypeTraits<Args>::spec...}
-                              , {detail::GTypeTraits<R>::shape}});
+                              , {detail::GTypeTraits<R>::shape}
+                              , {detail::GTypeTraits<Args>::op_kind...}});
         call.pass(args...);
         return detail::Yield<R>::yield(call, 0);
     }
@@ -445,7 +446,7 @@ namespace gapi {
      * Finally, two kernel packages can be combined into a new one
      * with function cv::gapi::combine().
      */
-    class GAPI_EXPORTS GKernelPackage
+    class GAPI_EXPORTS_W_SIMPLE GKernelPackage
     {
 
         /// @private
@@ -712,6 +713,7 @@ namespace detail
         static const char* tag() { return "gapi.use_only"; }
     };
 } // namespace detail
+
 } // namespace cv
 
 #endif // OPENCV_GAPI_GKERNEL_HPP

@@ -256,6 +256,9 @@ enum InterpolationFlags{
     INTER_LANCZOS4       = 4,
     /** Bit exact bilinear interpolation */
     INTER_LINEAR_EXACT = 5,
+    /** Bit exact nearest neighbor interpolation. This will produce same results as
+    the nearest neighbor method in PIL, scikit-image or Matlab. */
+    INTER_NEAREST_EXACT  = 6,
     /** mask for interpolation codes */
     INTER_MAX            = 7,
     /** flag, fills all of the destination image pixels. If some of them correspond to outliers in the
@@ -401,7 +404,7 @@ enum ConnectedComponentsTypes {
 
 //! connected components algorithm
 enum ConnectedComponentsAlgorithmsTypes {
-    CCL_WU      = 0,  //!< SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+    CCL_WU      = 0,  //!< SAUF @cite Wu2009 algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
     CCL_DEFAULT = -1, //!< BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
     CCL_GRANA   = 1   //!< BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 };
@@ -1899,8 +1902,8 @@ CV_EXPORTS_W void preCornerDetect( InputArray src, OutputArray dst, int ksize,
 
 /** @brief Refines the corner locations.
 
-The function iterates to find the sub-pixel accurate location of corners or radial saddle points, as
-shown on the figure below.
+The function iterates to find the sub-pixel accurate location of corners or radial saddle
+points as described in @cite forstner1987fast, and as shown on the figure below.
 
 ![image](pics/cornersubpix.png)
 
@@ -2310,7 +2313,7 @@ CV_EXPORTS_W void warpAffine( InputArray src, OutputArray dst,
                               const Scalar& borderValue = Scalar());
 
 /** @example samples/cpp/warpPerspective_demo.cpp
-An example program shows using cv::findHomography and cv::warpPerspective for image warping
+An example program shows using cv::getPerspectiveTransform and cv::warpPerspective for image warping
 */
 
 /** @brief Applies a perspective transformation to an image.
@@ -3747,7 +3750,7 @@ image with 4 or 8 way connectivity - returns N, the total number of labels [0, N
 represents the background label. ltype specifies the output label image type, an important
 consideration based on the total number of labels or alternatively the total number of pixels in
 the source image. ccltype specifies the connected components labeling algorithm to use, currently
-Grana (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+Grana (BBDT) and Wu's (SAUF) @cite Wu2009 algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 This function uses parallel version of both Grana and Wu's algorithms if at least one allowed
 parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
@@ -3779,7 +3782,7 @@ image with 4 or 8 way connectivity - returns N, the total number of labels [0, N
 represents the background label. ltype specifies the output label image type, an important
 consideration based on the total number of labels or alternatively the total number of pixels in
 the source image. ccltype specifies the connected components labeling algorithm to use, currently
-Grana's (BBDT) and Wu's (SAUF) algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
+Grana's (BBDT) and Wu's (SAUF) @cite Wu2009 algorithms are supported, see the #ConnectedComponentsAlgorithmsTypes
 for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
 This function uses parallel version of both Grana and Wu's algorithms (statistics included) if at least one allowed
 parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
