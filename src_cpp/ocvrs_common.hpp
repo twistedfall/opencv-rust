@@ -7,6 +7,11 @@
 #endif
 
 #define CV_COLLECT_IMPL_DATA
+// strip dnn experimental ns when generating headers
+#ifdef OCVRS_PARSING_HEADERS
+	#define CV_DNN_DONT_ADD_EXPERIMENTAL_NS
+	#define CV_DNN_DONT_ADD_INLINE_NS
+#endif
 #include <opencv2/core.hpp>
 
 #define OCVRS_ONLY_DEPENDENT_TYPES

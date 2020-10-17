@@ -869,6 +869,9 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 	"cudastereo" => hashmap! {
 		"cuda" => "CUDA",
 	},
+	"mcc" => hashmap! {
+		"mcc" => "MCC",
+	},
 });
 
 pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
