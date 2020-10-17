@@ -42,6 +42,9 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		);
 
 		let vec_type = self.type_ref();
+		if vec_type.constness().is_const() { // todo we should generate smth like VectorRef in this case
+			return "".to_string();
+		}
 		let element_type = self.element_type();
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
@@ -95,6 +98,9 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		);
 
 		let vec_type = self.type_ref();
+		if vec_type.constness().is_const() { // todo we should generate smth like VectorRef in this case
+			return "".to_string();
+		}
 		let element_type = self.element_type();
 		let element_is_bool = element_type.is_bool();
 		// https://stackoverflow.com/questions/58660207/why-doesnt-stdswap-work-on-vectorbool-elements-under-clang-win
