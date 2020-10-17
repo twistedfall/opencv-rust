@@ -219,6 +219,12 @@ The following variables are rarely used, but you might need them under some circ
   the rare cases where it doesn't get picked up automatically. Should help with issues like
   [this](https://github.com/twistedfall/opencv-rust/issues/125).
 
+* `OPENCV_MODULE_WHITELIST` and `OPENCV_MODULE_BLACKLIST`
+  Comma separated lists that affect modules that get their bindings generated. Setting whitelist will only
+  generate the specified modules, setting blacklist will exclude the specified modules from generation. If the
+  same module is specified in both list it will be excluded (i.e. blacklist has precedence). E.g.
+  "core,dnn,features2d" .
+
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`

@@ -53,8 +53,6 @@ static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_it
 	"viz",
 ].iter().copied()));
 
-static DEBUG_MODULE: &str = "";
-
 static MODULES: OnceCell<Vec<String>> = OnceCell::new();
 
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
@@ -62,7 +60,7 @@ static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CAR
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 
-static ENV_VARS: [&str; 16] = [
+static ENV_VARS: [&str; 18] = [
 	"OPENCV_HEADER_DIR",
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
@@ -74,6 +72,8 @@ static ENV_VARS: [&str; 16] = [
 	"OPENCV_INCLUDE_PATHS",
 	"OPENCV_DISABLE_PROBES",
 	"OPENCV_CLANG_STDLIB_PATH",
+	"OPENCV_MODULE_WHITELIST",
+	"OPENCV_MODULE_BLACKLIST",
 	"CMAKE_PREFIX_PATH",
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",
@@ -649,10 +649,6 @@ fn get_versioned_hub_dirs() -> (PathBuf, PathBuf) {
 }
 
 fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
-	if !DEBUG_MODULE.is_empty() {
-		MODULES.set(vec![DEBUG_MODULE.to_string()]).expect("Can't set debug MODULES cache");
-		return Ok(())
-	}
 	let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
 		"core_detect",
 		"cudalegacy",
@@ -661,17 +657,30 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 		"opencv",
 		"opencv_modules",
 	].iter().copied());
+	let env_whitelist = env::var("OPENCV_MODULE_WHITELIST").ok();
+	let env_whitelist = env_whitelist.as_ref()
+		.map(|wl| wl.split(',')
+			.map(|e| e.trim())
+			.collect::<HashSet<_>>()
+		);
+
+	let env_blacklist = env::var("OPENCV_MODULE_BLACKLIST").ok();
+	let env_blacklist = env_blacklist.as_ref()
+		.map(|wl| wl.split(',')
+			.map(|e| e.trim())
+			.collect::<HashSet<_>>()
+		);
 
 	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
 		.filter_map(|entry| {
 			let entry = entry.expect("Can't get path for module file");
 			let module = entry.file_stem()
 				.and_then(OsStr::to_str).expect("Can't calculate file stem");
-			if ignore_modules.contains(module) {
-				None
-			} else {
-				Some(module.to_string())
-			}
+			Some(module)
+				.filter(|m| !ignore_modules.contains(m))
+				.filter(|m| env_blacklist.as_ref().map_or(true, |bl| !bl.contains(m)))
+				.filter(|m| env_whitelist.as_ref().map_or(true, |wl| wl.contains(m)))
+				.map(str::to_string)
 		})
 		.collect();
 
