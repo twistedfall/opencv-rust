@@ -624,6 +624,7 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::optflow::GPCTrainingParams" => ExportConfig::simple(),
 	"cv::optflow::GPCMatchingParams" => ExportConfig::simple(),
 	"cv::cudacodec::FormatInfo" => ExportConfig::simple(),
+	"cv::kinfu::Intr" => ExportConfig::simple(),
 
 	// override boxed
 	"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
