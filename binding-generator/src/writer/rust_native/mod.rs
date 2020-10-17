@@ -185,6 +185,7 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 				}
 			},
 			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ },
 			Err(e) => {
 				panic!("Error while creating file for rust dependent type: {}", e)
 			},
@@ -207,6 +208,7 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 				}
 			},
 			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ },
+			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ },
 			Err(e) => {
 				panic!("Error while creating file for cpp dependent type: {}", e)
 			},
