@@ -135,7 +135,7 @@ You need to set up the following environment variables to point to the installed
    found, e.g. for Xcode:
    
    ```  
-   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
    ```
 
 ## Reporting issues
