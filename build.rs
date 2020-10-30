@@ -359,24 +359,27 @@ impl Library {
 			toolchain,
 			env::var_os("PROFILE").map_or(false, |p| p == "release"),
 		);
-		let (
-			version,
-			opencv_include_paths,
-			opencv_link_paths,
-			opencv_link_libs,
-		) = cmake.probe_ninja(ninja_bin)
+		let mut probe_result = cmake.probe_ninja(ninja_bin)
 			.or_else(|e| {
 				eprintln!("=== Probing with cmake ninja generator failed, will try makefile generator, error: {}", e);
 				cmake.probe_makefile()
+			})
+			.or_else(|e| {
+				eprintln!("=== Probing with cmake Makefile generator failed, will try deprecated find_package, error: {}", e);
+				cmake.probe_find_package()
 			})?;
 
-		let mut cargo_metadata = Vec::with_capacity(opencv_link_paths.len() + opencv_link_libs.len());
-		cargo_metadata.extend(Self::process_link_paths(link_paths, opencv_link_paths.into_iter().collect(), None));
-		cargo_metadata.extend(Self::process_link_libs(link_libs, opencv_link_libs, None));
+		if probe_result.version.is_none() {
+			probe_result.version = Self::version_from_include_paths(&probe_result.include_paths);
+		}
+
+		let mut cargo_metadata = Vec::with_capacity(probe_result.link_paths.len() + probe_result.link_libs.len());
+		cargo_metadata.extend(Self::process_link_paths(link_paths, probe_result.link_paths, None));
+		cargo_metadata.extend(Self::process_link_libs(link_libs, probe_result.link_libs, None));
 
 		Ok(Self {
-			include_paths: Self::process_env_var_list(include_paths, opencv_include_paths),
-			version: version.unwrap_or_else(|| "0.0.0".to_string()),
+			include_paths: Self::process_env_var_list(include_paths, probe_result.include_paths),
+			version: probe_result.version.unwrap_or_else(|| "0.0.0".to_string()),
 			cargo_metadata,
 		})
 	}
@@ -466,6 +469,9 @@ impl Library {
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
 		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || cfg!(target_os = "windows");
+		eprintln!("=== Detected probe priority based on environment vars: pkg_config: {}, cmake: {}, vcpkg: {}",
+		          explicit_pkg_config, explicit_cmake, explicit_vcpkg
+		);
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
 		let disabled_probes = disabled_probes.as_ref()
@@ -480,23 +486,33 @@ impl Library {
 			("vcpkg", &probe_vcpkg),
 		];
 
+		let mut prioritize = |probe: &str, over: &str| {
+			let (probe_idx, over_idx) = probes.iter().position(|(name, _)| name == &probe)
+				.and_then(|probe_idx| probes.iter().position(|(name, _)| name == &over)
+					.map(|over_idx| (probe_idx, over_idx))
+				)
+				.expect("Can't find probe to swap");
+			if probe_idx > over_idx {
+				for i in (over_idx..probe_idx).rev() {
+					probes.swap(i, i + 1);
+				}
+			}
+		};
+
 		if explicit_pkg_config {
-			if explicit_vcpkg {
-				probes.swap(2, 3);
-				probes.swap(3, 4);
+			if explicit_vcpkg && !explicit_cmake {
+				prioritize("vcpkg_cmake", "cmake");
+				prioritize("vcpkg", "cmake");
 			}
 		} else if explicit_cmake {
-			probes.swap(1, 2);
+			prioritize("cmake", "pkg_config");
 			if explicit_vcpkg {
-				probes.swap(2, 3);
-				probes.swap(3, 4);
+				prioritize("vcpkg_cmake", "pkg_config");
+				prioritize("vcpkg", "pkg_config");
 			}
 		} else if explicit_vcpkg {
-			probes.swap(2, 3);
-			probes.swap(3, 4);
-
-			probes.swap(1, 2);
-			probes.swap(2, 3);
+			prioritize("vcpkg_cmake", "pkg_config");
+			prioritize("vcpkg", "pkg_config");
 		}
 
 		let probe_list = probes.iter()
