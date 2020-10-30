@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Tracking API
 //! 
 //! Long-term optical tracking API
@@ -267,22 +275,22 @@ pub mod prelude {
 	pub use { super::CvFeatureParamsTrait, super::CvHaarEvaluator_FeatureHaarTrait, super::CvHaarEvaluatorTrait, super::ClfMilBoost_ParamsTrait, super::ClfMilBoostTrait, super::TrackerFeature, super::TrackerFeatureSetTrait, super::TrackerSamplerAlgorithm, super::TrackerSamplerTrait, super::TrackerTargetStateTrait, super::TrackerStateEstimator, super::TrackerModel, super::Tracker, super::TrackerStateEstimatorMILBoosting_TrackerMILTargetStateTrait, super::TrackerStateEstimatorMILBoostingTrait, super::TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetStateTrait, super::TrackerStateEstimatorAdaBoostingTrait, super::TrackerStateEstimatorSVMTrait, super::TrackerSamplerCSC_ParamsTrait, super::TrackerSamplerCSCTrait, super::TrackerSamplerCS_ParamsTrait, super::TrackerSamplerCSTrait, super::TrackerSamplerPF_ParamsTrait, super::TrackerSamplerPFTrait, super::TrackerFeatureFeature2dTrait, super::TrackerFeatureHOGTrait, super::TrackerFeatureHAAR_ParamsTrait, super::TrackerFeatureHAARTrait, super::TrackerFeatureLBPTrait, super::TrackerMIL_ParamsTrait, super::TrackerMIL, super::TrackerBoosting_ParamsTrait, super::TrackerBoosting, super::TrackerMedianFlow_ParamsTrait, super::TrackerMedianFlow, super::TrackerTLD_ParamsTrait, super::TrackerTLD, super::TrackerKCF_ParamsTrait, super::TrackerKCF, super::TrackerGOTURN_ParamsTrait, super::TrackerGOTURN, super::MultiTrackerTrait, super::MultiTracker_AltTrait, super::MultiTrackerTLDTrait };
 }
 
-pub const CC_FEATURE_PARAMS: &'static str = "featureParams";
-pub const CC_FEATURE_SIZE: &'static str = "featSize";
-pub const CC_ISINTEGRAL: &'static str = "isIntegral";
-pub const CC_MAX_CAT_COUNT: &'static str = "maxCatCount";
-pub const CC_NUM_FEATURES: &'static str = "numFeat";
-pub const CC_RECT: &'static str = "rect";
-pub const CC_RECTS: &'static str = "rects";
-pub const CC_TILTED: &'static str = "tilted";
+pub const CC_FEATURE_PARAMS: &str = "featureParams";
+pub const CC_FEATURE_SIZE: &str = "featSize";
+pub const CC_ISINTEGRAL: &str = "isIntegral";
+pub const CC_MAX_CAT_COUNT: &str = "maxCatCount";
+pub const CC_NUM_FEATURES: &str = "numFeat";
+pub const CC_RECT: &str = "rect";
+pub const CC_RECTS: &str = "rects";
+pub const CC_TILTED: &str = "tilted";
 pub const CV_HAAR_FEATURE_MAX: i32 = 3;
 pub const CvFeatureParams_HAAR: i32 = 0;
 pub const CvFeatureParams_HOG: i32 = 2;
 pub const CvFeatureParams_LBP: i32 = 1;
-pub const FEATURES: &'static str = "features";
-pub const HFP_NAME: &'static str = "haarFeatureParams";
-pub const HOGF_NAME: &'static str = "HOGFeatureParams";
-pub const LBPF_NAME: &'static str = "lbpFeatureParams";
+pub const FEATURES: &str = "features";
+pub const HFP_NAME: &str = "haarFeatureParams";
+pub const HOGF_NAME: &str = "HOGFeatureParams";
+pub const LBPF_NAME: &str = "lbpFeatureParams";
 pub const N_BINS: i32 = 9;
 pub const N_CELLS: i32 = 4;
 /// mode for detect samples

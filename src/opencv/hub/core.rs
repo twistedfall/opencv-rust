@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Core functionality
 //!    # Basic structures
 //!    # C structures and operations
@@ -359,11 +367,11 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &'static str = "4.5.0";
+pub const CV_VERSION: &str = "4.5.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
 pub const CV_VERSION_MINOR: i32 = 5;
 pub const CV_VERSION_REVISION: i32 = 0;
-pub const CV_VERSION_STATUS: &'static str = "";
+pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
 pub const CV_WASM_SIMD: i32 = 0;

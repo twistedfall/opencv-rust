@@ -1,3 +1,13 @@
+* 0.46.2
+  * Bring back deprecated cmake find-package discovery as a fallback, it's still useful in [some cases](https://github.com/twistedfall/opencv-rust/issues/177)
+
+* 0.46.1
+  * Improve cmake package detection (and remove deprecated find-package)
+  * Re-enable parallel building with `clang-runtime` feature enabled
+  * Add support for appending user values to detected OpenCV build configurations like include paths or link paths
+  * Fix generation with OpenCV 4.5.0
+  * Minimal required rust version is now 1.45.0 due to usage of `str::strip_prefix`
+
 * 0.46.0
   * Fix linking in some configurations (https://github.com/twistedfall/opencv-rust/issues/164)
   * Fix argument name clashing in external functions

@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Core functionality
 //!    # Basic structures
 //!    # C structures and operations
@@ -542,19 +550,19 @@ pub const CV_StsVecLengthErr: i32 = -28;
 pub const CV_TERMCRIT_EPS: i32 = 2;
 pub const CV_TERMCRIT_ITER: i32 = 1;
 pub const CV_TERMCRIT_NUMBER: i32 = CV_TERMCRIT_ITER;
-pub const CV_TYPE_NAME_GRAPH: &'static str = "opencv-graph";
-pub const CV_TYPE_NAME_IMAGE: &'static str = "opencv-image";
-pub const CV_TYPE_NAME_MAT: &'static str = "opencv-matrix";
-pub const CV_TYPE_NAME_MATND: &'static str = "opencv-nd-matrix";
-pub const CV_TYPE_NAME_SEQ: &'static str = "opencv-sequence";
-pub const CV_TYPE_NAME_SEQ_TREE: &'static str = "opencv-sequence-tree";
-pub const CV_TYPE_NAME_SPARSE_MAT: &'static str = "opencv-sparse-matrix";
+pub const CV_TYPE_NAME_GRAPH: &str = "opencv-graph";
+pub const CV_TYPE_NAME_IMAGE: &str = "opencv-image";
+pub const CV_TYPE_NAME_MAT: &str = "opencv-matrix";
+pub const CV_TYPE_NAME_MATND: &str = "opencv-nd-matrix";
+pub const CV_TYPE_NAME_SEQ: &str = "opencv-sequence";
+pub const CV_TYPE_NAME_SEQ_TREE: &str = "opencv-sequence-tree";
+pub const CV_TYPE_NAME_SPARSE_MAT: &str = "opencv-sparse-matrix";
 pub const CV_USRTYPE1: i32 = 7;
-pub const CV_VERSION: &'static str = "3.2.0";
+pub const CV_VERSION: &str = "3.2.0";
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 2;
 pub const CV_VERSION_REVISION: i32 = 0;
-pub const CV_VERSION_STATUS: &'static str = "";
+pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VFP: i32 = 0;
 pub const CV_WHOLE_SEQ_END_INDEX: i32 = 0x3fffffff;
 /// performs an inverse 1D or 2D transform instead of the default forward transform.

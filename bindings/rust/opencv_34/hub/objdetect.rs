@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Object Detection
 //! 
 //! Haar Feature-based Cascade Classifier for Object Detection
@@ -70,7 +78,7 @@ pub const CV_HAAR_FIND_BIGGEST_OBJECT: i32 = 4;
 pub const CV_HAAR_MAGIC_VAL: i32 = 0x42500000;
 pub const CV_HAAR_SCALE_IMAGE: i32 = 2;
 pub const CV_HAAR_STAGE_MAX: i32 = 1000;
-pub const CV_TYPE_NAME_HAAR: &'static str = "opencv-haar-classifier";
+pub const CV_TYPE_NAME_HAAR: &str = "opencv-haar-classifier";
 /// Default nlevels value.
 pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
 /// Default histogramNormType

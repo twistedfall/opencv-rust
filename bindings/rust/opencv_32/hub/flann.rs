@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Clustering and Search in Multi-Dimensional Spaces
 //! 
 //! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
@@ -57,13 +65,13 @@ pub const FLANN_LOG_FATAL: i32 = 1;
 pub const FLANN_LOG_INFO: i32 = 4;
 pub const FLANN_LOG_NONE: i32 = 0;
 pub const FLANN_LOG_WARN: i32 = 3;
-pub const FLANN_SIGNATURE_: &'static str = "FLANN_INDEX";
+pub const FLANN_SIGNATURE_: &str = "FLANN_INDEX";
 pub const FLANN_UINT16: i32 = 5;
 pub const FLANN_UINT32: i32 = 6;
 pub const FLANN_UINT64: i32 = 7;
 pub const FLANN_UINT8: i32 = 4;
 pub const FLANN_USE_BOOST: i32 = 0;
-pub const FLANN_VERSION_: &'static str = "1.6.10";
+pub const FLANN_VERSION_: &str = "1.6.10";
 pub const HELLINGER: i32 = 6;
 pub const HIST_INTERSECT: i32 = 5;
 pub const KDTREE: i32 = 1;

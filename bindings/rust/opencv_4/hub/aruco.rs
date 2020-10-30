@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # ArUco Marker Detection
 //! This module is dedicated to square fiducial markers (also known as Augmented Reality Markers)
 //! These markers are useful for easy, fast and robust camera pose estimation.ç

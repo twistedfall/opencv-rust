@@ -1,4 +1,12 @@
-#![allow(unused_parens)]
+#![allow(
+	unused_parens,
+	clippy::excessive_precision,
+	clippy::missing_safety_doc,
+	clippy::not_unsafe_ptr_arg_deref,
+	clippy::should_implement_trait,
+	clippy::too_many_arguments,
+	clippy::unused_unit,
+)]
 //! # Image processing based on fuzzy mathematics
 //! 
 //! Namespace for all functions is **ft**. The module brings implementation of the last image processing algorithms based on fuzzy mathematics.
