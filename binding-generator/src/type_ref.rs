@@ -898,7 +898,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn rust_local(&self) -> Cow<str> {
-		self.render(RustDeclarationRenderer::new()).into()
+		self.render(RustDeclarationRenderer::new())
 	}
 
 	pub fn rust_full(&self) -> Cow<str> {
@@ -907,7 +907,7 @@ impl<'tu> TypeRef<'tu> {
 
 	pub fn rust_full_ext(&self, elided_lifetimes: bool, use_turbo_fish: bool) -> Cow<str> {
 		let lifetimes = if !elided_lifetimes && self.rust_lifetime_count() > 0 { Some(Lifetime::default()) } else { None };
-		self.render(RustReferenceRenderer::new(lifetimes, use_turbo_fish)).into()
+		self.render(RustReferenceRenderer::new(lifetimes, use_turbo_fish))
 	}
 
 	fn rust_lifetime_count(&self) -> usize {
@@ -1384,7 +1384,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_local_ext(&self, extern_types: bool) -> Cow<str> {
-		self.render(CppDeclarationRenderer::new(extern_types)).into()
+		self.render(CppDeclarationRenderer::new(extern_types))
 	}
 
 	pub fn cpp_full(&self) -> Cow<str> {
@@ -1392,7 +1392,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_full_ext(&self, name: &str, extern_types: bool) -> Cow<str> {
-		self.render(CppReferenceRenderer::new(name, extern_types)).into()
+		self.render(CppReferenceRenderer::new(name, extern_types))
 	}
 
 	pub fn cpp_extern(&self) -> Cow<str> {
@@ -1483,7 +1483,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	pub fn cpp_extern_return(&self) -> Cow<str> {
-		self.render(CppExternReturnRenderer::new()).into()
+		self.render(CppExternReturnRenderer::new())
 	}
 
 	pub fn cpp_extern_return_wrapper_full(&self) -> Cow<str> {

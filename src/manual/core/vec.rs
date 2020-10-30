@@ -7,14 +7,14 @@ use crate::{
 	traits::Boxed,
 };
 
-pub use self::{scalar::ValidScalarType, vec::ValidVecType};
+pub use self::{scalar_inner::ValidScalarType, vec_inner::ValidVecType};
 
 // additional modules needed because valid_types! introduces module named "private"
-mod vec {
+mod vec_inner {
 	valid_types!(ValidVecType: i8, u8, i16, u16, i32, f32, f64);
 }
 
-mod scalar {
+mod scalar_inner {
 	valid_types!(ValidScalarType: i32, f64);
 }
 

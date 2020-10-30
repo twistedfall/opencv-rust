@@ -164,11 +164,11 @@ fn preprocess_formula(formula: &str) -> String {
 			"\\begin{bmatrix} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{bmatrix}",
 		),
 		(
-			Regex::new(&format!("\\\\hdotsfor{}", ARG_REGEX.repeat(1))).unwrap(),
+			Regex::new(&format!("\\\\hdotsfor{}", ARG_REGEX)).unwrap(),
 			"\\dots",
 		),
 		(
-			Regex::new(&format!("\\\\mathbbm{}", ARG_REGEX.repeat(1))).unwrap(),
+			Regex::new(&format!("\\\\mathbbm{}", ARG_REGEX)).unwrap(),
 			"\\mathbb{$1}",
 		),
 		(

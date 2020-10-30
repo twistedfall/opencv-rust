@@ -419,13 +419,13 @@ impl Library {
 	}
 
 	pub fn probe_vcpkg_cmake(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
-		eprintln!("=== Probing OpenCV library using vcpkg");
+		eprintln!("=== Probing OpenCV library using vcpkg_cmake");
 		let mut config = vcpkg::Config::new();
 		config.cargo_metadata(false);
 		// don't care about the error here, only need to have dlls copied to outdir
 		let _ = config.find_package(&PackageName::vcpkg());
 
-		let vcpkg_root = canonicalize(vcpkg::find_vcpkg_root(&mut config)?)?;
+		let vcpkg_root = canonicalize(vcpkg::find_vcpkg_root(&config)?)?;
 		eprintln!("=== Discovered vcpkg root: {}", vcpkg_root.display());
 		let vcpkg_cmake = vcpkg_root.to_str()
 			.and_then(|vcpkg_root| {

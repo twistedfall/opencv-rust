@@ -174,7 +174,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A
 
 impl<T: ValidMatxType, A: SizedArray<T>> std::cmp::PartialEq for Matx<T, A> {
 	fn eq(&self, other: &Matx<T, A>) -> bool {
-		&self.val() == &other.val()
+		self.val() == other.val()
 	}
 }
 

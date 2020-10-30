@@ -176,7 +176,7 @@ fn match_is_continuous(mat: &(impl MatTrait + ?Sized)) -> Result<()> {
 	if mat.is_continuous()? {
 		Ok(())
 	} else {
-		Err(Error::new(core::StsUnmatchedSizes, format!("Mat is not continuous, operation is not applicable")))
+		Err(Error::new(core::StsUnmatchedSizes, "Mat is not continuous, operation is not applicable".to_string()))
 	}
 }
 
@@ -310,6 +310,9 @@ pub(crate) mod mat_forward {
 
 pub trait MatTraitManual: MatTrait {
 	/// Like `Mat::at()` but performs no bounds or type checks
+	///
+	/// # Safety
+	/// Caller must ensure that index is within Mat bounds
 	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> Result<&T> {
 		let mat_size = self.size()?;
 		let (i, j) = if self.is_continuous()? || mat_size.width == 1 {
@@ -325,6 +328,8 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that index is within Mat bounds
 	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
 		let (i, j) = idx_to_row_col(self, i0)?;
 		self.ptr_2d_mut(i, j)
@@ -332,48 +337,68 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_2d()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
 		self.ptr_2d(row, col)
 			.map(|ptr| convert_ptr(ptr))
 	}
 
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_2d_unchecked_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
 		self.ptr_2d_mut(row, col)
 			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	/// Like `Mat::at_pt()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that point is within Mat bounds
 	unsafe fn at_pt_unchecked<T: DataType>(&self, pt: Point) -> Result<&T> {
 		self.at_2d_unchecked(pt.y, pt.x)
 	}
 
 	/// Like `Mat::at_pt_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that point is within Mat bounds
 	unsafe fn at_pt_unchecked_mut<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
 		self.at_2d_unchecked_mut(pt.y, pt.x)
 	}
 
-	/// Return a complete read-only row
+	/// Like `Mat::at_3d()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
 		self.ptr_3d(i0, i1, i2)
 			.map(|ptr| convert_ptr(ptr))
 	}
 
+	/// Like `Mat::at_3d_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_3d_unchecked_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		self.ptr_3d_mut(i0, i1, i2)
 			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
+	/// Like `Mat::at_nd()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
 		self.ptr_nd(idx)
 			.map(|ptr| convert_ptr(ptr))
 	}
 
+	/// Like `Mat::at_nd_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that indices are within Mat bounds
 	unsafe fn at_nd_unchecked_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
 		self.ptr_nd_mut(idx)
 			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
+	/// Return a complete read-only row
 	fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		match_format::<T>(self.typ()?)
 			.and_then(|_| match_indices(self, &[row, 0]))
@@ -381,6 +406,8 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_row()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that index is within Mat bounds
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		let width = self.size()?.width as usize;
 		self.ptr(row)
@@ -395,6 +422,8 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_row_mut()` but performs no bounds or type checks
+	/// # Safety
+	/// Caller must ensure that index is within Mat bounds
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		let width = self.size()?.width as usize;
 		self.ptr_mut(row)

@@ -30,8 +30,8 @@ fn read_dir(path: &Path) -> Result<impl Iterator<Item=DirEntry>> {
 fn copy_indent(mut read: impl BufRead, mut write: impl Write, indent: &str) -> Result<()> {
 	let mut line = Vec::with_capacity(100);
 	while read.read_until(b'\n', &mut line)? != 0 {
-		write.write(indent.as_bytes())?;
-		write.write(&line)?;
+		write.write_all(indent.as_bytes())?;
+		write.write_all(&line)?;
 		line.clear();
 	}
 	Ok(())
@@ -82,7 +82,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 	};
 
 	let clang_stdlib_include_dir = Arc::new(env::var_os("OPENCV_CLANG_STDLIB_PATH")
-		.map(|p| PathBuf::from(p))
+		.map(PathBuf::from)
 	);
 	let num_jobs = env::var("NUM_JOBS").ok()
 		.and_then(|jobs| jobs.parse().ok())

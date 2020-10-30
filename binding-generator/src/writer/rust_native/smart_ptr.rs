@@ -96,7 +96,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
-			"cpp_full_const" => cpp_full_const.into(),
+			"cpp_full_const" => cpp_full_const,
 			"inner_cpp_full" => pointee_type.cpp_full(),
 			"inner_cpp_extern" => inner_cpp_extern,
 			"inner_cpp_extern_const" => inner_cpp_extern_const,
