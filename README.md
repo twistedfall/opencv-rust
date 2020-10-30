@@ -72,9 +72,9 @@ Installing OpenCV is easy through the following sources:
 
 Get OpenCV from homebrew:
 
-* [homebrew](https://brew.sh), be sure to also install `pkg-config` that is required for building:
+* [homebrew](https://brew.sh):
   ```shell script
-  brew install pkg-config opencv
+  brew install opencv
   ```
   You will also need a working C++ compiler and libclang, you can use the ones from XCode or install `llvm`
   from brew. You most probably need to also check the item 6 of the troubleshooting below.

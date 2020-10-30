@@ -139,7 +139,6 @@ else
 	# build deps
 	sudo apt-get -y install \
 		build-essential \
-		pkg-config \
 		cmake \
 		libatlas-base-dev \
 		libavcodec-dev \
