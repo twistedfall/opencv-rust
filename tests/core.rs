@@ -107,7 +107,7 @@ fn file_storage() -> Result<()> {
     }
 
     { // test to correctly handle output string on error condition
-        let st = FileStorage::new("", 5, "")?;
+        let st = FileStorage::new("", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
         let node = FileNode::new(&st, 0, 0)?;
         let mut out = String::new();
         assert_matches!(core::read_str(&node, &mut out, "123"), Err(Error { code: core::StsAssert, .. }));

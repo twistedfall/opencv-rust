@@ -138,6 +138,16 @@ You need to set up the following environment variables to point to the installed
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
    ```
 
+7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
+
+   Enable the `clang-runtime` feature. The reason for the issue is that some crates (like `bindgen`) depend on
+   `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also enabled
+   for every other crate that depends on `clang-sys` (`opencv` in this case). During binding generation phase
+   `opencv` crate tries to use multiple threads and `clang-sys` with `runtime` feature enabled doesn't like
+   that (hence the panic). Enabling `clang-runtime` feature switches to using multiple processes instead of
+   multiple threads. This makes the build a bit longer because of the need to build the helper binary, but the
+   end result is the same.
+
 ## Reporting issues
 
 If you still have trouble using the crate after going through the Troubleshooting steps please fill free to
@@ -268,9 +278,8 @@ The following variables affect the building the of the `opencv` crate, but belon
   version is 6.0), with this feature enabled the bundled headers are no longer used for the code generation,
   the ones from the installed OpenCV are used instead
 * `clang-runtime` - only useful with the combination with `buildtime-bindgen`, enables the runtime detection
-  of libclang (`runtime` feature of `clang-sys`). This makes the build slower because it impairs the parallel
-  generation of OpenCV modules. Useful as a workaround for when your dependencies (like `bindgen`) pull in
-  `clang-sys` with hard `runtime` feature. See also this [issue](https://github.com/twistedfall/opencv-rust/issues/129).
+  of libclang (`runtime` feature of `clang-sys`). Useful as a workaround for when your dependencies (like
+  `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details
