@@ -6,7 +6,7 @@ repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = ["opencv", "vision"]
 license = "MIT"
-version = "0.46.2"
+version = "0.46.3"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 autoexamples = false # cuda example doesn't compile on just any system
@@ -67,7 +67,8 @@ once_cell = "1.0"
 pkg-config = "0.3"
 semver = "0.10"
 shlex = "0.1"
-vcpkg = "0.2"
+# vcpkg-0.2.9 is the first one that has accessible find_vcpkg_root()
+vcpkg = "0.2.9"
 
 [dev-dependencies]
 matches = "0.1"
