@@ -53,7 +53,8 @@ fn main() -> Result<()> {
 	println!("{:#?}", start.elapsed());
 	if opencl_use {
 		println!("Timing OpenCL implementation... ");
-		let img = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+		let mat = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?;
+		let img = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		let start = time::Instant::now();
 		for _ in 0..ITERATIONS {
 			let mut gray = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;

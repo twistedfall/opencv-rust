@@ -32,7 +32,8 @@ fn input_output_array_types() -> Result<()> {
 fn input_output_array() -> Result<()> {
 	{
 		let mat_expr = Mat::ones(1, 3, u8::typ())?;
-		let umat = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(3.))?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+		let mat = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(3.))?;
+		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		{
 			let mut trg = VectorOfu8::new();
 			core::add(&mat_expr, &umat, &mut trg, &core::no_array()?, -1)?;

@@ -36,7 +36,8 @@ fn umat_to_mat() -> Result<()> {
         vec.push(1);
         vec.push(2);
         vec.push(3);
-        let umat = Mat::from_exact_iter(vec.into_iter())?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+        let mat = Mat::from_exact_iter(vec.into_iter())?;
+        let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
         assert_eq!(3, umat.rows());
         assert_eq!(1, umat.cols());
         assert_eq!(i32::typ(), umat.typ()?);
@@ -48,7 +49,8 @@ fn umat_to_mat() -> Result<()> {
 
     {
         let vec: Vec<i32> = vec![1, 2, 3];
-        let umat = Mat::from_exact_iter(vec.into_iter())?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+        let mat = Mat::from_exact_iter(vec.into_iter())?;
+        let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
         assert_eq!(3, umat.rows());
         assert_eq!(1, umat.cols());
         assert_eq!(i32::typ(), umat.typ()?);
@@ -94,7 +96,8 @@ fn umat_continuous() -> Result<()> {
         vec![7., 8., 9.],
     ];
 
-    let umat = Mat::from_slice_2d(&s)?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+    let mat = Mat::from_slice_2d(&s)?;
+    let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 
     {
         let sub_umat_non_cont = UMat::roi(&umat, Rect::new(1, 1, 2, 2))?;
