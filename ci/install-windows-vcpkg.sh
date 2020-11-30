@@ -18,7 +18,7 @@ echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows-static.cmake
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x86-windows.cmake
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
-choco install llvm
+choco install -y llvm --version 11.0.0
 ./vcpkg install "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
 ./vcpkg upgrade --no-dry-run
 popd
