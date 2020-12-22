@@ -4,7 +4,7 @@ set -vex
 
 if [[ "$OS_FAMILY" == "windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
-	export LIBCLANG_PATH="/C/Program Files/LLVM/bin/libclang.dll"
+	export LIBCLANG_PATH="/C/Program Files/LLVM/bin"
 	if [[ "$CHOCO_OPENCV_VERSION" != "" ]]; then # chocolatey build
 		# missing aruco module that will not allow us to run tests, that's why contrib feature is not enabled
 		export PATH="/C/tools/opencv/build/x64/vc15/bin:$PATH"
