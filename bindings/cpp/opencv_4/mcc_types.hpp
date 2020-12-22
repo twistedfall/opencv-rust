@@ -6,6 +6,7 @@ template struct Result<cv::Ptr<cv::mcc::CCheckerDraw>*>;
 template struct Result<cv::Ptr<cv::mcc::CChecker>*>;
 template struct Result<cv::Ptr<cv::mcc::DetectorParameters>*>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::ccm::ColorCorrectionModel*>;
 template struct Result<cv::mcc::DetectorParameters*>;
 template struct Result<cv::mcc::TYPECHART>;
 template struct Result<double>;

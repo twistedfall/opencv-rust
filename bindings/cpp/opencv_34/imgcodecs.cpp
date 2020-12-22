@@ -45,4 +45,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
+	Result<bool> cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(const char* filename, const cv::_InputArray* img, const std::vector<int>* params) {
+		try {
+			bool ret = cv::imwritemulti(cv::String(filename), *img, *params);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 }

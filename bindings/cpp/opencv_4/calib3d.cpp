@@ -940,4 +940,11 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::StereoSGBM>*>))
 	}
 	
+	Result<cv::UsacParams> cv_UsacParams_UsacParams() {
+		try {
+			cv::UsacParams ret;
+			return Ok<cv::UsacParams>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::UsacParams>))
+	}
+	
 }

@@ -4099,6 +4099,37 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfCUDA_StereoSGM = core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>;
+	
+	ptr_extern! { dyn crate::cudastereo::CUDA_StereoSGM,
+		cv_PtrOfCUDA_StereoSGM_delete, cv_PtrOfCUDA_StereoSGM_get_inner_ptr, cv_PtrOfCUDA_StereoSGM_get_inner_ptr_mut
+	}
+	
+	impl PtrOfCUDA_StereoSGM {
+		#[inline] pub fn as_raw_PtrOfCUDA_StereoSGM(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_StereoSGM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_StereoSGM {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcher for PtrOfCUDA_StereoSGM {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoSGBM for PtrOfCUDA_StereoSGM {
+		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoSGM for PtrOfCUDA_StereoSGM {
+		#[inline] fn as_raw_CUDA_StereoSGM(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 }
 #[cfg(feature = "contrib")]
 pub use cudastereo_types::*;
@@ -8142,24 +8173,6 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfDynafu_Params = core::Ptr::<crate::rgbd::Dynafu_Params>;
-	
-	ptr_extern! { crate::rgbd::Dynafu_Params,
-		cv_PtrOfDynafu_Params_delete, cv_PtrOfDynafu_Params_get_inner_ptr, cv_PtrOfDynafu_Params_get_inner_ptr_mut
-	}
-	
-	ptr_extern_ctor! { crate::rgbd::Dynafu_Params, cv_PtrOfDynafu_Params_new }
-	
-	impl PtrOfDynafu_Params {
-		#[inline] pub fn as_raw_PtrOfDynafu_Params(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfDynafu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::rgbd::Dynafu_ParamsTrait for PtrOfDynafu_Params {
-		#[inline] fn as_raw_Dynafu_Params(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Dynafu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
 	pub type PtrOfFastICPOdometry = core::Ptr::<crate::rgbd::FastICPOdometry>;
 	
 	ptr_extern! { crate::rgbd::FastICPOdometry,
@@ -8264,6 +8277,40 @@ mod rgbd_types {
 	impl crate::rgbd::Kinfu_Volume for PtrOfKinfu_Volume {
 		#[inline] fn as_raw_Kinfu_Volume(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Kinfu_Volume(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfKinfu_VolumeParams = core::Ptr::<crate::rgbd::Kinfu_VolumeParams>;
+	
+	ptr_extern! { crate::rgbd::Kinfu_VolumeParams,
+		cv_PtrOfKinfu_VolumeParams_delete, cv_PtrOfKinfu_VolumeParams_get_inner_ptr, cv_PtrOfKinfu_VolumeParams_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::rgbd::Kinfu_VolumeParams, cv_PtrOfKinfu_VolumeParams_new }
+	
+	impl PtrOfKinfu_VolumeParams {
+		#[inline] pub fn as_raw_PtrOfKinfu_VolumeParams(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKinfu_VolumeParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Kinfu_VolumeParamsTrait for PtrOfKinfu_VolumeParams {
+		#[inline] fn as_raw_Kinfu_VolumeParams(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Kinfu_VolumeParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfLargeKinfu = core::Ptr::<dyn crate::rgbd::LargeKinfu>;
+	
+	ptr_extern! { dyn crate::rgbd::LargeKinfu,
+		cv_PtrOfLargeKinfu_delete, cv_PtrOfLargeKinfu_get_inner_ptr, cv_PtrOfLargeKinfu_get_inner_ptr_mut
+	}
+	
+	impl PtrOfLargeKinfu {
+		#[inline] pub fn as_raw_PtrOfLargeKinfu(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLargeKinfu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::LargeKinfu for PtrOfLargeKinfu {
+		#[inline] fn as_raw_LargeKinfu(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_LargeKinfu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfLinemod_ColorGradient = core::Ptr::<crate::rgbd::Linemod_ColorGradient>;
@@ -8404,6 +8451,24 @@ mod rgbd_types {
 	impl crate::rgbd::RgbdFrameTrait for PtrOfOdometryFrame {
 		#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfParams = core::Ptr::<crate::rgbd::Params>;
+	
+	ptr_extern! { crate::rgbd::Params,
+		cv_PtrOfParams_delete, cv_PtrOfParams_get_inner_ptr, cv_PtrOfParams_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::rgbd::Params, cv_PtrOfParams_new }
+	
+	impl PtrOfParams {
+		#[inline] pub fn as_raw_PtrOfParams(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::ParamsTrait for PtrOfParams {
+		#[inline] fn as_raw_Params(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfRgbdFrame = core::Ptr::<crate::rgbd::RgbdFrame>;
@@ -9773,76 +9838,6 @@ pub use text_types::*;
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
-	pub type PtrOfMultiTracker = core::Ptr::<crate::tracking::MultiTracker>;
-	
-	ptr_extern! { crate::tracking::MultiTracker,
-		cv_PtrOfMultiTracker_delete, cv_PtrOfMultiTracker_get_inner_ptr, cv_PtrOfMultiTracker_get_inner_ptr_mut
-	}
-	
-	ptr_extern_ctor! { crate::tracking::MultiTracker, cv_PtrOfMultiTracker_new }
-	
-	impl PtrOfMultiTracker {
-		#[inline] pub fn as_raw_PtrOfMultiTracker(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfMultiTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfMultiTracker {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::MultiTrackerTrait for PtrOfMultiTracker {
-		#[inline] fn as_raw_MultiTracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_MultiTracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTracker = core::Ptr::<dyn crate::tracking::Tracker>;
-	
-	ptr_extern! { dyn crate::tracking::Tracker,
-		cv_PtrOfTracker_delete, cv_PtrOfTracker_get_inner_ptr, cv_PtrOfTracker_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTracker {
-		#[inline] pub fn as_raw_PtrOfTracker(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTracker {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTracker {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerBoosting = core::Ptr::<dyn crate::tracking::TrackerBoosting>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerBoosting,
-		cv_PtrOfTrackerBoosting_delete, cv_PtrOfTrackerBoosting_get_inner_ptr, cv_PtrOfTrackerBoosting_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerBoosting {
-		#[inline] pub fn as_raw_PtrOfTrackerBoosting(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerBoosting(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerBoosting {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerBoosting {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerBoosting for PtrOfTrackerBoosting {
-		#[inline] fn as_raw_TrackerBoosting(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerBoosting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
 	pub type PtrOfTrackerCSRT = core::Ptr::<dyn crate::tracking::TrackerCSRT>;
 	
 	ptr_extern! { dyn crate::tracking::TrackerCSRT,
@@ -9854,12 +9849,7 @@ mod tracking_types {
 		#[inline] pub fn as_raw_mut_PtrOfTrackerCSRT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl core::AlgorithmTrait for PtrOfTrackerCSRT {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerCSRT {
+	impl crate::video::Tracker for PtrOfTrackerCSRT {
 		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
@@ -9867,48 +9857,6 @@ mod tracking_types {
 	impl crate::tracking::TrackerCSRT for PtrOfTrackerCSRT {
 		#[inline] fn as_raw_TrackerCSRT(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerFeature = core::Ptr::<dyn crate::tracking::TrackerFeature>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerFeature,
-		cv_PtrOfTrackerFeature_delete, cv_PtrOfTrackerFeature_get_inner_ptr, cv_PtrOfTrackerFeature_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerFeature {
-		#[inline] pub fn as_raw_PtrOfTrackerFeature(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerFeature for PtrOfTrackerFeature {
-		#[inline] fn as_raw_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::tracking::TrackerGOTURN>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerGOTURN,
-		cv_PtrOfTrackerGOTURN_delete, cv_PtrOfTrackerGOTURN_get_inner_ptr, cv_PtrOfTrackerGOTURN_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerGOTURN {
-		#[inline] pub fn as_raw_PtrOfTrackerGOTURN(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerGOTURN {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerGOTURN {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerGOTURN for PtrOfTrackerGOTURN {
-		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerKCF = core::Ptr::<dyn crate::tracking::TrackerKCF>;
@@ -9922,12 +9870,7 @@ mod tracking_types {
 		#[inline] pub fn as_raw_mut_PtrOfTrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl core::AlgorithmTrait for PtrOfTrackerKCF {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerKCF {
+	impl crate::video::Tracker for PtrOfTrackerKCF {
 		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
@@ -9936,180 +9879,6 @@ mod tracking_types {
 		#[inline] fn as_raw_TrackerKCF(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
-	
-	pub type PtrOfTrackerMIL = core::Ptr::<dyn crate::tracking::TrackerMIL>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerMIL,
-		cv_PtrOfTrackerMIL_delete, cv_PtrOfTrackerMIL_get_inner_ptr, cv_PtrOfTrackerMIL_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerMIL {
-		#[inline] pub fn as_raw_PtrOfTrackerMIL(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerMIL {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerMIL {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerMIL for PtrOfTrackerMIL {
-		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerMOSSE = core::Ptr::<dyn crate::tracking::TrackerMOSSE>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerMOSSE,
-		cv_PtrOfTrackerMOSSE_delete, cv_PtrOfTrackerMOSSE_get_inner_ptr, cv_PtrOfTrackerMOSSE_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerMOSSE {
-		#[inline] pub fn as_raw_PtrOfTrackerMOSSE(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerMOSSE(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerMOSSE {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerMOSSE {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerMOSSE for PtrOfTrackerMOSSE {
-		#[inline] fn as_raw_TrackerMOSSE(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerMOSSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerMedianFlow = core::Ptr::<dyn crate::tracking::TrackerMedianFlow>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerMedianFlow,
-		cv_PtrOfTrackerMedianFlow_delete, cv_PtrOfTrackerMedianFlow_get_inner_ptr, cv_PtrOfTrackerMedianFlow_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerMedianFlow {
-		#[inline] pub fn as_raw_PtrOfTrackerMedianFlow(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerMedianFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerMedianFlow {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerMedianFlow {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerMedianFlow for PtrOfTrackerMedianFlow {
-		#[inline] fn as_raw_TrackerMedianFlow(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerMedianFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerSamplerAlgorithm = core::Ptr::<dyn crate::tracking::TrackerSamplerAlgorithm>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerSamplerAlgorithm,
-		cv_PtrOfTrackerSamplerAlgorithm_delete, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr, cv_PtrOfTrackerSamplerAlgorithm_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerSamplerAlgorithm {
-		#[inline] pub fn as_raw_PtrOfTrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerSamplerAlgorithm for PtrOfTrackerSamplerAlgorithm {
-		#[inline] fn as_raw_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerStateEstimator = core::Ptr::<dyn crate::tracking::TrackerStateEstimator>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerStateEstimator,
-		cv_PtrOfTrackerStateEstimator_delete, cv_PtrOfTrackerStateEstimator_get_inner_ptr, cv_PtrOfTrackerStateEstimator_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerStateEstimator {
-		#[inline] pub fn as_raw_PtrOfTrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerStateEstimator for PtrOfTrackerStateEstimator {
-		#[inline] fn as_raw_TrackerStateEstimator(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerTLD = core::Ptr::<dyn crate::tracking::TrackerTLD>;
-	
-	ptr_extern! { dyn crate::tracking::TrackerTLD,
-		cv_PtrOfTrackerTLD_delete, cv_PtrOfTrackerTLD_get_inner_ptr, cv_PtrOfTrackerTLD_get_inner_ptr_mut
-	}
-	
-	impl PtrOfTrackerTLD {
-		#[inline] pub fn as_raw_PtrOfTrackerTLD(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerTLD(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl core::AlgorithmTrait for PtrOfTrackerTLD {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::Tracker for PtrOfTrackerTLD {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerTLD for PtrOfTrackerTLD {
-		#[inline] fn as_raw_TrackerTLD(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerTLD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type PtrOfTrackerTargetState = core::Ptr::<crate::tracking::TrackerTargetState>;
-	
-	ptr_extern! { crate::tracking::TrackerTargetState,
-		cv_PtrOfTrackerTargetState_delete, cv_PtrOfTrackerTargetState_get_inner_ptr, cv_PtrOfTrackerTargetState_get_inner_ptr_mut
-	}
-	
-	ptr_extern_ctor! { crate::tracking::TrackerTargetState, cv_PtrOfTrackerTargetState_new }
-	
-	impl PtrOfTrackerTargetState {
-		#[inline] pub fn as_raw_PtrOfTrackerTargetState(&self) -> *const c_void { self.as_raw() }
-		#[inline] pub fn as_raw_mut_PtrOfTrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::tracking::TrackerTargetStateTrait for PtrOfTrackerTargetState {
-		#[inline] fn as_raw_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
-		#[inline] fn as_raw_mut_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-	
-	pub type VectorOfPtrOfTracker = core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>>;
-	
-	impl VectorOfPtrOfTracker {
-		pub fn as_raw_VectorOfPtrOfTracker(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_VectorOfPtrOfTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	vector_extern! { core::Ptr::<dyn crate::tracking::Tracker>, *const c_void, *mut c_void,
-		cv_VectorOfPtrOfTracker_new, cv_VectorOfPtrOfTracker_delete,
-		cv_VectorOfPtrOfTracker_len, cv_VectorOfPtrOfTracker_is_empty,
-		cv_VectorOfPtrOfTracker_capacity, cv_VectorOfPtrOfTracker_shrink_to_fit,
-		cv_VectorOfPtrOfTracker_reserve, cv_VectorOfPtrOfTracker_remove,
-		cv_VectorOfPtrOfTracker_swap, cv_VectorOfPtrOfTracker_clear,
-		cv_VectorOfPtrOfTracker_get, cv_VectorOfPtrOfTracker_set,
-		cv_VectorOfPtrOfTracker_push, cv_VectorOfPtrOfTracker_insert,
-	}
-	vector_non_copy_or_bool! { core::Ptr::<dyn crate::tracking::Tracker> }
-	
-	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::tracking::Tracker>> {}
 	
 }
 #[cfg(feature = "contrib")]
@@ -10288,6 +10057,48 @@ mod video_types {
 	impl crate::video::SparsePyrLKOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::video::TrackerGOTURN>;
+	
+	ptr_extern! { dyn crate::video::TrackerGOTURN,
+		cv_PtrOfTrackerGOTURN_delete, cv_PtrOfTrackerGOTURN_get_inner_ptr, cv_PtrOfTrackerGOTURN_get_inner_ptr_mut
+	}
+	
+	impl PtrOfTrackerGOTURN {
+		#[inline] pub fn as_raw_PtrOfTrackerGOTURN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::Tracker for PtrOfTrackerGOTURN {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::TrackerGOTURN for PtrOfTrackerGOTURN {
+		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerMIL = core::Ptr::<dyn crate::video::TrackerMIL>;
+	
+	ptr_extern! { dyn crate::video::TrackerMIL,
+		cv_PtrOfTrackerMIL_delete, cv_PtrOfTrackerMIL_get_inner_ptr, cv_PtrOfTrackerMIL_get_inner_ptr_mut
+	}
+	
+	impl PtrOfTrackerMIL {
+		#[inline] pub fn as_raw_PtrOfTrackerMIL(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::Tracker for PtrOfTrackerMIL {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::TrackerMIL for PtrOfTrackerMIL {
+		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfVariationalRefinement = core::Ptr::<dyn crate::video::VariationalRefinement>;
@@ -10601,6 +10412,34 @@ mod xfeatures2d_types {
 	impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
 		#[inline] fn as_raw_AffineFeature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_AffineFeature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfBEBLID = core::Ptr::<crate::xfeatures2d::BEBLID>;
+	
+	ptr_extern! { crate::xfeatures2d::BEBLID,
+		cv_PtrOfBEBLID_delete, cv_PtrOfBEBLID_get_inner_ptr, cv_PtrOfBEBLID_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::xfeatures2d::BEBLID, cv_PtrOfBEBLID_new }
+	
+	impl PtrOfBEBLID {
+		#[inline] pub fn as_raw_PtrOfBEBLID(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBEBLID(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfBEBLID {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for PtrOfBEBLID {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::BEBLIDTrait for PtrOfBEBLID {
+		#[inline] fn as_raw_BEBLID(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_BEBLID(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfBoostDesc = core::Ptr::<dyn crate::xfeatures2d::BoostDesc>;
@@ -10935,6 +10774,37 @@ mod xfeatures2d_types {
 	impl crate::xfeatures2d::StarDetectorTrait for PtrOfStarDetector {
 		#[inline] fn as_raw_StarDetector(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTBMR = core::Ptr::<dyn crate::xfeatures2d::TBMR>;
+	
+	ptr_extern! { dyn crate::xfeatures2d::TBMR,
+		cv_PtrOfTBMR_delete, cv_PtrOfTBMR_get_inner_ptr, cv_PtrOfTBMR_get_inner_ptr_mut
+	}
+	
+	impl PtrOfTBMR {
+		#[inline] pub fn as_raw_PtrOfTBMR(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTBMR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTBMR {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for PtrOfTBMR {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::AffineFeature2D for PtrOfTBMR {
+		#[inline] fn as_raw_AffineFeature2D(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_AffineFeature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::xfeatures2d::TBMR for PtrOfTBMR {
+		#[inline] fn as_raw_TBMR(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TBMR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfVGG = core::Ptr::<dyn crate::xfeatures2d::VGG>;

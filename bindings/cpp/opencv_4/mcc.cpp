@@ -3,6 +3,170 @@
 #include "mcc_types.hpp"
 
 extern "C" {
+	void cv_ColorCorrectionModel_delete(cv::ccm::ColorCorrectionModel* instance) {
+		delete instance;
+	}
+	Result<cv::ccm::ColorCorrectionModel*> cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_CONST_COLOR(const cv::Mat* src, cv::ccm::CONST_COLOR constcolor) {
+		try {
+			cv::ccm::ColorCorrectionModel* ret = new cv::ccm::ColorCorrectionModel(*src, constcolor);
+			return Ok<cv::ccm::ColorCorrectionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ccm::ColorCorrectionModel*>))
+	}
+	
+	Result<cv::ccm::ColorCorrectionModel*> cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE(const cv::Mat* src, cv::Mat* colors, cv::ccm::COLOR_SPACE ref_cs) {
+		try {
+			cv::ccm::ColorCorrectionModel* ret = new cv::ccm::ColorCorrectionModel(*src, *colors, ref_cs);
+			return Ok<cv::ccm::ColorCorrectionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ccm::ColorCorrectionModel*>))
+	}
+	
+	Result<cv::ccm::ColorCorrectionModel*> cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE_Mat(const cv::Mat* src, cv::Mat* colors, cv::ccm::COLOR_SPACE ref_cs, cv::Mat* colored) {
+		try {
+			cv::ccm::ColorCorrectionModel* ret = new cv::ccm::ColorCorrectionModel(*src, *colors, ref_cs, *colored);
+			return Ok<cv::ccm::ColorCorrectionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ccm::ColorCorrectionModel*>))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setColorSpace_COLOR_SPACE(cv::ccm::ColorCorrectionModel* instance, cv::ccm::COLOR_SPACE cs) {
+		try {
+			instance->setColorSpace(cs);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setCCM_TYPE_CCM_TYPE(cv::ccm::ColorCorrectionModel* instance, cv::ccm::CCM_TYPE ccm_type) {
+		try {
+			instance->setCCM_TYPE(ccm_type);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setDistance_DISTANCE_TYPE(cv::ccm::ColorCorrectionModel* instance, cv::ccm::DISTANCE_TYPE distance) {
+		try {
+			instance->setDistance(distance);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setLinear_LINEAR_TYPE(cv::ccm::ColorCorrectionModel* instance, cv::ccm::LINEAR_TYPE linear_type) {
+		try {
+			instance->setLinear(linear_type);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setLinearGamma_const_doubleR(cv::ccm::ColorCorrectionModel* instance, const double* gamma) {
+		try {
+			instance->setLinearGamma(*gamma);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setLinearDegree_const_intR(cv::ccm::ColorCorrectionModel* instance, const int* deg) {
+		try {
+			instance->setLinearDegree(*deg);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setSaturatedThreshold_const_doubleR_const_doubleR(cv::ccm::ColorCorrectionModel* instance, const double* lower, const double* upper) {
+		try {
+			instance->setSaturatedThreshold(*lower, *upper);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setWeightsList_const_MatR(cv::ccm::ColorCorrectionModel* instance, const cv::Mat* weights_list) {
+		try {
+			instance->setWeightsList(*weights_list);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setWeightCoeff_const_doubleR(cv::ccm::ColorCorrectionModel* instance, const double* weights_coeff) {
+		try {
+			instance->setWeightCoeff(*weights_coeff);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setInitialMethod_INITIAL_METHOD_TYPE(cv::ccm::ColorCorrectionModel* instance, cv::ccm::INITIAL_METHOD_TYPE initial_method_type) {
+		try {
+			instance->setInitialMethod(initial_method_type);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setMaxCount_const_intR(cv::ccm::ColorCorrectionModel* instance, const int* max_count) {
+		try {
+			instance->setMaxCount(*max_count);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_setEpsilon_const_doubleR(cv::ccm::ColorCorrectionModel* instance, const double* epsilon) {
+		try {
+			instance->setEpsilon(*epsilon);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ccm_ColorCorrectionModel_run(cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			instance->run();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_getCCM_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			cv::Mat ret = instance->getCCM();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<double> cv_ccm_ColorCorrectionModel_getLoss_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			double ret = instance->getLoss();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_get_src_rgbl_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			cv::Mat ret = instance->get_src_rgbl();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_get_dst_rgbl_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			cv::Mat ret = instance->get_dst_rgbl();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_getMask_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			cv::Mat ret = instance->getMask();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_getWeights_const(const cv::ccm::ColorCorrectionModel* instance) {
+		try {
+			cv::Mat ret = instance->getWeights();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
+	Result<cv::Mat*> cv_ccm_ColorCorrectionModel_infer_const_MatR_bool(cv::ccm::ColorCorrectionModel* instance, const cv::Mat* img, bool islinear) {
+		try {
+			cv::Mat ret = instance->infer(*img, islinear);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
 	Result<cv::Ptr<cv::mcc::CChecker>*> cv_mcc_CChecker_create() {
 		try {
 			cv::Ptr<cv::mcc::CChecker> ret = cv::mcc::CChecker::create();

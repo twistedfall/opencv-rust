@@ -544,14 +544,7 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*>))
 	}
 	
-	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(const cv::Ptr<cv::text::OCRBeamSearchDecoder::ClassifierCallback>* classifier, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode, int beam_size) {
-		try {
-			cv::Ptr<cv::text::OCRBeamSearchDecoder> ret = cv::text::OCRBeamSearchDecoder::create(*classifier, std::string(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode, beam_size);
-			return Ok(new cv::Ptr<cv::text::OCRBeamSearchDecoder>(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*>))
-	}
-	
-	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(const char* filename, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, int mode, int beam_size) {
+	Result<cv::Ptr<cv::text::OCRBeamSearchDecoder>*> cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(const char* filename, const char* vocabulary, const cv::_InputArray* transition_probabilities_table, const cv::_InputArray* emission_probabilities_table, cv::text::decoder_mode mode, int beam_size) {
 		try {
 			cv::Ptr<cv::text::OCRBeamSearchDecoder> ret = cv::text::OCRBeamSearchDecoder::create(std::string(filename), std::string(vocabulary), *transition_probabilities_table, *emission_probabilities_table, mode, beam_size);
 			return Ok(new cv::Ptr<cv::text::OCRBeamSearchDecoder>(ret));

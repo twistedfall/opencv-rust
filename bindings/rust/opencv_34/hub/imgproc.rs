@@ -3446,7 +3446,7 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 /// (labelType==#DIST_LABEL_CCOMP) or the nearest zero pixel (labelType==#DIST_LABEL_PIXEL). Index of the
 /// component/pixel is stored in `labels(x, y)`. When labelType==#DIST_LABEL_CCOMP, the function
 /// automatically finds connected components of zero pixels in the input image and marks them with
-/// distinct labels. When labelType==#DIST_LABEL_CCOMP, the function scans through the input image and
+/// distinct labels. When labelType==#DIST_LABEL_PIXEL, the function scans through the input image and
 /// marks all the zero pixels with distinct labels.
 /// 
 /// In this mode, the complexity is still linear. That is, the function provides a very fast way to
@@ -3508,7 +3508,7 @@ pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dy
 /// (labelType==#DIST_LABEL_CCOMP) or the nearest zero pixel (labelType==#DIST_LABEL_PIXEL). Index of the
 /// component/pixel is stored in `labels(x, y)`. When labelType==#DIST_LABEL_CCOMP, the function
 /// automatically finds connected components of zero pixels in the input image and marks them with
-/// distinct labels. When labelType==#DIST_LABEL_CCOMP, the function scans through the input image and
+/// distinct labels. When labelType==#DIST_LABEL_PIXEL, the function scans through the input image and
 /// marks all the zero pixels with distinct labels.
 /// 
 /// In this mode, the complexity is still linear. That is, the function provides a very fast way to
@@ -5548,8 +5548,8 @@ pub fn rectangle_points(img: &mut dyn core::ToInputOutputArray, pt1: core::Point
 /// representation to fixed-point for speed.
 /// * map2: The second map of y values having the type CV_16UC1, CV_32FC1, or none (empty map
 /// if map1 is (x,y) points), respectively.
-/// * interpolation: Interpolation method (see #InterpolationFlags). The method #INTER_AREA is
-/// not supported by this function.
+/// * interpolation: Interpolation method (see #InterpolationFlags). The methods #INTER_AREA
+/// and #INTER_LINEAR_EXACT are not supported by this function.
 /// * borderMode: Pixel extrapolation method (see #BorderTypes). When
 /// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
 /// corresponds to the "outliers" in the source image are not modified by the function.

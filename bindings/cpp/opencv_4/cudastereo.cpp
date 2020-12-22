@@ -31,6 +31,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::StereoConstantSpaceBP>*>))
 	}
 	
+	Result<cv::Ptr<cv::cuda::StereoSGM>*> cv_cuda_createStereoSGM_int_int_int_int_int_int(int minDisparity, int numDisparities, int P1, int P2, int uniquenessRatio, int mode) {
+		try {
+			cv::Ptr<cv::cuda::StereoSGM> ret = cv::cuda::createStereoSGM(minDisparity, numDisparities, P1, P2, uniquenessRatio, mode);
+			return Ok(new cv::Ptr<cv::cuda::StereoSGM>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::StereoSGM>*>))
+	}
+	
 	Result_void cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(const cv::_InputArray* src_disp, const cv::_OutputArray* dst_disp, int ndisp, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::drawColorDisp(*src_disp, *dst_disp, ndisp, *stream);
@@ -293,6 +300,20 @@ extern "C" {
 	Result_void cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(int width, int height, int* ndisp, int* iters, int* levels, int* nr_plane) {
 		try {
 			cv::cuda::StereoConstantSpaceBP::estimateRecommendedParams(width, height, *ndisp, *iters, *levels, *nr_plane);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::cuda::StereoSGM* instance, const cv::_InputArray* left, const cv::_InputArray* right, const cv::_OutputArray* disparity) {
+		try {
+			instance->compute(*left, *right, *disparity);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(cv::cuda::StereoSGM* instance, const cv::_InputArray* left, const cv::_InputArray* right, const cv::_OutputArray* disparity, cv::cuda::Stream* stream) {
+		try {
+			instance->compute(*left, *right, *disparity, *stream);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}

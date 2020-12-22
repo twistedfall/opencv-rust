@@ -100,9 +100,9 @@ pub trait PhaseUnwrapping: core::AlgorithmTrait {
 	/// Unwraps a 2D phase map.
 	/// 
 	/// ## Parameters
-	/// * wrappedPhaseMap: The wrapped phase map that needs to be unwrapped.
+	/// * wrappedPhaseMap: The wrapped phase map of type CV_32FC1 that needs to be unwrapped.
 	/// * unwrappedPhaseMap: The unwrapped phase map.
-	/// * shadowMask: Optional parameter used when some pixels do not hold any phase information in the wrapped phase map.
+	/// * shadowMask: Optional CV_8UC1 mask image used when some pixels do not hold any phase information in the wrapped phase map.
 	/// 
 	/// ## C++ default parameters
 	/// * shadow_mask: noArray()

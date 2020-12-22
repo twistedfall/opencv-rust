@@ -64,7 +64,7 @@ pub trait FreeType2: core::AlgorithmTrait {
 	/// The function putText renders the specified text string in the image. Symbols that cannot be rendered using the specified font are replaced by "Tofu" or non-drawn.
 	/// 
 	/// ## Parameters
-	/// * img: Image.
+	/// * img: Image. (Only 8UC3 image is supported.)
 	/// * text: Text string to be drawn.
 	/// * org: Bottom-left/Top-left corner of the text string in the image.
 	/// * fontHeight: Drawing font size by pixel unit.

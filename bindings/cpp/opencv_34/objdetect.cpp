@@ -10,6 +10,15 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>))
 	}
 	
+	Result<bool> cv_decodeCurvedQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(const cv::_InputArray* in, const cv::_InputArray* points, void** decoded_info, const cv::_OutputArray* straight_qrcode) {
+		try {
+			std::string decoded_info_out;
+			bool ret = cv::decodeCurvedQRCode(*in, *points, decoded_info_out, *straight_qrcode);
+			*decoded_info = ocvrs_create_string(decoded_info_out.c_str());
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	Result<bool> cv_decodeQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(const cv::_InputArray* in, const cv::_InputArray* points, void** decoded_info, const cv::_OutputArray* straight_qrcode) {
 		try {
 			std::string decoded_info_out;
@@ -971,9 +980,23 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<void*> cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, const cv::_OutputArray* straight_qrcode) {
+		try {
+			cv::String ret = instance->decodeCurved(*img, *points, *straight_qrcode);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	Result<void*> cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
 		try {
 			cv::String ret = instance->detectAndDecode(*img, *points, *straight_qrcode);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
+		try {
+			cv::String ret = instance->detectAndDecodeCurved(*img, *points, *straight_qrcode);
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}

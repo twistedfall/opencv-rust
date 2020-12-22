@@ -6,6 +6,7 @@ template struct Result<cv::Matx<float, 2, 3>>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Ptr<cv::cuda::SURF_CUDA>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*>;
+template struct Result<cv::Ptr<cv::xfeatures2d::BEBLID>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::BoostDesc>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::DAISY>*>;
@@ -18,6 +19,7 @@ template struct Result<cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::PCTSignatures>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::SURF>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::StarDetector>*>;
+template struct Result<cv::Ptr<cv::xfeatures2d::TBMR>*>;
 template struct Result<cv::Ptr<cv::xfeatures2d::VGG>*>;
 template struct Result<cv::Size_<float>>;
 template struct Result<cv::cuda::GpuMat*>;
@@ -39,6 +41,24 @@ extern "C" {
 	}
 
 	cv::xfeatures2d::AffineFeature2D* cv_PtrOfAffineFeature2D_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::AffineFeature2D>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::xfeatures2d::BEBLID>* cv_PtrOfBEBLID_new(cv::xfeatures2d::BEBLID* val) {
+		return new cv::Ptr<cv::xfeatures2d::BEBLID>(val);
+	}
+	
+	void cv_PtrOfBEBLID_delete(cv::Ptr<cv::xfeatures2d::BEBLID>* instance) {
+		delete instance;
+	}
+
+	const cv::xfeatures2d::BEBLID* cv_PtrOfBEBLID_get_inner_ptr(const cv::Ptr<cv::xfeatures2d::BEBLID>* instance) {
+		return instance->get();
+	}
+
+	cv::xfeatures2d::BEBLID* cv_PtrOfBEBLID_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::BEBLID>* instance) {
 		return instance->get();
 	}
 }
@@ -253,6 +273,20 @@ extern "C" {
 	}
 
 	cv::xfeatures2d::StarDetector* cv_PtrOfStarDetector_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::StarDetector>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfTBMR_delete(cv::Ptr<cv::xfeatures2d::TBMR>* instance) {
+		delete instance;
+	}
+
+	const cv::xfeatures2d::TBMR* cv_PtrOfTBMR_get_inner_ptr(const cv::Ptr<cv::xfeatures2d::TBMR>* instance) {
+		return instance->get();
+	}
+
+	cv::xfeatures2d::TBMR* cv_PtrOfTBMR_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::TBMR>* instance) {
 		return instance->get();
 	}
 }

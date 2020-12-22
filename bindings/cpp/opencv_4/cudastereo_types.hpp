@@ -3,6 +3,7 @@ template struct Result<cv::Ptr<cv::cuda::DisparityBilateralFilter>*>;
 template struct Result<cv::Ptr<cv::cuda::StereoBM>*>;
 template struct Result<cv::Ptr<cv::cuda::StereoBeliefPropagation>*>;
 template struct Result<cv::Ptr<cv::cuda::StereoConstantSpaceBP>*>;
+template struct Result<cv::Ptr<cv::cuda::StereoSGM>*>;
 template struct Result<double>;
 template struct Result<int>;
 extern "C" {
@@ -57,6 +58,20 @@ extern "C" {
 	}
 
 	cv::cuda::StereoConstantSpaceBP* cv_PtrOfCUDA_StereoConstantSpaceBP_get_inner_ptr_mut(cv::Ptr<cv::cuda::StereoConstantSpaceBP>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfCUDA_StereoSGM_delete(cv::Ptr<cv::cuda::StereoSGM>* instance) {
+		delete instance;
+	}
+
+	const cv::cuda::StereoSGM* cv_PtrOfCUDA_StereoSGM_get_inner_ptr(const cv::Ptr<cv::cuda::StereoSGM>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::StereoSGM* cv_PtrOfCUDA_StereoSGM_get_inner_ptr_mut(cv::Ptr<cv::cuda::StereoSGM>* instance) {
 		return instance->get();
 	}
 }

@@ -993,6 +993,79 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*>))
 	}
 	
+	Result_void cv_Tracker_init_const__InputArrayR_const_RectR(cv::Tracker* instance, const cv::_InputArray* image, const cv::Rect* boundingBox) {
+		try {
+			instance->init(*image, *boundingBox);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_Tracker_update_const__InputArrayR_RectR(cv::Tracker* instance, const cv::_InputArray* image, cv::Rect* boundingBox) {
+		try {
+			bool ret = instance->update(*image, *boundingBox);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<cv::Ptr<cv::TrackerGOTURN>*> cv_TrackerGOTURN_create_const_ParamsR(const cv::TrackerGOTURN::Params* parameters) {
+		try {
+			cv::Ptr<cv::TrackerGOTURN> ret = cv::TrackerGOTURN::create(*parameters);
+			return Ok(new cv::Ptr<cv::TrackerGOTURN>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerGOTURN>*>))
+	}
+	
+	Result<void*> cv_TrackerGOTURN_Params_getPropModelTxt_const(const cv::TrackerGOTURN::Params* instance) {
+		try {
+			std::string ret = instance->modelTxt;
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_TrackerGOTURN_Params_setPropModelTxt_string(cv::TrackerGOTURN::Params* instance, char* val) {
+		try {
+			instance->modelTxt = std::string(val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<void*> cv_TrackerGOTURN_Params_getPropModelBin_const(const cv::TrackerGOTURN::Params* instance) {
+		try {
+			std::string ret = instance->modelBin;
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_TrackerGOTURN_Params_setPropModelBin_string(cv::TrackerGOTURN::Params* instance, char* val) {
+		try {
+			instance->modelBin = std::string(val);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_TrackerGOTURN_Params_delete(cv::TrackerGOTURN::Params* instance) {
+		delete instance;
+	}
+	Result<cv::TrackerGOTURN::Params*> cv_TrackerGOTURN_Params_Params() {
+		try {
+			cv::TrackerGOTURN::Params* ret = new cv::TrackerGOTURN::Params();
+			return Ok<cv::TrackerGOTURN::Params*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerGOTURN::Params*>))
+	}
+	
+	Result<cv::Ptr<cv::TrackerMIL>*> cv_TrackerMIL_create_const_ParamsR(const cv::TrackerMIL::Params* parameters) {
+		try {
+			cv::Ptr<cv::TrackerMIL> ret = cv::TrackerMIL::create(*parameters);
+			return Ok(new cv::Ptr<cv::TrackerMIL>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::TrackerMIL>*>))
+	}
+	
+	Result<cv::TrackerMIL::Params> cv_TrackerMIL_Params_Params() {
+		try {
+			cv::TrackerMIL::Params ret;
+			return Ok<cv::TrackerMIL::Params>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::TrackerMIL::Params>))
+	}
+	
 	Result_void cv_VariationalRefinement_calcUV_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(cv::VariationalRefinement* instance, const cv::_InputArray* I0, const cv::_InputArray* I1, const cv::_InputOutputArray* flow_u, const cv::_InputOutputArray* flow_v) {
 		try {
 			instance->calcUV(*I0, *I1, *flow_u, *flow_v);

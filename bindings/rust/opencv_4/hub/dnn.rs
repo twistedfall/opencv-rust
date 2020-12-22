@@ -18,7 +18,7 @@
 //!   A network training is in principle not supported.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::ModelTrait, super::ClassificationModelTrait, super::KeypointsModelTrait, super::SegmentationModelTrait, super::DetectionModelTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::DataAugmentationLayerTrait, super::CorrelationLayerTrait, super::AccumLayerTrait, super::FlowWarpLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
+	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::ModelTrait, super::ClassificationModelTrait, super::KeypointsModelTrait, super::SegmentationModelTrait, super::DetectionModelTrait, super::TextRecognitionModelTrait, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::DataAugmentationLayerTrait, super::CorrelationLayerTrait, super::AccumLayerTrait, super::FlowWarpLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
 }
 
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
@@ -46,11 +46,12 @@ pub const DNN_TARGET_CUDA: i32 = 6;
 pub const DNN_TARGET_CUDA_FP16: i32 = 7;
 /// FPGA device with CPU fallbacks using Inference Engine's Heterogeneous plugin.
 pub const DNN_TARGET_FPGA: i32 = 5;
+pub const DNN_TARGET_HDDL: i32 = 8;
 pub const DNN_TARGET_MYRIAD: i32 = 3;
 pub const DNN_TARGET_OPENCL: i32 = 1;
 pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub const DNN_TARGET_VULKAN: i32 = 4;
-pub const OPENCV_DNN_API_VERSION: i32 = 20200908;
+pub const OPENCV_DNN_API_VERSION: i32 = 20201117;
 /// Enum of computation backends supported by layers.
 /// ## See also
 /// Net::setPreferableBackend
@@ -91,6 +92,7 @@ pub enum Target {
 	DNN_TARGET_FPGA = 5,
 	DNN_TARGET_CUDA = 6,
 	DNN_TARGET_CUDA_FP16 = 7,
+	DNN_TARGET_HDDL = 8,
 }
 
 opencv_type_enum! { crate::dnn::Target }
@@ -611,6 +613,11 @@ pub fn read_tensor_from_onnx(path: &str) -> Result<core::Mat> {
 pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<core::Mat> {
 	extern_container_arg!(filename);
 	unsafe { sys::cv_dnn_readTorchBlob_const_StringR_bool(filename.opencv_as_extern(), is_binary) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+}
+
+/// Release a HDDL plugin.
+pub fn release_hddl_plugin() -> Result<()> {
+	unsafe { sys::cv_dnn_releaseHDDLPlugin() }.into_result()
 }
 
 /// Release a Myriad device (binded by OpenCV).
@@ -1226,11 +1233,6 @@ impl crate::dnn::ModelTrait for ClassificationModel {
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::NetTrait for ClassificationModel {
-	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl ClassificationModel {
 	/// Create classification model from network represented in one of the supported formats.
 	/// An order of @p model and @p config arguments does not matter.
@@ -1685,6 +1687,21 @@ pub trait DetectionModelTrait: crate::dnn::ModelTrait {
 	fn as_raw_DetectionModel(&self) -> *const c_void;
 	fn as_raw_mut_DetectionModel(&mut self) -> *mut c_void;
 
+	/// nmsAcrossClasses defaults to false,
+	/// such that when non max suppression is used during the detect() function, it will do so per-class.
+	/// This function allows you to toggle this behaviour.
+	/// ## Parameters
+	/// * value: The new value for nmsAcrossClasses
+	fn set_nms_across_classes(&mut self, value: bool) -> Result<crate::dnn::DetectionModel> {
+		unsafe { sys::cv_dnn_DetectionModel_setNmsAcrossClasses_bool(self.as_raw_mut_DetectionModel(), value) }.into_result().map(|r| unsafe { crate::dnn::DetectionModel::opencv_from_extern(r) } )
+	}
+	
+	/// Getter for nmsAcrossClasses. This variable defaults to false,
+	/// such that when non max suppression is used during the detect() function, it will do so only per-class
+	fn get_nms_across_classes(&mut self) -> Result<bool> {
+		unsafe { sys::cv_dnn_DetectionModel_getNmsAcrossClasses(self.as_raw_mut_DetectionModel()) }.into_result()
+	}
+	
 	/// Given the @p input frame, create input blob, run net and return result detections.
 	/// ## Parameters
 	/// * frame: The input image.
@@ -1740,11 +1757,6 @@ impl crate::dnn::ModelTrait for DetectionModel {
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::NetTrait for DetectionModel {
-	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl DetectionModel {
 	/// Create detection model from network represented in one of the supported formats.
 	/// An order of @p model and @p config arguments does not matter.
@@ -1765,6 +1777,10 @@ impl DetectionModel {
 	/// * network: Net object.
 	pub fn new_1(network: &crate::dnn::Net) -> Result<crate::dnn::DetectionModel> {
 		unsafe { sys::cv_dnn_DetectionModel_DetectionModel_const_NetR(network.as_raw_Net()) }.into_result().map(|r| unsafe { crate::dnn::DetectionModel::opencv_from_extern(r) } )
+	}
+	
+	pub fn default() -> Result<crate::dnn::DetectionModel> {
+		unsafe { sys::cv_dnn_DetectionModel_DetectionModel() }.into_result().map(|r| unsafe { crate::dnn::DetectionModel::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2387,11 +2403,6 @@ impl crate::dnn::ModelTrait for KeypointsModel {
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::NetTrait for KeypointsModel {
-	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl KeypointsModel {
 	/// Create keypoints model from network represented in one of the supported formats.
 	/// An order of @p model and @p config arguments does not matter.
@@ -2895,6 +2906,10 @@ pub trait LayerTrait: core::AlgorithmTrait {
 		unsafe { sys::cv_dnn_Layer_getFLOPS_const_const_vector_MatShape_R_const_vector_MatShape_R(self.as_raw_Layer(), inputs.as_raw_VectorOfMatShape(), outputs.as_raw_VectorOfMatShape()) }.into_result()
 	}
 	
+	fn update_memory_shapes(&mut self, inputs: &core::Vector::<crate::dnn::MatShape>) -> Result<bool> {
+		unsafe { sys::cv_dnn_Layer_updateMemoryShapes_const_vector_MatShape_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfMatShape()) }.into_result()
+	}
+	
 	fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
 		unsafe { sys::cv_dnn_Layer_setParamsFrom_const_LayerParamsR(self.as_raw_mut_Layer(), params.as_raw_LayerParams()) }.into_result()
 	}
@@ -3245,7 +3260,7 @@ impl dyn MishLayer + '_ {
 /// Model allows to set params for preprocessing input image.
 /// Model creates net from file with trained weights and config,
 /// sets preprocessing input and runs forward pass.
-pub trait ModelTrait: crate::dnn::NetTrait {
+pub trait ModelTrait {
 	fn as_raw_Model(&self) -> *const c_void;
 	fn as_raw_mut_Model(&mut self) -> *mut c_void;
 
@@ -3260,11 +3275,14 @@ pub trait ModelTrait: crate::dnn::NetTrait {
 	
 	/// Set input size for frame.
 	/// ## Parameters
+	/// * size: New input size.
+	/// 
+	/// Note: If shape of the new blob less than 0, then frame size not change.
+	/// 
+	/// ## Overloaded parameters
+	/// 
 	/// * width: New input width.
 	/// * height: New input height.
-	/// 
-	/// Note: If shape of the new blob less than 0,
-	/// then frame size not change.
 	fn set_input_size_1(&mut self, width: i32, height: i32) -> Result<crate::dnn::Model> {
 		unsafe { sys::cv_dnn_Model_setInputSize_int_int(self.as_raw_mut_Model(), width, height) }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
 	}
@@ -3320,10 +3338,30 @@ pub trait ModelTrait: crate::dnn::NetTrait {
 	/// ## Parameters
 	/// * frame: The input image.
 	/// * outs:[out] Allocated output blobs, which will store results of the computation.
-	fn predict(&mut self, frame: &dyn core::ToInputArray, outs: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn predict(&self, frame: &dyn core::ToInputArray, outs: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(frame);
 		output_array_arg!(outs);
-		unsafe { sys::cv_dnn_Model_predict_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Model(), frame.as_raw__InputArray(), outs.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_dnn_Model_predict_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Model(), frame.as_raw__InputArray(), outs.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// ## See also
+	/// Net::setPreferableBackend
+	fn set_preferable_backend(&mut self, backend_id: crate::dnn::Backend) -> Result<crate::dnn::Model> {
+		unsafe { sys::cv_dnn_Model_setPreferableBackend_Backend(self.as_raw_mut_Model(), backend_id) }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
+	}
+	
+	/// ## See also
+	/// Net::setPreferableTarget
+	fn set_preferable_target(&mut self, target_id: crate::dnn::Target) -> Result<crate::dnn::Model> {
+		unsafe { sys::cv_dnn_Model_setPreferableTarget_Target(self.as_raw_mut_Model(), target_id) }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
+	}
+	
+	fn get_network_(&self) -> Result<crate::dnn::Net> {
+		unsafe { sys::cv_dnn_Model_getNetwork__const(self.as_raw_Model()) }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
+	}
+	
+	fn get_network__1(&mut self) -> Result<crate::dnn::Net> {
+		unsafe { sys::cv_dnn_Model_getNetwork_(self.as_raw_mut_Model()) }.into_result().map(|r| unsafe { crate::dnn::Net::opencv_from_extern(r) } )
 	}
 	
 }
@@ -3358,15 +3396,17 @@ impl crate::dnn::ModelTrait for Model {
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::NetTrait for Model {
-	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl Model {
-	/// Default constructor.
 	pub fn default() -> Result<crate::dnn::Model> {
 		unsafe { sys::cv_dnn_Model_Model() }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy(unnamed: &crate::dnn::Model) -> Result<crate::dnn::Model> {
+		unsafe { sys::cv_dnn_Model_Model_const_ModelR(unnamed.as_raw_Model()) }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(unnamed: &mut crate::dnn::Model) -> Result<crate::dnn::Model> {
+		unsafe { sys::cv_dnn_Model_Model_ModelR(unnamed.as_raw_mut_Model()) }.into_result().map(|r| unsafe { crate::dnn::Model::opencv_from_extern(r) } )
 	}
 	
 	/// Create model from deep learning network represented in one of the supported formats.
@@ -3619,6 +3659,7 @@ pub trait NetTrait {
 	/// | DNN_TARGET_FPGA        |                    |                            + |                    |                   |
 	/// | DNN_TARGET_CUDA        |                    |                              |                    |                 + |
 	/// | DNN_TARGET_CUDA_FP16   |                    |                              |                    |                 + |
+	/// | DNN_TARGET_HDDL        |                    |                            + |                    |                   |
 	fn set_preferable_target(&mut self, target_id: i32) -> Result<()> {
 		unsafe { sys::cv_dnn_Net_setPreferableTarget_int(self.as_raw_mut_Net(), target_id) }.into_result()
 	}
@@ -4264,62 +4305,6 @@ pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 	
 	fn set_pads_end(&mut self, mut val: core::Vector::<size_t>) -> () {
 		unsafe { sys::cv_dnn_PoolingLayer_setPropPads_end_vector_size_t_(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) }.into_result().expect("Infallible function failed: set_pads_end")
-	}
-	
-	fn kernel(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropKernel_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: kernel")
-	}
-	
-	fn set_kernel(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropKernel_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_kernel")
-	}
-	
-	fn stride(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropStride_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: stride")
-	}
-	
-	fn set_stride(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropStride_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_stride")
-	}
-	
-	fn pad(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad")
-	}
-	
-	fn set_pad(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_pad")
-	}
-	
-	fn pad_l(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_l_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_l")
-	}
-	
-	fn set_pad_l(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_l_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_l")
-	}
-	
-	fn pad_t(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_t_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_t")
-	}
-	
-	fn set_pad_t(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_t_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_t")
-	}
-	
-	fn pad_r(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_r_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_r")
-	}
-	
-	fn set_pad_r(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_r_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_r")
-	}
-	
-	fn pad_b(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_b_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_b")
-	}
-	
-	fn set_pad_b(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_b_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_b")
 	}
 	
 	/// Flag is true if at least one of the axes is global pooled.
@@ -5010,11 +4995,6 @@ impl crate::dnn::ModelTrait for SegmentationModel {
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::NetTrait for SegmentationModel {
-	#[inline] fn as_raw_Net(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Net(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::SegmentationModelTrait for SegmentationModel {
 	#[inline] fn as_raw_SegmentationModel(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_SegmentationModel(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -5440,6 +5420,488 @@ impl dyn TanHLayer + '_ {
 	}
 	
 }
+/// Base class for text detection networks
+pub trait TextDetectionModelTrait: crate::dnn::ModelTrait {
+	fn as_raw_TextDetectionModel(&self) -> *const c_void;
+	fn as_raw_mut_TextDetectionModel(&mut self) -> *mut c_void;
+
+	/// Performs detection
+	/// 
+	/// Given the input @p frame, prepare network input, run network inference, post-process network output and return result detections.
+	/// 
+	/// Each result is quadrangle's 4 points in this order:
+	/// - bottom-left
+	/// - top-left
+	/// - top-right
+	/// - bottom-right
+	/// 
+	/// Use cv::getPerspectiveTransform function to retrive image region without perspective transformations.
+	/// 
+	/// 
+	/// Note: If DL model doesn't support that kind of output then result may be derived from detectTextRectangles() output.
+	/// 
+	/// ## Parameters
+	/// * frame: The input image
+	/// * detections:[out] array with detections' quadrangles (4 points per result)
+	/// * confidences:[out] array with detection confidences
+	fn detect(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>, confidences: &mut core::Vector::<f32>) -> Result<()> {
+		input_array_arg!(frame);
+		unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint(), confidences.as_raw_mut_VectorOff32()) }.into_result()
+	}
+	
+	/// Performs detection
+	/// 
+	/// Given the input @p frame, prepare network input, run network inference, post-process network output and return result detections.
+	/// 
+	/// Each result is quadrangle's 4 points in this order:
+	/// - bottom-left
+	/// - top-left
+	/// - top-right
+	/// - bottom-right
+	/// 
+	/// Use cv::getPerspectiveTransform function to retrive image region without perspective transformations.
+	/// 
+	/// 
+	/// Note: If DL model doesn't support that kind of output then result may be derived from detectTextRectangles() output.
+	/// 
+	/// ## Parameters
+	/// * frame: The input image
+	/// * detections:[out] array with detections' quadrangles (4 points per result)
+	/// * confidences:[out] array with detection confidences
+	/// 
+	/// ## Overloaded parameters
+	fn detect_1(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
+		input_array_arg!(frame);
+		unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
+	}
+	
+	/// Performs detection
+	/// 
+	/// Given the input @p frame, prepare network input, run network inference, post-process network output and return result detections.
+	/// 
+	/// Each result is rotated rectangle.
+	/// 
+	/// 
+	/// Note: Result may be inaccurate in case of strong perspective transformations.
+	/// 
+	/// ## Parameters
+	/// * frame: the input image
+	/// * detections:[out] array with detections' RotationRect results
+	/// * confidences:[out] array with detection confidences
+	fn detect_text_rectangles(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::RotatedRect>, confidences: &mut core::Vector::<f32>) -> Result<()> {
+		input_array_arg!(frame);
+		unsafe { sys::cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R_vector_float_R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfRotatedRect(), confidences.as_raw_mut_VectorOff32()) }.into_result()
+	}
+	
+	/// Performs detection
+	/// 
+	/// Given the input @p frame, prepare network input, run network inference, post-process network output and return result detections.
+	/// 
+	/// Each result is rotated rectangle.
+	/// 
+	/// 
+	/// Note: Result may be inaccurate in case of strong perspective transformations.
+	/// 
+	/// ## Parameters
+	/// * frame: the input image
+	/// * detections:[out] array with detections' RotationRect results
+	/// * confidences:[out] array with detection confidences
+	/// 
+	/// ## Overloaded parameters
+	fn detect_text_rectangles_1(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::RotatedRect>) -> Result<()> {
+		input_array_arg!(frame);
+		unsafe { sys::cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfRotatedRect()) }.into_result()
+	}
+	
+}
+
+/// Base class for text detection networks
+pub struct TextDetectionModel {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TextDetectionModel }
+
+impl Drop for TextDetectionModel {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TextDetectionModel_delete(instance: *mut c_void); }
+		unsafe { cv_TextDetectionModel_delete(self.as_raw_mut_TextDetectionModel()) };
+	}
+}
+
+impl TextDetectionModel {
+	#[inline] pub fn as_raw_TextDetectionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TextDetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for TextDetectionModel {}
+
+impl crate::dnn::ModelTrait for TextDetectionModel {
+	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextDetectionModelTrait for TextDetectionModel {
+	#[inline] fn as_raw_TextDetectionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextDetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TextDetectionModel {
+}
+
+/// This class represents high-level API for text detection DL networks compatible with DB model.
+/// 
+/// Related publications: [liao2020real](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Paper: https://arxiv.org/abs/1911.08947
+/// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
+/// 
+/// Configurable parameters:
+/// - (float) binaryThreshold - The threshold of the binary map. It is usually set to 0.3.
+/// - (float) polygonThreshold - The threshold of text polygons. It is usually set to 0.5, 0.6, and 0.7. Default is 0.5f
+/// - (double) unclipRatio - The unclip ratio of the detected text region, which determines the output size. It is usually set to 2.0.
+/// - (int) maxCandidates - The max number of the output results.
+pub trait TextDetectionModel_DBTrait: crate::dnn::TextDetectionModelTrait {
+	fn as_raw_TextDetectionModel_DB(&self) -> *const c_void;
+	fn as_raw_mut_TextDetectionModel_DB(&mut self) -> *mut c_void;
+
+	fn set_binary_threshold(&mut self, binary_threshold: f32) -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_setBinaryThreshold_float(self.as_raw_mut_TextDetectionModel_DB(), binary_threshold) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	fn get_binary_threshold(&self) -> Result<f32> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_getBinaryThreshold_const(self.as_raw_TextDetectionModel_DB()) }.into_result()
+	}
+	
+	fn set_polygon_threshold(&mut self, polygon_threshold: f32) -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_setPolygonThreshold_float(self.as_raw_mut_TextDetectionModel_DB(), polygon_threshold) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	fn get_polygon_threshold(&self) -> Result<f32> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_getPolygonThreshold_const(self.as_raw_TextDetectionModel_DB()) }.into_result()
+	}
+	
+	fn set_unclip_ratio(&mut self, unclip_ratio: f64) -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_setUnclipRatio_double(self.as_raw_mut_TextDetectionModel_DB(), unclip_ratio) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	fn get_unclip_ratio(&self) -> Result<f64> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_getUnclipRatio_const(self.as_raw_TextDetectionModel_DB()) }.into_result()
+	}
+	
+	fn set_max_candidates(&mut self, max_candidates: i32) -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_setMaxCandidates_int(self.as_raw_mut_TextDetectionModel_DB(), max_candidates) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	fn get_max_candidates(&self) -> Result<i32> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_getMaxCandidates_const(self.as_raw_TextDetectionModel_DB()) }.into_result()
+	}
+	
+}
+
+/// This class represents high-level API for text detection DL networks compatible with DB model.
+/// 
+/// Related publications: [liao2020real](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Paper: https://arxiv.org/abs/1911.08947
+/// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
+/// 
+/// Configurable parameters:
+/// - (float) binaryThreshold - The threshold of the binary map. It is usually set to 0.3.
+/// - (float) polygonThreshold - The threshold of text polygons. It is usually set to 0.5, 0.6, and 0.7. Default is 0.5f
+/// - (double) unclipRatio - The unclip ratio of the detected text region, which determines the output size. It is usually set to 2.0.
+/// - (int) maxCandidates - The max number of the output results.
+pub struct TextDetectionModel_DB {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TextDetectionModel_DB }
+
+impl Drop for TextDetectionModel_DB {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TextDetectionModel_DB_delete(instance: *mut c_void); }
+		unsafe { cv_TextDetectionModel_DB_delete(self.as_raw_mut_TextDetectionModel_DB()) };
+	}
+}
+
+impl TextDetectionModel_DB {
+	#[inline] pub fn as_raw_TextDetectionModel_DB(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TextDetectionModel_DB(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for TextDetectionModel_DB {}
+
+impl crate::dnn::ModelTrait for TextDetectionModel_DB {
+	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextDetectionModelTrait for TextDetectionModel_DB {
+	#[inline] fn as_raw_TextDetectionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextDetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextDetectionModel_DBTrait for TextDetectionModel_DB {
+	#[inline] fn as_raw_TextDetectionModel_DB(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextDetectionModel_DB(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TextDetectionModel_DB {
+	pub fn default() -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB() }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	/// Create text detection algorithm from deep learning network.
+	/// ## Parameters
+	/// * network: Net object.
+	pub fn new(network: &crate::dnn::Net) -> Result<crate::dnn::TextDetectionModel_DB> {
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_NetR(network.as_raw_Net()) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+	/// Create text detection model from network represented in one of the supported formats.
+	/// An order of @p model and @p config arguments does not matter.
+	/// ## Parameters
+	/// * model: Binary file contains trained weights.
+	/// * config: Text file contains network configuration.
+	/// 
+	/// ## C++ default parameters
+	/// * config: ""
+	pub fn new_1(model: &str, config: &str) -> Result<crate::dnn::TextDetectionModel_DB> {
+		extern_container_arg!(model);
+		extern_container_arg!(config);
+		unsafe { sys::cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// This class represents high-level API for text detection DL networks compatible with EAST model.
+/// 
+/// Configurable parameters:
+/// - (float) confThreshold - used to filter boxes by confidences, default: 0.5f
+/// - (float) nmsThreshold - used in non maximum suppression, default: 0.0f
+pub trait TextDetectionModel_EASTTrait: crate::dnn::TextDetectionModelTrait {
+	fn as_raw_TextDetectionModel_EAST(&self) -> *const c_void;
+	fn as_raw_mut_TextDetectionModel_EAST(&mut self) -> *mut c_void;
+
+	/// Set the detection confidence threshold
+	/// ## Parameters
+	/// * confThreshold: A threshold used to filter boxes by confidences
+	fn set_confidence_threshold(&mut self, conf_threshold: f32) -> Result<crate::dnn::TextDetectionModel_EAST> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_setConfidenceThreshold_float(self.as_raw_mut_TextDetectionModel_EAST(), conf_threshold) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
+	}
+	
+	/// Get the detection confidence threshold
+	fn get_confidence_threshold(&self) -> Result<f32> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_getConfidenceThreshold_const(self.as_raw_TextDetectionModel_EAST()) }.into_result()
+	}
+	
+	/// Set the detection NMS filter threshold
+	/// ## Parameters
+	/// * nmsThreshold: A threshold used in non maximum suppression
+	fn set_nms_threshold(&mut self, nms_threshold: f32) -> Result<crate::dnn::TextDetectionModel_EAST> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_setNMSThreshold_float(self.as_raw_mut_TextDetectionModel_EAST(), nms_threshold) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
+	}
+	
+	/// Get the detection confidence threshold
+	fn get_nms_threshold(&self) -> Result<f32> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_getNMSThreshold_const(self.as_raw_TextDetectionModel_EAST()) }.into_result()
+	}
+	
+}
+
+/// This class represents high-level API for text detection DL networks compatible with EAST model.
+/// 
+/// Configurable parameters:
+/// - (float) confThreshold - used to filter boxes by confidences, default: 0.5f
+/// - (float) nmsThreshold - used in non maximum suppression, default: 0.0f
+pub struct TextDetectionModel_EAST {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TextDetectionModel_EAST }
+
+impl Drop for TextDetectionModel_EAST {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TextDetectionModel_EAST_delete(instance: *mut c_void); }
+		unsafe { cv_TextDetectionModel_EAST_delete(self.as_raw_mut_TextDetectionModel_EAST()) };
+	}
+}
+
+impl TextDetectionModel_EAST {
+	#[inline] pub fn as_raw_TextDetectionModel_EAST(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TextDetectionModel_EAST(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for TextDetectionModel_EAST {}
+
+impl crate::dnn::ModelTrait for TextDetectionModel_EAST {
+	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextDetectionModelTrait for TextDetectionModel_EAST {
+	#[inline] fn as_raw_TextDetectionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextDetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextDetectionModel_EASTTrait for TextDetectionModel_EAST {
+	#[inline] fn as_raw_TextDetectionModel_EAST(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextDetectionModel_EAST(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TextDetectionModel_EAST {
+	pub fn default() -> Result<crate::dnn::TextDetectionModel_EAST> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST() }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
+	}
+	
+	/// Create text detection algorithm from deep learning network
+	/// ## Parameters
+	/// * network: Net object
+	pub fn new(network: &crate::dnn::Net) -> Result<crate::dnn::TextDetectionModel_EAST> {
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_NetR(network.as_raw_Net()) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
+	}
+	
+	/// Create text detection model from network represented in one of the supported formats.
+	/// An order of @p model and @p config arguments does not matter.
+	/// ## Parameters
+	/// * model: Binary file contains trained weights.
+	/// * config: Text file contains network configuration.
+	/// 
+	/// ## C++ default parameters
+	/// * config: ""
+	pub fn new_1(model: &str, config: &str) -> Result<crate::dnn::TextDetectionModel_EAST> {
+		extern_container_arg!(model);
+		extern_container_arg!(config);
+		unsafe { sys::cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// This class represents high-level API for text recognition networks.
+/// 
+/// TextRecognitionModel allows to set params for preprocessing input image.
+/// TextRecognitionModel creates net from file with trained weights and config,
+/// sets preprocessing input, runs forward pass and return recognition result.
+/// For TextRecognitionModel, CRNN-CTC is supported.
+pub trait TextRecognitionModelTrait: crate::dnn::ModelTrait {
+	fn as_raw_TextRecognitionModel(&self) -> *const c_void;
+	fn as_raw_mut_TextRecognitionModel(&mut self) -> *mut c_void;
+
+	/// Set the decoding method of translating the network output into string
+	/// ## Parameters
+	/// * decodeType: The decoding method of translating the network output into string: {'CTC-greedy': greedy decoding for the output of CTC-based methods}
+	fn set_decode_type(&mut self, decode_type: &str) -> Result<crate::dnn::TextRecognitionModel> {
+		extern_container_arg!(decode_type);
+		unsafe { sys::cv_dnn_TextRecognitionModel_setDecodeType_const_stringR(self.as_raw_mut_TextRecognitionModel(), decode_type.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
+	}
+	
+	/// Get the decoding method
+	/// ## Returns
+	/// the decoding method
+	fn get_decode_type(&self) -> Result<String> {
+		unsafe { sys::cv_dnn_TextRecognitionModel_getDecodeType_const(self.as_raw_TextRecognitionModel()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	/// Set the vocabulary for recognition.
+	/// ## Parameters
+	/// * vocabulary: the associated vocabulary of the network.
+	fn set_vocabulary(&mut self, vocabulary: &core::Vector::<String>) -> Result<crate::dnn::TextRecognitionModel> {
+		unsafe { sys::cv_dnn_TextRecognitionModel_setVocabulary_const_vector_string_R(self.as_raw_mut_TextRecognitionModel(), vocabulary.as_raw_VectorOfString()) }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
+	}
+	
+	/// Get the vocabulary for recognition.
+	/// ## Returns
+	/// vocabulary the associated vocabulary
+	fn get_vocabulary(&self) -> Result<core::Vector::<String>> {
+		unsafe { sys::cv_dnn_TextRecognitionModel_getVocabulary_const(self.as_raw_TextRecognitionModel()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
+	}
+	
+	/// Given the @p input frame, create input blob, run net and return recognition result
+	/// ## Parameters
+	/// * frame: The input image
+	/// ## Returns
+	/// The text recognition result
+	fn recognize(&self, frame: &dyn core::ToInputArray) -> Result<String> {
+		input_array_arg!(frame);
+		unsafe { sys::cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR(self.as_raw_TextRecognitionModel(), frame.as_raw__InputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	/// Given the @p input frame, create input blob, run net and return recognition result
+	/// ## Parameters
+	/// * frame: The input image
+	/// * roiRects: List of text detection regions of interest (cv::Rect, CV_32SC4). ROIs is be cropped as the network inputs
+	/// * results:[out] A set of text recognition results.
+	fn recognize_1(&self, frame: &dyn core::ToInputArray, roi_rects: &dyn core::ToInputArray, results: &mut core::Vector::<String>) -> Result<()> {
+		input_array_arg!(frame);
+		input_array_arg!(roi_rects);
+		unsafe { sys::cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR_const__InputArrayR_vector_string_R(self.as_raw_TextRecognitionModel(), frame.as_raw__InputArray(), roi_rects.as_raw__InputArray(), results.as_raw_mut_VectorOfString()) }.into_result()
+	}
+	
+}
+
+/// This class represents high-level API for text recognition networks.
+/// 
+/// TextRecognitionModel allows to set params for preprocessing input image.
+/// TextRecognitionModel creates net from file with trained weights and config,
+/// sets preprocessing input, runs forward pass and return recognition result.
+/// For TextRecognitionModel, CRNN-CTC is supported.
+pub struct TextRecognitionModel {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TextRecognitionModel }
+
+impl Drop for TextRecognitionModel {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TextRecognitionModel_delete(instance: *mut c_void); }
+		unsafe { cv_TextRecognitionModel_delete(self.as_raw_mut_TextRecognitionModel()) };
+	}
+}
+
+impl TextRecognitionModel {
+	#[inline] pub fn as_raw_TextRecognitionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TextRecognitionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for TextRecognitionModel {}
+
+impl crate::dnn::ModelTrait for TextRecognitionModel {
+	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::TextRecognitionModelTrait for TextRecognitionModel {
+	#[inline] fn as_raw_TextRecognitionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TextRecognitionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TextRecognitionModel {
+	pub fn default() -> Result<crate::dnn::TextRecognitionModel> {
+		unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel() }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
+	}
+	
+	/// Create Text Recognition model from deep learning network
+	/// Call setDecodeType() and setVocabulary() after constructor to initialize the decoding method
+	/// ## Parameters
+	/// * network: Net object
+	pub fn new(network: &crate::dnn::Net) -> Result<crate::dnn::TextRecognitionModel> {
+		unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel_const_NetR(network.as_raw_Net()) }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
+	}
+	
+	/// Create text recognition model from network represented in one of the supported formats
+	/// Call setDecodeType() and setVocabulary() after constructor to initialize the decoding method
+	/// ## Parameters
+	/// * model: Binary file contains trained weights
+	/// * config: Text file contains network configuration
+	/// 
+	/// ## C++ default parameters
+	/// * config: ""
+	pub fn new_1(model: &str, config: &str) -> Result<crate::dnn::TextRecognitionModel> {
+		extern_container_arg!(model);
+		extern_container_arg!(config);
+		unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
+	}
+	
+}
+
 pub trait _RangeTrait: core::RangeTrait {
 	fn as_raw__Range(&self) -> *const c_void;
 	fn as_raw_mut__Range(&mut self) -> *mut c_void;

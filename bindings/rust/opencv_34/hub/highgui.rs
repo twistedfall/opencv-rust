@@ -19,6 +19,7 @@
 //! *   Create and manipulate windows that can display images and "remember" their content (no need to
 //!    handle repaint events from OS).
 //! *   Add trackbars to the windows, handle simple mouse events as well as keyboard commands.
+//!    # Flags related creating and manipulating HighGUI windows and mouse events
 //!    # OpenGL support
 //!    # Qt New Functions
 //! 
@@ -46,7 +47,7 @@
 //! 
 //! 
 //!            namedWindow("main1",WINDOW_NORMAL);
-//!            namedWindow("main2",WINDOW_AUTOSIZE | CV_GUI_NORMAL);
+//!            namedWindow("main2",WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL);
 //!            createTrackbar( "track1", "main1", &value, 255,  NULL);
 //! 
 //!            String nameb1 = "button1";
@@ -607,8 +608,6 @@ pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i3
 /// respectively. For cv::EVENT_MOUSEHWHEEL, where available, positive and negative values mean right and
 /// left scrolling, respectively.
 /// 
-/// With the C API, the macro CV_GET_WHEEL_DELTA(flags) can be used alternatively.
-/// 
 /// 
 /// Note:
 /// 
@@ -720,7 +719,7 @@ pub fn load_window_parameters(window_name: &str) -> Result<()> {
 	unsafe { sys::cv_loadWindowParameters_const_StringR(window_name.opencv_as_extern()) }.into_result()
 }
 
-/// Moves window to the specified position
+/// Moves the window to the specified position
 /// 
 /// ## Parameters
 /// * winname: Name of the window.
@@ -766,7 +765,7 @@ pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 	unsafe { sys::cv_namedWindow_const_StringR_int(winname.opencv_as_extern(), flags) }.into_result()
 }
 
-/// Resizes window to the specified size
+/// Resizes the window to the specified size
 /// 
 /// 
 /// Note:
@@ -788,7 +787,7 @@ pub fn resize_window_size(winname: &str, size: core::Size) -> Result<()> {
 	unsafe { sys::cv_resizeWindow_const_StringR_const_SizeR(winname.opencv_as_extern(), &size) }.into_result()
 }
 
-/// Resizes window to the specified size
+/// Resizes the window to the specified size
 /// 
 /// 
 /// Note:
@@ -817,8 +816,9 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 	unsafe { sys::cv_saveWindowParameters_const_StringR(window_name.opencv_as_extern()) }.into_result()
 }
 
-/// Selects ROI on the given image.
-/// Function creates a window and allows user to select a ROI using mouse.
+/// Allows users to select a ROI on the given image.
+/// 
+/// The function creates a window and allows users to select a ROI using the mouse.
 /// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
 /// 
 /// ## Parameters
@@ -843,8 +843,9 @@ pub fn select_roi_for_window(window_name: &str, img: &dyn core::ToInputArray, sh
 	unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center) }.into_result()
 }
 
-/// Selects ROI on the given image.
-/// Function creates a window and allows user to select a ROI using mouse.
+/// Allows users to select a ROI on the given image.
+/// 
+/// The function creates a window and allows users to select a ROI using the mouse.
 /// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
 /// 
 /// ## Parameters
@@ -870,8 +871,9 @@ pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_cente
 	unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center) }.into_result()
 }
 
-/// Selects ROIs on the given image.
-/// Function creates a window and allows user to select a ROIs using mouse.
+/// Allows users to select multiple ROIs on the given image.
+/// 
+/// The function creates a window and allows users to select multiple ROIs using the mouse.
 /// Controls: use `space` or `enter` to finish current selection and start a new one,
 /// use `esc` to terminate multiple ROI selection process.
 /// 

@@ -1440,6 +1440,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
+	Result<bool> cv_dnn_Layer_updateMemoryShapes_const_vector_MatShape_R(cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs) {
+		try {
+			bool ret = instance->updateMemoryShapes(*inputs);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	Result<cv::dnn::Layer*> cv_dnn_Layer_Layer() {
 		try {
 			cv::dnn::Layer* ret = new cv::dnn::Layer();
@@ -2118,104 +2125,6 @@ extern "C" {
 	Result_void cv_dnn_PoolingLayer_setPropPads_end_vector_size_t_(cv::dnn::PoolingLayer* instance, std::vector<size_t>* val) {
 		try {
 			instance->pads_end = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropKernel_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->kernel;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropKernel_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->kernel = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropStride_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->stride;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropStride_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->stride = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropPad_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->pad;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->pad = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_l_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_l;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_l_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_l = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_t_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_t;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_t_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_t = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_r_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_r;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_r_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_r = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_b_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_b;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_b_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_b = val;
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}

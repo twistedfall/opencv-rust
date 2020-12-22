@@ -2049,6 +2049,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<void*> cv_utils_dumpString_const_StringR(const char* argument) {
+		try {
+			cv::String ret = cv::utils::dumpString(cv::String(argument));
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	Result<int> cv_utils_getThreadID() {
 		try {
 			int ret = cv::utils::getThreadID();
@@ -10616,6 +10623,20 @@ extern "C" {
 			cv::String ret = instance->version();
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<int> cv_ocl_PlatformInfo_versionMajor_const(const cv::ocl::PlatformInfo* instance) {
+		try {
+			int ret = instance->versionMajor();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<int> cv_ocl_PlatformInfo_versionMinor_const(const cv::ocl::PlatformInfo* instance) {
+		try {
+			int ret = instance->versionMinor();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<int> cv_ocl_PlatformInfo_deviceNumber_const(const cv::ocl::PlatformInfo* instance) {

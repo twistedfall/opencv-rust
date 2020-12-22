@@ -14,6 +14,7 @@ template struct Result<cv::SamplingMethod>;
 template struct Result<cv::Scalar_<double>>;
 template struct Result<cv::ScoreMethod>;
 template struct Result<cv::Size_<float>>;
+template struct Result<cv::UsacParams>;
 template struct Result<cv::Vec<double, 3>>;
 template struct Result<double>;
 template struct Result<float>;

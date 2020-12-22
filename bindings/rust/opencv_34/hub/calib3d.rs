@@ -49,7 +49,7 @@
 //! 
 //! The joint rotation-translation matrix ![inline formula](https://latex.codecogs.com/png.latex?%5BR%7Ct%5D) is the matrix product of a projective
 //! transformation and a homogeneous transformation. The 3-by-4 projective transformation maps 3D points
-//! represented in camera coordinates to 2D poins in the image plane and represented in normalized
+//! represented in camera coordinates to 2D points in the image plane and represented in normalized
 //! camera coordinates ![inline formula](https://latex.codecogs.com/png.latex?x%27%20%3D%20X%5Fc%20%2F%20Z%5Fc) and ![inline formula](https://latex.codecogs.com/png.latex?y%27%20%3D%20Y%5Fc%20%2F%20Z%5Fc):
 //! 
 //! ![block formula](https://latex.codecogs.com/png.latex?Z%5Fc%20%5Cbegin%7Bbmatrix%7D%0Ax%27%20%5C%5C%0Ay%27%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0A1%20%26%200%20%26%200%20%26%200%20%5C%5C%0A0%20%26%201%20%26%200%20%26%200%20%5C%5C%0A0%20%26%200%20%26%201%20%26%200%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0AX%5Fc%20%5C%5C%0AY%5Fc%20%5C%5C%0AZ%5Fc%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%2E)
@@ -352,6 +352,7 @@ pub const Fisheye_CALIB_FIX_PRINCIPAL_POINT: i32 = 512;
 pub const Fisheye_CALIB_FIX_SKEW: i32 = 8;
 pub const Fisheye_CALIB_RECOMPUTE_EXTRINSIC: i32 = 2;
 pub const Fisheye_CALIB_USE_INTRINSIC_GUESS: i32 = 1;
+pub const Fisheye_CALIB_ZERO_DISPARITY: i32 = 1024;
 /// least-median of squares algorithm
 pub const LMEDS: i32 = 4;
 /// RANSAC algorithm
@@ -382,9 +383,11 @@ pub const SOLVEPNP_IPPE: i32 = 6;
 pub const SOLVEPNP_IPPE_SQUARE: i32 = 7;
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
 /// Used for count
-pub const SOLVEPNP_MAX_COUNT: i32 = 8;
+pub const SOLVEPNP_MAX_COUNT: i32 = 9;
 /// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
+/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis20](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Terzakis20)
+pub const SOLVEPNP_SQPNP: i32 = 8;
 /// **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
 /// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
@@ -455,8 +458,10 @@ pub enum SolvePnPMethod {
 	///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 	SOLVEPNP_IPPE_SQUARE = 7,
+	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis20](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Terzakis20)
+	SOLVEPNP_SQPNP = 8,
 	/// Used for count
-	SOLVEPNP_MAX_COUNT = 8,
+	SOLVEPNP_MAX_COUNT = 9,
 }
 
 opencv_type_enum! { crate::calib3d::SolvePnPMethod }
@@ -553,8 +558,8 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// concatenated together.
 /// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
 /// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
-/// and/or CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If @ref CALIB_USE_INTRINSIC_GUESS
+/// and/or @ref CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
 /// initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
@@ -576,40 +581,40 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// the number of pattern views. ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20T%5Fi) are concatenated 1x3 vectors.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   **CALIB_USE_INTRINSIC_GUESS** cameraMatrix contains valid initial values of
+/// *   @ref CALIB_USE_INTRINSIC_GUESS cameraMatrix contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 /// Note, that if intrinsic parameters are known, there is no need to use this function just to
 /// estimate extrinsic parameters. Use solvePnP instead.
-/// *   **CALIB_FIX_PRINCIPAL_POINT** The principal point is not changed during the global
+/// *   @ref CALIB_FIX_PRINCIPAL_POINT The principal point is not changed during the global
 /// optimization. It stays at the center or at a different location specified when
-/// CALIB_USE_INTRINSIC_GUESS is set too.
-/// *   **CALIB_FIX_ASPECT_RATIO** The functions consider only fy as a free parameter. The
+///  @ref CALIB_USE_INTRINSIC_GUESS is set too.
+/// *   @ref CALIB_FIX_ASPECT_RATIO The functions consider only fy as a free parameter. The
 /// ratio fx/fy stays the same as in the input cameraMatrix . When
-/// CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
+///  @ref CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
 /// ignored, only their ratio is computed and used further.
-/// *   **CALIB_ZERO_TANGENT_DIST** Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
+/// *   @ref CALIB_ZERO_TANGENT_DIST Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
 /// to zeros and stay zero.
-/// *   **CALIB_FIX_K1,...,CALIB_FIX_K6** The corresponding radial distortion
-/// coefficient is not changed during the optimization. If CALIB_USE_INTRINSIC_GUESS is
+/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 The corresponding radial distortion
+/// coefficient is not changed during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is
 /// set, the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_RATIONAL_MODEL** Coefficients k4, k5, and k6 are enabled. To provide the
+/// *   @ref CALIB_RATIONAL_MODEL Coefficients k4, k5, and k6 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the rational model and return 8 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_THIN_PRISM_MODEL** Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_S1_S2_S3_S4** The thin prism distortion coefficients are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_TILTED_MODEL** Coefficients tauX and tauY are enabled. To provide the
+/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_TAUX_TAUY** The coefficients of the tilted sensor model are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -622,7 +627,7 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
 /// a calibration rig (see @ref findChessboardCorners). Currently, initialization of intrinsic
-/// parameters (when CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
+/// parameters (when @ref CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
 /// 
@@ -686,8 +691,8 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// concatenated together.
 /// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
 /// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
-/// and/or CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If @ref CALIB_USE_INTRINSIC_GUESS
+/// and/or @ref CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
 /// initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
@@ -709,40 +714,40 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// the number of pattern views. ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20T%5Fi) are concatenated 1x3 vectors.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   **CALIB_USE_INTRINSIC_GUESS** cameraMatrix contains valid initial values of
+/// *   @ref CALIB_USE_INTRINSIC_GUESS cameraMatrix contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 /// Note, that if intrinsic parameters are known, there is no need to use this function just to
 /// estimate extrinsic parameters. Use solvePnP instead.
-/// *   **CALIB_FIX_PRINCIPAL_POINT** The principal point is not changed during the global
+/// *   @ref CALIB_FIX_PRINCIPAL_POINT The principal point is not changed during the global
 /// optimization. It stays at the center or at a different location specified when
-/// CALIB_USE_INTRINSIC_GUESS is set too.
-/// *   **CALIB_FIX_ASPECT_RATIO** The functions consider only fy as a free parameter. The
+///  @ref CALIB_USE_INTRINSIC_GUESS is set too.
+/// *   @ref CALIB_FIX_ASPECT_RATIO The functions consider only fy as a free parameter. The
 /// ratio fx/fy stays the same as in the input cameraMatrix . When
-/// CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
+///  @ref CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
 /// ignored, only their ratio is computed and used further.
-/// *   **CALIB_ZERO_TANGENT_DIST** Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
+/// *   @ref CALIB_ZERO_TANGENT_DIST Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
 /// to zeros and stay zero.
-/// *   **CALIB_FIX_K1,...,CALIB_FIX_K6** The corresponding radial distortion
-/// coefficient is not changed during the optimization. If CALIB_USE_INTRINSIC_GUESS is
+/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 The corresponding radial distortion
+/// coefficient is not changed during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is
 /// set, the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_RATIONAL_MODEL** Coefficients k4, k5, and k6 are enabled. To provide the
+/// *   @ref CALIB_RATIONAL_MODEL Coefficients k4, k5, and k6 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the rational model and return 8 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_THIN_PRISM_MODEL** Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_S1_S2_S3_S4** The thin prism distortion coefficients are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_TILTED_MODEL** Coefficients tauX and tauY are enabled. To provide the
+/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_TAUX_TAUY** The coefficients of the tilted sensor model are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -755,7 +760,7 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
 /// a calibration rig (see @ref findChessboardCorners). Currently, initialization of intrinsic
-/// parameters (when CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
+/// parameters (when @ref CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
 /// 
@@ -1217,8 +1222,8 @@ pub fn draw_frame_axes(image: &mut dyn core::ToInputOutputArray, camera_matrix: 
 /// * to: Second input 2D point set containing ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29).
 /// * inliers: Output vector indicating which points are inliers (1-inlier, 0-outlier).
 /// * method: Robust method used to compute transformation. The following methods are possible:
-/// *   cv::RANSAC - RANSAC-based robust method
-/// *   cv::LMEDS - Least-Median robust method
+/// *   @ref RANSAC - RANSAC-based robust method
+/// *   @ref LMEDS - Least-Median robust method
 /// RANSAC is the default method.
 /// * ransacReprojThreshold: Maximum reprojection error in the RANSAC algorithm to consider
 /// a point as an inlier. Applies only to RANSAC.
@@ -1301,8 +1306,8 @@ pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputA
 /// * to: Second input 2D point set.
 /// * inliers: Output vector indicating which points are inliers.
 /// * method: Robust method used to compute transformation. The following methods are possible:
-/// *   cv::RANSAC - RANSAC-based robust method
-/// *   cv::LMEDS - Least-Median robust method
+/// *   @ref RANSAC - RANSAC-based robust method
+/// *   @ref LMEDS - Least-Median robust method
 /// RANSAC is the default method.
 /// * ransacReprojThreshold: Maximum reprojection error in the RANSAC algorithm to consider
 /// a point as an inlier. Applies only to RANSAC.
@@ -1417,13 +1422,13 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// ( patternSize = cvSize(points_per_row,points_per_colum) = cvSize(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   **CALIB_CB_ADAPTIVE_THRESH** Use adaptive thresholding to convert the image to black
+/// *   @ref CALIB_CB_ADAPTIVE_THRESH Use adaptive thresholding to convert the image to black
 /// and white, rather than a fixed threshold level (computed from the average image brightness).
-/// *   **CALIB_CB_NORMALIZE_IMAGE** Normalize the image gamma with equalizeHist before
+/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with equalizeHist before
 /// applying fixed or adaptive thresholding.
-/// *   **CALIB_CB_FILTER_QUADS** Use additional criteria (like contour area, perimeter,
+/// *   @ref CALIB_CB_FILTER_QUADS Use additional criteria (like contour area, perimeter,
 /// square-like shape) to filter out false quads extracted at the contour retrieval stage.
-/// *   **CALIB_CB_FAST_CHECK** Run a fast check on the image that looks for chessboard corners,
+/// *   @ref CALIB_CB_FAST_CHECK Run a fast check on the image that looks for chessboard corners,
 /// and shortcut the call if none is found. This can drastically speed up the call in the
 /// degenerate condition when no chessboard is observed.
 /// 
@@ -1483,11 +1488,12 @@ pub fn find_circles_grid2(image: &dyn core::ToInputArray, pattern_size: core::Si
 /// ( patternSize = Size(points_per_row, points_per_colum) ).
 /// * centers: output array of detected centers.
 /// * flags: various operation flags that can be one of the following values:
-/// *   **CALIB_CB_SYMMETRIC_GRID** uses symmetric pattern of circles.
-/// *   **CALIB_CB_ASYMMETRIC_GRID** uses asymmetric pattern of circles.
-/// *   **CALIB_CB_CLUSTERING** uses a special algorithm for grid detection. It is more robust to
+/// *   @ref CALIB_CB_SYMMETRIC_GRID uses symmetric pattern of circles.
+/// *   @ref CALIB_CB_ASYMMETRIC_GRID uses asymmetric pattern of circles.
+/// *   @ref CALIB_CB_CLUSTERING uses a special algorithm for grid detection. It is more robust to
 /// perspective distortions but much more sensitive to background clutter.
 /// * blobDetector: feature detector that finds blobs like dark circles on light background.
+///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
 /// * parameters: struct for finding circles in a grid pattern.
 /// 
 /// The function attempts to determine whether the input image contains a grid of circles. If it is, the
@@ -1498,7 +1504,7 @@ pub fn find_circles_grid2(image: &dyn core::ToInputArray, pattern_size: core::Si
 /// Sample usage of detecting and drawing the centers of circles: :
 /// ```ignore
 ///    Size patternsize(7,7); //number of centers
-///    Mat gray = ....; //source image
+///    Mat gray = ...; //source image
 ///    vector<Point2f> centers; //this will be filled by the detected centers
 /// 
 ///    bool patternfound = findCirclesGrid(gray, patternsize, centers);
@@ -1529,11 +1535,12 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// ( patternSize = Size(points_per_row, points_per_colum) ).
 /// * centers: output array of detected centers.
 /// * flags: various operation flags that can be one of the following values:
-/// *   **CALIB_CB_SYMMETRIC_GRID** uses symmetric pattern of circles.
-/// *   **CALIB_CB_ASYMMETRIC_GRID** uses asymmetric pattern of circles.
-/// *   **CALIB_CB_CLUSTERING** uses a special algorithm for grid detection. It is more robust to
+/// *   @ref CALIB_CB_SYMMETRIC_GRID uses symmetric pattern of circles.
+/// *   @ref CALIB_CB_ASYMMETRIC_GRID uses asymmetric pattern of circles.
+/// *   @ref CALIB_CB_CLUSTERING uses a special algorithm for grid detection. It is more robust to
 /// perspective distortions but much more sensitive to background clutter.
 /// * blobDetector: feature detector that finds blobs like dark circles on light background.
+///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
 /// * parameters: struct for finding circles in a grid pattern.
 /// 
 /// The function attempts to determine whether the input image contains a grid of circles. If it is, the
@@ -1544,7 +1551,7 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// Sample usage of detecting and drawing the centers of circles: :
 /// ```ignore
 ///    Size patternsize(7,7); //number of centers
-///    Mat gray = ....; //source image
+///    Mat gray = ...; //source image
 ///    vector<Point2f> centers; //this will be filled by the detected centers
 /// 
 ///    bool patternfound = findCirclesGrid(gray, patternsize, centers);
@@ -1574,8 +1581,8 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   **RANSAC** for the RANSAC algorithm.
-/// *   **LMEDS** for the LMedS algorithm.
+/// *   @ref RANSAC for the RANSAC algorithm.
+/// *   @ref LMEDS for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -1620,8 +1627,8 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   **RANSAC** for the RANSAC algorithm.
-/// *   **LMEDS** for the LMedS algorithm.
+/// *   @ref RANSAC for the RANSAC algorithm.
+/// *   @ref LMEDS for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -1649,8 +1656,8 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// are feature points from cameras with same focal length and principal point.
 /// * pp: principal point of the camera.
 /// * method: Method for computing a fundamental matrix.
-/// *   **RANSAC** for the RANSAC algorithm.
-/// *   **LMEDS** for the LMedS algorithm.
+/// *   @ref RANSAC for the RANSAC algorithm.
+/// *   @ref LMEDS for the LMedS algorithm.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -1686,10 +1693,10 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   **CV_FM_7POINT** for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   **CV_FM_8POINT** for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_RANSAC** for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_LMEDS** for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -1752,10 +1759,10 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   **CV_FM_7POINT** for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   **CV_FM_8POINT** for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_RANSAC** for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_LMEDS** for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -1819,10 +1826,10 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   **CV_FM_7POINT** for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   **CV_FM_8POINT** for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_RANSAC** for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   **CV_FM_LMEDS** for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -1883,15 +1890,15 @@ pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core
 /// a vector\<Point2f\> .
 /// * method: Method used to compute a homography matrix. The following methods are possible:
 /// *   **0** - a regular method using all the points, i.e., the least squares method
-/// *   **RANSAC** - RANSAC-based robust method
-/// *   **LMEDS** - Least-Median robust method
-/// *   **RHO** - PROSAC-based robust method
+/// *   @ref RANSAC - RANSAC-based robust method
+/// *   @ref LMEDS - Least-Median robust method
+/// *   @ref RHO - PROSAC-based robust method
 /// * ransacReprojThreshold: Maximum allowed reprojection error to treat a point pair as an inlier
 /// (used in the RANSAC and RHO methods only). That is, if
 /// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7BdstPoints%7D%20%5Fi%20%2D%20%20%5Ctexttt%7BconvertPointsHomogeneous%7D%20%28%20%5Ctexttt%7BH%7D%20%2A%20%5Ctexttt%7BsrcPoints%7D%20%5Fi%29%20%5C%7C%5F2%20%20%3E%20%20%5Ctexttt%7BransacReprojThreshold%7D)
 /// then the point ![inline formula](https://latex.codecogs.com/png.latex?i) is considered as an outlier. If srcPoints and dstPoints are measured in pixels,
 /// it usually makes sense to set this parameter somewhere in the range of 1 to 10.
-/// * mask: Optional output mask set by a robust method ( RANSAC or LMEDS ). Note that the input
+/// * mask: Optional output mask set by a robust method ( RANSAC or LMeDS ). Note that the input
 /// mask values are ignored.
 /// * maxIters: The maximum number of RANSAC iterations.
 /// * confidence: Confidence level, between 0 and 1.
@@ -1954,15 +1961,15 @@ pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn cor
 /// a vector\<Point2f\> .
 /// * method: Method used to compute a homography matrix. The following methods are possible:
 /// *   **0** - a regular method using all the points, i.e., the least squares method
-/// *   **RANSAC** - RANSAC-based robust method
-/// *   **LMEDS** - Least-Median robust method
-/// *   **RHO** - PROSAC-based robust method
+/// *   @ref RANSAC - RANSAC-based robust method
+/// *   @ref LMEDS - Least-Median robust method
+/// *   @ref RHO - PROSAC-based robust method
 /// * ransacReprojThreshold: Maximum allowed reprojection error to treat a point pair as an inlier
 /// (used in the RANSAC and RHO methods only). That is, if
 /// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7BdstPoints%7D%20%5Fi%20%2D%20%20%5Ctexttt%7BconvertPointsHomogeneous%7D%20%28%20%5Ctexttt%7BH%7D%20%2A%20%5Ctexttt%7BsrcPoints%7D%20%5Fi%29%20%5C%7C%5F2%20%20%3E%20%20%5Ctexttt%7BransacReprojThreshold%7D)
 /// then the point ![inline formula](https://latex.codecogs.com/png.latex?i) is considered as an outlier. If srcPoints and dstPoints are measured in pixels,
 /// it usually makes sense to set this parameter somewhere in the range of 1 to 10.
-/// * mask: Optional output mask set by a robust method ( RANSAC or LMEDS ). Note that the input
+/// * mask: Optional output mask set by a robust method ( RANSAC or LMeDS ). Note that the input
 /// mask values are ignored.
 /// * maxIters: The maximum number of RANSAC iterations.
 /// * confidence: Confidence level, between 0 and 1.
@@ -2028,7 +2035,7 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 /// * image_size: Size of the image used only to initialize the camera intrinsic matrix.
 /// * K: Output 3x3 floating-point camera intrinsic matrix
 ///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If
-///    fisheye::CALIB_USE_INTRINSIC_GUESS/ is specified, some or all of fx, fy, cx, cy must be
+///    @ref fisheye::CALIB_USE_INTRINSIC_GUESS is specified, some or all of fx, fy, cx, cy must be
 ///    initialized before calling the function.
 /// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each pattern view.
@@ -2038,17 +2045,17 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 ///    position of the calibration pattern in the k-th pattern view (k=0.. *M* -1).
 /// * tvecs: Output vector of translation vectors estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-///    *   **fisheye::CALIB_USE_INTRINSIC_GUESS** cameraMatrix contains valid initial values of
+///    *    @ref fisheye::CALIB_USE_INTRINSIC_GUESS  cameraMatrix contains valid initial values of
 ///    fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 ///    center ( imageSize is used), and focal distances are computed in a least-squares fashion.
-///    *   **fisheye::CALIB_RECOMPUTE_EXTRINSIC** Extrinsic will be recomputed after each iteration
+///    *    @ref fisheye::CALIB_RECOMPUTE_EXTRINSIC  Extrinsic will be recomputed after each iteration
 ///    of intrinsic optimization.
-///    *   **fisheye::CALIB_CHECK_COND** The functions will check validity of condition number.
-///    *   **fisheye::CALIB_FIX_SKEW** Skew coefficient (alpha) is set to zero and stay zero.
-///    *   **fisheye::CALIB_FIX_K1..fisheye::CALIB_FIX_K4** Selected distortion coefficients
+///    *    @ref fisheye::CALIB_CHECK_COND  The functions will check validity of condition number.
+///    *    @ref fisheye::CALIB_FIX_SKEW  Skew coefficient (alpha) is set to zero and stay zero.
+///    *    @ref fisheye::CALIB_FIX_K1,..., @ref fisheye::CALIB_FIX_K4 Selected distortion coefficients
 ///    are set to zeros and stay zero.
-///    *   **fisheye::CALIB_FIX_PRINCIPAL_POINT** The principal point is not changed during the global
-/// optimization. It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
+///    *    @ref fisheye::CALIB_FIX_PRINCIPAL_POINT  The principal point is not changed during the global
+/// optimization. It stays at the center or at a different location specified when @ref fisheye::CALIB_USE_INTRINSIC_GUESS is set too.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
 /// ## C++ default parameters
@@ -2218,7 +2225,7 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// observed by the second camera.
 /// * K1: Input/output first camera intrinsic matrix:
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
-/// any of fisheye::CALIB_USE_INTRINSIC_GUESS , fisheye::CALIB_FIX_INTRINSIC are specified,
+/// any of @ref fisheye::CALIB_USE_INTRINSIC_GUESS , @ref fisheye::CALIB_FIX_INTRINSIC are specified,
 /// some or all of the matrix components must be initialized.
 /// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 /// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
@@ -2228,16 +2235,16 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// * R: Output rotation matrix between the 1st and the 2nd camera coordinate systems.
 /// * T: Output translation vector between the coordinate systems of the cameras.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   **fisheye::CALIB_FIX_INTRINSIC** Fix K1, K2? and D1, D2? so that only R, T matrices
+/// *    @ref fisheye::CALIB_FIX_INTRINSIC  Fix K1, K2? and D1, D2? so that only R, T matrices
 /// are estimated.
-/// *   **fisheye::CALIB_USE_INTRINSIC_GUESS** K1, K2 contains valid initial values of
+/// *    @ref fisheye::CALIB_USE_INTRINSIC_GUESS  K1, K2 contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center (imageSize is used), and focal distances are computed in a least-squares fashion.
-/// *   **fisheye::CALIB_RECOMPUTE_EXTRINSIC** Extrinsic will be recomputed after each iteration
+/// *    @ref fisheye::CALIB_RECOMPUTE_EXTRINSIC  Extrinsic will be recomputed after each iteration
 /// of intrinsic optimization.
-/// *   **fisheye::CALIB_CHECK_COND** The functions will check validity of condition number.
-/// *   **fisheye::CALIB_FIX_SKEW** Skew coefficient (alpha) is set to zero and stay zero.
-/// *   **fisheye::CALIB_FIX_K1..4** Selected distortion coefficients are set to zeros and stay
+/// *    @ref fisheye::CALIB_CHECK_COND  The functions will check validity of condition number.
+/// *    @ref fisheye::CALIB_FIX_SKEW  Skew coefficient (alpha) is set to zero and stay zero.
+/// *   @ref fisheye::CALIB_FIX_K1,..., @ref fisheye::CALIB_FIX_K4 Selected distortion coefficients are set to zeros and stay
 /// zero.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -2275,7 +2282,7 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 /// * P2: Output 3x4 projection matrix in the new (rectified) coordinate systems for the second
 /// camera.
 /// * Q: Output ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) disparity-to-depth mapping matrix (see reprojectImageTo3D ).
-/// * flags: Operation flags that may be zero or CALIB_ZERO_DISPARITY . If the flag is set,
+/// * flags: Operation flags that may be zero or @ref fisheye::CALIB_ZERO_DISPARITY . If the flag is set,
 /// the function makes the principal points of each camera have the same pixel coordinates in the
 /// rectified views. And if the flag is not set, the function may still shift the images in the
 /// horizontal or vertical direction (depending on the orientation of epipolar lines) to maximize the
@@ -2855,9 +2862,9 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// the model coordinate system to the camera coordinate system. A P3P problem has up to 4 solutions.
 /// * tvecs: Output translation vectors.
 /// * flags: Method for solving a P3P problem:
-/// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
+/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)).
-/// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke and S. Roumeliotis.
+/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke and S. Roumeliotis.
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)).
 /// 
 /// The function estimates the object pose given 3 object points, their corresponding image
@@ -2906,41 +2913,41 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
 /// * flags: Method for solving a PnP problem:
-/// *   **SOLVEPNP_ITERATIVE** Iterative method is based on a Levenberg-Marquardt optimization. In
+/// *   @ref SOLVEPNP_ITERATIVE Iterative method is based on a Levenberg-Marquardt optimization. In
 /// this case the function finds such a pose that minimizes reprojection error, that is the sum
 /// of squared distances between the observed projections imagePoints and the projected (using
 /// projectPoints ) objectPoints .
-/// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
+/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// In this case the function requires exactly four object and image points.
-/// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke, S. Roumeliotis
+/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke, S. Roumeliotis
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)).
 /// In this case the function requires exactly four object and image points.
-/// *   **SOLVEPNP_EPNP** Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
+/// *   @ref SOLVEPNP_EPNP Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
 /// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   **SOLVEPNP_DLS** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// *   @ref SOLVEPNP_DLS **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
 /// Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
 /// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   **SOLVEPNP_UPNP** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// *   @ref SOLVEPNP_UPNP **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
 /// Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
 /// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
 /// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
 /// focal length.
-/// *   **SOLVEPNP_IPPE** Method is based on the paper of T. Collins and A. Bartoli.
+/// *   @ref SOLVEPNP_IPPE Method is based on the paper of T. Collins and A. Bartoli.
 /// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
-/// *   **SOLVEPNP_IPPE_SQUARE** Method is based on the paper of Toby Collins and Adrien Bartoli.
+/// *   @ref SOLVEPNP_IPPE_SQUARE Method is based on the paper of Toby Collins and Adrien Bartoli.
 /// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
 /// It requires 4 coplanar object points defined in the following order:
 ///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
 ///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 ///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
-/// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is SOLVEPNP_ITERATIVE
+/// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
 /// and useExtrinsicGuess is set to true.
-/// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is SOLVEPNP_ITERATIVE
+/// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
 /// and useExtrinsicGuess is set to true.
 /// * reprojectionError: Optional vector of reprojection error, that is the RMS error
 /// (![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctext%7BRMSE%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Csum%5F%7Bi%7D%5E%7BN%7D%20%5Cleft%20%28%20%5Chat%7By%5Fi%7D%20%2D%20y%5Fi%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20)) between the input image points
@@ -2977,17 +2984,17 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 ///        - Thus, given some data D = np.array(...) where D.shape = (N,M), in order to use a subset of
 ///        it as, e.g., imagePoints, one must effectively copy it into a new array: imagePoints =
 ///        np.ascontiguousarray(D[:,:2]).reshape((N,1,2))
-///    *   The methods **SOLVEPNP_DLS** and **SOLVEPNP_UPNP** cannot be used as the current implementations are
+///    *   The methods @ref SOLVEPNP_DLS and @ref SOLVEPNP_UPNP cannot be used as the current implementations are
 ///        unstable and sometimes give completely wrong results. If you pass one of these two
-///        flags, **SOLVEPNP_EPNP** method will be used instead.
-///    *   The minimum number of points is 4 in the general case. In the case of **SOLVEPNP_P3P** and **SOLVEPNP_AP3P**
+///        flags, @ref SOLVEPNP_EPNP method will be used instead.
+///    *   The minimum number of points is 4 in the general case. In the case of @ref SOLVEPNP_P3P and @ref SOLVEPNP_AP3P
 ///        methods, it is required to use exactly 4 points (the first 3 points are used to estimate all the solutions
 ///        of the P3P problem, the last one is used to retain the best solution that minimizes the reprojection error).
-///    *   With **SOLVEPNP_ITERATIVE** method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
+///    *   With @ref SOLVEPNP_ITERATIVE method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
 ///        are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
 ///        global solution to converge.
-///    *   With **SOLVEPNP_IPPE** input points must be >= 4 and object points must be coplanar.
-///    *   With **SOLVEPNP_IPPE_SQUARE** this is a special case suitable for marker pose estimation.
+///    *   With @ref SOLVEPNP_IPPE input points must be >= 4 and object points must be coplanar.
+///    *   With @ref SOLVEPNP_IPPE_SQUARE this is a special case suitable for marker pose estimation.
 ///        Number of input points must be 4. Object points must be defined in the following order:
 ///          - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
@@ -3176,38 +3183,41 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
 /// * flags: Method for solving a PnP problem:
-/// *   **SOLVEPNP_ITERATIVE** Iterative method is based on a Levenberg-Marquardt optimization. In
+/// *   @ref SOLVEPNP_ITERATIVE Iterative method is based on a Levenberg-Marquardt optimization. In
 /// this case the function finds such a pose that minimizes reprojection error, that is the sum
 /// of squared distances between the observed projections imagePoints and the projected (using
 /// @ref projectPoints ) objectPoints .
-/// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
+/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// In this case the function requires exactly four object and image points.
-/// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke, S. Roumeliotis
+/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke, S. Roumeliotis
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Ke17)).
 /// In this case the function requires exactly four object and image points.
-/// *   **SOLVEPNP_EPNP** Method has been introduced by F. Moreno-Noguer, V. Lepetit and P. Fua in the
+/// *   @ref SOLVEPNP_EPNP Method has been introduced by F. Moreno-Noguer, V. Lepetit and P. Fua in the
 /// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   **SOLVEPNP_DLS** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// *   @ref SOLVEPNP_DLS **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
 /// Method is based on the paper of J. Hesch and S. Roumeliotis.
 /// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   **SOLVEPNP_UPNP** **Broken implementation. Using this flag will fallback to EPnP.** 
+/// *   @ref SOLVEPNP_UPNP **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
 /// Method is based on the paper of A. Penate-Sanchez, J. Andrade-Cetto,
 /// F. Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
 /// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
 /// focal length.
-/// *   **SOLVEPNP_IPPE** Method is based on the paper of T. Collins and A. Bartoli.
+/// *   @ref SOLVEPNP_IPPE Method is based on the paper of T. Collins and A. Bartoli.
 /// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
-/// *   **SOLVEPNP_IPPE_SQUARE** Method is based on the paper of Toby Collins and Adrien Bartoli.
+/// *   @ref SOLVEPNP_IPPE_SQUARE Method is based on the paper of Toby Collins and Adrien Bartoli.
 /// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
 /// It requires 4 coplanar object points defined in the following order:
 ///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
 ///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 ///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
+/// *   @ref SOLVEPNP_SQPNP Method is based on the paper "A Consistently Fast and Globally Optimal Solution to the
+/// Perspective-n-Point Problem" by G. Terzakis and M.Lourakis ([Terzakis20](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Terzakis20)). It requires 3 or more points.
+/// 
 /// 
 /// The function estimates the object pose given a set of object points, their corresponding image
 /// projections, as well as the camera intrinsic matrix and the distortion coefficients, see the figure below
@@ -3240,22 +3250,23 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 ///        - Thus, given some data D = np.array(...) where D.shape = (N,M), in order to use a subset of
 ///        it as, e.g., imagePoints, one must effectively copy it into a new array: imagePoints =
 ///        np.ascontiguousarray(D[:,:2]).reshape((N,1,2))
-///    *   The methods **SOLVEPNP_DLS** and **SOLVEPNP_UPNP** cannot be used as the current implementations are
+///    *   The methods @ref SOLVEPNP_DLS and @ref SOLVEPNP_UPNP cannot be used as the current implementations are
 ///        unstable and sometimes give completely wrong results. If you pass one of these two
-///        flags, **SOLVEPNP_EPNP** method will be used instead.
-///    *   The minimum number of points is 4 in the general case. In the case of **SOLVEPNP_P3P** and **SOLVEPNP_AP3P**
+///        flags, @ref SOLVEPNP_EPNP method will be used instead.
+///    *   The minimum number of points is 4 in the general case. In the case of @ref SOLVEPNP_P3P and @ref SOLVEPNP_AP3P
 ///        methods, it is required to use exactly 4 points (the first 3 points are used to estimate all the solutions
 ///        of the P3P problem, the last one is used to retain the best solution that minimizes the reprojection error).
-///    *   With **SOLVEPNP_ITERATIVE** method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
+///    *   With @ref SOLVEPNP_ITERATIVE method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
 ///        are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
 ///        global solution to converge.
-///    *   With **SOLVEPNP_IPPE** input points must be >= 4 and object points must be coplanar.
-///    *   With **SOLVEPNP_IPPE_SQUARE** this is a special case suitable for marker pose estimation.
+///    *   With @ref SOLVEPNP_IPPE input points must be >= 4 and object points must be coplanar.
+///    *   With @ref SOLVEPNP_IPPE_SQUARE this is a special case suitable for marker pose estimation.
 ///        Number of input points must be 4. Object points must be defined in the following order:
 ///          - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 ///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 ///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
+///    *  With @ref SOLVEPNP_SQPNP input points must be >= 3
 /// 
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
@@ -3303,39 +3314,39 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * F: Output fundamental matrix.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   **CALIB_FIX_INTRINSIC** Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
+/// *   @ref CALIB_FIX_INTRINSIC Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
 /// matrices are estimated.
-/// *   **CALIB_USE_INTRINSIC_GUESS** Optimize some or all of the intrinsic parameters
+/// *   @ref CALIB_USE_INTRINSIC_GUESS Optimize some or all of the intrinsic parameters
 /// according to the specified flags. Initial values are provided by the user.
-/// *   **CALIB_USE_EXTRINSIC_GUESS** R and T contain valid initial values that are optimized further.
+/// *   @ref CALIB_USE_EXTRINSIC_GUESS R and T contain valid initial values that are optimized further.
 /// Otherwise R and T are initialized to the median value of the pattern views (each dimension separately).
-/// *   **CALIB_FIX_PRINCIPAL_POINT** Fix the principal points during the optimization.
-/// *   **CALIB_FIX_FOCAL_LENGTH** Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
-/// *   **CALIB_FIX_ASPECT_RATIO** Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
+/// *   @ref CALIB_FIX_PRINCIPAL_POINT Fix the principal points during the optimization.
+/// *   @ref CALIB_FIX_FOCAL_LENGTH Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
+/// *   @ref CALIB_FIX_ASPECT_RATIO Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
 /// .
-/// *   **CALIB_SAME_FOCAL_LENGTH** Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
-/// *   **CALIB_ZERO_TANGENT_DIST** Set tangential distortion coefficients for each camera to
+/// *   @ref CALIB_SAME_FOCAL_LENGTH Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
+/// *   @ref CALIB_ZERO_TANGENT_DIST Set tangential distortion coefficients for each camera to
 /// zeros and fix there.
-/// *   **CALIB_FIX_K1,...,CALIB_FIX_K6** Do not change the corresponding radial
-/// distortion coefficient during the optimization. If CALIB_USE_INTRINSIC_GUESS is set,
+/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 Do not change the corresponding radial
+/// distortion coefficient during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set,
 /// the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_RATIONAL_MODEL** Enable coefficients k4, k5, and k6. To provide the backward
+/// *   @ref CALIB_RATIONAL_MODEL Enable coefficients k4, k5, and k6. To provide the backward
 /// compatibility, this extra flag should be explicitly specified to make the calibration
 /// function use the rational model and return 8 coefficients. If the flag is not set, the
 /// function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_THIN_PRISM_MODEL** Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_S1_S2_S3_S4** The thin prism distortion coefficients are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_TILTED_MODEL** Coefficients tauX and tauY are enabled. To provide the
+/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_TAUX_TAUY** The coefficients of the tilted sensor model are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -3370,10 +3381,10 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
 /// input data, the function can diverge from the correct solution. If the intrinsic parameters can be
 /// estimated with high accuracy for each of the cameras individually (for example, using
-/// calibrateCamera ), you are recommended to do so and then pass CALIB_FIX_INTRINSIC flag to the
+/// calibrateCamera ), you are recommended to do so and then pass @ref CALIB_FIX_INTRINSIC flag to the
 /// function along with the computed intrinsic parameters. Otherwise, if all the parameters are
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
-/// CALIB_SAME_FOCAL_LENGTH and CALIB_ZERO_TANGENT_DIST flags, which is usually a
+///  @ref CALIB_SAME_FOCAL_LENGTH and @ref CALIB_ZERO_TANGENT_DIST flags, which is usually a
 /// reasonable assumption.
 /// 
 /// Similarly to calibrateCamera, the function minimizes the total re-projection error for all the
@@ -3432,39 +3443,39 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// * F: Output fundamental matrix.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   **CALIB_FIX_INTRINSIC** Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
+/// *   @ref CALIB_FIX_INTRINSIC Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
 /// matrices are estimated.
-/// *   **CALIB_USE_INTRINSIC_GUESS** Optimize some or all of the intrinsic parameters
+/// *   @ref CALIB_USE_INTRINSIC_GUESS Optimize some or all of the intrinsic parameters
 /// according to the specified flags. Initial values are provided by the user.
-/// *   **CALIB_USE_EXTRINSIC_GUESS** R and T contain valid initial values that are optimized further.
+/// *   @ref CALIB_USE_EXTRINSIC_GUESS R and T contain valid initial values that are optimized further.
 /// Otherwise R and T are initialized to the median value of the pattern views (each dimension separately).
-/// *   **CALIB_FIX_PRINCIPAL_POINT** Fix the principal points during the optimization.
-/// *   **CALIB_FIX_FOCAL_LENGTH** Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
-/// *   **CALIB_FIX_ASPECT_RATIO** Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
+/// *   @ref CALIB_FIX_PRINCIPAL_POINT Fix the principal points during the optimization.
+/// *   @ref CALIB_FIX_FOCAL_LENGTH Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
+/// *   @ref CALIB_FIX_ASPECT_RATIO Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
 /// .
-/// *   **CALIB_SAME_FOCAL_LENGTH** Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
-/// *   **CALIB_ZERO_TANGENT_DIST** Set tangential distortion coefficients for each camera to
+/// *   @ref CALIB_SAME_FOCAL_LENGTH Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
+/// *   @ref CALIB_ZERO_TANGENT_DIST Set tangential distortion coefficients for each camera to
 /// zeros and fix there.
-/// *   **CALIB_FIX_K1,...,CALIB_FIX_K6** Do not change the corresponding radial
-/// distortion coefficient during the optimization. If CALIB_USE_INTRINSIC_GUESS is set,
+/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 Do not change the corresponding radial
+/// distortion coefficient during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set,
 /// the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_RATIONAL_MODEL** Enable coefficients k4, k5, and k6. To provide the backward
+/// *   @ref CALIB_RATIONAL_MODEL Enable coefficients k4, k5, and k6. To provide the backward
 /// compatibility, this extra flag should be explicitly specified to make the calibration
 /// function use the rational model and return 8 coefficients. If the flag is not set, the
 /// function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_THIN_PRISM_MODEL** Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_S1_S2_S3_S4** The thin prism distortion coefficients are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   **CALIB_TILTED_MODEL** Coefficients tauX and tauY are enabled. To provide the
+/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   **CALIB_FIX_TAUX_TAUY** The coefficients of the tilted sensor model are not changed during
-/// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
+/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -3499,10 +3510,10 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
 /// input data, the function can diverge from the correct solution. If the intrinsic parameters can be
 /// estimated with high accuracy for each of the cameras individually (for example, using
-/// calibrateCamera ), you are recommended to do so and then pass CALIB_FIX_INTRINSIC flag to the
+/// calibrateCamera ), you are recommended to do so and then pass @ref CALIB_FIX_INTRINSIC flag to the
 /// function along with the computed intrinsic parameters. Otherwise, if all the parameters are
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
-/// CALIB_SAME_FOCAL_LENGTH and CALIB_ZERO_TANGENT_DIST flags, which is usually a
+///  @ref CALIB_SAME_FOCAL_LENGTH and @ref CALIB_ZERO_TANGENT_DIST flags, which is usually a
 /// reasonable assumption.
 /// 
 /// Similarly to calibrateCamera, the function minimizes the total re-projection error for all the
@@ -3598,7 +3609,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// camera, i.e. it projects points given in the rectified first camera coordinate system into the
 /// rectified second camera's image.
 /// * Q: Output ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) disparity-to-depth mapping matrix (see @ref reprojectImageTo3D).
-/// * flags: Operation flags that may be zero or CALIB_ZERO_DISPARITY . If the flag is set,
+/// * flags: Operation flags that may be zero or @ref CALIB_ZERO_DISPARITY . If the flag is set,
 /// the function makes the principal points of each camera have the same pixel coordinates in the
 /// rectified views. And if the flag is not set, the function may still shift the images in the
 /// horizontal or vertical direction (depending on the orientation of epipolar lines) to maximize the
@@ -3637,7 +3648,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BP2%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%20%26%200%20%26%20cx%5F2%20%26%20T%5Fx%2Af%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20f%20%26%20cy%20%26%200%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%201%20%26%200%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%20%2C)
 /// 
 ///    where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fx) is a horizontal shift between the cameras and ![inline formula](https://latex.codecogs.com/png.latex?cx%5F1%3Dcx%5F2) if
-///    CALIB_ZERO_DISPARITY is set.
+///    @ref CALIB_ZERO_DISPARITY is set.
 /// 
 /// *   **Vertical stereo**: the first and the second camera views are shifted relative to each other
 ///    mainly in the vertical direction (and probably a bit in the horizontal direction too). The epipolar
@@ -3648,7 +3659,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BP2%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%20%26%200%20%26%20cx%20%26%200%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20f%20%26%20cy%5F2%20%26%20T%5Fy%2Af%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%201%20%26%200%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%2C)
 /// 
 ///    where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fy) is a vertical shift between the cameras and ![inline formula](https://latex.codecogs.com/png.latex?cy%5F1%3Dcy%5F2) if
-///    CALIB_ZERO_DISPARITY is set.
+///    @ref CALIB_ZERO_DISPARITY is set.
 /// 
 /// As you can see, the first three columns of P1 and P2 will effectively be the new "rectified" camera
 /// matrices. The matrices, together with R1 and R2 , can then be passed to initUndistortRectifyMap to

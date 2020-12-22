@@ -10,7 +10,7 @@
 //! # Stereo Correspondence
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::CUDA_StereoBM, super::CUDA_StereoBeliefPropagation, super::CUDA_StereoConstantSpaceBP, super::CUDA_DisparityBilateralFilter };
+	pub use { super::CUDA_StereoBM, super::CUDA_StereoBeliefPropagation, super::CUDA_StereoConstantSpaceBP, super::CUDA_StereoSGM, super::CUDA_DisparityBilateralFilter };
 }
 
 /// Creates DisparityBilateralFilter object.
@@ -80,6 +80,30 @@ pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg
 /// * msg_type: CV_32F
 pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_plane: i32, msg_type: i32) -> Result<core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
 	unsafe { sys::cv_cuda_createStereoConstantSpaceBP_int_int_int_int_int(ndisp, iters, levels, nr_plane, msg_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(r) } )
+}
+
+/// Creates StereoSGM object.
+/// 
+/// ## Parameters
+/// * minDisparity: Minimum possible disparity value. Normally, it is zero but sometimes rectification algorithms can shift images, so this parameter needs to be adjusted accordingly.
+/// * numDisparities: Maximum disparity minus minimum disparity. The value must be 64, 128 or 256.
+/// * P1: The first parameter controlling the disparity smoothness.This parameter is used for the case of slanted surfaces (not fronto parallel).
+/// * P2: The second parameter controlling the disparity smoothness.This parameter is used for "solving" the depth discontinuities problem.
+/// * uniquenessRatio: Margin in percentage by which the best (minimum) computed cost function
+/// value should "win" the second best value to consider the found match correct. Normally, a value
+/// within the 5-15 range is good enough.
+/// * mode: Set it to StereoSGM::MODE_HH to run the full-scale two-pass dynamic programming algorithm.
+/// It will consume O(W\*H\*numDisparities) bytes. By default, it is set to StereoSGM::MODE_HH4.
+/// 
+/// ## C++ default parameters
+/// * min_disparity: 0
+/// * num_disparities: 128
+/// * p1: 10
+/// * p2: 120
+/// * uniqueness_ratio: 5
+/// * mode: cv::cuda::StereoSGM::MODE_HH4
+pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: i32, uniqueness_ratio: i32, mode: i32) -> Result<core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>> {
+	unsafe { sys::cv_cuda_createStereoSGM_int_int_int_int_int_int(min_disparity, num_disparities, p1, p2, uniqueness_ratio, mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(r) } )
 }
 
 /// Colors a disparity image.
@@ -418,6 +442,45 @@ impl dyn CUDA_StereoConstantSpaceBP + '_ {
 	/// image size (widthand height).
 	pub fn estimate_recommended_params(width: i32, height: i32, ndisp: &mut i32, iters: &mut i32, levels: &mut i32, nr_plane: &mut i32) -> Result<()> {
 		unsafe { sys::cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(width, height, ndisp, iters, levels, nr_plane) }.into_result()
+	}
+	
+}
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_HH08).
+/// Limitation and difference are as follows:
+/// 
+/// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
+/// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
+/// *   Mutual Information cost function is not implemented.
+/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
+/// is used for robustness.
+/// ## See also
+/// cv::StereoSGBM
+pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM {
+	fn as_raw_CUDA_StereoSGM(&self) -> *const c_void;
+	fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void;
+
+	/// Computes disparity map for the specified stereo pair
+	/// 
+	/// ## Parameters
+	/// * left: Left 8-bit or 16-bit unsigned single-channel image.
+	/// * right: Right image of the same size and the same type as the left one.
+	/// * disparity: Output disparity map. It has the same size as the input images.
+	/// StereoSGM computes 16-bit fixed-point disparity map (where each disparity value has 4 fractional bits).
+	fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(left);
+		input_array_arg!(right);
+		output_array_arg!(disparity);
+		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Computes disparity map with specified CUDA Stream
+	/// ## See also
+	/// compute
+	fn compute_with_stream(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(left);
+		input_array_arg!(right);
+		output_array_arg!(disparity);
+		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 	}
 	
 }

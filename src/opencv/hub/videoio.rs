@@ -78,6 +78,8 @@ pub const CAP_OPENCV_MJPEG: i32 = 2200;
 pub const CAP_OPENNI: i32 = 900;
 /// OpenNI2 (for Kinect)
 pub const CAP_OPENNI2: i32 = 1600;
+/// OpenNI2 (for Orbbec Astra)
+pub const CAP_OPENNI2_ASTRA: i32 = 1620;
 /// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
 pub const CAP_OPENNI2_ASUS: i32 = 1610;
 /// OpenNI (for Asus Xtion)
@@ -621,6 +623,8 @@ pub const CAP_PVAPI_PIXELFORMAT_RGBA32: i32 = 7;
 pub const CAP_QT: i32 = 500;
 /// Synonym for CAP_INTELPERC
 pub const CAP_REALSENSE: i32 = 1500;
+/// uEye Camera API
+pub const CAP_UEYE: i32 = 2500;
 /// Unicap drivers (obsolete, removed)
 pub const CAP_UNICAP: i32 = 600;
 /// V4L/V4L2 capturing support
@@ -636,6 +640,8 @@ pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
 pub const CV__CAP_PROP_LATEST: i32 = 50;
+/// Defaults to CV_8U.
+pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 /// If it is not zero, the encoder will expect and encode color frames, otherwise it
@@ -706,6 +712,8 @@ pub enum VideoCaptureAPIs {
 	CAP_OPENNI2 = 1600,
 	/// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
 	CAP_OPENNI2_ASUS = 1610,
+	/// OpenNI2 (for Orbbec Astra)
+	CAP_OPENNI2_ASTRA = 1620,
 	/// gPhoto2 connection
 	CAP_GPHOTO2 = 1700,
 	/// GStreamer
@@ -722,6 +730,8 @@ pub enum VideoCaptureAPIs {
 	CAP_INTEL_MFX = 2300,
 	/// XINE engine (Linux)
 	CAP_XINE = 2400,
+	/// uEye Camera API
+	CAP_UEYE = 2500,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
@@ -837,6 +847,8 @@ pub enum VideoWriterProperties {
 	/// If it is not zero, the encoder will expect and encode color frames, otherwise it
 	/// will work with grayscale frames.
 	VIDEOWRITER_PROP_IS_COLOR = 4,
+	/// Defaults to CV_8U.
+	VIDEOWRITER_PROP_DEPTH = 5,
 }
 
 opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -1197,7 +1209,7 @@ impl VideoCapture {
 	/// @throws Exception %Exception on stream errors (check .isOpened() to filter out malformed streams) or VideoCapture type is not supported
 	/// 
 	/// The primary use of the function is in multi-camera environments.
-	/// The method fills the ready state vector, grabbs video frame, if camera is ready.
+	/// The method fills the ready state vector, grabs video frame, if camera is ready.
 	/// 
 	/// After this call use VideoCapture::retrieve() to decode and fetch frame data.
 	/// 

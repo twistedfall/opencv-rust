@@ -357,6 +357,9 @@ pub trait IndexTrait {
 	fn as_raw_Index(&self) -> *const c_void;
 	fn as_raw_mut_Index(&mut self) -> *mut c_void;
 
+	/// 
+	/// Note: 'features' must have extended lifetime (as cv::Mat) than this #Index instance (to avoid dangling pointers)
+	/// 
 	/// ## C++ default parameters
 	/// * dist_type: cvflann::FLANN_DIST_L2
 	fn build(&mut self, features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<()> {
@@ -437,6 +440,9 @@ impl Index {
 		unsafe { sys::cv_flann_Index_Index() }.into_result().map(|r| unsafe { crate::flann::Index::opencv_from_extern(r) } )
 	}
 	
+	/// 
+	/// Note: 'features' must have extended lifetime (as cv::Mat) than this #Index instance (to avoid dangling pointers)
+	/// 
 	/// ## C++ default parameters
 	/// * dist_type: cvflann::FLANN_DIST_L2
 	pub fn new(features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {

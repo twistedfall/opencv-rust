@@ -63,6 +63,7 @@ pub const Detail_ExposureCompensator_NO: i32 = 0;
 pub const Detail_SeamFinder_DP_SEAM: i32 = 2;
 pub const Detail_SeamFinder_NO: i32 = 0;
 pub const Detail_SeamFinder_VORONOI_SEAM: i32 = 1;
+pub const Detail_WAVE_CORRECT_AUTO: i32 = 2;
 pub const Detail_WAVE_CORRECT_HORIZ: i32 = 0;
 pub const Detail_WAVE_CORRECT_VERT: i32 = 1;
 #[repr(C)]
@@ -88,6 +89,7 @@ opencv_type_enum! { crate::stitching::Detail_GraphCutSeamFinderBase_CostType }
 pub enum Detail_WaveCorrectKind {
 	WAVE_CORRECT_HORIZ = 0,
 	WAVE_CORRECT_VERT = 1,
+	WAVE_CORRECT_AUTO = 2,
 }
 
 opencv_type_enum! { crate::stitching::Detail_WaveCorrectKind }
@@ -119,6 +121,17 @@ pub enum Stitcher_Status {
 }
 
 opencv_type_enum! { crate::stitching::Stitcher_Status }
+
+/// Tries to detect the wave correction kind depending
+/// on whether a panorama spans horizontally or vertically
+/// 
+/// ## Parameters
+/// * rmats: Camera rotation matrices.
+/// ## Returns
+/// The correction kind to use for this panorama
+pub fn auto_detect_wave_correct_kind(rmats: &core::Vector::<core::Mat>) -> Result<crate::stitching::Detail_WaveCorrectKind> {
+	unsafe { sys::cv_detail_autoDetectWaveCorrectKind_const_vector_Mat_R(rmats.as_raw_VectorOfMat()) }.into_result()
+}
 
 /// @brief
 /// 
@@ -683,6 +696,12 @@ pub trait PyRotationWarperTrait {
 		input_array_arg!(k);
 		input_array_arg!(r);
 		unsafe { sys::cv_PyRotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_PyRotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
+	}
+	
+	fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
+		input_array_arg!(k);
+		input_array_arg!(r);
+		unsafe { sys::cv_PyRotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_PyRotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Builds the projection maps according to the given camera data.
@@ -1444,6 +1463,20 @@ pub trait Detail_AffineWarperTrait: crate::stitching::Detail_PlaneWarperTrait {
 		unsafe { sys::cv_detail_AffineWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_AffineWarper(), &pt, k.as_raw__InputArray(), h.as_raw__InputArray()) }.into_result()
 	}
 	
+	/// Projects the image point backward.
+	/// 
+	/// ## Parameters
+	/// * pt: Projected point
+	/// * K: Camera intrinsic parameters
+	/// * H: Camera extrinsic parameters
+	/// ## Returns
+	/// Backward-projected point
+	fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray) -> Result<core::Point2f> {
+		input_array_arg!(k);
+		input_array_arg!(h);
+		unsafe { sys::cv_detail_AffineWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_AffineWarper(), &pt, k.as_raw__InputArray(), h.as_raw__InputArray()) }.into_result()
+	}
+	
 	/// Builds the projection maps according to the given camera data.
 	/// 
 	/// ## Parameters
@@ -1851,6 +1884,14 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_ExposureCompensator
 	
 	fn get_nr_feeds(&mut self) -> Result<i32> {
 		unsafe { sys::cv_detail_BlocksCompensator_getNrFeeds(self.as_raw_mut_Detail_BlocksCompensator()) }.into_result()
+	}
+	
+	fn set_similarity_threshold(&mut self, similarity_threshold: f64) -> Result<()> {
+		unsafe { sys::cv_detail_BlocksCompensator_setSimilarityThreshold_double(self.as_raw_mut_Detail_BlocksCompensator(), similarity_threshold) }.into_result()
+	}
+	
+	fn get_similarity_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_detail_BlocksCompensator_getSimilarityThreshold_const(self.as_raw_Detail_BlocksCompensator()) }.into_result()
 	}
 	
 	fn set_block_size(&mut self, width: i32, height: i32) -> Result<()> {
@@ -2349,6 +2390,14 @@ pub trait Detail_ChannelsCompensatorTrait: crate::stitching::Detail_ExposureComp
 	
 	fn get_nr_feeds(&mut self) -> Result<i32> {
 		unsafe { sys::cv_detail_ChannelsCompensator_getNrFeeds(self.as_raw_mut_Detail_ChannelsCompensator()) }.into_result()
+	}
+	
+	fn set_similarity_threshold(&mut self, similarity_threshold: f64) -> Result<()> {
+		unsafe { sys::cv_detail_ChannelsCompensator_setSimilarityThreshold_double(self.as_raw_mut_Detail_ChannelsCompensator(), similarity_threshold) }.into_result()
+	}
+	
+	fn get_similarity_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_detail_ChannelsCompensator_getSimilarityThreshold_const(self.as_raw_Detail_ChannelsCompensator()) }.into_result()
 	}
 	
 	fn gains(&self) -> Result<core::Vector::<core::Scalar>> {
@@ -3305,6 +3354,18 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	
 	fn get_nr_feeds(&mut self) -> Result<i32> {
 		unsafe { sys::cv_detail_GainCompensator_getNrFeeds(self.as_raw_mut_Detail_GainCompensator()) }.into_result()
+	}
+	
+	fn set_similarity_threshold(&mut self, similarity_threshold: f64) -> Result<()> {
+		unsafe { sys::cv_detail_GainCompensator_setSimilarityThreshold_double(self.as_raw_mut_Detail_GainCompensator(), similarity_threshold) }.into_result()
+	}
+	
+	fn get_similarity_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_detail_GainCompensator_getSimilarityThreshold_const(self.as_raw_Detail_GainCompensator()) }.into_result()
+	}
+	
+	fn prepare_similarity_mask(&mut self, corners: &core::Vector::<core::Point>, images: &core::Vector::<core::UMat>) -> Result<()> {
+		unsafe { sys::cv_detail_GainCompensator_prepareSimilarityMask_const_vector_Point_R_const_vector_UMat_R(self.as_raw_mut_Detail_GainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat()) }.into_result()
 	}
 	
 	fn gains(&self) -> Result<core::Vector::<f64>> {
@@ -4581,6 +4642,19 @@ pub trait Detail_PlaneWarperTrait {
 		unsafe { sys::cv_detail_PlaneWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray()) }.into_result()
 	}
 	
+	fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
+		input_array_arg!(k);
+		input_array_arg!(r);
+		unsafe { sys::cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
+	}
+	
+	fn warp_point_backward_1(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<core::Point2f> {
+		input_array_arg!(k);
+		input_array_arg!(r);
+		input_array_arg!(t);
+		unsafe { sys::cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray()) }.into_result()
+	}
+	
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
 		input_array_arg!(r);
@@ -4877,6 +4951,12 @@ pub trait Detail_RotationWarper {
 		input_array_arg!(k);
 		input_array_arg!(r);
 		unsafe { sys::cv_detail_RotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_RotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
+	}
+	
+	fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
+		input_array_arg!(k);
+		input_array_arg!(r);
+		unsafe { sys::cv_detail_RotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_RotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Builds the projection maps according to the given camera data.

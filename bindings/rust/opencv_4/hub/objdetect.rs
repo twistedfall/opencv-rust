@@ -1416,6 +1416,23 @@ pub trait QRCodeDetectorTrait {
 		unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
+	/// Decodes QR code on a curved surface in image once it's found by the detect() method.
+	/// 
+	/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+	/// ## Parameters
+	/// * img: grayscale or color (BGR) image containing QR code.
+	/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
+	/// * straight_qrcode: The optional output image containing rectified and binarized QR code
+	/// 
+	/// ## C++ default parameters
+	/// * straight_qrcode: noArray()
+	fn decode_curved(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+		input_array_arg!(img);
+		input_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
 	/// Both detects and decodes QR code
 	/// 
 	/// ## Parameters
@@ -1431,6 +1448,23 @@ pub trait QRCodeDetectorTrait {
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	/// Both detects and decodes QR code on a curved surface
+	/// 
+	/// ## Parameters
+	/// * img: grayscale or color (BGR) image containing QR code.
+	/// * points: optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
+	/// * straight_qrcode: The optional output image containing rectified and binarized QR code
+	/// 
+	/// ## C++ default parameters
+	/// * points: noArray()
+	/// * straight_qrcode: noArray()
+	fn detect_and_decode_curved(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+		input_array_arg!(img);
+		output_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
 	/// Detects QR codes in image and returns the vector of the quadrangles containing the codes.

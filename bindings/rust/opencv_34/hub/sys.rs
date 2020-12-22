@@ -734,6 +734,7 @@ mod core_sys {
 		pub fn cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpInt_int(argument: i32) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpSizeT_size_t(argument: size_t) -> Result<*mut c_void>;
+		pub fn cv_utils_dumpString_const_StringR(argument: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_utils_getThreadID() -> Result<i32>;
 		pub fn cv_utils_logging_getLogLevel() -> Result<core::LogLevel>;
 		pub fn cv_utils_logging_internal_writeLogMessage_LogLevel_const_charX(log_level: core::LogLevel, message: *const c_char) -> Result_void;
@@ -1932,6 +1933,8 @@ mod core_sys {
 		pub fn cv_ocl_PlatformInfo_name_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_PlatformInfo_vendor_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_ocl_PlatformInfo_version_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_PlatformInfo_versionMajor_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_ocl_PlatformInfo_versionMinor_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ocl_PlatformInfo_deviceNumber_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(instance: *const c_void, device: *mut c_void, d: i32) -> Result_void;
 		pub fn cv_ocl_Program_Program() -> Result<*mut c_void>;
@@ -2788,6 +2791,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_unsetAttached(instance: *mut c_void) -> Result_void;
 		pub fn cv_dnn_Layer_getMemoryShapes_const_const_vector_MatShape_R_const_int_vector_MatShape_R_vector_MatShape_R(instance: *const c_void, inputs: *const c_void, required_outputs: i32, outputs: *mut c_void, internals: *mut c_void) -> Result<bool>;
 		pub fn cv_dnn_Layer_getFLOPS_const_const_vector_MatShape_R_const_vector_MatShape_R(instance: *const c_void, inputs: *const c_void, outputs: *const c_void) -> Result<i64>;
+		pub fn cv_dnn_Layer_updateMemoryShapes_const_vector_MatShape_R(instance: *mut c_void, inputs: *const c_void) -> Result<bool>;
 		pub fn cv_dnn_Layer_Layer() -> Result<*mut c_void>;
 		pub fn cv_dnn_Layer_Layer_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_Layer_setParamsFrom_const_LayerParamsR(instance: *mut c_void, params: *const c_void) -> Result_void;
@@ -2882,20 +2886,6 @@ mod dnn_sys {
 		pub fn cv_dnn_PoolingLayer_setPropPads_begin_vector_size_t_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_getPropPads_end(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_PoolingLayer_setPropPads_end_vector_size_t_(instance: *mut c_void, val: *mut c_void) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropKernel_const(instance: *const c_void) -> Result<core::Size>;
-		pub fn cv_dnn_PoolingLayer_setPropKernel_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropStride_const(instance: *const c_void) -> Result<core::Size>;
-		pub fn cv_dnn_PoolingLayer_setPropStride_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropPad_const(instance: *const c_void) -> Result<core::Size>;
-		pub fn cv_dnn_PoolingLayer_setPropPad_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropPad_l_const(instance: *const c_void) -> Result<i32>;
-		pub fn cv_dnn_PoolingLayer_setPropPad_l_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropPad_t_const(instance: *const c_void) -> Result<i32>;
-		pub fn cv_dnn_PoolingLayer_setPropPad_t_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropPad_r_const(instance: *const c_void) -> Result<i32>;
-		pub fn cv_dnn_PoolingLayer_setPropPad_r_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_dnn_PoolingLayer_getPropPad_b_const(instance: *const c_void) -> Result<i32>;
-		pub fn cv_dnn_PoolingLayer_setPropPad_b_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_getPropGlobalPooling_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_dnn_PoolingLayer_setPropGlobalPooling_bool(instance: *mut c_void, val: bool) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_getPropIsGlobalPooling(instance: *mut c_void) -> Result<*mut c_void>;
@@ -3696,6 +3686,7 @@ mod imgcodecs_sys {
 		pub fn cv_imread_const_StringR_int(filename: *const c_char, flags: i32) -> Result<*mut c_void>;
 		pub fn cv_imreadmulti_const_StringR_vector_Mat_R_int(filename: *const c_char, mats: *mut c_void, flags: i32) -> Result<bool>;
 		pub fn cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
+		pub fn cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
 	}
 }
 pub use imgcodecs_sys::*;
@@ -4286,6 +4277,7 @@ mod objdetect_sys {
 
 	extern "C" {
 		pub fn cv_createFaceDetectionMaskGenerator() -> Result<*mut c_void>;
+		pub fn cv_decodeCurvedQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(in_: *const c_void, points: *const c_void, decoded_info: *mut *mut c_void, straight_qrcode: *const c_void) -> Result<bool>;
 		pub fn cv_decodeQRCode_const__InputArrayR_const__InputArrayR_stringR_const__OutputArrayR(in_: *const c_void, points: *const c_void, decoded_info: *mut *mut c_void, straight_qrcode: *const c_void) -> Result<bool>;
 		pub fn cv_detectQRCode_const__InputArrayR_vector_Point_R_double_double(in_: *const c_void, points: *mut c_void, eps_x: f64, eps_y: f64) -> Result<bool>;
 		pub fn cv_groupRectangles_meanshift_vector_Rect_R_vector_double_R_vector_double_R_double_Size(rect_list: *mut c_void, found_weights: *mut c_void, found_scales: *mut c_void, detect_threshold: f64, win_det_size: *const core::Size) -> Result_void;
@@ -4420,7 +4412,9 @@ mod objdetect_sys {
 		pub fn cv_QRCodeDetector_setEpsY_double(instance: *mut c_void, eps_y: f64) -> Result_void;
 		pub fn cv_QRCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, img: *const c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, img: *const c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, img: *const c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, img: *const c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_String_R_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void, decoded_info: *mut c_void, straight_qrcode: *const c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_String_R_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, decoded_info: *mut c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<bool>;

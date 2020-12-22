@@ -13,7 +13,7 @@
 //!   # C API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::KalmanFilterTrait, super::DenseOpticalFlow, super::SparseOpticalFlow, super::FarnebackOpticalFlow, super::VariationalRefinement, super::DISOpticalFlow, super::SparsePyrLKOpticalFlow, super::BackgroundSubtractor, super::BackgroundSubtractorMOG2, super::BackgroundSubtractorKNN };
+	pub use { super::KalmanFilterTrait, super::DenseOpticalFlow, super::SparseOpticalFlow, super::FarnebackOpticalFlow, super::VariationalRefinement, super::DISOpticalFlow, super::SparsePyrLKOpticalFlow, super::Tracker, super::TrackerMIL, super::TrackerGOTURN_ParamsTrait, super::TrackerGOTURN, super::BackgroundSubtractor, super::BackgroundSubtractorMOG2, super::BackgroundSubtractorKNN };
 }
 
 pub const DISOpticalFlow_PRESET_FAST: i32 = 1;
@@ -1407,6 +1407,178 @@ impl dyn SparsePyrLKOpticalFlow + '_ {
 	}
 	
 }
+/// Base abstract class for the long-term tracker
+pub trait Tracker {
+	fn as_raw_Tracker(&self) -> *const c_void;
+	fn as_raw_mut_Tracker(&mut self) -> *mut c_void;
+
+	/// Initialize the tracker with a known bounding box that surrounded the target
+	/// ## Parameters
+	/// * image: The initial frame
+	/// * boundingBox: The initial bounding box
+	fn init(&mut self, image: &dyn core::ToInputArray, bounding_box: core::Rect) -> Result<()> {
+		input_array_arg!(image);
+		unsafe { sys::cv_Tracker_init_const__InputArrayR_const_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box) }.into_result()
+	}
+	
+	/// Update the tracker, find the new most likely bounding box for the target
+	/// ## Parameters
+	/// * image: The current frame
+	/// * boundingBox: The bounding box that represent the new target location, if true was returned, not
+	/// modified otherwise
+	/// 
+	/// ## Returns
+	/// True means that target was located and false means that tracker cannot locate target in
+	/// current frame. Note, that latter *does not* imply that tracker has failed, maybe target is indeed
+	/// missing from the frame (say, out of sight)
+	fn update(&mut self, image: &dyn core::ToInputArray, bounding_box: &mut core::Rect) -> Result<bool> {
+		input_array_arg!(image);
+		unsafe { sys::cv_Tracker_update_const__InputArrayR_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box) }.into_result()
+	}
+	
+}
+
+/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
+/// 
+/// GOTURN ([GOTURN](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+/// GOTURN is much faster due to offline training without online fine-tuning nature.
+/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
+/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
+/// robust to viewpoint changes, lighting changes, and deformations.
+/// Inputs of GOTURN are two RGB patches representing Target and Search patches resized to 227x227.
+/// Outputs of GOTURN are predicted bounding box coordinates, relative to Search patch coordinate system, in format X1,Y1,X2,Y2.
+/// Original paper is here: <http://davheld.github.io/GOTURN/GOTURN.pdf>
+/// As long as original authors implementation: <https://github.com/davheld/GOTURN#train-the-tracker>
+/// Implementation of training algorithm is placed in separately here due to 3d-party dependencies:
+/// <https://github.com/Auron-X/GOTURN_Training_Toolkit>
+/// GOTURN architecture goturn.prototxt and trained model goturn.caffemodel are accessible on opencv_extra GitHub repository.
+pub trait TrackerGOTURN: crate::video::Tracker {
+	fn as_raw_TrackerGOTURN(&self) -> *const c_void;
+	fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void;
+
+}
+
+impl dyn TrackerGOTURN + '_ {
+	/// Constructor
+	/// ## Parameters
+	/// * parameters: GOTURN parameters TrackerGOTURN::Params
+	/// 
+	/// ## C++ default parameters
+	/// * parameters: TrackerGOTURN::Params()
+	pub fn create(parameters: &crate::video::TrackerGOTURN_Params) -> Result<core::Ptr::<dyn crate::video::TrackerGOTURN>> {
+		unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::TrackerGOTURN>::opencv_from_extern(r) } )
+	}
+	
+}
+pub trait TrackerGOTURN_ParamsTrait {
+	fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void;
+	fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void;
+
+	fn model_txt(&self) -> String {
+		unsafe { sys::cv_TrackerGOTURN_Params_getPropModelTxt_const(self.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_txt")
+	}
+	
+	fn set_model_txt(&mut self, val: &str) -> () {
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_TrackerGOTURN_Params_setPropModelTxt_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_txt")
+	}
+	
+	fn model_bin(&self) -> String {
+		unsafe { sys::cv_TrackerGOTURN_Params_getPropModelBin_const(self.as_raw_TrackerGOTURN_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_bin")
+	}
+	
+	fn set_model_bin(&mut self, val: &str) -> () {
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_TrackerGOTURN_Params_setPropModelBin_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_bin")
+	}
+	
+}
+
+pub struct TrackerGOTURN_Params {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TrackerGOTURN_Params }
+
+impl Drop for TrackerGOTURN_Params {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TrackerGOTURN_Params_delete(instance: *mut c_void); }
+		unsafe { cv_TrackerGOTURN_Params_delete(self.as_raw_mut_TrackerGOTURN_Params()) };
+	}
+}
+
+impl TrackerGOTURN_Params {
+	#[inline] pub fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for TrackerGOTURN_Params {}
+
+impl crate::video::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
+	#[inline] fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TrackerGOTURN_Params {
+	pub fn default() -> Result<crate::video::TrackerGOTURN_Params> {
+		unsafe { sys::cv_TrackerGOTURN_Params_Params() }.into_result().map(|r| unsafe { crate::video::TrackerGOTURN_Params::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// The MIL algorithm trains a classifier in an online manner to separate the object from the
+/// background.
+/// 
+/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
+/// based on [MIL](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_MIL) .
+/// 
+/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
+pub trait TrackerMIL: crate::video::Tracker {
+	fn as_raw_TrackerMIL(&self) -> *const c_void;
+	fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void;
+
+}
+
+impl dyn TrackerMIL + '_ {
+	/// Create MIL tracker instance
+	/// ## Parameters
+	/// * parameters: MIL parameters TrackerMIL::Params
+	/// 
+	/// ## C++ default parameters
+	/// * parameters: TrackerMIL::Params()
+	pub fn create(parameters: crate::video::TrackerMIL_Params) -> Result<core::Ptr::<dyn crate::video::TrackerMIL>> {
+		unsafe { sys::cv_TrackerMIL_create_const_ParamsR(&parameters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::video::TrackerMIL>::opencv_from_extern(r) } )
+	}
+	
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct TrackerMIL_Params {
+	/// radius for gathering positive instances during init
+	pub sampler_init_in_radius: f32,
+	/// # negative samples to use during init
+	pub sampler_init_max_neg_num: i32,
+	/// size of search window
+	pub sampler_search_win_size: f32,
+	/// radius for gathering positive instances during tracking
+	pub sampler_track_in_radius: f32,
+	/// # positive samples to use during tracking
+	pub sampler_track_max_pos_num: i32,
+	/// # negative samples to use during tracking
+	pub sampler_track_max_neg_num: i32,
+	/// # features
+	pub feature_set_num_features: i32,
+}
+
+opencv_type_simple! { crate::video::TrackerMIL_Params }
+
+impl TrackerMIL_Params {
+	pub fn default() -> Result<crate::video::TrackerMIL_Params> {
+		unsafe { sys::cv_TrackerMIL_Params_Params() }.into_result()
+	}
+	
+}
+
 /// Variational optical flow refinement
 /// 
 /// This class implements variational refinement of the input flow field, i.e.

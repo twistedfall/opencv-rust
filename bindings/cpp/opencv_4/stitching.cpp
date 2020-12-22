@@ -3,6 +3,13 @@
 #include "stitching_types.hpp"
 
 extern "C" {
+	Result<cv::detail::WaveCorrectKind> cv_detail_autoDetectWaveCorrectKind_const_vector_Mat_R(const std::vector<cv::Mat>* rmats) {
+		try {
+			cv::detail::WaveCorrectKind ret = cv::detail::autoDetectWaveCorrectKind(*rmats);
+			return Ok<cv::detail::WaveCorrectKind>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::detail::WaveCorrectKind>))
+	}
+	
 	Result_void cv_detail_computeImageFeatures_const_Ptr_Feature2D_R_const__InputArrayR_ImageFeaturesR_const__InputArrayR(const cv::Ptr<cv::Feature2D>* featuresFinder, const cv::_InputArray* image, cv::detail::ImageFeatures* features, const cv::_InputArray* mask) {
 		try {
 			cv::detail::computeImageFeatures(*featuresFinder, *image, *features, *mask);
@@ -274,6 +281,13 @@ extern "C" {
 	Result<cv::Point2f> cv_PyRotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::PyRotationWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *R);
+			return Ok<cv::Point2f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
+	}
+	
+	Result<cv::Point2f> cv_PyRotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::PyRotationWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
+		try {
+			cv::Point2f ret = instance->warpPointBackward(*pt, *K, *R);
 			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
@@ -747,6 +761,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
+	Result<cv::Point2f> cv_detail_AffineWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::AffineWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* H) {
+		try {
+			cv::Point2f ret = instance->warpPointBackward(*pt, *K, *H);
+			return Ok<cv::Point2f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
+	}
+	
 	Result<cv::Rect> cv_detail_AffineWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::AffineWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* H, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *H, *xmap, *ymap);
@@ -883,6 +904,20 @@ extern "C" {
 			int ret = instance->getNrFeeds();
 			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_detail_BlocksCompensator_setSimilarityThreshold_double(cv::detail::BlocksCompensator* instance, double similarity_threshold) {
+		try {
+			instance->setSimilarityThreshold(similarity_threshold);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<double> cv_detail_BlocksCompensator_getSimilarityThreshold_const(const cv::detail::BlocksCompensator* instance) {
+		try {
+			double ret = instance->getSimilarityThreshold();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result_void cv_detail_BlocksCompensator_setBlockSize_int_int(cv::detail::BlocksCompensator* instance, int width, int height) {
@@ -1191,6 +1226,20 @@ extern "C" {
 			int ret = instance->getNrFeeds();
 			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_detail_ChannelsCompensator_setSimilarityThreshold_double(cv::detail::ChannelsCompensator* instance, double similarity_threshold) {
+		try {
+			instance->setSimilarityThreshold(similarity_threshold);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<double> cv_detail_ChannelsCompensator_getSimilarityThreshold_const(const cv::detail::ChannelsCompensator* instance) {
+		try {
+			double ret = instance->getSimilarityThreshold();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
 	}
 	
 	Result<std::vector<cv::Scalar>*> cv_detail_ChannelsCompensator_gains_const(const cv::detail::ChannelsCompensator* instance) {
@@ -1712,6 +1761,27 @@ extern "C" {
 			int ret = instance->getNrFeeds();
 			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_detail_GainCompensator_setSimilarityThreshold_double(cv::detail::GainCompensator* instance, double similarity_threshold) {
+		try {
+			instance->setSimilarityThreshold(similarity_threshold);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<double> cv_detail_GainCompensator_getSimilarityThreshold_const(const cv::detail::GainCompensator* instance) {
+		try {
+			double ret = instance->getSimilarityThreshold();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result_void cv_detail_GainCompensator_prepareSimilarityMask_const_vector_Point_R_const_vector_UMat_R(cv::detail::GainCompensator* instance, const std::vector<cv::Point>* corners, const std::vector<cv::UMat>* images) {
+		try {
+			instance->prepareSimilarityMask(*corners, *images);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result<std::vector<double>*> cv_detail_GainCompensator_gains_const(const cv::detail::GainCompensator* instance) {
@@ -2361,6 +2431,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}
 	
+	Result<cv::Point2f> cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
+		try {
+			cv::Point2f ret = instance->warpPointBackward(*pt, *K, *R);
+			return Ok<cv::Point2f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
+	}
+	
+	Result<cv::Point2f> cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cv::detail::PlaneWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T) {
+		try {
+			cv::Point2f ret = instance->warpPointBackward(*pt, *K, *R, *T);
+			return Ok<cv::Point2f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
+	}
+	
 	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(cv::detail::PlaneWarper* instance, cv::Size* src_size, const cv::_InputArray* K, const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* xmap, const cv::_OutputArray* ymap) {
 		try {
 			cv::Rect ret = instance->buildMaps(*src_size, *K, *R, *T, *xmap, *ymap);
@@ -2531,6 +2615,13 @@ extern "C" {
 	Result<cv::Point2f> cv_detail_RotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::RotationWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
 		try {
 			cv::Point2f ret = instance->warpPoint(*pt, *K, *R);
+			return Ok<cv::Point2f>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
+	}
+	
+	Result<cv::Point2f> cv_detail_RotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(cv::detail::RotationWarper* instance, const cv::Point2f* pt, const cv::_InputArray* K, const cv::_InputArray* R) {
+		try {
+			cv::Point2f ret = instance->warpPointBackward(*pt, *K, *R);
 			return Ok<cv::Point2f>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Point2f>))
 	}

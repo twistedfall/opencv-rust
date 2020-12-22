@@ -1015,16 +1015,6 @@ impl OCRBeamSearchDecoder {
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
-	/// ## C++ default parameters
-	/// * mode: OCR_DECODER_VITERBI
-	/// * beam_size: 500
-	pub fn create_1(classifier: core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32, beam_size: i32) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder>> {
-		extern_container_arg!(vocabulary);
-		input_array_arg!(transition_probabilities_table);
-		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
-	}
-	
 	/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
 	/// 
 	///    Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
@@ -1051,12 +1041,12 @@ impl OCRBeamSearchDecoder {
 	/// ## C++ default parameters
 	/// * mode: OCR_DECODER_VITERBI
 	/// * beam_size: 500
-	pub fn create_2(filename: &str, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32, beam_size: i32) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder>> {
+	pub fn create_1(filename: &str, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder>> {
 		extern_container_arg!(filename);
 		extern_container_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(r) } )
 	}
 	
 }

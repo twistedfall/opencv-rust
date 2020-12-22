@@ -299,6 +299,16 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	void cv_BEBLID_delete(cv::xfeatures2d::BEBLID* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::xfeatures2d::BEBLID>*> cv_xfeatures2d_BEBLID_create_float_int(float scale_factor, int n_bits) {
+		try {
+			cv::Ptr<cv::xfeatures2d::BEBLID> ret = cv::xfeatures2d::BEBLID::create(scale_factor, n_bits);
+			return Ok(new cv::Ptr<cv::xfeatures2d::BEBLID>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::BEBLID>*>))
+	}
+	
 	Result<cv::Ptr<cv::xfeatures2d::BoostDesc>*> cv_xfeatures2d_BoostDesc_create_int_bool_float(int desc, bool use_scale_orientation, float scale_factor) {
 		try {
 			cv::Ptr<cv::xfeatures2d::BoostDesc> ret = cv::xfeatures2d::BoostDesc::create(desc, use_scale_orientation, scale_factor);
@@ -951,6 +961,69 @@ extern "C" {
 			cv::Ptr<cv::xfeatures2d::StarDetector> ret = cv::xfeatures2d::StarDetector::create(maxSize, responseThreshold, lineThresholdProjected, lineThresholdBinarized, suppressNonmaxSize);
 			return Ok(new cv::Ptr<cv::xfeatures2d::StarDetector>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::StarDetector>*>))
+	}
+	
+	Result<cv::Ptr<cv::xfeatures2d::TBMR>*> cv_xfeatures2d_TBMR_create_int_float_float_int(int min_area, float max_area_relative, float scale_factor, int n_scales) {
+		try {
+			cv::Ptr<cv::xfeatures2d::TBMR> ret = cv::xfeatures2d::TBMR::create(min_area, max_area_relative, scale_factor, n_scales);
+			return Ok(new cv::Ptr<cv::xfeatures2d::TBMR>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::xfeatures2d::TBMR>*>))
+	}
+	
+	Result_void cv_xfeatures2d_TBMR_setMinArea_int(cv::xfeatures2d::TBMR* instance, int minArea) {
+		try {
+			instance->setMinArea(minArea);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_xfeatures2d_TBMR_getMinArea_const(const cv::xfeatures2d::TBMR* instance) {
+		try {
+			int ret = instance->getMinArea();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_xfeatures2d_TBMR_setMaxAreaRelative_float(cv::xfeatures2d::TBMR* instance, float maxArea) {
+		try {
+			instance->setMaxAreaRelative(maxArea);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_xfeatures2d_TBMR_getMaxAreaRelative_const(const cv::xfeatures2d::TBMR* instance) {
+		try {
+			float ret = instance->getMaxAreaRelative();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_xfeatures2d_TBMR_setScaleFactor_float(cv::xfeatures2d::TBMR* instance, float scale_factor) {
+		try {
+			instance->setScaleFactor(scale_factor);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_xfeatures2d_TBMR_getScaleFactor_const(const cv::xfeatures2d::TBMR* instance) {
+		try {
+			float ret = instance->getScaleFactor();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_xfeatures2d_TBMR_setNScales_int(cv::xfeatures2d::TBMR* instance, int n_scales) {
+		try {
+			instance->setNScales(n_scales);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_xfeatures2d_TBMR_getNScales_const(const cv::xfeatures2d::TBMR* instance) {
+		try {
+			int ret = instance->getNScales();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
 	Result<cv::Ptr<cv::xfeatures2d::VGG>*> cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(int desc, float isigma, bool img_normalize, bool use_scale_orientation, float scale_factor, bool dsc_normalize) {

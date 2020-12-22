@@ -1,7 +1,7 @@
 template struct Result<bool>;
 template struct Result<const cv::Affine3<float>>;
-template struct Result<const cv::dynafu::Params*>;
 template struct Result<const cv::kinfu::Params*>;
+template struct Result<const cv::large_kinfu::Params*>;
 template struct Result<const float>;
 template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
 template struct Result<const std::vector<cv::linemod::Template>*>;
@@ -10,10 +10,12 @@ template struct Result<cv::Mat*>;
 template struct Result<cv::Matx<float, 3, 3>>;
 template struct Result<cv::Point3_<float>>;
 template struct Result<cv::Ptr<cv::dynafu::DynaFu>*>;
-template struct Result<cv::Ptr<cv::dynafu::Params>*>;
 template struct Result<cv::Ptr<cv::kinfu::KinFu>*>;
 template struct Result<cv::Ptr<cv::kinfu::Params>*>;
+template struct Result<cv::Ptr<cv::kinfu::VolumeParams>*>;
 template struct Result<cv::Ptr<cv::kinfu::Volume>*>;
+template struct Result<cv::Ptr<cv::large_kinfu::LargeKinfu>*>;
+template struct Result<cv::Ptr<cv::large_kinfu::Params>*>;
 template struct Result<cv::Ptr<cv::linemod::ColorGradient>*>;
 template struct Result<cv::Ptr<cv::linemod::DepthNormal>*>;
 template struct Result<cv::Ptr<cv::linemod::Detector>*>;
@@ -36,6 +38,7 @@ template struct Result<cv::kinfu::Intr>;
 template struct Result<cv::kinfu::Intr::Projector>;
 template struct Result<cv::kinfu::Intr::Reprojector>;
 template struct Result<cv::kinfu::Params*>;
+template struct Result<cv::kinfu::VolumeParams*>;
 template struct Result<cv::kinfu::VolumeType>;
 template struct Result<cv::linemod::ColorGradient*>;
 template struct Result<cv::linemod::DepthNormal*>;
@@ -90,24 +93,6 @@ extern "C" {
 	}
 
 	cv::dynafu::DynaFu* cv_PtrOfDynafu_DynaFu_get_inner_ptr_mut(cv::Ptr<cv::dynafu::DynaFu>* instance) {
-		return instance->get();
-	}
-}
-
-extern "C" {
-	cv::Ptr<cv::dynafu::Params>* cv_PtrOfDynafu_Params_new(cv::dynafu::Params* val) {
-		return new cv::Ptr<cv::dynafu::Params>(val);
-	}
-	
-	void cv_PtrOfDynafu_Params_delete(cv::Ptr<cv::dynafu::Params>* instance) {
-		delete instance;
-	}
-
-	const cv::dynafu::Params* cv_PtrOfDynafu_Params_get_inner_ptr(const cv::Ptr<cv::dynafu::Params>* instance) {
-		return instance->get();
-	}
-
-	cv::dynafu::Params* cv_PtrOfDynafu_Params_get_inner_ptr_mut(cv::Ptr<cv::dynafu::Params>* instance) {
 		return instance->get();
 	}
 }
@@ -190,6 +175,38 @@ extern "C" {
 	}
 
 	cv::kinfu::Volume* cv_PtrOfKinfu_Volume_get_inner_ptr_mut(cv::Ptr<cv::kinfu::Volume>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::kinfu::VolumeParams>* cv_PtrOfKinfu_VolumeParams_new(cv::kinfu::VolumeParams* val) {
+		return new cv::Ptr<cv::kinfu::VolumeParams>(val);
+	}
+	
+	void cv_PtrOfKinfu_VolumeParams_delete(cv::Ptr<cv::kinfu::VolumeParams>* instance) {
+		delete instance;
+	}
+
+	const cv::kinfu::VolumeParams* cv_PtrOfKinfu_VolumeParams_get_inner_ptr(const cv::Ptr<cv::kinfu::VolumeParams>* instance) {
+		return instance->get();
+	}
+
+	cv::kinfu::VolumeParams* cv_PtrOfKinfu_VolumeParams_get_inner_ptr_mut(cv::Ptr<cv::kinfu::VolumeParams>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfLargeKinfu_delete(cv::Ptr<cv::large_kinfu::LargeKinfu>* instance) {
+		delete instance;
+	}
+
+	const cv::large_kinfu::LargeKinfu* cv_PtrOfLargeKinfu_get_inner_ptr(const cv::Ptr<cv::large_kinfu::LargeKinfu>* instance) {
+		return instance->get();
+	}
+
+	cv::large_kinfu::LargeKinfu* cv_PtrOfLargeKinfu_get_inner_ptr_mut(cv::Ptr<cv::large_kinfu::LargeKinfu>* instance) {
 		return instance->get();
 	}
 }
@@ -304,6 +321,24 @@ extern "C" {
 	}
 
 	cv::rgbd::OdometryFrame* cv_PtrOfOdometryFrame_get_inner_ptr_mut(cv::Ptr<cv::rgbd::OdometryFrame>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	cv::Ptr<cv::large_kinfu::Params>* cv_PtrOfParams_new(cv::large_kinfu::Params* val) {
+		return new cv::Ptr<cv::large_kinfu::Params>(val);
+	}
+	
+	void cv_PtrOfParams_delete(cv::Ptr<cv::large_kinfu::Params>* instance) {
+		delete instance;
+	}
+
+	const cv::large_kinfu::Params* cv_PtrOfParams_get_inner_ptr(const cv::Ptr<cv::large_kinfu::Params>* instance) {
+		return instance->get();
+	}
+
+	cv::large_kinfu::Params* cv_PtrOfParams_get_inner_ptr_mut(cv::Ptr<cv::large_kinfu::Params>* instance) {
 		return instance->get();
 	}
 }

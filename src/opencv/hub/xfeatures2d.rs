@@ -24,7 +24,7 @@
 //!    - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::SURF, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDesc, super::PCTSignatures, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2D, super::SURF_CUDATrait };
+	pub use { super::SURF, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::BEBLIDTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDesc, super::PCTSignatures, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2D, super::TBMR, super::SURF_CUDATrait };
 }
 
 pub const BoostDesc_BGM: i32 = 100;
@@ -38,6 +38,17 @@ pub const VGG_VGG_120: i32 = 100;
 pub const VGG_VGG_48: i32 = 103;
 pub const VGG_VGG_64: i32 = 102;
 pub const VGG_VGG_80: i32 = 101;
+///  Descriptor number of bits, each bit is a boosting weak-learner.
+/// The user can choose between 512 or 256 bits.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum BEBLID_BeblidSize {
+	SIZE_512_BITS = 100,
+	SIZE_256_BITS = 101,
+}
+
+opencv_type_enum! { crate::xfeatures2d::BEBLID_BeblidSize }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DAISY_NormalizationType {
@@ -520,6 +531,108 @@ impl dyn AffineFeature2D + '_ {
 	}
 	
 }
+/// Class implementing BEBLID (Boosted Efficient Binary Local Image Descriptor),
+///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
+/// 
+/// BEBLID \cite Suarez2020BEBLID is a efficient binary descriptor learned with boosting.
+/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
+/// In several benchmarks it has proved to largely improve other binary descriptors like ORB or
+/// BRISK with the same efficiency. BEBLID describes using the difference of mean gray values in
+/// different regions of the image around the KeyPoint, the descriptor is specifically optimized for
+/// image matching and patch retrieval addressing the asymmetries of these problems.
+/// 
+/// If you find this code useful, please add a reference to the following paper:
+/// <BLOCKQUOTE> Iago Suárez, Ghesn Sfeir, José M. Buenaposada, and Luis Baumela.
+/// BEBLID: Boosted efficient binary local image descriptor.
+/// Pattern Recognition Letters, 133:366–372, 2020. </BLOCKQUOTE>
+/// 
+/// The descriptor was trained using 1 million of randomly sampled pairs of patches
+/// (20% positives and 80% negatives) from the Liberty split of the UBC datasets
+/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
+/// You can check in the [AKAZE example](https://raw.githubusercontent.com/opencv/opencv/master/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
+/// how well BEBLID works. Detecting 10000 keypoints with ORB and describing with BEBLID obtains
+/// 561 inliers (75%) whereas describing with ORB obtains only 493 inliers (63%).
+pub trait BEBLIDTrait: crate::features2d::Feature2DTrait {
+	fn as_raw_BEBLID(&self) -> *const c_void;
+	fn as_raw_mut_BEBLID(&mut self) -> *mut c_void;
+
+}
+
+/// Class implementing BEBLID (Boosted Efficient Binary Local Image Descriptor),
+///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
+/// 
+/// BEBLID \cite Suarez2020BEBLID is a efficient binary descriptor learned with boosting.
+/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
+/// In several benchmarks it has proved to largely improve other binary descriptors like ORB or
+/// BRISK with the same efficiency. BEBLID describes using the difference of mean gray values in
+/// different regions of the image around the KeyPoint, the descriptor is specifically optimized for
+/// image matching and patch retrieval addressing the asymmetries of these problems.
+/// 
+/// If you find this code useful, please add a reference to the following paper:
+/// <BLOCKQUOTE> Iago Suárez, Ghesn Sfeir, José M. Buenaposada, and Luis Baumela.
+/// BEBLID: Boosted efficient binary local image descriptor.
+/// Pattern Recognition Letters, 133:366–372, 2020. </BLOCKQUOTE>
+/// 
+/// The descriptor was trained using 1 million of randomly sampled pairs of patches
+/// (20% positives and 80% negatives) from the Liberty split of the UBC datasets
+/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
+/// You can check in the [AKAZE example](https://raw.githubusercontent.com/opencv/opencv/master/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
+/// how well BEBLID works. Detecting 10000 keypoints with ORB and describing with BEBLID obtains
+/// 561 inliers (75%) whereas describing with ORB obtains only 493 inliers (63%).
+pub struct BEBLID {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { BEBLID }
+
+impl Drop for BEBLID {
+	fn drop(&mut self) {
+		extern "C" { fn cv_BEBLID_delete(instance: *mut c_void); }
+		unsafe { cv_BEBLID_delete(self.as_raw_mut_BEBLID()) };
+	}
+}
+
+impl BEBLID {
+	#[inline] pub fn as_raw_BEBLID(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_BEBLID(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for BEBLID {}
+
+impl core::AlgorithmTrait for BEBLID {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::xfeatures2d::BEBLIDTrait for BEBLID {
+	#[inline] fn as_raw_BEBLID(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BEBLID(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::features2d::Feature2DTrait for BEBLID {
+	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl BEBLID {
+	/// Creates the BEBLID descriptor.
+	/// ## Parameters
+	/// * scale_factor: Adjust the sampling window around detected keypoints:
+	/// - <b> 1.00f </b> should be the scale for ORB keypoints
+	/// - <b> 6.75f </b> should be the scale for SIFT detected keypoints
+	/// - <b> 6.25f </b> is default and fits for KAZE, SURF detected keypoints
+	/// - <b> 5.00f </b> should be the scale for AKAZE, MSD, AGAST, FAST, BRISK keypoints
+	/// * n_bits: Determine the number of bits in the descriptor. Should be either
+	///  BEBLID::SIZE_512_BITS or BEBLID::SIZE_256_BITS.
+	/// 
+	/// ## C++ default parameters
+	/// * n_bits: BEBLID::SIZE_512_BITS
+	pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr::<crate::xfeatures2d::BEBLID>> {
+		unsafe { sys::cv_xfeatures2d_BEBLID_create_float_int(scale_factor, n_bits) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(r) } )
+	}
+	
+}
+
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
 /// [Trzcinski13a](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 /// 
@@ -1824,6 +1937,71 @@ impl StarDetector {
 	
 }
 
+/// Class implementing the Tree Based Morse Regions (TBMR) as described in
+/// [Najman2014](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Najman2014) extended with scaled extraction ability.
+/// 
+/// ## Parameters
+/// * min_area: prune areas smaller than minArea
+/// * max_area_relative: prune areas bigger than maxArea = max_area_relative *
+/// input_image_size
+/// * scale_factor: scale factor for scaled extraction.
+/// * n_scales: number of applications of the scale factor (octaves).
+/// 
+/// 
+/// Note: This algorithm is based on Component Tree (Min/Max) as well as MSER but
+/// uses a Morse-theory approach to extract features.
+/// 
+/// Features are ellipses (similar to MSER, however a MSER feature can never be a
+/// TBMR feature and vice versa).
+pub trait TBMR: crate::xfeatures2d::AffineFeature2D {
+	fn as_raw_TBMR(&self) -> *const c_void;
+	fn as_raw_mut_TBMR(&mut self) -> *mut c_void;
+
+	fn set_min_area(&mut self, min_area: i32) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_TBMR_setMinArea_int(self.as_raw_mut_TBMR(), min_area) }.into_result()
+	}
+	
+	fn get_min_area(&self) -> Result<i32> {
+		unsafe { sys::cv_xfeatures2d_TBMR_getMinArea_const(self.as_raw_TBMR()) }.into_result()
+	}
+	
+	fn set_max_area_relative(&mut self, max_area: f32) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_TBMR_setMaxAreaRelative_float(self.as_raw_mut_TBMR(), max_area) }.into_result()
+	}
+	
+	fn get_max_area_relative(&self) -> Result<f32> {
+		unsafe { sys::cv_xfeatures2d_TBMR_getMaxAreaRelative_const(self.as_raw_TBMR()) }.into_result()
+	}
+	
+	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_TBMR_setScaleFactor_float(self.as_raw_mut_TBMR(), scale_factor) }.into_result()
+	}
+	
+	fn get_scale_factor(&self) -> Result<f32> {
+		unsafe { sys::cv_xfeatures2d_TBMR_getScaleFactor_const(self.as_raw_TBMR()) }.into_result()
+	}
+	
+	fn set_n_scales(&mut self, n_scales: i32) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_TBMR_setNScales_int(self.as_raw_mut_TBMR(), n_scales) }.into_result()
+	}
+	
+	fn get_n_scales(&self) -> Result<i32> {
+		unsafe { sys::cv_xfeatures2d_TBMR_getNScales_const(self.as_raw_TBMR()) }.into_result()
+	}
+	
+}
+
+impl dyn TBMR + '_ {
+	/// ## C++ default parameters
+	/// * min_area: 60
+	/// * max_area_relative: 0.01f
+	/// * scale_factor: 1.25f
+	/// * n_scales: -1
+	pub fn create(min_area: i32, max_area_relative: f32, scale_factor: f32, n_scales: i32) -> Result<core::Ptr::<dyn crate::xfeatures2d::TBMR>> {
+		unsafe { sys::cv_xfeatures2d_TBMR_create_int_float_float_int(min_area, max_area_relative, scale_factor, n_scales) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::TBMR>::opencv_from_extern(r) } )
+	}
+	
+}
 /// Class implementing VGG (Oxford Visual Geometry Group) descriptor trained end to end
 /// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Simonyan14).
 /// 

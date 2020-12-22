@@ -261,6 +261,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
+	Result_void cv_dnn_releaseHDDLPlugin() {
+		try {
+			cv::dnn::releaseHDDLPlugin();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_dnn_resetMyriadDevice() {
 		try {
 			cv::dnn::resetMyriadDevice();
@@ -854,6 +861,27 @@ extern "C" {
 			cv::dnn::DetectionModel* ret = new cv::dnn::DetectionModel(*network);
 			return Ok<cv::dnn::DetectionModel*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DetectionModel*>))
+	}
+	
+	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_DetectionModel() {
+		try {
+			cv::dnn::DetectionModel* ret = new cv::dnn::DetectionModel();
+			return Ok<cv::dnn::DetectionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DetectionModel*>))
+	}
+	
+	Result<cv::dnn::DetectionModel*> cv_dnn_DetectionModel_setNmsAcrossClasses_bool(cv::dnn::DetectionModel* instance, bool value) {
+		try {
+			cv::dnn::DetectionModel ret = instance->setNmsAcrossClasses(value);
+			return Ok(new cv::dnn::DetectionModel(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::DetectionModel*>))
+	}
+	
+	Result<bool> cv_dnn_DetectionModel_getNmsAcrossClasses(cv::dnn::DetectionModel* instance) {
+		try {
+			bool ret = instance->getNmsAcrossClasses();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
 	Result_void cv_dnn_DetectionModel_detect_const__InputArrayR_vector_int_R_vector_float_R_vector_Rect_R_float_float(cv::dnn::DetectionModel* instance, const cv::_InputArray* frame, std::vector<int>* classIds, std::vector<float>* confidences, std::vector<cv::Rect>* boxes, float confThreshold, float nmsThreshold) {
@@ -1526,6 +1554,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int64_t>))
 	}
 	
+	Result<bool> cv_dnn_Layer_updateMemoryShapes_const_vector_MatShape_R(cv::dnn::Layer* instance, const std::vector<cv::dnn::MatShape>* inputs) {
+		try {
+			bool ret = instance->updateMemoryShapes(*inputs);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	Result<cv::dnn::Layer*> cv_dnn_Layer_Layer() {
 		try {
 			cv::dnn::Layer* ret = new cv::dnn::Layer();
@@ -1737,6 +1772,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
 	}
 	
+	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_ModelR(const cv::dnn::Model* unnamed) {
+		try {
+			cv::dnn::Model* ret = new cv::dnn::Model(*unnamed);
+			return Ok<cv::dnn::Model*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
+	}
+	
+	Result<cv::dnn::Model*> cv_dnn_Model_Model_ModelR(cv::dnn::Model* unnamed) {
+		try {
+			cv::dnn::Model* ret = new cv::dnn::Model(*unnamed);
+			return Ok<cv::dnn::Model*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
+	}
+	
 	Result<cv::dnn::Model*> cv_dnn_Model_Model_const_StringR_const_StringR(const char* model, const char* config) {
 		try {
 			cv::dnn::Model* ret = new cv::dnn::Model(std::string(model), std::string(config));
@@ -1800,11 +1849,39 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_Model_predict_const__InputArrayR_const__OutputArrayR(cv::dnn::Model* instance, const cv::_InputArray* frame, const cv::_OutputArray* outs) {
+	Result_void cv_dnn_Model_predict_const_const__InputArrayR_const__OutputArrayR(const cv::dnn::Model* instance, const cv::_InputArray* frame, const cv::_OutputArray* outs) {
 		try {
 			instance->predict(*frame, *outs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::dnn::Model*> cv_dnn_Model_setPreferableBackend_Backend(cv::dnn::Model* instance, cv::dnn::Backend backendId) {
+		try {
+			cv::dnn::Model ret = instance->setPreferableBackend(backendId);
+			return Ok(new cv::dnn::Model(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
+	}
+	
+	Result<cv::dnn::Model*> cv_dnn_Model_setPreferableTarget_Target(cv::dnn::Model* instance, cv::dnn::Target targetId) {
+		try {
+			cv::dnn::Model ret = instance->setPreferableTarget(targetId);
+			return Ok(new cv::dnn::Model(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Model*>))
+	}
+	
+	Result<cv::dnn::Net*> cv_dnn_Model_getNetwork__const(const cv::dnn::Model* instance) {
+		try {
+			cv::dnn::Net ret = instance->getNetwork_();
+			return Ok(new cv::dnn::Net(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
+	}
+	
+	Result<cv::dnn::Net*> cv_dnn_Model_getNetwork_(cv::dnn::Model* instance) {
+		try {
+			cv::dnn::Net ret = instance->getNetwork_();
+			return Ok(new cv::dnn::Net(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::Net*>))
 	}
 	
 	void cv_Net_delete(cv::dnn::Net* instance) {
@@ -2284,104 +2361,6 @@ extern "C" {
 	Result_void cv_dnn_PoolingLayer_setPropPads_end_vector_size_t_(cv::dnn::PoolingLayer* instance, std::vector<size_t>* val) {
 		try {
 			instance->pads_end = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropKernel_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->kernel;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropKernel_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->kernel = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropStride_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->stride;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropStride_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->stride = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<cv::Size> cv_dnn_PoolingLayer_getPropPad_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			cv::Size ret = instance->pad;
-			return Ok<cv::Size>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_Size(cv::dnn::PoolingLayer* instance, cv::Size* val) {
-		try {
-			instance->pad = *val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_l_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_l;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_l_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_l = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_t_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_t;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_t_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_t = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_r_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_r;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_r_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_r = val;
-			return Ok();
-		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
-	}
-	
-	Result<int> cv_dnn_PoolingLayer_getPropPad_b_const(const cv::dnn::PoolingLayer* instance) {
-		try {
-			int ret = instance->pad_b;
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result_void cv_dnn_PoolingLayer_setPropPad_b_int(cv::dnn::PoolingLayer* instance, int val) {
-		try {
-			instance->pad_b = val;
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
@@ -2965,6 +2944,235 @@ extern "C" {
 			cv::Ptr<cv::dnn::TanHLayer> ret = cv::dnn::TanHLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::TanHLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::TanHLayer>*>))
+	}
+	
+	void cv_TextDetectionModel_delete(cv::dnn::TextDetectionModel* instance) {
+		delete instance;
+	}
+	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections, std::vector<float>* confidences) {
+		try {
+			instance->detect(*frame, *detections, *confidences);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections) {
+		try {
+			instance->detect(*frame, *detections);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R_vector_float_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections, std::vector<float>* confidences) {
+		try {
+			instance->detectTextRectangles(*frame, *detections, *confidences);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections) {
+		try {
+			instance->detectTextRectangles(*frame, *detections);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_TextDetectionModel_DB_delete(cv::dnn::TextDetectionModel_DB* instance) {
+		delete instance;
+	}
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB() {
+		try {
+			cv::dnn::TextDetectionModel_DB* ret = new cv::dnn::TextDetectionModel_DB();
+			return Ok<cv::dnn::TextDetectionModel_DB*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_NetR(const cv::dnn::Net* network) {
+		try {
+			cv::dnn::TextDetectionModel_DB* ret = new cv::dnn::TextDetectionModel_DB(*network);
+			return Ok<cv::dnn::TextDetectionModel_DB*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_stringR_const_stringR(const char* model, const char* config) {
+		try {
+			cv::dnn::TextDetectionModel_DB* ret = new cv::dnn::TextDetectionModel_DB(std::string(model), std::string(config));
+			return Ok<cv::dnn::TextDetectionModel_DB*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_setBinaryThreshold_float(cv::dnn::TextDetectionModel_DB* instance, float binaryThreshold) {
+		try {
+			cv::dnn::TextDetectionModel_DB ret = instance->setBinaryThreshold(binaryThreshold);
+			return Ok(new cv::dnn::TextDetectionModel_DB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<float> cv_dnn_TextDetectionModel_DB_getBinaryThreshold_const(const cv::dnn::TextDetectionModel_DB* instance) {
+		try {
+			float ret = instance->getBinaryThreshold();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_setPolygonThreshold_float(cv::dnn::TextDetectionModel_DB* instance, float polygonThreshold) {
+		try {
+			cv::dnn::TextDetectionModel_DB ret = instance->setPolygonThreshold(polygonThreshold);
+			return Ok(new cv::dnn::TextDetectionModel_DB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<float> cv_dnn_TextDetectionModel_DB_getPolygonThreshold_const(const cv::dnn::TextDetectionModel_DB* instance) {
+		try {
+			float ret = instance->getPolygonThreshold();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_setUnclipRatio_double(cv::dnn::TextDetectionModel_DB* instance, double unclipRatio) {
+		try {
+			cv::dnn::TextDetectionModel_DB ret = instance->setUnclipRatio(unclipRatio);
+			return Ok(new cv::dnn::TextDetectionModel_DB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<double> cv_dnn_TextDetectionModel_DB_getUnclipRatio_const(const cv::dnn::TextDetectionModel_DB* instance) {
+		try {
+			double ret = instance->getUnclipRatio();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_DB*> cv_dnn_TextDetectionModel_DB_setMaxCandidates_int(cv::dnn::TextDetectionModel_DB* instance, int maxCandidates) {
+		try {
+			cv::dnn::TextDetectionModel_DB ret = instance->setMaxCandidates(maxCandidates);
+			return Ok(new cv::dnn::TextDetectionModel_DB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_DB*>))
+	}
+	
+	Result<int> cv_dnn_TextDetectionModel_DB_getMaxCandidates_const(const cv::dnn::TextDetectionModel_DB* instance) {
+		try {
+			int ret = instance->getMaxCandidates();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	void cv_TextDetectionModel_EAST_delete(cv::dnn::TextDetectionModel_EAST* instance) {
+		delete instance;
+	}
+	Result<cv::dnn::TextDetectionModel_EAST*> cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST() {
+		try {
+			cv::dnn::TextDetectionModel_EAST* ret = new cv::dnn::TextDetectionModel_EAST();
+			return Ok<cv::dnn::TextDetectionModel_EAST*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_EAST*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_EAST*> cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_NetR(const cv::dnn::Net* network) {
+		try {
+			cv::dnn::TextDetectionModel_EAST* ret = new cv::dnn::TextDetectionModel_EAST(*network);
+			return Ok<cv::dnn::TextDetectionModel_EAST*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_EAST*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_EAST*> cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_stringR_const_stringR(const char* model, const char* config) {
+		try {
+			cv::dnn::TextDetectionModel_EAST* ret = new cv::dnn::TextDetectionModel_EAST(std::string(model), std::string(config));
+			return Ok<cv::dnn::TextDetectionModel_EAST*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_EAST*>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_EAST*> cv_dnn_TextDetectionModel_EAST_setConfidenceThreshold_float(cv::dnn::TextDetectionModel_EAST* instance, float confThreshold) {
+		try {
+			cv::dnn::TextDetectionModel_EAST ret = instance->setConfidenceThreshold(confThreshold);
+			return Ok(new cv::dnn::TextDetectionModel_EAST(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_EAST*>))
+	}
+	
+	Result<float> cv_dnn_TextDetectionModel_EAST_getConfidenceThreshold_const(const cv::dnn::TextDetectionModel_EAST* instance) {
+		try {
+			float ret = instance->getConfidenceThreshold();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result<cv::dnn::TextDetectionModel_EAST*> cv_dnn_TextDetectionModel_EAST_setNMSThreshold_float(cv::dnn::TextDetectionModel_EAST* instance, float nmsThreshold) {
+		try {
+			cv::dnn::TextDetectionModel_EAST ret = instance->setNMSThreshold(nmsThreshold);
+			return Ok(new cv::dnn::TextDetectionModel_EAST(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextDetectionModel_EAST*>))
+	}
+	
+	Result<float> cv_dnn_TextDetectionModel_EAST_getNMSThreshold_const(const cv::dnn::TextDetectionModel_EAST* instance) {
+		try {
+			float ret = instance->getNMSThreshold();
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	void cv_TextRecognitionModel_delete(cv::dnn::TextRecognitionModel* instance) {
+		delete instance;
+	}
+	Result<cv::dnn::TextRecognitionModel*> cv_dnn_TextRecognitionModel_TextRecognitionModel() {
+		try {
+			cv::dnn::TextRecognitionModel* ret = new cv::dnn::TextRecognitionModel();
+			return Ok<cv::dnn::TextRecognitionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextRecognitionModel*>))
+	}
+	
+	Result<cv::dnn::TextRecognitionModel*> cv_dnn_TextRecognitionModel_TextRecognitionModel_const_NetR(const cv::dnn::Net* network) {
+		try {
+			cv::dnn::TextRecognitionModel* ret = new cv::dnn::TextRecognitionModel(*network);
+			return Ok<cv::dnn::TextRecognitionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextRecognitionModel*>))
+	}
+	
+	Result<cv::dnn::TextRecognitionModel*> cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR_const_stringR(const char* model, const char* config) {
+		try {
+			cv::dnn::TextRecognitionModel* ret = new cv::dnn::TextRecognitionModel(std::string(model), std::string(config));
+			return Ok<cv::dnn::TextRecognitionModel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextRecognitionModel*>))
+	}
+	
+	Result<cv::dnn::TextRecognitionModel*> cv_dnn_TextRecognitionModel_setDecodeType_const_stringR(cv::dnn::TextRecognitionModel* instance, const char* decodeType) {
+		try {
+			cv::dnn::TextRecognitionModel ret = instance->setDecodeType(std::string(decodeType));
+			return Ok(new cv::dnn::TextRecognitionModel(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextRecognitionModel*>))
+	}
+	
+	Result<void*> cv_dnn_TextRecognitionModel_getDecodeType_const(const cv::dnn::TextRecognitionModel* instance) {
+		try {
+			const std::string ret = instance->getDecodeType();
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<cv::dnn::TextRecognitionModel*> cv_dnn_TextRecognitionModel_setVocabulary_const_vector_string_R(cv::dnn::TextRecognitionModel* instance, const std::vector<std::string>* vocabulary) {
+		try {
+			cv::dnn::TextRecognitionModel ret = instance->setVocabulary(*vocabulary);
+			return Ok(new cv::dnn::TextRecognitionModel(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::TextRecognitionModel*>))
+	}
+	
+	Result<const std::vector<std::string>*> cv_dnn_TextRecognitionModel_getVocabulary_const(const cv::dnn::TextRecognitionModel* instance) {
+		try {
+			const std::vector<std::string> ret = instance->getVocabulary();
+			return Ok(new const std::vector<std::string>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<const std::vector<std::string>*>))
+	}
+	
+	Result<void*> cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR(const cv::dnn::TextRecognitionModel* instance, const cv::_InputArray* frame) {
+		try {
+			std::string ret = instance->recognize(*frame);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR_const__InputArrayR_vector_string_R(const cv::dnn::TextRecognitionModel* instance, const cv::_InputArray* frame, const cv::_InputArray* roiRects, std::vector<std::string>* results) {
+		try {
+			instance->recognize(*frame, *roiRects, *results);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	void cv__Range_delete(cv::dnn::_Range* instance) {

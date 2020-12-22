@@ -13,6 +13,7 @@ pub mod prelude {
 	pub use { super::EncoderParamsTrait, super::EncoderCallBack, super::VideoWriter, super::VideoReader, super::RawVideoSource };
 }
 
+pub const AV1: i32 = 11;
 pub const H264: i32 = 4;
 pub const H264_MVC: i32 = 7;
 pub const H264_SVC: i32 = 6;
@@ -22,7 +23,7 @@ pub const MPEG1: i32 = 0;
 pub const MPEG2: i32 = 1;
 pub const MPEG4: i32 = 2;
 pub const Monochrome: i32 = 0;
-pub const NumCodecs: i32 = 11;
+pub const NumCodecs: i32 = 12;
 pub const NumFormats: i32 = 4;
 pub const SF_BGR: i32 = 5;
 pub const SF_GRAY: i32 = 5;
@@ -75,7 +76,8 @@ pub enum Codec {
 	HEVC = 8,
 	VP8 = 9,
 	VP9 = 10,
-	NumCodecs = 11,
+	AV1 = 11,
+	NumCodecs = 12,
 	/// Y,U,V (4:2:0)
 	Uncompressed_YUV420 = 1230591318,
 	/// Y,V,U (4:2:0)

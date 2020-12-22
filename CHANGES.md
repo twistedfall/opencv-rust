@@ -1,3 +1,11 @@
+* 0.47.0
+  * Fix building with OpenCV 4.5.1 and 3.4.15
+  * Due to the code adjustments, some `VectorOf...` types are no longer generated (e.g. `VectorOfPoint3i`)
+  * The documentation for `tracking` module is now a copy of `imgproc`, which is a bug
+
+* 0.46.3
+  * Specify minimum required vcpkg version
+
 * 0.46.2
   * Bring back deprecated cmake find-package discovery as a fallback, it's still useful in [some cases](https://github.com/twistedfall/opencv-rust/issues/177)
 

@@ -367,10 +367,10 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &str = "4.5.0";
+pub const CV_VERSION: &str = "4.5.1";
 pub const CV_VERSION_MAJOR: i32 = 4;
 pub const CV_VERSION_MINOR: i32 = 5;
-pub const CV_VERSION_REVISION: i32 = 0;
+pub const CV_VERSION_REVISION: i32 = 1;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -6020,6 +6020,11 @@ pub fn dump_size_t(argument: size_t) -> Result<String> {
 	unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
+pub fn dump_string(argument: &str) -> Result<String> {
+	extern_container_arg!(argument);
+	unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 pub fn get_thread_id() -> Result<i32> {
 	unsafe { sys::cv_utils_getThreadID() }.into_result()
 }
@@ -7701,8 +7706,8 @@ pub trait FileStorageTrait {
 	
 	/// Simplified writing API to use with bindings.
 	/// ## Parameters
-	/// * name: Name of the written object
-	/// * val: Value of the written object
+	/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+	/// * val: Value of the written object.
 	fn write_i32(&mut self, name: &str, val: i32) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_FileStorage_write_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val) }.into_result()
@@ -7710,8 +7715,8 @@ pub trait FileStorageTrait {
 	
 	/// Simplified writing API to use with bindings.
 	/// ## Parameters
-	/// * name: Name of the written object
-	/// * val: Value of the written object
+	/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+	/// * val: Value of the written object.
 	/// 
 	/// ## Overloaded parameters
 	fn write_f64(&mut self, name: &str, val: f64) -> Result<()> {
@@ -7721,8 +7726,8 @@ pub trait FileStorageTrait {
 	
 	/// Simplified writing API to use with bindings.
 	/// ## Parameters
-	/// * name: Name of the written object
-	/// * val: Value of the written object
+	/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+	/// * val: Value of the written object.
 	/// 
 	/// ## Overloaded parameters
 	fn write_str(&mut self, name: &str, val: &str) -> Result<()> {
@@ -7733,8 +7738,8 @@ pub trait FileStorageTrait {
 	
 	/// Simplified writing API to use with bindings.
 	/// ## Parameters
-	/// * name: Name of the written object
-	/// * val: Value of the written object
+	/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+	/// * val: Value of the written object.
 	/// 
 	/// ## Overloaded parameters
 	fn write_mat(&mut self, name: &str, val: &core::Mat) -> Result<()> {
@@ -7744,8 +7749,8 @@ pub trait FileStorageTrait {
 	
 	/// Simplified writing API to use with bindings.
 	/// ## Parameters
-	/// * name: Name of the written object
-	/// * val: Value of the written object
+	/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+	/// * val: Value of the written object.
 	/// 
 	/// ## Overloaded parameters
 	fn write_str_vec(&mut self, name: &str, val: &core::Vector::<String>) -> Result<()> {
@@ -7784,9 +7789,10 @@ pub trait FileStorageTrait {
 	
 	/// Starts to write a nested structure (sequence or a mapping).
 	/// ## Parameters
-	/// * name: name of the structure (if it's a member of parent mapping, otherwise it should be empty
+	/// * name: name of the structure. When writing to sequences (a.k.a. "arrays"), pass an empty string.
 	/// * flags: type of the structure (FileNode::MAP or FileNode::SEQ (both with optional FileNode::FLOW)).
-	/// * typeName: usually an empty string
+	/// * typeName: optional name of the type you store. The effect of setting this depends on the storage format.
+	/// I.e. if the format has a specification for storing type information, this parameter is used.
 	/// 
 	/// ## C++ default parameters
 	/// * type_name: String()
@@ -8320,11 +8326,16 @@ impl LDA {
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
 ///    ```ignore
-///        void process_video_frame(const unsigned char* pixels,
-///                                  int width, int height, int step)
+///        Mat process_video_frame(const unsigned char* pixels,
+///                                 int width, int height, int step)
 ///        {
-///            Mat img(height, width, CV_8UC3, pixels, step);
-///            GaussianBlur(img, img, Size(7,7), 1.5, 1.5);
+///            // wrap input buffer
+///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+/// 
+///            Mat result;
+///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+/// 
+///            return result;
 ///        }
 ///    ```
 /// 
@@ -10062,11 +10073,16 @@ pub trait MatTrait {
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
 ///    ```ignore
-///        void process_video_frame(const unsigned char* pixels,
-///                                  int width, int height, int step)
+///        Mat process_video_frame(const unsigned char* pixels,
+///                                 int width, int height, int step)
 ///        {
-///            Mat img(height, width, CV_8UC3, pixels, step);
-///            GaussianBlur(img, img, Size(7,7), 1.5, 1.5);
+///            // wrap input buffer
+///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+/// 
+///            Mat result;
+///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+/// 
+///            return result;
 ///        }
 ///    ```
 /// 
@@ -18401,12 +18417,13 @@ pub trait OpenCLExecutionContextTrait {
 		unsafe { sys::cv_ocl_OpenCLExecutionContext_getContext_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
 	}
 	
-	/// Get associated ocl::Device
+	/// Get the single default associated ocl::Device
 	fn get_device(&self) -> Result<core::Device> {
 		unsafe { sys::cv_ocl_OpenCLExecutionContext_getDevice_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
 	}
 	
-	/// Get associated ocl::Queue
+	/// Get the single ocl::Queue that is associated with the ocl::Context and
+	/// the single default ocl::Device
 	fn get_queue(&self) -> Result<core::Queue> {
 		unsafe { sys::cv_ocl_OpenCLExecutionContext_getQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
 	}
@@ -18620,8 +18637,17 @@ pub trait PlatformInfoTrait {
 		unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
+	/// See CL_PLATFORM_VERSION
 	fn version(&self) -> Result<String> {
 		unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	fn version_major(&self) -> Result<i32> {
+		unsafe { sys::cv_ocl_PlatformInfo_versionMajor_const(self.as_raw_PlatformInfo()) }.into_result()
+	}
+	
+	fn version_minor(&self) -> Result<i32> {
+		unsafe { sys::cv_ocl_PlatformInfo_versionMinor_const(self.as_raw_PlatformInfo()) }.into_result()
 	}
 	
 	fn device_number(&self) -> Result<i32> {

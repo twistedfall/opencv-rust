@@ -640,10 +640,10 @@ pub const CV_TYPE_NAME_SEQ: &str = "opencv-sequence";
 pub const CV_TYPE_NAME_SEQ_TREE: &str = "opencv-sequence-tree";
 pub const CV_TYPE_NAME_SPARSE_MAT: &str = "opencv-sparse-matrix";
 pub const CV_USRTYPE1: i32 = 7;
-pub const CV_VERSION: &str = "3.4.12";
+pub const CV_VERSION: &str = "3.4.13";
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 12;
+pub const CV_VERSION_REVISION: i32 = 13;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -6330,6 +6330,11 @@ pub fn dump_size_t(argument: size_t) -> Result<String> {
 	unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
+pub fn dump_string(argument: &str) -> Result<String> {
+	extern_container_arg!(argument);
+	unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 pub fn get_thread_id() -> Result<i32> {
 	unsafe { sys::cv_utils_getThreadID() }.into_result()
 }
@@ -8670,11 +8675,16 @@ impl LDA {
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
 ///    ```ignore
-///        void process_video_frame(const unsigned char* pixels,
-///                                  int width, int height, int step)
+///        Mat process_video_frame(const unsigned char* pixels,
+///                                 int width, int height, int step)
 ///        {
-///            Mat img(height, width, CV_8UC3, pixels, step);
-///            GaussianBlur(img, img, Size(7,7), 1.5, 1.5);
+///            // wrap input buffer
+///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+/// 
+///            Mat result;
+///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+/// 
+///            return result;
 ///        }
 ///    ```
 /// 
@@ -10417,11 +10427,16 @@ pub trait MatTrait {
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
 ///    ```ignore
-///        void process_video_frame(const unsigned char* pixels,
-///                                  int width, int height, int step)
+///        Mat process_video_frame(const unsigned char* pixels,
+///                                 int width, int height, int step)
 ///        {
-///            Mat img(height, width, CV_8UC3, pixels, step);
-///            GaussianBlur(img, img, Size(7,7), 1.5, 1.5);
+///            // wrap input buffer
+///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+/// 
+///            Mat result;
+///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+/// 
+///            return result;
 ///        }
 ///    ```
 /// 
@@ -18847,8 +18862,17 @@ pub trait PlatformInfoTrait {
 		unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
+	/// See CL_PLATFORM_VERSION
 	fn version(&self) -> Result<String> {
 		unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	fn version_major(&self) -> Result<i32> {
+		unsafe { sys::cv_ocl_PlatformInfo_versionMajor_const(self.as_raw_PlatformInfo()) }.into_result()
+	}
+	
+	fn version_minor(&self) -> Result<i32> {
+		unsafe { sys::cv_ocl_PlatformInfo_versionMinor_const(self.as_raw_PlatformInfo()) }.into_result()
 	}
 	
 	fn device_number(&self) -> Result<i32> {

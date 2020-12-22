@@ -7,13 +7,18 @@ template struct Result<cv::Ptr<cv::BackgroundSubtractorMOG2>*>;
 template struct Result<cv::Ptr<cv::DISOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::FarnebackOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*>;
+template struct Result<cv::Ptr<cv::TrackerGOTURN>*>;
+template struct Result<cv::Ptr<cv::TrackerMIL>*>;
 template struct Result<cv::Ptr<cv::VariationalRefinement>*>;
 template struct Result<cv::RotatedRect*>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::TermCriteria>;
+template struct Result<cv::TrackerGOTURN::Params*>;
+template struct Result<cv::TrackerMIL::Params>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
+template struct Result<void*>;
 extern "C" {
 	void cv_PtrOfBackgroundSubtractorKNN_delete(cv::Ptr<cv::BackgroundSubtractorKNN>* instance) {
 		delete instance;
@@ -108,6 +113,34 @@ extern "C" {
 	}
 
 	cv::SparsePyrLKOpticalFlow* cv_PtrOfSparsePyrLKOpticalFlow_get_inner_ptr_mut(cv::Ptr<cv::SparsePyrLKOpticalFlow>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfTrackerGOTURN_delete(cv::Ptr<cv::TrackerGOTURN>* instance) {
+		delete instance;
+	}
+
+	const cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr(const cv::Ptr<cv::TrackerGOTURN>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerGOTURN* cv_PtrOfTrackerGOTURN_get_inner_ptr_mut(cv::Ptr<cv::TrackerGOTURN>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfTrackerMIL_delete(cv::Ptr<cv::TrackerMIL>* instance) {
+		delete instance;
+	}
+
+	const cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr(const cv::Ptr<cv::TrackerMIL>* instance) {
+		return instance->get();
+	}
+
+	cv::TrackerMIL* cv_PtrOfTrackerMIL_get_inner_ptr_mut(cv::Ptr<cv::TrackerMIL>* instance) {
 		return instance->get();
 	}
 }

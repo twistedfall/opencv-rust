@@ -156,15 +156,6 @@ pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutput
 /// 
 /// Note: If the window with that name already exists, that window is returned. Otherwise, new window is
 /// created with the given name, and it is returned.
-/// 
-/// 
-/// Note: Window names are automatically prefixed by "Viz - " if it is not done by the user.
-///    ```ignore
-///    /// window and window_2 are the same windows.
-///    viz::Viz3d window   = viz::getWindowByName("myWindow");
-///    viz::Viz3d window_2 = viz::getWindowByName("Viz - myWindow");
-///    ```
-/// 
 pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
 	unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::viz::Viz3d::opencv_from_extern(r) } )

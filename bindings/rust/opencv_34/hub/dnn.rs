@@ -2602,6 +2602,10 @@ pub trait LayerTrait: core::AlgorithmTrait {
 		unsafe { sys::cv_dnn_Layer_getFLOPS_const_const_vector_MatShape_R_const_vector_MatShape_R(self.as_raw_Layer(), inputs.as_raw_VectorOfMatShape(), outputs.as_raw_VectorOfMatShape()) }.into_result()
 	}
 	
+	fn update_memory_shapes(&mut self, inputs: &core::Vector::<crate::dnn::MatShape>) -> Result<bool> {
+		unsafe { sys::cv_dnn_Layer_updateMemoryShapes_const_vector_MatShape_R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfMatShape()) }.into_result()
+	}
+	
 	fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
 		unsafe { sys::cv_dnn_Layer_setParamsFrom_const_LayerParamsR(self.as_raw_mut_Layer(), params.as_raw_LayerParams()) }.into_result()
 	}
@@ -3817,62 +3821,6 @@ pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 	
 	fn set_pads_end(&mut self, mut val: core::Vector::<size_t>) -> () {
 		unsafe { sys::cv_dnn_PoolingLayer_setPropPads_end_vector_size_t_(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) }.into_result().expect("Infallible function failed: set_pads_end")
-	}
-	
-	fn kernel(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropKernel_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: kernel")
-	}
-	
-	fn set_kernel(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropKernel_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_kernel")
-	}
-	
-	fn stride(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropStride_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: stride")
-	}
-	
-	fn set_stride(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropStride_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_stride")
-	}
-	
-	fn pad(&self) -> core::Size {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad")
-	}
-	
-	fn set_pad(&mut self, val: core::Size) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_pad")
-	}
-	
-	fn pad_l(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_l_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_l")
-	}
-	
-	fn set_pad_l(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_l_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_l")
-	}
-	
-	fn pad_t(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_t_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_t")
-	}
-	
-	fn set_pad_t(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_t_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_t")
-	}
-	
-	fn pad_r(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_r_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_r")
-	}
-	
-	fn set_pad_r(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_r_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_r")
-	}
-	
-	fn pad_b(&self) -> i32 {
-		unsafe { sys::cv_dnn_PoolingLayer_getPropPad_b_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: pad_b")
-	}
-	
-	fn set_pad_b(&mut self, val: i32) -> () {
-		unsafe { sys::cv_dnn_PoolingLayer_setPropPad_b_int(self.as_raw_mut_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_b")
 	}
 	
 	/// Flag is true if at least one of the axes is global pooled.
