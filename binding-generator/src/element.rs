@@ -286,7 +286,7 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {
 		if let Some(&parent) = module_comp.peek() {
-			if parent == "opencv2" {
+			if parent == "opencv2" || parent == "src_cpp" {
 				module = Some(cur);
 				break;
 			}

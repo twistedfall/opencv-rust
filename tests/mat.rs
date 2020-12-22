@@ -37,7 +37,6 @@ fn mat_create() -> Result<()> {
 	mat.release()?;
 	assert!(!mat.is_allocated());
 	assert_eq!(Size::new(0, 0), mat.size()?);
-	assert_eq!(2, mat.dims());
 	Ok(())
 }
 

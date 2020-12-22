@@ -22,9 +22,9 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.12
+          - opencv: 3.4.13
             features: opencv-34
-          - opencv: 4.5.0
+          - opencv: 4.5.1
             features: opencv-4
         exclude:
           - os:

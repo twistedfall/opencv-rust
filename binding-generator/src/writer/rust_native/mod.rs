@@ -21,7 +21,6 @@ use crate::{
 	Func,
 	GeneratorVisitor,
 	IteratorExt,
-	main_module_from_path,
 	module_from_path,
 	settings,
 	StrExt,
@@ -123,7 +122,6 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 
 	fn wants_file(&mut self, path: &Path) -> bool {
 		module_from_path(path).map_or(false, |m| m == self.module)
-			|| main_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {

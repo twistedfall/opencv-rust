@@ -6,7 +6,6 @@ use opencv::{
 		DMatch,
 		Point2d,
 		Point2f,
-		Point3i,
 		Scalar,
 		SparseMat_Hdr,
 		Vec4i,
@@ -23,12 +22,10 @@ use opencv::{
 		VectorOfMat,
 		VectorOfPoint2d,
 		VectorOfPoint2f,
-		VectorOfPoint3i,
 		VectorOfString,
 		VectorOfu8,
 		VectorOfVec4i,
 		VectorOfVectorOfPoint2f,
-		VectorOfVectorOfPoint3i,
 	}
 };
 
@@ -163,36 +160,36 @@ fn simple() -> Result<()> {
 #[test]
 fn vector_of_vector_simple_struct() -> Result<()> {
 	#[inline(never)]
-	fn make_vec() -> VectorOfVectorOfPoint3i {
-		let mut outer = VectorOfVectorOfPoint3i::new();
+	fn make_vec() -> VectorOfVectorOfPoint2f {
+		let mut outer = VectorOfVectorOfPoint2f::new();
 		outer.push({
-			let mut inner = VectorOfPoint3i::new();
-			inner.push(Point3i::new(1, 1, 1));
-			inner.push(Point3i::new(2, 2, 2));
-			inner.push(Point3i::new(3, 3, 3));
+			let mut inner = VectorOfPoint2f::new();
+			inner.push(Point2f::new(1., 1.));
+			inner.push(Point2f::new(2., 2.));
+			inner.push(Point2f::new(3., 3.));
 			inner
 		});
 		outer.push({
-			let mut inner = VectorOfPoint3i::new();
-			inner.push(Point3i::new(4, 4, 4));
-			inner.push(Point3i::new(5, 5, 5));
-			inner.push(Point3i::new(6, 6, 6));
+			let mut inner = VectorOfPoint2f::new();
+			inner.push(Point2f::new(4., 4.));
+			inner.push(Point2f::new(5., 5.));
+			inner.push(Point2f::new(6., 6.));
 			inner
 		});
 		outer.push({
-			let mut inner = VectorOfPoint3i::new();
-			inner.push(Point3i::new(7, 7, 7));
-			inner.push(Point3i::new(8, 8, 8));
-			inner.push(Point3i::new(9, 9, 9));
+			let mut inner = VectorOfPoint2f::new();
+			inner.push(Point2f::new(7., 7.));
+			inner.push(Point2f::new(8., 8.));
+			inner.push(Point2f::new(9., 9.));
 			inner
 		});
 		outer
 	}
 
 	let mut outer = make_vec();
-	assert_eq!(6, outer.get(1)?.get(2)?.x);
+	assert_eq!(6., outer.get(1)?.get(2)?.x);
 	outer.remove(1)?;
-	assert_eq!(9, outer.get(1)?.get(2)?.x);
+	assert_eq!(9., outer.get(1)?.get(2)?.x);
 	Ok(())
 }
 
@@ -493,12 +490,13 @@ fn to_vec() -> Result<()> {
 		assert_eq!(vec_new, src_vec);
 	}
 	{
-		let src_vec = vec![];
-		let vec = VectorOfVec4i::new();
+		let src_vec = vec![Vec4i::from([1, 2, 3, 4])];
+		let mut vec = VectorOfVec4i::new();
+		vec.push(Vec4i::from([1, 2, 3, 4]));
 		assert_eq!(vec.to_vec(), src_vec);
 		assert_eq!(Vec::from(vec), src_vec);
 		let vec_new: Vec<Vec4i> = VectorOfVec4i::new().into();
-		assert_eq!(vec_new, src_vec);
+		assert_eq!(vec_new, vec![]);
 	}
 	{
 		let mut vec = VectorOfMat::new();

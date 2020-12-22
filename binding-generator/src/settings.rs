@@ -367,6 +367,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	"cv_dnn_DictValue_DictValue_const_StringR" => "-", // effectively duplicate of cv_dnn_DictValue_DictValue_const_charX
 	"cv_dnn_Layer_finalize_const_vector_MatX_R_vector_Mat_R" => "-", // dup of cv_dnn_Layer_finalize_const_vector_Mat_X_vector_Mat_X
+	"cv_dnn_Model_operator_cv_dnn_Net_const" => "-", // fixme, should generate fine, it's a dup of get_network_() anyway
 
 	// ### face ###
 	"cv_face_FacemarkLBF_Params_getPropPupils" => "-", // fixme array of vectors
@@ -638,10 +639,15 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::dnn::DetectionModel" => ExportConfig::default(),
 	"cv::dnn::Model" => ExportConfig::default(),
 	"cv::dnn::Net" => ExportConfig::default(), // incorrectly marked as simple
+	"cv::dnn::TextDetectionModel_DB" => ExportConfig::default(), // incorrectly marked as simple
+	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::default(), // incorrectly marked as simple
+	"cv::dnn::TextRecognitionModel" => ExportConfig::default(), // incorrectly marked as simple
 	"cv::linemod::Match" => ExportConfig::default(), // contains String
 	"cv::linemod::Template" => ExportConfig::default(), // contains String
 	"cv::linemod::QuantizedPyramid" => ExportConfig::default(), // missing export in 3.2
 	"cv::ocl::Device" => ExportConfig::default(),
+	"cv::tracking::TrackerCSRT::Params" => ExportConfig::default(), // contains String, so no Copy
+	"cv::TrackerGOTURN::Params" => ExportConfig::default(), // contains String, so no Copy
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
