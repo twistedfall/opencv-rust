@@ -694,11 +694,16 @@ sub-matrices.
     -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
     a processing module for gstreamer, and so on). For example:
     @code
-        void process_video_frame(const unsigned char* pixels,
-                                 int width, int height, int step)
+        Mat process_video_frame(const unsigned char* pixels,
+                                int width, int height, int step)
         {
-            Mat img(height, width, CV_8UC3, pixels, step);
-            GaussianBlur(img, img, Size(7,7), 1.5, 1.5);
+            // wrap input buffer
+            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+
+            Mat result;
+            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+
+            return result;
         }
     @endcode
     -# Quickly initialize small matrices and/or get a super-fast element access.
@@ -2397,19 +2402,10 @@ public:
     UMat(const UMat& m, const Rect& roi);
     UMat(const UMat& m, const Range* ranges);
     UMat(const UMat& m, const std::vector<Range>& ranges);
+
+    // FIXIT copyData=false is not implemented, drop this in favor of cv::Mat (OpenCV 5.0)
     //! builds matrix from std::vector with or without copying the data
     template<typename _Tp> explicit UMat(const std::vector<_Tp>& vec, bool copyData=false);
-
-    //! builds matrix from cv::Vec; the data is copied by default
-    template<typename _Tp, int n> explicit UMat(const Vec<_Tp, n>& vec, bool copyData=true);
-    //! builds matrix from cv::Matx; the data is copied by default
-    template<typename _Tp, int m, int n> explicit UMat(const Matx<_Tp, m, n>& mtx, bool copyData=true);
-    //! builds matrix from a 2D point
-    template<typename _Tp> explicit UMat(const Point_<_Tp>& pt, bool copyData=true);
-    //! builds matrix from a 3D point
-    template<typename _Tp> explicit UMat(const Point3_<_Tp>& pt, bool copyData=true);
-    //! builds matrix from comma initializer
-    template<typename _Tp> explicit UMat(const MatCommaInitializer_<_Tp>& commaInitializer);
 
     //! destructor - calls release()
     ~UMat();

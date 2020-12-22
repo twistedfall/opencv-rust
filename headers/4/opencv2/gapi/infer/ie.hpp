@@ -11,6 +11,7 @@
 #include <string>
 #include <array>
 #include <tuple> // tuple, tuple_size
+#include <map>
 
 #include <opencv2/gapi/opencv_includes.hpp>
 #include <opencv2/gapi/util/any.hpp>
@@ -42,6 +43,8 @@ enum class TraitAs: int
     IMAGE   //!< G-API traits an associated cv::Mat as an image so creates an "image" blob (NCHW/NHWC, etc)
 };
 
+using IEConfig = std::map<std::string, std::string>;
+
 namespace detail {
     struct ParamDesc {
         std::string model_path;
@@ -60,7 +63,10 @@ namespace detail {
         std::size_t num_in;  // How many inputs are defined in the operation
         std::size_t num_out; // How many outputs are defined in the operation
 
+        enum class Kind { Load, Import };
+        Kind kind;
         bool is_generic;
+        IEConfig config;
     };
 } // namespace detail
 
@@ -83,7 +89,19 @@ public:
         : desc{ model, weights, device, {}, {}, {}
               , std::tuple_size<typename Net::InArgs>::value  // num_in
               , std::tuple_size<typename Net::OutArgs>::value // num_out
-              , false} {
+              , detail::ParamDesc::Kind::Load
+              , false
+              , {}} {
+    };
+
+    Params(const std::string &model,
+           const std::string &device)
+        : desc{ model, {}, device, {}, {}, {}
+              , std::tuple_size<typename Net::InArgs>::value  // num_in
+              , std::tuple_size<typename Net::OutArgs>::value // num_out
+              , detail::ParamDesc::Kind::Import
+              , false
+              , {}} {
     };
 
     Params<Net>& cfgInputLayers(const typename PortCfg<Net>::In &ll) {
@@ -109,6 +127,16 @@ public:
         return *this;
     }
 
+    Params& pluginConfig(IEConfig&& cfg) {
+        desc.config = std::move(cfg);
+        return *this;
+    }
+
+    Params& pluginConfig(const IEConfig& cfg) {
+        desc.config = cfg;
+        return *this;
+    }
+
     // BEGIN(G-API's network parametrization API)
     GBackend      backend()    const { return cv::gapi::ie::backend();  }
     std::string   tag()        const { return Net::tag(); }
@@ -122,12 +150,28 @@ protected:
 template<>
 class Params<cv::gapi::Generic> {
 public:
-    Params(const std::string& tag,
+    Params(const std::string &tag,
            const std::string &model,
            const std::string &weights,
            const std::string &device)
-        : desc{ model, weights, device, {}, {}, {}, 0u, 0u, true}, m_tag(tag) {
+        : desc{ model, weights, device, {}, {}, {}, 0u, 0u, detail::ParamDesc::Kind::Load, true, {}}, m_tag(tag) {
     };
+
+    Params(const std::string &tag,
+           const std::string &model,
+           const std::string &device)
+        : desc{ model, {}, device, {}, {}, {}, 0u, 0u, detail::ParamDesc::Kind::Import, true, {}}, m_tag(tag) {
+    };
+
+    Params& pluginConfig(IEConfig&& cfg) {
+        desc.config = std::move(cfg);
+        return *this;
+    }
+
+    Params& pluginConfig(const IEConfig& cfg) {
+        desc.config = cfg;
+        return *this;
+    }
 
     // BEGIN(G-API's network parametrization API)
     GBackend      backend()    const { return cv::gapi::ie::backend();  }
@@ -144,4 +188,4 @@ protected:
 } // namespace gapi
 } // namespace cv
 
-#endif // OPENCV_GAPI_INFER_HPP
+#endif // OPENCV_GAPI_INFER_IE_HPP
