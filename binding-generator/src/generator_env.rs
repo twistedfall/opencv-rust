@@ -231,7 +231,7 @@ impl<'tu> GeneratorEnv<'tu> {
 						let export_decl = String::from_utf8(buf).expect("Not a valid UTF-8");
 						if export_decl.contains("CV_EXPORTS_W_SIMPLE") || export_decl.contains("CV_EXPORTS_W_MAP") {
 							return Some(ClassKind::Simple)
-						} else if export_decl.contains("CV_EXPORTS") {
+						} else if export_decl.contains("CV_EXPORTS") || export_decl.contains("GAPI_EXPORTS") {
 							return Some(ClassKind::Boxed)
 						}
 					}

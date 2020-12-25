@@ -98,7 +98,7 @@ impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for Open
 			}
 			EntityKind::MacroExpansion => {
 				if let Some(name) = entity.get_name() {
-					if name == "CV_EXPORTS" || name == "CV_EXPORTS_W" || name == "CV_WRAP" {
+					if name == "CV_EXPORTS" || name == "CV_EXPORTS_W" || name == "CV_WRAP" || name == "GAPI_EXPORTS" {
 						self.gen_env.make_export_config(entity);
 					} else if name == "CV_EXPORTS_W_SIMPLE" || name == "CV_EXPORTS_W_MAP" {
 						self.gen_env.make_export_config(entity).simple = true;

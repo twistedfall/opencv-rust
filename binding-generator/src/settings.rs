@@ -393,6 +393,14 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_Feature2D_detect_const__InputArrayR_vector_vector_KeyPoint__R_const__InputArrayR" => "+_multiple",
 	"cv_GFTTDetector_create_int_double_double_int_int_bool_double" => "+_with_gradient",
 
+	// ### gapi ###
+	// "cv_GComputation_apply_const_vector_Mat_R_const_vector_Mat_R_GCompileArgsR" => "-",
+	// "cv_GComputation_apply_const_vector_Mat_R_vector_Mat_R_GCompileArgsR" => "-",
+	// "cv_GComputation_apply_Mat_Mat_ScalarR_GCompileArgsR" => "-",
+	// "cv_GComputation_apply_Mat_Mat_MatR_GCompileArgsR" => "-",
+	// "cv_GComputation_apply_Mat_ScalarR_GCompileArgsR" => "-",
+	// "cv_GComputation_apply_Mat_MatR_GCompileArgsR" => "-",
+
 	// ### highgui ###
 	"cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int" => "+_with_font",
 	"cv_resizeWindow_const_StringR_const_SizeR" => "+_size",
@@ -727,6 +735,7 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"use" => "use_",
 	"impl" => "impl_",
 	"loop" => "loop_",
+	"yield" => "yield_",
 });
 
 /// dict of functions with manual implementations
@@ -879,6 +888,9 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 	"mcc" => hashmap! {
 		"mcc" => "MCC",
 	},
+	"gapi" => hashmap! {
+		"own" => "Own",
+	}
 });
 
 pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
