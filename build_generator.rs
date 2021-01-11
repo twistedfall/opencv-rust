@@ -16,6 +16,7 @@ use super::{
 	file_copy_to_dir,
 	get_versioned_hub_dirs,
 	is_core_module,
+	HOST_TRIPLE,
 	MODULES,
 	OUT_DIR,
 	Result,
@@ -110,7 +111,10 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 					let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
 						.and_then(|p| p.to_str())
 						.unwrap_or("None");
-					let mut bin_generator = Command::new(OUT_DIR.join("release/binding-generator"));
+					let mut bin_generator = match HOST_TRIPLE.as_ref() {
+						Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
+						None => Command::new(OUT_DIR.join("release/binding-generator")),
+					};
 					bin_generator.arg(&*opencv_header_dir)
 						.arg(&*SRC_CPP_DIR)
 						.arg(&*OUT_DIR)
