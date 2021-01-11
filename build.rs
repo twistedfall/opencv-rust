@@ -59,7 +59,7 @@ static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR"
 static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
-static HOST_TRIPLE: Lazy<String> = Lazy::new(||env::var("HOST_TRIPLE").expect("Unable to determine host triple"));
+static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(||env::var("HOST_TRIPLE").ok());
 
 static ENV_VARS: [&str; 18] = [
 	"OPENCV_HEADER_DIR",
@@ -818,8 +818,11 @@ fn main() -> Result<()> {
 		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
 		let mut cargo = Command::new(cargo_bin);
 		// generator script is quite slow in debug mode, so we force it to be built in release mode
-		cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator", "--target", &*HOST_TRIPLE])
+		cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
 			.env("CARGO_TARGET_DIR", &*OUT_DIR);
+		if let Some(host_triple) = HOST_TRIPLE.as_ref() {
+			cargo.args(&["--target", host_triple]);
+		}
 		println!("running: {:?}", &cargo);
 		Some(cargo.spawn()?)
 	} else {

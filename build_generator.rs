@@ -111,7 +111,10 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 					let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
 						.and_then(|p| p.to_str())
 						.unwrap_or("None");
-					let mut bin_generator = Command::new(OUT_DIR.join(format!("{}/release/binding-generator", &*HOST_TRIPLE)));
+					let mut bin_generator = match HOST_TRIPLE.as_ref() {
+						Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
+						None => Command::new(OUT_DIR.join("release/binding-generator")),
+					};
 					bin_generator.arg(&*opencv_header_dir)
 						.arg(&*SRC_CPP_DIR)
 						.arg(&*OUT_DIR)
