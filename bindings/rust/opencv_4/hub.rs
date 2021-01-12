@@ -33,6 +33,7 @@ pub mod cudawarping;
 #[cfg(feature = "contrib")]
 pub mod cvv;
 pub mod dnn;
+#[cfg(feature = "contrib")]
 pub mod dnn_superres;
 #[cfg(feature = "contrib")]
 pub mod dpm;
@@ -147,6 +148,7 @@ pub mod hub_prelude {
 	#[cfg(feature = "contrib")]
 	pub use super::cvv::prelude::*;
 	pub use super::dnn::prelude::*;
+	#[cfg(feature = "contrib")]
 	pub use super::dnn_superres::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::dpm::prelude::*;

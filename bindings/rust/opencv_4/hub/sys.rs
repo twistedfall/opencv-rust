@@ -3113,6 +3113,7 @@ mod dnn_sys {
 }
 pub use dnn_sys::*;
 
+#[cfg(feature = "contrib")]
 mod dnn_superres_sys {
 	use super::*;
 
@@ -3131,6 +3132,7 @@ mod dnn_superres_sys {
 		pub fn cv_dnn_superres_DnnSuperResImpl_getAlgorithm(instance: *mut c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(feature = "contrib")]
 pub use dnn_superres_sys::*;
 
 #[cfg(feature = "contrib")]

@@ -14,17 +14,17 @@ Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your sy
 
 Update your Cargo.toml
 ```toml
-opencv = "0.47"
+opencv = "0.48"
 ```
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.47", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
+opencv = {version = "0.48", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
 ```
 
 Or enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.47", features = ["contrib"]}
+opencv = {version = "0.48", features = ["contrib"]}
 ```
 
 Import prelude
@@ -45,6 +45,11 @@ You have several options of getting the OpenCV library:
   `opencv` crate:
   * `PKG_CONFIG_PATH` for the location of `*.pc` files or `OpenCV_DIR` for the location of `*.cmake` files
   * `LD_LIBRARY_PATH` for where to look for the installed `*.so` files during runtime
+
+Additionally, please make sure to install `clang` package or its derivative that contains `libclang.so` and
+`clang` binary.
+  * Gentoo, Fedora: `clang`
+  * Debian, Ubuntu: `clang` and `libclang-dev`
 
 ### Windows package
 

@@ -1,3 +1,7 @@
+* 0.48.0
+  * Fix binding-generator build in cross-compilation environment (kudos to tylerhawkes)
+  * Using `dnn_superres` now requires `contrib` feature enabled, it was incorrectly marked as core module
+
 * 0.47.0
   * Fix building with OpenCV 4.5.1 and 3.4.15
   * Due to the code adjustments, some `VectorOf...` types are no longer generated (e.g. `VectorOfPoint3i`)

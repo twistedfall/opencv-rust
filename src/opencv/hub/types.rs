@@ -5482,6 +5482,7 @@ mod dnn_types {
 }
 pub use dnn_types::*;
 
+#[cfg(feature = "contrib")]
 mod dnn_superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -5504,6 +5505,7 @@ mod dnn_superres_types {
 	}
 	
 }
+#[cfg(feature = "contrib")]
 pub use dnn_superres_types::*;
 
 #[cfg(feature = "contrib")]
