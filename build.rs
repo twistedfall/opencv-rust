@@ -29,8 +29,6 @@ static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_it
 	"core",
 	#[cfg(not(feature = "opencv-32"))]
 	"dnn",
-	#[cfg(feature = "opencv-4")]
-	"dnn_superres",
 	"features2d",
 	"flann",
 	#[cfg(feature = "opencv-4")]
@@ -59,7 +57,7 @@ static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR"
 static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
-static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(||env::var("HOST_TRIPLE").ok());
+static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(|| env::var("HOST_TRIPLE").ok());
 
 static ENV_VARS: [&str; 18] = [
 	"OPENCV_HEADER_DIR",
@@ -301,7 +299,7 @@ impl Library {
 				.map(PathBuf::from)
 				.collect();
 
-		let version = Self::version_from_include_paths(&include_paths);
+			let version = Self::version_from_include_paths(&include_paths);
 
 			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![], None));
 			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![], None));

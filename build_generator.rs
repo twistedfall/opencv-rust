@@ -15,8 +15,8 @@ use glob::glob;
 use super::{
 	file_copy_to_dir,
 	get_versioned_hub_dirs,
-	is_core_module,
 	HOST_TRIPLE,
+	is_core_module,
 	MODULES,
 	OUT_DIR,
 	Result,
