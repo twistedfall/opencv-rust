@@ -375,7 +375,7 @@ impl<'tu> Func<'tu> {
 		let args_len = args.len();
 		let func_name = self.cpp_fullname();
 		let is_field_setter = self.as_field_setter().is_some();
-		let slice_arg = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len));
+		let slice_args = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len));
 
 		args.into_iter()
 			.map(|a| {
@@ -383,20 +383,13 @@ impl<'tu> Func<'tu> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(slice_arg) = slice_arg {
-					match *slice_arg {
-						SliceHint::ForceSlice(arg) => {
-							if arg == a.rust_leafname().as_ref() {
-								return Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
-							}
+				if let Some(slice_arg) = slice_args.and_then(|o| o.get(a.rust_leafname().as_ref())) {
+					return match *slice_arg {
+						SliceHint::Slice => {
+							Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
 						},
-						SliceHint::ConvertSlice(ptr_arg, len_arg, len_div) => {
-							let arg_name = a.rust_leafname();
-							if ptr_arg == arg_name.as_ref() {
-								return Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
-							} else if len_arg == arg_name.as_ref() {
-								return Field::new_ext(a, FieldTypeHint::SliceLen(ptr_arg, len_div), self.gen_env)
-							}
+						SliceHint::LenForSlice(ptr_arg, len_div) => {
+							Field::new_ext(a, FieldTypeHint::SliceLen(ptr_arg, len_div), self.gen_env)
 						}
 					}
 				}

@@ -838,27 +838,68 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 
 #[derive(Debug)]
 pub enum SliceHint {
-	ForceSlice(&'static str),
-	ConvertSlice(&'static str, &'static str, usize),
+	Slice,
+	LenForSlice(&'static str, usize),
 }
 
-/// cpp_fullname
-pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), SliceHint>> = Lazy::new(|| hashmap! {
-	("cv::Mat::at", 1) => SliceHint::ForceSlice("idx"),
-	("cv::Mat::ptr", 1) => SliceHint::ForceSlice("idx"),
-	("cv::Mat::Mat", 4) => SliceHint::ForceSlice("steps"),
-	("cv::Mat::Mat", 5) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::Mat::Mat", 4) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::Mat::zeros", 3) => SliceHint::ConvertSlice("sz", "ndims", 1),
-	("cv::Mat::ones", 3) => SliceHint::ConvertSlice("sz", "ndims", 1),
-	("cv::Mat::create", 3) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::Mat::reshape", 3) => SliceHint::ConvertSlice("newsz", "newndims", 1),
-	("cv::SparseMat::Hdr::Hdr", 3) => SliceHint::ConvertSlice("_sizes", "_dims", 1),
-	("cv::UMat::UMat", 4) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::UMat::UMat", 5) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::UMat::create", 4) => SliceHint::ConvertSlice("sizes", "ndims", 1),
-	("cv::_OutputArray::create", 6) => SliceHint::ConvertSlice("size", "dims", 1),
-	("cv::mixChannels", 4) => SliceHint::ConvertSlice("from_to", "npairs", 2),
+/// cpp_fullname, number of arguments
+pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), HashMap<&str, SliceHint>>> = Lazy::new(|| hashmap! {
+	("cv::Mat::at", 1) => hashmap! {
+		"idx" => SliceHint::Slice
+	},
+	("cv::Mat::ptr", 1) => hashmap! {
+		"idx" => SliceHint::Slice
+	},
+	("cv::Mat::Mat", 4) => hashmap! {
+		"steps" => SliceHint::Slice,
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::Mat::Mat", 5) => hashmap! {
+		"steps" => SliceHint::Slice,
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::Mat::zeros", 3) => hashmap! {
+		"sz" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sz", 1),
+	},
+	("cv::Mat::ones", 3) => hashmap! {
+		"sz" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sz", 1),
+	},
+	("cv::Mat::create", 3) => hashmap! {
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::Mat::reshape", 3) => hashmap! {
+		"newsz" => SliceHint::Slice,
+		"newndims" => SliceHint::LenForSlice("newsz", 1),
+	},
+	("cv::SparseMat::Hdr::Hdr", 3) => hashmap! {
+		"_sizes" => SliceHint::Slice,
+		"_dims" => SliceHint::LenForSlice("_sizes", 1),
+	},
+	("cv::UMat::UMat", 4) => hashmap! {
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::UMat::UMat", 5) => hashmap! {
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::UMat::create", 4) => hashmap! {
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	("cv::_OutputArray::create", 6) => hashmap! {
+		"size" => SliceHint::Slice,
+		"dims" => SliceHint::LenForSlice("size", 1),
+	},
+	("cv::mixChannels", 4) => hashmap! {
+		"from_to" => SliceHint::Slice,
+		"npairs" => SliceHint::LenForSlice("from_to", 2),
+	},
 });
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| hashmap! {
