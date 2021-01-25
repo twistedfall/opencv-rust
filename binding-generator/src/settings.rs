@@ -839,6 +839,7 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 #[derive(Debug)]
 pub enum SliceHint {
 	Slice,
+	NullableSlice,
 	LenForSlice(&'static str, usize),
 }
 
@@ -851,12 +852,12 @@ pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), HashMap<&str, SliceHint>>
 		"idx" => SliceHint::Slice
 	},
 	("cv::Mat::Mat", 4) => hashmap! {
-		"steps" => SliceHint::Slice,
+		"steps" => SliceHint::NullableSlice,
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
 	("cv::Mat::Mat", 5) => hashmap! {
-		"steps" => SliceHint::Slice,
+		"steps" => SliceHint::NullableSlice,
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},

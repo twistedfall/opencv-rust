@@ -411,8 +411,26 @@ fn mat_from_data() -> Result<()> {
 	assert_eq!(PIXEL.len(), src.total()?);
 	let row = src.at_row::<u8>(0)?;
 	assert_eq!(0x89, row[0]);
+	assert_eq!(0x50, row[1]);
+	assert_eq!(0x1A, row[6]);
 	assert_eq!(0x0D, row[11]);
 	assert_eq!(0x82, row[89]);
+
+	let src = unsafe {
+		Mat::new_nd_with_data(
+			&[3, 5, 6],
+			u8::typ(),
+			bytes.as_mut_ptr() as *mut c_void,
+			None,
+		)?
+	};
+	assert_eq!(Size::new(5_, 3), src.size()?);
+	assert_eq!(PIXEL.len(), src.total()?);
+	assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
+	assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
+	assert_eq!(0x1A, *src.at_3d::<u8>(0, 1, 0)?);
+	assert_eq!(0x0D, *src.at_3d::<u8>(0, 1, 5)?);
+	assert_eq!(0x82, *src.at_3d::<u8>(2, 4, 5)?);
 	Ok(())
 }
 

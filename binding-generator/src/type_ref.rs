@@ -86,6 +86,7 @@ pub enum Kind<'tu> {
 pub enum TypeRefTypeHint<'tu> {
 	None,
 	Slice,
+	NullableSlice,
 	Specialized(Type<'tu>),
 }
 
@@ -160,7 +161,7 @@ impl<'tu> TypeRef<'tu> {
 				let pointee_typeref = TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind()
-				} else if matches!(self.type_hint, TypeRefTypeHint::Slice) {
+				} else if matches!(self.type_hint, TypeRefTypeHint::Slice | TypeRefTypeHint::NullableSlice) {
 					Kind::Array(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env), None)
 				} else {
 					Kind::Pointer(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env))
@@ -677,6 +678,10 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
+	pub fn is_nullable(&self) -> bool {
+		matches!(self.type_hint, TypeRefTypeHint::NullableSlice)
+	}
+
 	pub fn as_class(&self) -> Option<Class<'tu>> {
 		if let Kind::Class(out) = self.canonical().kind() {
 			Some(out)
@@ -1190,10 +1195,20 @@ impl<'tu> TypeRef<'tu> {
 			}
 		}
 		if self.as_variable_array().is_some() {
-			return if constness.with(self.constness()).is_const() {
+			let arr = if constness.with(self.constness()).is_const() {
 				format!("{name}.as_ptr()", name=name)
 			} else {
 				format!("{name}.as_mut_ptr()", name=name)
+			};
+			return if self.is_nullable() {
+				let null_ptr_name = if constness.with(self.constness()).is_const() {
+					"null"
+				} else {
+					"null_mut"
+				};
+				format!("{name}.map_or(::core::ptr::{null_ptr_name}(), |{name}| {arr})", name=name, null_ptr_name=null_ptr_name, arr=arr)
+			} else {
+				arr
 			}
 		}
 		if let Some(func) = self.as_function() {

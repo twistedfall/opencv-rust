@@ -28,6 +28,7 @@ use crate::{
 pub enum FieldTypeHint<'tu> {
 	None,
 	Slice,
+	NullableSlice,
 	SliceLen(&'static str, usize),
 	FieldSetter,
 	Specialized(Type<'tu>),
@@ -70,6 +71,7 @@ impl<'tu> Field<'tu> {
 	pub fn type_ref(&self) -> TypeRef<'tu> {
 		let type_hint = match self.type_hint {
 			FieldTypeHint::Slice => TypeRefTypeHint::Slice,
+			FieldTypeHint::NullableSlice => TypeRefTypeHint::NullableSlice,
 			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ),
 			_ => TypeRefTypeHint::None,
 		};

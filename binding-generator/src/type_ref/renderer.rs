@@ -109,7 +109,13 @@ fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef
 			rust.into()
 		}
 		Kind::Array(elem, size) => {
-			type_ref.format_as_array(&elem.render(renderer.recurse()), size).into()
+			let typ = type_ref.format_as_array(&elem.render(renderer.recurse()), size);
+			if type_ref.is_nullable() {
+				let turbo_fish = if use_turbo_fish { "::" } else { "" };
+				format!("Option{turbo_fish}<{typ}>", turbo_fish=turbo_fish, typ=typ)
+			} else {
+				typ
+			}.into()
 		}
 		Kind::StdVector(vec) => {
 			vec.rust_name(is_full).into_owned().into()
