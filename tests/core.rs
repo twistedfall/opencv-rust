@@ -10,16 +10,11 @@ use opencv::{
         RotatedRect,
         Scalar,
         Size2f,
-        FileStorage,
-        FileNode,
-        FileStorage_Mode,
     },
     prelude::*,
     Result,
-    Error,
     types::VectorOfMat,
 };
-use matches::assert_matches;
 
 #[test]
 fn make_type() {
@@ -81,6 +76,13 @@ fn in_range() -> Result<()> {
 #[test]
 #[cfg(feature = "opencv-4")]
 fn file_storage() -> Result<()> {
+    use opencv::{
+        core::{FileStorage_Mode, FileStorage, FileNode},
+        Error,
+    };
+
+    use matches::assert_matches;
+
     {
         let mut st = FileStorage::new(".yml", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
         st.write_i32("test_int", 98)?;

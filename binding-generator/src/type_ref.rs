@@ -82,7 +82,7 @@ pub enum Kind<'tu> {
 	Ignored,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug)]
 pub enum TypeRefTypeHint<'tu> {
 	None,
 	Slice,
@@ -160,7 +160,7 @@ impl<'tu> TypeRef<'tu> {
 				let pointee_typeref = TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind()
-				} else if self.type_hint == TypeRefTypeHint::Slice {
+				} else if matches!(self.type_hint, TypeRefTypeHint::Slice) {
 					Kind::Array(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env), None)
 				} else {
 					Kind::Pointer(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env))
@@ -1173,7 +1173,7 @@ impl<'tu> TypeRef<'tu> {
 					format!("{name}.opencv_as_extern_mut()", name=name)
 				},
 				Dir::Out(_) => format!("&mut {name}_via", name=name),
-			};
+			}
 		}
 		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (constness.with(inner.constness()).is_const())) {
 			return format!("&{name}", name=name);
@@ -1187,9 +1187,9 @@ impl<'tu> TypeRef<'tu> {
 				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			} else {
 				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
-			};
+			}
 		}
-		if self.as_variable_array().is_some() || self.as_abstract_class_ptr().is_some() {
+		if self.as_variable_array().is_some() {
 			return if constness.with(self.constness()).is_const() {
 				format!("{name}.as_ptr()", name=name)
 			} else {

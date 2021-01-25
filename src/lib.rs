@@ -21,6 +21,7 @@ pub mod prelude {
 	};
 }
 
+/// Reexported platform types that are used by OpenCV
 pub mod platform_types {
 	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
 }

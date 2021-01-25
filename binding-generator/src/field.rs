@@ -24,7 +24,7 @@ use crate::{
 	TypeRefTypeHint,
 };
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug)]
 pub enum FieldTypeHint<'tu> {
 	None,
 	Slice,
@@ -68,12 +68,10 @@ impl<'tu> Field<'tu> {
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu> {
-		let type_hint = if self.type_hint == FieldTypeHint::Slice {
-			TypeRefTypeHint::Slice
-		} else if let FieldTypeHint::Specialized(typ) = self.type_hint {
-			TypeRefTypeHint::Specialized(typ)
-		} else {
-			TypeRefTypeHint::None
+		let type_hint = match self.type_hint {
+			FieldTypeHint::Slice => TypeRefTypeHint::Slice,
+			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ),
+			_ => TypeRefTypeHint::None,
 		};
 		TypeRef::new_ext(self.entity.get_type().expect("Can't get type"), type_hint, Some(self.entity), self.gen_env)
 	}
@@ -119,7 +117,7 @@ impl<'tu> Field<'tu> {
 
 	/// whether argument is used for passing user data to callback
 	pub fn is_user_data(&self) -> bool {
-		if self.type_hint == FieldTypeHint::FieldSetter {
+		if matches!(self.type_hint, FieldTypeHint::FieldSetter) {
 			return false;
 		}
 		let type_ref = self.type_ref();
@@ -169,7 +167,7 @@ impl Element for Field<'_> {
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		if self.type_hint == FieldTypeHint::FieldSetter {
+		if matches!(self.type_hint, FieldTypeHint::FieldSetter) {
 			"val".into()
 		} else {
 			DefaultElement::cpp_localname(self)
@@ -181,7 +179,7 @@ impl Element for Field<'_> {
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		if self.type_hint == FieldTypeHint::FieldSetter {
+		if matches!(self.type_hint, FieldTypeHint::FieldSetter) {
 			"val".into()
 		} else {
 			DefaultElement::rust_leafname(self)

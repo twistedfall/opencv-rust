@@ -375,6 +375,7 @@ impl<'tu> Func<'tu> {
 		let args_len = args.len();
 		let func_name = self.cpp_fullname();
 		let is_field_setter = self.as_field_setter().is_some();
+		let slice_arg = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len));
 
 		args.into_iter()
 			.map(|a| {
@@ -382,7 +383,7 @@ impl<'tu> Func<'tu> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(slice_arg) = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len)) {
+				if let Some(slice_arg) = slice_arg {
 					match *slice_arg {
 						SliceHint::ForceSlice(arg) => {
 							if arg == a.rust_leafname().as_ref() {

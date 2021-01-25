@@ -396,13 +396,23 @@ fn mat_operations() -> Result<()> {
 #[test]
 fn mat_from_data() -> Result<()> {
 	let mut bytes = PIXEL.to_vec();
-	let src = unsafe { Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), bytes.as_mut_ptr() as *mut c_void, core::Mat_AUTO_STEP)? };
-	assert_eq!(src.size()?, Size::new(PIXEL.len() as _, 1));
-	assert_eq!(src.total()?, PIXEL.len());
+	assert_eq!(90, bytes.len());
+
+	let src = unsafe {
+		Mat::new_rows_cols_with_data(
+			1,
+			PIXEL.len() as _,
+			u8::typ(),
+			bytes.as_mut_ptr() as *mut c_void,
+			core::Mat_AUTO_STEP,
+		)?
+	};
+	assert_eq!(Size::new(PIXEL.len() as _, 1), src.size()?);
+	assert_eq!(PIXEL.len(), src.total()?);
 	let row = src.at_row::<u8>(0)?;
-	assert_eq!(row[0], 0x89);
-	assert_eq!(row[11], 0x0D);
-	assert_eq!(row[89], 0x82);
+	assert_eq!(0x89, row[0]);
+	assert_eq!(0x0D, row[11]);
+	assert_eq!(0x82, row[89]);
 	Ok(())
 }
 
