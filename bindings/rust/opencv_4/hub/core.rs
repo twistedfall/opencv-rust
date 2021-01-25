@@ -10410,8 +10410,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+	pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// download data from GpuMat
@@ -10432,8 +10432,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub unsafe fn new_nd_vec_with_data(sizes: &core::Vector::<i32>, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+	pub unsafe fn new_nd_vec_with_data(sizes: &core::Vector::<i32>, typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// download data from GpuMat

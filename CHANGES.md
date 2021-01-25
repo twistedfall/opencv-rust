@@ -1,3 +1,6 @@
+* 0.49.0
+  * Fix conversion of slice arguments, allow nullable slices (fixes [#201](https://github.com/twistedfall/opencv-rust/issues/201))
+
 * 0.48.0
   * Fix binding-generator build in cross-compilation environment (kudos to tylerhawkes)
   * Using `dnn_superres` now requires `contrib` feature enabled, it was incorrectly marked as core module
