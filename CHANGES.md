@@ -1,3 +1,6 @@
+* 0.49.1
+  * Improved processing of environment variables
+
 * 0.49.0
   * Fix conversion of slice arguments, allow nullable slices (fixes [#201](https://github.com/twistedfall/opencv-rust/issues/201))
 
