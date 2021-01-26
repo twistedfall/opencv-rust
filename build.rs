@@ -257,7 +257,7 @@ impl Library {
 			} else {
 				vec![]
 			};
-			includes.extend(include_paths.iter().map(T::from));
+			includes.extend(include_paths.iter().filter(|v| !v.is_empty()).map(T::from));
 			includes
 		} else {
 			sys_list
