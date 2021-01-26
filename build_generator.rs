@@ -43,7 +43,7 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 		fs::create_dir_all(&target_dir)?;
 	}
 	let src_filename = src_file.file_name()
-		.ok_or_else(|| "Can't calculate filename")?;
+		.ok_or("Can't calculate filename")?;
 	let target_file = target_dir.join(src_filename);
 	if fs::rename(&src_file, &target_file).is_err() {
 		fs::copy(&src_file, &target_file)?;

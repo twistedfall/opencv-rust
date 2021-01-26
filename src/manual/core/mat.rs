@@ -464,6 +464,8 @@ pub trait MatTraitManual: MatTrait {
 			.and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
+	/// # Safety
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let total = self.total()?;
 		self.data().map(|x| slice::from_raw_parts(x as *const _ as *const _, total))
@@ -475,6 +477,8 @@ pub trait MatTraitManual: MatTrait {
 		unsafe { self.data_typed_unchecked_mut() }
 	}
 
+	/// # Safety
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total()?;
 		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut _ as *mut _, total))

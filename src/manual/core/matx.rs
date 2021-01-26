@@ -59,6 +59,8 @@ pub trait MatxTrait: Sized {
 			.map(|_| unsafe { self.get_unchecked(idx) })
 	}
 
+	/// # Safety
+	/// Caller must ensure that the specified `idx` is within the `Matx` bounds
 	unsafe fn get_unchecked(&self, idx: (usize, usize)) -> &Self::ElemType {
 		self.val().get_unchecked(idx.0 * self.cols() + idx.1)
 	}
@@ -69,6 +71,8 @@ pub trait MatxTrait: Sized {
 		Some(unsafe { self.get_unchecked_mut(idx) })
 	}
 
+	/// # Safety
+	/// Caller must ensure that the specified `idx` is within the `Matx` bounds
 	unsafe fn get_unchecked_mut(&mut self, idx: (usize, usize)) -> &mut Self::ElemType {
 		let cols = self.cols();
 		self.val_mut().get_unchecked_mut(idx.0 * cols + idx.1)
@@ -233,9 +237,9 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for &mut Matx<T, A> 
 
 #[doc(hidden)]
 pub trait MatxExtern<T: ValidMatxType, A: SizedArray<T>> {
-	unsafe fn extern_input_array(&self) -> SysResult<*mut c_void>;
-	unsafe fn extern_output_array(&mut self) -> SysResult<*mut c_void>;
-	unsafe fn extern_input_output_array(&mut self) -> SysResult<*mut c_void>;
+	#[doc(hidden)] unsafe fn extern_input_array(&self) -> SysResult<*mut c_void>;
+	#[doc(hidden)] unsafe fn extern_output_array(&mut self) -> SysResult<*mut c_void>;
+	#[doc(hidden)] unsafe fn extern_input_output_array(&mut self) -> SysResult<*mut c_void>;
 }
 
 macro_rules! matx_extern {

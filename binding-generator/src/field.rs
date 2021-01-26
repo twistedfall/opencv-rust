@@ -29,7 +29,7 @@ pub enum FieldTypeHint<'tu> {
 	None,
 	Slice,
 	NullableSlice,
-	SliceLen(&'static str, usize),
+	LenForSlice(&'static str, usize),
 	FieldSetter,
 	Specialized(Type<'tu>),
 }
@@ -129,7 +129,7 @@ impl<'tu> Field<'tu> {
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {
-		if let FieldTypeHint::SliceLen(ptr_arg, len_div) = self.type_hint {
+		if let FieldTypeHint::LenForSlice(ptr_arg, len_div) = self.type_hint {
 			Some((ptr_arg, len_div))
 		} else {
 			None

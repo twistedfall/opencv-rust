@@ -391,8 +391,8 @@ impl<'tu> Func<'tu> {
 						SliceHint::NullableSlice => {
 							Field::new_ext(a, FieldTypeHint::NullableSlice, self.gen_env)
 						},
-						SliceHint::LenForSlice(ptr_arg, len_div) => {
-							Field::new_ext(a, FieldTypeHint::SliceLen(ptr_arg, len_div), self.gen_env)
+						SliceHint::LenForSlice(slice, len_div) => {
+							Field::new_ext(a, FieldTypeHint::LenForSlice(slice, len_div), self.gen_env)
 						}
 					}
 				}

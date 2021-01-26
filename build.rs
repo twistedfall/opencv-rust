@@ -6,7 +6,7 @@ use std::{
 	fmt,
 	fs::{self, File},
 	io::{BufRead, BufReader},
-	iter::{self, FromIterator},
+	iter,
 	path::{Path, PathBuf},
 	process::Command,
 };
@@ -24,7 +24,7 @@ mod generator;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_iter([
+static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| [
 	"calib3d",
 	"core",
 	#[cfg(not(feature = "opencv-32"))]
@@ -49,7 +49,7 @@ static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_it
 	#[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
 	"videostab",
 	"viz",
-].iter().copied()));
+].iter().copied().collect());
 
 static MODULES: OnceCell<Vec<String>> = OnceCell::new();
 
@@ -474,7 +474,7 @@ impl Library {
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
 		let disabled_probes = disabled_probes.as_ref()
-			.map(|s| HashSet::from_iter(EnvList::from(s.as_str()).iter()))
+			.map(|s| EnvList::from(s.as_str()).iter().collect())
 			.unwrap_or_else(|_| HashSet::new());
 
 		let mut probes = [
@@ -575,7 +575,7 @@ fn file_copy_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 		fs::create_dir_all(&target_dir)?;
 	}
 	let src_filename = src_file.file_name()
-		.ok_or_else(|| "Can't calculate filename")?;
+		.ok_or("Can't calculate filename")?;
 	let target_file = target_dir.join(src_filename);
 	fs::copy(&src_file, &target_file)?;
 	Ok(target_file)
@@ -664,14 +664,14 @@ fn get_versioned_hub_dirs() -> (PathBuf, PathBuf) {
 }
 
 fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
-	let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
+	let ignore_modules: HashSet<&'static str> = [
 		"core_detect",
 		"cudalegacy",
 		"cudev",
 		"gapi",
 		"opencv",
 		"opencv_modules",
-	].iter().copied());
+	].iter().copied().collect();
 	let env_whitelist = env::var("OPENCV_MODULE_WHITELIST").ok();
 	let env_whitelist = env_whitelist.as_ref()
 		.map(|wl| wl.split(',')

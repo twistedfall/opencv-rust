@@ -2,6 +2,8 @@ use std::ffi::c_void;
 
 pub trait Boxed: Sized {
 	/// Wrap the specified raw pointer
+	/// # Safety
+	/// Caller must ensure that the passed pointer is pointing to a valid unowned object data
 	unsafe fn from_raw(ptr: *mut c_void) -> Self;
 
 	/// Return an the underlying raw pointer while consuming this wrapper.

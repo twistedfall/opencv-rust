@@ -123,8 +123,8 @@ pub fn strip_comment_markers(comment: &str) -> String {
 			}
 		}
 		let line_clean_end = line.trim_end();
-		if line_clean_end.ends_with(MULTILINE_SUFFIX) {
-			out += line_clean_end[..line_clean_end.len() - MULTILINE_SUFFIX.len()].trim_end();
+		if let Some(suffix) = line_clean_end.strip_suffix(MULTILINE_SUFFIX) {
+			out += suffix.trim_end();
 			out.push('\n');
 		} else {
 			out += line;

@@ -122,6 +122,8 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Same as `set()` but without bounds checking
+	/// # Safety
+	/// Caller must ensure that the specified `index` is within the `Vector` bounds
 	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
 		self.extern_set(index, val.opencv_as_extern())
@@ -136,6 +138,8 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Same as `get()` but without bounds checking
+	/// # Safety
+	/// Caller must ensure that the specified `index` is within the `Vector` bounds
 	pub unsafe fn get_unchecked(&self, index: size_t) -> T {
 		self.extern_get(index)
 			.into_result()
