@@ -140,7 +140,7 @@ You need to set up the following environment variables to point to the installed
    found, e.g. for Xcode:
    
    ```  
-   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
    ```
 
 7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
