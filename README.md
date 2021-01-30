@@ -81,8 +81,9 @@ Get OpenCV from homebrew:
   ```shell script
   brew install opencv
   ```
-  You will also need a working C++ compiler and libclang, you can use the ones from XCode or install `llvm`
-  from brew. You most probably need to also check the item 6 of the troubleshooting below.
+  You will also need a working C++ compiler and libclang, you can install Command Line Tools (xcode-select
+  --install), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 6 of the
+  troubleshooting below.
 
 ### Manual build
 
@@ -137,10 +138,14 @@ You need to set up the following environment variables to point to the installed
 
    OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
-   found, e.g. for Xcode:
-   
-   ```  
+   found, e.g. for Command Line Tools:
+   ```
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
+   ```
+   
+   or XCode:
+   ```
+   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
    ```
 
 7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
