@@ -12,7 +12,7 @@ pub type MemoizeMap<K, V> = RefCell<HashMap<K, V>>;
 #[inline(always)]
 pub fn memo<T: Clone>(memo_field: &Memoize<T>, init: impl FnOnce() -> T) -> T {
 	let field = memo_field.borrow();
-	if let Some(v) = &*field {
+	if let Some(v) = field.as_ref() {
 		v.clone()
 	} else {
 		drop(field);

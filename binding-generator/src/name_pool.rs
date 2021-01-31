@@ -14,11 +14,6 @@ impl NamePool {
 		Self { names: HashSet::with_capacity(capacity) }
 	}
 
-//	pub fn disambiguate_vec<T>(vec: Vec<T>, name_cb: impl for<'a> FnMut(&'a T) -> Cow<'a, str>) -> impl Iterator<Item=(String, T)> {
-//		NamePool::with_capacity(vec.len())
-//			.into_disambiguator(vec, name_cb)
-//	}
-
 	pub fn get_name<'a>(&mut self, mut name: Cow<'a, str>) -> Cow<'a, str> {
 		while self.names.contains(name.as_ref()) {
 			name.to_mut().bump_counter();

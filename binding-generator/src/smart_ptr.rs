@@ -27,7 +27,7 @@ impl<'tu> SmartPtr<'tu> {
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu> {
-		TypeRef::new(self.entity.get_type().expect("Can't get smartptr type"), self.gen_env)
+		TypeRef::new(self.entity.get_type().expect("Can't get smart pointer type"), self.gen_env)
 	}
 
 	pub fn pointee(&self) -> TypeRef<'tu> {
@@ -36,7 +36,7 @@ impl<'tu> SmartPtr<'tu> {
 				Some(type_ref)
 			} else {
 				None
-			}).expect("smart pointer template argument list is empty")
+			}).expect("Smart pointer template argument list is empty")
 	}
 
 	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {

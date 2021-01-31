@@ -56,7 +56,7 @@ impl<'tu> Field<'tu> {
 		Self { entity: entity.into(), type_hint, gen_env }
 	}
 
-	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu>>>(args: I) -> impl Iterator<Item=(String, Field<'tu>)> where I::IntoIter: 'tu {
+	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu>>>(args: I) -> impl Iterator<Item=(String, Field<'tu>)> {
 		let args = args.into_iter();
 		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
 			.into_disambiguator(args, |f| f.rust_leafname())

@@ -57,7 +57,7 @@ impl RustNativeGeneratedElement for Vector<'_> {
 		if element_type.as_typedef().is_some()
 			&& !element_type.is_data_type()
 			&& !element_type.as_string().is_some()
-			&& !settings::FORCE_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_full().as_ref())
+			&& !settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_full().as_ref())
 		{
 			&TYPE_ALIAS_TPL
 		} else {

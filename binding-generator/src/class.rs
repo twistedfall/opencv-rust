@@ -76,7 +76,6 @@ impl<'tu> Class<'tu> {
 
 	pub fn detect_class_simplicity(&self) -> bool {
 		!self.has_bases()
-			&& !self.has_descendants()
 			&& self.fields().into_iter()
 			.map(|f| f.type_ref())
 			.all(|t| t.is_copy())
@@ -168,10 +167,6 @@ impl<'tu> Class<'tu> {
 			})
 			.flatten()
 			.collect()
-	}
-
-	pub fn has_descendants(&self) -> bool {
-		self.gen_env.has_descendants(self.entity)
 	}
 
 	pub fn has_methods(&self) -> bool {
@@ -391,9 +386,6 @@ impl fmt::Debug for Class<'_> {
 		}
 		if self.is_simple() {
 			props.push("simple");
-		}
-		if self.has_descendants() {
-			props.push("has_descendants");
 		}
 		if self.has_methods() {
 			props.push("has_methods");

@@ -1,5 +1,5 @@
 use std::{
-	collections::{HashMap, HashSet},
+	collections::HashMap,
 	fmt,
 	fs::File,
 	io::{Read, Seek, SeekFrom},
@@ -17,10 +17,10 @@ use crate::{
 	EntityWalker,
 	EntityWalkerVisitor,
 	is_opencv_path,
-	main_module_from_path,
 	memo_map,
 	MemoizeMap,
 	NamePool,
+	opencv_module_from_path,
 	settings,
 	TypeRef,
 };
@@ -73,7 +73,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
 			|| path.ends_with("ocvrs_resolve_types.hpp")
-			|| main_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
+			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
 	}
 
 	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> bool {
@@ -88,10 +88,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
 				entity.visit_children(|c, _| {
 					match c.get_kind() {
-//						EntityKind::BaseSpecifier => {
-//							let c_decl = c.get_definition().expect("Can't get base class definition");
-//							self.gen_env.has_descendants_cache.insert(c_decl.usr().into_owned());
-//						}
 						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
@@ -122,7 +118,6 @@ pub struct GeneratorEnv<'tu> {
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	pub func_names: NamePool,
 	func_comments: HashMap<String, String>,
-	has_descendants_cache: HashSet<String>,
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
 	type_resolve_cache: HashMap<String, Type<'tu>>,
@@ -135,7 +130,6 @@ impl<'tu> GeneratorEnv<'tu> {
 			export_map: HashMap::with_capacity(1024),
 			func_names: NamePool::with_capacity(512),
 			func_comments: HashMap::with_capacity(2048),
-			has_descendants_cache: HashSet::with_capacity(128),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			class_constants: HashMap::with_capacity(32),
 			type_resolve_cache: HashMap::with_capacity(32),
@@ -205,10 +199,6 @@ impl<'tu> GeneratorEnv<'tu> {
 		self.func_comments.get(cpp_fullname).map(|x| x.as_str())
 	}
 
-	pub fn has_descendants(&self, entity: Entity<'tu>) -> bool {
-		self.has_descendants_cache.contains(entity.usr().as_ref())
-	}
-
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {
 		let id = entity.usr();
 		memo_map(&self.class_kind_cache, id.as_ref(), || {
@@ -259,7 +249,6 @@ impl fmt::Debug for GeneratorEnv<'_> {
 		f.debug_struct("GeneratorEnv")
 			.field("export_map", &format!("{} elements", self.export_map.len()))
 			.field("func_comments", &format!("{} elements", self.func_comments.len()))
-			.field("has_descendants_cache", &format!("{} elements", self.has_descendants_cache.len()))
 			.field("class_kind_cache", &format!("{} elements", self.class_kind_cache.borrow().len()))
 			.field("type_resolve_cache", &format!("{} elements", self.type_resolve_cache.len()))
 			.finish()

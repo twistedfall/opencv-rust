@@ -109,7 +109,7 @@ impl DefaultElement {
 		let loc = this.entity().get_location().expect("Can't get location")
 			.get_spelling_location().file.expect("Can't file")
 			.get_path();
-		module_from_path(&loc)
+		opencv_module_from_path(&loc)
 			.map_or_else(|| "core".into(), |x| x.to_string().into())
 	}
 
@@ -263,25 +263,12 @@ pub fn is_opencv_path(path: &Path) -> bool {
 		.is_some()
 }
 
-pub fn main_module_from_path(path: &Path) -> Option<&str> {
-	if path.extension().map_or(false, |ext| ext == "hpp") {
-		path.file_stem()
-			.and_then(|m| m.to_str())
-	} else {
-		None
-	}
-}
-
+/// Returns path component that corresponds to OpenCV module name. It's either a directory
+/// (e.g. "calib3d") or a header file (e.g. "dnn.hpp")
 fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 	let mut module_comp = path.components()
 		.rev()
-		.filter_map(|c| {
-			if let Component::Normal(c) = c {
-				Some(c)
-			} else {
-				None
-			}
-		})
+		.filter_map(|c| if let Component::Normal(c) = c { Some(c) } else { None })
 		.peekable();
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {
@@ -295,28 +282,16 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 	module
 }
 
+/// Return OpenCV module name if the path points to the main header file, e.g. "opencv2/dnn.hpp".
 pub fn main_opencv_module_from_path(path: &Path) -> Option<&str> {
 	opencv_module_component(path)
 		.and_then(|m| m.to_str())
-		.and_then(|m| {
-			if let Some(dot_pos) = m.rfind('.') {
-				if &m[dot_pos..] == ".hpp" {
-					Some(&m[..dot_pos])
-				} else {
-					None
-				}
-			} else {
-				None
-			}
-		})
+		.and_then(|m| m.strip_suffix(".hpp"))
 }
 
-pub fn module_from_path(path: &Path) -> Option<&str> {
+/// Return OpenCV module from the given path
+pub fn opencv_module_from_path(path: &Path) -> Option<&str> {
 	opencv_module_component(path)
 		.and_then(|m| m.to_str())
-		.map(|m| m.split('.')
-			.next()
-			.unwrap()
-		)
-
+		.and_then(|m| m.strip_suffix(".hpp").or(Some(m)))
 }

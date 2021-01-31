@@ -464,12 +464,14 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector" => "-", // support of "operator &" missing
 
 	// ### photo ###
-	"cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int" => "+_vec",
-	"cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int" => "+_vec",
 	"cv_AlignMTB_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR" => "+_with_response",
 	"cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 	"cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 	"cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
+	"cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR" => "+_cuda",
+	"cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR" => "+_cuda",
+	"cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int" => "+_vec",
+	"cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int" => "+_vec",
 
 	// ### stitching ###
 	"cv_Stitcher_composePanorama_const__InputArrayR_const__OutputArrayR" => "+_images",
@@ -744,16 +746,16 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 ///   keys: "rust_safe", "rust_extern", "cpp", missing key means skip particular implementation
 ///   values: template to use for manual implementation or "~" to use default implementation
 pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|| hashmap! {
-	"cv_Mat_at_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_Point" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_Point" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_int_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_int_int_int" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
-	"cv_Mat_at_const_intX" => include_str!("../tpl/settings/rust_mat_at_mut.rs").compile_interpolation(),
-	"cv_Mat_at_const_const_intX" => include_str!("../tpl/settings/rust_mat_at_const.rs").compile_interpolation(),
+	"cv_Mat_at_int" => include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_int" => include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_int_int" => include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_Point" => include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_Point" => include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_int_int_int" => include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_int_int_int" => include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_intX" => include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
+	"cv_Mat_at_const_const_intX" => include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
 });
 
 pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, &str>>>> = Lazy::new(|| hashmap! {
@@ -935,7 +937,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 	}
 });
 
-pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
+pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::ppf_match_3d::Pose3DPtr",
 	"cv::dnn::Net::LayerId",
 });

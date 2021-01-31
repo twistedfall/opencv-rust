@@ -2,7 +2,7 @@ use std::path::Path;
 
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::main_opencv_module_from_path;
+use crate::element::main_opencv_module_from_path;
 
 #[allow(unused)]
 pub trait EntityWalkerVisitor<'tu> {
@@ -83,6 +83,8 @@ impl<'tu> EntityWalker<'tu> {
 										Self::visit_resolve_types_namespace(root_decl, &mut visitor)
 									}
 									else if name.starts_with("cv") { // + e.g. cvflann, cvv
+										// fixme: it should be possible to use opencv_module_from_path here,
+										// but it breaks module documentation generation
 										if main_opencv_module_from_path(&file).is_some() {
 											visitor.visit_entity(root_decl);
 										}

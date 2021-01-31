@@ -21,7 +21,7 @@ use crate::{
 	Func,
 	GeneratorVisitor,
 	IteratorExt,
-	module_from_path,
+	opencv_module_from_path,
 	settings,
 	StrExt,
 	Typedef,
@@ -121,7 +121,7 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 	type D = DepType<'tu>;
 
 	fn wants_file(&mut self, path: &Path) -> bool {
-		module_from_path(path).map_or(false, |m| m == self.module)
+		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {

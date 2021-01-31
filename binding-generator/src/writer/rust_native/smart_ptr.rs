@@ -23,8 +23,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 			|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation()
 		);
 
-		static TRAIT_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/trait_cast.tpl.rs").compile_interpolation()
+		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation()
 		);
 
 		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
@@ -43,12 +43,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 		};
 
 		let mut impls = String::new();
-		if pointee_type.is_primitive() || pointee_type.as_class().map_or(false, |c| !c.is_abstract()) {
-			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
-		} else {
-			inter_vars.insert("ctor", "".into());
-		}
+		let mut gen_ctor = pointee_type.is_primitive();
 		if let Some(cls) = pointee_type.as_class() {
+			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
 				let mut all_bases = cls.all_bases();
 				all_bases.insert(cls);
@@ -59,10 +56,15 @@ impl RustNativeGeneratedElement for SmartPtr<'_> {
 				for base in all_bases {
 					inter_vars.insert("base_rust_local", base.rust_localname().into_owned().into());
 					inter_vars.insert("base_rust_full", base.rust_trait_fullname().into_owned().into());
-					impls += &TRAIT_CAST_TPL.interpolate(&inter_vars);
+					impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 				}
 			}
 		};
+		if gen_ctor {
+			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
+		} else {
+			inter_vars.insert("ctor", "".into());
+		}
 		inter_vars.insert("impls", impls.into());
 		TPL.interpolate(&inter_vars)
 	}

@@ -34,7 +34,7 @@ use once_cell::sync::Lazy;
 pub use abstract_ref_wrapper::AbstractRefWrapper;
 pub use class::Class;
 pub use constant::Const;
-pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, main_module_from_path, main_opencv_module_from_path, module_from_path};
+pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, opencv_module_from_path};
 pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};

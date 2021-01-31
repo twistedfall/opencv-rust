@@ -15,8 +15,7 @@ use opencv_binding_generator::{
 	Func,
 	Generator,
 	GeneratorEnv,
-	main_module_from_path,
-	module_from_path,
+	opencv_module_from_path,
 	settings,
 };
 
@@ -46,8 +45,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 
 impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		module_from_path(path).map_or(false, |m| m == self.gen_env.module())
-			|| main_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
+		opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
 	fn visit_resolve_type(&mut self, _typ: Type<'tu>) -> bool {

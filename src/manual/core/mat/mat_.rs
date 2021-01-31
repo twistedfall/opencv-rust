@@ -120,7 +120,7 @@ impl<T> Boxed for Mat_<T> {
 }
 
 impl<T> ToInputArray for Mat_<T> {
-	fn input_array(&self) -> Result<_InputArray, Error> {
+	fn input_array(&self) -> Result<_InputArray> {
 		self.inner.input_array()
 	}
 }
