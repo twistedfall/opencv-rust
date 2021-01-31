@@ -6,7 +6,7 @@ use std::{
 };
 
 use crate::{
-	core::{Mat, MatTrait},
+	core::{_InputArray, Mat, MatTrait, ToInputArray},
 	Error,
 	Result,
 	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
@@ -45,6 +45,11 @@ impl<T: DataType> Mat_<T> {
 	#[inline]
 	pub fn into_untyped(self) -> Mat {
 		self.into()
+	}
+
+	#[inline]
+	pub fn as_untyped(&self) -> &Mat {
+		&self.inner
 	}
 
 	#[inline]
@@ -111,6 +116,12 @@ impl<T> Boxed for Mat_<T> {
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.inner.as_raw_mut()
+	}
+}
+
+impl<T> ToInputArray for Mat_<T> {
+	fn input_array(&self) -> Result<_InputArray, Error> {
+		self.inner.input_array()
 	}
 }
 
