@@ -2,6 +2,7 @@ use std::ffi::c_void;
 
 use crate::{
 	core::{_InputArray, ToInputArray},
+	opencv_type_simple_generic,
 	Result,
 	sys,
 	traits::Boxed,

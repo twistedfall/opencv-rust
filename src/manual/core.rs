@@ -29,36 +29,6 @@ macro_rules! valid_types {
 	};
 }
 
-macro_rules! opencv_type_simple_generic {
-	($type: ident<$trait: ident>) => {
-		impl<T: $trait> $crate::traits::OpenCVType<'_> for $type<T> {
-			type Arg = Self;
-			type ExternReceive = Self;
-			type ExternContainer = Self;
-
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
-			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
-		}
-
-		impl<T: $trait> $crate::traits::OpenCVTypeArg<'_> for $type<T> {
-			type ExternContainer = Self;
-
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
-		}
-
-		impl<T: $trait> $crate::traits::OpenCVTypeExternContainer for $type<T> {
-			type ExternSend = *const Self;
-			type ExternSendMut = *mut Self;
-
-			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
-			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
-		}
-	};
-}
-
 mod affine3;
 mod gpumat;
 mod input_output_array;

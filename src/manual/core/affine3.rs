@@ -1,4 +1,7 @@
-use crate::core::{Matx44, ValidMatxType, MatxTrait};
+use crate::{
+	core::{Matx44, MatxTrait, ValidMatxType},
+	opencv_type_simple_generic,
+};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/dd/d99/classcv_1_1Affine3.html)
 #[repr(C)]

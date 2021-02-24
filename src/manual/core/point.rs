@@ -2,7 +2,10 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use num_traits::{NumCast, ToPrimitive};
 
-use crate::core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec2};
+use crate::{
+	core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec2},
+	opencv_type_simple_generic,
+};
 
 valid_types!(ValidPointType: i32, i64, f32, f64);
 

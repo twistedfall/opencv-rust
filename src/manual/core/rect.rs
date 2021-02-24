@@ -6,7 +6,10 @@ use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign};
 
 use num_traits::{NumCast, ToPrimitive};
 
-use crate::core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType};
+use crate::{
+	core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType},
+	opencv_type_simple_generic,
+};
 
 valid_types!(ValidRectType: i32, f32, f64);
 
