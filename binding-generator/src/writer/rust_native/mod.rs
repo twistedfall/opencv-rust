@@ -20,6 +20,7 @@ use crate::{
 	Enum,
 	Func,
 	GeneratorVisitor,
+	is_ephemeral_header,
 	IteratorExt,
 	opencv_module_from_path,
 	settings,
@@ -121,7 +122,7 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 	type D = DepType<'tu>;
 
 	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path).map_or(false, |m| m == self.module)
+		is_ephemeral_header(path) || opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {
@@ -212,6 +213,13 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 			},
 		}
 	}
+
+	fn visit_ephemeral_header(&mut self, contents: &str) {
+		if false {
+			let mut file = File::create(self.types_dir.join(format!("ocvrs_ephemeral_{}.hpp", self.module))).expect("Can't create debug ephemeral file");
+			file.write_all(contents.as_bytes()).expect("Can't write debug ephemeral file");
+		}
+	}
 }
 
 fn join<T: AsRef<str>>(v: &mut Vec<(String, T)>) -> String {
@@ -258,7 +266,7 @@ impl Drop for RustNativeBindingWriter<'_> {
 		let mut cpp = join(&mut self.cpp_funcs);
 		cpp += &join(&mut self.cpp_classes);
 		let includes = if self.src_cpp_dir.join(format!("{}.hpp", self.module)).exists() {
-			format!("#include \"{module}.hpp\"\n", module=self.module)
+			format!("#include \"{module}.hpp\"", module=self.module)
 		} else {
 			format!("#include \"ocvrs_common.hpp\"\n#include <opencv2/{module}.hpp>", module=self.module)
 		};

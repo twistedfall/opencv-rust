@@ -16,6 +16,7 @@ use crate::{
 	Element,
 	EntityWalker,
 	EntityWalkerVisitor,
+	is_ephemeral_header,
 	is_opencv_path,
 	memo_map,
 	MemoizeMap,
@@ -72,7 +73,7 @@ impl<'tu> DBPopulator<'_, 'tu> {
 impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
-			|| path.ends_with("ocvrs_resolve_types.hpp")
+			|| is_ephemeral_header(path)
 			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
 	}
 
@@ -146,18 +147,23 @@ impl<'tu> GeneratorEnv<'tu> {
 	fn key(entity: Entity) -> ExportIdx {
 		let (loc, offset) = if entity.get_kind() == EntityKind::MacroExpansion {
 			// sometimes CV_EXPORT macros are located on a separate line so for those we compensate the offset
-			let l = entity.get_range().expect("Can't get export macro range").get_end().get_spelling_location();
-			let mut f = File::open(l.file.expect("Can't get export macro file").get_path()).expect("Can't open export macro file");
-			f.seek(SeekFrom::Start(l.offset as u64)).expect("Can't seek export macro file");
-			let mut buf = [0; 8];
-			let read = f.read(&mut buf).expect("Can't read file");
-			let line_offset = buf[0..read].iter()
-				.take_while(|&&c| c == b'\n')
-				.count();
-			if line_offset > 1 {
-				panic!("Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values");
+			let l = entity.get_range().expect("Can't get exported macro range").get_end().get_spelling_location();
+			let path = l.file.expect("Can't get exported macro file").get_path();
+			if is_ephemeral_header(&path) {
+				(l, 0)
+			} else {
+				let mut f = File::open(path).expect("Can't open export macro file");
+				f.seek(SeekFrom::Start(l.offset as u64)).expect("Can't seek export macro file");
+				let mut buf = [0; 8];
+				let read = f.read(&mut buf).expect("Can't read file");
+				let line_offset = buf[0..read].iter()
+					.take_while(|&&c| c == b'\n')
+					.count();
+				if line_offset > 1 {
+					panic!("Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values");
+				}
+				(l, line_offset as u32)
 			}
-			(l, line_offset as u32)
 		} else {
 			let loc = if let Some(range) = entity.get_range() {
 				range.get_start().get_spelling_location()

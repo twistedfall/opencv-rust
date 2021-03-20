@@ -42,7 +42,7 @@ pub use func::{Func, FunctionTypeHint};
 use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
-pub use generator::{DependentType, Generator, GeneratorVisitor};
+pub use generator::{DependentType, Generator, GeneratorVisitor, is_ephemeral_header};
 pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 #[allow(unused)]

@@ -138,7 +138,8 @@ fn main() {
 		let gen = Generator::new(None, &opencv_header_dir, &src_cpp_dir, clang);
 		for module in modules {
 			println!("  {}", module);
-			gen.process_module(&module, false, |root_entity| {
+			gen.process_module(&module, false, |root_tu| {
+				let root_entity = root_tu.get_entity();
 				let gen_env = GeneratorEnv::new(root_entity, &module);
 				let walker = EntityWalker::new(root_entity);
 				walker.walk_opencv_entities(FunctionFinder {

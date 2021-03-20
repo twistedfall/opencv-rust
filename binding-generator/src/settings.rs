@@ -622,6 +622,7 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::PlaneWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::AffineWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::CylindricalWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
+	"cv::CylindricalWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::SphericalWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::FisheyeWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::StereographicWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
@@ -629,13 +630,16 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::CompressedRectilinearPortraitWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::PaniniWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::PaniniPortraitWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
+	"cv::PlaneWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::MercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
+	"cv::SphericalWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::TransverseMercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
 	"cv::TermCriteria" => ExportConfig::simple(),
 	"cv::optflow::GPCTrainingParams" => ExportConfig::simple(),
 	"cv::optflow::GPCMatchingParams" => ExportConfig::simple(),
 	"cv::cudacodec::FormatInfo" => ExportConfig::simple(),
 	"cv::kinfu::Intr" => ExportConfig::simple(),
+	"cv::videostab::MaskFrameSource" => ExportConfig::default(),
 
 	// override boxed
 	"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
@@ -940,4 +944,107 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::ppf_match_3d::Pose3DPtr",
 	"cv::dnn::Net::LayerId",
+});
+
+#[derive(Default)]
+pub struct ModuleTweak {
+	pub includes: Vec<&'static str>,
+	pub resolve_types: Vec<&'static str>,
+	pub generate_types: Vec<&'static str>,
+}
+
+pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new(|| hashmap! {
+	"*" => ModuleTweak {
+		resolve_types: vec![
+			// void is used as return type for property setters
+			"void",
+			// base types
+			"bool",
+			"int",
+			"unsigned int",
+			"double",
+			// return of String
+			"const char*",
+			"void*",
+			// handling vector of strings
+			"std::vector<cv::String>",
+			"std::vector<std::string>",
+			// for return of vector<DataType> types
+			"cv::_InputArray",
+			"cv::_OutputArray",
+			"cv::_InputOutputArray",
+		],
+		..Default::default()
+	},
+	"aruco" => ModuleTweak {
+		generate_types: vec![
+			"std::vector<cv::Vec3f>",
+			"std::vector<cv::Vec3d>",
+		],
+		..Default::default()
+	},
+	"calib3d" => ModuleTweak {
+		generate_types: vec![
+			"std::vector<cv::Point3i>",
+			"std::vector<std::vector<cv::Point3i>>",
+			"std::vector<cv::Point3d>",
+			"std::vector<std::vector<cv::Point3d>>",
+		],
+		..Default::default()
+	},
+	"dnn" => ModuleTweak {
+		includes: vec![
+			"dnn/dict.hpp",
+		],
+		resolve_types: vec![
+			// for specializing cv::dnn::Dict::set
+			"cv::dnn::DictValue",
+			// for specializing cv::dnn::DictValue::get
+			"cv::String",
+			"int64_t",
+		],
+		..Default::default()
+	},
+	"face" => ModuleTweak {
+		includes: vec![
+			"face.hpp",
+		],
+		..Default::default()
+	},
+	"imgproc" => ModuleTweak {
+		generate_types: vec![
+			"std::vector<cv::Vec4i>",
+		],
+		..Default::default()
+	},
+	"shape" => ModuleTweak {
+		includes: vec![
+			"shape.hpp",
+		],
+		..Default::default()
+	},
+	"stitching" => ModuleTweak {
+		includes: vec![
+			"stitching.hpp",
+		],
+		..Default::default()
+	},
+	"tracking" => ModuleTweak {
+		includes: vec![
+			"tracking.hpp",
+		],
+		..Default::default()
+	},
+	"videostab" => ModuleTweak {
+		includes: vec![
+			"videostab.hpp",
+		],
+		..Default::default()
+	},
+	"ximgproc" => ModuleTweak {
+		includes: vec![
+			"ximgproc.hpp",
+		],
+		..Default::default()
+	},
 });

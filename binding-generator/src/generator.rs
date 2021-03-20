@@ -1,6 +1,7 @@
 use std::{
 	borrow::Cow,
-	fmt,
+	collections::{HashMap, HashSet},
+	fmt::{self, Write},
 	fs::File,
 	io::BufReader,
 	path::{Path, PathBuf},
@@ -8,18 +9,24 @@ use std::{
 
 use clang::{
 	Clang,
+	diagnostic::Diagnostic,
 	diagnostic::Severity,
 	Entity,
 	EntityKind,
+	EntityVisitResult,
 	Index,
 	TranslationUnit,
 	Type,
+	Unsaved,
 };
 use dunce::canonicalize;
+use maplit::hashmap;
+use once_cell::sync::Lazy;
 
 use crate::{
 	AbstractRefWrapper,
 	Class,
+	CompiledInterpolation,
 	Const,
 	Element,
 	EntityExt,
@@ -31,9 +38,11 @@ use crate::{
 	GeneratorEnv,
 	get_definition_text,
 	line_reader,
+	opencv_module_from_path,
 	return_type_wrapper::ReturnTypeWrapper,
 	settings,
 	smart_ptr::SmartPtr,
+	StrExt,
 	type_ref::Kind as TypeRefKind,
 	Typedef,
 	vector::Vector,
@@ -59,6 +68,114 @@ pub trait GeneratorVisitor<'tu> {
 	fn visit_typedef(&mut self, typedef: Typedef) {}
 	fn visit_class(&mut self, class: Class) {}
 	fn visit_dependent_type(&mut self, typ: Self::D) {}
+
+	fn visit_ephemeral_header(&mut self, contents: &str) {}
+}
+
+struct EphemeralGenerator<'m> {
+	module: &'m str,
+	used_in_smart_ptr: HashSet<String>,
+	descendants: HashMap<String, HashSet<String>>,
+}
+
+impl<'m> EphemeralGenerator<'m> {
+	pub fn new(module: &'m str) -> Self {
+		Self {
+			module,
+			used_in_smart_ptr: HashSet::with_capacity(32),
+			descendants: HashMap::with_capacity(16),
+		}
+	}
+
+	fn add_used_in_smart_ptr(&mut self, func: Entity) {
+		for arg in func.get_arguments().into_iter().flatten() {
+			if let Some(arg_type) = arg.get_type() {
+				if arg_type.get_declaration().map_or(false, |ent| ent.cpp_fullname().starts_with("cv::Ptr")) {
+					let inner_type_ent = arg_type.get_template_argument_types().into_iter()
+						.flatten()
+						.flatten()
+						.next()
+						.and_then(|t| t.get_declaration());
+					if let Some(inner_type_ent) = inner_type_ent {
+						self.used_in_smart_ptr.insert(inner_type_ent.cpp_fullname().into_owned());
+					}
+				}
+			}
+		}
+	}
+
+	pub fn make_generated_header(&self) -> String {
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation()
+		);
+
+		let mut includes = String::with_capacity(128);
+		let mut resolve_types = String::with_capacity(1024);
+		let mut generate_types: Vec<Cow<_>> = Vec::with_capacity(32);
+
+		let mut resolve_types_idx = 0usize;
+		let global_tweaks = settings::GENERATOR_MODULE_TWEAKS.get("*");
+		let module_tweaks = settings::GENERATOR_MODULE_TWEAKS.get(self.module);
+		for tweak in global_tweaks.iter().chain(module_tweaks.iter()) {
+			for &include in &tweak.includes {
+				writeln!(&mut includes, "#include <opencv2/{}>", include).expect("Can't fail");
+			}
+			for &res_type in &tweak.resolve_types {
+				writeln!(&mut resolve_types, "typedef {} ephem{};", res_type, resolve_types_idx).expect("Can't fail");
+				resolve_types_idx += 1;
+			}
+			for &gen_type in &tweak.generate_types {
+				generate_types.push(gen_type.into());
+			}
+		}
+		for used_cppfull in &self.used_in_smart_ptr {
+			for desc_cppfull in self.descendants.get(used_cppfull).into_iter().flatten() {
+				if !self.used_in_smart_ptr.contains(desc_cppfull) {
+					generate_types.push(format!("cv::Ptr<{}>", desc_cppfull).into());
+				}
+			}
+		}
+
+		TPL.interpolate(&hashmap! {
+			"includes" => includes,
+			"resolve_types" => resolve_types,
+			"generate_types" => generate_types.join(",\n"),
+		})
+	}
+}
+
+impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
+	fn wants_file(&mut self, path: &Path) -> bool {
+		opencv_module_from_path(path).map_or(false, |m| m == self.module)
+	}
+
+	fn visit_entity(&mut self, entity: Entity<'_>) -> bool {
+		match entity.get_kind() {
+			EntityKind::ClassDecl | EntityKind::StructDecl => {
+				entity.visit_children(|c, _| {
+					match c.get_kind() {
+						EntityKind::BaseSpecifier => {
+							let c_decl = c.get_definition().expect("Can't get base class definition");
+							self.descendants.entry(c_decl.cpp_fullname().into_owned())
+								.or_insert_with(|| HashSet::with_capacity(4))
+								.insert(entity.cpp_fullname().into_owned());
+						}
+						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
+						| EntityKind::ConversionFunction => {
+							self.add_used_in_smart_ptr(c)
+						}
+						_ => {}
+					}
+					EntityVisitResult::Continue
+				});
+			}
+			EntityKind::FunctionDecl => {
+				self.add_used_in_smart_ptr(entity);
+			}
+			_ => {}
+		}
+		true
+	}
 }
 
 #[derive(Debug)]
@@ -349,32 +466,11 @@ impl Generator {
 		}
 	}
 
-	pub fn build_clang_command_line_args(&self) -> Vec<Cow<'static, str>> {
-		let mut args = self.clang_include_dirs.iter()
-			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
-			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter()
-				.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")).into())
-			)
-			.collect::<Vec<_>>();
-		args.push("-DOCVRS_PARSING_HEADERS".into());
-		args.push("-includeocvrs_resolve_types.hpp".into());
-		// need to have c++14 here because VS headers contain features that require it
-		args.push("-std=c++14".into());
-		args
+	fn make_ephemeral_header(&self, contents: &str) -> Unsaved {
+		Unsaved::new(self.src_cpp_dir.join("ocvrs_ephemeral.hpp"), contents)
 	}
 
-	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(Entity)) {
-		let index = Index::new(&self.clang, true, false);
-		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
-		if !module_file.exists() {
-			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
-		}
-		let root_tu: TranslationUnit = index.parser(module_file)
-			.arguments(&self.build_clang_command_line_args())
-			.detailed_preprocessing_record(true)
-			.skip_function_bodies(true)
-			.parse().expect("Cannot parse");
-		let diags = root_tu.get_diagnostics();
+	fn handle_diags(diags: &[Diagnostic], panic_on_error: bool) {
 		if !diags.is_empty() {
 			let mut has_error = false;
 			eprintln!("=== WARNING: {} diagnostic messages", diags.len());
@@ -388,11 +484,49 @@ impl Generator {
 				panic!("=== Errors during header parsing");
 			}
 		}
-		entity_processor(root_tu.get_entity());
 	}
 
-	pub fn process_opencv_module(&self, module: &str, visitor: impl for<'gtu> GeneratorVisitor<'gtu>) {
-		self.process_module(module, true, |root_entity| {
+	pub fn build_clang_command_line_args(&self) -> Vec<Cow<'static, str>> {
+		let mut args = self.clang_include_dirs.iter()
+			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
+			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter()
+				.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")).into())
+			)
+			.collect::<Vec<_>>();
+		args.push("-DOCVRS_PARSING_HEADERS".into());
+		args.push("-includeocvrs_ephemeral.hpp".into());
+		// need to have c++14 here because VS headers contain features that require it
+		args.push("-std=c++14".into());
+		args
+	}
+
+	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(TranslationUnit)) {
+		let index = Index::new(&self.clang, true, false);
+		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
+		if !module_file.exists() {
+			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
+		}
+		let root_tu: TranslationUnit = index.parser(module_file)
+			.unsaved(&[self.make_ephemeral_header("")])
+			.arguments(&self.build_clang_command_line_args())
+			.detailed_preprocessing_record(true)
+			.skip_function_bodies(true)
+			.parse().expect("Cannot parse");
+		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
+		entity_processor(root_tu);
+	}
+
+	pub fn process_opencv_module(&self, module: &str, mut visitor: impl for<'gtu> GeneratorVisitor<'gtu>) {
+		self.process_module(module, true, |mut root_tu| {
+			let mut root_entity = root_tu.get_entity();
+			let walker = EntityWalker::new(root_entity);
+			let mut ephem_gen = EphemeralGenerator::new(module);
+			walker.walk_opencv_entities(&mut ephem_gen);
+			let hdr = ephem_gen.make_generated_header();
+			visitor.visit_ephemeral_header(&hdr);
+			root_tu = root_tu.reparse(&[self.make_ephemeral_header(&hdr)]).expect("Can't reparse file");
+			Self::handle_diags(&root_tu.get_diagnostics(), true);
+			root_entity = root_tu.get_entity();
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCVWalker::new(
 				&self.opencv_include_dir,
@@ -403,6 +537,10 @@ impl Generator {
 			walker.walk_opencv_entities(opencv_walker);
 		});
 	}
+}
+
+pub fn is_ephemeral_header(path: &Path) -> bool {
+	path.ends_with("ocvrs_ephemeral.hpp")
 }
 
 #[allow(unused)]
