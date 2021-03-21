@@ -65,19 +65,19 @@ pub enum Dir<T> {
 }
 
 #[derive(Clone, Debug)]
-pub enum Kind<'tu> {
+pub enum Kind<'tu, 'ge> {
 	/// (rust name, cpp name)
 	Primitive(&'static str, &'static str),
 	/// (element type, array size)
-	Array(TypeRef<'tu>, Option<usize>),
-	StdVector(Vector<'tu>),
-	Pointer(TypeRef<'tu>),
-	Reference(TypeRef<'tu>),
-	SmartPtr(SmartPtr<'tu>),
-	Class(Class<'tu>),
+	Array(TypeRef<'tu, 'ge>, Option<usize>),
+	StdVector(Vector<'tu, 'ge>),
+	Pointer(TypeRef<'tu, 'ge>),
+	Reference(TypeRef<'tu, 'ge>),
+	SmartPtr(SmartPtr<'tu, 'ge>),
+	Class(Class<'tu, 'ge>),
 	Enum(Enum<'tu>),
-	Function(Function<'tu>),
-	Typedef(Typedef<'tu>),
+	Function(Function<'tu, 'ge>),
+	Typedef(Typedef<'tu, 'ge>),
 	Generic(String),
 	Ignored,
 }
@@ -97,19 +97,19 @@ impl Default for TypeRefTypeHint<'_> {
 }
 
 #[derive(Clone)]
-pub struct TypeRef<'tu> {
+pub struct TypeRef<'tu, 'ge> {
 	type_ref: Type<'tu>,
 	type_hint: TypeRefTypeHint<'tu>,
 	parent_entity: Option<Entity<'tu>>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> TypeRef<'tu> {
-	pub fn new(type_ref: Type<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> TypeRef<'tu, 'ge> {
+	pub fn new(type_ref: Type<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::new_ext(type_ref, Default::default(), None, gen_env)
 	}
 
-	pub fn new_ext(type_ref: Type<'tu>, type_hint: TypeRefTypeHint<'tu>, parent_entity: Option<Entity<'tu>>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(type_ref: Type<'tu>, type_hint: TypeRefTypeHint<'tu>, parent_entity: Option<Entity<'tu>>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { type_ref, type_hint, parent_entity, gen_env }
 	}
 
@@ -132,7 +132,7 @@ impl<'tu> TypeRef<'tu> {
 		self.type_ref
 	}
 
-	pub fn kind(&self) -> Kind<'tu> {
+	pub fn kind(&self) -> Kind<'tu, 'ge> {
 		match self.type_ref.get_kind() {
 			TypeKind::Void => Kind::Primitive("()", "void"),
 			TypeKind::Bool => Kind::Primitive("bool", "bool"),
@@ -297,7 +297,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	/// TypeRef with all of the typedef's traversed
-	pub fn canonical(&self) -> TypeRef<'tu> {
+	pub fn canonical(&self) -> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Typedef(tdef) => {
 				tdef.underlying_type_ref().canonical()
@@ -309,7 +309,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	/// performs canonical by calling clang function not taking application logic into account
-	pub fn canonical_clang(&self) -> TypeRef<'tu> {
+	pub fn canonical_clang(&self) -> TypeRef<'tu, 'ge> {
 		if let TypeRefTypeHint::Specialized(typ) = self.type_hint {
 			Self::new_ext(typ.get_canonical_type(), self.type_hint, self.parent_entity, self.gen_env)
 		} else {
@@ -318,7 +318,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	/// Like canonical(), but also removes indirection by pointer and reference
-	pub fn source(&self) -> TypeRef<'tu> {
+	pub fn source(&self) -> TypeRef<'tu, 'ge> {
 		let canonical = self.canonical();
 		match canonical.kind() {
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
@@ -331,7 +331,7 @@ impl<'tu> TypeRef<'tu> {
 	}
 
 	/// Like source(), but digs down to the elements of arrays
-	pub fn base(&self) -> TypeRef<'tu> {
+	pub fn base(&self) -> TypeRef<'tu, 'ge> {
 		let source = self.source();
 		match source.kind() {
 			Kind::Array(inner, ..) => {
@@ -409,7 +409,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_template(&self) -> Option<Class<'tu>> {
+	pub fn as_template(&self) -> Option<Class<'tu, 'ge>> {
 		match self.base().kind() {
 			Kind::Class(cls) => {
 				cls.as_template()
@@ -633,7 +633,7 @@ impl<'tu> TypeRef<'tu> {
 		matches!(self.canonical().kind(), Kind::Primitive("bool", _))
 	}
 
-	pub fn as_pointer(&self) -> Option<TypeRef<'tu>> {
+	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let Kind::Pointer(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -641,7 +641,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_reference(&self) -> Option<TypeRef<'tu>> {
+	pub fn as_reference(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let Kind::Reference(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -649,7 +649,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu>> {
+	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu, 'ge>> {
 		if let Kind::SmartPtr(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -682,7 +682,7 @@ impl<'tu> TypeRef<'tu> {
 		matches!(self.type_hint, TypeRefTypeHint::NullableSlice)
 	}
 
-	pub fn as_class(&self) -> Option<Class<'tu>> {
+	pub fn as_class(&self) -> Option<Class<'tu, 'ge>> {
 		if let Kind::Class(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -690,7 +690,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_simple_class(&self) -> Option<Class<'tu>> {
+	pub fn as_simple_class(&self) -> Option<Class<'tu, 'ge>> {
 		match self.canonical().kind() {
 			Kind::Class(out) if out.is_simple() => {
 				Some(out)
@@ -701,7 +701,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_abstract_class_ptr(&self) -> Option<(TypeRef<'tu>, Class<'tu>)> {
+	pub fn as_abstract_class_ptr(&self) -> Option<(TypeRef<'tu, 'ge>, Class<'tu, 'ge>)> {
 		if let Some(pointee) = self.as_pointer() {
 			if let Some(class) = pointee.as_class() {
 				if class.is_abstract() {
@@ -712,7 +712,7 @@ impl<'tu> TypeRef<'tu> {
 		None
 	}
 
-	pub fn as_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
+	pub fn as_array(&self) -> Option<(TypeRef<'tu, 'ge>, Option<usize>)> {
 		if let Kind::Array(elem, size) = self.canonical().kind() {
 			Some((elem, size))
 		} else {
@@ -720,7 +720,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_variable_array(&self) -> Option<TypeRef<'tu>> {
+	pub fn as_variable_array(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let Some((elem, None)) = self.as_array() {
 			Some(elem)
 		} else {
@@ -728,7 +728,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_fixed_array(&self) -> Option<(TypeRef<'tu>, usize)> {
+	pub fn as_fixed_array(&self) -> Option<(TypeRef<'tu, 'ge>, usize)> {
 		if let Some((elem, Some(size))) = self.as_array() {
 			Some((elem, size))
 		} else {
@@ -736,7 +736,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_string_array(&self) -> Option<(TypeRef<'tu>, Option<usize>)> {
+	pub fn as_string_array(&self) -> Option<(TypeRef<'tu, 'ge>, Option<usize>)> {
 		if let Some((elem, size)) = self.as_array() {
 			if elem.as_string().is_some() {
 				return Some((elem, size))
@@ -745,7 +745,7 @@ impl<'tu> TypeRef<'tu> {
 		None
 	}
 
-	pub fn as_vector(&self) -> Option<Vector<'tu>> {
+	pub fn as_vector(&self) -> Option<Vector<'tu, 'ge>> {
 		if let Kind::StdVector(out) = self.canonical().kind() {
 			Some(out)
 		} else {
@@ -753,7 +753,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_function(&self) -> Option<Function<'tu>> {
+	pub fn as_function(&self) -> Option<Function<'tu, 'ge>> {
 		match self.canonical().kind() {
 			Kind::Function(out) => {
 				Some(out)
@@ -764,7 +764,7 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn as_typedef(&self) -> Option<Typedef<'tu>> {
+	pub fn as_typedef(&self) -> Option<Typedef<'tu, 'ge>> {
 		match self.kind() {
 			Kind::Typedef(out) => {
 				Some(out)
@@ -798,7 +798,7 @@ impl<'tu> TypeRef<'tu> {
 		settings::DATA_TYPES.contains(self.cpp_full().as_ref())
 	}
 
-	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu>> {
+	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu, 'ge>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
 				vec![]
@@ -1274,11 +1274,11 @@ impl<'tu> TypeRef<'tu> {
 		}
 	}
 
-	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
+	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		self.dependent_types_with_mode(DependentTypeMode::None)
 	}
 
-	pub fn dependent_types_with_mode<D: DependentType<'tu>>(&self, mode: DependentTypeMode) -> Vec<D> {
+	pub fn dependent_types_with_mode(&self, mode: DependentTypeMode) -> Vec<DependentType<'tu, 'ge>> {
 		let mut out = vec![];
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
@@ -1301,7 +1301,7 @@ impl<'tu> TypeRef<'tu> {
 							vec.type_ref()
 						};
 						let const_hint = self.get_const_hint(&vec_type_ref);
-						out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+						out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
 							vec_type_ref,
 							const_hint,
 							def_location,
@@ -1315,22 +1315,22 @@ impl<'tu> TypeRef<'tu> {
 							vec_cv_string,
 							self.gen_env,
 						);
-						out.push(D::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
+						out.push(DependentType::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
 					} else {
-						out.push(D::from_vector(vec))
+						out.push(DependentType::from_vector(vec))
 					}
 				} else {
 					if let DependentTypeMode::ForReturn(def_location) = mode {
 						let vec_type_ref = vec.type_ref().canonical_clang();
 						let const_hint = self.get_const_hint(&vec_type_ref);
-						out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+						out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
 							vec_type_ref,
 							const_hint,
 							def_location,
 							self.gen_env,
 						)));
 					}
-					out.push(D::from_vector(vec));
+					out.push(DependentType::from_vector(vec));
 				}
 			},
 			Kind::SmartPtr(ptr) => {
@@ -1338,14 +1338,14 @@ impl<'tu> TypeRef<'tu> {
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					let ptr_type_ref = ptr.type_ref().canonical_clang();
 					let const_hint = self.get_const_hint(&ptr_type_ref);
-					out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+					out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
 						ptr_type_ref,
 						const_hint,
 						def_location,
 						self.gen_env,
 					)));
 				}
-				out.push(D::from_smart_ptr(ptr))
+				out.push(DependentType::from_smart_ptr(ptr))
 			},
 			Kind::Typedef(typedef) => {
 				out = typedef.dependent_types();
@@ -1362,18 +1362,18 @@ impl<'tu> TypeRef<'tu> {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
 								dl => dl
 							};
-							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, def_location, self.gen_env)));
+							out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(type_ref, def_location, self.gen_env)));
 						} else {
 							let type_ref = self.canonical_clang();
 							let const_hint = self.get_const_hint(&type_ref);
-							out.push(D::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
+							out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
 								type_ref,
 								const_hint,
 								def_location,
 								self.gen_env,
 							)));
 							if self.as_abstract_class_ptr().is_some() {
-								out.push(D::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone(), self.gen_env)))
+								out.push(DependentType::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone(), self.gen_env)))
 							}
 						}
 					}
@@ -1533,13 +1533,13 @@ impl<'tu> TypeRef<'tu> {
 	}
 }
 
-impl cmp::PartialEq for TypeRef<'_> {
+impl cmp::PartialEq for TypeRef<'_, '_> {
 	fn eq(&self, other: &Self) -> bool {
 		self.type_ref == other.type_ref
 	}
 }
 
-impl fmt::Debug for TypeRef<'_> {
+impl fmt::Debug for TypeRef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut props = vec![];
 		if self.is_excluded() {
@@ -1618,8 +1618,8 @@ impl fmt::Debug for TypeRef<'_> {
 }
 
 #[derive(Debug)]
-pub enum TemplateArg<'tu> {
+pub enum TemplateArg<'tu, 'ge> {
 	Unknown,
-	Typename(TypeRef<'tu>),
+	Typename(TypeRef<'tu, 'ge>),
 	Constant(String),
 }

@@ -13,8 +13,8 @@ use crate::{
 	comment,
 	DefaultElement,
 	DefinitionLocation,
-	DependentType,
 	DependentTypeMode,
+	DependentType,
 	Element,
 	EntityElement,
 	EntityExt,
@@ -70,17 +70,17 @@ impl OperatorKind {
 }
 
 #[derive(Debug)]
-pub enum Kind<'tu> {
+pub enum Kind<'tu, 'ge> {
 	Function,
 	FunctionOperator(OperatorKind),
-	Constructor(Class<'tu>),
-	InstanceMethod(Class<'tu>),
-	StaticMethod(Class<'tu>),
-	FieldAccessor(Class<'tu>),
-	ConversionMethod(Class<'tu>),
-	InstanceOperator(Class<'tu>, OperatorKind),
+	Constructor(Class<'tu, 'ge>),
+	InstanceMethod(Class<'tu, 'ge>),
+	StaticMethod(Class<'tu, 'ge>),
+	FieldAccessor(Class<'tu, 'ge>),
+	ConversionMethod(Class<'tu, 'ge>),
+	InstanceOperator(Class<'tu, 'ge>, OperatorKind),
 	GenericFunction,
-	GenericInstanceMethod(Class<'tu>),
+	GenericInstanceMethod(Class<'tu, 'ge>),
 }
 
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -91,19 +91,19 @@ pub enum FunctionTypeHint {
 }
 
 #[derive(Clone)]
-pub struct Func<'tu> {
+pub struct Func<'tu, 'ge> {
 	entity: Entity<'tu>,
 	type_hint: FunctionTypeHint,
 	name_hint: Option<&'tu str>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> Func<'tu> {
-	pub fn new(entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> Func<'tu, 'ge> {
+	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity, type_hint: FunctionTypeHint::None, name_hint: None, gen_env }
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FunctionTypeHint, name_hint: Option<&'tu str>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_hint: FunctionTypeHint, name_hint: Option<&'tu str>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity, type_hint, name_hint, gen_env }
 	}
 
@@ -119,7 +119,7 @@ impl<'tu> Func<'tu> {
 		self.type_hint
 	}
 
-	pub fn kind(&self) -> Kind<'tu> {
+	pub fn kind(&self) -> Kind<'tu, 'ge> {
 		const OPERATOR: &str = "operator";
 		match self.entity.get_kind() {
 			EntityKind::FunctionDecl => {
@@ -176,7 +176,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_constructor(&self) -> Option<Class<'tu>> {
+	pub fn as_constructor(&self) -> Option<Class<'tu, 'ge>> {
 		if let Kind::Constructor(out) = self.kind() {
 			Some(out)
 		} else {
@@ -184,7 +184,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_instance_method(&self) -> Option<Class<'tu>> {
+	pub fn as_instance_method(&self) -> Option<Class<'tu, 'ge>> {
 		match self.kind() {
 			Kind::InstanceMethod(out) | Kind::FieldAccessor(out) | Kind::GenericInstanceMethod(out)
 			| Kind::ConversionMethod(out) | Kind::InstanceOperator(out, ..) => {
@@ -196,7 +196,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_static_method(&self) -> Option<Class<'tu>> {
+	pub fn as_static_method(&self) -> Option<Class<'tu, 'ge>> {
 		if let Kind::StaticMethod(out) = self.kind() {
 			Some(out)
 		} else {
@@ -204,7 +204,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_field_accessor(&self) -> Option<Field<'tu>> {
+	pub fn as_field_accessor(&self) -> Option<Field<'tu, 'ge>> {
 		if let Kind::FieldAccessor(..) = self.kind() {
 			Some(Field::new(self.entity, self.gen_env))
 		} else {
@@ -212,7 +212,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_field_setter(&self) -> Option<Field<'tu>> {
+	pub fn as_field_setter(&self) -> Option<Field<'tu, 'ge>> {
 		if self.as_field_accessor().is_some() && self.type_hint == FunctionTypeHint::FieldSetter {
 			Some(Field::new_ext(self.entity, FieldTypeHint::FieldSetter, self.gen_env))
 		} else {
@@ -220,7 +220,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_conversion_method(&self) -> Option<Class<'tu>> {
+	pub fn as_conversion_method(&self) -> Option<Class<'tu, 'ge>> {
 		if let Kind::ConversionMethod(out) = self.kind() {
 			Some(out)
 		} else {
@@ -228,7 +228,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn as_operator(&self) -> Option<(Option<Class<'tu>>, OperatorKind)> {
+	pub fn as_operator(&self) -> Option<(Option<Class<'tu, 'ge>>, OperatorKind)> {
 		match self.kind() {
 			Kind::FunctionOperator(kind) => {
 				Some((None, kind))
@@ -298,7 +298,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn return_type(&self) -> TypeRef<'tu> {
+	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Constructor(cls) => {
 				cls.type_ref()
@@ -363,7 +363,7 @@ impl<'tu> Func<'tu> {
 		}
 	}
 
-	pub fn arguments(&self) -> Vec<Field<'tu>> {
+	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
 		let args = self.clang_arguments();
 
 		let empty_hashmap = HashMap::new();
@@ -411,7 +411,7 @@ impl<'tu> Func<'tu> {
 			.collect()
 	}
 
-	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
+	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		self.arguments().into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
@@ -459,13 +459,13 @@ impl<'tu> Func<'tu> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for Func<'tu> {
+impl<'tu> EntityElement<'tu> for Func<'tu, '_> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for Func<'_> {
+impl Element for Func<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		let identifier = self.identifier();
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) || settings::FUNC_SPECIALIZE.contains_key(identifier.as_ref()) {
@@ -662,13 +662,13 @@ impl Element for Func<'_> {
 	}
 }
 
-impl fmt::Display for Func<'_> {
+impl fmt::Display for Func<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for Func<'_> {
+impl fmt::Debug for Func<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Func");
 		self.update_debug_struct(&mut debug_struct)

@@ -16,21 +16,21 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct SmartPtr<'tu> {
+pub struct SmartPtr<'tu, 'ge> {
 	entity: Entity<'tu>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> SmartPtr<'tu> {
-	pub fn new(entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
+	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity, gen_env }
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu> {
+	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.entity.get_type().expect("Can't get smart pointer type"), self.gen_env)
 	}
 
-	pub fn pointee(&self) -> TypeRef<'tu> {
+	pub fn pointee(&self) -> TypeRef<'tu, 'ge> {
 		self.type_ref().template_specialization_args().into_iter()
 			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
 				Some(type_ref)
@@ -39,7 +39,7 @@ impl<'tu> SmartPtr<'tu> {
 			}).expect("Smart pointer template argument list is empty")
 	}
 
-	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
+	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		if self.pointee().as_typedef().is_some() {
 			self.type_ref().canonical_clang().dependent_types()
 		} else {
@@ -56,13 +56,13 @@ impl<'tu> SmartPtr<'tu> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for SmartPtr<'tu> {
+impl<'tu> EntityElement<'tu> for SmartPtr<'tu, '_> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for SmartPtr<'_> {
+impl Element for SmartPtr<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self) || self.pointee().is_excluded()
 	}
@@ -112,13 +112,13 @@ impl Element for SmartPtr<'_> {
 	}
 }
 
-impl fmt::Display for SmartPtr<'_> {
+impl fmt::Display for SmartPtr<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for SmartPtr<'_> {
+impl fmt::Debug for SmartPtr<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("SmartPtr");
 		self.update_debug_struct(&mut debug_struct)

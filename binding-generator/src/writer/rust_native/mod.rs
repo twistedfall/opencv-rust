@@ -9,13 +9,14 @@ use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use element::{DepType, RustNativeGeneratedElement};
+use element::RustNativeGeneratedElement;
 
 use crate::{
 	Class,
 	comment,
 	CompiledInterpolation,
 	Const,
+	DependentType,
 	Element,
 	Enum,
 	Func,
@@ -118,9 +119,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 	}
 }
 
-impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
-	type D = DepType<'tu>;
-
+impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_ephemeral_header(path) || opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
@@ -163,7 +162,7 @@ impl<'tu> GeneratorVisitor<'tu> for RustNativeBindingWriter<'_> {
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
-	fn visit_dependent_type(&mut self, typ: Self::D) {
+	fn visit_dependent_type(&mut self, typ: DependentType) {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 

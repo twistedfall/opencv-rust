@@ -21,7 +21,7 @@ fn cpp_extern_return<'t>(type_ref: &'t TypeRef, constness: ConstnessOverride) ->
 	type_ref.render(renderer)
 }
 
-impl RustNativeGeneratedElement for ReturnTypeWrapper<'_> {
+impl RustNativeGeneratedElement for ReturnTypeWrapper<'_, '_> {
 	fn element_order(&self) -> u8 {
 		10
 	}

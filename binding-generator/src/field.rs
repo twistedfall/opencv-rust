@@ -41,34 +41,34 @@ impl Default for FieldTypeHint<'_> {
 }
 
 #[derive(Clone)]
-pub struct Field<'tu> {
+pub struct Field<'tu, 'ge> {
 	entity: Entity<'tu>,
 	type_hint: FieldTypeHint<'tu>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> Field<'tu> {
-	pub fn new(entity: impl Into<Entity<'tu>>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> Field<'tu, 'ge> {
+	pub fn new(entity: impl Into<Entity<'tu>>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::new_ext(entity, Default::default(), gen_env)
 	}
 
-	pub fn new_ext(entity: impl Into<Entity<'tu>>, type_hint: FieldTypeHint<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: impl Into<Entity<'tu>>, type_hint: FieldTypeHint<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity: entity.into(), type_hint, gen_env }
 	}
 
-	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu>>>(args: I) -> impl Iterator<Item=(String, Field<'tu>)> {
+	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu, 'ge>>>(args: I) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
 		let args = args.into_iter();
 		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
 			.into_disambiguator(args, |f| f.rust_leafname())
 	}
 
-	pub fn cpp_disambiguate_names(args: impl IntoIterator<Item=Field<'tu>>) -> impl Iterator<Item=(String, Field<'tu>)> {
+	pub fn cpp_disambiguate_names(args: impl IntoIterator<Item=Field<'tu, 'ge>>) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
 		let args = args.into_iter();
 		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
 			.into_disambiguator(args, |f| f.cpp_localname())
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu> {
+	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		let type_hint = match self.type_hint {
 			FieldTypeHint::Slice => TypeRefTypeHint::Slice,
 			FieldTypeHint::NullableSlice => TypeRefTypeHint::NullableSlice,
@@ -105,7 +105,7 @@ impl<'tu> Field<'tu> {
 		None
 	}
 
-	pub fn parent(&self) -> Class<'tu> {
+	pub fn parent(&self) -> Class<'tu, 'ge> {
 		let parent_entity = self.entity.get_semantic_parent().expect("Can't get parent of field");
 		match parent_entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
@@ -137,13 +137,13 @@ impl<'tu> Field<'tu> {
 	}
 }
 
-impl<'tu> EntityElement<'tu> for Field<'tu> {
+impl<'tu> EntityElement<'tu> for Field<'tu, '_> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for Field<'_> {
+impl Element for Field<'_, '_> {
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self) || self.type_ref().is_ignored()
 	}
@@ -193,13 +193,13 @@ impl Element for Field<'_> {
 	}
 }
 
-impl fmt::Display for Field<'_> {
+impl fmt::Display for Field<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for Field<'_> {
+impl fmt::Debug for Field<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_struct("Field")
 			.field("rust_name", &self.rust_localname())

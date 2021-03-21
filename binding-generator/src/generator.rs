@@ -48,17 +48,34 @@ use crate::{
 	vector::Vector,
 };
 
-pub trait DependentType<'tu> {
-	fn from_return_type_wrapper(s: ReturnTypeWrapper<'tu>) -> Self;
-	fn from_abstract_ref_wrapper(s: AbstractRefWrapper<'tu>) -> Self;
-	fn from_vector(s: Vector<'tu>) -> Self;
-	fn from_smart_ptr(s: SmartPtr<'tu>) -> Self;
+#[derive(Debug)]
+pub enum DependentType<'tu, 'ge> {
+	ReturnTypeWrapper(ReturnTypeWrapper<'tu, 'ge>),
+	AbstractRefWrapper(AbstractRefWrapper<'tu, 'ge>),
+	Vector(Vector<'tu, 'ge>),
+	SmartPtr(SmartPtr<'tu, 'ge>),
+}
+
+impl<'tu, 'ge> DependentType<'tu, 'ge> {
+	pub fn from_return_type_wrapper(s: ReturnTypeWrapper<'tu, 'ge>) -> Self {
+		DependentType::ReturnTypeWrapper(s)
+	}
+
+	pub fn from_abstract_ref_wrapper(s: AbstractRefWrapper<'tu, 'ge>) -> Self {
+		DependentType::AbstractRefWrapper(s)
+	}
+
+	pub fn from_vector(s: Vector<'tu, 'ge>) -> Self {
+		DependentType::Vector(s)
+	}
+
+	pub fn from_smart_ptr(s: SmartPtr<'tu, 'ge>) -> Self {
+		DependentType::SmartPtr(s)
+	}
 }
 
 #[allow(unused)]
-pub trait GeneratorVisitor<'tu> {
-	type D: DependentType<'tu>;
-
+pub trait GeneratorVisitor {
 	fn wants_file(&mut self, path: &Path) -> bool { true }
 
 	fn visit_module_comment(&mut self, comment: String) {}
@@ -67,7 +84,7 @@ pub trait GeneratorVisitor<'tu> {
 	fn visit_func(&mut self, func: Func) {}
 	fn visit_typedef(&mut self, typedef: Typedef) {}
 	fn visit_class(&mut self, class: Class) {}
-	fn visit_dependent_type(&mut self, typ: Self::D) {}
+	fn visit_dependent_type(&mut self, typ: DependentType) {}
 
 	fn visit_ephemeral_header(&mut self, contents: &str) {}
 }
@@ -186,14 +203,14 @@ pub struct Generator {
 	clang: Clang,
 }
 
-struct OpenCVWalker<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> {
-	opencv_include_dir: &'tu Path,
+struct OpenCVWalker<'tu, 'r, V: GeneratorVisitor> {
+	opencv_include_dir: &'r Path,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
 	comment_found: bool,
 }
 
-impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V> {
+impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, '_, V> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
@@ -268,8 +285,8 @@ impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> EntityWalkerVisitor<'tu> for Open
 	}
 }
 
-impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> OpenCVWalker<'tu, V> {
-	pub fn new(opencv_include_dir: &'tu Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'r, V: GeneratorVisitor> OpenCVWalker<'tu, 'r, V> {
+	pub fn new(opencv_include_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self { opencv_include_dir, visitor, gen_env, comment_found: false }
 	}
 
@@ -408,7 +425,7 @@ impl<'tu, V: for<'gtu> GeneratorVisitor<'gtu>> OpenCVWalker<'tu, V> {
 	}
 }
 
-impl<V: for<'gtu> GeneratorVisitor<'gtu>> Drop for OpenCVWalker<'_, V> {
+impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, '_, V> {
 	fn drop(&mut self) {
 		if !self.comment_found {
 			// some module level comments like "bioinspired" are not attached to anything and libclang
@@ -516,7 +533,7 @@ impl Generator {
 		entity_processor(root_tu);
 	}
 
-	pub fn process_opencv_module(&self, module: &str, mut visitor: impl for<'gtu> GeneratorVisitor<'gtu>) {
+	pub fn process_opencv_module(&self, module: &str, mut visitor: impl GeneratorVisitor) {
 		self.process_module(module, true, |mut root_tu| {
 			let mut root_entity = root_tu.get_entity();
 			let walker = EntityWalker::new(root_entity);

@@ -44,11 +44,11 @@ impl ExportConfig {
 
 type ExportIdx = (PathBuf, u32, u32);
 
-struct DBPopulator<'ge, 'tu> {
+struct DBPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
-impl<'tu> DBPopulator<'_, 'tu> {
+impl<'tu> DBPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.get_comment().unwrap_or_default();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
@@ -70,7 +70,7 @@ impl<'tu> DBPopulator<'_, 'tu> {
 	}
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'_, 'tu> {
+impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
 			|| is_ephemeral_header(path)

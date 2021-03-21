@@ -5,7 +5,7 @@ use crate::{AbstractRefWrapper, CompiledInterpolation, Constness, ConstnessOverr
 
 use super::RustNativeGeneratedElement;
 
-impl RustNativeGeneratedElement for AbstractRefWrapper<'_> {
+impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 	fn element_order(&self) -> u8 {
 		10
 	}

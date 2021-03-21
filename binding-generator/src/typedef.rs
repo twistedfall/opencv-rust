@@ -18,21 +18,21 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct Typedef<'tu> {
+pub struct Typedef<'tu, 'ge> {
 	entity: Entity<'tu>,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> Typedef<'tu> {
-	pub fn new(entity: Entity<'tu>, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> Typedef<'tu, 'ge> {
+	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity, gen_env }
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu> {
+	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.entity.get_type().expect("Can't get typedef type"), self.gen_env)
 	}
 
-	pub fn underlying_type_ref(&self) -> TypeRef<'tu> {
+	pub fn underlying_type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new_ext(
 			self.entity.get_typedef_underlying_type().expect("Can't get typedef underlying type"),
 			TypeRefTypeHint::None,
@@ -41,18 +41,18 @@ impl<'tu> Typedef<'tu> {
 		)
 	}
 
-	pub fn dependent_types<D: DependentType<'tu>>(&self) -> Vec<D> {
+	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		self.underlying_type_ref().dependent_types()
 	}
 }
 
-impl<'tu> EntityElement<'tu> for Typedef<'tu> {
+impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 	fn entity(&self) -> Entity<'tu> {
 		self.entity
 	}
 }
 
-impl Element for Typedef<'_> {
+impl Element for Typedef<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
 			|| self.rust_fullname() == self.underlying_type_ref().rust_full() // fixes recursive typedefs like Cv16suf
@@ -108,13 +108,13 @@ impl Element for Typedef<'_> {
 	}
 }
 
-impl fmt::Display for Typedef<'_> {
+impl fmt::Display for Typedef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 
-impl fmt::Debug for Typedef<'_> {
+impl fmt::Debug for Typedef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Typedef");
 		self.update_debug_struct(&mut debug_struct)

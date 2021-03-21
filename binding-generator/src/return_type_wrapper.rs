@@ -14,23 +14,23 @@ pub enum DefinitionLocation {
 }
 
 #[derive(Debug)]
-pub struct ReturnTypeWrapper<'tu> {
-	type_ref: TypeRef<'tu>,
+pub struct ReturnTypeWrapper<'tu, 'ge> {
+	type_ref: TypeRef<'tu, 'ge>,
 	const_hint: ConstnessOverride,
 	definition_location: DefinitionLocation,
-	gen_env: &'tu GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
-impl<'tu> ReturnTypeWrapper<'tu> {
-	pub fn new(type_ref: TypeRef<'tu>, definition_location: DefinitionLocation, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+impl<'tu, 'ge> ReturnTypeWrapper<'tu, 'ge> {
+	pub fn new(type_ref: TypeRef<'tu, 'ge>, definition_location: DefinitionLocation, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::new_ext(type_ref, ConstnessOverride::No, definition_location, gen_env)
 	}
 
-	pub fn new_ext(type_ref: TypeRef<'tu>, const_hint: ConstnessOverride, definition_location: DefinitionLocation, gen_env: &'tu GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(type_ref: TypeRef<'tu, 'ge>, const_hint: ConstnessOverride, definition_location: DefinitionLocation, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { type_ref, const_hint, definition_location, gen_env }
 	}
 
-	pub fn type_ref(&self) -> &TypeRef<'tu> {
+	pub fn type_ref(&self) -> &TypeRef<'tu, 'ge> {
 		&self.type_ref
 	}
 

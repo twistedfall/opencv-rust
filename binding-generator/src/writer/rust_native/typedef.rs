@@ -14,7 +14,7 @@ use crate::{
 
 use super::RustNativeGeneratedElement;
 
-impl RustNativeGeneratedElement for Typedef<'_> {
+impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_localname())
 	}
