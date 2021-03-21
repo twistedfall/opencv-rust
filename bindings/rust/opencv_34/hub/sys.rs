@@ -5189,6 +5189,7 @@ mod stitching_sys {
 		pub fn cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
 		pub fn cv_CompressedRectilinearWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_CylindricalWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_CylindricalWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_FisheyeWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_MercatorWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
@@ -5196,7 +5197,9 @@ mod stitching_sys {
 		pub fn cv_PaniniWarper_PaniniWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
 		pub fn cv_PaniniWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PlaneWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_PlaneWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_SphericalWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_SphericalWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_StereographicWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_Stitcher_createDefault_bool(try_use_gpu: bool) -> Result<*mut c_void>;
 		pub fn cv_Stitcher_create_Mode_bool(mode: crate::stitching::Stitcher_Mode, try_use_gpu: bool) -> Result<*mut c_void>;

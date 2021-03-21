@@ -1,3 +1,8 @@
+* 0.50.0
+  * Improve smart pointer handling (`Ptr`), deeper analysis now generates more necessary `Ptr<T>` bindings and
+    all `Ptr<Child>` types are now castable to `Ptr<Parent>` when it's required by the OpenCV API (fixes [#217](https://github.com/twistedfall/opencv-rust/issues/217))
+  * Module-level documentation generation for `tracking` module is now fixed
+
 * 0.49.1
   * Improved processing of environment variables
 

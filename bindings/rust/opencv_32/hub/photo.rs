@@ -236,7 +236,7 @@ pub fn create_tonemap(gamma: f32) -> Result<core::Ptr::<dyn crate::photo::Tonema
 /// * search_window: 21
 /// * block_size: 7
 /// * stream: Stream::Null()
-pub fn fast_nl_means_denoising_colored_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+pub fn fast_nl_means_denoising_colored_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream()) }.into_result()
@@ -267,7 +267,7 @@ pub fn fast_nl_means_denoising_colored_1(src: &dyn core::ToInputArray, dst: &mut
 /// * search_window: 21
 /// * block_size: 7
 /// * stream: Stream::Null()
-pub fn fast_nl_means_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+pub fn fast_nl_means_denoising_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, stream.as_raw_mut_Stream()) }.into_result()

@@ -14,17 +14,17 @@ Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your sy
 
 Update your Cargo.toml
 ```toml
-opencv = "0.49"
+opencv = "0.50"
 ```
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.49", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
+opencv = {version = "0.50", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
 ```
 
 Or enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.49", features = ["contrib"]}
+opencv = {version = "0.50", features = ["contrib"]}
 ```
 
 Import prelude

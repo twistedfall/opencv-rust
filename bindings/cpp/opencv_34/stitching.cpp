@@ -176,6 +176,16 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::RotationWarper>*>))
 	}
 	
+	void cv_CylindricalWarperGpu_delete(cv::CylindricalWarperGpu* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::detail::RotationWarper>*> cv_CylindricalWarperGpu_create_const_float(const cv::CylindricalWarperGpu* instance, float scale) {
+		try {
+			cv::Ptr<cv::detail::RotationWarper> ret = instance->create(scale);
+			return Ok(new cv::Ptr<cv::detail::RotationWarper>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::RotationWarper>*>))
+	}
+	
 	void cv_FisheyeWarper_delete(cv::FisheyeWarper* instance) {
 		delete instance;
 	}
@@ -240,10 +250,30 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::RotationWarper>*>))
 	}
 	
+	void cv_PlaneWarperGpu_delete(cv::PlaneWarperGpu* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::detail::RotationWarper>*> cv_PlaneWarperGpu_create_const_float(const cv::PlaneWarperGpu* instance, float scale) {
+		try {
+			cv::Ptr<cv::detail::RotationWarper> ret = instance->create(scale);
+			return Ok(new cv::Ptr<cv::detail::RotationWarper>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::RotationWarper>*>))
+	}
+	
 	void cv_SphericalWarper_delete(cv::SphericalWarper* instance) {
 		delete instance;
 	}
 	Result<cv::Ptr<cv::detail::RotationWarper>*> cv_SphericalWarper_create_const_float(const cv::SphericalWarper* instance, float scale) {
+		try {
+			cv::Ptr<cv::detail::RotationWarper> ret = instance->create(scale);
+			return Ok(new cv::Ptr<cv::detail::RotationWarper>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::detail::RotationWarper>*>))
+	}
+	
+	void cv_SphericalWarperGpu_delete(cv::SphericalWarperGpu* instance) {
+		delete instance;
+	}
+	Result<cv::Ptr<cv::detail::RotationWarper>*> cv_SphericalWarperGpu_create_const_float(const cv::SphericalWarperGpu* instance, float scale) {
 		try {
 			cv::Ptr<cv::detail::RotationWarper> ret = instance->create(scale);
 			return Ok(new cv::Ptr<cv::detail::RotationWarper>(ret));

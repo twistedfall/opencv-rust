@@ -1,4 +1,5 @@
-#include "imgproc.hpp"
+#include "ocvrs_common.hpp"
+#include <opencv2/imgproc.hpp>
 #include "imgproc_types.hpp"
 
 extern "C" {

@@ -49,7 +49,7 @@
 //!    # Image Blenders
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Detail_RotationWarper, super::Detail_ProjectorBaseTrait, super::Detail_PlaneProjectorTrait, super::Detail_PlaneWarperTrait, super::Detail_AffineWarperTrait, super::Detail_SphericalWarperTrait, super::Detail_CylindricalProjectorTrait, super::Detail_CylindricalWarperTrait, super::Detail_FisheyeProjectorTrait, super::Detail_FisheyeWarperTrait, super::Detail_StereographicProjectorTrait, super::Detail_StereographicWarperTrait, super::Detail_CompressedRectilinearProjectorTrait, super::Detail_CompressedRectilinearWarperTrait, super::Detail_CompressedRectilinearPortraitProjectorTrait, super::Detail_CompressedRectilinearPortraitWarperTrait, super::Detail_PaniniProjectorTrait, super::Detail_PaniniWarperTrait, super::Detail_PaniniPortraitProjectorTrait, super::Detail_PaniniPortraitWarperTrait, super::Detail_MercatorProjectorTrait, super::Detail_MercatorWarperTrait, super::Detail_TransverseMercatorProjectorTrait, super::Detail_TransverseMercatorWarperTrait, super::Detail_PlaneWarperGpuTrait, super::Detail_SphericalWarperGpuTrait, super::Detail_CylindricalWarperGpuTrait, super::Detail_SphericalPortraitProjectorTrait, super::Detail_SphericalPortraitWarperTrait, super::Detail_CylindricalPortraitProjectorTrait, super::Detail_CylindricalPortraitWarperTrait, super::Detail_PlanePortraitProjectorTrait, super::Detail_PlanePortraitWarperTrait, super::PyRotationWarperTrait, super::WarperCreator, super::PlaneWarperTrait, super::AffineWarperTrait, super::CylindricalWarperTrait, super::SphericalWarperTrait, super::FisheyeWarperTrait, super::StereographicWarperTrait, super::CompressedRectilinearWarperTrait, super::CompressedRectilinearPortraitWarperTrait, super::PaniniWarperTrait, super::PaniniPortraitWarperTrait, super::MercatorWarperTrait, super::TransverseMercatorWarperTrait, super::Detail_ImageFeaturesTrait, super::Detail_MatchesInfoTrait, super::Detail_FeaturesMatcher, super::Detail_BestOf2NearestMatcherTrait, super::Detail_BestOf2NearestRangeMatcherTrait, super::Detail_AffineBestOf2NearestMatcherTrait, super::Detail_DisjointSetsTrait, super::Detail_GraphEdgeTrait, super::Detail_GraphTrait, super::Detail_CameraParamsTrait, super::Detail_Estimator, super::Detail_HomographyBasedEstimatorTrait, super::Detail_AffineBasedEstimatorTrait, super::Detail_BundleAdjusterBase, super::Detail_NoBundleAdjusterTrait, super::Detail_BundleAdjusterReprojTrait, super::Detail_BundleAdjusterRayTrait, super::Detail_BundleAdjusterAffineTrait, super::Detail_BundleAdjusterAffinePartialTrait, super::Detail_ExposureCompensator, super::Detail_NoExposureCompensatorTrait, super::Detail_GainCompensatorTrait, super::Detail_ChannelsCompensatorTrait, super::Detail_BlocksCompensator, super::Detail_BlocksGainCompensatorTrait, super::Detail_BlocksChannelsCompensatorTrait, super::Detail_SeamFinder, super::Detail_NoSeamFinderTrait, super::Detail_PairwiseSeamFinder, super::Detail_VoronoiSeamFinderTrait, super::Detail_DpSeamFinderTrait, super::Detail_GraphCutSeamFinderBaseTrait, super::Detail_GraphCutSeamFinderTrait, super::Detail_GraphCutSeamFinderGpuTrait, super::Detail_BlenderTrait, super::Detail_FeatherBlenderTrait, super::Detail_MultiBandBlenderTrait, super::StitcherTrait };
+	pub use { super::Detail_RotationWarper, super::Detail_ProjectorBaseTrait, super::Detail_PlaneProjectorTrait, super::Detail_PlaneWarperTrait, super::Detail_AffineWarperTrait, super::Detail_SphericalWarperTrait, super::Detail_CylindricalProjectorTrait, super::Detail_CylindricalWarperTrait, super::Detail_FisheyeProjectorTrait, super::Detail_FisheyeWarperTrait, super::Detail_StereographicProjectorTrait, super::Detail_StereographicWarperTrait, super::Detail_CompressedRectilinearProjectorTrait, super::Detail_CompressedRectilinearWarperTrait, super::Detail_CompressedRectilinearPortraitProjectorTrait, super::Detail_CompressedRectilinearPortraitWarperTrait, super::Detail_PaniniProjectorTrait, super::Detail_PaniniWarperTrait, super::Detail_PaniniPortraitProjectorTrait, super::Detail_PaniniPortraitWarperTrait, super::Detail_MercatorProjectorTrait, super::Detail_MercatorWarperTrait, super::Detail_TransverseMercatorProjectorTrait, super::Detail_TransverseMercatorWarperTrait, super::Detail_PlaneWarperGpuTrait, super::Detail_SphericalWarperGpuTrait, super::Detail_CylindricalWarperGpuTrait, super::Detail_SphericalPortraitProjectorTrait, super::Detail_SphericalPortraitWarperTrait, super::Detail_CylindricalPortraitProjectorTrait, super::Detail_CylindricalPortraitWarperTrait, super::Detail_PlanePortraitProjectorTrait, super::Detail_PlanePortraitWarperTrait, super::PyRotationWarperTrait, super::WarperCreator, super::PlaneWarperTrait, super::AffineWarperTrait, super::CylindricalWarperTrait, super::SphericalWarperTrait, super::FisheyeWarperTrait, super::StereographicWarperTrait, super::CompressedRectilinearWarperTrait, super::CompressedRectilinearPortraitWarperTrait, super::PaniniWarperTrait, super::PaniniPortraitWarperTrait, super::MercatorWarperTrait, super::TransverseMercatorWarperTrait, super::PlaneWarperGpuTrait, super::CylindricalWarperGpuTrait, super::SphericalWarperGpuTrait, super::Detail_ImageFeaturesTrait, super::Detail_MatchesInfoTrait, super::Detail_FeaturesMatcher, super::Detail_BestOf2NearestMatcherTrait, super::Detail_BestOf2NearestRangeMatcherTrait, super::Detail_AffineBestOf2NearestMatcherTrait, super::Detail_DisjointSetsTrait, super::Detail_GraphEdgeTrait, super::Detail_GraphTrait, super::Detail_CameraParamsTrait, super::Detail_Estimator, super::Detail_HomographyBasedEstimatorTrait, super::Detail_AffineBasedEstimatorTrait, super::Detail_BundleAdjusterBase, super::Detail_NoBundleAdjusterTrait, super::Detail_BundleAdjusterReprojTrait, super::Detail_BundleAdjusterRayTrait, super::Detail_BundleAdjusterAffineTrait, super::Detail_BundleAdjusterAffinePartialTrait, super::Detail_ExposureCompensator, super::Detail_NoExposureCompensatorTrait, super::Detail_GainCompensatorTrait, super::Detail_ChannelsCompensatorTrait, super::Detail_BlocksCompensator, super::Detail_BlocksGainCompensatorTrait, super::Detail_BlocksChannelsCompensatorTrait, super::Detail_SeamFinder, super::Detail_NoSeamFinderTrait, super::Detail_PairwiseSeamFinder, super::Detail_VoronoiSeamFinderTrait, super::Detail_DpSeamFinderTrait, super::Detail_GraphCutSeamFinderBaseTrait, super::Detail_GraphCutSeamFinderTrait, super::Detail_GraphCutSeamFinderGpuTrait, super::Detail_BlenderTrait, super::Detail_FeatherBlenderTrait, super::Detail_MultiBandBlenderTrait, super::StitcherTrait };
 }
 
 pub const Detail_Blender_FEATHER: i32 = 1;
@@ -445,6 +445,49 @@ impl crate::stitching::WarperCreator for CylindricalWarper {
 impl CylindricalWarper {
 }
 
+pub trait CylindricalWarperGpuTrait: crate::stitching::WarperCreator {
+	fn as_raw_CylindricalWarperGpu(&self) -> *const c_void;
+	fn as_raw_mut_CylindricalWarperGpu(&mut self) -> *mut c_void;
+
+	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
+		unsafe { sys::cv_CylindricalWarperGpu_create_const_float(self.as_raw_CylindricalWarperGpu(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub struct CylindricalWarperGpu {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { CylindricalWarperGpu }
+
+impl Drop for CylindricalWarperGpu {
+	fn drop(&mut self) {
+		extern "C" { fn cv_CylindricalWarperGpu_delete(instance: *mut c_void); }
+		unsafe { cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
+	}
+}
+
+impl CylindricalWarperGpu {
+	#[inline] pub fn as_raw_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for CylindricalWarperGpu {}
+
+impl crate::stitching::CylindricalWarperGpuTrait for CylindricalWarperGpu {
+	#[inline] fn as_raw_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::WarperCreator for CylindricalWarperGpu {
+	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl CylindricalWarperGpu {
+}
+
 pub trait FisheyeWarperTrait: crate::stitching::WarperCreator {
 	fn as_raw_FisheyeWarper(&self) -> *const c_void;
 	fn as_raw_mut_FisheyeWarper(&mut self) -> *mut c_void;
@@ -680,6 +723,49 @@ impl crate::stitching::WarperCreator for PlaneWarper {
 impl PlaneWarper {
 }
 
+pub trait PlaneWarperGpuTrait: crate::stitching::WarperCreator {
+	fn as_raw_PlaneWarperGpu(&self) -> *const c_void;
+	fn as_raw_mut_PlaneWarperGpu(&mut self) -> *mut c_void;
+
+	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
+		unsafe { sys::cv_PlaneWarperGpu_create_const_float(self.as_raw_PlaneWarperGpu(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub struct PlaneWarperGpu {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { PlaneWarperGpu }
+
+impl Drop for PlaneWarperGpu {
+	fn drop(&mut self) {
+		extern "C" { fn cv_PlaneWarperGpu_delete(instance: *mut c_void); }
+		unsafe { cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
+	}
+}
+
+impl PlaneWarperGpu {
+	#[inline] pub fn as_raw_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for PlaneWarperGpu {}
+
+impl crate::stitching::PlaneWarperGpuTrait for PlaneWarperGpu {
+	#[inline] fn as_raw_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::WarperCreator for PlaneWarperGpu {
+	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl PlaneWarperGpu {
+}
+
 pub trait PyRotationWarperTrait {
 	fn as_raw_PyRotationWarper(&self) -> *const c_void;
 	fn as_raw_mut_PyRotationWarper(&mut self) -> *mut c_void;
@@ -861,6 +947,49 @@ impl crate::stitching::WarperCreator for SphericalWarper {
 }
 
 impl SphericalWarper {
+}
+
+pub trait SphericalWarperGpuTrait: crate::stitching::WarperCreator {
+	fn as_raw_SphericalWarperGpu(&self) -> *const c_void;
+	fn as_raw_mut_SphericalWarperGpu(&mut self) -> *mut c_void;
+
+	fn create(&self, scale: f32) -> Result<core::Ptr::<dyn crate::stitching::Detail_RotationWarper>> {
+		unsafe { sys::cv_SphericalWarperGpu_create_const_float(self.as_raw_SphericalWarperGpu(), scale) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stitching::Detail_RotationWarper>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub struct SphericalWarperGpu {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { SphericalWarperGpu }
+
+impl Drop for SphericalWarperGpu {
+	fn drop(&mut self) {
+		extern "C" { fn cv_SphericalWarperGpu_delete(instance: *mut c_void); }
+		unsafe { cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
+	}
+}
+
+impl SphericalWarperGpu {
+	#[inline] pub fn as_raw_SphericalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_SphericalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for SphericalWarperGpu {}
+
+impl crate::stitching::SphericalWarperGpuTrait for SphericalWarperGpu {
+	#[inline] fn as_raw_SphericalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SphericalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::WarperCreator for SphericalWarperGpu {
+	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl SphericalWarperGpu {
 }
 
 pub trait StereographicWarperTrait: crate::stitching::WarperCreator {

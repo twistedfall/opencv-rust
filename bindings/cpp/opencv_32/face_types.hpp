@@ -83,5 +83,9 @@ extern "C" {
 	cv::face::StandardCollector* cv_PtrOfStandardCollector_get_inner_ptr_mut(cv::Ptr<cv::face::StandardCollector>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::face::PredictCollector>* cv_PtrOfStandardCollector_to_PtrOfPredictCollector(cv::Ptr<cv::face::StandardCollector>* instance) {
+		return new cv::Ptr<cv::face::PredictCollector>(instance->dynamicCast<cv::face::PredictCollector>());
+	}
 }
 

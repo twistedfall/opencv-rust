@@ -767,6 +767,30 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	void cv_MaskFrameSource_delete(cv::videostab::MaskFrameSource* instance) {
+		delete instance;
+	}
+	Result<cv::videostab::MaskFrameSource*> cv_videostab_MaskFrameSource_MaskFrameSource_const_Ptr_IFrameSource_R(const cv::Ptr<cv::videostab::IFrameSource>* source) {
+		try {
+			cv::videostab::MaskFrameSource* ret = new cv::videostab::MaskFrameSource(*source);
+			return Ok<cv::videostab::MaskFrameSource*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::videostab::MaskFrameSource*>))
+	}
+	
+	Result_void cv_videostab_MaskFrameSource_reset(cv::videostab::MaskFrameSource* instance) {
+		try {
+			instance->reset();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Mat*> cv_videostab_MaskFrameSource_nextFrame(cv::videostab::MaskFrameSource* instance) {
+		try {
+			cv::Mat ret = instance->nextFrame();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
+	}
+	
 	void cv_MoreAccurateMotionWobbleSuppressor_delete(cv::videostab::MoreAccurateMotionWobbleSuppressor* instance) {
 		delete instance;
 	}

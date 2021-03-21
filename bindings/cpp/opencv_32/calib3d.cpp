@@ -1,4 +1,5 @@
-#include "calib3d.hpp"
+#include "ocvrs_common.hpp"
+#include <opencv2/calib3d.hpp>
 #include "calib3d_types.hpp"
 
 extern "C" {

@@ -21,6 +21,64 @@ extern "C" {
 	cv::AffineTransformer* cv_PtrOfAffineTransformer_get_inner_ptr_mut(cv::Ptr<cv::AffineTransformer>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::ShapeTransformer>* cv_PtrOfAffineTransformer_to_PtrOfShapeTransformer(cv::Ptr<cv::AffineTransformer>* instance) {
+		return new cv::Ptr<cv::ShapeTransformer>(instance->dynamicCast<cv::ShapeTransformer>());
+	}
+}
+
+extern "C" {
+	void cv_PtrOfChiHistogramCostExtractor_delete(cv::Ptr<cv::ChiHistogramCostExtractor>* instance) {
+		delete instance;
+	}
+
+	const cv::ChiHistogramCostExtractor* cv_PtrOfChiHistogramCostExtractor_get_inner_ptr(const cv::Ptr<cv::ChiHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::ChiHistogramCostExtractor* cv_PtrOfChiHistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::ChiHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+	
+	cv::Ptr<cv::HistogramCostExtractor>* cv_PtrOfChiHistogramCostExtractor_to_PtrOfHistogramCostExtractor(cv::Ptr<cv::ChiHistogramCostExtractor>* instance) {
+		return new cv::Ptr<cv::HistogramCostExtractor>(instance->dynamicCast<cv::HistogramCostExtractor>());
+	}
+}
+
+extern "C" {
+	void cv_PtrOfEMDHistogramCostExtractor_delete(cv::Ptr<cv::EMDHistogramCostExtractor>* instance) {
+		delete instance;
+	}
+
+	const cv::EMDHistogramCostExtractor* cv_PtrOfEMDHistogramCostExtractor_get_inner_ptr(const cv::Ptr<cv::EMDHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::EMDHistogramCostExtractor* cv_PtrOfEMDHistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::EMDHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+	
+	cv::Ptr<cv::HistogramCostExtractor>* cv_PtrOfEMDHistogramCostExtractor_to_PtrOfHistogramCostExtractor(cv::Ptr<cv::EMDHistogramCostExtractor>* instance) {
+		return new cv::Ptr<cv::HistogramCostExtractor>(instance->dynamicCast<cv::HistogramCostExtractor>());
+	}
+}
+
+extern "C" {
+	void cv_PtrOfEMDL1HistogramCostExtractor_delete(cv::Ptr<cv::EMDL1HistogramCostExtractor>* instance) {
+		delete instance;
+	}
+
+	const cv::EMDL1HistogramCostExtractor* cv_PtrOfEMDL1HistogramCostExtractor_get_inner_ptr(const cv::Ptr<cv::EMDL1HistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::EMDL1HistogramCostExtractor* cv_PtrOfEMDL1HistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::EMDL1HistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+	
+	cv::Ptr<cv::HistogramCostExtractor>* cv_PtrOfEMDL1HistogramCostExtractor_to_PtrOfHistogramCostExtractor(cv::Ptr<cv::EMDL1HistogramCostExtractor>* instance) {
+		return new cv::Ptr<cv::HistogramCostExtractor>(instance->dynamicCast<cv::HistogramCostExtractor>());
+	}
 }
 
 extern "C" {
@@ -48,6 +106,24 @@ extern "C" {
 
 	cv::HistogramCostExtractor* cv_PtrOfHistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::HistogramCostExtractor>* instance) {
 		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfNormHistogramCostExtractor_delete(cv::Ptr<cv::NormHistogramCostExtractor>* instance) {
+		delete instance;
+	}
+
+	const cv::NormHistogramCostExtractor* cv_PtrOfNormHistogramCostExtractor_get_inner_ptr(const cv::Ptr<cv::NormHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+
+	cv::NormHistogramCostExtractor* cv_PtrOfNormHistogramCostExtractor_get_inner_ptr_mut(cv::Ptr<cv::NormHistogramCostExtractor>* instance) {
+		return instance->get();
+	}
+	
+	cv::Ptr<cv::HistogramCostExtractor>* cv_PtrOfNormHistogramCostExtractor_to_PtrOfHistogramCostExtractor(cv::Ptr<cv::NormHistogramCostExtractor>* instance) {
+		return new cv::Ptr<cv::HistogramCostExtractor>(instance->dynamicCast<cv::HistogramCostExtractor>());
 	}
 }
 
@@ -90,6 +166,10 @@ extern "C" {
 
 	cv::ThinPlateSplineShapeTransformer* cv_PtrOfThinPlateSplineShapeTransformer_get_inner_ptr_mut(cv::Ptr<cv::ThinPlateSplineShapeTransformer>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::ShapeTransformer>* cv_PtrOfThinPlateSplineShapeTransformer_to_PtrOfShapeTransformer(cv::Ptr<cv::ThinPlateSplineShapeTransformer>* instance) {
+		return new cv::Ptr<cv::ShapeTransformer>(instance->dynamicCast<cv::ShapeTransformer>());
 	}
 }
 

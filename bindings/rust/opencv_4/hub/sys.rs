@@ -5844,6 +5844,7 @@ mod stitching_sys {
 		pub fn cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
 		pub fn cv_CompressedRectilinearWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_CylindricalWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_CylindricalWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_FisheyeWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_MercatorWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
@@ -5851,6 +5852,7 @@ mod stitching_sys {
 		pub fn cv_PaniniWarper_PaniniWarper_float_float(a: f32, b: f32) -> Result<*mut c_void>;
 		pub fn cv_PaniniWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PlaneWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_PlaneWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PyRotationWarper_PyRotationWarper_String_float(typ: *mut c_char, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_PyRotationWarper_PyRotationWarper() -> Result<*mut c_void>;
 		pub fn cv_PyRotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(instance: *mut c_void, pt: *const core::Point2f, k: *const c_void, r: *const c_void) -> Result<core::Point2f>;
@@ -5862,6 +5864,7 @@ mod stitching_sys {
 		pub fn cv_PyRotationWarper_getScale_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_PyRotationWarper_setScale_float(instance: *mut c_void, unnamed: f32) -> Result_void;
 		pub fn cv_SphericalWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
+		pub fn cv_SphericalWarperGpu_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_StereographicWarper_create_const_float(instance: *const c_void, scale: f32) -> Result<*mut c_void>;
 		pub fn cv_Stitcher_create_Mode(mode: crate::stitching::Stitcher_Mode) -> Result<*mut c_void>;
 		pub fn cv_Stitcher_registrationResol_const(instance: *const c_void) -> Result<f64>;
@@ -6907,6 +6910,9 @@ mod videostab_sys {
 		pub fn cv_videostab_LpMotionStabilizer_setWeight4_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_videostab_LpMotionStabilizer_weight4_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_videostab_LpMotionStabilizer_stabilize_int_const_vector_Mat_R_const_RangeR_MatX(instance: *mut c_void, size: i32, motions: *const c_void, range: *const c_void, stabilization_motions: *mut c_void) -> Result_void;
+		pub fn cv_videostab_MaskFrameSource_MaskFrameSource_const_Ptr_IFrameSource_R(source: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_videostab_MaskFrameSource_reset(instance: *mut c_void) -> Result_void;
+		pub fn cv_videostab_MaskFrameSource_nextFrame(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_const_MatR_MatR(instance: *mut c_void, idx: i32, frame: *const c_void, result: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressorBase_setPeriod_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressorBase_period_const(instance: *const c_void) -> Result<i32>;

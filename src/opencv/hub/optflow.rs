@@ -7,148 +7,25 @@
 	clippy::too_many_arguments,
 	clippy::unused_unit,
 )]
-//! # Image Processing
+//! # Optical Flow Algorithms
 //! 
-//! This module includes image-processing functions.
-//!    # Image Filtering
+//! Dense optical flow algorithms compute motion for each point:
 //! 
-//! Functions and classes described in this section are used to perform various linear or non-linear
-//! filtering operations on 2D images (represented as Mat's). It means that for each pixel location
-//! ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in the source image (normally, rectangular), its neighborhood is considered and used to
-//! compute the response. In case of a linear filter, it is a weighted sum of pixel values. In case of
-//! morphological operations, it is the minimum or maximum values, and so on. The computed response is
-//! stored in the destination image at the same location ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29). It means that the output image
-//! will be of the same size as the input image. Normally, the functions support multi-channel arrays,
-//! in which case every channel is processed independently. Therefore, the output image will also have
-//! the same number of channels as the input one.
+//! - cv::optflow::calcOpticalFlowSF
+//! - cv::optflow::createOptFlow_DeepFlow
 //! 
-//! Another common feature of the functions and classes described in this section is that, unlike
-//! simple arithmetic functions, they need to extrapolate values of some non-existing pixels. For
-//! example, if you want to smooth an image using a Gaussian ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) filter, then, when
-//! processing the left-most pixels in each row, you need pixels to the left of them, that is, outside
-//! of the image. You can let these pixels be the same as the left-most image pixels ("replicated
-//! border" extrapolation method), or assume that all the non-existing pixels are zeros ("constant
-//! border" extrapolation method), and so on. OpenCV enables you to specify the extrapolation method.
-//! For details, see #BorderTypes
+//! Motion templates is alternative technique for detecting motion and computing its direction.
+//! See samples/motempl.py.
 //! 
-//! @anchor filter_depths
-//! ### Depth combinations
-//! Input depth (src.depth()) | Output depth (ddepth)
-//! --------------------------|----------------------
-//! CV_8U                     | -1/CV_16S/CV_32F/CV_64F
-//! CV_16U/CV_16S             | -1/CV_32F/CV_64F
-//! CV_32F                    | -1/CV_32F/CV_64F
-//! CV_64F                    | -1/CV_64F
+//! - cv::motempl::updateMotionHistory
+//! - cv::motempl::calcMotionGradient
+//! - cv::motempl::calcGlobalOrientation
+//! - cv::motempl::segmentMotion
 //! 
+//! Functions reading and writing .flo files in "Middlebury" format, see: <http://vision.middlebury.edu/flow/code/flow-code/README.txt>
 //! 
-//! Note: when ddepth=-1, the output image will have the same depth as the source.
-//! 
-//!    # Geometric Image Transformations
-//! 
-//! The functions in this section perform various geometrical transformations of 2D images. They do not
-//! change the image content but deform the pixel grid and map this deformed grid to the destination
-//! image. In fact, to avoid sampling artifacts, the mapping is done in the reverse order, from
-//! destination to the source. That is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) of the destination image, the
-//! functions compute coordinates of the corresponding "donor" pixel in the source image and copy the
-//! pixel value:
-//! 
-//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%3D%20%5Ctexttt%7Bsrc%7D%20%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29)
-//! 
-//! In case when you specify the forward mapping ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cg%5Fx%2C%20g%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bsrc%7D%20%5Crightarrow%0A%5Ctexttt%7Bdst%7D), the OpenCV functions first compute the corresponding inverse mapping
-//! ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bdst%7D%20%5Crightarrow%20%5Ctexttt%7Bsrc%7D) and then use the above formula.
-//! 
-//! The actual implementations of the geometrical transformations, from the most generic remap and to
-//! the simplest and the fastest resize, need to solve two main problems with the above formula:
-//! 
-//! - Extrapolation of non-existing pixels. Similarly to the filtering functions described in the
-//! previous section, for some ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29), either one of ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29), or ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29), or both
-//! of them may fall outside of the image. In this case, an extrapolation method needs to be used.
-//! OpenCV provides the same selection of extrapolation methods as in the filtering functions. In
-//! addition, it provides the method #BORDER_TRANSPARENT. This means that the corresponding pixels in
-//! the destination image will not be modified at all.
-//! 
-//! - Interpolation of pixel values. Usually ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29) are floating-point
-//! numbers. This means that ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E) can be either an affine or perspective
-//! transformation, or radial lens distortion correction, and so on. So, a pixel value at fractional
-//! coordinates needs to be retrieved. In the simplest case, the coordinates can be just rounded to the
-//! nearest integer coordinates and the corresponding pixel can be used. This is called a
-//! nearest-neighbor interpolation. However, a better result can be achieved by using more
-//! sophisticated [interpolation methods](http://en.wikipedia.org/wiki/Multivariate_interpolation) ,
-//! where a polynomial function is fit into some neighborhood of the computed pixel ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%0Af%5Fy%28x%2Cy%29%29), and then the value of the polynomial at ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29) is taken as the
-//! interpolated pixel value. In OpenCV, you can choose between several interpolation methods. See
-//! resize for details.
-//! 
-//! 
-//! Note: The geometrical transformations do not work with `CV_8S` or `CV_32S` images.
-//! 
-//!    # Miscellaneous Image Transformations
-//!    # Drawing Functions
-//! 
-//! Drawing functions work with matrices/images of arbitrary depth. The boundaries of the shapes can be
-//! rendered with antialiasing (implemented only for 8-bit images for now). All the functions include
-//! the parameter color that uses an RGB value (that may be constructed with the Scalar constructor )
-//! for color images and brightness for grayscale images. For color images, the channel ordering is
-//! normally *Blue, Green, Red*. This is what imshow, imread, and imwrite expect. So, if you form a
-//! color using the Scalar constructor, it should look like:
-//! 
-//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BScalar%7D%20%28blue%20%5C%5F%20component%2C%20green%20%5C%5F%20component%2C%20red%20%5C%5F%20component%5B%2C%20alpha%20%5C%5F%20component%5D%29)
-//! 
-//! If you are using your own image rendering and I/O functions, you can use any channel ordering. The
-//! drawing functions process each channel independently and do not depend on the channel order or even
-//! on the used color space. The whole image can be converted from BGR to RGB or to a different color
-//! space using cvtColor .
-//! 
-//! If a drawn figure is partially or completely outside the image, the drawing functions clip it. Also,
-//! many drawing functions can handle pixel coordinates specified with sub-pixel accuracy. This means
-//! that the coordinates can be passed as fixed-point numbers encoded as integers. The number of
-//! fractional bits is specified by the shift parameter and the real point coordinates are calculated as
-//! ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BPoint%7D%28x%2Cy%29%5Crightarrow%5Ctexttt%7BPoint2f%7D%28x%2A2%5E%7B%2Dshift%7D%2Cy%2A2%5E%7B%2Dshift%7D%29) . This feature is
-//! especially effective when rendering antialiased shapes.
-//! 
-//! 
-//! Note: The functions do not support alpha-transparency when the target image is 4-channel. In this
-//! case, the color[3] is simply copied to the repainted pixels. Thus, if you want to paint
-//! semi-transparent shapes, you can paint them in a separate buffer and then blend it with the main
-//! image.
-//! 
-//!    # Color Space Conversions
-//!    # ColorMaps in OpenCV
-//! 
-//! The human perception isn't built for observing fine changes in grayscale images. Human eyes are more
-//! sensitive to observing changes between colors, so you often need to recolor your grayscale images to
-//! get a clue about them. OpenCV now comes with various colormaps to enhance the visualization in your
-//! computer vision application.
-//! 
-//! In OpenCV you only need applyColorMap to apply a colormap on a given image. The following sample
-//! code reads the path to an image from command line, applies a Jet colormap on it and shows the
-//! result:
-//! 
-//! @include snippets/imgproc_applyColorMap.cpp
-//! ## See also
-//! #ColormapTypes
-//! 
-//!    # Planar Subdivision
-//! 
-//! The Subdiv2D class described in this section is used to perform various planar subdivision on
-//! a set of 2D points (represented as vector of Point2f). OpenCV subdivides a plane into triangles
-//! using the Delaunay's algorithm, which corresponds to the dual graph of the Voronoi diagram.
-//! In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
-//! diagram with red lines.
-//! 
-//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.3.0/delaunay_voronoi.png)
-//! 
-//! The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
-//! location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
-//! 
-//!    # Histograms
-//!    # Structural Analysis and Shape Descriptors
-//!    # Motion Analysis and Object Tracking
-//!    # Feature Detection
-//!    # Object Detection
-//!    # C API
-//!    # Hardware Acceleration Layer
-//!        # Functions
-//!        # Interface
+//! - cv::optflow::readOpticalFlow
+//! - cv::optflow::writeOpticalFlow
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::PCAPriorTrait, super::OpticalFlowPCAFlowTrait, super::GPCPatchDescriptorTrait, super::GPCPatchSampleTrait, super::GPCTrainingSamplesTrait, super::GPCTreeTrait, super::GPCDetailsTrait, super::RLOFOpticalFlowParameterTrait, super::DenseRLOFOpticalFlow, super::SparseRLOFOpticalFlow, super::DualTVL1OpticalFlow };

@@ -33,7 +33,7 @@
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::ISparseOptFlowEstimator, super::IDenseOptFlowEstimator, super::PyrLkOptFlowEstimatorBaseTrait, super::SparsePyrLkOptFlowEstimatorTrait, super::SparsePyrLkOptFlowEstimatorGpuTrait, super::DensePyrLkOptFlowEstimatorGpuTrait, super::RansacParamsTrait, super::IOutlierRejector, super::NullOutlierRejectorTrait, super::TranslationBasedLocalOutlierRejectorTrait, super::MotionEstimatorBase, super::MotionEstimatorRansacL2Trait, super::MotionEstimatorL1Trait, super::ImageMotionEstimatorBase, super::FromFileMotionReaderTrait, super::ToFileMotionWriterTrait, super::KeypointBasedMotionEstimatorTrait, super::KeypointBasedMotionEstimatorGpuTrait, super::IMotionStabilizer, super::MotionStabilizationPipelineTrait, super::MotionFilterBase, super::GaussianMotionFilterTrait, super::LpMotionStabilizerTrait, super::IFrameSource, super::NullFrameSourceTrait, super::VideoFileSourceTrait, super::ILog, super::NullLogTrait, super::LogToStdoutTrait, super::FastMarchingMethodTrait, super::InpainterBase, super::NullInpainterTrait, super::InpaintingPipelineTrait, super::ConsistentMosaicInpainterTrait, super::MotionInpainterTrait, super::ColorAverageInpainterTrait, super::ColorInpainterTrait, super::DeblurerBase, super::NullDeblurerTrait, super::WeightingDeblurerTrait, super::WobbleSuppressorBase, super::NullWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorBase, super::MoreAccurateMotionWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorGpuTrait, super::StabilizerBase, super::OnePassStabilizerTrait, super::TwoPassStabilizerTrait };
+	pub use { super::ISparseOptFlowEstimator, super::IDenseOptFlowEstimator, super::PyrLkOptFlowEstimatorBaseTrait, super::SparsePyrLkOptFlowEstimatorTrait, super::SparsePyrLkOptFlowEstimatorGpuTrait, super::DensePyrLkOptFlowEstimatorGpuTrait, super::RansacParamsTrait, super::IOutlierRejector, super::NullOutlierRejectorTrait, super::TranslationBasedLocalOutlierRejectorTrait, super::MotionEstimatorBase, super::MotionEstimatorRansacL2Trait, super::MotionEstimatorL1Trait, super::ImageMotionEstimatorBase, super::FromFileMotionReaderTrait, super::ToFileMotionWriterTrait, super::KeypointBasedMotionEstimatorTrait, super::KeypointBasedMotionEstimatorGpuTrait, super::IMotionStabilizer, super::MotionStabilizationPipelineTrait, super::MotionFilterBase, super::GaussianMotionFilterTrait, super::LpMotionStabilizerTrait, super::IFrameSource, super::NullFrameSourceTrait, super::VideoFileSourceTrait, super::MaskFrameSourceTrait, super::ILog, super::NullLogTrait, super::LogToStdoutTrait, super::FastMarchingMethodTrait, super::InpainterBase, super::NullInpainterTrait, super::InpaintingPipelineTrait, super::ConsistentMosaicInpainterTrait, super::MotionInpainterTrait, super::ColorAverageInpainterTrait, super::ColorInpainterTrait, super::DeblurerBase, super::NullDeblurerTrait, super::WeightingDeblurerTrait, super::WobbleSuppressorBase, super::NullWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorBase, super::MoreAccurateMotionWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorGpuTrait, super::StabilizerBase, super::OnePassStabilizerTrait, super::TwoPassStabilizerTrait };
 }
 
 pub const MM_AFFINE: i32 = 5;
@@ -1104,6 +1104,57 @@ impl LpMotionStabilizer {
 	/// * model: MM_SIMILARITY
 	pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::LpMotionStabilizer> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer_MotionModel(model) }.into_result().map(|r| unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait MaskFrameSourceTrait: crate::videostab::IFrameSource {
+	fn as_raw_MaskFrameSource(&self) -> *const c_void;
+	fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void;
+
+	fn reset(&mut self) -> Result<()> {
+		unsafe { sys::cv_videostab_MaskFrameSource_reset(self.as_raw_mut_MaskFrameSource()) }.into_result()
+	}
+	
+	fn next_frame(&mut self) -> Result<core::Mat> {
+		unsafe { sys::cv_videostab_MaskFrameSource_nextFrame(self.as_raw_mut_MaskFrameSource()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub struct MaskFrameSource {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { MaskFrameSource }
+
+impl Drop for MaskFrameSource {
+	fn drop(&mut self) {
+		extern "C" { fn cv_MaskFrameSource_delete(instance: *mut c_void); }
+		unsafe { cv_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
+	}
+}
+
+impl MaskFrameSource {
+	#[inline] pub fn as_raw_MaskFrameSource(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for MaskFrameSource {}
+
+impl crate::videostab::IFrameSource for MaskFrameSource {
+	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::videostab::MaskFrameSourceTrait for MaskFrameSource {
+	#[inline] fn as_raw_MaskFrameSource(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl MaskFrameSource {
+	pub fn new(source: &core::Ptr::<dyn crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
+		unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_const_Ptr_IFrameSource_R(source.as_raw_PtrOfIFrameSource()) }.into_result().map(|r| unsafe { crate::videostab::MaskFrameSource::opencv_from_extern(r) } )
 	}
 	
 }

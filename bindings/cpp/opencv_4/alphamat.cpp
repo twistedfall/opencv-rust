@@ -1,5 +1,4 @@
-#include "ocvrs_common.hpp"
-#include <opencv2/alphamat.hpp>
+#include "alphamat.hpp"
 #include "alphamat_types.hpp"
 
 extern "C" {

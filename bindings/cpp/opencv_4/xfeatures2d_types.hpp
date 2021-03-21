@@ -43,6 +43,10 @@ extern "C" {
 	cv::xfeatures2d::AffineFeature2D* cv_PtrOfAffineFeature2D_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::AffineFeature2D>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfAffineFeature2D_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::AffineFeature2D>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -61,6 +65,10 @@ extern "C" {
 	cv::xfeatures2d::BEBLID* cv_PtrOfBEBLID_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::BEBLID>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfBEBLID_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::BEBLID>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -74,6 +82,10 @@ extern "C" {
 
 	cv::xfeatures2d::BoostDesc* cv_PtrOfBoostDesc_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::BoostDesc>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfBoostDesc_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::BoostDesc>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
 	}
 }
 
@@ -93,6 +105,10 @@ extern "C" {
 	cv::xfeatures2d::BriefDescriptorExtractor* cv_PtrOfBriefDescriptorExtractor_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfBriefDescriptorExtractor_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -106,6 +122,10 @@ extern "C" {
 
 	cv::xfeatures2d::DAISY* cv_PtrOfDAISY_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::DAISY>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfDAISY_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::DAISY>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
 	}
 }
 
@@ -125,6 +145,10 @@ extern "C" {
 	cv::xfeatures2d::FREAK* cv_PtrOfFREAK_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::FREAK>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfFREAK_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::FREAK>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -142,6 +166,10 @@ extern "C" {
 
 	cv::xfeatures2d::HarrisLaplaceFeatureDetector* cv_PtrOfHarrisLaplaceFeatureDetector_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::HarrisLaplaceFeatureDetector>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfHarrisLaplaceFeatureDetector_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::HarrisLaplaceFeatureDetector>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
 	}
 }
 
@@ -161,6 +189,10 @@ extern "C" {
 	cv::xfeatures2d::LATCH* cv_PtrOfLATCH_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::LATCH>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfLATCH_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::LATCH>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -179,6 +211,10 @@ extern "C" {
 	cv::xfeatures2d::LUCID* cv_PtrOfLUCID_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::LUCID>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfLUCID_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::LUCID>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -196,6 +232,10 @@ extern "C" {
 
 	cv::xfeatures2d::MSDDetector* cv_PtrOfMSDDetector_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::MSDDetector>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfMSDDetector_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::MSDDetector>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
 	}
 }
 
@@ -239,6 +279,10 @@ extern "C" {
 	cv::xfeatures2d::SURF* cv_PtrOfSURF_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::SURF>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfSURF_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::SURF>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -275,6 +319,10 @@ extern "C" {
 	cv::xfeatures2d::StarDetector* cv_PtrOfStarDetector_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::StarDetector>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfStarDetector_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::StarDetector>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -289,6 +337,10 @@ extern "C" {
 	cv::xfeatures2d::TBMR* cv_PtrOfTBMR_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::TBMR>* instance) {
 		return instance->get();
 	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfTBMR_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::TBMR>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
+	}
 }
 
 extern "C" {
@@ -302,6 +354,10 @@ extern "C" {
 
 	cv::xfeatures2d::VGG* cv_PtrOfVGG_get_inner_ptr_mut(cv::Ptr<cv::xfeatures2d::VGG>* instance) {
 		return instance->get();
+	}
+	
+	cv::Ptr<cv::Feature2D>* cv_PtrOfVGG_to_PtrOfFeature2D(cv::Ptr<cv::xfeatures2d::VGG>* instance) {
+		return new cv::Ptr<cv::Feature2D>(instance->dynamicCast<cv::Feature2D>());
 	}
 }
 
