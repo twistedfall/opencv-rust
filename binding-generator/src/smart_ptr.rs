@@ -18,7 +18,7 @@ use crate::{
 #[derive(Clone)]
 pub struct SmartPtr<'tu, 'ge> {
 	entity: Entity<'tu>,
-	gen_env: &'ge GeneratorEnv<'tu>,
+	pub(crate) gen_env: &'ge GeneratorEnv<'tu>,
 }
 
 impl<'tu, 'ge> SmartPtr<'tu, 'ge> {

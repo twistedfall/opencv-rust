@@ -55,3 +55,17 @@ macro_rules! ptr_extern_ctor {
 		}
 	};
 }
+
+#[macro_export]
+macro_rules! ptr_cast_base {
+	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
+		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
+
+		impl ::std::convert::Into<$base> for $type {
+			#[inline]
+			fn into(self) -> $base {
+				unsafe { <$base>::from_raw($extern_convert(self.into_raw())) }
+			}
+		}
+	};
+}

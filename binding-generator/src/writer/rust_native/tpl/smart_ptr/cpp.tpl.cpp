@@ -1,6 +1,6 @@
 extern "C" {
 	{{ctor}}
-	void cv_{{rust_localalias}}_delete({{cpp_full}}* instance) {
+	void cv_{{rust_localalias}}_delete({{cpp_decl}}) {
 		delete instance;
 	}
 
@@ -8,9 +8,10 @@ extern "C" {
 		return instance->get();
 	}
 
-	{{inner_cpp_extern}} cv_{{rust_localalias}}_get_inner_ptr_mut({{cpp_full}}* instance) {
+	{{inner_cpp_extern}} cv_{{rust_localalias}}_get_inner_ptr_mut({{cpp_decl}}) {
 		return instance->get();
 	}
+	{{base_cast}}
 }
 
 

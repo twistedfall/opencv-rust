@@ -6,6 +6,7 @@ use crate::{
 	Constness,
 	ConstnessOverride,
 	Element,
+	EntityElement,
 	SmartPtr,
 	StrExt,
 	type_ref,
@@ -25,6 +26,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation()
+		);
+
+		static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation()
 		);
 
 		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
@@ -47,16 +52,21 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		if let Some(cls) = pointee_type.as_class() {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
-				let mut all_bases = cls.all_bases();
-				all_bases.insert(cls);
-				let mut all_bases = all_bases.into_iter()
+				inter_vars.insert("base_rust_local", cls.rust_localname().into_owned().into());
+				inter_vars.insert("base_rust_full", cls.rust_trait_fullname().into_owned().into());
+				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
+				let mut all_bases = cls.all_bases().into_iter()
 					.filter(|b| !b.is_excluded())
 					.collect::<Vec<_>>();
 				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
 				for base in all_bases {
 					inter_vars.insert("base_rust_local", base.rust_localname().into_owned().into());
 					inter_vars.insert("base_rust_full", base.rust_trait_fullname().into_owned().into());
+					inter_vars.insert("base_rust_full_ref", base.type_ref().rust_full().into_owned().into());
 					impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
+					if self.gen_env.is_used_in_smart_ptr(base.entity()) {
+						impls += &BASE_CAST_TPL.interpolate(&inter_vars);
+					}
 				}
 			}
 		};
@@ -72,6 +82,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	fn gen_cpp(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation()
+		);
+
+		static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/smart_ptr/base_cast.tpl.cpp").compile_interpolation()
 		);
 
 		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
@@ -97,6 +111,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
+			"cpp_decl" => type_ref.cpp_arg_func_decl("instance").into(),
 			"cpp_full" => type_ref.cpp_full(),
 			"cpp_full_const" => cpp_full_const,
 			"inner_cpp_full" => pointee_type.cpp_full(),
@@ -104,8 +119,29 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			"inner_cpp_extern_const" => inner_cpp_extern_const,
 		};
 
+		let mut base_cast = String::new();
 		let pointee_primitive = pointee_type.is_primitive();
-		if pointee_primitive || pointee_type.as_class().map_or(false, |c| !c.is_abstract()) {
+		let mut gen_ctor = pointee_primitive;
+		if let Some(cls) = pointee_type.as_class() {
+			gen_ctor |= !cls.is_abstract();
+			if cls.is_trait() {
+				let mut all_bases = cls.all_bases().into_iter()
+					.filter(|b| !b.is_excluded() && self.gen_env.is_used_in_smart_ptr(b.entity()))
+					.collect::<Vec<_>>();
+				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
+				for base in all_bases {
+					inter_vars.insert("base_cpp_full", base.cpp_fullname().into_owned().into());
+					inter_vars.insert("base_rust_local", base.rust_localname().into_owned().into());
+					let new_base_cast = BASE_CAST_TPL.interpolate(&inter_vars);
+					if base_cast.is_empty() {
+						base_cast = new_base_cast;
+					} else {
+						base_cast += &new_base_cast;
+					}
+				}
+			}
+		}
+		if gen_ctor {
 			let inner_cpp_func_call = if pointee_primitive {
 				format!("new {typ}(val)", typ=pointee_type.cpp_full()).into()
 			} else {
@@ -121,6 +157,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		} else {
 			inter_vars.insert("ctor", "".into());
 		};
+		inter_vars.insert("base_cast", base_cast.into());
 
 		TPL.interpolate(&inter_vars)
 	}

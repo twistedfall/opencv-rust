@@ -44,6 +44,7 @@ pub(crate) mod mod_prelude {
 		opencv_type_boxed,
 		opencv_type_enum,
 		opencv_type_simple,
+		ptr_cast_base,
 		ptr_extern,
 		ptr_extern_ctor,
 		vector_copy_non_bool,

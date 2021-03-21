@@ -1,5 +1,5 @@
 use std::{
-	collections::HashMap,
+	collections::{HashMap, HashSet},
 	fmt,
 	fs::File,
 	io::{Read, Seek, SeekFrom},
@@ -16,6 +16,7 @@ use crate::{
 	Element,
 	EntityWalker,
 	EntityWalkerVisitor,
+	Func,
 	is_ephemeral_header,
 	is_opencv_path,
 	memo_map,
@@ -68,6 +69,16 @@ impl<'tu> DBPopulator<'tu, '_> {
 		}
 		self.gen_env.class_constants.insert(full_name, cnst);
 	}
+
+	fn add_used_in_smart_ptr(&mut self, func: Entity<'tu>) {
+		let args = Func::new(func, self.gen_env).arguments().into_iter()
+			.filter_map(|arg| arg.type_ref().as_smart_ptr())
+			.filter_map(|smart_ptr| smart_ptr.pointee().clang_type().get_declaration())
+			.collect::<Vec<_>>();
+		for arg in args {
+			self.gen_env.used_in_smart_ptr.insert(arg);
+		}
+	}
 }
 
 impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'tu, '_> {
@@ -92,6 +103,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'tu, '_> {
 						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
+							self.add_used_in_smart_ptr(c);
 						}
 						EntityKind::VarDecl => {
 							if let Some(StorageClass::Static) = c.get_storage_class() {
@@ -107,6 +119,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'tu, '_> {
 			}
 			EntityKind::FunctionDecl => {
 				self.add_func_comment(entity);
+				self.add_used_in_smart_ptr(entity);
 			}
 			_ => {}
 		}
@@ -122,6 +135,7 @@ pub struct GeneratorEnv<'tu> {
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
 	type_resolve_cache: HashMap<String, Type<'tu>>,
+	used_in_smart_ptr: HashSet<Entity<'tu>>,
 }
 
 impl<'tu> GeneratorEnv<'tu> {
@@ -134,6 +148,7 @@ impl<'tu> GeneratorEnv<'tu> {
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			class_constants: HashMap::with_capacity(32),
 			type_resolve_cache: HashMap::with_capacity(32),
+			used_in_smart_ptr: HashSet::with_capacity(32),
 		};
 		let walker = EntityWalker::new(root_entity);
 		walker.walk_opencv_entities(DBPopulator { gen_env: &mut out });
@@ -247,6 +262,10 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn resolve_type(&self, typ: &str) -> Option<Type<'tu>> {
 		self.type_resolve_cache.get(typ).copied()
+	}
+
+	pub fn is_used_in_smart_ptr(&self, entity: Entity) -> bool {
+		self.used_in_smart_ptr.contains(&entity)
 	}
 }
 
