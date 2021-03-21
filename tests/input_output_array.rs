@@ -82,9 +82,12 @@ fn input_output_array() -> Result<()> {
 #[test]
 fn no_array() -> Result<()> {
 	use self::core::no_array;
-	assert_eq!(Scalar::all(0.), core::sum_elems(&no_array()?)?);
-	assert_matches!(core::complete_symm(&mut no_array()?, false), Ok(()));
-	let m = Mat::new_rows_cols_with_default(1, 1, u16::typ(), Scalar::all(0.))?;
-	assert_matches!(core::mean_std_dev(&m, &mut no_array()?, &mut no_array()?, &no_array()?), Ok(()));
+
+	assert!(no_array()?.empty()?);
+
+	{
+		let m = Mat::new_rows_cols_with_default(1, 1, u16::typ(), Scalar::all(0.))?;
+		assert_matches!(core::mean_std_dev(&m, &mut no_array()?, &mut no_array()?, &no_array()?), Ok(()));
+	}
 	Ok(())
 }
