@@ -205,6 +205,7 @@ pub struct Generator {
 
 struct OpenCVWalker<'tu, 'r, V: GeneratorVisitor> {
 	opencv_include_dir: &'r Path,
+	module: &'r str,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
 	comment_found: bool,
@@ -221,8 +222,12 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, '_
 				if !self.comment_found {
 					if let Some(c) = entity.get_comment() {
 						if c.contains("@defgroup") {
-							self.comment_found = true;
-							self.visitor.visit_module_comment(c)
+							if let Some(entity_file) = entity.get_location().and_then(|loc| loc.get_file_location().file) {
+								if !settings::IGNORE_CLANG_MODULE_COMMENT.contains(self.module) && opencv_module_from_path(&entity_file.get_path()).map_or(false, |m| m == self.module) {
+									self.comment_found = true;
+									self.visitor.visit_module_comment(c)
+								}
+							}
 						}
 					}
 				}
@@ -286,8 +291,8 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, '_
 }
 
 impl<'tu, 'r, V: GeneratorVisitor> OpenCVWalker<'tu, 'r, V> {
-	pub fn new(opencv_include_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
-		Self { opencv_include_dir, visitor, gen_env, comment_found: false }
+	pub fn new(opencv_include_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+		Self { opencv_include_dir, module, visitor, gen_env, comment_found: false }
 	}
 
 	fn process_const(&mut self, const_decl: Entity) {
@@ -547,6 +552,7 @@ impl Generator {
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCVWalker::new(
 				&self.opencv_include_dir,
+				module,
 				visitor,
 				gen_env,
 			);

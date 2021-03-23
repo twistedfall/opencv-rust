@@ -1048,3 +1048,8 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		..Default::default()
 	},
 });
+
+/// list of module names that must use manual module comment extraction
+pub static IGNORE_CLANG_MODULE_COMMENT: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
+	"tracking",
+});
