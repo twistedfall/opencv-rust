@@ -9,7 +9,7 @@ license = "MIT"
 version = "0.50.0"
 edition = "2018"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
-autoexamples = false # cuda example doesn't compile on just any system
+autoexamples = false # not all examples compile on just any system
 
 [lib]
 doctest = false
@@ -20,8 +20,16 @@ maintenance = { status = "actively-developed" }
 [workspace]
 members = ["binding-generator"]
 
+# requires CUDA
+#[[example]]
+#name = "cuda"
+
 [[example]]
 name = "opencl"
+
+# requires OpenCV 4.5.1+
+#[[example]]
+#name = "text_detection"
 
 [[example]]
 name = "video_capture"

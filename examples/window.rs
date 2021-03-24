@@ -1,11 +1,13 @@
-extern crate opencv;
-use opencv::highgui;
-use opencv::imgcodecs;
+use opencv::{
+	highgui,
+	imgcodecs,
+	Result,
+};
 
-#[allow(dead_code)]
-fn main() {
-    let image = imgcodecs::imread("lena.jpg", 0).unwrap();
-    highgui::named_window("hello opencv!", 0).unwrap();
-    highgui::imshow("hello opencv!", &image).unwrap();
-    highgui::wait_key(10000).unwrap();
+fn main() -> Result<()> {
+	let image = imgcodecs::imread("lena.jpg", 0)?;
+	highgui::named_window("hello opencv!", 0)?;
+	highgui::imshow("hello opencv!", &image)?;
+	highgui::wait_key(10000)?;
+	Ok(())
 }

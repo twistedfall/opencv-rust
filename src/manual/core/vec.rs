@@ -27,12 +27,14 @@ macro_rules! vec_impl {
 		pub struct $type<T: $type_trait>(pub [T; $count]);
 
 		impl<T: $type_trait> $type<T> {
+			#[inline]
 			pub fn all(v0: T) -> Self {
 				Self::from([v0; $count])
 			}
 		}
 
 		impl<T: $type_trait> From<[T; $count]> for $type<T> {
+			#[inline]
 			fn from(s: [T; $count]) -> Self {
 				Self(s)
 			}
@@ -41,12 +43,14 @@ macro_rules! vec_impl {
 		impl<T: $type_trait> std::ops::Deref for $type<T> {
 			type Target = [T; $count];
 
+			#[inline]
 			fn deref(&self) -> &Self::Target {
 				&self.0
 			}
 		}
 
 		impl<T: $type_trait> std::ops::DerefMut for $type<T> {
+			#[inline]
 			fn deref_mut(&mut self) -> &mut Self::Target {
 				&mut self.0
 			}
@@ -65,14 +69,37 @@ vec_impl!(Vec18, 18, ValidVecType);
 vec_impl!(Scalar_, 4, ValidScalarType);
 
 impl<T: ValidScalarType> Scalar_<T> {
+	#[inline]
 	pub fn new(v0: T, v1: T, v2: T, v3: T) -> Self {
 		Self::from([v0, v1, v2, v3])
 	}
 }
 
 impl<T: ValidScalarType> From<T> for Scalar_<T> {
+	#[inline]
 	fn from(v0: T) -> Self {
 		Self::from([v0, T::zero(), T::zero(), T::zero()])
+	}
+}
+
+impl<T: ValidScalarType> From<(T, T)> for Scalar_<T> {
+	#[inline]
+	fn from(v: (T, T)) -> Self {
+		Self::from([v.0, v.1, T::zero(), T::zero()])
+	}
+}
+
+impl<T: ValidScalarType> From<(T, T, T)> for Scalar_<T> {
+	#[inline]
+	fn from(v: (T, T, T)) -> Self {
+		Self::from([v.0, v.1, v.2, T::zero()])
+	}
+}
+
+impl<T: ValidScalarType> From<(T, T, T, T)> for Scalar_<T> {
+	#[inline]
+	fn from(v: (T, T, T, T)) -> Self {
+		Self::from([v.0, v.1, v.2, v.3])
 	}
 }
 

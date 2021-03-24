@@ -1,3 +1,2 @@
-*.py linguist-vendored
 *.hpp linguist-vendored
 *.rs linguist-language=Rust
