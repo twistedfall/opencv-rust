@@ -10487,7 +10487,7 @@ impl Mat {
 	}
 	
 	/// download data from GpuMat
-	pub fn new(m: &core::GpuMat) -> Result<core::Mat> {
+	pub fn from_gpumat(m: &core::GpuMat) -> Result<core::Mat> {
 		unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	

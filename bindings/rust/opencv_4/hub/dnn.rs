@@ -5444,7 +5444,7 @@ pub trait TextDetectionModelTrait: crate::dnn::ModelTrait {
 	/// * frame: The input image
 	/// * detections:[out] array with detections' quadrangles (4 points per result)
 	/// * confidences:[out] array with detection confidences
-	fn detect(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>, confidences: &mut core::Vector::<f32>) -> Result<()> {
+	fn detect_with_confidences(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>, confidences: &mut core::Vector::<f32>) -> Result<()> {
 		input_array_arg!(frame);
 		unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint(), confidences.as_raw_mut_VectorOff32()) }.into_result()
 	}
@@ -5470,7 +5470,7 @@ pub trait TextDetectionModelTrait: crate::dnn::ModelTrait {
 	/// * confidences:[out] array with detection confidences
 	/// 
 	/// ## Overloaded parameters
-	fn detect_1(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
+	fn detect(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
 		input_array_arg!(frame);
 		unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
 	}
@@ -5767,7 +5767,7 @@ impl TextDetectionModel_EAST {
 	/// 
 	/// ## C++ default parameters
 	/// * config: ""
-	pub fn new_1(model: &str, config: &str) -> Result<crate::dnn::TextDetectionModel_EAST> {
+	pub fn from_file(model: &str, config: &str) -> Result<crate::dnn::TextDetectionModel_EAST> {
 		extern_container_arg!(model);
 		extern_container_arg!(config);
 		unsafe { sys::cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(r) } )
@@ -5894,7 +5894,7 @@ impl TextRecognitionModel {
 	/// 
 	/// ## C++ default parameters
 	/// * config: ""
-	pub fn new_1(model: &str, config: &str) -> Result<crate::dnn::TextRecognitionModel> {
+	pub fn from_file(model: &str, config: &str) -> Result<crate::dnn::TextRecognitionModel> {
 		extern_container_arg!(model);
 		extern_container_arg!(config);
 		unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(r) } )
