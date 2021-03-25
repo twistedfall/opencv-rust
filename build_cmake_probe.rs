@@ -134,7 +134,7 @@ impl<'r> CmakeProbe<'r> {
 							link_paths.push(parent);
 						}
 					} else {
-						panic!(arg.to_string());
+						panic!("{}", arg.to_string());
 					}
 					link_libs.push(file.to_str().expect("Non-UTF8 filename").to_string());
 				}

@@ -1,5 +1,4 @@
 use opencv::{
-	core,
 	highgui,
 	prelude::*,
 	Result,

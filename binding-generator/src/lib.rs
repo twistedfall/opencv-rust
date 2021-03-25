@@ -10,7 +10,6 @@
 // fixme vector<Mat*> get's interpreted as Vector<Mat> which should be wrong (e.g. Layer::forward and Layer::apply_halide_scheduler)
 // fixme most constructors of Mat have invalid comment "download data from GpuMat"
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
-// fixme docs.rs fails to build crates that have opencv as dependency
 // fixme VectorOfMat::get allows mutation
 // fixme TextDetectionModel_EAST (and all others inheriting from Model) seems to have no fields, but it fails when generated as simple, probably makes sense to have a special case for that
 
