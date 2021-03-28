@@ -1015,6 +1015,16 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		],
 		..Default::default()
 	},
+	"features2d" => ModuleTweak {
+		includes: vec![
+			"features2d.hpp",
+		],
+		// type used in other modules, thus needs casting (https://github.com/twistedfall/opencv-rust/issues/218)
+		generate_types: vec![
+			"cv::Ptr<cv::Feature2D>",
+		],
+		..Default::default()
+	},
 	"imgproc" => ModuleTweak {
 		generate_types: vec![
 			"std::vector<cv::Vec4i>",
