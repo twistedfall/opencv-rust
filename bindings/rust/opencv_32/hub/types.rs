@@ -3712,6 +3712,10 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	ptr_cast_base! { PtrOfAKAZE, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfAKAZE_to_PtrOfFeature2D,
+	}
+	
 	pub type PtrOfAgastFeatureDetector = core::Ptr::<dyn crate::features2d::AgastFeatureDetector>;
 	
 	ptr_extern! { dyn crate::features2d::AgastFeatureDetector,
@@ -3736,6 +3740,10 @@ mod features2d_types {
 	impl crate::features2d::Feature2DTrait for PtrOfAgastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfAgastFeatureDetector, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfAgastFeatureDetector_to_PtrOfFeature2D,
 	}
 	
 	pub type PtrOfBFMatcher = core::Ptr::<crate::features2d::BFMatcher>;
@@ -3794,6 +3802,10 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	ptr_cast_base! { PtrOfBRISK, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfBRISK_to_PtrOfFeature2D,
+	}
+	
 	pub type PtrOfDescriptorMatcher = core::Ptr::<dyn crate::features2d::DescriptorMatcher>;
 	
 	ptr_extern! { dyn crate::features2d::DescriptorMatcher,
@@ -3839,6 +3851,10 @@ mod features2d_types {
 	impl crate::features2d::Feature2DTrait for PtrOfFastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfFastFeatureDetector, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfFastFeatureDetector_to_PtrOfFeature2D,
 	}
 	
 	pub type PtrOfFeature2D = core::Ptr::<crate::features2d::Feature2D>;
@@ -3918,6 +3934,10 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	ptr_cast_base! { PtrOfGFTTDetector, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfGFTTDetector_to_PtrOfFeature2D,
+	}
+	
 	pub type PtrOfKAZE = core::Ptr::<dyn crate::features2d::KAZE>;
 	
 	ptr_extern! { dyn crate::features2d::KAZE,
@@ -3942,6 +3962,10 @@ mod features2d_types {
 	impl crate::features2d::Feature2DTrait for PtrOfKAZE {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfKAZE, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfKAZE_to_PtrOfFeature2D,
 	}
 	
 	pub type PtrOfMSER = core::Ptr::<dyn crate::features2d::MSER>;
@@ -3970,6 +3994,10 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	ptr_cast_base! { PtrOfMSER, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfMSER_to_PtrOfFeature2D,
+	}
+	
 	pub type PtrOfORB = core::Ptr::<dyn crate::features2d::ORB>;
 	
 	ptr_extern! { dyn crate::features2d::ORB,
@@ -3994,6 +4022,10 @@ mod features2d_types {
 	impl crate::features2d::Feature2DTrait for PtrOfORB {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfORB, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfORB_to_PtrOfFeature2D,
 	}
 	
 	pub type PtrOfSimpleBlobDetector = core::Ptr::<crate::features2d::SimpleBlobDetector>;
@@ -4022,6 +4054,10 @@ mod features2d_types {
 	impl crate::features2d::Feature2DTrait for PtrOfSimpleBlobDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfSimpleBlobDetector, core::Ptr<crate::features2d::Feature2D>,
+		cv_PtrOfSimpleBlobDetector_to_PtrOfFeature2D,
 	}
 	
 }

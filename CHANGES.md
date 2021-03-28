@@ -1,3 +1,8 @@
+* 0.51.0
+  * Make sure that casts to Ptr<Feature2D> are also generated (fixes [#218](https://github.com/twistedfall/opencv-rust/issues/218))
+  * Port text detection example (requires OpenCV 4.5.1)
+  * Adjust some function names
+
 * 0.50.0
   * Improve smart pointer handling (`Ptr`), deeper analysis now generates more necessary `Ptr<T>` bindings and
     all `Ptr<Child>` types are now castable to `Ptr<Parent>` when it's required by the OpenCV API (fixes [#217](https://github.com/twistedfall/opencv-rust/issues/217))
