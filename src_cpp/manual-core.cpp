@@ -64,10 +64,6 @@ extern "C" {
 		return *(instance->p - 1);
 	}
 
-	const int* cv_manual_MatSize_deref(const cv::MatSize* instance) {
-		return instance->p;
-	}
-
 	const size_t* cv_manual_MatStep_deref(const cv::MatStep* instance) {
 		return instance->p;
 	}

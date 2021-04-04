@@ -563,12 +563,14 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashm
 	"cv_TrackerStateEstimatorMILBoosting_TrackerMILTargetState_setTargetFg_bool" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 });
 
+/// cpp_fullname
 pub static ELEMENT_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::String",
 	"cv::internal::format", // 3.2 duplicate definition
 	"cv::face::FacemarkLBF::BBox", // not used, not exported in windows dll
 });
 
+/// cpp_fullname
 pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"CV_DEPRECATED",
 	"CV_EXPORTS",
@@ -786,6 +788,7 @@ pub static FORCE_CLASS_ABSTRACT: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::detail::BlocksCompensator",
 });
 
+/// cpp_fullname
 pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Mat::size",
 	"cv::Mat::step",
@@ -853,7 +856,7 @@ pub enum SliceHint {
 	LenForSlice(&'static str, usize),
 }
 
-/// cpp_fullname, number of arguments
+/// (cpp_fullname, argument count)
 pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), HashMap<&str, SliceHint>>> = Lazy::new(|| hashmap! {
 	("cv::Mat::at", 1) => hashmap! {
 		"idx" => SliceHint::Slice

@@ -45,11 +45,11 @@ impl ExportConfig {
 
 type ExportIdx = (PathBuf, u32, u32);
 
-struct DBPopulator<'tu, 'ge> {
+struct DbPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
-impl<'tu> DBPopulator<'tu, '_> {
+impl<'tu> DbPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.get_comment().unwrap_or_default();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
@@ -81,7 +81,7 @@ impl<'tu> DBPopulator<'tu, '_> {
 	}
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for DBPopulator<'tu, '_> {
+impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
 			|| is_ephemeral_header(path)
@@ -151,7 +151,7 @@ impl<'tu> GeneratorEnv<'tu> {
 			used_in_smart_ptr: HashSet::with_capacity(32),
 		};
 		let walker = EntityWalker::new(root_entity);
-		walker.walk_opencv_entities(DBPopulator { gen_env: &mut out });
+		walker.walk_opencv_entities(DbPopulator { gen_env: &mut out });
 		out
 	}
 

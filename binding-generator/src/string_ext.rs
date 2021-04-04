@@ -213,13 +213,13 @@ impl StringExt for String {
 	}
 }
 
-pub struct LinesWithNL<'s> {
+pub struct LinesWithNl<'s> {
 	string: &'s str,
 	len: usize,
 	idx: usize,
 }
 
-impl<'s> Iterator for LinesWithNL<'s> {
+impl<'s> Iterator for LinesWithNl<'s> {
 	type Item = &'s str;
 
 	fn next(&mut self) -> Option<Self::Item> {
@@ -326,7 +326,7 @@ impl CompiledInterpolation<'_> {
 
 pub trait StrExt {
 	fn to_snake_case(&self) -> String;
-	fn lines_with_nl(&self) -> LinesWithNL;
+	fn lines_with_nl(&self) -> LinesWithNl;
 	fn detect_indent(&self) -> Indent;
 	fn compile_interpolation(&self) -> CompiledInterpolation;
 	fn trim_start_idx(&self) -> usize;
@@ -359,8 +359,8 @@ impl StrExt for str {
 		out.to_lowercase()
 	}
 
-	fn lines_with_nl(&self) -> LinesWithNL {
-		LinesWithNL { string: self, len: self.len(), idx: 0 }
+	fn lines_with_nl(&self) -> LinesWithNl {
+		LinesWithNl { string: self, len: self.len(), idx: 0 }
 	}
 
 	fn detect_indent(&self) -> Indent {

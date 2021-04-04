@@ -656,8 +656,7 @@ impl Deref for MatSize {
 	type Target = [i32];
 
 	fn deref(&self) -> &Self::Target {
-		extern "C" { fn cv_manual_MatSize_deref(instance: *const c_void) -> *const i32; }
-		let ptr = unsafe { cv_manual_MatSize_deref(self.as_raw_MatSize()) };
+		let ptr = self.to_ri32().expect("Cannot get MatSize internal pointer") as *const i32;
 		unsafe { slice::from_raw_parts(ptr, self.dims().expect("Cannot get dims") as usize) }
 	}
 }

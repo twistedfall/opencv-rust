@@ -48,12 +48,12 @@ pub struct Field<'tu, 'ge> {
 }
 
 impl<'tu, 'ge> Field<'tu, 'ge> {
-	pub fn new(entity: impl Into<Entity<'tu>>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::new_ext(entity, Default::default(), gen_env)
 	}
 
-	pub fn new_ext(entity: impl Into<Entity<'tu>>, type_hint: FieldTypeHint<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity: entity.into(), type_hint, gen_env }
+	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+		Self { entity, type_hint, gen_env }
 	}
 
 	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu, 'ge>>>(args: I) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {

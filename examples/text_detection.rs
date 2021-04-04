@@ -1,5 +1,6 @@
 //! Port of https://github.com/opencv/opencv/blob/master/samples/dnn/text_detection.cpp
 //! Check the source cpp file for where to get the NN files.
+//! This example requires at least OpenCV 4.5.1.
 
 use std::{
 	error::Error,

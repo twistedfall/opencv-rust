@@ -145,8 +145,12 @@ impl<'m> EphemeralGenerator<'m> {
 				generate_types.push(gen_type.into());
 			}
 		}
-		for used_cppfull in &self.used_in_smart_ptr {
-			for desc_cppfull in self.descendants.get(used_cppfull).into_iter().flatten() {
+		let mut used_in_smart_ptr = self.used_in_smart_ptr.iter().collect::<Vec<_>>();
+		used_in_smart_ptr.sort_unstable();
+		for used_cppfull in used_in_smart_ptr {
+			let mut descendants = self.descendants.get(used_cppfull).into_iter().flatten().collect::<Vec<_>>();
+			descendants.sort_unstable();
+			for desc_cppfull in descendants {
 				if !self.used_in_smart_ptr.contains(desc_cppfull) {
 					generate_types.push(format!("cv::Ptr<{}>", desc_cppfull).into());
 				}
@@ -203,7 +207,7 @@ pub struct Generator {
 	clang: Clang,
 }
 
-struct OpenCVWalker<'tu, 'r, V: GeneratorVisitor> {
+struct OpenCvWalker<'tu, 'r, V: GeneratorVisitor> {
 	opencv_include_dir: &'r Path,
 	module: &'r str,
 	visitor: V,
@@ -211,7 +215,7 @@ struct OpenCVWalker<'tu, 'r, V: GeneratorVisitor> {
 	comment_found: bool,
 }
 
-impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, '_, V> {
+impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_, V> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
@@ -290,7 +294,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, '_
 	}
 }
 
-impl<'tu, 'r, V: GeneratorVisitor> OpenCVWalker<'tu, 'r, V> {
+impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	pub fn new(opencv_include_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self { opencv_include_dir, module, visitor, gen_env, comment_found: false }
 	}
@@ -364,8 +368,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCVWalker<'tu, 'r, V> {
 	}
 
 	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
-		if let Some(export_config) = gen_env.get_export_config(func_decl) {
-			let only_dependent_types = export_config.only_dependent_types;
+		if let Some(only_dependent_types) = gen_env.get_export_config(func_decl).map(|e| e.only_dependent_types) {
 			let func = Func::new(func_decl, gen_env);
 			if !func.is_excluded() {
 				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref())
@@ -430,7 +433,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCVWalker<'tu, 'r, V> {
 	}
 }
 
-impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, '_, V> {
+impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 	fn drop(&mut self) {
 		if !self.comment_found {
 			// some module level comments like "bioinspired" are not attached to anything and libclang
@@ -550,7 +553,7 @@ impl Generator {
 			Self::handle_diags(&root_tu.get_diagnostics(), true);
 			root_entity = root_tu.get_entity();
 			let gen_env = GeneratorEnv::new(root_entity, module);
-			let opencv_walker = OpenCVWalker::new(
+			let opencv_walker = OpenCvWalker::new(
 				&self.opencv_include_dir,
 				module,
 				visitor,
