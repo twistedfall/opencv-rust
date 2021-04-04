@@ -30,7 +30,7 @@ impl<'tu> Enum<'tu> {
 	}
 
 	pub fn as_typedefed(&self) -> Option<Entity> {
-		if self.entity.get_kind() == EntityKind::TypedefDecl {
+		if matches!(self.entity.get_kind(), EntityKind::TypedefDecl | EntityKind::TypeAliasDecl) {
 			let mut child = None;
 			self.entity.walk_children_while(|c| {
 				child = Some(c);

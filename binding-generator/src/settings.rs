@@ -503,7 +503,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	// ### videoio ###
 	"cv_VideoCapture_VideoCapture_const_StringR" => "from_file_default", // 3.2
 	"cv_VideoCapture_VideoCapture_const_StringR_int" => "from_file",
+	"cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R" => "from_file_with_params",
 	"cv_VideoCapture_VideoCapture_int" => "+_default", // 3.4
+	"cv_VideoCapture_VideoCapture_int_int_const_vector_int_R" => "+_with_params",
 	"cv_VideoCapture_open_const_StringR" => "+_file_default", // 3.2
 	"cv_VideoCapture_open_const_StringR_int" => "+_file",
 	"cv_VideoCapture_open_const_StringR_int" => "+_file",
@@ -588,7 +590,9 @@ pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"std::random_access_iterator_tag",
 });
 
-pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hashmap! {
+/// Manual export config in form of "cpp_fullname" => ExportConfig, will totally override what's
+/// detected from the headers. Use it to add export config where none exists.
+pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hashmap! {
 	"VADisplay" => ExportConfig::default(),
 	"VASurfaceID" => ExportConfig::default(),
 	"cv::Mat_" => ExportConfig::default(),
@@ -651,23 +655,30 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
 	"cv::DetectionBasedTracker::IDetector" => ExportConfig::default(),
 	"cv::FileNode" => ExportConfig::default(), // return references in methods, generally looks like not simple
-	"cv::detail::CameraParams" => ExportConfig::default(), // contains non-copy stuff
-	"cv::detail::ImageFeatures" => ExportConfig::default(), // contains non-copy stuff
-	"cv::detail::MatchesInfo" => ExportConfig::default(), // contains non-copy stuff
-	"cv::detail::ProjectorBase" => ExportConfig::default(), // other classes inherit from this one
-	"cv::dnn::ClassificationModel" => ExportConfig::default(),
-	"cv::dnn::DetectionModel" => ExportConfig::default(),
-	"cv::dnn::Model" => ExportConfig::default(),
 	"cv::dnn::Net" => ExportConfig::default(), // incorrectly marked as simple
-	"cv::dnn::TextDetectionModel_DB" => ExportConfig::default(), // incorrectly marked as simple
-	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::default(), // incorrectly marked as simple
-	"cv::dnn::TextRecognitionModel" => ExportConfig::default(), // incorrectly marked as simple
-	"cv::linemod::Match" => ExportConfig::default(), // contains String
-	"cv::linemod::Template" => ExportConfig::default(), // contains String
 	"cv::linemod::QuantizedPyramid" => ExportConfig::default(), // missing export in 3.2
 	"cv::ocl::Device" => ExportConfig::default(),
-	"cv::tracking::TrackerCSRT::Params" => ExportConfig::default(), // contains String, so no Copy
-	"cv::TrackerGOTURN::Params" => ExportConfig::default(), // contains String, so no Copy
+});
+
+pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = Lazy::new(|| hashmap! {
+	"cv::TrackerGOTURN::Params" => ExportConfig::make_boxed as _, // contains String, so no Copy
+	"cv::detail::CameraParams" => ExportConfig::make_boxed as _, // contains non-copy stuff
+	"cv::detail::ImageFeatures" => ExportConfig::make_boxed as _, // contains non-copy stuff
+	"cv::detail::MatchesInfo" => ExportConfig::make_boxed as _, // contains non-copy stuff
+	"cv::detail::ProjectorBase" => ExportConfig::make_boxed as _, // other classes inherit from this one
+	"cv::dnn::ClassificationModel" => ExportConfig::make_boxed as _,
+	"cv::dnn::DetectionModel" => ExportConfig::make_boxed as _,
+	"cv::dnn::KeypointsModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
+	"cv::dnn::Model" => ExportConfig::make_boxed as _,
+	"cv::dnn::SegmentationModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
+	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+	"cv::linemod::Match" => ExportConfig::make_boxed as _, // contains String
+	"cv::linemod::Template" => ExportConfig::make_boxed as _, // contains String
+	"cv::segmentation::IntelligentScissorsMB" => ExportConfig::make_boxed as _,
+	"cv::tracking::TrackerCSRT::Params" => ExportConfig::make_boxed as _, // contains String, so no Copy
+	"cv::viz::Mesh" => ExportConfig::make_boxed as _, // contains Mat, so no Copy
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
@@ -796,6 +807,29 @@ pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::UMat::step",
 });
 
+/// (cpp_fullname, argument count)
+pub static FORCE_NOEXCEPT: Lazy<HashSet<(&str, usize)>> = Lazy::new(|| hashset! {
+	// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
+	("cv::Mat::Mat", 0),
+	("cv::MatSize::MatSize", 1),
+	("cv::MatSize::dims", 0),
+	("cv::MatSize::operator const int*", 0),
+	("cv::MatStep::MatStep", 0),
+	("cv::MatStep::operator[]", 1),
+	("cv::UMat::UMat", 1),
+	("cv::ocl::Context::Context", 0),
+	("cv::ocl::Device::Device", 0),
+	("cv::ocl::Image2D::Image2D", 0),
+	("cv::ocl::Kernel::Kernel", 0),
+	("cv::ocl::KernelArg::KernelArg", 0),
+	("cv::ocl::Platform::Platform", 0),
+	("cv::ocl::PlatformInfo::PlatformInfo", 0),
+	("cv::ocl::Program::Program", 0),
+	("cv::ocl::ProgramSource::ProgramSource", 0),
+	("cv::ocl::Queue::Queue", 0),
+});
+
+/// cpp_fullname => ( rust_fullname, cpp_fullname )
 pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| hashmap! {
 	"size_t" => ("size_t", "size_t"),
 	"ptrdiff_t" => ("ptrdiff_t", "ptrdiff_t"),

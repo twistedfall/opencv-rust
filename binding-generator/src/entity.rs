@@ -111,7 +111,7 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 	fn walk_typedefs_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| {
 			match child.get_kind() {
-				EntityKind::TypedefDecl => {
+				EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 					predicate(child)
 				}
 				_ => {

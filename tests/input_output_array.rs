@@ -21,7 +21,7 @@ fn input_array() -> Result<()> {
 
 #[test]
 fn input_output_array_types() -> Result<()> {
-	assert!(Mat::default()?.input_array()?.is_mat()?);
+	assert!(Mat::default().input_array()?.is_mat()?);
 	assert!(VectorOfu8::new().input_array()?.is_vector()?);
 	assert!(Matx12d::default().input_array()?.is_matx()?);
 	assert!(UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?.input_array()?.is_umat()?);

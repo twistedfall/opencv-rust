@@ -643,9 +643,9 @@ impl ToInputOutputArray for &mut UMat {
 #[cfg(feature = "opencv-32")]
 pub trait MatSizeTraitManual: MatSizeTrait {
 	#[inline]
-	fn dims(&self) -> Result<i32> {
+	fn dims(&self) -> i32 {
 		extern "C" { fn cv_manual_MatSize_dims(instance: *const c_void) -> i32; }
-		Ok(unsafe { cv_manual_MatSize_dims(self.as_raw_MatSize()) })
+		unsafe { cv_manual_MatSize_dims(self.as_raw_MatSize()) }
 	}
 }
 
@@ -656,8 +656,8 @@ impl Deref for MatSize {
 	type Target = [i32];
 
 	fn deref(&self) -> &Self::Target {
-		let ptr = self.to_ri32().expect("Cannot get MatSize internal pointer") as *const i32;
-		unsafe { slice::from_raw_parts(ptr, self.dims().expect("Cannot get dims") as usize) }
+		let ptr = self.to_ri32() as *const i32;
+		unsafe { slice::from_raw_parts(ptr, self.dims() as usize) }
 	}
 }
 

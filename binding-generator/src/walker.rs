@@ -23,7 +23,7 @@ impl<'tu> EntityWalker<'tu> {
 	fn visit_resolve_types_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> bool {
 		!ns.visit_children(|decl, _| {
 			let res = match decl.get_kind() {
-				EntityKind::TypedefDecl => {
+				EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 					if let Some(typ) = decl.get_typedef_underlying_type() {
 						visitor.visit_resolve_type(typ)
 					} else {
@@ -50,13 +50,12 @@ impl<'tu> EntityWalker<'tu> {
 				}
 				EntityKind::ClassDecl | EntityKind::ClassTemplate | EntityKind::ClassTemplatePartialSpecialization
 				| EntityKind::StructDecl | EntityKind::EnumDecl | EntityKind::FunctionDecl
-				| EntityKind::TypedefDecl | EntityKind::VarDecl => {
+				| EntityKind::TypedefDecl | EntityKind::VarDecl | EntityKind::TypeAliasDecl => {
 					visitor.visit_entity(decl)
 				}
 				EntityKind::Constructor | EntityKind::ConversionFunction | EntityKind::Destructor
 				| EntityKind::Method | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate
-				| EntityKind::UsingDeclaration | EntityKind::UsingDirective | EntityKind::TypeAliasTemplateDecl
-				| EntityKind::TypeAliasDecl => {
+				| EntityKind::UsingDeclaration | EntityKind::UsingDirective | EntityKind::TypeAliasTemplateDecl => {
 					/* ignoring */ true
 				}
 				_ => {

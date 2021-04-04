@@ -11,7 +11,7 @@ use opencv::core::AccessFlag::ACCESS_READ;
 
 #[test]
 fn umat_default() -> Result<()> {
-    let mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
+    let mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
     assert_eq!(u8::typ(), mat.typ()?);
     assert_eq!(u8::depth(), mat.depth()?);
     assert_eq!(u8::channels(), mat.channels()?);
@@ -22,7 +22,7 @@ fn umat_default() -> Result<()> {
 
 #[test]
 fn umat_create() -> Result<()> {
-    let mut mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
+    let mut mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
     unsafe { mat.create_rows_cols(10, 10, u16::typ(), UMatUsageFlags::USAGE_DEFAULT)? };
     assert_eq!(Size::new(10, 10), mat.size()?);
     assert_eq!(2, mat.dims());

@@ -22,10 +22,10 @@ fn main() -> Result<()> {
 	}
 	let mut orb = features2d::ORB::default()?;
 	loop {
-		let mut frame = Mat::default()?;
+		let mut frame = Mat::default();
 		cam.read(&mut frame)?;
 		if frame.size()?.width > 0 {
-			let mut gray = Mat::default()?;
+			let mut gray = Mat::default();
 			imgproc::cvt_color(
 				&frame,
 				&mut gray,
@@ -33,9 +33,9 @@ fn main() -> Result<()> {
 				0,
 			)?;
 			let mut kps = opencv::types::VectorOfKeyPoint::new();
-			let mask = Mat::default()?;
+			let mask = Mat::default();
 			orb.detect(&gray, &mut kps, &mask)?;
-			let mut display = Mat::default()?;
+			let mut display = Mat::default();
 			#[cfg(not(feature = "opencv-4"))]
 			let default_draw_matches_flags = features2d::DrawMatchesFlags_DEFAULT;
 			#[cfg(feature = "opencv-4")]

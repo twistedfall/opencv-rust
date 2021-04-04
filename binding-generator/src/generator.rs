@@ -254,7 +254,8 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 						} else {
 							unreachable!("Incorrect CV_EXPORTS_AS(..) or CV_WRAP_AS(..) usage")
 						};
-						self.gen_env.make_export_config(entity).rename = Some(definition.to_string());
+						self.gen_env.make_export_config(entity);
+						self.gen_env.make_rename_config(entity).rename = definition.to_string();
 					} else if name == "CV_NORETURN" {
 						self.gen_env.make_export_config(entity).no_return = true;
 					} else if name == "CV_NOEXCEPT" {
@@ -276,7 +277,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 			EntityKind::FunctionDecl => {
 				Self::process_func(&mut self.visitor, &mut self.gen_env, entity)
 			}
-			EntityKind::TypedefDecl => {
+			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 				Self::process_typedef(&mut self.visitor, &mut self.gen_env, entity)
 			}
 			EntityKind::VarDecl => {

@@ -25,7 +25,7 @@ fn main() -> Result<()> {
 		for (platf_num, platform) in platforms.into_iter().enumerate() {
 			println!("Platform #{}: {}", platf_num, platform.name()?);
 			for dev_num in 0..platform.device_number()? {
-				let mut dev = core::Device::default()?;
+				let mut dev = core::Device::default();
 				platform.get_device(&mut dev, dev_num)?;
 				println!("  OpenCL device #{}: {}", dev_num, dev.name()?);
 				println!("    vendor:  {}", dev.vendor_name()?);
@@ -43,11 +43,11 @@ fn main() -> Result<()> {
 	let img = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?;
 	let start = time::Instant::now();
 	for _ in 0..ITERATIONS {
-		let mut gray = Mat::default()?;
+		let mut gray = Mat::default();
 		imgproc::cvt_color(&img, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
-		let mut blurred = Mat::default()?;
+		let mut blurred = Mat::default();
 		imgproc::gaussian_blur(&gray, &mut blurred, core::Size::new(7, 7), 1.5, 0., core::BORDER_DEFAULT)?;
-		let mut edges = Mat::default()?;
+		let mut edges = Mat::default();
 		imgproc::canny(&blurred, &mut edges, 0., 50., 3, false)?;
 	}
 	println!("{:#?}", start.elapsed());
@@ -57,11 +57,11 @@ fn main() -> Result<()> {
 		let img = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		let start = time::Instant::now();
 		for _ in 0..ITERATIONS {
-			let mut gray = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
+			let mut gray = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
 			imgproc::cvt_color(&img, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
-			let mut blurred = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
+			let mut blurred = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
 			imgproc::gaussian_blur(&gray, &mut blurred, core::Size::new(7, 7), 1.5, 0., core::BORDER_DEFAULT)?;
-			let mut edges = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
+			let mut edges = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
 			imgproc::canny(&blurred, &mut edges, 0., 50., 3, false)?;
 		}
 		println!("{:#?}", start.elapsed());

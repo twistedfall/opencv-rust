@@ -42,7 +42,7 @@ fn net() -> Result<()> {
 	assert_ne!(-1, res);
 	assert!(!net.empty()?);
 	let mut blobs = VectorOfMat::new();
-	blobs.push(Mat::default()?);
+	blobs.push(Mat::default());
 	params.set_blobs(blobs);
 	let blobs = params.blobs();
 	assert_eq!(1, blobs.len());

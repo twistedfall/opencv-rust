@@ -34,12 +34,23 @@ pub struct ExportConfig {
 	pub no_return: bool,
 	pub no_except: bool,
 	pub only_dependent_types: bool,
-	pub rename: Option<String>,
+}
+
+pub struct RenameConfig {
+	pub rename: String,
 }
 
 impl ExportConfig {
 	pub fn simple() -> Self {
 		ExportConfig { simple: true, ..Default::default() }
+	}
+
+	pub fn make_noexcept(src: &mut ExportConfig) {
+		src.no_except = true;
+	}
+
+	pub fn make_boxed(src: &mut ExportConfig) {
+		src.simple = false;
 	}
 }
 
@@ -130,6 +141,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 pub struct GeneratorEnv<'tu> {
 	module: &'tu str,
 	export_map: HashMap<ExportIdx, ExportConfig>,
+	rename_map: HashMap<ExportIdx, RenameConfig>,
 	pub func_names: NamePool,
 	func_comments: HashMap<String, String>,
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
@@ -143,6 +155,7 @@ impl<'tu> GeneratorEnv<'tu> {
 		let mut out = Self {
 			module,
 			export_map: HashMap::with_capacity(1024),
+			rename_map: HashMap::with_capacity(64),
 			func_names: NamePool::with_capacity(512),
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
@@ -197,23 +210,43 @@ impl<'tu> GeneratorEnv<'tu> {
 		self.export_map.entry(key).or_default()
 	}
 
-	pub fn get_export_config(&self, entity: Entity) -> Option<&ExportConfig> {
-		settings::ELEMENT_EXPORT.get(entity.cpp_fullname().as_ref()).or_else(|| {
-			let key = Self::key(entity);
-			self.export_map.get(&key)
-				.or_else(|| {
-					// for cases where CV_EXPORTS is on the separate line but entity.get_range() spans into it
-					let fuzzy_key = (key.0, key.1, 1);
-					self.export_map.get(&fuzzy_key)
-						.or_else(|| if fuzzy_key.1 >= 1 {
-							// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
-							let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
-							self.export_map.get(&fuzzy_key)
-						} else {
-							None
-						})
-				})
+	#[inline]
+	fn get_with_fuzzy_key<T>(entity: Entity, f: impl Fn(&ExportIdx) -> Option<T>) -> Option<T> {
+		let key = Self::key(entity);
+		f(&key).or_else(|| {
+			// for cases where CV_EXPORTS is on the separate line but entity.get_range() spans into it
+			let fuzzy_key = (key.0, key.1, 1);
+			f(&fuzzy_key).or_else(|| if fuzzy_key.1 >= 1 {
+				// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
+				let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
+				f(&fuzzy_key)
+			} else {
+				None
+			})
 		})
+	}
+
+	pub fn get_export_config(&self, entity: Entity) -> Option<ExportConfig> {
+		let cpp_fullname = entity.cpp_fullname();
+		settings::ELEMENT_EXPORT_MANUAL.get(cpp_fullname.as_ref()).or_else(|| {
+			Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key))
+		})
+			.cloned()
+			.map(|mut e| {
+				if let Some(cb) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_fullname.as_ref()) {
+					cb(&mut e);
+				}
+				e
+			})
+	}
+
+	pub fn make_rename_config(&mut self, entity: Entity) -> &mut RenameConfig {
+		let key = Self::key(entity);
+		self.rename_map.entry(key).or_insert_with(|| RenameConfig { rename: String::new() })
+	}
+
+	pub fn get_rename_config(&self, entity: Entity) -> Option<&RenameConfig> {
+		Self::get_with_fuzzy_key(entity, |key| self.rename_map.get(key))
 	}
 
 	pub fn get_func_comment(&self, cpp_fullname: &str) -> Option<&str> {

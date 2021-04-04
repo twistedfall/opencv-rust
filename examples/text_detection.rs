@@ -67,7 +67,7 @@ fn main() -> Result<()> {
 		panic!("Unable to open default camera!");
 	}
 	let win_name = "EAST: An Efficient and Accurate Scene Text Detector";
-	let mut frame = Mat::default()?;
+	let mut frame = Mat::default();
 	while highgui::wait_key(1)? < 0 {
 		cap.read(&mut frame)?;
 		if frame.empty()? {
@@ -82,7 +82,7 @@ fn main() -> Result<()> {
 		if !det_results.is_empty() {
 			// Text Recognition
 			let rec_input = if !imread_rgb {
-				let mut rec_input = Mat::default()?;
+				let mut rec_input = Mat::default();
 				imgproc::cvt_color(&frame, &mut rec_input, imgproc::COLOR_BGR2GRAY, 0)?;
 				Some(rec_input)
 			} else {
@@ -102,7 +102,7 @@ fn main() -> Result<()> {
 			}
 			imgproc::polylines(&mut frame, &contours, true, Scalar::from((0., 255., 0.)), 2, imgproc::LINE_8, 0)?;
 		}
-		let mut big_frame = Mat::default()?;
+		let mut big_frame = Mat::default();
 		imgproc::resize(&frame, &mut big_frame, Size::default(), 3., 3., imgproc::INTER_NEAREST)?;
 		highgui::imshow(win_name, &mut big_frame)?;
 	}
@@ -118,7 +118,7 @@ fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
 		Point2f::new((output_size.width - 1) as f32, (output_size.height - 1) as f32),
 	];
 	let rotation_matrix = imgproc::get_perspective_transform_slice(&vertices, &target_vertices, core::DECOMP_LU)?;
-	let mut out = Mat::default()?;
+	let mut out = Mat::default();
 	imgproc::warp_perspective(frame, &mut out, &rotation_matrix, output_size, imgproc::INTER_LINEAR, core::BORDER_CONSTANT, Scalar::default())?;
 	Ok(out)
 }

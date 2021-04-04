@@ -14,7 +14,7 @@ const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
 fn mat_default() -> Result<()> {
-	let mat = Mat::default()?;
+	let mat = Mat::default();
 	assert_eq!(u8::typ(), mat.typ()?);
 	assert_eq!(u8::depth(), mat.depth()?);
 	assert_eq!(u8::channels(), mat.channels()?);
@@ -27,7 +27,7 @@ fn mat_default() -> Result<()> {
 
 #[test]
 fn mat_create() -> Result<()> {
-	let mut mat = Mat::default()?;
+	let mut mat = Mat::default();
 	unsafe { mat.create_rows_cols(10, 10, u16::typ())? };
 	assert!(mat.is_allocated());
 	mat.set(Scalar::from(7.))?;
@@ -372,7 +372,7 @@ fn mat_operations() -> Result<()> {
 	let mut src = VectorOfMat::new();
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(1.))?);
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(2.))?);
-	let mut merged = Mat::default()?;
+	let mut merged = Mat::default();
 	core::merge(&src, &mut merged)?;
 	assert_eq!(merged.typ()?, Vec2b::typ());
 	assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);

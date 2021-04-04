@@ -4,7 +4,7 @@ use std::{
 	fmt,
 };
 
-use clang::{Availability, Entity, EntityKind};
+use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
@@ -13,8 +13,8 @@ use crate::{
 	comment,
 	DefaultElement,
 	DefinitionLocation,
-	DependentTypeMode,
 	DependentType,
+	DependentTypeMode,
 	Element,
 	EntityElement,
 	EntityExt,
@@ -275,7 +275,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_infallible(&self) -> bool {
 		self.as_field_accessor().is_some()
-			|| self.gen_env.get_export_config(self.entity).map_or(false, |e| e.no_except)
+			|| matches!(self.entity.get_exception_specification(), Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated))
+			|| settings::FORCE_NOEXCEPT.contains(&(self.cpp_fullname().as_ref(), self.clang_arguments().len()))
 	}
 
 	pub fn is_clone(&self) -> bool {
@@ -571,7 +572,7 @@ impl Element for Func<'_, '_> {
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		let cpp_name = if let Some(name) = self.gen_env.get_export_config(self.entity).and_then(|c| c.rename.as_ref()) {
+		let cpp_name = if let Some(name) = self.gen_env.get_rename_config(self.entity).map(|c| &c.rename) {
 			name.into()
 		} else {
 			self.cpp_localname()
