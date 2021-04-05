@@ -5,6 +5,7 @@ template struct Result<const cv::large_kinfu::Params*>;
 template struct Result<const float>;
 template struct Result<const std::vector<cv::Ptr<cv::linemod::Modality>>*>;
 template struct Result<const std::vector<cv::linemod::Template>*>;
+template struct Result<cv::Affine3<double>>;
 template struct Result<cv::Affine3<float>>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Matx<float, 3, 3>>;
@@ -14,6 +15,7 @@ template struct Result<cv::Ptr<cv::kinfu::KinFu>*>;
 template struct Result<cv::Ptr<cv::kinfu::Params>*>;
 template struct Result<cv::Ptr<cv::kinfu::VolumeParams>*>;
 template struct Result<cv::Ptr<cv::kinfu::Volume>*>;
+template struct Result<cv::Ptr<cv::kinfu::detail::PoseGraph>*>;
 template struct Result<cv::Ptr<cv::large_kinfu::LargeKinfu>*>;
 template struct Result<cv::Ptr<cv::large_kinfu::Params>*>;
 template struct Result<cv::Ptr<cv::linemod::ColorGradient>*>;
@@ -63,6 +65,7 @@ template struct Result<std::vector<cv::Point3_<float>>*>;
 template struct Result<std::vector<cv::linemod::Feature>*>;
 template struct Result<std::vector<int>*>;
 template struct Result<std::vector<std::string>*>;
+template struct Result<std::vector<unsigned long>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
 extern "C" {
@@ -129,6 +132,20 @@ extern "C" {
 	}
 
 	cv::rgbd::ICPOdometry* cv_PtrOfICPOdometry_get_inner_ptr_mut(cv::Ptr<cv::rgbd::ICPOdometry>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfKinfu_Detail_PoseGraph_delete(cv::Ptr<cv::kinfu::detail::PoseGraph>* instance) {
+		delete instance;
+	}
+
+	const cv::kinfu::detail::PoseGraph* cv_PtrOfKinfu_Detail_PoseGraph_get_inner_ptr(const cv::Ptr<cv::kinfu::detail::PoseGraph>* instance) {
+		return instance->get();
+	}
+
+	cv::kinfu::detail::PoseGraph* cv_PtrOfKinfu_Detail_PoseGraph_get_inner_ptr_mut(cv::Ptr<cv::kinfu::detail::PoseGraph>* instance) {
 		return instance->get();
 	}
 }

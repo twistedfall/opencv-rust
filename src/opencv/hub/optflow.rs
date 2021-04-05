@@ -258,6 +258,8 @@ pub fn update_motion_history(silhouette: &dyn core::ToInputArray, mhi: &mut dyn 
 /// 
 /// 
 /// Note: SIMD parallelization is only available when compiling with SSE4.1.
+/// 
+/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
 /// ## See also
 /// optflow::DenseRLOFOpticalFlow, optflow::RLOFOpticalFlowParameter
 /// 
@@ -522,6 +524,9 @@ pub fn write(fs: &mut core::FileStorage, name: &str, node: crate::optflow::GPCTr
 /// 
 /// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
 /// computed by RLOF without using interpolation.
+/// 
+/// 
+/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
 /// ## See also
 /// optflow::calcOpticalFlowDenseRLOF(), optflow::RLOFOpticalFlowParameter
 pub trait DenseRLOFOpticalFlow: crate::video::DenseOpticalFlow {

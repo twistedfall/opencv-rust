@@ -640,10 +640,10 @@ pub const CV_TYPE_NAME_SEQ: &str = "opencv-sequence";
 pub const CV_TYPE_NAME_SEQ_TREE: &str = "opencv-sequence-tree";
 pub const CV_TYPE_NAME_SPARSE_MAT: &str = "opencv-sparse-matrix";
 pub const CV_USRTYPE1: i32 = 7;
-pub const CV_VERSION: &str = "3.4.13";
+pub const CV_VERSION: &str = "3.4.14";
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 13;
+pub const CV_VERSION_REVISION: i32 = 14;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -1041,7 +1041,7 @@ pub const USAGE_DEFAULT: i32 = 0;
 pub const WARP_SHUFFLE_FUNCTIONS: i32 = 30;
 pub const _InputArray_CUDA_GPU_MAT: i32 = 589824;
 pub const _InputArray_CUDA_HOST_MEM: i32 = 524288;
-/// removed
+/// removed: https://github.com/opencv/opencv/pull/17046
 pub const _InputArray_EXPR: i32 = 393216;
 pub const _InputArray_FIXED_SIZE: i32 = 1073741824;
 pub const _InputArray_FIXED_TYPE: i32 = -2147483648;
@@ -1051,6 +1051,7 @@ pub const _InputArray_MAT: i32 = 65536;
 pub const _InputArray_MATX: i32 = 131072;
 pub const _InputArray_NONE: i32 = 0;
 pub const _InputArray_OPENGL_BUFFER: i32 = 458752;
+/// removed: https://github.com/opencv/opencv/issues/18897
 pub const _InputArray_STD_ARRAY: i32 = 917504;
 pub const _InputArray_STD_ARRAY_MAT: i32 = 983040;
 pub const _InputArray_STD_BOOL_VECTOR: i32 = 786432;
@@ -3592,6 +3593,10 @@ pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
 	unsafe { sys::cv_getHardwareFeatureName_int(feature) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
+pub fn get_log_level_1() -> Result<i32> {
+	unsafe { sys::cv_getLogLevel() }.into_result()
+}
+
 /// Returns the number of threads used by OpenCV for parallel regions.
 /// 
 /// Always returns 1 if OpenCV is built without threading support.
@@ -5843,6 +5848,11 @@ pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> 
 	unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s) }.into_result()
 }
 
+/// @cond IGNORED
+pub fn set_log_level_1(level: i32) -> Result<i32> {
+	unsafe { sys::cv_setLogLevel_int(level) }.into_result()
+}
+
 /// OpenCV will try to set the number of threads for the next parallel region.
 /// 
 /// If threads == 0, OpenCV will disable threading optimizations and run all it's functions
@@ -6326,6 +6336,18 @@ pub fn dump_int(argument: i32) -> Result<String> {
 	unsafe { sys::cv_utils_dumpInt_int(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
+pub fn dump_range(argument: &core::Range) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRange_const_RangeR(argument.as_raw_Range()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_rect(argument: core::Rect) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRect_const_RectR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_rotated_rect(argument: &core::RotatedRect) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(argument.as_raw_RotatedRect()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 pub fn dump_size_t(argument: size_t) -> Result<String> {
 	unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
@@ -6333,6 +6355,10 @@ pub fn dump_size_t(argument: size_t) -> Result<String> {
 pub fn dump_string(argument: &str) -> Result<String> {
 	extern_container_arg!(argument);
 	unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
+	unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
 pub fn get_thread_id() -> Result<i32> {
@@ -6364,6 +6390,20 @@ pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::Async
 
 pub fn test_async_exception() -> Result<core::AsyncArray> {
 	unsafe { sys::cv_utils_testAsyncException() }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+}
+
+pub fn test_overload_resolution_1(rect: core::Rect) -> Result<String> {
+	unsafe { sys::cv_utils_testOverloadResolution_const_RectR(&rect) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+/// ## C++ default parameters
+/// * point: Point(42,24)
+pub fn test_overload_resolution(value: i32, point: core::Point) -> Result<String> {
+	unsafe { sys::cv_utils_testOverloadResolution_int_const_PointR(value, &point) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn test_raise_general_exception() -> Result<()> {
+	unsafe { sys::cv_utils_testRaiseGeneralException() }.into_result()
 }
 
 /// Converts VASurfaceID object to OutputArray.
@@ -10569,8 +10609,8 @@ impl Mat {
 	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
 	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
 	/// allocated with Mat::create . In the former case, the old content is de-referenced.
-	pub fn default() -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat() }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	pub fn default() -> core::Mat {
+		unsafe { sys::cv_Mat_Mat() }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// download data from GpuMat
@@ -11574,8 +11614,8 @@ pub trait MatSizeTrait {
 		unsafe { sys::cv_MatSize_setPropP_intX(self.as_raw_mut_MatSize(), val) }.into_result().expect("Infallible function failed: set_p")
 	}
 	
-	fn dims(&self) -> Result<i32> {
-		unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result()
+	fn dims(&self) -> i32 {
+		unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result().expect("Infallible function failed: dims")
 	}
 	
 	fn get(&self, i: i32) -> Result<i32> {
@@ -11586,8 +11626,8 @@ pub trait MatSizeTrait {
 		unsafe { sys::cv_MatSize_operator___int(self.as_raw_mut_MatSize(), i) }.into_result()
 	}
 	
-	fn to_ri32(&self) -> Result<&i32> {
-		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+	fn to_ri32(&self) -> &i32 {
+		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: to_ri32")
 	}
 	
 }
@@ -11619,8 +11659,8 @@ impl core::MatSizeTrait for MatSize {
 
 impl MatSize {
 	/// ////////////////////////// MatSize ////////////////////////////
-	pub fn new(_p: &mut i32) -> Result<core::MatSize> {
-		unsafe { sys::cv_MatSize_MatSize_intX(_p) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } )
+	pub fn new(_p: &mut i32) -> core::MatSize {
+		unsafe { sys::cv_MatSize_MatSize_intX(_p) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 }
@@ -11641,12 +11681,12 @@ pub trait MatStepTrait {
 		unsafe { sys::cv_MatStep_getPropBuf(self.as_raw_mut_MatStep()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: buf")
 	}
 	
-	fn get(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) }.into_result()
+	fn get(&self, i: i32) -> size_t {
+		unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) }.into_result().expect("Infallible function failed: get")
 	}
 	
-	fn get_mut(&mut self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) }.into_result()
+	fn get_mut(&mut self, i: i32) -> size_t {
+		unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) }.into_result().expect("Infallible function failed: get_mut")
 	}
 	
 	fn to_size_t(&self) -> Result<size_t> {
@@ -11682,12 +11722,12 @@ impl core::MatStepTrait for MatStep {
 
 impl MatStep {
 	/// ////////////////////////// MatStep ////////////////////////////
-	pub fn default() -> Result<core::MatStep> {
-		unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } )
+	pub fn default() -> core::MatStep {
+		unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
-	pub fn new(s: size_t) -> Result<core::MatStep> {
-		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } )
+	pub fn new(s: size_t) -> core::MatStep {
+		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 }
@@ -14853,8 +14893,8 @@ impl UMat {
 	/// 
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
-	pub fn new(usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn new(usage_flags: core::UMatUsageFlags) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 	/// constructs 2D matrix of the specified size and type
@@ -14900,8 +14940,8 @@ impl UMat {
 	}
 	
 	/// copy constructor
-	pub fn copy(m: &core::UMat) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn copy(m: &core::UMat) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
 	}
 	
 	/// creates a matrix header for a part of the bigger matrix
@@ -14958,8 +14998,8 @@ impl UMat {
 		unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn copy_mut(m: &mut core::UMat) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn copy_mut(m: &mut core::UMat) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 }
@@ -18056,8 +18096,8 @@ impl core::ContextTrait for Context {
 }
 
 impl Context {
-	pub fn default() -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	pub fn default() -> core::Context {
+		unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new_with_type(dtype: i32) -> Result<core::Context> {
@@ -18410,8 +18450,8 @@ impl core::DeviceTrait for Device {
 }
 
 impl Device {
-	pub fn default() -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+	pub fn default() -> core::Device {
+		unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(d: *mut c_void) -> Result<core::Device> {
@@ -18464,8 +18504,8 @@ impl core::Image2DTrait for Image2D {
 }
 
 impl Image2D {
-	pub fn default() -> Result<core::Image2D> {
-		unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } )
+	pub fn default() -> core::Image2D {
+		unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// ## Parameters
@@ -18620,8 +18660,8 @@ impl core::KernelTrait for Kernel {
 }
 
 impl Kernel {
-	pub fn default() -> Result<core::Kernel> {
-		unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } )
+	pub fn default() -> core::Kernel {
+		unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(kname: &str, prog: &core::Program) -> Result<core::Kernel> {
@@ -18732,8 +18772,8 @@ impl KernelArg {
 		unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
 	}
 	
-	pub fn default() -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+	pub fn default() -> core::KernelArg {
+		unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn local(local_mem_size: size_t) -> Result<core::KernelArg> {
@@ -18836,8 +18876,8 @@ impl core::PlatformTrait for Platform {
 }
 
 impl Platform {
-	pub fn default() -> Result<core::Platform> {
-		unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
+	pub fn default() -> core::Platform {
+		unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn copy(p: &core::Platform) -> Result<core::Platform> {
@@ -18911,8 +18951,8 @@ impl core::PlatformInfoTrait for PlatformInfo {
 }
 
 impl PlatformInfo {
-	pub fn default() -> Result<core::PlatformInfo> {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
+	pub fn default() -> core::PlatformInfo {
+		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
@@ -19002,8 +19042,8 @@ impl core::ProgramTrait for Program {
 }
 
 impl Program {
-	pub fn default() -> Result<core::Program> {
-		unsafe { sys::cv_ocl_Program_Program() }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } )
+	pub fn default() -> core::Program {
+		unsafe { sys::cv_ocl_Program_Program() }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(src: &core::ProgramSource, buildflags: &str, errmsg: &mut String) -> Result<core::Program> {
@@ -19065,8 +19105,8 @@ impl core::ProgramSourceTrait for ProgramSource {
 }
 
 impl ProgramSource {
-	pub fn default() -> Result<core::ProgramSource> {
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+	pub fn default() -> core::ProgramSource {
+		unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(module: &str, name: &str, code_str: &str, code_hash: &str) -> Result<core::ProgramSource> {
@@ -19197,8 +19237,8 @@ impl core::QueueTrait for Queue {
 }
 
 impl Queue {
-	pub fn default() -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	pub fn default() -> core::Queue {
+		unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// ## C++ default parameters

@@ -681,6 +681,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
 	}
 	
+	Result<cv::Stitcher::Status> cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R_const_vector_int_R(cv::Stitcher* instance, const cv::_InputArray* images, const std::vector<cv::detail::CameraParams>* cameras, const std::vector<int>* component) {
+		try {
+			cv::Stitcher::Status ret = instance->setTransform(*images, *cameras, *component);
+			return Ok<cv::Stitcher::Status>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
+	}
+	
+	Result<cv::Stitcher::Status> cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R(cv::Stitcher* instance, const cv::_InputArray* images, const std::vector<cv::detail::CameraParams>* cameras) {
+		try {
+			cv::Stitcher::Status ret = instance->setTransform(*images, *cameras);
+			return Ok<cv::Stitcher::Status>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Stitcher::Status>))
+	}
+	
 	Result<cv::Stitcher::Status> cv_Stitcher_composePanorama_const__OutputArrayR(cv::Stitcher* instance, const cv::_OutputArray* pano) {
 		try {
 			cv::Stitcher::Status ret = instance->composePanorama(*pano);

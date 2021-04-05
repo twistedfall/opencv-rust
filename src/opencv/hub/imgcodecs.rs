@@ -43,6 +43,28 @@ pub const IMREAD_REDUCED_GRAYSCALE_4: i32 = 32;
 pub const IMREAD_REDUCED_GRAYSCALE_8: i32 = 64;
 /// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 pub const IMREAD_UNCHANGED: i32 = -1;
+/// override EXR compression type (ZIP_COMPRESSION = 3 is default)
+pub const IMWRITE_EXR_COMPRESSION: i32 = 49;
+/// lossy 4-by-4 pixel block compression, fixed compression rate
+pub const IMWRITE_EXR_COMPRESSION_B44: i32 = 6;
+/// lossy 4-by-4 pixel block compression, flat fields are compressed more
+pub const IMWRITE_EXR_COMPRESSION_B44A: i32 = 7;
+/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access.
+pub const IMWRITE_EXR_COMPRESSION_DWAA: i32 = 8;
+/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION.
+pub const IMWRITE_EXR_COMPRESSION_DWAB: i32 = 9;
+/// no compression
+pub const IMWRITE_EXR_COMPRESSION_NO: i32 = 0;
+/// piz-based wavelet compression
+pub const IMWRITE_EXR_COMPRESSION_PIZ: i32 = 4;
+/// lossy 24-bit float compression
+pub const IMWRITE_EXR_COMPRESSION_PXR24: i32 = 5;
+/// run length encoding
+pub const IMWRITE_EXR_COMPRESSION_RLE: i32 = 1;
+/// zlib compression, in blocks of 16 scan lines
+pub const IMWRITE_EXR_COMPRESSION_ZIP: i32 = 3;
+/// zlib compression, one scan line at a time
+pub const IMWRITE_EXR_COMPRESSION_ZIPS: i32 = 2;
 /// override EXR storage type (FLOAT (FP32) is default)
 pub const IMWRITE_EXR_TYPE: i32 = 48;
 /// store as FP32 (default)
@@ -135,6 +157,33 @@ opencv_type_enum! { crate::imgcodecs::ImreadModes }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
+pub enum ImwriteEXRCompressionFlags {
+	/// no compression
+	IMWRITE_EXR_COMPRESSION_NO = 0,
+	/// run length encoding
+	IMWRITE_EXR_COMPRESSION_RLE = 1,
+	/// zlib compression, one scan line at a time
+	IMWRITE_EXR_COMPRESSION_ZIPS = 2,
+	/// zlib compression, in blocks of 16 scan lines
+	IMWRITE_EXR_COMPRESSION_ZIP = 3,
+	/// piz-based wavelet compression
+	IMWRITE_EXR_COMPRESSION_PIZ = 4,
+	/// lossy 24-bit float compression
+	IMWRITE_EXR_COMPRESSION_PXR24 = 5,
+	/// lossy 4-by-4 pixel block compression, fixed compression rate
+	IMWRITE_EXR_COMPRESSION_B44 = 6,
+	/// lossy 4-by-4 pixel block compression, flat fields are compressed more
+	IMWRITE_EXR_COMPRESSION_B44A = 7,
+	/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access.
+	IMWRITE_EXR_COMPRESSION_DWAA = 8,
+	/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION.
+	IMWRITE_EXR_COMPRESSION_DWAB = 9,
+}
+
+opencv_type_enum! { crate::imgcodecs::ImwriteEXRCompressionFlags }
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwriteEXRTypeFlags {
 	/// store as HALF (FP16)
 	IMWRITE_EXR_TYPE_HALF = 1,
@@ -170,6 +219,8 @@ pub enum ImwriteFlags {
 	IMWRITE_PXM_BINARY = 32,
 	/// override EXR storage type (FLOAT (FP32) is default)
 	IMWRITE_EXR_TYPE = 48,
+	/// override EXR compression type (ZIP_COMPRESSION = 3 is default)
+	IMWRITE_EXR_COMPRESSION = 49,
 	/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 	IMWRITE_WEBP_QUALITY = 64,
 	/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format

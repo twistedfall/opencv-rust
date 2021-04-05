@@ -1918,8 +1918,7 @@ impl KeyPointsFilter {
 /// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 /// 
 /// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
-/// than grey image method ( 3~4 times ); the chi_table.h file is taken directly from paper's source
-/// code which is distributed under GPL.
+/// than grey image method ( 3~4 times )
 /// 
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
 pub trait MSER: crate::features2d::Feature2DTrait {

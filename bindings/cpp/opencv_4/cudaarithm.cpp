@@ -206,6 +206,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result_void cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(const cv::_InputArray* src, const cv::Scalar* lowerb, const cv::Scalar* upperb, const cv::_OutputArray* dst, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::inRange(*src, *lowerb, *upperb, *dst, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_cuda_integral_const__InputArrayR_const__OutputArrayR_StreamR(const cv::_InputArray* src, const cv::_OutputArray* sum, cv::cuda::Stream* stream) {
 		try {
 			cv::cuda::integral(*src, *sum, *stream);

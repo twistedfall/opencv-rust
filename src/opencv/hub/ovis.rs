@@ -40,6 +40,7 @@ pub mod prelude {
 
 pub const ENTITY_AABB_WORLD: i32 = 2;
 pub const ENTITY_ANIMBLEND_MODE: i32 = 3;
+pub const ENTITY_CAST_SHADOWS: i32 = 4;
 pub const ENTITY_MATERIAL: i32 = 0;
 pub const ENTITY_SCALE: i32 = 1;
 pub const MATERIAL_DIFFUSE: i32 = 4;
@@ -60,6 +61,8 @@ pub const SCENE_INTERACTIVE: i32 = 2;
 pub const SCENE_OFFSCREEN: i32 = 16;
 /// the window will use a separate scene. The scene will be shared otherwise.
 pub const SCENE_SEPARATE: i32 = 1;
+/// Enable real-time shadows in the scene. All entities cast shadows by default. Control via @ref ENTITY_CAST_SHADOWS
+pub const SCENE_SHADOWS: i32 = 32;
 /// draw coordinate system crosses for debugging
 pub const SCENE_SHOW_CS_CROSS: i32 = 4;
 #[repr(C)]
@@ -69,6 +72,7 @@ pub enum EntityProperty {
 	ENTITY_SCALE = 1,
 	ENTITY_AABB_WORLD = 2,
 	ENTITY_ANIMBLEND_MODE = 3,
+	ENTITY_CAST_SHADOWS = 4,
 }
 
 opencv_type_enum! { crate::ovis::EntityProperty }
@@ -103,6 +107,8 @@ pub enum SceneSettings {
 	SCENE_AA = 8,
 	/// Render off-screen without a window. Allows separate AA setting. Requires manual update via @ref WindowScene::update
 	SCENE_OFFSCREEN = 16,
+	/// Enable real-time shadows in the scene. All entities cast shadows by default. Control via @ref ENTITY_CAST_SHADOWS
+	SCENE_SHADOWS = 32,
 }
 
 opencv_type_enum! { crate::ovis::SceneSettings }

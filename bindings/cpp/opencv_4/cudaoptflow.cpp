@@ -304,18 +304,39 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
 	}
 	
-	Result_void cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_int_int_int_const__InputOutputArrayR(cv::cuda::NvidiaOpticalFlow_1_0* instance, const cv::_InputArray* flow, int width, int height, int gridSize, const cv::_InputOutputArray* upsampledFlow) {
+	Result_void cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(cv::cuda::NvidiaOpticalFlow_1_0* instance, const cv::_InputArray* flow, cv::Size* imageSize, int gridSize, const cv::_InputOutputArray* upsampledFlow) {
 		try {
-			instance->upSampler(*flow, width, height, gridSize, *upsampledFlow);
+			instance->upSampler(*flow, *imageSize, gridSize, *upsampledFlow);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*> cv_cuda_NvidiaOpticalFlow_1_0_create_int_int_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(int width, int height, cv::cuda::NvidiaOpticalFlow_1_0::NVIDIA_OF_PERF_LEVEL perfPreset, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId, cv::cuda::Stream* inputStream, cv::cuda::Stream* outputStream) {
+	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*> cv_cuda_NvidiaOpticalFlow_1_0_create_Size_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(cv::Size* imageSize, cv::cuda::NvidiaOpticalFlow_1_0::NVIDIA_OF_PERF_LEVEL perfPreset, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId, cv::cuda::Stream* inputStream, cv::cuda::Stream* outputStream) {
 		try {
-			cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0> ret = cv::cuda::NvidiaOpticalFlow_1_0::create(width, height, perfPreset, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId, *inputStream, *outputStream);
+			cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0> ret = cv::cuda::NvidiaOpticalFlow_1_0::create(*imageSize, perfPreset, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId, *inputStream, *outputStream);
 			return Ok(new cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*>))
+	}
+	
+	Result_void cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(cv::cuda::NvidiaOpticalFlow_2_0* instance, const cv::_InputArray* flow, const cv::_InputOutputArray* floatFlow) {
+		try {
+			instance->convertToFloat(*flow, *floatFlow);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>*> cv_cuda_NvidiaOpticalFlow_2_0_create_Size_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(cv::Size* imageSize, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_PERF_LEVEL perfPreset, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE outputGridSize, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_HINT_VECTOR_GRID_SIZE hintGridSize, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId, cv::cuda::Stream* inputStream, cv::cuda::Stream* outputStream) {
+		try {
+			cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0> ret = cv::cuda::NvidiaOpticalFlow_2_0::create(*imageSize, perfPreset, outputGridSize, hintGridSize, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId, *inputStream, *outputStream);
+			return Ok(new cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>*>))
+	}
+	
+	Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>*> cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vector_Rect__NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(cv::Size* imageSize, std::vector<cv::Rect>* roiData, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_PERF_LEVEL perfPreset, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE outputGridSize, cv::cuda::NvidiaOpticalFlow_2_0::NVIDIA_OF_HINT_VECTOR_GRID_SIZE hintGridSize, bool enableTemporalHints, bool enableExternalHints, bool enableCostBuffer, int gpuId, cv::cuda::Stream* inputStream, cv::cuda::Stream* outputStream) {
+		try {
+			cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0> ret = cv::cuda::NvidiaOpticalFlow_2_0::create(*imageSize, *roiData, perfPreset, outputGridSize, hintGridSize, enableTemporalHints, enableExternalHints, enableCostBuffer, gpuId, *inputStream, *outputStream);
+			return Ok(new cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>*>))
 	}
 	
 	Result<double> cv_cuda_OpticalFlowDual_TVL1_getTau_const(const cv::cuda::OpticalFlowDual_TVL1* instance) {

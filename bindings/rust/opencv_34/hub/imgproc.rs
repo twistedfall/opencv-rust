@@ -161,11 +161,19 @@ pub mod prelude {
 pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 /// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a mean of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%0A%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) minus C
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
-/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
+pub const CCL_BBDT: i32 = 4;
+/// Spaghetti [Bolelli2019](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity.
+pub const CCL_BOLELLI: i32 = 2;
+/// BBDT [Grana2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 pub const CCL_DEFAULT: i32 = -1;
-/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// BBDT [Grana2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 pub const CCL_GRANA: i32 = 1;
-/// SAUF [Wu2009](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
+pub const CCL_SAUF: i32 = 3;
+/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
+pub const CCL_SPAGHETTI: i32 = 5;
+/// SAUF [Wu2009](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 pub const CCL_WU: i32 = 0;
 /// The total area (in pixels) of the connected component
 pub const CC_STAT_AREA: i32 = 4;
@@ -244,11 +252,13 @@ pub const COLOR_BGR2BGR565: i32 = 12;
 pub const COLOR_BGR2BGRA: i32 = 0;
 /// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 pub const COLOR_BGR2GRAY: i32 = 6;
-/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 pub const COLOR_BGR2HLS: i32 = 52;
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 pub const COLOR_BGR2HLS_FULL: i32 = 68;
-/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 pub const COLOR_BGR2HSV: i32 = 40;
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 pub const COLOR_BGR2HSV_FULL: i32 = 66;
 /// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
 pub const COLOR_BGR2Lab: i32 = 44;
@@ -374,12 +384,15 @@ pub const COLOR_GRAY2BGR565: i32 = 20;
 pub const COLOR_GRAY2BGRA: i32 = 9;
 pub const COLOR_GRAY2RGB: i32 = 8;
 pub const COLOR_GRAY2RGBA: i32 = 9;
+/// backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
 pub const COLOR_HLS2BGR: i32 = 60;
+/// backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
 pub const COLOR_HLS2BGR_FULL: i32 = 72;
 pub const COLOR_HLS2RGB: i32 = 61;
 pub const COLOR_HLS2RGB_FULL: i32 = 73;
-/// backward conversions to RGB/BGR
+/// backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
 pub const COLOR_HSV2BGR: i32 = 54;
+/// backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
 pub const COLOR_HSV2BGR_FULL: i32 = 70;
 pub const COLOR_HSV2RGB: i32 = 55;
 pub const COLOR_HSV2RGB_FULL: i32 = 71;
@@ -927,7 +940,7 @@ pub enum ColorConversionCodes {
 	COLOR_RGB2YCrCb = 37,
 	COLOR_YCrCb2BGR = 38,
 	COLOR_YCrCb2RGB = 39,
-	/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 	COLOR_BGR2HSV = 40,
 	COLOR_RGB2HSV = 41,
 	/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
@@ -936,24 +949,29 @@ pub enum ColorConversionCodes {
 	/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
 	COLOR_BGR2Luv = 50,
 	COLOR_RGB2Luv = 51,
-	/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 	COLOR_BGR2HLS = 52,
 	COLOR_RGB2HLS = 53,
-	/// backward conversions to RGB/BGR
+	/// backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
 	COLOR_HSV2BGR = 54,
 	COLOR_HSV2RGB = 55,
 	COLOR_Lab2BGR = 56,
 	COLOR_Lab2RGB = 57,
 	COLOR_Luv2BGR = 58,
 	COLOR_Luv2RGB = 59,
+	/// backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
 	COLOR_HLS2BGR = 60,
 	COLOR_HLS2RGB = 61,
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 	COLOR_BGR2HSV_FULL = 66,
 	COLOR_RGB2HSV_FULL = 67,
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 	COLOR_BGR2HLS_FULL = 68,
 	COLOR_RGB2HLS_FULL = 69,
+	/// backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
 	COLOR_HSV2BGR_FULL = 70,
 	COLOR_HSV2RGB_FULL = 71,
+	/// backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
 	COLOR_HLS2BGR_FULL = 72,
 	COLOR_HLS2RGB_FULL = 73,
 	COLOR_LBGR2Lab = 74,
@@ -1273,12 +1291,20 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
-	/// SAUF [Wu2009](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-	CCL_WU = 0,
-	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+	/// BBDT [Grana2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	CCL_DEFAULT = -1,
-	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+	/// SAUF [Wu2009](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	CCL_WU = 0,
+	/// BBDT [Grana2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	CCL_GRANA = 1,
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity.
+	CCL_BOLELLI = 2,
+	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
+	CCL_SAUF = 3,
+	/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
+	CCL_BBDT = 4,
+	/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
+	CCL_SPAGHETTI = 5,
 }
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }

@@ -217,6 +217,8 @@ pub const WND_PROP_OPENGL: i32 = 3;
 pub const WND_PROP_TOPMOST: i32 = 5;
 /// checks whether the window exists and is visible
 pub const WND_PROP_VISIBLE: i32 = 4;
+/// enable or disable VSYNC (in OpenGL mode)
+pub const WND_PROP_VSYNC: i32 = 6;
 /// Mouse Event Flags see cv::MouseCallback
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -357,6 +359,8 @@ pub enum WindowPropertyFlags {
 	WND_PROP_VISIBLE = 4,
 	/// property to toggle normal window being topmost or not
 	WND_PROP_TOPMOST = 5,
+	/// enable or disable VSYNC (in OpenGL mode)
+	WND_PROP_VSYNC = 6,
 }
 
 opencv_type_enum! { crate::highgui::WindowPropertyFlags }
@@ -685,11 +689,12 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 /// If you need to show an image that is bigger than the screen resolution, you will need to call namedWindow("", WINDOW_NORMAL) before the imshow.
 /// 
 /// 
-/// Note: This function should be followed by cv::waitKey function which displays the image for specified
-/// milliseconds. Otherwise, it won't display the image. For example, **waitKey(0)** will display the window
-/// infinitely until any keypress (it is suitable for image display). **waitKey(25)** will display a frame
-/// for 25 ms, after which display will be automatically closed. (If you put it in a loop to read
-/// videos, it will display the video frame-by-frame)
+/// Note: This function should be followed by a call to cv::waitKey or cv::pollKey to perform GUI
+/// housekeeping tasks that are necessary to actually show the given image and make the window respond
+/// to mouse and keyboard events. Otherwise, it won't display the image and the window might lock up.
+/// For example, **waitKey(0)** will display the window infinitely until any keypress (it is suitable
+/// for image display). **waitKey(25)** will display a frame and wait approximately 25 ms for a key
+/// press (suitable for displaying a video frame-by-frame). To remove the window, use cv::destroyWindow.
 /// 
 /// 
 /// Note:
@@ -763,6 +768,23 @@ pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 	extern_container_arg!(winname);
 	unsafe { sys::cv_namedWindow_const_StringR_int(winname.opencv_as_extern(), flags) }.into_result()
+}
+
+/// Polls for a pressed key.
+/// 
+/// The function pollKey polls for a key event without waiting. It returns the code of the pressed key
+/// or -1 if no key was pressed since the last invocation. To wait until a key was pressed, use #waitKey.
+/// 
+/// 
+/// Note: The functions #waitKey and #pollKey are the only methods in HighGUI that can fetch and handle
+/// GUI events, so one of them needs to be called periodically for normal event processing unless
+/// HighGUI is used within an environment that takes care of event processing.
+/// 
+/// 
+/// Note: The function only works if there is at least one HighGUI window created and the window is
+/// active. If there are several HighGUI windows, any of them can be active.
+pub fn poll_key() -> Result<i32> {
+	unsafe { sys::cv_pollKey() }.into_result()
 }
 
 /// Resizes the window to the specified size
@@ -1101,20 +1123,17 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 /// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
 /// function will not wait exactly delay ms, it will wait at least delay ms, depending on what else is
 /// running on your computer at that time. It returns the code of the pressed key or -1 if no key was
-/// pressed before the specified time had elapsed.
+/// pressed before the specified time had elapsed. To check for a key press but not wait for it, use
+/// #pollKey.
 /// 
 /// 
-/// Note:
-/// 
-/// This function is the only method in HighGUI that can fetch and handle events, so it needs to be
-/// called periodically for normal event processing unless HighGUI is used within an environment that
-/// takes care of event processing.
+/// Note: The functions #waitKey and #pollKey are the only methods in HighGUI that can fetch and handle
+/// GUI events, so one of them needs to be called periodically for normal event processing unless
+/// HighGUI is used within an environment that takes care of event processing.
 /// 
 /// 
-/// Note:
-/// 
-/// The function only works if there is at least one HighGUI window created and the window is active.
-/// If there are several HighGUI windows, any of them can be active.
+/// Note: The function only works if there is at least one HighGUI window created and the window is
+/// active. If there are several HighGUI windows, any of them can be active.
 /// 
 /// ## Parameters
 /// * delay: Delay in milliseconds. 0 is the special value that means "forever".

@@ -656,6 +656,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Size>))
 	}
 	
+	Result_void cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR_int_int_bool_double(const cv::_InputArray* image, const cv::_OutputArray* corners, int maxCorners, double qualityLevel, double minDistance, const cv::_InputArray* mask, const cv::_OutputArray* cornersQuality, int blockSize, int gradientSize, bool useHarrisDetector, double k) {
+		try {
+			cv::goodFeaturesToTrack(*image, *corners, maxCorners, qualityLevel, minDistance, *mask, *cornersQuality, blockSize, gradientSize, useHarrisDetector, k);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result_void cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_bool_double(const cv::_InputArray* image, const cv::_OutputArray* corners, int maxCorners, double qualityLevel, double minDistance, const cv::_InputArray* mask, int blockSize, bool useHarrisDetector, double k) {
 		try {
 			cv::goodFeaturesToTrack(*image, *corners, maxCorners, qualityLevel, minDistance, *mask, blockSize, useHarrisDetector, k);
@@ -1682,6 +1689,72 @@ extern "C" {
 			int ret = instance->edgeDst(edge, dstpt);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	void cv_IntelligentScissorsMB_delete(cv::segmentation::IntelligentScissorsMB* instance) {
+		delete instance;
+	}
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB() {
+		try {
+			cv::segmentation::IntelligentScissorsMB* ret = new cv::segmentation::IntelligentScissorsMB();
+			return Ok<cv::segmentation::IntelligentScissorsMB*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_setWeights_float_float_float(cv::segmentation::IntelligentScissorsMB* instance, float weight_non_edge, float weight_gradient_direction, float weight_gradient_magnitude) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->setWeights(weight_non_edge, weight_gradient_direction, weight_gradient_magnitude);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit_float(cv::segmentation::IntelligentScissorsMB* instance, float gradient_magnitude_threshold_max) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->setGradientMagnitudeMaxLimit(gradient_magnitude_threshold_max);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters_float(cv::segmentation::IntelligentScissorsMB* instance, float gradient_magnitude_min_value) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->setEdgeFeatureZeroCrossingParameters(gradient_magnitude_min_value);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double_int_bool(cv::segmentation::IntelligentScissorsMB* instance, double threshold1, double threshold2, int apertureSize, bool L2gradient) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->setEdgeFeatureCannyParameters(threshold1, threshold2, apertureSize, L2gradient);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(cv::segmentation::IntelligentScissorsMB* instance, const cv::_InputArray* image) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->applyImage(*image);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result<cv::segmentation::IntelligentScissorsMB*> cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cv::segmentation::IntelligentScissorsMB* instance, const cv::_InputArray* non_edge, const cv::_InputArray* gradient_direction, const cv::_InputArray* gradient_magnitude, const cv::_InputArray* image) {
+		try {
+			cv::segmentation::IntelligentScissorsMB ret = instance->applyImageFeatures(*non_edge, *gradient_direction, *gradient_magnitude, *image);
+			return Ok(new cv::segmentation::IntelligentScissorsMB(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::segmentation::IntelligentScissorsMB*>))
+	}
+	
+	Result_void cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(cv::segmentation::IntelligentScissorsMB* instance, const cv::Point* sourcePt) {
+		try {
+			instance->buildMap(*sourcePt);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(const cv::segmentation::IntelligentScissorsMB* instance, const cv::Point* targetPt, const cv::_OutputArray* contour, bool backward) {
+		try {
+			instance->getContour(*targetPt, *contour, backward);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 }

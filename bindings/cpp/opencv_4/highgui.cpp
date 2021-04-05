@@ -122,6 +122,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<int> cv_pollKey() {
+		try {
+			int ret = cv::pollKey();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result_void cv_resizeWindow_const_StringR_const_SizeR(const char* winname, const cv::Size* size) {
 		try {
 			cv::resizeWindow(std::string(winname), *size);

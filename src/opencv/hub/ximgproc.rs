@@ -23,6 +23,8 @@
 //! 
 //!    # Fast line detector
 //! 
+//!    # EdgeDrawing
+//! 
 //!    # Fourier descriptors
 //! 
 //!    # Binary morphology on run-length encoded image
@@ -45,7 +47,7 @@
 //!    "on".
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DTFilter, super::GuidedFilter, super::AdaptiveManifoldFilter, super::FastBilateralSolverFilter, super::FastGlobalSmootherFilter, super::DisparityFilter, super::DisparityWLSFilter, super::SparseMatchInterpolator, super::EdgeAwareInterpolator, super::RICInterpolator, super::RFFeatureGetter, super::StructuredEdgeDetection, super::EdgeBoxes, super::SuperpixelSEEDS, super::GraphSegmentation, super::SelectiveSearchSegmentationStrategy, super::SelectiveSearchSegmentationStrategyColor, super::SelectiveSearchSegmentationStrategySize, super::SelectiveSearchSegmentationStrategyTexture, super::SelectiveSearchSegmentationStrategyFill, super::SelectiveSearchSegmentationStrategyMultiple, super::SelectiveSearchSegmentation, super::SuperpixelSLIC, super::SuperpixelLSC, super::FastLineDetector, super::ContourFittingTrait, super::RidgeDetectionFilter };
+	pub use { super::DTFilter, super::GuidedFilter, super::AdaptiveManifoldFilter, super::FastBilateralSolverFilter, super::FastGlobalSmootherFilter, super::DisparityFilter, super::DisparityWLSFilter, super::SparseMatchInterpolator, super::EdgeAwareInterpolator, super::RICInterpolator, super::RFFeatureGetter, super::StructuredEdgeDetection, super::EdgeBoxes, super::EdgeDrawing, super::SuperpixelSEEDS, super::GraphSegmentation, super::SelectiveSearchSegmentationStrategy, super::SelectiveSearchSegmentationStrategyColor, super::SelectiveSearchSegmentationStrategySize, super::SelectiveSearchSegmentationStrategyTexture, super::SelectiveSearchSegmentationStrategyFill, super::SelectiveSearchSegmentationStrategyMultiple, super::SelectiveSearchSegmentation, super::SuperpixelSLIC, super::SuperpixelLSC, super::FastLineDetector, super::ContourFittingTrait, super::RidgeDetectionFilter };
 }
 
 pub const AM_FILTER: i32 = 4;
@@ -133,6 +135,17 @@ pub enum EdgeAwareFiltersList {
 }
 
 opencv_type_enum! { crate::ximgproc::EdgeAwareFiltersList }
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum EdgeDrawing_GradientOperator {
+	PREWITT = 0,
+	SOBEL = 1,
+	SCHARR = 2,
+	LSD = 3,
+}
+
+opencv_type_enum! { crate::ximgproc::EdgeDrawing_GradientOperator }
 
 ///   Specifies to do or not to do skewing of Hough transform image
 /// @details The enum specifies to do or not to do skewing of Hough transform image
@@ -670,6 +683,11 @@ pub fn create_edge_boxes(alpha: f32, beta: f32, eta: f32, min_score: f32, max_bo
 	unsafe { sys::cv_ximgproc_createEdgeBoxes_float_float_float_float_int_float_float_float_float_float_float_float(alpha, beta, eta, min_score, max_boxes, edge_min_mag, edge_merge_thr, cluster_min_mag, max_aspect_ratio, min_box_area, gamma, kappa) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::EdgeBoxes>::opencv_from_extern(r) } )
 }
 
+/// Creates a smart pointer to a EdgeDrawing object and initializes it
+pub fn create_edge_drawing() -> Result<core::Ptr::<dyn crate::ximgproc::EdgeDrawing>> {
+	unsafe { sys::cv_ximgproc_createEdgeDrawing() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::EdgeDrawing>::opencv_from_extern(r) } )
+}
+
 /// Factory method, create instance of FastBilateralSolverFilter and execute the initialization routines.
 /// 
 /// ## Parameters
@@ -742,7 +760,7 @@ pub fn create_fast_global_smoother_filter(guide: &dyn core::ToInputArray, lambda
 ///                                          If zero, Canny() is not applied and the input
 ///                                          image is taken as an edge image.
 /// * _do_merge: false      - If true, incremental merging of segments
-///                                          will be perfomred
+///                                          will be performed
 /// 
 /// ## C++ default parameters
 /// * _length_threshold: 10
@@ -2189,6 +2207,127 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 	
 }
 
+/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
+/// 
+/// EDGE DRAWING LIBRARY FOR GEOMETRIC FEATURE EXTRACTION AND VALIDATION
+/// 
+/// Edge Drawing (ED) algorithm is an proactive approach on edge detection problem. In contrast to many other existing edge detection algorithms which follow a subtractive
+/// approach (i.e. after applying gradient filters onto an image eliminating pixels w.r.t. several rules, e.g. non-maximal suppression and hysteresis in Canny), ED algorithm
+/// works via an additive strategy, i.e. it picks edge pixels one by one, hence the name Edge Drawing. Then we process those random shaped edge segments to extract higher level
+/// edge features, i.e. lines, circles, ellipses, etc. The popular method of extraction edge pixels from the thresholded gradient magnitudes is non-maximal supressiun that tests
+/// every pixel whether it has the maximum gradient response along its gradient direction and eliminates if it does not. However, this method does not check status of the
+/// neighboring pixels, and therefore might result low quality (in terms of edge continuity, smoothness, thinness, localization) edge segments. Instead of non-maximal supression,
+/// ED points a set of edge pixels and join them by maximizing the total gradient response of edge segments. Therefore it can extract high quality edge segments without need for
+/// an additional hysteresis step.
+pub trait EdgeDrawing: core::AlgorithmTrait {
+	fn as_raw_EdgeDrawing(&self) -> *const c_void;
+	fn as_raw_mut_EdgeDrawing(&mut self) -> *mut c_void;
+
+	fn params(&self) -> crate::ximgproc::EdgeDrawing_Params {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_getPropParams_const(self.as_raw_EdgeDrawing()) }.into_result().expect("Infallible function failed: params")
+	}
+	
+	fn set_params(&mut self, val: crate::ximgproc::EdgeDrawing_Params) -> () {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_setPropParams_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_params")
+	}
+	
+	/// Detects edges and prepares them to detect lines and ellipses.
+	/// 
+	/// ## Parameters
+	/// * src: input image
+	fn detect_edges(&mut self, src: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		unsafe { sys::cv_ximgproc_EdgeDrawing_detectEdges_const__InputArrayR(self.as_raw_mut_EdgeDrawing(), src.as_raw__InputArray()) }.into_result()
+	}
+	
+	fn get_edge_image(&mut self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		unsafe { sys::cv_ximgproc_EdgeDrawing_getEdgeImage_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), dst.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn get_gradient_image(&mut self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		unsafe { sys::cv_ximgproc_EdgeDrawing_getGradientImage_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), dst.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn get_segments(&mut self) -> Result<core::Vector::<core::Vector::<core::Point>>> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_getSegments(self.as_raw_mut_EdgeDrawing()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector::<core::Point>>::opencv_from_extern(r) } )
+	}
+	
+	/// Detects lines.
+	/// 
+	/// ## Parameters
+	/// * lines: output Vec<4f> contains start point and end point of detected lines.
+	/// 
+	/// Note: you should call detectEdges() method before call this.
+	fn detect_lines(&mut self, lines: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(lines);
+		unsafe { sys::cv_ximgproc_EdgeDrawing_detectLines_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), lines.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Detects circles and ellipses.
+	/// 
+	/// ## Parameters
+	/// * ellipses: output Vec<6d> contains center point and perimeter for circles.
+	/// 
+	/// Note: you should call detectEdges() method before call this.
+	fn detect_ellipses(&mut self, ellipses: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(ellipses);
+		unsafe { sys::cv_ximgproc_EdgeDrawing_detectEllipses_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), ellipses.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// sets parameters.
+	/// 
+	/// this function is meant to be used for parameter setting in other languages than c++.
+	fn set_params_1(&mut self, parameters: crate::ximgproc::EdgeDrawing_Params) -> Result<()> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_setParams_const_ParamsR(self.as_raw_mut_EdgeDrawing(), &parameters) }.into_result()
+	}
+	
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct EdgeDrawing_Params {
+	/// Parameter Free mode will be activated when this value is true.
+	pub p_fmode: bool,
+	/// indicates the operator used for gradient calculation.The following operation flags are available(cv::ximgproc::EdgeDrawing::GradientOperator)
+	pub edge_detection_operator: i32,
+	/// threshold value used to create gradient image.
+	pub gradient_threshold_value: i32,
+	/// threshold value used to create gradient image.
+	pub anchor_threshold_value: i32,
+	pub scan_interval: i32,
+	/// minimun connected pixels length processed to create an edge segment.
+	pub min_path_length: i32,
+	/// sigma value for internal GaussianBlur() function.
+	pub sigma: f32,
+	pub sum_flag: bool,
+	/// when this value is true NFA (Number of False Alarms) algorithm will be used for line and ellipse validation.
+	pub nfa_validation: bool,
+	/// minimun line length to detect.
+	pub min_line_length: i32,
+	pub max_distance_between_two_lines: f64,
+	pub line_fit_error_threshold: f64,
+	pub max_error_threshold: f64,
+}
+
+opencv_type_simple! { crate::ximgproc::EdgeDrawing_Params }
+
+impl EdgeDrawing_Params {
+	pub fn default() -> Result<crate::ximgproc::EdgeDrawing_Params> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_Params() }.into_result()
+	}
+	
+	pub fn read(self, fn_: &core::FileNode) -> Result<()> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_read_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode()) }.into_result()
+	}
+	
+	pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+}
+
 /// Interface for implementations of Fast Bilateral Solver.
 /// 
 /// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
@@ -2633,12 +2772,12 @@ pub trait SparseMatchInterpolator: core::AlgorithmTrait {
 	/// * from_image: first of the two matched images, 8-bit single-channel or three-channel.
 	/// 
 	/// * from_points: points of the from_image for which there are correspondences in the
-	/// to_image (Point2f vector, size shouldn't exceed 32767)
+	/// to_image (Point2f vector or Mat of depth CV_32F)
 	/// 
 	/// * to_image: second of the two matched images, 8-bit single-channel or three-channel.
 	/// 
 	/// * to_points: points in the to_image corresponding to from_points
-	/// (Point2f vector, size shouldn't exceed 32767)
+	/// (Point2f vector or Mat of depth CV_32F)
 	/// 
 	/// * dense_flow: output dense matching (two-channel CV_32F image)
 	fn interpolate(&mut self, from_image: &dyn core::ToInputArray, from_points: &dyn core::ToInputArray, to_image: &dyn core::ToInputArray, to_points: &dyn core::ToInputArray, dense_flow: &mut dyn core::ToOutputArray) -> Result<()> {

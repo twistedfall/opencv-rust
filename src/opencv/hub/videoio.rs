@@ -13,9 +13,10 @@
 //! 
 //! ### See also:
 //! - @ref videoio_overview
-//! - Tutorials: @ref tutorial_table_of_content_videoio
+//! - Tutorials: @ref tutorial_table_of_content_app
 //!   # Flags for video I/O
 //!   # Additional flags for video I/O API backends
+//!   # Hardware-accelerated video decoding and encoding
 //!   # C API for video I/O
 //!   # iOS glue for video I/O
 //!   # WinRT glue for video I/O
@@ -194,6 +195,10 @@ pub const CAP_PROP_GSTREAMER_QUEUE_LENGTH: i32 = 200;
 pub const CAP_PROP_GUID: i32 = 29;
 /// Hue of the image (only for cameras).
 pub const CAP_PROP_HUE: i32 = 13;
+/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in cv::VideoCapture constructor / .open() method. Default value is backend-specific.
+pub const CAP_PROP_HW_ACCELERATION: i32 = 50;
+/// (**open-only**) Hardware device index (select GPU if multiple available)
+pub const CAP_PROP_HW_DEVICE: i32 = 51;
 pub const CAP_PROP_IMAGES_BASE: i32 = 18000;
 pub const CAP_PROP_IMAGES_LAST: i32 = 19000;
 pub const CAP_PROP_INTELPERC_DEPTH_CONFIDENCE_THRESHOLD: i32 = 11005;
@@ -639,11 +644,16 @@ pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
-pub const CV__CAP_PROP_LATEST: i32 = 50;
+pub const CV__CAP_PROP_LATEST: i32 = 52;
+pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 8;
 /// Defaults to CV_8U.
 pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
+/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
+pub const VIDEOWRITER_PROP_HW_ACCELERATION: i32 = 6;
+/// (**open-only**) Hardware device index (select GPU if multiple available)
+pub const VIDEOWRITER_PROP_HW_DEVICE: i32 = 7;
 /// If it is not zero, the encoder will expect and encode color frames, otherwise it
 /// will work with grayscale frames.
 pub const VIDEOWRITER_PROP_IS_COLOR: i32 = 4;
@@ -651,7 +661,50 @@ pub const VIDEOWRITER_PROP_IS_COLOR: i32 = 4;
 pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
 /// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
-/// %VideoCapture API backends identifier.
+/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
+/// 
+/// Note: H/W acceleration may require special configuration of used environment.
+/// 
+/// Note: Results in encoding scenario may differ between software and hardware accelerated encoders.
+pub const VIDEO_ACCELERATION_ANY: i32 = 1;
+/// DirectX 11
+pub const VIDEO_ACCELERATION_D3D11: i32 = 2;
+/// libmfx (Intel MediaSDK/oneVPL)
+pub const VIDEO_ACCELERATION_MFX: i32 = 4;
+/// Do not require any specific H/W acceleration, prefer software processing.
+/// Reading of this value means that special H/W accelerated handling is not added or not detected by OpenCV.
+pub const VIDEO_ACCELERATION_NONE: i32 = 0;
+/// VAAPI
+pub const VIDEO_ACCELERATION_VAAPI: i32 = 3;
+/// Video Acceleration type
+/// 
+/// Used as value in #CAP_PROP_HW_ACCELERATION and #VIDEOWRITER_PROP_HW_ACCELERATION
+/// 
+/// 
+/// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h)
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum VideoAccelerationType {
+	/// Do not require any specific H/W acceleration, prefer software processing.
+	/// Reading of this value means that special H/W accelerated handling is not added or not detected by OpenCV.
+	VIDEO_ACCELERATION_NONE = 0,
+	/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
+	/// 
+	/// Note: H/W acceleration may require special configuration of used environment.
+	/// 
+	/// Note: Results in encoding scenario may differ between software and hardware accelerated encoders.
+	VIDEO_ACCELERATION_ANY = 1,
+	/// DirectX 11
+	VIDEO_ACCELERATION_D3D11 = 2,
+	/// VAAPI
+	VIDEO_ACCELERATION_VAAPI = 3,
+	/// libmfx (Intel MediaSDK/oneVPL)
+	VIDEO_ACCELERATION_MFX = 4,
+}
+
+opencv_type_enum! { crate::videoio::VideoAccelerationType }
+
+/// cv::VideoCapture API backends identifier.
 /// 
 /// Select preferred API for a capture object.
 /// To be used in the VideoCapture::VideoCapture() constructor or VideoCapture::open()
@@ -736,7 +789,7 @@ pub enum VideoCaptureAPIs {
 
 opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
 
-/// %VideoCapture generic properties identifier.
+/// cv::VideoCapture generic properties identifier.
 /// 
 /// Reading / writing properties involves many layers. Some unexpected result might happens along this chain.
 /// Effective behaviour depends from device hardware, driver and API Backend.
@@ -827,12 +880,16 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_ORIENTATION_META = 48,
 	/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg back-end only) (https://github.com/opencv/opencv/issues/15499)
 	CAP_PROP_ORIENTATION_AUTO = 49,
-	CV__CAP_PROP_LATEST = 50,
+	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in cv::VideoCapture constructor / .open() method. Default value is backend-specific.
+	CAP_PROP_HW_ACCELERATION = 50,
+	/// (**open-only**) Hardware device index (select GPU if multiple available)
+	CAP_PROP_HW_DEVICE = 51,
+	CV__CAP_PROP_LATEST = 52,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureProperties }
 
-/// %VideoWriter generic properties identifier.
+/// cv::VideoWriter generic properties identifier.
 /// ## See also
 /// VideoWriter::get(), VideoWriter::set()
 #[repr(C)]
@@ -849,6 +906,11 @@ pub enum VideoWriterProperties {
 	VIDEOWRITER_PROP_IS_COLOR = 4,
 	/// Defaults to CV_8U.
 	VIDEOWRITER_PROP_DEPTH = 5,
+	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
+	VIDEOWRITER_PROP_HW_ACCELERATION = 6,
+	/// (**open-only**) Hardware device index (select GPU if multiple available)
+	VIDEOWRITER_PROP_HW_DEVICE = 7,
+	CV__VIDEOWRITER_PROP_LATEST = 8,
 }
 
 opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -929,6 +991,22 @@ pub trait VideoCaptureTrait {
 	/// 
 	/// 
 	/// 
+	/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	/// See cv::VideoCaptureProperties
+	/// 
+	/// ## Returns
+	/// `true` if the file has been successfully opened
+	/// 
+	/// The method first calls VideoCapture::release to close the already opened file or camera.
+	fn open(&mut self, filename: &str, api_preference: i32, params: &core::Vector::<i32>) -> Result<bool> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32()) }.into_result()
+	}
+	
+	///  Opens a camera for video capturing
+	/// 
+	/// 
+	/// 
 	/// Parameters are same as the constructor VideoCapture(int index, int apiPreference = CAP_ANY)
 	/// ## Returns
 	/// `true` if the camera has been successfully opened.
@@ -937,8 +1015,23 @@ pub trait VideoCaptureTrait {
 	/// 
 	/// ## C++ default parameters
 	/// * api_preference: CAP_ANY
-	fn open(&mut self, index: i32, api_preference: i32) -> Result<bool> {
+	fn open_1(&mut self, index: i32, api_preference: i32) -> Result<bool> {
 		unsafe { sys::cv_VideoCapture_open_int_int(self.as_raw_mut_VideoCapture(), index, api_preference) }.into_result()
+	}
+	
+	/// Returns true if video capturing has been initialized already.
+	/// 
+	/// 
+	/// 
+	/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	/// See cv::VideoCaptureProperties
+	/// 
+	/// ## Returns
+	/// `true` if the camera has been successfully opened.
+	/// 
+	/// The method first calls VideoCapture::release to close the already opened file or camera.
+	fn open_2(&mut self, index: i32, api_preference: i32, params: &core::Vector::<i32>) -> Result<bool> {
+		unsafe { sys::cv_VideoCapture_open_int_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Returns true if video capturing has been initialized already.
@@ -1181,6 +1274,23 @@ impl VideoCapture {
 	/// 
 	/// ## Overloaded parameters
 	/// 
+	///    Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
+	/// 
+	///    The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	///    See cv::VideoCaptureProperties
+	pub fn from_file_with_params(filename: &str, api_preference: i32, params: &core::Vector::<i32>) -> Result<crate::videoio::VideoCapture> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+	}
+	
+	/// Default constructor
+	/// 
+	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+	/// destructor.
+	/// 
+	/// ## Overloaded parameters
+	/// 
 	///      Opens a camera for video capturing
 	/// 
 	/// ## Parameters
@@ -1195,6 +1305,22 @@ impl VideoCapture {
 	/// * api_preference: CAP_ANY
 	pub fn new(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
 		unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
+	}
+	
+	/// Default constructor
+	/// 
+	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+	/// destructor.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	///    Opens a camera for video capturing with API Preference and parameters
+	/// 
+	///    The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	///    See cv::VideoCaptureProperties
+	pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector::<i32>) -> Result<crate::videoio::VideoCapture> {
+		unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vector_int_R(index, api_preference, params.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { crate::videoio::VideoCapture::opencv_from_extern(r) } )
 	}
 	
 	/// Wait for ready frames from VideoCapture.

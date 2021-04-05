@@ -1,5 +1,5 @@
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 mod aruco_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -104,10 +104,10 @@ mod aruco_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 pub use aruco_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -265,10 +265,10 @@ mod bgsegm_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 pub use bgsegm_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 mod bioinspired_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -336,9 +336,10 @@ mod bioinspired_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 pub use bioinspired_types::*;
 
+#[cfg(ocvrs_has_module_calib3d)]
 mod calib3d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -453,8 +454,10 @@ mod calib3d_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_calib3d)]
 pub use calib3d_types::*;
 
+#[cfg(ocvrs_has_module_core)]
 mod core_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3261,9 +3264,10 @@ mod core_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_core)]
 pub use core_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaarithm)]
 mod cudaarithm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3331,10 +3335,10 @@ mod cudaarithm_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaarithm)]
 pub use cudaarithm_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudabgsegm)]
 mod cudabgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3396,10 +3400,10 @@ mod cudabgsegm_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudabgsegm)]
 pub use cudabgsegm_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudacodec)]
 mod cudacodec_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3468,10 +3472,10 @@ mod cudacodec_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudacodec)]
 pub use cudacodec_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafeatures2d)]
 mod cudafeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3559,10 +3563,10 @@ mod cudafeatures2d_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafeatures2d)]
 pub use cudafeatures2d_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafilters)]
 mod cudafilters_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3588,10 +3592,10 @@ mod cudafilters_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafilters)]
 pub use cudafilters_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaimgproc)]
 mod cudaimgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3769,10 +3773,10 @@ mod cudaimgproc_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaimgproc)]
 pub use cudaimgproc_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaobjdetect)]
 mod cudaobjdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3819,10 +3823,10 @@ mod cudaobjdetect_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaobjdetect)]
 pub use cudaobjdetect_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaoptflow)]
 mod cudaoptflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -3930,6 +3934,32 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfCUDA_NvidiaOpticalFlow_2_0 = core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>;
+	
+	ptr_extern! { dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0,
+		cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_delete, cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_get_inner_ptr, cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_get_inner_ptr_mut
+	}
+	
+	impl PtrOfCUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] pub fn as_raw_PtrOfCUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0 for PtrOfCUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow for PtrOfCUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfCUDA_OpticalFlowDual_TVL1 = core::Ptr::<dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>;
 	
 	ptr_extern! { dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1,
@@ -3983,10 +4013,10 @@ mod cudaoptflow_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaoptflow)]
 pub use cudaoptflow_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudastereo)]
 mod cudastereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -4131,9 +4161,10 @@ mod cudastereo_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudastereo)]
 pub use cudastereo_types::*;
 
+#[cfg(ocvrs_has_module_dnn)]
 mod dnn_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -4513,6 +4544,37 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfEltwiseLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfExpLayer = core::Ptr::<dyn crate::dnn::ExpLayer>;
+	
+	ptr_extern! { dyn crate::dnn::ExpLayer,
+		cv_PtrOfExpLayer_delete, cv_PtrOfExpLayer_get_inner_ptr, cv_PtrOfExpLayer_get_inner_ptr_mut
+	}
+	
+	impl PtrOfExpLayer {
+		#[inline] pub fn as_raw_PtrOfExpLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfExpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ExpLayer for PtrOfExpLayer {
+		#[inline] fn as_raw_ExpLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ExpLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfExpLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayer for PtrOfExpLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfExpLayer {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
@@ -5480,9 +5542,10 @@ mod dnn_types {
 	unsafe impl Send for core::Vector::<core::Vector::<crate::dnn::MatShape>> {}
 	
 }
+#[cfg(ocvrs_has_module_dnn)]
 pub use dnn_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dnn_superres)]
 mod dnn_superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -5505,10 +5568,10 @@ mod dnn_superres_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dnn_superres)]
 pub use dnn_superres_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 mod dpm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -5549,10 +5612,10 @@ mod dpm_types {
 	unsafe impl Send for core::Vector::<crate::dpm::DPMDetector_ObjectDetection> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 pub use dpm_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 mod face_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -5879,9 +5942,10 @@ mod face_types {
 	unsafe impl Send for core::Vector::<crate::face::FacemarkAAM_Model_Texture> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 pub use face_types::*;
 
+#[cfg(ocvrs_has_module_features2d)]
 mod features2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6322,8 +6386,10 @@ mod features2d_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_features2d)]
 pub use features2d_types::*;
 
+#[cfg(ocvrs_has_module_flann)]
 mod flann_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6392,9 +6458,10 @@ mod flann_types {
 	unsafe impl Send for core::Vector::<crate::flann::FlannIndexType> {}
 	
 }
+#[cfg(ocvrs_has_module_flann)]
 pub use flann_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 mod freetype_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6420,10 +6487,10 @@ mod freetype_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 pub use freetype_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 mod hdf_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6444,10 +6511,10 @@ mod hdf_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 pub use hdf_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hfs)]
 mod hfs_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6473,10 +6540,10 @@ mod hfs_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hfs)]
 pub use hfs_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_img_hash)]
 mod img_hash_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6649,9 +6716,10 @@ mod img_hash_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_img_hash)]
 pub use img_hash_types::*;
 
+#[cfg(ocvrs_has_module_imgproc)]
 mod imgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6750,9 +6818,10 @@ mod imgproc_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_imgproc)]
 pub use imgproc_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 mod line_descriptor_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6869,10 +6938,10 @@ mod line_descriptor_types {
 	unsafe impl Send for core::Vector::<core::Vector::<crate::line_descriptor::KeyLine>> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 pub use line_descriptor_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_mcc)]
 mod mcc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -6968,9 +7037,10 @@ mod mcc_types {
 	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::mcc::MCC_CChecker>> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_mcc)]
 pub use mcc_types::*;
 
+#[cfg(ocvrs_has_module_ml)]
 mod ml_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7340,8 +7410,10 @@ mod ml_types {
 	unsafe impl Send for core::Vector::<crate::ml::DTrees_Split> {}
 	
 }
+#[cfg(ocvrs_has_module_ml)]
 pub use ml_types::*;
 
+#[cfg(ocvrs_has_module_objdetect)]
 mod objdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7439,9 +7511,10 @@ mod objdetect_types {
 	unsafe impl Send for core::Vector::<crate::objdetect::DetectionROI> {}
 	
 }
+#[cfg(ocvrs_has_module_objdetect)]
 pub use objdetect_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 mod optflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7621,10 +7694,10 @@ mod optflow_types {
 	unsafe impl Send for core::Vector::<crate::optflow::GPCPatchDescriptor> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 pub use optflow_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ovis)]
 mod ovis_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7645,10 +7718,10 @@ mod ovis_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ovis)]
 pub use ovis_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 mod phase_unwrapping_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7679,9 +7752,10 @@ mod phase_unwrapping_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 pub use phase_unwrapping_types::*;
 
+#[cfg(ocvrs_has_module_photo)]
 mod photo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7941,9 +8015,10 @@ mod photo_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_photo)]
 pub use photo_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 mod plot_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -7969,10 +8044,10 @@ mod plot_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 pub use plot_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_quality)]
 mod quality_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -8117,10 +8192,10 @@ mod quality_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_quality)]
 pub use quality_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rapid)]
 mod rapid_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -8177,10 +8252,10 @@ mod rapid_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rapid)]
 pub use rapid_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 mod rgbd_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -8277,6 +8352,22 @@ mod rgbd_types {
 	impl crate::rgbd::Odometry for PtrOfICPOdometry {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfKinfu_Detail_PoseGraph = core::Ptr::<dyn crate::rgbd::Kinfu_Detail_PoseGraph>;
+	
+	ptr_extern! { dyn crate::rgbd::Kinfu_Detail_PoseGraph,
+		cv_PtrOfKinfu_Detail_PoseGraph_delete, cv_PtrOfKinfu_Detail_PoseGraph_get_inner_ptr, cv_PtrOfKinfu_Detail_PoseGraph_get_inner_ptr_mut
+	}
+	
+	impl PtrOfKinfu_Detail_PoseGraph {
+		#[inline] pub fn as_raw_PtrOfKinfu_Detail_PoseGraph(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKinfu_Detail_PoseGraph(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::Kinfu_Detail_PoseGraph for PtrOfKinfu_Detail_PoseGraph {
+		#[inline] fn as_raw_Kinfu_Detail_PoseGraph(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Kinfu_Detail_PoseGraph(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfKinfu_KinFu = core::Ptr::<dyn crate::rgbd::Kinfu_KinFu>;
@@ -8725,10 +8816,10 @@ mod rgbd_types {
 	unsafe impl Send for core::Vector::<core::Ptr::<dyn crate::rgbd::Linemod_Modality>> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 pub use rgbd_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 mod saliency_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -8865,10 +8956,10 @@ mod saliency_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 pub use saliency_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 mod sfm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -8894,10 +8985,10 @@ mod sfm_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 pub use sfm_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_shape)]
 mod shape_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -9176,10 +9267,10 @@ mod shape_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_shape)]
 pub use shape_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 mod stereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -9199,30 +9290,34 @@ mod stereo_types {
 		#[inline] fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type VectorOfMatch = core::Vector::<crate::stereo::Match>;
+	pub type VectorOfMatchQuasiDense = core::Vector::<crate::stereo::MatchQuasiDense>;
 	
-	impl VectorOfMatch {
-		pub fn as_raw_VectorOfMatch(&self) -> *const c_void { self.as_raw() }
-		pub fn as_raw_mut_VectorOfMatch(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl VectorOfMatchQuasiDense {
+		pub fn as_raw_VectorOfMatchQuasiDense(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfMatchQuasiDense(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	vector_extern! { crate::stereo::Match, *const c_void, *mut c_void,
-		cv_VectorOfMatch_new, cv_VectorOfMatch_delete,
-		cv_VectorOfMatch_len, cv_VectorOfMatch_is_empty,
-		cv_VectorOfMatch_capacity, cv_VectorOfMatch_shrink_to_fit,
-		cv_VectorOfMatch_reserve, cv_VectorOfMatch_remove,
-		cv_VectorOfMatch_swap, cv_VectorOfMatch_clear,
-		cv_VectorOfMatch_get, cv_VectorOfMatch_set,
-		cv_VectorOfMatch_push, cv_VectorOfMatch_insert,
+	vector_extern! { crate::stereo::MatchQuasiDense, *const c_void, *mut c_void,
+		cv_VectorOfMatchQuasiDense_new, cv_VectorOfMatchQuasiDense_delete,
+		cv_VectorOfMatchQuasiDense_len, cv_VectorOfMatchQuasiDense_is_empty,
+		cv_VectorOfMatchQuasiDense_capacity, cv_VectorOfMatchQuasiDense_shrink_to_fit,
+		cv_VectorOfMatchQuasiDense_reserve, cv_VectorOfMatchQuasiDense_remove,
+		cv_VectorOfMatchQuasiDense_swap, cv_VectorOfMatchQuasiDense_clear,
+		cv_VectorOfMatchQuasiDense_get, cv_VectorOfMatchQuasiDense_set,
+		cv_VectorOfMatchQuasiDense_push, cv_VectorOfMatchQuasiDense_insert,
 	}
-	vector_non_copy_or_bool! { crate::stereo::Match }
+	vector_copy_non_bool! { crate::stereo::MatchQuasiDense, *const c_void, *mut c_void,
+		cv_VectorOfMatchQuasiDense_data, cv_VectorOfMatchQuasiDense_data_mut,
+		cv_VectorOfMatchQuasiDense_clone,
+	}
 	
-	unsafe impl Send for core::Vector::<crate::stereo::Match> {}
+	unsafe impl Send for core::Vector::<crate::stereo::MatchQuasiDense> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 pub use stereo_types::*;
 
+#[cfg(ocvrs_has_module_stitching)]
 mod stitching_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10381,9 +10476,10 @@ mod stitching_types {
 	unsafe impl Send for core::Vector::<crate::stitching::Detail_MatchesInfo> {}
 	
 }
+#[cfg(ocvrs_has_module_stitching)]
 pub use stitching_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 mod structured_light_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10458,10 +10554,10 @@ mod structured_light_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 pub use structured_light_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_superres)]
 mod superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10633,10 +10729,10 @@ mod superres_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_superres)]
 pub use superres_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 mod surface_matching_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10697,10 +10793,10 @@ mod surface_matching_types {
 	unsafe impl Send for core::Vector::<crate::surface_matching::Pose3DPtr> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 pub use surface_matching_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 mod text_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10927,10 +11023,10 @@ mod text_types {
 	unsafe impl Send for core::Vector::<core::Vector::<crate::text::ERStat>> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 pub use text_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -10977,9 +11073,10 @@ mod tracking_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 pub use tracking_types::*;
 
+#[cfg(ocvrs_has_module_video)]
 mod video_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -11224,8 +11321,10 @@ mod video_types {
 	}
 	
 }
+#[cfg(ocvrs_has_module_video)]
 pub use video_types::*;
 
+#[cfg(ocvrs_has_module_videoio)]
 mod videoio_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -11273,9 +11372,10 @@ mod videoio_types {
 	unsafe impl Send for core::Vector::<crate::videoio::VideoCaptureAPIs> {}
 	
 }
+#[cfg(ocvrs_has_module_videoio)]
 pub use videoio_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_videostab)]
 mod videostab_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -12350,10 +12450,10 @@ mod videostab_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_videostab)]
 pub use videostab_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 mod xfeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -12879,10 +12979,10 @@ mod xfeatures2d_types {
 	unsafe impl Send for core::Vector::<crate::xfeatures2d::Elliptic_KeyPoint> {}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 pub use xfeatures2d_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 mod ximgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -13020,6 +13120,27 @@ mod ximgproc_types {
 	}
 	
 	impl core::AlgorithmTrait for PtrOfEdgeBoxes {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfEdgeDrawing = core::Ptr::<dyn crate::ximgproc::EdgeDrawing>;
+	
+	ptr_extern! { dyn crate::ximgproc::EdgeDrawing,
+		cv_PtrOfEdgeDrawing_delete, cv_PtrOfEdgeDrawing_get_inner_ptr, cv_PtrOfEdgeDrawing_get_inner_ptr_mut
+	}
+	
+	impl PtrOfEdgeDrawing {
+		#[inline] pub fn as_raw_PtrOfEdgeDrawing(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEdgeDrawing(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::EdgeDrawing for PtrOfEdgeDrawing {
+		#[inline] fn as_raw_EdgeDrawing(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_EdgeDrawing(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfEdgeDrawing {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
@@ -13474,10 +13595,10 @@ mod ximgproc_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 pub use ximgproc_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 mod xobjdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -13498,10 +13619,10 @@ mod xobjdetect_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 pub use xobjdetect_types::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 mod xphoto_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -13610,7 +13731,7 @@ mod xphoto_types {
 	}
 	
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 pub use xphoto_types::*;
 
 pub use crate::manual::types::*;

@@ -51,32 +51,18 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Range*> cv_dnn_clamp_const_RangeR_int(const cv::Range* r, int axisSize) {
-		try {
-			cv::Range ret = cv::dnn::clamp(*r, axisSize);
-			return Ok(new cv::Range(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Range*>))
-	}
-	
-	Result<int> cv_dnn_clamp_int_const_MatShapeR(int ax, const cv::dnn::MatShape* shape) {
-		try {
-			int ret = cv::dnn::clamp(ax, *shape);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result<int> cv_dnn_clamp_int_int(int ax, int dims) {
-		try {
-			int ret = cv::dnn::clamp(ax, dims);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
 	Result<cv::dnn::MatShape*> cv_dnn_concat_const_MatShapeR_const_MatShapeR(const cv::dnn::MatShape* a, const cv::dnn::MatShape* b) {
 		try {
 			cv::dnn::MatShape ret = cv::dnn::concat(*a, *b);
 			return Ok(new cv::dnn::MatShape(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::dnn::MatShape*>))
+	}
+	
+	Result_void cv_dnn_enableModelDiagnostics_bool(bool isDiagnosticsMode) {
+		try {
+			cv::dnn::enableModelDiagnostics(isDiagnosticsMode);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result<std::vector<cv::dnn::Target>*> cv_dnn_getAvailableTargets_Backend(cv::dnn::Backend be) {
@@ -89,6 +75,13 @@ extern "C" {
 	Result<void*> cv_dnn_getInferenceEngineBackendType() {
 		try {
 			cv::String ret = cv::dnn::getInferenceEngineBackendType();
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_dnn_getInferenceEngineCPUType() {
+		try {
+			cv::String ret = cv::dnn::getInferenceEngineCPUType();
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
@@ -1111,6 +1104,55 @@ extern "C" {
 			cv::Ptr<cv::dnn::EltwiseLayer> ret = cv::dnn::EltwiseLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::EltwiseLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::EltwiseLayer>*>))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropBase_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->base;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropBase_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->base = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropScale_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->scale;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropScale_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->scale = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropShift_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->shift;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropShift_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->shift = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Ptr<cv::dnn::ExpLayer>*> cv_dnn_ExpLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::ExpLayer> ret = cv::dnn::ExpLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::ExpLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::ExpLayer>*>))
 	}
 	
 	void cv_FlattenLayer_delete(cv::dnn::FlattenLayer* instance) {
@@ -2846,6 +2888,20 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<std::vector<std::vector<int>>*> cv_dnn_SliceLayer_getPropSliceSteps(cv::dnn::SliceLayer* instance) {
+		try {
+			std::vector<std::vector<int>> ret = instance->sliceSteps;
+			return Ok(new std::vector<std::vector<int>>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<std::vector<int>>*>))
+	}
+	
+	Result_void cv_dnn_SliceLayer_setPropSliceSteps_vector_vector_int__(cv::dnn::SliceLayer* instance, std::vector<std::vector<int>>* val) {
+		try {
+			instance->sliceSteps = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
 	Result<int> cv_dnn_SliceLayer_getPropAxis_const(const cv::dnn::SliceLayer* instance) {
 		try {
 			int ret = instance->axis;
@@ -2946,33 +3002,30 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::TanHLayer>*>))
 	}
 	
-	void cv_TextDetectionModel_delete(cv::dnn::TextDetectionModel* instance) {
-		delete instance;
-	}
-	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections, std::vector<float>* confidences) {
+	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R(const cv::dnn::TextDetectionModel instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections, std::vector<float>* confidences) {
 		try {
-			instance->detect(*frame, *detections, *confidences);
+			instance.detect(*frame, *detections, *confidences);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections) {
+	Result_void cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R(const cv::dnn::TextDetectionModel instance, const cv::_InputArray* frame, std::vector<std::vector<cv::Point>>* detections) {
 		try {
-			instance->detect(*frame, *detections);
+			instance.detect(*frame, *detections);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R_vector_float_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections, std::vector<float>* confidences) {
+	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R_vector_float_R(const cv::dnn::TextDetectionModel instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections, std::vector<float>* confidences) {
 		try {
-			instance->detectTextRectangles(*frame, *detections, *confidences);
+			instance.detectTextRectangles(*frame, *detections, *confidences);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
-	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R(const cv::dnn::TextDetectionModel* instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections) {
+	Result_void cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vector_RotatedRect_R(const cv::dnn::TextDetectionModel instance, const cv::_InputArray* frame, std::vector<cv::RotatedRect>* detections) {
 		try {
-			instance->detectTextRectangles(*frame, *detections);
+			instance.detectTextRectangles(*frame, *detections);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}

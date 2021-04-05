@@ -2,6 +2,7 @@ template struct Result<bool>;
 template struct Result<cv::Mat*>;
 template struct Result<cv::Matx<double, 2, 3>>;
 template struct Result<cv::Point3_<int>>;
+template struct Result<cv::Point_<int>>;
 template struct Result<cv::Ptr<cv::StereoMatcher>*>;
 template struct Result<cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::ContourFitting>*>;
@@ -9,6 +10,7 @@ template struct Result<cv::Ptr<cv::ximgproc::DTFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::DisparityWLSFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::EdgeAwareInterpolator>*>;
 template struct Result<cv::Ptr<cv::ximgproc::EdgeBoxes>*>;
+template struct Result<cv::Ptr<cv::ximgproc::EdgeDrawing>*>;
 template struct Result<cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::FastGlobalSmootherFilter>*>;
 template struct Result<cv::Ptr<cv::ximgproc::FastLineDetector>*>;
@@ -30,9 +32,12 @@ template struct Result<cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmen
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Vec<int, 4>>;
 template struct Result<cv::ximgproc::ContourFitting*>;
+template struct Result<cv::ximgproc::EdgeDrawing::Params>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
+template struct Result<std::vector<cv::Point_<int>>*>;
+template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
 extern "C" {
 	void cv_PtrOfAdaptiveManifoldFilter_delete(cv::Ptr<cv::ximgproc::AdaptiveManifoldFilter>* instance) {
 		delete instance;
@@ -117,6 +122,20 @@ extern "C" {
 	}
 
 	cv::ximgproc::EdgeBoxes* cv_PtrOfEdgeBoxes_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::EdgeBoxes>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfEdgeDrawing_delete(cv::Ptr<cv::ximgproc::EdgeDrawing>* instance) {
+		delete instance;
+	}
+
+	const cv::ximgproc::EdgeDrawing* cv_PtrOfEdgeDrawing_get_inner_ptr(const cv::Ptr<cv::ximgproc::EdgeDrawing>* instance) {
+		return instance->get();
+	}
+
+	cv::ximgproc::EdgeDrawing* cv_PtrOfEdgeDrawing_get_inner_ptr_mut(cv::Ptr<cv::ximgproc::EdgeDrawing>* instance) {
 		return instance->get();
 	}
 }

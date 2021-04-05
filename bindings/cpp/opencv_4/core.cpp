@@ -646,6 +646,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<int> cv_getLogLevel() {
+		try {
+			int ret = cv::getLogLevel();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result<int> cv_getNumThreads() {
 		try {
 			int ret = cv::getNumThreads();
@@ -1767,6 +1774,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<int> cv_setLogLevel_int(int level) {
+		try {
+			int ret = cv::setLogLevel(level);
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result_void cv_setNumThreads_int(int nthreads) {
 		try {
 			cv::setNumThreads(nthreads);
@@ -2005,6 +2019,27 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<void*> cv_utils_dumpRange_const_RangeR(const cv::Range* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRange(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpRect_const_RectR(const cv::Rect* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRect(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpRotatedRect_const_RotatedRectR(const cv::RotatedRect* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRotatedRect(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	Result<void*> cv_utils_dumpSizeT_size_t(size_t argument) {
 		try {
 			cv::String ret = cv::utils::dumpSizeT(argument);
@@ -2015,6 +2050,20 @@ extern "C" {
 	Result<void*> cv_utils_dumpString_const_StringR(const char* argument) {
 		try {
 			cv::String ret = cv::utils::dumpString(std::string(argument));
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpTermCriteria_const_TermCriteriaR(const cv::TermCriteria* argument) {
+		try {
+			cv::String ret = cv::utils::dumpTermCriteria(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_fs_getCacheDirectoryForDownloads() {
+		try {
+			cv::String ret = cv::utils::fs::getCacheDirectoryForDownloads();
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
@@ -2094,6 +2143,27 @@ extern "C" {
 			cv::AsyncArray ret = cv::utils::testAsyncException();
 			return Ok(new cv::AsyncArray(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::AsyncArray*>))
+	}
+	
+	Result<void*> cv_utils_testOverloadResolution_const_RectR(const cv::Rect* rect) {
+		try {
+			cv::String ret = cv::utils::testOverloadResolution(*rect);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_testOverloadResolution_int_const_PointR(int value, const cv::Point* point) {
+		try {
+			cv::String ret = cv::utils::testOverloadResolution(value, *point);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_utils_testRaiseGeneralException() {
+		try {
+			cv::utils::testRaiseGeneralException();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(VADisplay display, VASurfaceID surface, cv::Size* size, const cv::_OutputArray* dst) {
@@ -8228,6 +8298,44 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
 	}
 	
+	Result<unsigned char*> cv_cuda_GpuData_getPropData(cv::cuda::GpuData* instance) {
+		try {
+			unsigned char* ret = instance->data;
+			return Ok<unsigned char*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned char*>))
+	}
+	
+	Result_void cv_cuda_GpuData_setPropData_unsigned_charX(cv::cuda::GpuData* instance, unsigned char* val) {
+		try {
+			instance->data = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<size_t> cv_cuda_GpuData_getPropSize_const(const cv::cuda::GpuData* instance) {
+		try {
+			size_t ret = instance->size;
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result_void cv_cuda_GpuData_setPropSize_size_t(cv::cuda::GpuData* instance, size_t val) {
+		try {
+			instance->size = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_GpuData_delete(cv::cuda::GpuData* instance) {
+		delete instance;
+	}
+	Result<cv::cuda::GpuData*> cv_cuda_GpuData_GpuData_size_t(size_t _size) {
+		try {
+			cv::cuda::GpuData* ret = new cv::cuda::GpuData(_size);
+			return Ok<cv::cuda::GpuData*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuData*>))
+	}
+	
 	Result<int> cv_cuda_GpuMat_getPropFlags_const(const cv::cuda::GpuMat* instance) {
 		try {
 			int ret = instance->flags;
@@ -8770,6 +8878,254 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<int> cv_cuda_GpuMatND_getPropFlags_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			int ret = instance->flags;
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_setPropFlags_int(cv::cuda::GpuMatND* instance, int val) {
+		try {
+			instance->flags = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<int> cv_cuda_GpuMatND_getPropDims_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			int ret = instance->dims;
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_setPropDims_int(cv::cuda::GpuMatND* instance, int val) {
+		try {
+			instance->dims = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMatND::SizeArray*> cv_cuda_GpuMatND_getPropSize(cv::cuda::GpuMatND* instance) {
+		try {
+			cv::cuda::GpuMatND::SizeArray ret = instance->size;
+			return Ok(new cv::cuda::GpuMatND::SizeArray(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND::SizeArray*>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_setPropSize_SizeArray(cv::cuda::GpuMatND* instance, cv::cuda::GpuMatND::SizeArray* val) {
+		try {
+			instance->size = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMatND::StepArray*> cv_cuda_GpuMatND_getPropStep(cv::cuda::GpuMatND* instance) {
+		try {
+			cv::cuda::GpuMatND::StepArray ret = instance->step;
+			return Ok(new cv::cuda::GpuMatND::StepArray(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND::StepArray*>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_setPropStep_StepArray(cv::cuda::GpuMatND* instance, cv::cuda::GpuMatND::StepArray* val) {
+		try {
+			instance->step = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	void cv_GpuMatND_delete(cv::cuda::GpuMatND* instance) {
+		delete instance;
+	}
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_GpuMatND() {
+		try {
+			cv::cuda::GpuMatND* ret = new cv::cuda::GpuMatND();
+			return Ok<cv::cuda::GpuMatND*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_GpuMatND_SizeArray_int(cv::cuda::GpuMatND::SizeArray* size, int type) {
+		try {
+			cv::cuda::GpuMatND* ret = new cv::cuda::GpuMatND(*size, type);
+			return Ok<cv::cuda::GpuMatND*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(cv::cuda::GpuMatND::SizeArray* size, int type, void* data, cv::cuda::GpuMatND::StepArray* step) {
+		try {
+			cv::cuda::GpuMatND* ret = new cv::cuda::GpuMatND(*size, type, data, *step);
+			return Ok<cv::cuda::GpuMatND*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_create_SizeArray_int(cv::cuda::GpuMatND* instance, cv::cuda::GpuMatND::SizeArray* size, int type) {
+		try {
+			instance->create(*size, type);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_GpuMatND_release(cv::cuda::GpuMatND* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_GpuMatND_swap_GpuMatNDR(cv::cuda::GpuMatND* instance, cv::cuda::GpuMatND* m) {
+		try {
+			instance->swap(*m);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_clone_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			cv::cuda::GpuMatND ret = instance->clone();
+			return Ok(new cv::cuda::GpuMatND(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_clone_const_StreamR(const cv::cuda::GpuMatND* instance, cv::cuda::Stream* stream) {
+		try {
+			cv::cuda::GpuMatND ret = instance->clone(*stream);
+			return Ok(new cv::cuda::GpuMatND(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_GpuMatND_createGpuMatHeader_const_IndexArray_Range_Range(const cv::cuda::GpuMatND* instance, cv::cuda::GpuMatND::IndexArray* idx, cv::Range* rowRange, cv::Range* colRange) {
+		try {
+			cv::cuda::GpuMat ret = instance->createGpuMatHeader(*idx, *rowRange, *colRange);
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_GpuMatND_createGpuMatHeader_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->createGpuMatHeader();
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result<cv::cuda::GpuMat*> cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			cv::cuda::GpuMat ret = instance->operator cv::cuda::GpuMat();
+			return Ok(new cv::cuda::GpuMat(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMat*>))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(const cv::cuda::GpuMatND* unnamed) {
+		try {
+			cv::cuda::GpuMatND* ret = new cv::cuda::GpuMatND(*unnamed);
+			return Ok<cv::cuda::GpuMatND*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result<cv::cuda::GpuMatND*> cv_cuda_GpuMatND_GpuMatND_GpuMatNDR(cv::cuda::GpuMatND* unnamed) {
+		try {
+			cv::cuda::GpuMatND* ret = new cv::cuda::GpuMatND(*unnamed);
+			return Ok<cv::cuda::GpuMatND*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::GpuMatND*>))
+	}
+	
+	Result_void cv_cuda_GpuMatND_upload_const__InputArrayR(cv::cuda::GpuMatND* instance, const cv::_InputArray* src) {
+		try {
+			instance->upload(*src);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(cv::cuda::GpuMatND* instance, const cv::_InputArray* src, cv::cuda::Stream* stream) {
+		try {
+			instance->upload(*src, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_GpuMatND_download_const_const__OutputArrayR(const cv::cuda::GpuMatND* instance, const cv::_OutputArray* dst) {
+		try {
+			instance->download(*dst);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(const cv::cuda::GpuMatND* instance, const cv::_OutputArray* dst, cv::cuda::Stream* stream) {
+		try {
+			instance->download(*dst, *stream);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_cuda_GpuMatND_isContinuous_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			bool ret = instance->isContinuous();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_cuda_GpuMatND_isSubmatrix_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			bool ret = instance->isSubmatrix();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<size_t> cv_cuda_GpuMatND_elemSize_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			size_t ret = instance->elemSize();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<size_t> cv_cuda_GpuMatND_elemSize1_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			size_t ret = instance->elemSize1();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<bool> cv_cuda_GpuMatND_empty_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_cuda_GpuMatND_external_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			bool ret = instance->external();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<unsigned char*> cv_cuda_GpuMatND_getDevicePtr_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			unsigned char* ret = instance->getDevicePtr();
+			return Ok<unsigned char*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<unsigned char*>))
+	}
+	
+	Result<size_t> cv_cuda_GpuMatND_total_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			size_t ret = instance->total();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<size_t> cv_cuda_GpuMatND_totalMemSize_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			size_t ret = instance->totalMemSize();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<int> cv_cuda_GpuMatND_type_const(const cv::cuda::GpuMatND* instance) {
+		try {
+			int ret = instance->type();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result<int> cv_cuda_HostMem_getPropFlags_const(const cv::cuda::HostMem* instance) {
 		try {
 			int ret = instance->flags;
@@ -9059,6 +9415,13 @@ extern "C" {
 	Result<cv::cuda::Stream*> cv_cuda_Stream_Stream_const_Ptr_Allocator_R(const cv::Ptr<cv::cuda::GpuMat::Allocator>* allocator) {
 		try {
 			cv::cuda::Stream* ret = new cv::cuda::Stream(*allocator);
+			return Ok<cv::cuda::Stream*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::Stream*>))
+	}
+	
+	Result<cv::cuda::Stream*> cv_cuda_Stream_Stream_const_size_t(const size_t cudaFlags) {
+		try {
+			cv::cuda::Stream* ret = new cv::cuda::Stream(cudaFlags);
 			return Ok<cv::cuda::Stream*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::cuda::Stream*>))
 	}
@@ -9442,6 +9805,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
 	}
 	
+	Result<cv::ocl::Context*> cv_ocl_Context_Context_ContextR(cv::ocl::Context* c) {
+		try {
+			cv::ocl::Context* ret = new cv::ocl::Context(*c);
+			return Ok<cv::ocl::Context*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Context*>))
+	}
+	
 	Result<bool> cv_ocl_Context_create(cv::ocl::Context* instance) {
 		try {
 			bool ret = instance->create();
@@ -9567,6 +9937,13 @@ extern "C" {
 	}
 	
 	Result<cv::ocl::Device*> cv_ocl_Device_Device_const_DeviceR(const cv::ocl::Device* d) {
+		try {
+			cv::ocl::Device* ret = new cv::ocl::Device(*d);
+			return Ok<cv::ocl::Device*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Device*>))
+	}
+	
+	Result<cv::ocl::Device*> cv_ocl_Device_Device_DeviceR(cv::ocl::Device* d) {
 		try {
 			cv::ocl::Device* ret = new cv::ocl::Device(*d);
 			return Ok<cv::ocl::Device*>(ret);
@@ -10143,6 +10520,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Image2D*>))
 	}
 	
+	Result<cv::ocl::Image2D*> cv_ocl_Image2D_Image2D_Image2DR(cv::ocl::Image2D* unnamed) {
+		try {
+			cv::ocl::Image2D* ret = new cv::ocl::Image2D(*unnamed);
+			return Ok<cv::ocl::Image2D*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Image2D*>))
+	}
+	
 	Result<bool> cv_ocl_Image2D_canCreateAlias_const_UMatR(const cv::UMat* u) {
 		try {
 			bool ret = cv::ocl::Image2D::canCreateAlias(*u);
@@ -10191,6 +10575,13 @@ extern "C" {
 	}
 	
 	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel_const_KernelR(const cv::ocl::Kernel* k) {
+		try {
+			cv::ocl::Kernel* ret = new cv::ocl::Kernel(*k);
+			return Ok<cv::ocl::Kernel*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Kernel*>))
+	}
+	
+	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel_KernelR(cv::ocl::Kernel* k) {
 		try {
 			cv::ocl::Kernel* ret = new cv::ocl::Kernel(*k);
 			return Ok<cv::ocl::Kernel*>(ret);
@@ -10621,6 +11012,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Platform*>))
 	}
 	
+	Result<cv::ocl::Platform*> cv_ocl_Platform_Platform_PlatformR(cv::ocl::Platform* p) {
+		try {
+			cv::ocl::Platform* ret = new cv::ocl::Platform(*p);
+			return Ok<cv::ocl::Platform*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Platform*>))
+	}
+	
 	Result<void*> cv_ocl_Platform_ptr_const(const cv::ocl::Platform* instance) {
 		try {
 			void* ret = instance->ptr();
@@ -10660,6 +11058,13 @@ extern "C" {
 	}
 	
 	Result<cv::ocl::PlatformInfo*> cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(const cv::ocl::PlatformInfo* i) {
+		try {
+			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo(*i);
+			return Ok<cv::ocl::PlatformInfo*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::PlatformInfo*>))
+	}
+	
+	Result<cv::ocl::PlatformInfo*> cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoR(cv::ocl::PlatformInfo* i) {
 		try {
 			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo(*i);
 			return Ok<cv::ocl::PlatformInfo*>(ret);
@@ -10742,6 +11147,13 @@ extern "C" {
 	}
 	
 	Result<cv::ocl::Program*> cv_ocl_Program_Program_const_ProgramR(const cv::ocl::Program* prog) {
+		try {
+			cv::ocl::Program* ret = new cv::ocl::Program(*prog);
+			return Ok<cv::ocl::Program*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Program*>))
+	}
+	
+	Result<cv::ocl::Program*> cv_ocl_Program_Program_ProgramR(cv::ocl::Program* prog) {
 		try {
 			cv::ocl::Program* ret = new cv::ocl::Program(*prog);
 			return Ok<cv::ocl::Program*>(ret);
@@ -10846,6 +11258,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::ProgramSource*>))
 	}
 	
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_ProgramSource_ProgramSourceR(cv::ocl::ProgramSource* prog) {
+		try {
+			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource(*prog);
+			return Ok<cv::ocl::ProgramSource*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::ProgramSource*>))
+	}
+	
 	Result<void*> cv_ocl_ProgramSource_source_const(const cv::ocl::ProgramSource* instance) {
 		try {
 			const cv::String ret = instance->source();
@@ -10899,6 +11318,13 @@ extern "C" {
 	}
 	
 	Result<cv::ocl::Queue*> cv_ocl_Queue_Queue_const_QueueR(const cv::ocl::Queue* q) {
+		try {
+			cv::ocl::Queue* ret = new cv::ocl::Queue(*q);
+			return Ok<cv::ocl::Queue*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ocl::Queue*>))
+	}
+	
+	Result<cv::ocl::Queue*> cv_ocl_Queue_Queue_QueueR(cv::ocl::Queue* q) {
 		try {
 			cv::ocl::Queue* ret = new cv::ocl::Queue(*q);
 			return Ok<cv::ocl::Queue*>(ret);

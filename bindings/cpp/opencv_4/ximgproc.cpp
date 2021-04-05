@@ -171,6 +171,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::EdgeBoxes>*>))
 	}
 	
+	Result<cv::Ptr<cv::ximgproc::EdgeDrawing>*> cv_ximgproc_createEdgeDrawing() {
+		try {
+			cv::Ptr<cv::ximgproc::EdgeDrawing> ret = cv::ximgproc::createEdgeDrawing();
+			return Ok(new cv::Ptr<cv::ximgproc::EdgeDrawing>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::ximgproc::EdgeDrawing>*>))
+	}
+	
 	Result<cv::Ptr<cv::ximgproc::FastBilateralSolverFilter>*> cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double_double_int_double(const cv::_InputArray* guide, double sigma_spatial, double sigma_luma, double sigma_chroma, double lambda, int num_iter, double max_tol) {
 		try {
 			cv::Ptr<cv::ximgproc::FastBilateralSolverFilter> ret = cv::ximgproc::createFastBilateralSolverFilter(*guide, sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol);
@@ -1024,6 +1031,90 @@ extern "C" {
 	Result_void cv_ximgproc_EdgeBoxes_setKappa_float(cv::ximgproc::EdgeBoxes* instance, float value) {
 		try {
 			instance->setKappa(value);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ximgproc::EdgeDrawing::Params> cv_ximgproc_EdgeDrawing_getPropParams_const(const cv::ximgproc::EdgeDrawing* instance) {
+		try {
+			cv::ximgproc::EdgeDrawing::Params ret = instance->params;
+			return Ok<cv::ximgproc::EdgeDrawing::Params>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ximgproc::EdgeDrawing::Params>))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_setPropParams_Params(cv::ximgproc::EdgeDrawing* instance, cv::ximgproc::EdgeDrawing::Params* val) {
+		try {
+			instance->params = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_detectEdges_const__InputArrayR(cv::ximgproc::EdgeDrawing* instance, const cv::_InputArray* src) {
+		try {
+			instance->detectEdges(*src);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_getEdgeImage_const__OutputArrayR(cv::ximgproc::EdgeDrawing* instance, const cv::_OutputArray* dst) {
+		try {
+			instance->getEdgeImage(*dst);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_getGradientImage_const__OutputArrayR(cv::ximgproc::EdgeDrawing* instance, const cv::_OutputArray* dst) {
+		try {
+			instance->getGradientImage(*dst);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<std::vector<std::vector<cv::Point>>*> cv_ximgproc_EdgeDrawing_getSegments(cv::ximgproc::EdgeDrawing* instance) {
+		try {
+			std::vector<std::vector<cv::Point>> ret = instance->getSegments();
+			return Ok(new std::vector<std::vector<cv::Point>>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<std::vector<cv::Point>>*>))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_detectLines_const__OutputArrayR(cv::ximgproc::EdgeDrawing* instance, const cv::_OutputArray* lines) {
+		try {
+			instance->detectLines(*lines);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_detectEllipses_const__OutputArrayR(cv::ximgproc::EdgeDrawing* instance, const cv::_OutputArray* ellipses) {
+		try {
+			instance->detectEllipses(*ellipses);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_setParams_const_ParamsR(cv::ximgproc::EdgeDrawing* instance, const cv::ximgproc::EdgeDrawing::Params* parameters) {
+		try {
+			instance->setParams(*parameters);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::ximgproc::EdgeDrawing::Params> cv_ximgproc_EdgeDrawing_Params_Params() {
+		try {
+			cv::ximgproc::EdgeDrawing::Params ret;
+			return Ok<cv::ximgproc::EdgeDrawing::Params>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::ximgproc::EdgeDrawing::Params>))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_Params_read_const_FileNodeR(cv::ximgproc::EdgeDrawing::Params instance, const cv::FileNode* fn) {
+		try {
+			instance.read(*fn);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result_void cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(const cv::ximgproc::EdgeDrawing::Params instance, cv::FileStorage* fs) {
+		try {
+			instance.write(*fs);
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}

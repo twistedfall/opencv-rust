@@ -61,9 +61,23 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
 	}
 	
+	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(const char* filename, int apiPreference, const std::vector<int>* params) {
+		try {
+			cv::VideoCapture* ret = new cv::VideoCapture(std::string(filename), apiPreference, *params);
+			return Ok<cv::VideoCapture*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
+	}
+	
 	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_int_int(int index, int apiPreference) {
 		try {
 			cv::VideoCapture* ret = new cv::VideoCapture(index, apiPreference);
+			return Ok<cv::VideoCapture*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
+	}
+	
+	Result<cv::VideoCapture*> cv_VideoCapture_VideoCapture_int_int_const_vector_int_R(int index, int apiPreference, const std::vector<int>* params) {
+		try {
+			cv::VideoCapture* ret = new cv::VideoCapture(index, apiPreference, *params);
 			return Ok<cv::VideoCapture*>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::VideoCapture*>))
 	}
@@ -75,9 +89,23 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}
 	
+	Result<bool> cv_VideoCapture_open_const_StringR_int_const_vector_int_R(cv::VideoCapture* instance, const char* filename, int apiPreference, const std::vector<int>* params) {
+		try {
+			bool ret = instance->open(std::string(filename), apiPreference, *params);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
 	Result<bool> cv_VideoCapture_open_int_int(cv::VideoCapture* instance, int index, int apiPreference) {
 		try {
 			bool ret = instance->open(index, apiPreference);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_VideoCapture_open_int_int_const_vector_int_R(cv::VideoCapture* instance, int index, int apiPreference, const std::vector<int>* params) {
+		try {
+			bool ret = instance->open(index, apiPreference, *params);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
 	}

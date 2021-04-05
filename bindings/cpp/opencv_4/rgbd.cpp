@@ -877,6 +877,111 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::VolumeParams>*>))
 	}
 	
+	Result<cv::Ptr<cv::kinfu::detail::PoseGraph>*> cv_kinfu_detail_PoseGraph_create() {
+		try {
+			cv::Ptr<cv::kinfu::detail::PoseGraph> ret = cv::kinfu::detail::PoseGraph::create();
+			return Ok(new cv::Ptr<cv::kinfu::detail::PoseGraph>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::kinfu::detail::PoseGraph>*>))
+	}
+	
+	Result_void cv_kinfu_detail_PoseGraph_addNode_size_t_const_Affine3dR_bool(cv::kinfu::detail::PoseGraph* instance, size_t _nodeId, const cv::Affine3d* _pose, bool fixed) {
+		try {
+			instance->addNode(_nodeId, *_pose, fixed);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<bool> cv_kinfu_detail_PoseGraph_isNodeExist_const_size_t(const cv::kinfu::detail::PoseGraph* instance, size_t nodeId) {
+		try {
+			bool ret = instance->isNodeExist(nodeId);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_kinfu_detail_PoseGraph_setNodeFixed_size_t_bool(cv::kinfu::detail::PoseGraph* instance, size_t nodeId, bool fixed) {
+		try {
+			bool ret = instance->setNodeFixed(nodeId, fixed);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<bool> cv_kinfu_detail_PoseGraph_isNodeFixed_const_size_t(const cv::kinfu::detail::PoseGraph* instance, size_t nodeId) {
+		try {
+			bool ret = instance->isNodeFixed(nodeId);
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<cv::Affine3d> cv_kinfu_detail_PoseGraph_getNodePose_const_size_t(const cv::kinfu::detail::PoseGraph* instance, size_t nodeId) {
+		try {
+			cv::Affine3d ret = instance->getNodePose(nodeId);
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Affine3d>))
+	}
+	
+	Result<std::vector<size_t>*> cv_kinfu_detail_PoseGraph_getNodesIds_const(const cv::kinfu::detail::PoseGraph* instance) {
+		try {
+			std::vector<size_t> ret = instance->getNodesIds();
+			return Ok(new std::vector<size_t>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<size_t>*>))
+	}
+	
+	Result<size_t> cv_kinfu_detail_PoseGraph_getNumNodes_const(const cv::kinfu::detail::PoseGraph* instance) {
+		try {
+			size_t ret = instance->getNumNodes();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result_void cv_kinfu_detail_PoseGraph_addEdge_size_t_size_t_const_Affine3fR_const_Matx66fR(cv::kinfu::detail::PoseGraph* instance, size_t _sourceNodeId, size_t _targetNodeId, const cv::Affine3f* _transformation, const cv::Matx66f* _information) {
+		try {
+			instance->addEdge(_sourceNodeId, _targetNodeId, *_transformation, *_information);
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<size_t> cv_kinfu_detail_PoseGraph_getEdgeStart_const_size_t(const cv::kinfu::detail::PoseGraph* instance, size_t i) {
+		try {
+			size_t ret = instance->getEdgeStart(i);
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<size_t> cv_kinfu_detail_PoseGraph_getEdgeEnd_const_size_t(const cv::kinfu::detail::PoseGraph* instance, size_t i) {
+		try {
+			size_t ret = instance->getEdgeEnd(i);
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<size_t> cv_kinfu_detail_PoseGraph_getNumEdges_const(const cv::kinfu::detail::PoseGraph* instance) {
+		try {
+			size_t ret = instance->getNumEdges();
+			return Ok<size_t>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<size_t>))
+	}
+	
+	Result<bool> cv_kinfu_detail_PoseGraph_isValid_const(const cv::kinfu::detail::PoseGraph* instance) {
+		try {
+			bool ret = instance->isValid();
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<bool>))
+	}
+	
+	Result<int> cv_kinfu_detail_PoseGraph_optimize_const_TermCriteriaR(cv::kinfu::detail::PoseGraph* instance, const cv::TermCriteria* tc) {
+		try {
+			int ret = instance->optimize(*tc);
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
+	Result<double> cv_kinfu_detail_PoseGraph_calcEnergy_const(const cv::kinfu::detail::PoseGraph* instance) {
+		try {
+			double ret = instance->calcEnergy();
+			return Ok<double>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<double>))
+	}
+	
 	Result<cv::Ptr<cv::large_kinfu::LargeKinfu>*> cv_large_kinfu_LargeKinfu_create_const_Ptr_Params_R(const cv::Ptr<cv::large_kinfu::Params>* _params) {
 		try {
 			cv::Ptr<cv::large_kinfu::LargeKinfu> ret = cv::large_kinfu::LargeKinfu::create(*_params);

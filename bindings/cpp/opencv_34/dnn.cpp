@@ -51,27 +51,6 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Mat*>))
 	}
 	
-	Result<cv::Range*> cv_dnn_clamp_const_RangeR_int(const cv::Range* r, int axisSize) {
-		try {
-			cv::Range ret = cv::dnn::clamp(*r, axisSize);
-			return Ok(new cv::Range(ret));
-		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Range*>))
-	}
-	
-	Result<int> cv_dnn_clamp_int_const_MatShapeR(int ax, const cv::dnn::MatShape* shape) {
-		try {
-			int ret = cv::dnn::clamp(ax, *shape);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
-	Result<int> cv_dnn_clamp_int_int(int ax, int dims) {
-		try {
-			int ret = cv::dnn::clamp(ax, dims);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
-	}
-	
 	Result<cv::dnn::MatShape*> cv_dnn_concat_const_MatShapeR_const_MatShapeR(const cv::dnn::MatShape* a, const cv::dnn::MatShape* b) {
 		try {
 			cv::dnn::MatShape ret = cv::dnn::concat(*a, *b);
@@ -89,6 +68,13 @@ extern "C" {
 	Result<void*> cv_dnn_getInferenceEngineBackendType() {
 		try {
 			cv::String ret = cv::dnn::getInferenceEngineBackendType();
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_dnn_getInferenceEngineCPUType() {
+		try {
+			cv::String ret = cv::dnn::getInferenceEngineCPUType();
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
@@ -1035,6 +1021,55 @@ extern "C" {
 			cv::Ptr<cv::dnn::EltwiseLayer> ret = cv::dnn::EltwiseLayer::create(*params);
 			return Ok(new cv::Ptr<cv::dnn::EltwiseLayer>(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::EltwiseLayer>*>))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropBase_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->base;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropBase_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->base = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropScale_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->scale;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropScale_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->scale = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<float> cv_dnn_ExpLayer_getPropShift_const(const cv::dnn::ExpLayer* instance) {
+		try {
+			float ret = instance->shift;
+			return Ok<float>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<float>))
+	}
+	
+	Result_void cv_dnn_ExpLayer_setPropShift_float(cv::dnn::ExpLayer* instance, float val) {
+		try {
+			instance->shift = val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<cv::Ptr<cv::dnn::ExpLayer>*> cv_dnn_ExpLayer_create_const_LayerParamsR(const cv::dnn::LayerParams* params) {
+		try {
+			cv::Ptr<cv::dnn::ExpLayer> ret = cv::dnn::ExpLayer::create(*params);
+			return Ok(new cv::Ptr<cv::dnn::ExpLayer>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::Ptr<cv::dnn::ExpLayer>*>))
 	}
 	
 	void cv_FlattenLayer_delete(cv::dnn::FlattenLayer* instance) {
@@ -2568,6 +2603,20 @@ extern "C" {
 	Result_void cv_dnn_SliceLayer_setPropSliceRanges_vector_vector_Range__(cv::dnn::SliceLayer* instance, std::vector<std::vector<cv::Range>>* val) {
 		try {
 			instance->sliceRanges = *val;
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
+	}
+	
+	Result<std::vector<std::vector<int>>*> cv_dnn_SliceLayer_getPropSliceSteps(cv::dnn::SliceLayer* instance) {
+		try {
+			std::vector<std::vector<int>> ret = instance->sliceSteps;
+			return Ok(new std::vector<std::vector<int>>(ret));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<std::vector<std::vector<int>>*>))
+	}
+	
+	Result_void cv_dnn_SliceLayer_setPropSliceSteps_vector_vector_int__(cv::dnn::SliceLayer* instance, std::vector<std::vector<int>>* val) {
+		try {
+			instance->sliceSteps = *val;
 			return Ok();
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}

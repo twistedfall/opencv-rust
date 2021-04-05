@@ -10,7 +10,7 @@
 //! # RGB-Depth Processing
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_Volume, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_DynaFu, super::ParamsTrait, super::LargeKinfu };
+	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_Volume, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_DynaFu, super::ParamsTrait, super::LargeKinfu, super::Kinfu_Detail_PoseGraph };
 }
 
 pub const Kinfu_VolumeType_HASHTSDF: i32 = 1;
@@ -59,6 +59,8 @@ pub enum RgbdPlane_RGBD_PLANE_METHOD {
 
 opencv_type_enum! { crate::rgbd::RgbdPlane_RGBD_PLANE_METHOD }
 
+/// Backwards compatibility for old versions
+pub type Dynafu_Params = crate::rgbd::Kinfu_Params;
 pub fn make_volume(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: core::Vec3i) -> Result<core::Ptr::<dyn crate::rgbd::Kinfu_Volume>> {
 	unsafe { sys::cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(_volume_type, _voxel_size, _pose.opencv_as_extern(), _raycast_step_factor, _trunc_dist, _max_weight, _truncate_threshold, _resolution.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_Volume>::opencv_from_extern(r) } )
 }
@@ -1083,6 +1085,78 @@ impl Kinfu_VolumeParams {
 	
 }
 
+pub trait Kinfu_Detail_PoseGraph {
+	fn as_raw_Kinfu_Detail_PoseGraph(&self) -> *const c_void;
+	fn as_raw_mut_Kinfu_Detail_PoseGraph(&mut self) -> *mut c_void;
+
+	fn add_node(&mut self, _node_id: size_t, _pose: core::Affine3d, fixed: bool) -> Result<()> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_addNode_size_t_const_Affine3dR_bool(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _node_id, &_pose, fixed) }.into_result()
+	}
+	
+	fn is_node_exist(&self, node_id: size_t) -> Result<bool> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_isNodeExist_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id) }.into_result()
+	}
+	
+	fn set_node_fixed(&mut self, node_id: size_t, fixed: bool) -> Result<bool> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_setNodeFixed_size_t_bool(self.as_raw_mut_Kinfu_Detail_PoseGraph(), node_id, fixed) }.into_result()
+	}
+	
+	fn is_node_fixed(&self, node_id: size_t) -> Result<bool> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_isNodeFixed_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id) }.into_result()
+	}
+	
+	fn get_node_pose(&self, node_id: size_t) -> Result<core::Affine3d> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getNodePose_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id) }.into_result()
+	}
+	
+	fn get_nodes_ids(&self) -> Result<core::Vector::<size_t>> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getNodesIds_const(self.as_raw_Kinfu_Detail_PoseGraph()) }.into_result().map(|r| unsafe { core::Vector::<size_t>::opencv_from_extern(r) } )
+	}
+	
+	fn get_num_nodes(&self) -> Result<size_t> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getNumNodes_const(self.as_raw_Kinfu_Detail_PoseGraph()) }.into_result()
+	}
+	
+	/// ## C++ default parameters
+	/// * _information: Matx66f::eye()
+	fn add_edge(&mut self, _source_node_id: size_t, _target_node_id: size_t, _transformation: core::Affine3f, _information: core::Matx66f) -> Result<()> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_addEdge_size_t_size_t_const_Affine3fR_const_Matx66fR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _source_node_id, _target_node_id, &_transformation, &_information) }.into_result()
+	}
+	
+	fn get_edge_start(&self, i: size_t) -> Result<size_t> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getEdgeStart_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), i) }.into_result()
+	}
+	
+	fn get_edge_end(&self, i: size_t) -> Result<size_t> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getEdgeEnd_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), i) }.into_result()
+	}
+	
+	fn get_num_edges(&self) -> Result<size_t> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_getNumEdges_const(self.as_raw_Kinfu_Detail_PoseGraph()) }.into_result()
+	}
+	
+	fn is_valid(&self) -> Result<bool> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_isValid_const(self.as_raw_Kinfu_Detail_PoseGraph()) }.into_result()
+	}
+	
+	/// ## C++ default parameters
+	/// * tc: cv::TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,1e-6)
+	fn optimize(&mut self, tc: core::TermCriteria) -> Result<i32> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_optimize_const_TermCriteriaR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), &tc) }.into_result()
+	}
+	
+	fn calc_energy(&self) -> Result<f64> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_calcEnergy_const(self.as_raw_Kinfu_Detail_PoseGraph()) }.into_result()
+	}
+	
+}
+
+impl dyn Kinfu_Detail_PoseGraph + '_ {
+	pub fn create() -> Result<core::Ptr::<dyn crate::rgbd::Kinfu_Detail_PoseGraph>> {
+		unsafe { sys::cv_kinfu_detail_PoseGraph_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_Detail_PoseGraph>::opencv_from_extern(r) } )
+	}
+	
+}
 /// Large Scale Dense Depth Fusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm for larger environments using

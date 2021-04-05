@@ -571,6 +571,38 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 	unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, stream.as_raw_mut_Stream()) }.into_result()
 }
 
+///  Checks if array elements lie between two scalars.
+/// 
+/// The function checks the range as follows:
+/// *   For every element of a single-channel input array:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0)
+/// *   For two-channel arrays:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%5F1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F1)
+/// *   and so forth.
+/// 
+/// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
+/// specified 1D, 2D, 3D, ... box and 0 otherwise.
+/// 
+/// Note that unlike the CPU inRange, this does NOT accept an array for lowerb or
+/// upperb, only a cv::Scalar.
+/// 
+/// ## Parameters
+/// * src: first input array.
+/// * lowerb: inclusive lower boundary cv::Scalar.
+/// * upperb: inclusive upper boundary cv::Scalar.
+/// * dst: output array of the same size as src and CV_8U type.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cv::inRange
+/// 
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+}
+
 /// Computes an integral image.
 /// 
 /// ## Parameters

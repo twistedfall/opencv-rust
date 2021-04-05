@@ -90,6 +90,8 @@ template struct Result<cv::cuda::BufferPool*>;
 template struct Result<cv::cuda::DeviceInfo*>;
 template struct Result<cv::cuda::DeviceInfo::ComputeMode>;
 template struct Result<cv::cuda::Event*>;
+template struct Result<cv::cuda::GpuData*>;
+template struct Result<cv::cuda::GpuMatND*>;
 template struct Result<cv::cuda::GpuMat*>;
 template struct Result<cv::cuda::GpuMat::Allocator*>;
 template struct Result<cv::cuda::HostMem*>;

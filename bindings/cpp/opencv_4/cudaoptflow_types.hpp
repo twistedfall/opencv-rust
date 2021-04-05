@@ -3,8 +3,10 @@ template struct Result<cv::Ptr<cv::cuda::BroxOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::cuda::DensePyrLKOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::cuda::FarnebackOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>*>;
+template struct Result<cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>*>;
 template struct Result<cv::Ptr<cv::cuda::OpticalFlowDual_TVL1>*>;
 template struct Result<cv::Ptr<cv::cuda::SparsePyrLKOpticalFlow>*>;
+template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Size_<int>>;
 template struct Result<double>;
 template struct Result<int>;
@@ -60,6 +62,20 @@ extern "C" {
 	}
 
 	cv::cuda::NvidiaOpticalFlow_1_0* cv_PtrOfCUDA_NvidiaOpticalFlow_1_0_get_inner_ptr_mut(cv::Ptr<cv::cuda::NvidiaOpticalFlow_1_0>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_delete(cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>* instance) {
+		delete instance;
+	}
+
+	const cv::cuda::NvidiaOpticalFlow_2_0* cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_get_inner_ptr(const cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>* instance) {
+		return instance->get();
+	}
+
+	cv::cuda::NvidiaOpticalFlow_2_0* cv_PtrOfCUDA_NvidiaOpticalFlow_2_0_get_inner_ptr_mut(cv::Ptr<cv::cuda::NvidiaOpticalFlow_2_0>* instance) {
 		return instance->get();
 	}
 }

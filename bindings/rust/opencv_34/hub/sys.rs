@@ -1,6 +1,6 @@
 use crate::{mod_prelude_types::*, core};
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 mod aruco_sys {
 	use super::*;
 
@@ -130,10 +130,10 @@ mod aruco_sys {
 		pub fn cv_aruco_GridBoard_getMarkerSeparation_const(instance: *const c_void) -> Result<f32>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 pub use aruco_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_sys {
 	use super::*;
 
@@ -193,10 +193,10 @@ mod bgsegm_sys {
 		pub fn cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, frame: *const c_void, gt_mask: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 pub use bgsegm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 mod bioinspired_sys {
 	use super::*;
 
@@ -250,9 +250,10 @@ mod bioinspired_sys {
 		pub fn cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size: *const core::Size) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 pub use bioinspired_sys::*;
 
+#[cfg(ocvrs_has_module_calib3d)]
 mod calib3d_sys {
 	use super::*;
 
@@ -369,9 +370,10 @@ mod calib3d_sys {
 		pub fn cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_calib3d)]
 pub use calib3d_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ccalib)]
 mod ccalib_sys {
 	use super::*;
 
@@ -436,9 +438,10 @@ mod ccalib_sys {
 		pub fn cv_randpattern_RandomPatternGenerator_getPattern(instance: *mut c_void) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ccalib)]
 pub use ccalib_sys::*;
 
+#[cfg(ocvrs_has_module_core)]
 mod core_sys {
 	use super::*;
 
@@ -536,6 +539,7 @@ mod core_sys {
 		pub fn cv_getCPUTickCount() -> Result<i64>;
 		pub fn cv_getElemSize_int(typ: i32) -> Result<size_t>;
 		pub fn cv_getHardwareFeatureName_int(feature: i32) -> Result<*mut c_void>;
+		pub fn cv_getLogLevel() -> Result<i32>;
 		pub fn cv_getNumThreads() -> Result<i32>;
 		pub fn cv_getNumberOfCPUs() -> Result<i32>;
 		pub fn cv_getOptimalDFTSize_int(vecsize: i32) -> Result<i32>;
@@ -699,6 +703,7 @@ mod core_sys {
 		pub fn cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1: *const c_void, alpha: f64, src2: *const c_void, dst: *const c_void) -> Result_void;
 		pub fn cv_setBreakOnError_bool(flag: bool) -> Result<bool>;
 		pub fn cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx: *const c_void, s: *const core::Scalar) -> Result_void;
+		pub fn cv_setLogLevel_int(level: i32) -> Result<i32>;
 		pub fn cv_setNumThreads_int(nthreads: i32) -> Result_void;
 		pub fn cv_setRNGSeed_int(seed: i32) -> Result_void;
 		pub fn cv_setUseOpenVX_bool(flag: bool) -> Result_void;
@@ -733,14 +738,21 @@ mod core_sys {
 		pub fn cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpInt_int(argument: i32) -> Result<*mut c_void>;
+		pub fn cv_utils_dumpRange_const_RangeR(argument: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_utils_dumpRect_const_RectR(argument: *const core::Rect) -> Result<*mut c_void>;
+		pub fn cv_utils_dumpRotatedRect_const_RotatedRectR(argument: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpSizeT_size_t(argument: size_t) -> Result<*mut c_void>;
 		pub fn cv_utils_dumpString_const_StringR(argument: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_utils_dumpTermCriteria_const_TermCriteriaR(argument: *const core::TermCriteria) -> Result<*mut c_void>;
 		pub fn cv_utils_getThreadID() -> Result<i32>;
 		pub fn cv_utils_logging_getLogLevel() -> Result<core::LogLevel>;
 		pub fn cv_utils_logging_internal_writeLogMessage_LogLevel_const_charX(log_level: core::LogLevel, message: *const c_char) -> Result_void;
 		pub fn cv_utils_logging_setLogLevel_LogLevel(log_level: core::LogLevel) -> Result<core::LogLevel>;
 		pub fn cv_utils_testAsyncArray_const__InputArrayR(argument: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_utils_testAsyncException() -> Result<*mut c_void>;
+		pub fn cv_utils_testOverloadResolution_const_RectR(rect: *const core::Rect) -> Result<*mut c_void>;
+		pub fn cv_utils_testOverloadResolution_int_const_PointR(value: i32, point: *const core::Point) -> Result<*mut c_void>;
+		pub fn cv_utils_testRaiseGeneralException() -> Result_void;
 		pub fn cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display: *mut c_void, surface: core::va_surface_id, size: *const core::Size, dst: *const c_void) -> Result_void;
 		pub fn cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display: *mut c_void, src: *const c_void, surface: core::va_surface_id, size: *const core::Size) -> Result_void;
 		pub fn cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display: *mut c_void, try_interop: bool) -> Result<*mut c_void>;
@@ -2036,9 +2048,10 @@ mod core_sys {
 		pub fn cv_ogl_Texture2D_texId_const(instance: *const c_void) -> Result<u32>;
 	}
 }
+#[cfg(ocvrs_has_module_core)]
 pub use core_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaarithm)]
 mod cudaarithm_sys {
 	use super::*;
 
@@ -2114,10 +2127,10 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR_StreamR(instance: *mut c_void, src: *const c_void, dst: *const c_void, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaarithm)]
 pub use cudaarithm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudabgsegm)]
 mod cudabgsegm_sys {
 	use super::*;
 
@@ -2138,10 +2151,10 @@ mod cudabgsegm_sys {
 		pub fn cv_cuda_BackgroundSubtractorMOG2_getBackgroundImage_const_const__OutputArrayR_StreamR(instance: *const c_void, background_image: *const c_void, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudabgsegm)]
 pub use cudabgsegm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudacodec)]
 mod cudacodec_sys {
 	use super::*;
 
@@ -2206,10 +2219,10 @@ mod cudacodec_sys {
 		pub fn cv_cudacodec_VideoWriter_getEncoderParams_const(instance: *const c_void) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudacodec)]
 pub use cudacodec_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafeatures2d)]
 mod cudafeatures2d_sys {
 	use super::*;
 
@@ -2248,10 +2261,10 @@ mod cudafeatures2d_sys {
 		pub fn cv_cuda_ORB_getBlurForDescriptor_const(instance: *const c_void) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafeatures2d)]
 pub use cudafeatures2d_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafilters)]
 mod cudafilters_sys {
 	use super::*;
 
@@ -2273,10 +2286,10 @@ mod cudafilters_sys {
 		pub fn cv_cuda_Filter_apply_const__InputArrayR_const__OutputArrayR_StreamR(instance: *mut c_void, src: *const c_void, dst: *const c_void, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudafilters)]
 pub use cudafilters_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaimgproc)]
 mod cudaimgproc_sys {
 	use super::*;
 
@@ -2362,10 +2375,10 @@ mod cudaimgproc_sys {
 		pub fn cv_cuda_TemplateMatching_match_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(instance: *mut c_void, image: *const c_void, templ: *const c_void, result: *const c_void, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaimgproc)]
 pub use cudaimgproc_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaobjdetect)]
 mod cudaobjdetect_sys {
 	use super::*;
 
@@ -2415,10 +2428,10 @@ mod cudaobjdetect_sys {
 		pub fn cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR_StreamR(instance: *mut c_void, img: *const c_void, descriptors: *const c_void, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaobjdetect)]
 pub use cudaobjdetect_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaoptflow)]
 mod cudaoptflow_sys {
 	use super::*;
 
@@ -2496,10 +2509,10 @@ mod cudaoptflow_sys {
 		pub fn cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size: *const core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudaoptflow)]
 pub use cudaoptflow_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudastereo)]
 mod cudastereo_sys {
 	use super::*;
 
@@ -2548,10 +2561,10 @@ mod cudastereo_sys {
 		pub fn cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(width: i32, height: i32, ndisp: *mut i32, iters: *mut i32, levels: *mut i32, nr_plane: *mut i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudastereo)]
 pub use cudastereo_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudawarping)]
 mod cudawarping_sys {
 	use super::*;
 
@@ -2567,10 +2580,10 @@ mod cudawarping_sys {
 		pub fn cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src: *const c_void, dst: *const c_void, m: *const c_void, dsize: *const core::Size, flags: i32, border_mode: i32, border_value: *const core::Scalar, stream: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cudawarping)]
 pub use cudawarping_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cvv)]
 mod cvv_sys {
 	use super::*;
 
@@ -2588,9 +2601,10 @@ mod cvv_sys {
 		pub fn cvv_impl_CallMetaData_operator_bool(instance: *mut c_void) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cvv)]
 pub use cvv_sys::*;
 
+#[cfg(ocvrs_has_module_dnn)]
 mod dnn_sys {
 	use super::*;
 
@@ -2602,12 +2616,10 @@ mod dnn_sys {
 		pub fn cv_dnn_blobFromImage_const__InputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int(image: *const c_void, scalefactor: f64, size: *const core::Size, mean: *const core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<*mut c_void>;
 		pub fn cv_dnn_blobFromImages_const__InputArrayR_const__OutputArrayR_double_Size_const_ScalarR_bool_bool_int(images: *const c_void, blob: *const c_void, scalefactor: f64, size: *const core::Size, mean: *const core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result_void;
 		pub fn cv_dnn_blobFromImages_const__InputArrayR_double_Size_const_ScalarR_bool_bool_int(images: *const c_void, scalefactor: f64, size: *const core::Size, mean: *const core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<*mut c_void>;
-		pub fn cv_dnn_clamp_const_RangeR_int(r: *const c_void, axis_size: i32) -> Result<*mut c_void>;
-		pub fn cv_dnn_clamp_int_const_MatShapeR(ax: i32, shape: *const c_void) -> Result<i32>;
-		pub fn cv_dnn_clamp_int_int(ax: i32, dims: i32) -> Result<i32>;
 		pub fn cv_dnn_concat_const_MatShapeR_const_MatShapeR(a: *const c_void, b: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_getAvailableTargets_Backend(be: crate::dnn::Backend) -> Result<*mut c_void>;
 		pub fn cv_dnn_getInferenceEngineBackendType() -> Result<*mut c_void>;
+		pub fn cv_dnn_getInferenceEngineCPUType() -> Result<*mut c_void>;
 		pub fn cv_dnn_getInferenceEngineVPUType() -> Result<*mut c_void>;
 		pub fn cv_dnn_getPlane_const_MatR_int_int(m: *const c_void, n: i32, cn: i32) -> Result<*mut c_void>;
 		pub fn cv_dnn_imagesFromBlob_const_MatR_const__OutputArrayR(blob_: *const c_void, images_: *const c_void) -> Result_void;
@@ -2736,6 +2748,13 @@ mod dnn_sys {
 		pub fn cv_dnn_DictValue_getStringValue_const_int(instance: *const c_void, idx: i32) -> Result<*mut c_void>;
 		pub fn cv_dnn_ELULayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_EltwiseLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_ExpLayer_getPropBase_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_dnn_ExpLayer_setPropBase_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_dnn_ExpLayer_getPropScale_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_dnn_ExpLayer_setPropScale_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_dnn_ExpLayer_getPropShift_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_dnn_ExpLayer_setPropShift_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_dnn_ExpLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_FlattenLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_FlowWarpLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_InnerProductLayer_getPropAxis_const(instance: *const c_void) -> Result<i32>;
@@ -2945,6 +2964,8 @@ mod dnn_sys {
 		pub fn cv_dnn_SigmoidLayer_create_const_LayerParamsR(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_SliceLayer_getPropSliceRanges(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_SliceLayer_setPropSliceRanges_vector_vector_Range__(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_dnn_SliceLayer_getPropSliceSteps(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_SliceLayer_setPropSliceSteps_vector_vector_int__(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_dnn_SliceLayer_getPropAxis_const(instance: *const c_void) -> Result<i32>;
 		pub fn cv_dnn_SliceLayer_setPropAxis_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_SliceLayer_getPropNum_split_const(instance: *const c_void) -> Result<i32>;
@@ -2962,9 +2983,10 @@ mod dnn_sys {
 		pub fn cv_dnn__Range__Range_int_int(start_: i32, size_: i32) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_dnn)]
 pub use dnn_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 mod dpm_sys {
 	use super::*;
 
@@ -2984,10 +3006,10 @@ mod dpm_sys {
 		pub fn cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(rect: *const core::Rect, score: f32, class_id: i32) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 pub use dpm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 mod face_sys {
 	use super::*;
 
@@ -3210,9 +3232,10 @@ mod face_sys {
 		pub fn cv_face_StandardCollector_PredictResult_PredictResult_int_double(label_: i32, distance_: f64) -> Result<crate::face::StandardCollector_PredictResult>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 pub use face_sys::*;
 
+#[cfg(ocvrs_has_module_features2d)]
 mod features2d_sys {
 	use super::*;
 
@@ -3411,8 +3434,10 @@ mod features2d_sys {
 		pub fn cv_SimpleBlobDetector_Params_write_const_FileStorageR(instance: *const crate::features2d::SimpleBlobDetector_Params, fs: *mut c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_features2d)]
 pub use features2d_sys::*;
 
+#[cfg(ocvrs_has_module_flann)]
 mod flann_sys {
 	use super::*;
 
@@ -3453,9 +3478,10 @@ mod flann_sys {
 		pub fn cv_flann_SearchParams_SearchParams_int_float_bool(checks: i32, eps: f32, sorted: bool) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_flann)]
 pub use flann_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 mod freetype_sys {
 	use super::*;
 
@@ -3467,10 +3493,10 @@ mod freetype_sys {
 		pub fn cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(instance: *mut c_void, text: *const c_char, font_height: i32, thickness: i32, base_line: *mut i32) -> Result<core::Size>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 pub use freetype_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_fuzzy)]
 mod fuzzy_sys {
 	use super::*;
 
@@ -3493,10 +3519,10 @@ mod fuzzy_sys {
 		pub fn cv_ft_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(image: *const c_void, mask: *const c_void, output: *const c_void, radius: i32, function: i32, algorithm: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_fuzzy)]
 pub use fuzzy_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 mod hdf_sys {
 	use super::*;
 
@@ -3544,10 +3570,10 @@ mod hdf_sys {
 		pub fn cv_hdf_HDF5_kpread_const_vector_KeyPoint_R_const_StringR_const_int_const_int(instance: *const c_void, keypoints: *mut c_void, kplabel: *const c_char, offset: i32, counts: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 pub use hdf_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hfs)]
 mod hfs_sys {
 	use super::*;
 
@@ -3571,9 +3597,10 @@ mod hfs_sys {
 		pub fn cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hfs)]
 pub use hfs_sys::*;
 
+#[cfg(ocvrs_has_module_highgui)]
 mod highgui_sys {
 	use super::*;
 
@@ -3637,9 +3664,10 @@ mod highgui_sys {
 		pub fn cv_QtFont_setPropLine_type_int(instance: *mut c_void, val: i32) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_highgui)]
 pub use highgui_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_img_hash)]
 mod img_hash_sys {
 	use super::*;
 
@@ -3673,9 +3701,10 @@ mod img_hash_sys {
 		pub fn cv_img_hash_RadialVarianceHash_getProjection(instance: *mut c_void) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_img_hash)]
 pub use img_hash_sys::*;
 
+#[cfg(ocvrs_has_module_imgcodecs)]
 mod imgcodecs_sys {
 	use super::*;
 
@@ -3689,8 +3718,10 @@ mod imgcodecs_sys {
 		pub fn cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
 	}
 }
+#[cfg(ocvrs_has_module_imgcodecs)]
 pub use imgcodecs_sys::*;
 
+#[cfg(ocvrs_has_module_imgproc)]
 mod imgproc_sys {
 	use super::*;
 
@@ -3929,9 +3960,10 @@ mod imgproc_sys {
 		pub fn cv_Subdiv2D_edgeDst_const_int_Point2fX(instance: *const c_void, edge: i32, dstpt: *mut core::Point2f) -> Result<i32>;
 	}
 }
+#[cfg(ocvrs_has_module_imgproc)]
 pub use imgproc_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 mod line_descriptor_sys {
 	use super::*;
 
@@ -3992,9 +4024,10 @@ mod line_descriptor_sys {
 		pub fn cv_line_descriptor_LSDParam_LSDParam() -> Result<crate::line_descriptor::LSDParam>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 pub use line_descriptor_sys::*;
 
+#[cfg(ocvrs_has_module_ml)]
 mod ml_sys {
 	use super::*;
 
@@ -4270,8 +4303,10 @@ mod ml_sys {
 		pub fn cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples: *const c_void, layout: i32, responses: *const c_void, var_idx: *const c_void, sample_idx: *const c_void, sample_weights: *const c_void, var_type: *const c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_ml)]
 pub use ml_sys::*;
 
+#[cfg(ocvrs_has_module_objdetect)]
 mod objdetect_sys {
 	use super::*;
 
@@ -4425,9 +4460,10 @@ mod objdetect_sys {
 		pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_objdetect)]
 pub use objdetect_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 mod optflow_sys {
 	use super::*;
 
@@ -4520,10 +4556,10 @@ mod optflow_sys {
 		pub fn cv_optflow_VariationalRefinement_setGamma_float(instance: *mut c_void, val: f32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 pub use optflow_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ovis)]
 mod ovis_sys {
 	use super::*;
 
@@ -4560,10 +4596,10 @@ mod ovis_sys {
 		pub fn cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR_float_float(instance: *mut c_void, k: *const c_void, imsize: *const core::Size, z_near: f32, z_far: f32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ovis)]
 pub use ovis_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 mod phase_unwrapping_sys {
 	use super::*;
 
@@ -4574,9 +4610,10 @@ mod phase_unwrapping_sys {
 		pub fn cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(instance: *mut c_void, wrapped_phase_map: *const c_void, unwrapped_phase_map: *const c_void, shadow_mask: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 pub use phase_unwrapping_sys::*;
 
+#[cfg(ocvrs_has_module_photo)]
 mod photo_sys {
 	use super::*;
 
@@ -4667,9 +4704,10 @@ mod photo_sys {
 		pub fn cv_TonemapReinhard_setColorAdaptation_float(instance: *mut c_void, color_adapt: f32) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_photo)]
 pub use photo_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 mod plot_sys {
 	use super::*;
 
@@ -4696,10 +4734,10 @@ mod plot_sys {
 		pub fn cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x: *const c_void, data_y: *const c_void) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 pub use plot_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 mod rgbd_sys {
 	use super::*;
 
@@ -4966,10 +5004,10 @@ mod rgbd_sys {
 		pub fn cv_rgbd_RgbdPlane_setSensorErrorC_double(instance: *mut c_void, val: f64) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 pub use rgbd_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 mod saliency_sys {
 	use super::*;
 
@@ -5013,10 +5051,10 @@ mod saliency_sys {
 		pub fn cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(instance: *mut c_void, val: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 pub use saliency_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 mod sfm_sys {
 	use super::*;
 
@@ -5077,9 +5115,10 @@ mod sfm_sys {
 		pub fn cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_const_int_const_int_const_int_const_int_const_int(_keyframe1: i32, _keyframe2: i32, _refine_intrinsics: i32, _select_keyframes: i32, _verbosity_level: i32) -> Result<crate::sfm::libmv_ReconstructionOptions>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 pub use sfm_sys::*;
 
+#[cfg(ocvrs_has_module_shape)]
 mod shape_sys {
 	use super::*;
 
@@ -5142,9 +5181,10 @@ mod shape_sys {
 		pub fn cv_ThinPlateSplineShapeTransformer_getRegularizationParameter_const(instance: *const c_void) -> Result<f64>;
 	}
 }
+#[cfg(ocvrs_has_module_shape)]
 pub use shape_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 mod stereo_sys {
 	use super::*;
 
@@ -5159,9 +5199,10 @@ mod stereo_sys {
 		pub fn cv_stereo_symetricCensusTransform_const_MatR_int_MatR_const_int(img1: *const c_void, kernel_size: i32, dist1: *mut c_void, typ: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 pub use stereo_sys::*;
 
+#[cfg(ocvrs_has_module_stitching)]
 mod stitching_sys {
 	use super::*;
 
@@ -5483,9 +5524,10 @@ mod stitching_sys {
 		pub fn cv_detail_VoronoiSeamFinder_find_const_vector_Size_R_const_vector_Point_R_vector_UMat_R(instance: *mut c_void, size: *const c_void, corners: *const c_void, masks: *mut c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_stitching)]
 pub use stitching_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 mod structured_light_sys {
 	use super::*;
 
@@ -5530,9 +5572,10 @@ mod structured_light_sys {
 		pub fn cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__R_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(instance: *const c_void, pattern_images: *const c_void, disparity_map: *const c_void, black_images: *const c_void, white_images: *const c_void, flags: i32) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 pub use structured_light_sys::*;
 
+#[cfg(ocvrs_has_module_superres)]
 mod superres_sys {
 	use super::*;
 
@@ -5627,9 +5670,10 @@ mod superres_sys {
 		pub fn cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(instance: *mut c_void, val: *const c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_superres)]
 pub use superres_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 mod surface_matching_sys {
 	use super::*;
 
@@ -5683,10 +5727,10 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(instance: *mut c_void, file_name: *const c_char) -> Result<i32>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 pub use surface_matching_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 mod text_sys {
 	use super::*;
 
@@ -5793,10 +5837,10 @@ mod text_sys {
 		pub fn cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename: *const c_char, model_weights_filename: *const c_char) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 pub use text_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 mod tracking_sys {
 	use super::*;
 
@@ -6131,9 +6175,10 @@ mod tracking_sys {
 		pub fn cv_TrackerTargetState_setTargetHeight_int(instance: *mut c_void, height: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 pub use tracking_sys::*;
 
+#[cfg(ocvrs_has_module_video)]
 mod video_sys {
 	use super::*;
 
@@ -6285,8 +6330,10 @@ mod video_sys {
 		pub fn cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size: *const core::Size, max_level: i32, crit: *const core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_video)]
 pub use video_sys::*;
 
+#[cfg(ocvrs_has_module_videoio)]
 mod videoio_sys {
 	use super::*;
 
@@ -6327,8 +6374,10 @@ mod videoio_sys {
 		pub fn cv_VideoWriter_getBackendName_const(instance: *const c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_videoio)]
 pub use videoio_sys::*;
 
+#[cfg(ocvrs_has_module_videostab)]
 mod videostab_sys {
 	use super::*;
 
@@ -6555,8 +6604,10 @@ mod videostab_sys {
 		pub fn cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(instance: *const c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_videostab)]
 pub use videostab_sys::*;
 
+#[cfg(ocvrs_has_module_viz)]
 mod viz_sys {
 	use super::*;
 
@@ -6769,9 +6820,10 @@ mod viz_sys {
 		pub fn cv_viz_Widget3D_setColor_const_ColorR(instance: *mut c_void, color: *const c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_viz)]
 pub use viz_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 mod xfeatures2d_sys {
 	use super::*;
 
@@ -6917,10 +6969,10 @@ mod xfeatures2d_sys {
 		pub fn cv_xfeatures2d_VGG_getUseNormalizeDescriptor_const(instance: *const c_void) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 pub use xfeatures2d_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 mod ximgproc_sys {
 	use super::*;
 
@@ -7105,10 +7157,10 @@ mod ximgproc_sys {
 		pub fn cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_clearStrategies(instance: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 pub use ximgproc_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 mod xobjdetect_sys {
 	use super::*;
 
@@ -7120,10 +7172,10 @@ mod xobjdetect_sys {
 		pub fn cv_xobjdetect_WBDetector_create() -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 pub use xobjdetect_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 mod xphoto_sys {
 	use super::*;
 
@@ -7167,7 +7219,7 @@ mod xphoto_sys {
 		pub fn cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, src: *const c_void, dst: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 pub use xphoto_sys::*;
 
 pub use crate::manual::sys::*;

@@ -1,3 +1,12 @@
+* 0.52.0
+  * Add support for OpenCV 4.5.2 and 3.4.14
+  * In those new OpenCV versions some methods are now marked NOEXCEPT which makes them return result directly,
+    without the wrapping Result. Most notable of those new methods is `Mat::default`, which now returns a `Mat`
+    directly. To keep the examples and tests running those methods are also manually marked as NOEXCEPT for previous
+    versions of OpenCV.
+  * The "contrib" feature flag is there no more, the crate now uses build-time module set detection, so just drop
+    it from your `Cargo.toml` if you've been using it.
+
 * 0.51.0
   * Make sure that casts to Ptr<Feature2D> are also generated (fixes [#218](https://github.com/twistedfall/opencv-rust/issues/218))
   * Port text detection example (requires OpenCV 4.5.1)

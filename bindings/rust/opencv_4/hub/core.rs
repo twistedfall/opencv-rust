@@ -35,9 +35,11 @@
 //!        # Universal intrinsics
 //!            # Private implementation helpers
 //!        # Low-level API for external libraries / plugins
+//!    # Parallel Processing
+//!        # Parallel backends API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::OpenCLExecutionContextTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
+	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::OpenCLExecutionContextTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::GpuDataTrait, super::GpuMatNDTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -367,10 +369,10 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &str = "4.5.1";
+pub const CV_VERSION: &str = "4.5.2";
 pub const CV_VERSION_MAJOR: i32 = 4;
 pub const CV_VERSION_MINOR: i32 = 5;
-pub const CV_VERSION_REVISION: i32 = 1;
+pub const CV_VERSION_REVISION: i32 = 2;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -1557,7 +1559,7 @@ pub enum _InputArray_KindFlag {
 	STD_VECTOR = 196608,
 	STD_VECTOR_VECTOR = 262144,
 	STD_VECTOR_MAT = 327680,
-	/// removed
+	/// removed: https://github.com/opencv/opencv/pull/17046
 	EXPR = 393216,
 	OPENGL_BUFFER = 458752,
 	CUDA_HOST_MEM = 524288,
@@ -1566,6 +1568,7 @@ pub enum _InputArray_KindFlag {
 	STD_VECTOR_UMAT = 720896,
 	STD_BOOL_VECTOR = 786432,
 	STD_VECTOR_CUDA_GPU_MAT = 851968,
+	/// removed: https://github.com/opencv/opencv/issues/18897
 	STD_ARRAY = 917504,
 	STD_ARRAY_MAT = 983040,
 }
@@ -1708,6 +1711,9 @@ pub type Vec6d = core::Vec6<f64>;
 pub type Vec6f = core::Vec6<f32>;
 pub type Vec6i = core::Vec6<i32>;
 pub type Vec8i = core::Vec8<i32>;
+pub type GpuMatND_IndexArray = core::Vector::<i32>;
+pub type GpuMatND_SizeArray = core::Vector::<i32>;
+pub type GpuMatND_StepArray = core::Vector::<size_t>;
 pub type Stream_StreamCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'static>>;
 pub type ProgramSource_hash_t = u64;
 /// proxy for hal::Cholesky
@@ -3302,6 +3308,10 @@ pub fn get_elem_size(typ: i32) -> Result<size_t> {
 /// Returns empty string if feature is not defined
 pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
 	unsafe { sys::cv_getHardwareFeatureName_int(feature) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn get_log_level_1() -> Result<i32> {
+	unsafe { sys::cv_getLogLevel() }.into_result()
 }
 
 /// Returns the number of threads used by OpenCV for parallel regions.
@@ -5058,6 +5068,8 @@ pub fn mul_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 
 /// Parallel data processor
 /// 
+/// @ingroup core_parallel
+/// 
 /// ## C++ default parameters
 /// * nstripes: -1.
 pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nstripes: f64) -> Result<()> {
@@ -5528,6 +5540,11 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
 	input_output_array_arg!(mtx);
 	unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s) }.into_result()
+}
+
+/// @cond IGNORED
+pub fn set_log_level_1(level: i32) -> Result<i32> {
+	unsafe { sys::cv_setLogLevel_int(level) }.into_result()
 }
 
 /// OpenCV will try to set the number of threads for the next parallel region.
@@ -6016,6 +6033,18 @@ pub fn dump_int(argument: i32) -> Result<String> {
 	unsafe { sys::cv_utils_dumpInt_int(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
+pub fn dump_range(argument: &core::Range) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRange_const_RangeR(argument.as_raw_Range()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_rect(argument: core::Rect) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRect_const_RectR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_rotated_rect(argument: &core::RotatedRect) -> Result<String> {
+	unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(argument.as_raw_RotatedRect()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 pub fn dump_size_t(argument: size_t) -> Result<String> {
 	unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
@@ -6023,6 +6052,14 @@ pub fn dump_size_t(argument: size_t) -> Result<String> {
 pub fn dump_string(argument: &str) -> Result<String> {
 	extern_container_arg!(argument);
 	unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
+	unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn get_cache_directory_for_downloads() -> Result<String> {
+	unsafe { sys::cv_utils_fs_getCacheDirectoryForDownloads() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
 pub fn get_thread_id() -> Result<i32> {
@@ -6082,6 +6119,20 @@ pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::Async
 
 pub fn test_async_exception() -> Result<core::AsyncArray> {
 	unsafe { sys::cv_utils_testAsyncException() }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+}
+
+pub fn test_overload_resolution_1(rect: core::Rect) -> Result<String> {
+	unsafe { sys::cv_utils_testOverloadResolution_const_RectR(&rect) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+/// ## C++ default parameters
+/// * point: Point(42,24)
+pub fn test_overload_resolution(value: i32, point: core::Point) -> Result<String> {
+	unsafe { sys::cv_utils_testOverloadResolution_int_const_PointR(value, &point) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+pub fn test_raise_general_exception() -> Result<()> {
+	unsafe { sys::cv_utils_testRaiseGeneralException() }.into_result()
 }
 
 /// Converts VASurfaceID object to OutputArray.
@@ -10211,8 +10262,8 @@ impl Mat {
 	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
 	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
 	/// allocated with Mat::create . In the former case, the old content is de-referenced.
-	pub fn default() -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat() }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	pub fn default() -> core::Mat {
+		unsafe { sys::cv_Mat_Mat() }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// download data from GpuMat
@@ -11216,8 +11267,8 @@ pub trait MatSizeTrait {
 		unsafe { sys::cv_MatSize_setPropP_intX(self.as_raw_mut_MatSize(), val) }.into_result().expect("Infallible function failed: set_p")
 	}
 	
-	fn dims(&self) -> Result<i32> {
-		unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result()
+	fn dims(&self) -> i32 {
+		unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result().expect("Infallible function failed: dims")
 	}
 	
 	fn get(&self, i: i32) -> Result<i32> {
@@ -11228,8 +11279,8 @@ pub trait MatSizeTrait {
 		unsafe { sys::cv_MatSize_operator___int(self.as_raw_mut_MatSize(), i) }.into_result()
 	}
 	
-	fn to_ri32(&self) -> Result<&i32> {
-		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+	fn to_ri32(&self) -> &i32 {
+		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: to_ri32")
 	}
 	
 }
@@ -11261,8 +11312,8 @@ impl core::MatSizeTrait for MatSize {
 
 impl MatSize {
 	/// ////////////////////////// MatSize ////////////////////////////
-	pub fn new(_p: &mut i32) -> Result<core::MatSize> {
-		unsafe { sys::cv_MatSize_MatSize_intX(_p) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } )
+	pub fn new(_p: &mut i32) -> core::MatSize {
+		unsafe { sys::cv_MatSize_MatSize_intX(_p) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 }
@@ -11283,12 +11334,12 @@ pub trait MatStepTrait {
 		unsafe { sys::cv_MatStep_getPropBuf(self.as_raw_mut_MatStep()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: buf")
 	}
 	
-	fn get(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) }.into_result()
+	fn get(&self, i: i32) -> size_t {
+		unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) }.into_result().expect("Infallible function failed: get")
 	}
 	
-	fn get_mut(&mut self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) }.into_result()
+	fn get_mut(&mut self, i: i32) -> size_t {
+		unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) }.into_result().expect("Infallible function failed: get_mut")
 	}
 	
 	fn to_size_t(&self) -> Result<size_t> {
@@ -11324,12 +11375,12 @@ impl core::MatStepTrait for MatStep {
 
 impl MatStep {
 	/// ////////////////////////// MatStep ////////////////////////////
-	pub fn default() -> Result<core::MatStep> {
-		unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } )
+	pub fn default() -> core::MatStep {
+		unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
-	pub fn new(s: size_t) -> Result<core::MatStep> {
-		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } )
+	pub fn new(s: size_t) -> core::MatStep {
+		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 }
@@ -12184,6 +12235,8 @@ impl PCA {
 }
 
 /// Base class for parallel data processors
+/// 
+/// @ingroup core_parallel
 pub trait ParallelLoopBody {
 	fn as_raw_ParallelLoopBody(&self) -> *const c_void;
 	fn as_raw_mut_ParallelLoopBody(&mut self) -> *mut c_void;
@@ -14431,8 +14484,8 @@ impl UMat {
 	/// 
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
-	pub fn new(usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn new(usage_flags: core::UMatUsageFlags) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
 	/// constructs 2D matrix of the specified size and type
@@ -14478,8 +14531,8 @@ impl UMat {
 	}
 	
 	/// copy constructor
-	pub fn copy(m: &core::UMat) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn copy(m: &core::UMat) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
 	}
 	
 	/// creates a matrix header for a part of the bigger matrix
@@ -14536,8 +14589,8 @@ impl UMat {
 		unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn copy_mut(m: &mut core::UMat) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	pub fn copy_mut(m: &mut core::UMat) -> core::UMat {
+		unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 }
@@ -16249,6 +16302,60 @@ impl Event {
 	
 }
 
+pub trait GpuDataTrait {
+	fn as_raw_GpuData(&self) -> *const c_void;
+	fn as_raw_mut_GpuData(&mut self) -> *mut c_void;
+
+	fn data(&mut self) -> &mut u8 {
+		unsafe { sys::cv_cuda_GpuData_getPropData(self.as_raw_mut_GpuData()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data")
+	}
+	
+	fn set_data(&mut self, val: &mut u8) -> () {
+		unsafe { sys::cv_cuda_GpuData_setPropData_unsigned_charX(self.as_raw_mut_GpuData(), val) }.into_result().expect("Infallible function failed: set_data")
+	}
+	
+	fn size(&self) -> size_t {
+		unsafe { sys::cv_cuda_GpuData_getPropSize_const(self.as_raw_GpuData()) }.into_result().expect("Infallible function failed: size")
+	}
+	
+	fn set_size(&mut self, val: size_t) -> () {
+		unsafe { sys::cv_cuda_GpuData_setPropSize_size_t(self.as_raw_mut_GpuData(), val) }.into_result().expect("Infallible function failed: set_size")
+	}
+	
+}
+
+pub struct GpuData {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GpuData }
+
+impl Drop for GpuData {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GpuData_delete(instance: *mut c_void); }
+		unsafe { cv_GpuData_delete(self.as_raw_mut_GpuData()) };
+	}
+}
+
+impl GpuData {
+	#[inline] pub fn as_raw_GpuData(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_GpuData(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for GpuData {}
+
+impl core::GpuDataTrait for GpuData {
+	#[inline] fn as_raw_GpuData(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_GpuData(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GpuData {
+	pub fn new(_size: size_t) -> Result<core::GpuData> {
+		unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size) }.into_result().map(|r| unsafe { core::GpuData::opencv_from_extern(r) } )
+	}
+	
+}
+
 /// Base storage class for GPU memory with reference counting.
 /// 
 /// Its interface matches the Mat interface with the following limitations:
@@ -16814,6 +16921,291 @@ pub trait GpuMat_Allocator {
 	
 }
 
+pub trait GpuMatNDTrait {
+	fn as_raw_GpuMatND(&self) -> *const c_void;
+	fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void;
+
+	/// ! includes several bit-fields:
+	/// - the magic signature
+	/// - continuity flag
+	/// - depth
+	/// - number of channels
+	fn flags(&self) -> i32 {
+		unsafe { sys::cv_cuda_GpuMatND_getPropFlags_const(self.as_raw_GpuMatND()) }.into_result().expect("Infallible function failed: flags")
+	}
+	
+	/// ! includes several bit-fields:
+	/// - the magic signature
+	/// - continuity flag
+	/// - depth
+	/// - number of channels
+	fn set_flags(&mut self, val: i32) -> () {
+		unsafe { sys::cv_cuda_GpuMatND_setPropFlags_int(self.as_raw_mut_GpuMatND(), val) }.into_result().expect("Infallible function failed: set_flags")
+	}
+	
+	/// matrix dimensionality
+	fn dims(&self) -> i32 {
+		unsafe { sys::cv_cuda_GpuMatND_getPropDims_const(self.as_raw_GpuMatND()) }.into_result().expect("Infallible function failed: dims")
+	}
+	
+	/// matrix dimensionality
+	fn set_dims(&mut self, val: i32) -> () {
+		unsafe { sys::cv_cuda_GpuMatND_setPropDims_int(self.as_raw_mut_GpuMatND(), val) }.into_result().expect("Infallible function failed: set_dims")
+	}
+	
+	/// shape of this array
+	fn size(&mut self) -> core::Vector::<i32> {
+		unsafe { sys::cv_cuda_GpuMatND_getPropSize(self.as_raw_mut_GpuMatND()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: size")
+	}
+	
+	/// shape of this array
+	fn set_size(&mut self, mut val: core::GpuMatND_SizeArray) -> () {
+		unsafe { sys::cv_cuda_GpuMatND_setPropSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_size")
+	}
+	
+	/// ! step values
+	/// Their semantics is identical to the semantics of step for Mat.
+	fn step(&mut self) -> core::Vector::<size_t> {
+		unsafe { sys::cv_cuda_GpuMatND_getPropStep(self.as_raw_mut_GpuMatND()) }.into_result().map(|r| unsafe { core::Vector::<size_t>::opencv_from_extern(r) } ).expect("Infallible function failed: step")
+	}
+	
+	/// ! step values
+	/// Their semantics is identical to the semantics of step for Mat.
+	fn set_step(&mut self, mut val: core::GpuMatND_StepArray) -> () {
+		unsafe { sys::cv_cuda_GpuMatND_setPropStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) }.into_result().expect("Infallible function failed: set_step")
+	}
+	
+	/// Allocates GPU memory.
+	/// Suppose there is some GPU memory already allocated. In that case, this method may choose to reuse that
+	/// GPU memory under the specific condition: it must be of the same size and type, not externally allocated,
+	/// the GPU memory is continuous(i.e., isContinuous() is true), and is not a sub-matrix of another GpuMatND
+	/// (i.e., isSubmatrix() is false). In other words, this method guarantees that the GPU memory allocated by
+	/// this method is always continuous and is not a sub-region of another GpuMatND.
+	fn create(&mut self, mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<()> {
+		unsafe { sys::cv_cuda_GpuMatND_create_SizeArray_int(self.as_raw_mut_GpuMatND(), size.as_raw_mut_VectorOfi32(), typ) }.into_result()
+	}
+	
+	fn release(&mut self) -> Result<()> {
+		unsafe { sys::cv_cuda_GpuMatND_release(self.as_raw_mut_GpuMatND()) }.into_result()
+	}
+	
+	fn swap(&mut self, m: &mut core::GpuMatND) -> () {
+		unsafe { sys::cv_cuda_GpuMatND_swap_GpuMatNDR(self.as_raw_mut_GpuMatND(), m.as_raw_mut_GpuMatND()) }.into_result().expect("Infallible function failed: swap")
+	}
+	
+	/// Creates a full copy of the array and the underlying data.
+	/// The method creates a full copy of the array. It mimics the behavior of Mat::clone(), i.e.
+	/// the original step is not taken into account. So, the array copy is a continuous array
+	/// occupying total()\*elemSize() bytes.
+	fn try_clone(&self) -> Result<core::GpuMatND> {
+		unsafe { sys::cv_cuda_GpuMatND_clone_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+	}
+	
+	/// Creates a full copy of the array and the underlying data.
+	/// The method creates a full copy of the array. It mimics the behavior of Mat::clone(), i.e.
+	/// the original step is not taken into account. So, the array copy is a continuous array
+	/// occupying total()\*elemSize() bytes.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	///    This overload is non-blocking, so it may return even if the copy operation is not finished.
+	fn clone_1(&self, stream: &mut core::Stream) -> Result<core::GpuMatND> {
+		unsafe { sys::cv_cuda_GpuMatND_clone_const_StreamR(self.as_raw_GpuMatND(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+	}
+	
+	/// Creates a GpuMat header for a 2D plane part of an n-dim matrix.
+	/// 
+	/// Note: The returned GpuMat is constructed with the constructor for user-allocated data.
+	/// That is, It does not perform reference counting.
+	/// 
+	/// Note: This function does not increment this GpuMatND's reference counter.
+	fn create_gpu_mat_header(&self, mut idx: core::GpuMatND_IndexArray, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::GpuMat> {
+		unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+	}
+	
+	/// Creates a GpuMat header for a 2D plane part of an n-dim matrix.
+	/// 
+	/// Note: The returned GpuMat is constructed with the constructor for user-allocated data.
+	/// That is, It does not perform reference counting.
+	/// 
+	/// Note: This function does not increment this GpuMatND's reference counter.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	///    Creates a GpuMat header if this GpuMatND is effectively 2D.
+	///     
+	/// Note: The returned GpuMat is constructed with the constructor for user-allocated data.
+	///    That is, It does not perform reference counting.
+	///     
+	/// Note: This function does not increment this GpuMatND's reference counter.
+	fn create_gpu_mat_header_1(&self) -> Result<core::GpuMat> {
+		unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+	}
+	
+	/// Extracts a 2D plane part of an n-dim matrix if this GpuMatND is effectively 2D.
+	/// It differs from createGpuMatHeader() in that it clones a part of this GpuMatND.
+	/// 
+	/// Note: This operator does not increment this GpuMatND's reference counter;
+	fn to_gpu_mat(&self) -> Result<core::GpuMat> {
+		unsafe { sys::cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+	}
+	
+	fn upload(&mut self, src: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray()) }.into_result()
+	}
+	
+	fn upload_1(&mut self, src: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	}
+	
+	fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn download_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		output_array_arg!(dst);
+		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	}
+	
+	/// returns true iff the GpuMatND data is continuous
+	/// (i.e. when there are no gaps between successive rows)
+	fn is_continuous(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_GpuMatND_isContinuous_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns true if the matrix is a sub-matrix of another matrix
+	fn is_submatrix(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_GpuMatND_isSubmatrix_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns element size in bytes
+	fn elem_size(&self) -> Result<size_t> {
+		unsafe { sys::cv_cuda_GpuMatND_elemSize_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns the size of element channel in bytes
+	fn elem_size1(&self) -> Result<size_t> {
+		unsafe { sys::cv_cuda_GpuMatND_elemSize1_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns true if data is null
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_GpuMatND_empty_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns true if not empty and points to external(user-allocated) gpu memory
+	fn external(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_GpuMatND_external_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns pointer to the first byte of the GPU memory
+	fn get_device_ptr(&self) -> Result<&mut u8> {
+		unsafe { sys::cv_cuda_GpuMatND_getDevicePtr_const(self.as_raw_GpuMatND()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+	}
+	
+	/// returns the total number of array elements
+	fn total(&self) -> Result<size_t> {
+		unsafe { sys::cv_cuda_GpuMatND_total_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns the size of underlying memory in bytes
+	fn total_mem_size(&self) -> Result<size_t> {
+		unsafe { sys::cv_cuda_GpuMatND_totalMemSize_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+	/// returns element type
+	fn typ(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_GpuMatND_type_const(self.as_raw_GpuMatND()) }.into_result()
+	}
+	
+}
+
+pub struct GpuMatND {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GpuMatND }
+
+impl Drop for GpuMatND {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GpuMatND_delete(instance: *mut c_void); }
+		unsafe { cv_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
+	}
+}
+
+impl GpuMatND {
+	#[inline] pub fn as_raw_GpuMatND(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for GpuMatND {}
+
+impl core::GpuMatNDTrait for GpuMatND {
+	#[inline] fn as_raw_GpuMatND(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GpuMatND {
+	/// default constructor
+	pub fn default() -> Result<core::GpuMatND> {
+		unsafe { sys::cv_cuda_GpuMatND_GpuMatND() }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+	}
+	
+	/// default constructor
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * size: Array of integers specifying an n-dimensional array shape.
+	/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+	pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
+		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+	}
+	
+	/// default constructor
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * size: Array of integers specifying an n-dimensional array shape.
+	/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+	/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+	///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+	///    data, which means that no data is copied. This operation is very efficient and can be used to
+	///    process external data using OpenCV functions. The external data is not automatically deallocated, so
+	///    you should take care of it.
+	/// * step: Array of _size.size()-1 steps in case of a multi-dimensional array (the last step is always
+	///    set to the element size). If not specified, the matrix is assumed to be continuous.
+	/// 
+	/// ## C++ default parameters
+	/// * step: StepArray()
+	pub fn new_1(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void, mut step: core::GpuMatND_StepArray) -> Result<core::GpuMatND> {
+		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy(unnamed: &core::GpuMatND) -> core::GpuMatND {
+		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+	}
+	
+	pub fn copy_mut(unnamed: &mut core::GpuMatND) -> core::GpuMatND {
+		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_GpuMatNDR(unnamed.as_raw_mut_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+	}
+	
+}
+
+impl Clone for GpuMatND {
+	#[inline(always)]
+	/// Calls try_clone() and panics if that fails
+	fn clone(&self) -> Self {
+		self.try_clone().expect("Cannot clone GpuMatND")
+	}
+}
+
 /// Class with reference counting wrapping special memory type allocation functions from CUDA.
 /// 
 /// Its interface is also Mat-like but with additional memory type parameters.
@@ -17203,6 +17595,21 @@ impl Stream {
 	/// creates a new asynchronous stream with custom allocator
 	pub fn new(allocator: &core::Ptr::<dyn core::GpuMat_Allocator>) -> Result<core::Stream> {
 		unsafe { sys::cv_cuda_Stream_Stream_const_Ptr_Allocator_R(allocator.as_raw_PtrOfGpuMat_Allocator()) }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
+	}
+	
+	/// creates a new Stream using the cudaFlags argument to determine the behaviors of the stream
+	/// 
+	/// 
+	/// Note: The cudaFlags parameter is passed to the underlying api cudaStreamCreateWithFlags() and
+	/// supports the same parameter values.
+	/// ```ignore
+	///    // creates an OpenCV cuda::Stream that manages an asynchronous, non-blocking,
+	///    // non-default CUDA stream
+	///    cv::cuda::Stream cvStream(cudaStreamNonBlocking);
+	/// ```
+	/// 
+	pub fn new_1(cuda_flags: size_t) -> Result<core::Stream> {
+		unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags) }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
 	}
 	
 	/// return Stream object for default CUDA stream
@@ -17639,8 +18046,8 @@ impl core::ContextTrait for Context {
 }
 
 impl Context {
-	pub fn default() -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	pub fn default() -> core::Context {
+		unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new_with_type(dtype: i32) -> Result<core::Context> {
@@ -17649,6 +18056,10 @@ impl Context {
 	
 	pub fn copy(c: &core::Context) -> Result<core::Context> {
 		unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(c: &mut core::Context) -> core::Context {
+		unsafe { sys::cv_ocl_Context_Context_ContextR(c.as_raw_mut_Context()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	/// ## C++ default parameters
@@ -18012,8 +18423,8 @@ impl core::DeviceTrait for Device {
 }
 
 impl Device {
-	pub fn default() -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+	pub fn default() -> core::Device {
+		unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(d: *mut c_void) -> Result<core::Device> {
@@ -18022,6 +18433,10 @@ impl Device {
 	
 	pub fn copy(d: &core::Device) -> Result<core::Device> {
 		unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(d: &mut core::Device) -> core::Device {
+		unsafe { sys::cv_ocl_Device_Device_DeviceR(d.as_raw_mut_Device()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	pub fn get_default() -> Result<core::Device> {
@@ -18072,8 +18487,8 @@ impl core::Image2DTrait for Image2D {
 }
 
 impl Image2D {
-	pub fn default() -> Result<core::Image2D> {
-		unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } )
+	pub fn default() -> core::Image2D {
+		unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// ## Parameters
@@ -18091,6 +18506,10 @@ impl Image2D {
 	
 	pub fn copy(i: &core::Image2D) -> Result<core::Image2D> {
 		unsafe { sys::cv_ocl_Image2D_Image2D_const_Image2DR(i.as_raw_Image2D()) }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(unnamed: &mut core::Image2D) -> core::Image2D {
+		unsafe { sys::cv_ocl_Image2D_Image2D_Image2DR(unnamed.as_raw_mut_Image2D()) }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	/// Indicates if creating an aliased image should succeed.
@@ -18228,8 +18647,8 @@ impl core::KernelTrait for Kernel {
 }
 
 impl Kernel {
-	pub fn default() -> Result<core::Kernel> {
-		unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } )
+	pub fn default() -> core::Kernel {
+		unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(kname: &str, prog: &core::Program) -> Result<core::Kernel> {
@@ -18251,6 +18670,10 @@ impl Kernel {
 	
 	pub fn copy(k: &core::Kernel) -> Result<core::Kernel> {
 		unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel()) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(k: &mut core::Kernel) -> core::Kernel {
+		unsafe { sys::cv_ocl_Kernel_Kernel_KernelR(k.as_raw_mut_Kernel()) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 }
@@ -18340,8 +18763,8 @@ impl KernelArg {
 		unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
 	}
 	
-	pub fn default() -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+	pub fn default() -> core::KernelArg {
+		unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn local(local_mem_size: size_t) -> Result<core::KernelArg> {
@@ -18500,16 +18923,16 @@ impl core::OpenCLExecutionContextTrait for OpenCLExecutionContext {
 }
 
 impl OpenCLExecutionContext {
-	pub fn default() -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	pub fn default() -> core::OpenCLExecutionContext {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
-	pub fn copy(unnamed: &core::OpenCLExecutionContext) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	pub fn copy(unnamed: &core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
 	}
 	
-	pub fn copy_mut(unnamed: &mut core::OpenCLExecutionContext) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed.as_raw_mut_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+	pub fn copy_mut(unnamed: &mut core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
+		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed.as_raw_mut_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	/// Get OpenCL execution context of current thread.
@@ -18610,12 +19033,16 @@ impl core::PlatformTrait for Platform {
 }
 
 impl Platform {
-	pub fn default() -> Result<core::Platform> {
-		unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
+	pub fn default() -> core::Platform {
+		unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn copy(p: &core::Platform) -> Result<core::Platform> {
 		unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform()) }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(p: &mut core::Platform) -> core::Platform {
+		unsafe { sys::cv_ocl_Platform_Platform_PlatformR(p.as_raw_mut_Platform()) }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	/// @deprecated
@@ -18690,8 +19117,8 @@ impl core::PlatformInfoTrait for PlatformInfo {
 }
 
 impl PlatformInfo {
-	pub fn default() -> Result<core::PlatformInfo> {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
+	pub fn default() -> core::PlatformInfo {
+		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// ## Parameters
@@ -18702,6 +19129,10 @@ impl PlatformInfo {
 	
 	pub fn copy(i: &core::PlatformInfo) -> Result<core::PlatformInfo> {
 		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(i: &mut core::PlatformInfo) -> core::PlatformInfo {
+		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoR(i.as_raw_mut_PlatformInfo()) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 }
@@ -18787,8 +19218,8 @@ impl core::ProgramTrait for Program {
 }
 
 impl Program {
-	pub fn default() -> Result<core::Program> {
-		unsafe { sys::cv_ocl_Program_Program() }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } )
+	pub fn default() -> core::Program {
+		unsafe { sys::cv_ocl_Program_Program() }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(src: &core::ProgramSource, buildflags: &str, errmsg: &mut String) -> Result<core::Program> {
@@ -18801,6 +19232,10 @@ impl Program {
 	
 	pub fn copy(prog: &core::Program) -> Result<core::Program> {
 		unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program()) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(prog: &mut core::Program) -> core::Program {
+		unsafe { sys::cv_ocl_Program_Program_ProgramR(prog.as_raw_mut_Program()) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
@@ -18854,8 +19289,8 @@ impl core::ProgramSourceTrait for ProgramSource {
 }
 
 impl ProgramSource {
-	pub fn default() -> Result<core::ProgramSource> {
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+	pub fn default() -> core::ProgramSource {
+		unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	pub fn new(module: &str, name: &str, code_str: &str, code_hash: &str) -> Result<core::ProgramSource> {
@@ -18873,6 +19308,10 @@ impl ProgramSource {
 	
 	pub fn copy(prog: &core::ProgramSource) -> Result<core::ProgramSource> {
 		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceR(prog.as_raw_ProgramSource()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(prog: &mut core::ProgramSource) -> core::ProgramSource {
+		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_ProgramSourceR(prog.as_raw_mut_ProgramSource()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	/// Describe OpenCL program binary.
@@ -18990,8 +19429,8 @@ impl core::QueueTrait for Queue {
 }
 
 impl Queue {
-	pub fn default() -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	pub fn default() -> core::Queue {
+		unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } ).expect("Infallible function failed: default")
 	}
 	
 	/// ## C++ default parameters
@@ -19002,6 +19441,10 @@ impl Queue {
 	
 	pub fn copy(q: &core::Queue) -> Result<core::Queue> {
 		unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+	}
+	
+	pub fn copy_mut(q: &mut core::Queue) -> core::Queue {
+		unsafe { sys::cv_ocl_Queue_Queue_QueueR(q.as_raw_mut_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
 	pub fn get_default() -> Result<core::Queue> {

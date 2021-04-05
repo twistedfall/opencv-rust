@@ -18,11 +18,13 @@
 //!   A network training is in principle not supported.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::DataAugmentationLayerTrait, super::CorrelationLayerTrait, super::AccumLayerTrait, super::FlowWarpLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
+	pub use { super::DictValueTrait, super::DictTrait, super::LayerParamsTrait, super::BackendNodeTrait, super::BackendWrapper, super::LayerTrait, super::NetTrait, super::LayerFactoryTrait, super::BlankLayerTrait, super::ConstLayerTrait, super::LSTMLayer, super::RNNLayer, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTrait, super::DeconvolutionLayerTrait, super::LRNLayerTrait, super::PoolingLayerTrait, super::SoftmaxLayerTrait, super::InnerProductLayerTrait, super::MVNLayerTrait, super::ReshapeLayerTrait, super::FlattenLayerTrait, super::ConcatLayerTrait, super::SplitLayerTrait, super::SliceLayerTrait, super::PermuteLayerTrait, super::ShuffleChannelLayerTrait, super::PaddingLayerTrait, super::ActivationLayer, super::ReLULayer, super::ReLU6Layer, super::ChannelsPReLULayer, super::ELULayer, super::TanHLayer, super::SwishLayer, super::MishLayer, super::SigmoidLayer, super::BNLLLayer, super::AbsLayer, super::PowerLayer, super::ExpLayer, super::CropLayerTrait, super::EltwiseLayerTrait, super::BatchNormLayer, super::MaxUnpoolLayerTrait, super::ScaleLayerTrait, super::ShiftLayerTrait, super::DataAugmentationLayerTrait, super::CorrelationLayerTrait, super::AccumLayerTrait, super::FlowWarpLayerTrait, super::PriorBoxLayerTrait, super::ReorgLayerTrait, super::RegionLayerTrait, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTrait, super::ResizeLayerTrait, super::InterpLayerTrait, super::ProposalLayerTrait, super::CropAndResizeLayerTrait, super::_RangeTrait };
 }
 
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NN_BUILDER_API: &str = "NN_BUILDER";
+pub const CV_DNN_INFERENCE_ENGINE_CPU_TYPE_ARM_COMPUTE: &str = "ARM_COMPUTE";
+pub const CV_DNN_INFERENCE_ENGINE_CPU_TYPE_X86: &str = "X86";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &str = "Myriad2";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &str = "MyriadX";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_UNSPECIFIED: &str = "";
@@ -216,18 +218,6 @@ pub fn blob_from_images(images: &dyn core::ToInputArray, scalefactor: f64, size:
 	unsafe { sys::cv_dnn_blobFromImages_const__InputArrayR_double_Size_const_ScalarR_bool_bool_int(images.as_raw__InputArray(), scalefactor, size.opencv_as_extern(), &mean, swap_rb, crop, ddepth) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
-pub fn clamp_2(r: &core::Range, axis_size: i32) -> Result<core::Range> {
-	unsafe { sys::cv_dnn_clamp_const_RangeR_int(r.as_raw_Range(), axis_size) }.into_result().map(|r| unsafe { core::Range::opencv_from_extern(r) } )
-}
-
-pub fn clamp_1(ax: i32, shape: &crate::dnn::MatShape) -> Result<i32> {
-	unsafe { sys::cv_dnn_clamp_int_const_MatShapeR(ax, shape.as_raw_VectorOfi32()) }.into_result()
-}
-
-pub fn clamp(ax: i32, dims: i32) -> Result<i32> {
-	unsafe { sys::cv_dnn_clamp_int_int(ax, dims) }.into_result()
-}
-
 pub fn concat(a: &crate::dnn::MatShape, b: &crate::dnn::MatShape) -> Result<core::Vector::<i32>> {
 	unsafe { sys::cv_dnn_concat_const_MatShapeR_const_MatShapeR(a.as_raw_VectorOfi32(), b.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
 }
@@ -243,6 +233,13 @@ pub fn get_available_targets(be: crate::dnn::Backend) -> Result<core::Vector::<c
 /// Default value is controlled through `OPENCV_DNN_BACKEND_INFERENCE_ENGINE_TYPE` runtime parameter (environment variable).
 pub fn get_inference_engine_backend_type() -> Result<String> {
 	unsafe { sys::cv_dnn_getInferenceEngineBackendType() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
+/// Returns Inference Engine CPU type.
+/// 
+/// Specify OpenVINO plugin: CPU or ARM.
+pub fn get_inference_engine_cpu_type() -> Result<String> {
+	unsafe { sys::cv_dnn_getInferenceEngineCPUType() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
 /// Returns Inference Engine VPU type.
@@ -1931,6 +1928,42 @@ impl EltwiseLayer {
 	
 }
 
+pub trait ExpLayer: crate::dnn::ActivationLayer {
+	fn as_raw_ExpLayer(&self) -> *const c_void;
+	fn as_raw_mut_ExpLayer(&mut self) -> *mut c_void;
+
+	fn base(&self) -> f32 {
+		unsafe { sys::cv_dnn_ExpLayer_getPropBase_const(self.as_raw_ExpLayer()) }.into_result().expect("Infallible function failed: base")
+	}
+	
+	fn set_base(&mut self, val: f32) -> () {
+		unsafe { sys::cv_dnn_ExpLayer_setPropBase_float(self.as_raw_mut_ExpLayer(), val) }.into_result().expect("Infallible function failed: set_base")
+	}
+	
+	fn scale(&self) -> f32 {
+		unsafe { sys::cv_dnn_ExpLayer_getPropScale_const(self.as_raw_ExpLayer()) }.into_result().expect("Infallible function failed: scale")
+	}
+	
+	fn set_scale(&mut self, val: f32) -> () {
+		unsafe { sys::cv_dnn_ExpLayer_setPropScale_float(self.as_raw_mut_ExpLayer(), val) }.into_result().expect("Infallible function failed: set_scale")
+	}
+	
+	fn shift(&self) -> f32 {
+		unsafe { sys::cv_dnn_ExpLayer_getPropShift_const(self.as_raw_ExpLayer()) }.into_result().expect("Infallible function failed: shift")
+	}
+	
+	fn set_shift(&mut self, val: f32) -> () {
+		unsafe { sys::cv_dnn_ExpLayer_setPropShift_float(self.as_raw_mut_ExpLayer(), val) }.into_result().expect("Infallible function failed: set_shift")
+	}
+	
+}
+
+impl dyn ExpLayer + '_ {
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<dyn crate::dnn::ExpLayer>> {
+		unsafe { sys::cv_dnn_ExpLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dnn::ExpLayer>::opencv_from_extern(r) } )
+	}
+	
+}
 pub trait FlattenLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_FlattenLayer(&self) -> *const c_void;
 	fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void;
@@ -4625,6 +4658,14 @@ pub trait SliceLayerTrait: crate::dnn::LayerTrait {
 	/// Inner vector has slice ranges for the first number of input dimensions.
 	fn set_slice_ranges(&mut self, mut val: core::Vector::<core::Vector::<core::Range>>) -> () {
 		unsafe { sys::cv_dnn_SliceLayer_setPropSliceRanges_vector_vector_Range__(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfRange()) }.into_result().expect("Infallible function failed: set_slice_ranges")
+	}
+	
+	fn slice_steps(&mut self) -> core::Vector::<core::Vector::<i32>> {
+		unsafe { sys::cv_dnn_SliceLayer_getPropSliceSteps(self.as_raw_mut_SliceLayer()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector::<i32>>::opencv_from_extern(r) } ).expect("Infallible function failed: slice_steps")
+	}
+	
+	fn set_slice_steps(&mut self, mut val: core::Vector::<core::Vector::<i32>>) -> () {
+		unsafe { sys::cv_dnn_SliceLayer_setPropSliceSteps_vector_vector_int__(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfi32()) }.into_result().expect("Infallible function failed: set_slice_steps")
 	}
 	
 	fn axis(&self) -> i32 {

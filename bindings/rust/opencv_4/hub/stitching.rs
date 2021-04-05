@@ -1233,6 +1233,36 @@ pub trait StitcherTrait {
 		unsafe { sys::cv_Stitcher_estimateTransform_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), masks.as_raw__InputArray()) }.into_result()
 	}
 	
+	/// These function restors camera rotation and camera intrinsics of each camera
+	/// that can be got with @ref Stitcher::cameras call
+	/// 
+	/// ## Parameters
+	/// * images: Input images.
+	/// * cameras: Estimated rotation of cameras for each of the input images.
+	/// * component: Indices (0-based) of images constituting the final panorama (optional).
+	/// ## Returns
+	/// Status code.
+	fn set_transform(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector::<crate::stitching::Detail_CameraParams>, component: &core::Vector::<i32>) -> Result<crate::stitching::Stitcher_Status> {
+		input_array_arg!(images);
+		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R_const_vector_int_R(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), component.as_raw_VectorOfi32()) }.into_result()
+	}
+	
+	/// These function restors camera rotation and camera intrinsics of each camera
+	/// that can be got with @ref Stitcher::cameras call
+	/// 
+	/// ## Parameters
+	/// * images: Input images.
+	/// * cameras: Estimated rotation of cameras for each of the input images.
+	/// * component: Indices (0-based) of images constituting the final panorama (optional).
+	/// ## Returns
+	/// Status code.
+	/// 
+	/// ## Overloaded parameters
+	fn set_transform_1(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector::<crate::stitching::Detail_CameraParams>) -> Result<crate::stitching::Stitcher_Status> {
+		input_array_arg!(images);
+		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams()) }.into_result()
+	}
+	
 	/// These functions try to compose the given images (or images stored internally from the other function
 	/// calls) into the final pano under the assumption that the image transformations were estimated
 	/// before.

@@ -19,6 +19,7 @@ template struct Result<cv::Subdiv2D*>;
 template struct Result<cv::Vec<float, 4>>;
 template struct Result<cv::Vec<float, 6>>;
 template struct Result<cv::Vec<int, 4>>;
+template struct Result<cv::segmentation::IntelligentScissorsMB*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;

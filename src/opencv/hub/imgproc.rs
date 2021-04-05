@@ -145,13 +145,14 @@
 //!    # Motion Analysis and Object Tracking
 //!    # Feature Detection
 //!    # Object Detection
+//!    # Image Segmentation
 //!    # C API
 //!    # Hardware Acceleration Layer
 //!        # Functions
 //!        # Interface
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::GeneralizedHough, super::GeneralizedHoughBallard, super::GeneralizedHoughGuil, super::CLAHE, super::Subdiv2DTrait, super::LineSegmentDetector, super::LineIteratorTrait };
+	pub use { super::GeneralizedHough, super::GeneralizedHoughBallard, super::GeneralizedHoughGuil, super::CLAHE, super::Subdiv2DTrait, super::LineSegmentDetector, super::LineIteratorTrait, super::IntelligentScissorsMBTrait };
 }
 
 /// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is a weighted sum (cross-correlation with a Gaussian
@@ -161,11 +162,19 @@ pub mod prelude {
 pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 /// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a mean of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%0A%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) minus C
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
-/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
+pub const CCL_BBDT: i32 = 4;
+/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity.
+pub const CCL_BOLELLI: i32 = 2;
+/// BBDT [Grana2010](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 pub const CCL_DEFAULT: i32 = -1;
-/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// BBDT [Grana2010](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 pub const CCL_GRANA: i32 = 1;
-/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
+pub const CCL_SAUF: i32 = 3;
+/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
+pub const CCL_SPAGHETTI: i32 = 5;
+/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 pub const CCL_WU: i32 = 0;
 /// The total area (in pixels) of the connected component
 pub const CC_STAT_AREA: i32 = 4;
@@ -244,11 +253,13 @@ pub const COLOR_BGR2BGR565: i32 = 12;
 pub const COLOR_BGR2BGRA: i32 = 0;
 /// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 pub const COLOR_BGR2GRAY: i32 = 6;
-/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 pub const COLOR_BGR2HLS: i32 = 52;
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 pub const COLOR_BGR2HLS_FULL: i32 = 68;
-/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 pub const COLOR_BGR2HSV: i32 = 40;
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 pub const COLOR_BGR2HSV_FULL: i32 = 66;
 /// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
 pub const COLOR_BGR2Lab: i32 = 44;
@@ -374,12 +385,15 @@ pub const COLOR_GRAY2BGR565: i32 = 20;
 pub const COLOR_GRAY2BGRA: i32 = 9;
 pub const COLOR_GRAY2RGB: i32 = 8;
 pub const COLOR_GRAY2RGBA: i32 = 9;
+/// backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
 pub const COLOR_HLS2BGR: i32 = 60;
+/// backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
 pub const COLOR_HLS2BGR_FULL: i32 = 72;
 pub const COLOR_HLS2RGB: i32 = 61;
 pub const COLOR_HLS2RGB_FULL: i32 = 73;
-/// backward conversions to RGB/BGR
+/// backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
 pub const COLOR_HSV2BGR: i32 = 54;
+/// backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
 pub const COLOR_HSV2BGR_FULL: i32 = 70;
 pub const COLOR_HSV2RGB: i32 = 55;
 pub const COLOR_HSV2RGB_FULL: i32 = 71;
@@ -951,7 +965,7 @@ pub enum ColorConversionCodes {
 	COLOR_RGB2YCrCb = 37,
 	COLOR_YCrCb2BGR = 38,
 	COLOR_YCrCb2RGB = 39,
-	/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 	COLOR_BGR2HSV = 40,
 	COLOR_RGB2HSV = 41,
 	/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
@@ -960,24 +974,29 @@ pub enum ColorConversionCodes {
 	/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
 	COLOR_BGR2Luv = 50,
 	COLOR_RGB2Luv = 51,
-	/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 	COLOR_BGR2HLS = 52,
 	COLOR_RGB2HLS = 53,
-	/// backward conversions to RGB/BGR
+	/// backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
 	COLOR_HSV2BGR = 54,
 	COLOR_HSV2RGB = 55,
 	COLOR_Lab2BGR = 56,
 	COLOR_Lab2RGB = 57,
 	COLOR_Luv2BGR = 58,
 	COLOR_Luv2RGB = 59,
+	/// backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
 	COLOR_HLS2BGR = 60,
 	COLOR_HLS2RGB = 61,
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
 	COLOR_BGR2HSV_FULL = 66,
 	COLOR_RGB2HSV_FULL = 67,
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
 	COLOR_BGR2HLS_FULL = 68,
 	COLOR_RGB2HLS_FULL = 69,
+	/// backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
 	COLOR_HSV2BGR_FULL = 70,
 	COLOR_HSV2RGB_FULL = 71,
+	/// backward conversions HLS to RGB/BGR with H range 0..255 if 8 bit image
 	COLOR_HLS2BGR_FULL = 72,
 	COLOR_HLS2RGB_FULL = 73,
 	COLOR_LBGR2Lab = 74,
@@ -1297,12 +1316,20 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
-	/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-	CCL_WU = 0,
-	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+	/// BBDT [Grana2010](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	CCL_DEFAULT = -1,
-	/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+	/// SAUF [Wu2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	CCL_WU = 0,
+	/// BBDT [Grana2010](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	CCL_GRANA = 1,
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity.
+	CCL_BOLELLI = 2,
+	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
+	CCL_SAUF = 3,
+	/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
+	CCL_BBDT = 4,
+	/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
+	CCL_SPAGHETTI = 5,
 }
 
 opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
@@ -4659,6 +4686,45 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 	unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_as_extern(), font_face, font_scale, thickness, base_line) }.into_result()
 }
 
+/// Same as above, but returns also quality measure of the detected corners.
+/// 
+/// ## Parameters
+/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
+/// * corners: Output vector of detected corners.
+/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
+/// the strongest of them is returned. `maxCorners <= 0` implies that no limit on the maximum is set
+/// and all detected corners are returned.
+/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
+/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
+/// (see #cornerMinEigenVal ) or the Harris function response (see #cornerHarris ). The corners with the
+/// quality measure less than the product are rejected. For example, if the best corner has the
+/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
+/// less than 15 are rejected.
+/// * minDistance: Minimum possible Euclidean distance between the returned corners.
+/// * mask: Region of interest. If the image is not empty (it needs to have the type
+/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
+/// * cornersQuality: Output vector of quality measure of the detected corners.
+/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
+/// pixel neighborhood. See cornerEigenValsAndVecs .
+/// * gradientSize: Aperture parameter for the Sobel operator used for derivatives computation.
+/// See cornerEigenValsAndVecs .
+/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see #cornerHarris)
+/// or #cornerMinEigenVal.
+/// * k: Free parameter of the Harris detector.
+/// 
+/// ## C++ default parameters
+/// * block_size: 3
+/// * gradient_size: 3
+/// * use_harris_detector: false
+/// * k: 0.04
+pub fn good_features_to_track_with_quality(image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &dyn core::ToInputArray, corners_quality: &mut dyn core::ToOutputArray, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
+	input_array_arg!(image);
+	output_array_arg!(corners);
+	input_array_arg!(mask);
+	output_array_arg!(corners_quality);
+	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), block_size, gradient_size, use_harris_detector, k) }.into_result()
+}
+
 /// Determines strong corners on an image.
 /// 
 /// The function finds the most prominent corners in the image or in the specified image region, as
@@ -5952,8 +6018,6 @@ pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// size as image .
 /// ## See also
 /// findContours
-/// 
-/// @ingroup imgproc_misc
 pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInputOutputArray) -> Result<()> {
 	input_array_arg!(image);
 	input_output_array_arg!(markers);
@@ -6863,6 +6927,189 @@ impl Subdiv2D {
 	///    error is raised.
 	pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
 		unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(rect.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(r) } )
+	}
+	
+}
+
+/// Intelligent Scissors image segmentation
+/// 
+/// This class is used to find the path (contour) between two points
+/// which can be used for image segmentation.
+/// 
+/// Usage example:
+/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+/// 
+/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
+/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
+/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+pub trait IntelligentScissorsMBTrait {
+	fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
+	fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void;
+
+	/// Specify weights of feature functions
+	/// 
+	/// Consider keeping weights normalized (sum of weights equals to 1.0)
+	/// Discrete dynamic programming (DP) goal is minimization of costs between pixels.
+	/// 
+	/// ## Parameters
+	/// * weight_non_edge: Specify cost of non-edge pixels (default: 0.43f)
+	/// * weight_gradient_direction: Specify cost of gradient direction function (default: 0.43f)
+	/// * weight_gradient_magnitude: Specify cost of gradient magnitude function (default: 0.14f)
+	fn set_weights(&mut self, weight_non_edge: f32, weight_gradient_direction: f32, weight_gradient_magnitude: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_setWeights_float_float_float(self.as_raw_mut_IntelligentScissorsMB(), weight_non_edge, weight_gradient_direction, weight_gradient_magnitude) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Specify gradient magnitude max value threshold
+	/// 
+	/// Zero limit value is used to disable gradient magnitude thresholding (default behavior, as described in original article).
+	/// Otherwize pixels with `gradient magnitude >= threshold` have zero cost.
+	/// 
+	/// 
+	/// Note: Thresholding should be used for images with irregular regions (to avoid stuck on parameters from high-contract areas, like embedded logos).
+	/// 
+	/// ## Parameters
+	/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
+	/// 
+	/// ## C++ default parameters
+	/// * gradient_magnitude_threshold_max: 0.0f
+	fn set_gradient_magnitude_max_limit(&mut self, gradient_magnitude_threshold_max: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_threshold_max) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Switch to "Laplacian Zero-Crossing" edge feature extractor and specify its parameters
+	/// 
+	/// This feature extractor is used by default according to article.
+	/// 
+	/// Implementation has additional filtering for regions with low-amplitude noise.
+	/// This filtering is enabled through parameter of minimal gradient amplitude (use some small value 4, 8, 16).
+	/// 
+	/// 
+	/// Note: Current implementation of this feature extractor is based on processing of grayscale images (color image is converted to grayscale image first).
+	/// 
+	/// 
+	/// Note: Canny edge detector is a bit slower, but provides better results (especially on color images): use setEdgeFeatureCannyParameters().
+	/// 
+	/// ## Parameters
+	/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
+	/// 
+	/// ## C++ default parameters
+	/// * gradient_magnitude_min_value: 0.0f
+	fn set_edge_feature_zero_crossing_parameters(&mut self, gradient_magnitude_min_value: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_min_value) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Switch edge feature extractor to use Canny edge detector
+	/// 
+	/// 
+	/// Note: "Laplacian Zero-Crossing" feature extractor is used by default (following to original article)
+	/// ## See also
+	/// Canny
+	/// 
+	/// ## C++ default parameters
+	/// * aperture_size: 3
+	/// * l2gradient: false
+	fn set_edge_feature_canny_parameters(&mut self, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double_int_bool(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, aperture_size, l2gradient) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Specify input image and extract image features
+	/// 
+	/// ## Parameters
+	/// * image: input image. Type is #CV_8UC1 / #CV_8UC3
+	fn apply_image(&mut self, image: &dyn core::ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		input_array_arg!(image);
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), image.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Specify custom features of imput image
+	/// 
+	/// Customized advanced variant of applyImage() call.
+	/// 
+	/// ## Parameters
+	/// * non_edge: Specify cost of non-edge pixels. Type is CV_8UC1. Expected values are `{0, 1}`.
+	/// * gradient_direction: Specify gradient direction feature. Type is CV_32FC2. Values are expected to be normalized: `x^2 + y^2 == 1`
+	/// * gradient_magnitude: Specify cost of gradient magnitude function: Type is CV_32FC1. Values should be in range `[0, 1]`.
+	/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
+	/// 
+	/// ## C++ default parameters
+	/// * image: noArray()
+	fn apply_image_features(&mut self, non_edge: &dyn core::ToInputArray, gradient_direction: &dyn core::ToInputArray, gradient_magnitude: &dyn core::ToInputArray, image: &dyn core::ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
+		input_array_arg!(non_edge);
+		input_array_arg!(gradient_direction);
+		input_array_arg!(gradient_magnitude);
+		input_array_arg!(image);
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), image.as_raw__InputArray()) }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
+	}
+	
+	/// Prepares a map of optimal paths for the given source point on the image
+	/// 
+	/// 
+	/// Note: applyImage() / applyImageFeatures() must be called before this call
+	/// 
+	/// ## Parameters
+	/// * sourcePt: The source point used to find the paths
+	fn build_map(&mut self, source_pt: core::Point) -> Result<()> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(self.as_raw_mut_IntelligentScissorsMB(), &source_pt) }.into_result()
+	}
+	
+	/// Extracts optimal contour for the given target point on the image
+	/// 
+	/// 
+	/// Note: buildMap() must be called before this call
+	/// 
+	/// ## Parameters
+	/// * targetPt: The target point
+	/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
+	/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
+	/// 
+	/// ## C++ default parameters
+	/// * backward: false
+	fn get_contour(&self, target_pt: core::Point, contour: &mut dyn core::ToOutputArray, backward: bool) -> Result<()> {
+		output_array_arg!(contour);
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward) }.into_result()
+	}
+	
+}
+
+/// Intelligent Scissors image segmentation
+/// 
+/// This class is used to find the path (contour) between two points
+/// which can be used for image segmentation.
+/// 
+/// Usage example:
+/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+/// 
+/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
+/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
+/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+pub struct IntelligentScissorsMB {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { IntelligentScissorsMB }
+
+impl Drop for IntelligentScissorsMB {
+	fn drop(&mut self) {
+		extern "C" { fn cv_IntelligentScissorsMB_delete(instance: *mut c_void); }
+		unsafe { cv_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
+	}
+}
+
+impl IntelligentScissorsMB {
+	#[inline] pub fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for IntelligentScissorsMB {}
+
+impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
+	#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl IntelligentScissorsMB {
+	pub fn default() -> Result<crate::imgproc::IntelligentScissorsMB> {
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB() }.into_result().map(|r| unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(r) } )
 	}
 	
 }

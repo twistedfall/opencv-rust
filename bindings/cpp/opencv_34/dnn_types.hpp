@@ -19,6 +19,7 @@ template struct Result<cv::Ptr<cv::dnn::DataAugmentationLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::DetectionOutputLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::ELULayer>*>;
 template struct Result<cv::Ptr<cv::dnn::EltwiseLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::ExpLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::FlattenLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::FlowWarpLayer>*>;
 template struct Result<cv::Ptr<cv::dnn::InnerProductLayer>*>;
@@ -304,6 +305,20 @@ extern "C" {
 	}
 
 	cv::dnn::EltwiseLayer* cv_PtrOfEltwiseLayer_get_inner_ptr_mut(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
+		return instance->get();
+	}
+}
+
+extern "C" {
+	void cv_PtrOfExpLayer_delete(cv::Ptr<cv::dnn::ExpLayer>* instance) {
+		delete instance;
+	}
+
+	const cv::dnn::ExpLayer* cv_PtrOfExpLayer_get_inner_ptr(const cv::Ptr<cv::dnn::ExpLayer>* instance) {
+		return instance->get();
+	}
+
+	cv::dnn::ExpLayer* cv_PtrOfExpLayer_get_inner_ptr_mut(cv::Ptr<cv::dnn::ExpLayer>* instance) {
 		return instance->get();
 	}
 }

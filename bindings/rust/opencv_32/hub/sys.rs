@@ -1,6 +1,6 @@
 use crate::{mod_prelude_types::*, core};
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 mod aruco_sys {
 	use super::*;
 
@@ -110,10 +110,10 @@ mod aruco_sys {
 		pub fn cv_aruco_GridBoard_getMarkerSeparation_const(instance: *const c_void) -> Result<f32>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_aruco)]
 pub use aruco_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_sys {
 	use super::*;
 
@@ -150,10 +150,10 @@ mod bgsegm_sys {
 		pub fn cv_bgsegm_BackgroundSubtractorMOG_setNoiseSigma_double(instance: *mut c_void, noise_sigma: f64) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bgsegm)]
 pub use bgsegm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 mod bioinspired_sys {
 	use super::*;
 
@@ -209,9 +209,10 @@ mod bioinspired_sys {
 		pub fn cv_bioinspired_TransientAreasSegmentationModule_clearAllBuffers(instance: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_bioinspired)]
 pub use bioinspired_sys::*;
 
+#[cfg(ocvrs_has_module_calib3d)]
 mod calib3d_sys {
 	use super::*;
 
@@ -314,9 +315,10 @@ mod calib3d_sys {
 		pub fn cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_calib3d)]
 pub use calib3d_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ccalib)]
 mod ccalib_sys {
 	use super::*;
 
@@ -379,9 +381,10 @@ mod ccalib_sys {
 		pub fn cv_randpattern_RandomPatternGenerator_getPattern(instance: *mut c_void) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ccalib)]
 pub use ccalib_sys::*;
 
+#[cfg(ocvrs_has_module_core)]
 mod core_sys {
 	use super::*;
 
@@ -1841,9 +1844,10 @@ mod core_sys {
 		pub fn cv_ogl_Texture2D_texId_const(instance: *const c_void) -> Result<u32>;
 	}
 }
+#[cfg(ocvrs_has_module_core)]
 pub use core_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cvv)]
 mod cvv_sys {
 	use super::*;
 
@@ -1861,10 +1865,10 @@ mod cvv_sys {
 		pub fn cvv_impl_CallMetaData_operator_bool(instance: *mut c_void) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_cvv)]
 pub use cvv_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dnn)]
 mod dnn_sys {
 	use super::*;
 
@@ -2115,10 +2119,10 @@ mod dnn_sys {
 		pub fn cv_dnn__Range__Range_int_int(start: i32, size: i32) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dnn)]
 pub use dnn_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 mod dpm_sys {
 	use super::*;
 
@@ -2138,10 +2142,10 @@ mod dpm_sys {
 		pub fn cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(rect: *const core::Rect, score: f32, class_id: i32) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_dpm)]
 pub use dpm_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 mod face_sys {
 	use super::*;
 
@@ -2199,9 +2203,10 @@ mod face_sys {
 		pub fn cv_face_StandardCollector_PredictResult_PredictResult_int_double(label_: i32, distance_: f64) -> Result<crate::face::StandardCollector_PredictResult>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_face)]
 pub use face_sys::*;
 
+#[cfg(ocvrs_has_module_features2d)]
 mod features2d_sys {
 	use super::*;
 
@@ -2378,8 +2383,10 @@ mod features2d_sys {
 		pub fn cv_SimpleBlobDetector_Params_write_const_FileStorageR(instance: *const crate::features2d::SimpleBlobDetector_Params, fs: *mut c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_features2d)]
 pub use features2d_sys::*;
 
+#[cfg(ocvrs_has_module_flann)]
 mod flann_sys {
 	use super::*;
 
@@ -2420,9 +2427,10 @@ mod flann_sys {
 		pub fn cv_flann_SearchParams_SearchParams_int_float_bool(checks: i32, eps: f32, sorted: bool) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_flann)]
 pub use flann_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 mod freetype_sys {
 	use super::*;
 
@@ -2433,10 +2441,10 @@ mod freetype_sys {
 		pub fn cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(instance: *mut c_void, img: *const c_void, text: *const c_char, org: *const core::Point, font_height: i32, color: *const core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_freetype)]
 pub use freetype_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_fuzzy)]
 mod fuzzy_sys {
 	use super::*;
 
@@ -2453,10 +2461,10 @@ mod fuzzy_sys {
 		pub fn cv_ft_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(image: *const c_void, mask: *const c_void, output: *const c_void, radius: i32, function: i32, algorithm: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_fuzzy)]
 pub use fuzzy_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 mod hdf_sys {
 	use super::*;
 
@@ -2494,9 +2502,10 @@ mod hdf_sys {
 		pub fn cv_hdf_HDF5_kpread_const_vector_KeyPoint_R_String_const_int_const_int(instance: *const c_void, keypoints: *mut c_void, kplabel: *mut c_char, offset: i32, counts: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_hdf)]
 pub use hdf_sys::*;
 
+#[cfg(ocvrs_has_module_highgui)]
 mod highgui_sys {
 	use super::*;
 
@@ -2555,8 +2564,10 @@ mod highgui_sys {
 		pub fn cv_QtFont_setPropLine_type_int(instance: *mut c_void, val: i32) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_highgui)]
 pub use highgui_sys::*;
 
+#[cfg(ocvrs_has_module_imgcodecs)]
 mod imgcodecs_sys {
 	use super::*;
 
@@ -2569,8 +2580,10 @@ mod imgcodecs_sys {
 		pub fn cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
 	}
 }
+#[cfg(ocvrs_has_module_imgcodecs)]
 pub use imgcodecs_sys::*;
 
+#[cfg(ocvrs_has_module_imgproc)]
 mod imgproc_sys {
 	use super::*;
 
@@ -2799,9 +2812,10 @@ mod imgproc_sys {
 		pub fn cv_Subdiv2D_edgeDst_const_int_Point2fX(instance: *const c_void, edge: i32, dstpt: *mut core::Point2f) -> Result<i32>;
 	}
 }
+#[cfg(ocvrs_has_module_imgproc)]
 pub use imgproc_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 mod line_descriptor_sys {
 	use super::*;
 
@@ -2891,9 +2905,10 @@ mod line_descriptor_sys {
 		pub fn cv_line_descriptor_LSDDetector_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_int_int_const_vector_Mat_R(instance: *const c_void, images: *const c_void, keylines: *mut c_void, scale: i32, num_octaves: i32, masks: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_line_descriptor)]
 pub use line_descriptor_sys::*;
 
+#[cfg(ocvrs_has_module_ml)]
 mod ml_sys {
 	use super::*;
 
@@ -3136,8 +3151,10 @@ mod ml_sys {
 		pub fn cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples: *const c_void, layout: i32, responses: *const c_void, var_idx: *const c_void, sample_idx: *const c_void, sample_weights: *const c_void, var_type: *const c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_ml)]
 pub use ml_sys::*;
 
+#[cfg(ocvrs_has_module_objdetect)]
 mod objdetect_sys {
 	use super::*;
 
@@ -3275,9 +3292,10 @@ mod objdetect_sys {
 		pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_objdetect)]
 pub use objdetect_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 mod optflow_sys {
 	use super::*;
 
@@ -3371,10 +3389,10 @@ mod optflow_sys {
 		pub fn cv_optflow_VariationalRefinement_setGamma_float(instance: *mut c_void, val: f32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_optflow)]
 pub use optflow_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 mod phase_unwrapping_sys {
 	use super::*;
 
@@ -3395,9 +3413,10 @@ mod phase_unwrapping_sys {
 		pub fn cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(instance: *mut c_void, wrapped_phase_map: *const c_void, unwrapped_phase_map: *const c_void, shadow_mask: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_phase_unwrapping)]
 pub use phase_unwrapping_sys::*;
 
+#[cfg(ocvrs_has_module_photo)]
 mod photo_sys {
 	use super::*;
 
@@ -3497,9 +3516,10 @@ mod photo_sys {
 		pub fn cv_TonemapReinhard_setColorAdaptation_float(instance: *mut c_void, color_adapt: f32) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_photo)]
 pub use photo_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 mod plot_sys {
 	use super::*;
 
@@ -3521,10 +3541,10 @@ mod plot_sys {
 		pub fn cv_plot_Plot2d_render_const__OutputArrayR(instance: *mut c_void, _plot_result: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_plot)]
 pub use plot_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 mod rgbd_sys {
 	use super::*;
 
@@ -3739,10 +3759,10 @@ mod rgbd_sys {
 		pub fn cv_rgbd_RgbdPlane_setSensorErrorC_double(instance: *mut c_void, val: f64) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_rgbd)]
 pub use rgbd_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 mod saliency_sys {
 	use super::*;
 
@@ -3788,10 +3808,10 @@ mod saliency_sys {
 		pub fn cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(instance: *mut c_void, val: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_saliency)]
 pub use saliency_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 mod sfm_sys {
 	use super::*;
 
@@ -3852,9 +3872,10 @@ mod sfm_sys {
 		pub fn cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_const_int_const_int_const_int_const_int_const_int(_keyframe1: i32, _keyframe2: i32, _refine_intrinsics: i32, _select_keyframes: i32, _verbosity_level: i32) -> Result<crate::sfm::libmv_ReconstructionOptions>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_sfm)]
 pub use sfm_sys::*;
 
+#[cfg(ocvrs_has_module_shape)]
 mod shape_sys {
 	use super::*;
 
@@ -3917,9 +3938,10 @@ mod shape_sys {
 		pub fn cv_ThinPlateSplineShapeTransformer_getRegularizationParameter_const(instance: *const c_void) -> Result<f64>;
 	}
 }
+#[cfg(ocvrs_has_module_shape)]
 pub use shape_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 mod stereo_sys {
 	use super::*;
 
@@ -3934,9 +3956,10 @@ mod stereo_sys {
 		pub fn cv_stereo_symetricCensusTransform_const_MatR_int_MatR_const_int(img1: *const c_void, kernel_size: i32, dist1: *mut c_void, typ: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_stereo)]
 pub use stereo_sys::*;
 
+#[cfg(ocvrs_has_module_stitching)]
 mod stitching_sys {
 	use super::*;
 
@@ -4245,9 +4268,10 @@ mod stitching_sys {
 		pub fn cv_detail_VoronoiSeamFinder_find_const_vector_Size_R_const_vector_Point_R_vector_UMat_R(instance: *mut c_void, size: *const c_void, corners: *const c_void, masks: *mut c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_stitching)]
 pub use stitching_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 mod structured_light_sys {
 	use super::*;
 
@@ -4292,9 +4316,10 @@ mod structured_light_sys {
 		pub fn cv_structured_light_StructuredLightPattern_decode_const_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(instance: *const c_void, pattern_images: *const c_void, disparity_map: *const c_void, black_images: *const c_void, white_images: *const c_void, flags: i32) -> Result<bool>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_structured_light)]
 pub use structured_light_sys::*;
 
+#[cfg(ocvrs_has_module_superres)]
 mod superres_sys {
 	use super::*;
 
@@ -4389,9 +4414,10 @@ mod superres_sys {
 		pub fn cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(instance: *mut c_void, val: *const c_void) -> Result_void;
 	}
 }
+#[cfg(ocvrs_has_module_superres)]
 pub use superres_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 mod surface_matching_sys {
 	use super::*;
 
@@ -4442,10 +4468,10 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(instance: *mut c_void, file_name: *const c_char) -> Result<i32>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_surface_matching)]
 pub use surface_matching_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 mod text_sys {
 	use super::*;
 
@@ -4539,10 +4565,10 @@ mod text_sys {
 		pub fn cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath: *const c_char, language: *const c_char, char_whitelist: *const c_char, oem: i32, psmode: i32) -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_text)]
 pub use text_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 mod tracking_sys {
 	use super::*;
 
@@ -4801,9 +4827,10 @@ mod tracking_sys {
 		pub fn cv_TrackerTargetState_setTargetHeight_int(instance: *mut c_void, height: i32) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_tracking)]
 pub use tracking_sys::*;
 
+#[cfg(ocvrs_has_module_video)]
 mod video_sys {
 	use super::*;
 
@@ -4951,8 +4978,10 @@ mod video_sys {
 		pub fn cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size: *const core::Size, max_level: i32, crit: *const core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_video)]
 pub use video_sys::*;
 
+#[cfg(ocvrs_has_module_videoio)]
 mod videoio_sys {
 	use super::*;
 
@@ -4983,8 +5012,10 @@ mod videoio_sys {
 		pub fn cv_VideoWriter_fourcc_char_char_char_char(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32>;
 	}
 }
+#[cfg(ocvrs_has_module_videoio)]
 pub use videoio_sys::*;
 
+#[cfg(ocvrs_has_module_videostab)]
 mod videostab_sys {
 	use super::*;
 
@@ -5195,9 +5226,10 @@ mod videostab_sys {
 		pub fn cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(instance: *const c_void) -> Result<*mut c_void>;
 	}
 }
+#[cfg(ocvrs_has_module_videostab)]
 pub use videostab_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 mod xfeatures2d_sys {
 	use super::*;
 
@@ -5316,10 +5348,10 @@ mod xfeatures2d_sys {
 		pub fn cv_xfeatures2d_VGG_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR(instance: *mut c_void, image: *const c_void, keypoints: *mut c_void, descriptors: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xfeatures2d)]
 pub use xfeatures2d_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 mod ximgproc_sys {
 	use super::*;
 
@@ -5456,10 +5488,10 @@ mod ximgproc_sys {
 		pub fn cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_clearStrategies(instance: *mut c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_ximgproc)]
 pub use ximgproc_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 mod xobjdetect_sys {
 	use super::*;
 
@@ -5471,10 +5503,10 @@ mod xobjdetect_sys {
 		pub fn cv_xobjdetect_WBDetector_create() -> Result<*mut c_void>;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xobjdetect)]
 pub use xobjdetect_sys::*;
 
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 mod xphoto_sys {
 	use super::*;
 
@@ -5509,7 +5541,7 @@ mod xphoto_sys {
 		pub fn cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, src: *const c_void, dst: *const c_void) -> Result_void;
 	}
 }
-#[cfg(feature = "contrib")]
+#[cfg(ocvrs_has_module_xphoto)]
 pub use xphoto_sys::*;
 
 pub use crate::manual::sys::*;

@@ -631,6 +631,13 @@ extern "C" {
 	void cv_Mesh_delete(cv::viz::Mesh* instance) {
 		delete instance;
 	}
+	Result<cv::viz::Mesh*> cv_viz_Mesh_Mesh() {
+		try {
+			cv::viz::Mesh* ret = new cv::viz::Mesh();
+			return Ok<cv::viz::Mesh*>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::viz::Mesh*>))
+	}
+	
 	Result<cv::viz::Mesh*> cv_viz_Mesh_load_const_StringR_int(const char* file, int type) {
 		try {
 			cv::viz::Mesh ret = cv::viz::Mesh::load(std::string(file), type);

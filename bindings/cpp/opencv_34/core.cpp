@@ -653,6 +653,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<int> cv_getLogLevel() {
+		try {
+			int ret = cv::getLogLevel();
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result<int> cv_getNumThreads() {
 		try {
 			int ret = cv::getNumThreads();
@@ -1804,6 +1811,13 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
+	Result<int> cv_setLogLevel_int(int level) {
+		try {
+			int ret = cv::setLogLevel(level);
+			return Ok<int>(ret);
+		} OCVRS_CATCH(OCVRS_TYPE(Result<int>))
+	}
+	
 	Result_void cv_setNumThreads_int(int nthreads) {
 		try {
 			cv::setNumThreads(nthreads);
@@ -2042,6 +2056,27 @@ extern "C" {
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
 	
+	Result<void*> cv_utils_dumpRange_const_RangeR(const cv::Range* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRange(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpRect_const_RectR(const cv::Rect* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRect(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpRotatedRect_const_RotatedRectR(const cv::RotatedRect* argument) {
+		try {
+			cv::String ret = cv::utils::dumpRotatedRect(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
 	Result<void*> cv_utils_dumpSizeT_size_t(size_t argument) {
 		try {
 			cv::String ret = cv::utils::dumpSizeT(argument);
@@ -2052,6 +2087,13 @@ extern "C" {
 	Result<void*> cv_utils_dumpString_const_StringR(const char* argument) {
 		try {
 			cv::String ret = cv::utils::dumpString(cv::String(argument));
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_dumpTermCriteria_const_TermCriteriaR(const cv::TermCriteria* argument) {
+		try {
+			cv::String ret = cv::utils::dumpTermCriteria(*argument);
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
 	}
@@ -2096,6 +2138,27 @@ extern "C" {
 			cv::AsyncArray ret = cv::utils::testAsyncException();
 			return Ok(new cv::AsyncArray(ret));
 		} OCVRS_CATCH(OCVRS_TYPE(Result<cv::AsyncArray*>))
+	}
+	
+	Result<void*> cv_utils_testOverloadResolution_const_RectR(const cv::Rect* rect) {
+		try {
+			cv::String ret = cv::utils::testOverloadResolution(*rect);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result<void*> cv_utils_testOverloadResolution_int_const_PointR(int value, const cv::Point* point) {
+		try {
+			cv::String ret = cv::utils::testOverloadResolution(value, *point);
+			return Ok(ocvrs_create_string(ret.c_str()));
+		} OCVRS_CATCH(OCVRS_TYPE(Result<void*>))
+	}
+	
+	Result_void cv_utils_testRaiseGeneralException() {
+		try {
+			cv::utils::testRaiseGeneralException();
+			return Ok();
+		} OCVRS_CATCH(OCVRS_TYPE(Result_void))
 	}
 	
 	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(VADisplay display, VASurfaceID surface, cv::Size* size, const cv::_OutputArray* dst) {

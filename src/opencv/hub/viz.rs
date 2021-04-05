@@ -867,6 +867,10 @@ impl crate::viz::MeshTrait for Mesh {
 }
 
 impl Mesh {
+	pub fn default() -> Result<crate::viz::Mesh> {
+		unsafe { sys::cv_viz_Mesh_Mesh() }.into_result().map(|r| unsafe { crate::viz::Mesh::opencv_from_extern(r) } )
+	}
+	
 	/// Loads a mesh from a ply or a obj file.
 	/// 
 	/// ## Parameters
@@ -1984,7 +1988,7 @@ impl WCone {
 	/// * color: Color of the cone.
 	/// 
 	/// ## C++ default parameters
-	/// * resolution: 6.0
+	/// * resolution: 6
 	/// * color: Color::white()
 	pub fn new(length: f64, radius: f64, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
 		unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorR(length, radius, resolution, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCone::opencv_from_extern(r) } )
@@ -2000,7 +2004,7 @@ impl WCone {
 	/// * color: Color of the cone.
 	/// 
 	/// ## C++ default parameters
-	/// * resolution: 6.0
+	/// * resolution: 6
 	/// * color: Color::white()
 	pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
 		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color()) }.into_result().map(|r| unsafe { crate::viz::WCone::opencv_from_extern(r) } )

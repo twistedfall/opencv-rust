@@ -314,6 +314,7 @@ pub const FM_LMEDS: i32 = 4;
 /// RANSAC algorithm. It needs at least 15 points. 7-point algorithm is used.
 pub const FM_RANSAC: i32 = 8;
 pub const Fisheye_CALIB_CHECK_COND: i32 = 4;
+pub const Fisheye_CALIB_FIX_FOCAL_LENGTH: i32 = 2048;
 pub const Fisheye_CALIB_FIX_INTRINSIC: i32 = 256;
 pub const Fisheye_CALIB_FIX_K1: i32 = 16;
 pub const Fisheye_CALIB_FIX_K2: i32 = 32;
@@ -1809,11 +1810,11 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// ( patternSize = cv::Size(points_per_row,points_per_colum) = cv::Size(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   **CALIB_CB_NORMALIZE_IMAGE** Normalize the image gamma with equalizeHist before detection.
-/// *   **CALIB_CB_EXHAUSTIVE** Run an exhaustive search to improve detection rate.
-/// *   **CALIB_CB_ACCURACY** Up sample input image to improve sub-pixel accuracy due to aliasing effects.
-/// *   **CALIB_CB_LARGER** The detected pattern is allowed to be larger than patternSize (see description).
-/// *   **CALIB_CB_MARKER** The detected pattern must have a marker (see description).
+/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with equalizeHist before detection.
+/// *   @ref CALIB_CB_EXHAUSTIVE Run an exhaustive search to improve detection rate.
+/// *   @ref CALIB_CB_ACCURACY Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+/// *   @ref CALIB_CB_LARGER The detected pattern is allowed to be larger than patternSize (see description).
+/// *   @ref CALIB_CB_MARKER The detected pattern must have a marker (see description).
 /// This should be used if an accurate camera calibration is required.
 /// * meta: Optional output arrray of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
 /// Each entry stands for one corner of the pattern and can have one of the following values:
@@ -1832,7 +1833,7 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
 /// 
-/// In the case, the flags **CALIB_CB_LARGER** or **CALIB_CB_MARKER** are given,
+/// In the case, the flags @ref CALIB_CB_LARGER or @ref CALIB_CB_MARKER are given,
 /// the result can be recovered from the optional meta array. Both flags are
 /// helpful to use calibration patterns exceeding the field of view of the camera.
 /// These oversized patterns allow more accurate calibrations as corners can be
@@ -1869,11 +1870,11 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// ( patternSize = cv::Size(points_per_row,points_per_colum) = cv::Size(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   **CALIB_CB_NORMALIZE_IMAGE** Normalize the image gamma with equalizeHist before detection.
-/// *   **CALIB_CB_EXHAUSTIVE** Run an exhaustive search to improve detection rate.
-/// *   **CALIB_CB_ACCURACY** Up sample input image to improve sub-pixel accuracy due to aliasing effects.
-/// *   **CALIB_CB_LARGER** The detected pattern is allowed to be larger than patternSize (see description).
-/// *   **CALIB_CB_MARKER** The detected pattern must have a marker (see description).
+/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with equalizeHist before detection.
+/// *   @ref CALIB_CB_EXHAUSTIVE Run an exhaustive search to improve detection rate.
+/// *   @ref CALIB_CB_ACCURACY Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+/// *   @ref CALIB_CB_LARGER The detected pattern is allowed to be larger than patternSize (see description).
+/// *   @ref CALIB_CB_MARKER The detected pattern must have a marker (see description).
 /// This should be used if an accurate camera calibration is required.
 /// * meta: Optional output arrray of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
 /// Each entry stands for one corner of the pattern and can have one of the following values:
@@ -1892,7 +1893,7 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
 /// 
-/// In the case, the flags **CALIB_CB_LARGER** or **CALIB_CB_MARKER** are given,
+/// In the case, the flags @ref CALIB_CB_LARGER or @ref CALIB_CB_MARKER are given,
 /// the result can be recovered from the optional meta array. Both flags are
 /// helpful to use calibration patterns exceeding the field of view of the camera.
 /// These oversized patterns allow more accurate calibrations as corners can be
@@ -2101,8 +2102,8 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
 /// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
-/// *   **RANSAC** for the RANSAC algorithm.
-/// *   **LMEDS** for the LMedS algorithm.
+/// *   @ref RANSAC for the RANSAC algorithm.
+/// *   @ref LMEDS for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2208,8 +2209,8 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
 /// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
-/// *   **RANSAC** for the RANSAC algorithm.
-/// *   **LMEDS** for the LMedS algorithm.
+/// *   @ref RANSAC for the RANSAC algorithm.
+/// *   @ref LMEDS for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2651,6 +2652,8 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 ///    are set to zeros and stay zero.
 ///    *    @ref fisheye::CALIB_FIX_PRINCIPAL_POINT  The principal point is not changed during the global
 /// optimization. It stays at the center or at a different location specified when @ref fisheye::CALIB_USE_INTRINSIC_GUESS is set too.
+///    *    @ref fisheye::CALIB_FIX_FOCAL_LENGTH The focal length is not changed during the global
+/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F%5Cpi) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when @ref fisheye::CALIB_USE_INTRINSIC_GUESS is set too.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
 /// ## C++ default parameters
