@@ -1,3 +1,5 @@
+#![cfg(ocvrs_has_module_imgcodecs)]
+
 use std::ffi::c_void;
 
 use opencv::{

@@ -1,4 +1,4 @@
-#![cfg(feature = "contrib")]
+#![cfg(ocvrs_has_module_aruco)]
 
 use opencv::{aruco::DetectorParameters, prelude::*, Result};
 

@@ -22,11 +22,6 @@ Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 opencv = {version = "0.51", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
 ```
 
-Or enable usage of `contrib` modules:
-```toml
-opencv = {version = "0.51", features = ["contrib"]}
-```
-
 Import prelude
 ```rust
 use opencv::prelude::*;
@@ -118,8 +113,6 @@ You need to set up the following environment variables to point to the installed
 
    Be sure to import ```use opencv::prelude::*;```. The crate contains a lot of traits that need to be imported
    first.
-
-   Also check that if you're using a contrib module that the `contrib` feature is enabled for the crate. 
 
 4. On Windows, you're getting the `(exit code: 0xc0000135, STATUS_DLL_NOT_FOUND)` error when running the
    compiled binary.
@@ -283,7 +276,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   source
 * `opencv-34` - build against OpenCV 3.4.x
 * `opencv-4` (default) - build against OpenCV 4.x
-* `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
 * `buildtime-bindgen` (default) - regenerate all bindings, requires installed clang/llvm (minimum supported
   version is 6.0), with this feature enabled the bundled headers are no longer used for the code generation,
   the ones from the installed OpenCV are used instead
@@ -304,8 +296,6 @@ The following OpenCV versions are supported at the moment:
 * 3.2 - enabled by `opencv-32` feature
 * 3.4 - enabled by `opencv-34` feature
 * 4.3 - enabled by the default `opencv-4` feature
-
-If you need support for `contrib` modules, also enable `contrib` feature.
 
 ### Minimum rustc version
 
@@ -366,7 +356,7 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 ## Contrib modules
 
 To be able to use some modules you need to have [`opencv_contrib`](https://github.com/opencv/opencv_contrib)
-installed. You can find the full list of contrib modules [here](https://github.com/opencv/opencv_contrib/tree/master/modules) with the exception that `dnn` module is also considered contrib for OpenCV 3.2.
+installed. You can find the full list of contrib modules [here](https://github.com/opencv/opencv_contrib/tree/master/modules).
 
 ## Missing modules and functions
 

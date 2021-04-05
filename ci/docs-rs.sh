@@ -2,4 +2,4 @@
 
 set -vex
 
-cargo doc -vv --no-default-features --features=docs-only,contrib,opencv-4
+cargo doc -vv --no-default-features --features=docs-only,opencv-4

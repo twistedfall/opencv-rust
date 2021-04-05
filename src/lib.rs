@@ -13,8 +13,9 @@ mod manual;
 mod traits;
 
 pub mod prelude {
+	#[cfg(ocvrs_has_module_core)]
+	pub use crate::core::{DataType, Mat};
 	pub use crate::{
-		core::{DataType, Mat},
 		hub_prelude::*,
 		manual::prelude::*,
 		traits::Boxed,

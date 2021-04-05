@@ -16,7 +16,6 @@ use super::{
 	file_copy_to_dir,
 	get_versioned_hub_dirs,
 	HOST_TRIPLE,
-	is_core_module,
 	MODULES,
 	OUT_DIR,
 	Result,
@@ -197,16 +196,22 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 		}
 	}
 
-	let add_manual = |file: &mut File, mod_name: &str| -> Result<bool> {
-		if manual_dir.join(format!("{}.rs", mod_name)).exists() {
-			writeln!(file, "pub use crate::manual::{}::*;", mod_name)?;
-			Ok(true)
-		} else {
-			Ok(false)
-		}
-	};
 
 	{
+		fn write_has_module(write: &mut File, module: &str) -> Result<()> {
+			writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?;
+			Ok(())
+		}
+
+		let add_manual = |file: &mut File, module: &str| -> Result<bool> {
+			if manual_dir.join(format!("{}.rs", module)).exists() {
+				writeln!(file, "pub use crate::manual::{}::*;", module)?;
+				Ok(true)
+			} else {
+				Ok(false)
+			}
+		};
+
 		let mut hub_rs = File::create(rust_hub_dir.join("hub.rs"))?;
 
 		let mut types_rs = File::create(module_dir.join("types.rs"))?;
@@ -216,15 +221,8 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 		writeln!(&mut sys_rs, "use crate::{{mod_prelude_types::*, core}};")?;
 		writeln!(&mut sys_rs)?;
 		for module in modules {
-			let is_core_module = is_core_module(module.as_str());
-			let write_if_contrib = |write: &mut File| -> Result<()> {
-				if !is_core_module {
-					writeln!(write, r#"#[cfg(feature = "contrib")]"#)?;
-				}
-				Ok(())
-			};
 			// hub
-			write_if_contrib(&mut hub_rs)?;
+			write_has_module(&mut hub_rs, module)?;
 			writeln!(&mut hub_rs, "pub mod {};", module)?;
 			let module_filename = format!("{}.rs", module);
 			let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &module_dir)?;
@@ -237,7 +235,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 				let entry = entry?;
 				if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 					if write_header {
-						write_if_contrib(&mut types_rs)?;
+						write_has_module(&mut types_rs, module)?;
 						writeln!(&mut types_rs, "mod {}_types {{", module)?;
 						writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 						writeln!(&mut types_rs)?;
@@ -248,14 +246,14 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 			}
 			if !write_header {
 				writeln!(&mut types_rs, "}}")?;
-				write_if_contrib(&mut types_rs)?;
+				write_has_module(&mut types_rs, module)?;
 				writeln!(&mut types_rs, "pub use {}_types::*;", module)?;
 				writeln!(&mut types_rs)?;
 			}
 
 			// sys
 			let path = OUT_DIR.join(format!("{}.externs.rs", module));
-			write_if_contrib(&mut sys_rs)?;
+			write_has_module(&mut sys_rs, module)?;
 			writeln!(&mut sys_rs, "mod {}_sys {{", module)?;
 			writeln!(&mut sys_rs, "\tuse super::*;")?;
 			writeln!(&mut sys_rs)?;
@@ -265,7 +263,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 			}
 			copy_indent(BufReader::new(File::open(&path)?), &mut sys_rs, "\t")?;
 			writeln!(&mut sys_rs, "}}")?;
-			write_if_contrib(&mut sys_rs)?;
+			write_has_module(&mut sys_rs, module)?;
 			writeln!(&mut sys_rs, "pub use {}_sys::*;", module)?;
 			writeln!(&mut sys_rs)?;
 		}
@@ -279,10 +277,8 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 
 		writeln!(&mut hub_rs, "pub mod hub_prelude {{")?;
 		for module in modules {
-			if !is_core_module(module.as_str()) {
-				writeln!(&mut hub_rs, r#"	#[cfg(feature = "contrib")]"#)?;
-			}
-			writeln!(&mut hub_rs, r#"	pub use super::{}::prelude::*;"#, module)?;
+			writeln!(&mut hub_rs, "	#[cfg(ocvrs_has_module_{})]", module)?;
+			writeln!(&mut hub_rs, "	pub use super::{}::prelude::*;", module)?;
 		}
 		writeln!(&mut hub_rs, "}}")?;
 	}

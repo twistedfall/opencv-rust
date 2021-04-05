@@ -24,33 +24,6 @@ mod generator;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| [
-	"calib3d",
-	"core",
-	#[cfg(not(feature = "opencv-32"))]
-	"dnn",
-	"features2d",
-	"flann",
-	#[cfg(feature = "opencv-4")]
-	"gapi",
-	"highgui",
-	"imgcodecs",
-	"imgproc",
-	"ml",
-	"objdetect",
-	"photo",
-	#[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-	"shape",
-	"stitching",
-	#[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-	"superres",
-	"video",
-	"videoio",
-	#[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-	"videostab",
-	"viz",
-].iter().copied().collect());
-
 static MODULES: OnceCell<Vec<String>> = OnceCell::new();
 
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
@@ -699,16 +672,8 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 		})
 		.collect();
 
-	for m in &modules {
-		println!("cargo:rustc-cfg=mod_{}", m);
-	}
-
 	MODULES.set(modules).expect("Can't set MODULES cache");
 	Ok(())
-}
-
-fn is_core_module(module: &str) -> bool {
-	CORE_MODULES.contains(module)
 }
 
 fn build_compiler(opencv: &Library) -> cc::Build {
@@ -758,7 +723,11 @@ fn build_wrapper(opencv: &Library) -> Result<()> {
 
 	let mut cc = build_compiler(opencv);
 	let modules = MODULES.get().expect("MODULES not initialized");
-	for module in modules.iter().filter(|m| cfg!(feature = "contrib") || is_core_module(m)) {
+	for module in &["sys", "types"] { // special internal modules
+		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
+	}
+	for module in modules.iter() {
+		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
 		cc.file(OUT_DIR.join(format!("{}.cpp", module)));
 		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{}.cpp", module));
 		if manual_cpp.exists() {

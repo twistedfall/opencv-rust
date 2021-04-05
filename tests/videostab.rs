@@ -1,4 +1,4 @@
-#![cfg(feature = "contrib")]
+#![cfg(ocvrs_has_module_videostab)]
 
 use opencv::{
 	core::Ptr,

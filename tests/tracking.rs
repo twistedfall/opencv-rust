@@ -1,4 +1,4 @@
-#![cfg(feature = "contrib")]
+#![cfg(ocvrs_has_module_tracking)]
 
 // use opencv::{
 // 	prelude::*,

@@ -1,3 +1,5 @@
+#![cfg(ocvrs_has_module_features2d)]
+
 use std::path::PathBuf;
 
 use opencv::{

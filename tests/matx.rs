@@ -48,7 +48,7 @@ fn matx_return() -> Result<()> {
 	Ok(())
 }
 
-#[cfg(all(feature = "contrib", not(feature = "opencv-32")))]
+#[cfg(all(ocvrs_has_module_surface_matching, not(feature = "opencv-32")))]
 #[test]
 fn matx_arg() -> Result<()> {
 	use opencv::{core::Matx44d, surface_matching::Pose3D};

@@ -61,7 +61,6 @@ clang-runtime = ["clang/runtime"]
 opencv-32 = []
 opencv-34 = []
 opencv-4 = []
-contrib = []
 docs-only = []
 
 [build-dependencies]
@@ -83,4 +82,4 @@ matches = "0.1"
 
 [package.metadata.docs.rs]
 no-default-features = true
-features = ["opencv-4", "docs-only", "contrib"]
+features = ["opencv-4", "docs-only"]

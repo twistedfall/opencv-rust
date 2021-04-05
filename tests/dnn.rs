@@ -1,4 +1,4 @@
-#![cfg(not(feature = "opencv-32"))]
+#![cfg(ocvrs_has_module_dnn)]
 
 use matches::assert_matches;
 
