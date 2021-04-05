@@ -699,6 +699,10 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 		})
 		.collect();
 
+	for m in &modules {
+		println!("cargo:rustc-cfg=mod_{}", m);
+	}
+
 	MODULES.set(modules).expect("Can't set MODULES cache");
 	Ok(())
 }
