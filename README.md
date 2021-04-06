@@ -10,7 +10,8 @@ The API is usable, but unstable and not very battle-tested; use at your own risk
 
 ## Quickstart
 
-Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your system.
+Make sure the supported OpenCV version (3.2, 3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
+generation) are installed in your system.
 
 Update your Cargo.toml
 ```toml
@@ -19,7 +20,7 @@ opencv = "0.52"
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.52", default-features = false, features = ["opencv-34", "buildtime-bindgen"]}
+opencv = {version = "0.52", default-features = false, features = ["opencv-34"]}
 ```
 
 Import prelude
@@ -92,9 +93,8 @@ You need to set up the following environment variables to point to the installed
 
 1. One of the common problems is link errors in the end of the build.
 
-   Make sure you're building with `buildtime-bindgen` feature enabled (requires installed clang/llvm), it will
-   recreate rust and cpp files to match the version you have installed. Please be sure to also set up the
-   relevant environment variables that will allow the linker to find the libraries it needs (see below).
+   Be sure to set up the relevant environment variables that will allow the linker to find the libraries it
+   needs (see below).
 
 2. You're getting runtime errors like:
    ```
@@ -276,12 +276,8 @@ The following variables affect the building the of the `opencv` crate, but belon
   source
 * `opencv-34` - build against OpenCV 3.4.x
 * `opencv-4` (default) - build against OpenCV 4.x
-* `buildtime-bindgen` (default) - regenerate all bindings, requires installed clang/llvm (minimum supported
-  version is 6.0), with this feature enabled the bundled headers are no longer used for the code generation,
-  the ones from the installed OpenCV are used instead
-* `clang-runtime` - only useful with the combination with `buildtime-bindgen`, enables the runtime detection
-  of libclang (`runtime` feature of `clang-sys`). Useful as a workaround for when your dependencies (like
-  `bindgen`) pull in `clang-sys` with hard `runtime` feature.
+* `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
+  workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details
@@ -386,9 +382,8 @@ version because the crate has gone through the considerable rewrite since.
 ## Contributor's Guide
 
 The binding generator code lives in a separate crate under [binding-generator](binding-generator). During the
-build phase (with `buildtime-bindgen` feature enabled) it creates bindings from the header files and puts them
-into [bindings](bindings) directory. Those are then transferred to [src](src) for the consumption by the
-crate users. 
+build phase it creates bindings from the header files and puts them into [bindings](bindings) directory. Those
+are then transferred to [src](src) for the consumption by the crate users. 
 
 The crate itself, as imported by users, consists of generated rust code in [src](src) committed to the repo.
 This way, users don't have to handle the code generation overhead in their builds. When developing this crate,

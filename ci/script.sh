@@ -51,7 +51,6 @@ rustc --print=cfg
 
 cargo test -vv -p opencv-binding-generator
 
-CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
 cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 

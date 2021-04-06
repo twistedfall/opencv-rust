@@ -18,7 +18,6 @@ use semver::{Version, VersionReq};
 
 #[path = "build_cmake_probe.rs"]
 mod cmake_probe;
-#[cfg(feature = "buildtime-bindgen")]
 #[path = "build_generator.rs"]
 mod generator;
 
@@ -785,7 +784,6 @@ fn main() -> Result<()> {
 		panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-4");
 	}
 
-	#[cfg(feature = "buildtime-bindgen")]
 	let generator_build = if cfg!(feature = "clang-runtime") { // start building binding generator as early as possible
 		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
 		let mut cargo = Command::new(cargo_bin);
@@ -847,13 +845,9 @@ fn main() -> Result<()> {
 			.map_err(|e| format!("{}, (version coming from the detected package/environment)", e))?;
 	}
 	let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
-		if cfg!(feature = "buildtime-bindgen") {
-			opencv.include_paths.iter()
-				.find(|p| p.join("opencv2/core/version.hpp").is_file() || p.join("Headers/core/version.hpp").is_file())
-				.expect("Using buildtime-bindgen, but discovered OpenCV include paths is empty or contains non-existent paths").clone()
-		} else {
-			opencv_header_dir
-		}
+		opencv.include_paths.iter()
+			.find(|p| p.join("opencv2/core/version.hpp").is_file() || p.join("Headers/core/version.hpp").is_file())
+			.expect("Discovered OpenCV include paths is empty or contains non-existent paths").clone()
 	});
 
 	make_modules(&opencv_header_dir.join("opencv2"))?;
@@ -867,7 +861,6 @@ fn main() -> Result<()> {
 
 	setup_rerun()?;
 
-	#[cfg(feature = "buildtime-bindgen")]
 	generator::gen_wrapper(&opencv_header_dir, generator_build)?;
 	install_wrapper()?;
 	build_wrapper(&opencv);
