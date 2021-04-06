@@ -18,14 +18,14 @@ fn main() -> Result<()> {
 	let (xml, mut cam) = {
 		(
 			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
-			videoio::VideoCapture::new_default(0)?,  // 0 is the default camera
+			videoio::VideoCapture::new_default(0)?, // 0 is the default camera
 		)
 	};
 	#[cfg(not(feature = "opencv-32"))]
 	let (xml, mut cam) = {
 		(
 			core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,
-			videoio::VideoCapture::new(0, videoio::CAP_ANY)?,  // 0 is the default camera
+			videoio::VideoCapture::new(0, videoio::CAP_ANY)?, // 0 is the default camera
 		)
 	};
 	let opened = videoio::VideoCapture::is_opened(&cam)?;

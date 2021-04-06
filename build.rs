@@ -53,7 +53,6 @@ static ENV_VARS: [&str; 18] = [
 	"VCPKGRS_DYNAMIC",
 ];
 
-
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 	let mut strip_performed = false;
 	let mut filename_path = Path::new(filename);
@@ -214,7 +213,7 @@ impl Library {
 		format!(
 			"cargo:rustc-link-search={}{}",
 			typ.map_or_else(|| "".to_string(), |t| format!("{}=", t)),
-			path.to_str().expect("Link search path can't be converted to UTF-8 string")
+			path.to_str().expect("Can't convert link search path to UTF-8 string")
 		)
 	}
 
@@ -636,7 +635,7 @@ fn get_versioned_hub_dirs() -> (PathBuf, PathBuf) {
 	(rust_hub_dir, cpp_hub_dir)
 }
 
-fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
+fn make_modules(opencv_dir: &Path) -> Result<()> {
 	let ignore_modules: HashSet<&'static str> = [
 		"core_detect",
 		"cudalegacy",
@@ -659,7 +658,7 @@ fn make_modules(opencv_dir_as_string: &str) -> Result<()> {
 			.collect::<HashSet<_>>()
 		);
 
-	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
+	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir.to_str().ok_or("Can't OpenCV header directory to UTF-8 string")?))?
 		.filter_map(|entry| {
 			let entry = entry.expect("Can't get path for module file");
 			let module = entry.file_stem()
@@ -706,7 +705,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	out
 }
 
-fn build_wrapper(opencv: &Library) -> Result<()> {
+fn setup_rerun() -> Result<()> {
 	for &v in ENV_VARS.iter() {
 		println!("cargo:rerun-if-env-changed={}", v);
 	}
@@ -720,7 +719,10 @@ fn build_wrapper(opencv: &Library) -> Result<()> {
 			}
 		}
 	}
+	Ok(())
+}
 
+fn build_wrapper(opencv: &Library) {
 	let mut cc = build_compiler(opencv);
 	let modules = MODULES.get().expect("MODULES not initialized");
 	for module in &["sys", "types"] { // special internal modules
@@ -735,7 +737,6 @@ fn build_wrapper(opencv: &Library) -> Result<()> {
 		}
 	}
 	cc.compile("ocvrs");
-	Ok(())
 }
 
 fn install_wrapper() -> Result<()> {
@@ -772,7 +773,7 @@ fn install_wrapper() -> Result<()> {
 
 fn cleanup() -> Result<()> {
 	// fixme, shouldn't be needed
-	for entry in glob(&format!("{}/*.rs", OUT_DIR.to_string_lossy()))? {
+	for entry in glob(&format!("{}/*.rs", OUT_DIR.to_str().ok_or_else(|| "Can't convert OUT_DIR to UTF-8 string")?))? {
 		let _ = fs::remove_file(entry?);
 	}
 	Ok(())
@@ -832,7 +833,11 @@ fn main() -> Result<()> {
 		panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
 	};
 	let opencv = if cfg!(feature = "docs-only") {
-		Library::probe_from_paths(Some(opencv_header_dir.to_string_lossy().as_ref().into()), Some("".into()), Some("".into()))?
+		Library::probe_from_paths(
+			Some(opencv_header_dir.to_str().expect("Can't convert link search path to UTF-8 string").into()),
+			Some("".into()),
+			Some("".into()),
+		)?
 	} else {
 		Library::probe()?
 	};
@@ -851,7 +856,7 @@ fn main() -> Result<()> {
 		}
 	});
 
-	make_modules(&opencv_header_dir.join("opencv2").to_string_lossy())?;
+	make_modules(&opencv_header_dir.join("opencv2"))?;
 
 	if let Some(version) = get_version_from_headers(&opencv_header_dir) {
 		check_matching_version(&version).map_err(|e| format!("{}, (version coming from headers at: {})", e, opencv_header_dir.display()))?;
@@ -860,10 +865,12 @@ fn main() -> Result<()> {
 		panic!("Unable to find header version in: {}", opencv_header_dir.display())
 	}
 
+	setup_rerun()?;
+
 	#[cfg(feature = "buildtime-bindgen")]
 	generator::gen_wrapper(&opencv_header_dir, generator_build)?;
 	install_wrapper()?;
-	build_wrapper(&opencv)?;
+	build_wrapper(&opencv);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
 	cleanup()?;

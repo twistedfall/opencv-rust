@@ -28,7 +28,7 @@ pub struct CmakeProbe<'r> {
 
 impl<'r> CmakeProbe<'r> {
 	pub fn new(cmake_bin: Option<PathBuf>, build_dir: &Path, src_dir: &'r Path, package_name: &'r str, toolchain: Option<&'r Path>, is_release: bool) -> Self {
-		CmakeProbe {
+		Self {
 			cmake_bin: cmake_bin.unwrap_or_else(|| "cmake".into()),
 			build_dir: build_dir.join("cmake_probe_build"),
 			src_dir,

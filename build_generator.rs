@@ -44,6 +44,7 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	let src_filename = src_file.file_name()
 		.ok_or("Can't calculate filename")?;
 	let target_file = target_dir.join(src_filename);
+	// rename doesn't work across fs boundaries for example
 	if fs::rename(&src_file, &target_file).is_err() {
 		fs::copy(&src_file, &target_file)?;
 		fs::remove_file(src_file)?;
@@ -196,92 +197,89 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 		}
 	}
 
-
-	{
-		fn write_has_module(write: &mut File, module: &str) -> Result<()> {
-			writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?;
-			Ok(())
-		}
-
-		let add_manual = |file: &mut File, module: &str| -> Result<bool> {
-			if manual_dir.join(format!("{}.rs", module)).exists() {
-				writeln!(file, "pub use crate::manual::{}::*;", module)?;
-				Ok(true)
-			} else {
-				Ok(false)
-			}
-		};
-
-		let mut hub_rs = File::create(rust_hub_dir.join("hub.rs"))?;
-
-		let mut types_rs = File::create(module_dir.join("types.rs"))?;
-		writeln!(&mut types_rs)?;
-
-		let mut sys_rs = File::create(module_dir.join("sys.rs"))?;
-		writeln!(&mut sys_rs, "use crate::{{mod_prelude_types::*, core}};")?;
-		writeln!(&mut sys_rs)?;
-		for module in modules {
-			// hub
-			write_has_module(&mut hub_rs, module)?;
-			writeln!(&mut hub_rs, "pub mod {};", module)?;
-			let module_filename = format!("{}.rs", module);
-			let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &module_dir)?;
-			let mut f = OpenOptions::new().append(true).open(&target_file)?;
-			add_manual(&mut f, module)?;
-
-			// types
-			let mut write_header = true;
-			for entry in glob(&format!("{}/???-{}-*.type.rs", out_dir_as_str, module))? {
-				let entry = entry?;
-				if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
-					if write_header {
-						write_has_module(&mut types_rs, module)?;
-						writeln!(&mut types_rs, "mod {}_types {{", module)?;
-						writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
-						writeln!(&mut types_rs)?;
-						write_header = false;
-					}
-					copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
-				}
-			}
-			if !write_header {
-				writeln!(&mut types_rs, "}}")?;
-				write_has_module(&mut types_rs, module)?;
-				writeln!(&mut types_rs, "pub use {}_types::*;", module)?;
-				writeln!(&mut types_rs)?;
-			}
-
-			// sys
-			let path = OUT_DIR.join(format!("{}.externs.rs", module));
-			write_has_module(&mut sys_rs, module)?;
-			writeln!(&mut sys_rs, "mod {}_sys {{", module)?;
-			writeln!(&mut sys_rs, "\tuse super::*;")?;
-			writeln!(&mut sys_rs)?;
-			for entry in glob(&format!("{}/{}-*.rv.rs", out_dir_as_str, module))? {
-				let entry: PathBuf = entry?;
-				copy_indent(BufReader::new(File::open(entry)?), &mut sys_rs, "\t")?;
-			}
-			copy_indent(BufReader::new(File::open(&path)?), &mut sys_rs, "\t")?;
-			writeln!(&mut sys_rs, "}}")?;
-			write_has_module(&mut sys_rs, module)?;
-			writeln!(&mut sys_rs, "pub use {}_sys::*;", module)?;
-			writeln!(&mut sys_rs)?;
-		}
-		writeln!(&mut hub_rs, "pub mod types;")?;
-		writeln!(&mut hub_rs, "#[doc(hidden)]")?;
-		writeln!(&mut hub_rs, "pub mod sys;")?;
-
-		add_manual(&mut types_rs, "types")?;
-
-		add_manual(&mut sys_rs, "sys")?;
-
-		writeln!(&mut hub_rs, "pub mod hub_prelude {{")?;
-		for module in modules {
-			writeln!(&mut hub_rs, "	#[cfg(ocvrs_has_module_{})]", module)?;
-			writeln!(&mut hub_rs, "	pub use super::{}::prelude::*;", module)?;
-		}
-		writeln!(&mut hub_rs, "}}")?;
+	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
+		writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?;
+		Ok(())
 	}
+
+	let add_manual = |file: &mut File, module: &str| -> Result<bool> {
+		if manual_dir.join(format!("{}.rs", module)).exists() {
+			writeln!(file, "pub use crate::manual::{}::*;", module)?;
+			Ok(true)
+		} else {
+			Ok(false)
+		}
+	};
+
+	let mut hub_rs = File::create(rust_hub_dir.join("hub.rs"))?;
+
+	let mut types_rs = File::create(module_dir.join("types.rs"))?;
+	writeln!(&mut types_rs)?;
+
+	let mut sys_rs = File::create(module_dir.join("sys.rs"))?;
+	writeln!(&mut sys_rs, "use crate::{{mod_prelude_types::*, core}};")?;
+	writeln!(&mut sys_rs)?;
+	for module in modules {
+		// hub
+		write_has_module(&mut hub_rs, module)?;
+		writeln!(&mut hub_rs, "pub mod {};", module)?;
+		let module_filename = format!("{}.rs", module);
+		let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &module_dir)?;
+		let mut f = OpenOptions::new().append(true).open(&target_file)?;
+		add_manual(&mut f, module)?;
+
+		// types
+		let mut write_header = true;
+		for entry in glob(&format!("{}/???-{}-*.type.rs", out_dir_as_str, module))? {
+			let entry = entry?;
+			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
+				if write_header {
+					write_has_module(&mut types_rs, module)?;
+					writeln!(&mut types_rs, "mod {}_types {{", module)?;
+					writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
+					writeln!(&mut types_rs)?;
+					write_header = false;
+				}
+				copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
+			}
+		}
+		if !write_header {
+			writeln!(&mut types_rs, "}}")?;
+			write_has_module(&mut types_rs, module)?;
+			writeln!(&mut types_rs, "pub use {}_types::*;", module)?;
+			writeln!(&mut types_rs)?;
+		}
+
+		// sys
+		let path = OUT_DIR.join(format!("{}.externs.rs", module));
+		write_has_module(&mut sys_rs, module)?;
+		writeln!(&mut sys_rs, "mod {}_sys {{", module)?;
+		writeln!(&mut sys_rs, "\tuse super::*;")?;
+		writeln!(&mut sys_rs)?;
+		for entry in glob(&format!("{}/{}-*.rv.rs", out_dir_as_str, module))? {
+			let entry: PathBuf = entry?;
+			copy_indent(BufReader::new(File::open(entry)?), &mut sys_rs, "\t")?;
+		}
+		copy_indent(BufReader::new(File::open(&path)?), &mut sys_rs, "\t")?;
+		writeln!(&mut sys_rs, "}}")?;
+		write_has_module(&mut sys_rs, module)?;
+		writeln!(&mut sys_rs, "pub use {}_sys::*;", module)?;
+		writeln!(&mut sys_rs)?;
+	}
+	writeln!(&mut hub_rs, "pub mod types;")?;
+	writeln!(&mut hub_rs, "#[doc(hidden)]")?;
+	writeln!(&mut hub_rs, "pub mod sys;")?;
+
+	add_manual(&mut types_rs, "types")?;
+
+	add_manual(&mut sys_rs, "sys")?;
+
+	writeln!(&mut hub_rs, "pub mod hub_prelude {{")?;
+	for module in modules {
+		writeln!(&mut hub_rs, "	#[cfg(ocvrs_has_module_{})]", module)?;
+		writeln!(&mut hub_rs, "	pub use super::{}::prelude::*;", module)?;
+	}
+	writeln!(&mut hub_rs, "}}")?;
 
 	Ok(())
 }
