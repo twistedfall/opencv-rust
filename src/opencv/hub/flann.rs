@@ -12,7 +12,7 @@
 //! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 //! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 //! neighbor search in large datasets and for high dimensional features. More information about FLANN
-//! can be found in [Muja2009](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Muja2009) .
+//! can be found in [Muja2009](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Muja2009) .
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::IndexParamsTrait, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTrait, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTrait, super::LshIndexParamsTrait, super::SavedIndexParamsTrait, super::SearchParamsTrait, super::IndexTrait };

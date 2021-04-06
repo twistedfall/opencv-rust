@@ -435,7 +435,7 @@ impl Kinfu_Intr_Reprojector {
 /// KinectFusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm described in
-/// [kinectfusion](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+/// [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 /// 
 /// It takes a sequence of depth images taken from depth sensor
 /// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -443,7 +443,7 @@ impl Kinfu_Intr_Reprojector {
 /// or can be Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a voxel cuboid that keeps TSDF values
-/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 /// There is no interface to that representation yet.
 /// 
 /// KinFu uses OpenCL acceleration automatically if available.
@@ -1172,7 +1172,7 @@ impl dyn Kinfu_Detail_PoseGraph + '_ {
 /// Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a spatially hashed voxel cube that stores TSDF values
-/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
+/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) article
 /// about TSDF). There is no interface to that representation yet.
 /// 
 /// For posegraph optimization, a Submap abstraction over the Volume class is created.

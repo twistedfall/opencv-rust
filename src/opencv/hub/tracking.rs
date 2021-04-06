@@ -32,7 +32,7 @@ opencv_type_enum! { crate::tracking::TrackerKCF_MODE }
 pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>;
 /// the CSRT tracker
 /// 
-/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 pub trait TrackerCSRT: crate::video::Tracker {
 	fn as_raw_TrackerCSRT(&self) -> *const c_void;
 	fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
@@ -318,7 +318,7 @@ impl TrackerCSRT_Params {
 /// the KCF (Kernelized Correlation Filter) tracker
 /// 
 /// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_KCF_CN)).
 /// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 /// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 /// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.

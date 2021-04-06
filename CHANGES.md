@@ -1,3 +1,20 @@
+* 0.53.0
+  * This release removes some features and environment variables to make the crate easier to use:
+    * `buildtime-bindgen` is removed. With all the possible OpenCV configurations out there it was practically
+      impossible to build the crate without regenerating bindings to fit your exact installation.
+    * `opencv-32`, `opencv-34` and `opencv-4` branch selection features are removed too. Version selection is
+      now performed in build-time. If you were using those features in your `Cargo.toml` then just remove them
+      (and `default-features = false` can probably go too).
+    * Support for `OPENCV_CLANG_STDLIB_PATH` environment variable is removed. If you were using it, then you
+      can add that directory as part of `OPENCV_INCLUDE_PATHS`. E.g.:
+      ```
+      OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+" 
+      ```
+    * Support for `OPENCV_HEADER_DIR` is also removed. It was meant to be development-only environment variable,
+      and it's no longer needed in the development process.
+  * The crate is now smaller due to dropping of the bundled headers and bindings.
+  * Fixes for building with older OpenCV versions (fixes [#227](https://github.com/twistedfall/opencv-rust/issues/227))
+
 * 0.52.0
   * Add support for OpenCV 4.5.2 and 3.4.14
   * In those new OpenCV versions some methods are now marked NOEXCEPT which makes them return result directly,

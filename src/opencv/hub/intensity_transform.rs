@@ -16,18 +16,18 @@
 //! - Log Transformations
 //! - Power-Law (Gamma) Transformations
 //! - Contrast Stretching
-//! - BIMEF, A Bio-Inspired Multi-Exposure Fusion Framework for Low-light Image Enhancement [ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)
+//! - BIMEF, A Bio-Inspired Multi-Exposure Fusion Framework for Low-light Image Enhancement [ying2017bio](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017new)
 //! 
 //! References from following book and websites:
-//! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Gonzalez2018)
-//! - http://www.cs.uregina.ca/Links/class-info/425/Lab3/ [lcs435lab](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lcs435lab)
-//! - https://theailearner.com/2019/01/30/contrast-stretching/ [theailearner](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_theailearner)
+//! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Gonzalez2018)
+//! - http://www.cs.uregina.ca/Links/class-info/425/Lab3/ [lcs435lab](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_lcs435lab)
+//! - https://theailearner.com/2019/01/30/contrast-stretching/ [theailearner](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_theailearner)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use {  };
 }
 
-/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017new)).
 /// 
 /// ## Parameters
 /// * input: input color image.
@@ -50,7 +50,7 @@ pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArra
 	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b) }.into_result()
 }
 
-/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_ying2017new)).
 /// 
 /// This is an overloaded function with the exposure ratio given as parameter.
 /// 
