@@ -6,12 +6,13 @@ use std::{
 };
 use std::process::Output;
 
+use semver::Version;
 use shlex::Shlex;
 
 use super::Result;
 
 pub struct ProbeResult {
-	pub version: Option<String>,
+	pub version: Option<Version>,
 	pub include_paths: Vec<PathBuf>,
 	pub link_paths: Vec<PathBuf>,
 	pub link_libs: Vec<String>,
@@ -72,7 +73,7 @@ impl<'r> CmakeProbe<'r> {
 		out
 	}
 
-	fn extract_from_output(output: &Output, version: &mut Option<String>, opencv_include_paths: &mut Vec<PathBuf>) -> Result<()> {
+	fn extract_from_output(output: &Output, version: &mut Option<Version>, opencv_include_paths: &mut Vec<PathBuf>) -> Result<()> {
 		if output.status.success() {
 			let mut line = String::new();
 			let mut reader = BufReader::new(output.stderr.as_slice());
@@ -94,7 +95,7 @@ impl<'r> CmakeProbe<'r> {
 							);
 						}
 						Some("OCVRS_VERSION") => {
-							*version = Some(value.trim().to_string());
+							*version = Some(Version::parse(value.trim())?);
 						}
 						_ => {}
 					}

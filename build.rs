@@ -177,7 +177,7 @@ impl fmt::Display for EnvList<'_> {
 #[derive(Debug)]
 struct Library {
 	pub include_paths: Vec<PathBuf>,
-	pub version: String,
+	pub version: Version,
 	pub cargo_metadata: Vec<String>,
 }
 
@@ -204,7 +204,7 @@ impl Library {
 			})
 	}
 
-	fn version_from_include_paths(include_paths: impl IntoIterator<Item=impl AsRef<Path>>) -> Option<String> {
+	fn version_from_include_paths(include_paths: impl IntoIterator<Item=impl AsRef<Path>>) -> Option<Version> {
 		include_paths.into_iter().find_map(|x| get_version_from_headers(x.as_ref()))
 	}
 
@@ -278,7 +278,7 @@ impl Library {
 
 			Ok(Self {
 				include_paths,
-				version: version.unwrap_or_else(|| "0.0.0".to_owned()),
+				version: version.unwrap_or_else(|| Version::new(0, 0, 0)),
 				cargo_metadata,
 			})
 		} else {
@@ -307,7 +307,7 @@ impl Library {
 
 		Ok(Self {
 			include_paths,
-			version: opencv.version,
+			version: Version::parse(&opencv.version)?,
 			cargo_metadata,
 		})
 	}
@@ -350,7 +350,7 @@ impl Library {
 
 		Ok(Self {
 			include_paths: Self::process_env_var_list(include_paths, probe_result.include_paths),
-			version: probe_result.version.unwrap_or_else(|| "0.0.0".to_string()),
+			version: probe_result.version.unwrap_or_else(|| Version::new(0, 0, 0)),
 			cargo_metadata,
 		})
 	}
@@ -387,7 +387,7 @@ impl Library {
 
 		Ok(Self {
 			include_paths,
-			version: version.unwrap_or_else(|| "0.0.0".to_string()),
+			version: version.unwrap_or_else(|| Version::new(0, 0, 0)),
 			cargo_metadata,
 		})
 	}
@@ -599,9 +599,9 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 		line.clear();
 	}
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-		Some(format!("{}.{}.{}", major, minor, revision))
+		Some(Version::new(major.parse().ok()?, minor.parse().ok()?, revision.parse().ok()?))
 	} else {
-		Some("0.0.0".to_string())
+		Some(Version::new(0, 0, 0))
 	}
 }
 
