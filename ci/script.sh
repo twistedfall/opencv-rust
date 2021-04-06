@@ -51,15 +51,15 @@ rustc --print=cfg
 
 cargo test -vv -p opencv-binding-generator
 
-cargo test -vv --no-default-features --features "$CARGO_FEATURES"
-cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
+cargo test -vv
+cargo test --release -vv
 
-cargo test --release -vv --no-default-features --features "$CARGO_FEATURES,clang-runtime"
+cargo test --release -vv --features clang-runtime
 pushd ci/test-proj-clang-runtime
-cargo run -vv --features="$CARGO_FEATURES"
+cargo run -vv
 popd
 
 export CXX=clang++
 touch build.rs
-cargo test -vv --no-default-features --features "$CARGO_FEATURES"
-cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
+cargo test -vv
+cargo test --release -vv

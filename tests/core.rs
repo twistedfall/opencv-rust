@@ -33,7 +33,7 @@ fn moments() -> Result<()> {
 }
 
 #[test]
-#[cfg(not(feature = "opencv-32"))]
+#[cfg(not(ocvrs_opencv_branch_32))]
 fn cpu_features_line() -> Result<()> {
     let cpu_feats = core::get_cpu_features_line()?;
     assert!(cpu_feats.is_ascii());
@@ -74,7 +74,7 @@ fn in_range() -> Result<()> {
 }
 
 #[test]
-#[cfg(feature = "opencv-4")]
+#[cfg(ocvrs_opencv_branch_4)]
 fn file_storage() -> Result<()> {
     use opencv::{
         core::{FileStorage_Mode, FileStorage, FileNode},

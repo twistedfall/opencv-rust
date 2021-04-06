@@ -37,7 +37,7 @@ fn matx_set() {
 	assert_eq!(a[(1, 0)], 0.);
 }
 
-#[cfg(all(feature = "opencv-4", not(target_env = "msvc")))]
+#[cfg(all(ocvrs_opencv_branch_4, not(target_env = "msvc")))]
 #[test]
 fn matx_return() -> Result<()> {
 	let mat = imgproc::get_rotation_matrix_2d_matx(Point2f::new(10., 10.), 90., 2.)?;
@@ -48,7 +48,7 @@ fn matx_return() -> Result<()> {
 	Ok(())
 }
 
-#[cfg(all(ocvrs_has_module_surface_matching, not(feature = "opencv-32")))]
+#[cfg(all(ocvrs_has_module_surface_matching, not(ocvrs_opencv_branch_32)))]
 #[test]
 fn matx_arg() -> Result<()> {
 	use opencv::{core::Matx44d, surface_matching::Pose3D};

@@ -16,6 +16,7 @@ use super::{
 	file_copy_to_dir,
 	get_versioned_hub_dirs,
 	HOST_TRIPLE,
+	Library,
 	MODULES,
 	OUT_DIR,
 	Result,
@@ -52,16 +53,16 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	Ok(target_file)
 }
 
-pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> Result<()> {
+pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: Option<Child>) -> Result<()> {
 	let out_dir_as_str = OUT_DIR.to_str().unwrap();
-	let (rust_hub_dir, cpp_hub_dir) = get_versioned_hub_dirs();
+	let (rust_hub_dir, cpp_hub_dir) = get_versioned_hub_dirs(&opencv.version);
 	let module_dir = rust_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
 	let opencv_dir = opencv_header_dir.join("opencv2");
 
-	eprintln!("=== Using OpenCV headers from: {}", opencv_dir.display());
 	eprintln!("=== Generating code in: {}", out_dir_as_str);
 	eprintln!("=== Placing generated bindings into: {}", rust_hub_dir.display());
+	eprintln!("=== Using OpenCV headers from: {}", opencv_dir.display());
 
 	let modules = MODULES.get().expect("MODULES not initialized");
 
@@ -71,16 +72,6 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 			let _ = fs::remove_file(path);
 		}
 	}
-
-	let version = if cfg!(feature = "opencv-32") {
-		"3.2.0"
-	} else if cfg!(feature = "opencv-34") {
-		"3.4.10"
-	} else if cfg!(feature = "opencv-4") {
-		"4.3.0"
-	} else {
-		unreachable!();
-	};
 
 	let clang_stdlib_include_dir = Arc::new(env::var_os("OPENCV_CLANG_STDLIB_PATH")
 		.map(PathBuf::from)
@@ -104,6 +95,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 		start = Instant::now();
 		modules.iter().for_each(|module| {
 			let token = job_server.acquire().expect("Can't acquire token from job server");
+			let opencv_version = opencv.version.to_string();
 			let join_handle = thread::spawn({
 				let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
 				let opencv_header_dir = Arc::clone(&opencv_header_dir);
@@ -119,7 +111,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 						.arg(&*SRC_CPP_DIR)
 						.arg(&*OUT_DIR)
 						.arg(&module)
-						.arg(version)
+						.arg(&opencv_version)
 						.arg(clang_stdlib_include_dir);
 					eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
 					let res = bin_generator.status().expect("Can't run bindings generator");
@@ -137,6 +129,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 		start = Instant::now();
 		modules.iter().for_each(|module| {
 			let token = job_server.acquire().expect("Can't acquire token from job server");
+			let opencv_version = opencv.version.to_string();
 			let join_handle = thread::spawn({
 				let gen = Arc::clone(&gen);
 				move || {
@@ -144,7 +137,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, generator_build: Option<Child>) -> 
 						&*SRC_CPP_DIR,
 						&*OUT_DIR,
 						&module,
-						version,
+						&opencv_version,
 						false,
 					);
 					gen.process_opencv_module(&module, bindings_writer);

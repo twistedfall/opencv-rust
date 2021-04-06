@@ -6,10 +6,10 @@ use opencv::{
 	Result,
 	types::{VectorOff64, VectorOfu8},
 };
-#[cfg(not(feature = "opencv-4"))]
-use opencv::core::ACCESS_READ;
-#[cfg(feature = "opencv-4")]
+#[cfg(ocvrs_opencv_branch_4)]
 use opencv::core::AccessFlag::ACCESS_READ;
+#[cfg(not(ocvrs_opencv_branch_4))]
+use opencv::core::ACCESS_READ;
 
 #[test]
 fn input_array() -> Result<()> {

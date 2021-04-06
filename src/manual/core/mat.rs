@@ -133,10 +133,10 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	if mat_type == out_type {
 		Ok(())
 	} else {
-		#[cfg(not(feature = "opencv-32"))]
-			let mat_type = core::type_to_string(mat_type)?;
-		#[cfg(not(feature = "opencv-32"))]
-			let out_type = core::type_to_string(out_type)?;
+		#[cfg(not(ocvrs_opencv_branch_32))]
+		let mat_type = core::type_to_string(mat_type)?;
+		#[cfg(not(ocvrs_opencv_branch_32))]
+		let out_type = core::type_to_string(out_type)?;
 		Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", mat_type, out_type)))
 	}
 }
@@ -565,9 +565,9 @@ impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let typ = self.typ();
 		let depth = self.depth();
-		#[cfg(not(feature = "opencv-32"))]
+		#[cfg(not(ocvrs_opencv_branch_32))]
 		let typ = typ.and_then(core::type_to_string);
-		#[cfg(not(feature = "opencv-32"))]
+		#[cfg(not(ocvrs_opencv_branch_32))]
 		let depth = depth.and_then(core::depth_to_string);
 		f.debug_struct("Mat")
 			.field("type", &typ.map_err(|_| fmt::Error)?)
@@ -640,7 +640,7 @@ impl ToInputOutputArray for &mut UMat {
 	}
 }
 
-#[cfg(feature = "opencv-32")]
+#[cfg(ocvrs_opencv_branch_32)]
 pub trait MatSizeTraitManual: MatSizeTrait {
 	#[inline]
 	fn dims(&self) -> i32 {
@@ -649,7 +649,7 @@ pub trait MatSizeTraitManual: MatSizeTrait {
 	}
 }
 
-#[cfg(feature = "opencv-32")]
+#[cfg(ocvrs_opencv_branch_32)]
 impl<T: MatSizeTrait> MatSizeTraitManual for T {}
 
 impl Deref for MatSize {

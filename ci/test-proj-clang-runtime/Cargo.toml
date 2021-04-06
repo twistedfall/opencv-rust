@@ -6,11 +6,6 @@ authors = ["Pro"]
 edition = "2018"
 
 [dependencies]
-opencv = { path = "../..", default-features = false, features = ["clang-runtime"] }
+opencv = { path = "../..", features = ["clang-runtime"] }
 
 [workspace]
-
-[features]
-opencv-32 = ["opencv/opencv-32"]
-opencv-34 = ["opencv/opencv-34"]
-opencv-4 = ["opencv/opencv-4"]

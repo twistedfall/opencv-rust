@@ -23,21 +23,18 @@ jobs:
           - beta
         version:
           - opencv: 3.4.14
-            features: opencv-34
           - opencv: 4.5.2
-            features: opencv-4
         exclude:
           - os:
               family: osx
             version:
-              features: opencv-34
+              opencv: 3.4.14
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
       OPENCV_VERSION: ${{ matrix.version.opencv }}
-      CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
 
@@ -82,13 +79,11 @@ jobs:
           - beta
         version:
           - vcpkg: 4
-            features: opencv-4
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
-      CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
 
@@ -136,30 +131,27 @@ jobs:
         version:
           - opencv: 3.2.0
             brew: "@2"
-            features: opencv-32
-          - opencv: 3.4.8
+          - opencv: 3.4.14
             brew: "@3"
-            features: opencv-34
-          - opencv: 4.1.2
+          - opencv: 4.5.2
             brew: "@4"
-            features: opencv-4
         exclude:
           - os:
               family: osx
             version:
-              features: opencv-32
+              brew: "@2"
           - os:
               family: windows
             version:
-              features: opencv-32
+              opencv: 3.2.0
           - os:
               family: linux
             version:
-              features: opencv-34
+              opencv: 3.4.14
           - os:
               family: linux
             version:
-              features: opencv-4
+              opencv: 4.5.2
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
@@ -167,7 +159,6 @@ jobs:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
       CHOCO_OPENCV_VERSION: ${{ matrix.version.opencv }}
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
-      CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
 
@@ -205,19 +196,4 @@ jobs:
 
       - name: Run a documentation generation test
         run: ci/docs-rs.sh
-        shell: bash
-
-  check:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          default: true
-
-      - name: Run a self-check
-        run: ci/check.sh
         shell: bash

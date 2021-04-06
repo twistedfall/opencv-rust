@@ -8,10 +8,10 @@ use opencv::{
 	Result,
 	types,
 };
-#[cfg(not(feature = "opencv-4"))]
-use opencv::core::ACCESS_READ;
-#[cfg(feature = "opencv-4")]
+#[cfg(ocvrs_opencv_branch_4)]
 use opencv::core::AccessFlag::ACCESS_READ;
+#[cfg(not(ocvrs_opencv_branch_4))]
+use opencv::core::ACCESS_READ;
 
 const ITERATIONS: usize = 100;
 

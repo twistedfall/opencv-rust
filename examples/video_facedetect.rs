@@ -14,14 +14,14 @@ use opencv::{
 fn main() -> Result<()> {
 	let window = "video capture";
 	highgui::named_window(window, 1)?;
-	#[cfg(feature = "opencv-32")]
+	#[cfg(ocvrs_opencv_branch_32)]
 	let (xml, mut cam) = {
 		(
 			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
 			videoio::VideoCapture::new_default(0)?, // 0 is the default camera
 		)
 	};
-	#[cfg(not(feature = "opencv-32"))]
+	#[cfg(not(ocvrs_opencv_branch_32))]
 	let (xml, mut cam) = {
 		(
 			core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,

@@ -1,4 +1,4 @@
-#![cfg(all(ocvrs_has_module_objdetect, not(feature = "opencv-32")))]
+#![cfg(all(ocvrs_has_module_objdetect, not(ocvrs_opencv_branch_32)))]
 
 use std::path::Path;
 
@@ -38,19 +38,18 @@ fn qr_code() -> Result<()> {
 		assert!(!straight.empty()?);
 	}
 
-	#[cfg(feature = "opencv-34")]
-		{
-			let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-			let mut pts = VectorOfPoint::new();
-			let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
-			assert!(res);
-			assert_eq!(4, pts.len());
-			let mut out = String::new();
-			let mut straight = Mat::default();
-			let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
-			assert!(res);
-			assert_eq!(out, "https://crates.io/crates/opencv");
-			assert!(!straight.empty()?);
-		}
+	#[cfg(ocvrs_opencv_branch_34)] {
+		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
+		let mut pts = VectorOfPoint::new();
+		let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
+		assert!(res);
+		assert_eq!(4, pts.len());
+		let mut out = String::new();
+		let mut straight = Mat::default();
+		let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
+		assert!(res);
+		assert_eq!(out, "https://crates.io/crates/opencv");
+		assert!(!straight.empty()?);
+	}
 	Ok(())
 }

@@ -18,11 +18,6 @@ Update your Cargo.toml
 opencv = "0.52"
 ```
 
-Select OpenCV version if different from default (opencv-4) in Cargo.toml:
-```toml
-opencv = {version = "0.52", default-features = false, features = ["opencv-34"]}
-```
-
 Import prelude
 ```rust
 use opencv::prelude::*;
@@ -196,12 +191,6 @@ on any platform, the specified values will override those automatically discover
 
 The following variables are rarely used, but you might need them under some circumstances:
 
-* `OPENCV_HEADER_DIR`
-  During crate build it uses OpenCV headers bundled with the crate. If you want to use your own (system)
-  headers supply `OPENCV_HEADER_DIR` environment variable.
-  The directory in that environment variable should contain `opencv2` dir, e.g. set it `/usr/include` for
-  OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x.
-
 * `OPENCV_PACKAGE_NAME`
   In some cases you might want to override the pkg-config, cmake or vcpkg package name, you can use this
   environment variable for that. If you set it pkg-config will expect to find the file with that name and `.pc`
@@ -271,11 +260,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
 
 ## Cargo features
-* `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
-  Ubuntu users who can install OpenCV from the repository without having to compile it from the
-  source
-* `opencv-34` - build against OpenCV 3.4.x
-* `opencv-4` (default) - build against OpenCV 4.x
 * `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
   workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
@@ -289,9 +273,9 @@ as well.
 ### OpenCV version support
 
 The following OpenCV versions are supported at the moment:
-* 3.2 - enabled by `opencv-32` feature
-* 3.4 - enabled by `opencv-34` feature
-* 4.3 - enabled by the default `opencv-4` feature
+* 3.2
+* 3.4
+* 4.x
 
 ### Minimum rustc version
 

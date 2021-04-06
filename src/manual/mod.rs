@@ -9,7 +9,7 @@ pub mod types;
 
 pub mod prelude {
 	#[cfg(ocvrs_has_module_core)]
-	pub use super::{core::{MatConstIteratorTraitManual, MatTraitManual, MatxTrait, UMatTraitManual}};
-	#[cfg(all(ocvrs_has_module_core, feature = "opencv-32"))]
+	pub use super::core::{MatConstIteratorTraitManual, MatTraitManual, MatxTrait, UMatTraitManual};
+	#[cfg(all(ocvrs_has_module_core, ocvrs_opencv_branch_32))]
 	pub use super::core::MatSizeTraitManual;
 }
