@@ -1,1 +1,0 @@
-template struct Result<int>;

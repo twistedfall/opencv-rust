@@ -13,8 +13,6 @@ use std::{
 use glob::glob;
 
 use super::{
-	file_copy_to_dir,
-	get_versioned_hub_dirs,
 	HOST_TRIPLE,
 	Library,
 	MODULES,
@@ -55,13 +53,13 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 
 pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: Option<Child>) -> Result<()> {
 	let out_dir_as_str = OUT_DIR.to_str().unwrap();
-	let (rust_hub_dir, cpp_hub_dir) = get_versioned_hub_dirs(&opencv.version);
-	let module_dir = rust_hub_dir.join("hub");
+	let target_hub_dir = SRC_DIR.join("opencv");
+	let target_module_dir = target_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
 	let opencv_dir = opencv_header_dir.join("opencv2");
 
 	eprintln!("=== Generating code in: {}", out_dir_as_str);
-	eprintln!("=== Placing generated bindings into: {}", rust_hub_dir.display());
+	eprintln!("=== Placing generated bindings into: {}", target_hub_dir.display());
 	eprintln!("=== Using OpenCV headers from: {}", opencv_dir.display());
 
 	let modules = MODULES.get().expect("MODULES not initialized");
@@ -155,40 +153,10 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 	}
 	eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 
-	if !module_dir.exists() {
-		fs::create_dir_all(&module_dir)?;
-	}
-
-	for entry in read_dir(&module_dir)? {
+	for entry in read_dir(&target_module_dir)? {
 		let path = entry.path();
 		if path.extension().map_or(false, |e| e == "rs") {
 			let _ = fs::remove_file(path);
-		}
-	}
-
-	if !cpp_hub_dir.exists() {
-		fs::create_dir_all(&cpp_hub_dir)?;
-	}
-	for entry in read_dir(&cpp_hub_dir)? {
-		let path = entry.path();
-		if path.is_file() {
-			let _ = fs::remove_file(path);
-		}
-	}
-
-	for module in modules {
-		let module_cpp = OUT_DIR.join(format!("{}.cpp", module));
-		if module_cpp.is_file() {
-			file_copy_to_dir(&module_cpp, &cpp_hub_dir)?;
-			let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
-			let mut module_types_file = OpenOptions::new().create(true).truncate(true).write(true).open(&module_types_cpp)?;
-			let mut type_files: Vec<PathBuf> = glob(&format!("{}/???-{}-*.type.cpp", out_dir_as_str, module))?
-				.collect::<Result<_, glob::GlobError>>()?;
-			type_files.sort_unstable();
-			for entry in type_files.into_iter() {
-				io::copy(&mut File::open(entry)?, &mut module_types_file)?;
-			}
-			file_copy_to_dir(&module_types_cpp, &cpp_hub_dir)?;
 		}
 	}
 
@@ -206,56 +174,69 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 		}
 	};
 
-	let mut hub_rs = File::create(rust_hub_dir.join("hub.rs"))?;
+	let mut hub_rs = File::create(target_hub_dir.join("hub.rs"))?;
 
-	let mut types_rs = File::create(module_dir.join("types.rs"))?;
+	let mut types_rs = File::create(target_module_dir.join("types.rs"))?;
 	writeln!(&mut types_rs)?;
 
-	let mut sys_rs = File::create(module_dir.join("sys.rs"))?;
+	let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
 	writeln!(&mut sys_rs, "use crate::{{mod_prelude_types::*, core}};")?;
 	writeln!(&mut sys_rs)?;
+
 	for module in modules {
-		// hub
+		// merge multiple *-type.cpp files into a single module_types.hpp
+		let module_cpp = OUT_DIR.join(format!("{}.cpp", module));
+		if module_cpp.is_file() {
+			let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
+			let mut module_types_file = OpenOptions::new().create(true).truncate(true).write(true).open(&module_types_cpp)?;
+			let mut type_files: Vec<PathBuf> = glob(&format!("{}/???-{}-*.type.cpp", out_dir_as_str, module))?
+				.collect::<Result<_, glob::GlobError>>()?;
+			type_files.sort_unstable();
+			for entry in type_files.into_iter() {
+				io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
+				let _ = fs::remove_file(entry);
+			}
+		}
+
+		// add module entry to hub.rs and move the file into src/opencv/hub
 		write_has_module(&mut hub_rs, module)?;
 		writeln!(&mut hub_rs, "pub mod {};", module)?;
 		let module_filename = format!("{}.rs", module);
-		let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &module_dir)?;
+		let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &target_module_dir)?;
 		let mut f = OpenOptions::new().append(true).open(&target_file)?;
 		add_manual(&mut f, module)?;
 
-		// types
-		let mut write_header = true;
+		// merge multiple *-.type.rs files into a single types.rs
+		let mut header_written = false;
 		for entry in glob(&format!("{}/???-{}-*.type.rs", out_dir_as_str, module))? {
 			let entry = entry?;
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
-				if write_header {
+				if !header_written {
 					write_has_module(&mut types_rs, module)?;
 					writeln!(&mut types_rs, "mod {}_types {{", module)?;
 					writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 					writeln!(&mut types_rs)?;
-					write_header = false;
+					header_written = true;
 				}
 				copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
 			}
+			let _ = fs::remove_file(entry);
 		}
-		if !write_header {
+		if header_written {
 			writeln!(&mut types_rs, "}}")?;
 			write_has_module(&mut types_rs, module)?;
 			writeln!(&mut types_rs, "pub use {}_types::*;", module)?;
 			writeln!(&mut types_rs)?;
 		}
 
-		// sys
-		let path = OUT_DIR.join(format!("{}.externs.rs", module));
+		// merge module-specific *.externs.rs into a single sys.rs
+		let externs_rs = OUT_DIR.join(format!("{}.externs.rs", module));
 		write_has_module(&mut sys_rs, module)?;
 		writeln!(&mut sys_rs, "mod {}_sys {{", module)?;
 		writeln!(&mut sys_rs, "\tuse super::*;")?;
 		writeln!(&mut sys_rs)?;
-		for entry in glob(&format!("{}/{}-*.rv.rs", out_dir_as_str, module))? {
-			let entry: PathBuf = entry?;
-			copy_indent(BufReader::new(File::open(entry)?), &mut sys_rs, "\t")?;
-		}
-		copy_indent(BufReader::new(File::open(&path)?), &mut sys_rs, "\t")?;
+		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
+		let _ = fs::remove_file(externs_rs);
 		writeln!(&mut sys_rs, "}}")?;
 		write_has_module(&mut sys_rs, module)?;
 		writeln!(&mut sys_rs, "pub use {}_sys::*;", module)?;
@@ -269,10 +250,12 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 
 	add_manual(&mut sys_rs, "sys")?;
 
+	// write hub_prelude that imports all module-specific preludes
 	writeln!(&mut hub_rs, "pub mod hub_prelude {{")?;
 	for module in modules {
-		writeln!(&mut hub_rs, "	#[cfg(ocvrs_has_module_{})]", module)?;
-		writeln!(&mut hub_rs, "	pub use super::{}::prelude::*;", module)?;
+		write!(&mut hub_rs, "\t")?;
+		write_has_module(&mut hub_rs, module)?;
+		writeln!(&mut hub_rs, "\tpub use super::{}::prelude::*;", module)?;
 	}
 	writeln!(&mut hub_rs, "}}")?;
 

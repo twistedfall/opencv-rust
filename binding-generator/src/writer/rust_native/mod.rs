@@ -74,15 +74,6 @@ impl<'s> RustNativeBindingWriter<'s> {
 			if false {
 				File::create(&debug_path).expect("Can't create debug log");
 			}
-			for entry in out_dir.read_dir().expect("Can't read out_dir") {
-				let entry = entry.expect("Can't read directory entry");
-				let path = entry.path();
-				if entry.file_type().map(|f| f.is_file()).unwrap_or(false)
-					&& path.extension().map_or(false, |e| e == "rs" || e == "cpp")
-				{
-					let _ = fs::remove_file(path);
-				}
-			}
 		}
 		Self {
 			debug,

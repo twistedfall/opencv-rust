@@ -63,7 +63,7 @@ jobs:
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
-          path: bindings
+          path: src/opencv
 
   vcpkg:
     strategy:
@@ -112,7 +112,7 @@ jobs:
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-vcpkg-${{ matrix.version.vcpkg }}
-          path: bindings
+          path: src/opencv
 
   bin:
     strategy:
@@ -181,7 +181,7 @@ jobs:
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
-          path: bindings
+          path: src/opencv
 
   docs-rs:
     runs-on: ubuntu-20.04

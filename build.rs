@@ -4,7 +4,7 @@ use std::{
 	env,
 	ffi::OsStr,
 	fmt,
-	fs::{self, File},
+	fs::File,
 	io::{BufRead, BufReader},
 	iter,
 	path::{Path, PathBuf},
@@ -561,17 +561,6 @@ impl Library {
 	}
 }
 
-fn file_copy_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
-	if !target_dir.exists() {
-		fs::create_dir_all(&target_dir)?;
-	}
-	let src_filename = src_file.file_name()
-		.ok_or("Can't calculate filename")?;
-	let target_file = target_dir.join(src_filename);
-	fs::copy(&src_file, &target_file)?;
-	Ok(target_file)
-}
-
 fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	let out = header_dir.join("opencv2/core/version.hpp");
 	if out.is_file() {
@@ -624,25 +613,6 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 	} else {
 		Some(Version::new(0, 0, 0))
 	}
-}
-
-fn get_versioned_hub_dirs(opencv_version: &Version) -> (PathBuf, PathBuf) {
-	let bindings_dir = MANIFEST_DIR.join("bindings");
-	let mut rust_hub_dir = bindings_dir.join("rust");
-	let mut cpp_hub_dir = bindings_dir.join("cpp");
-	if OPENCV_BRANCH_4.matches(opencv_version) {
-		rust_hub_dir.push("opencv_4");
-		cpp_hub_dir.push("opencv_4");
-	} else if OPENCV_BRANCH_34.matches(opencv_version) {
-		rust_hub_dir.push("opencv_34");
-		cpp_hub_dir.push("opencv_34");
-	} else if OPENCV_BRANCH_32.matches(opencv_version) {
-		rust_hub_dir.push("opencv_32");
-		cpp_hub_dir.push("opencv_32");
-	} else {
-		panic!("Unsupported OpenCV version: {}", opencv_version);
-	}
-	(rust_hub_dir, cpp_hub_dir)
 }
 
 fn make_modules(opencv_dir: &Path) -> Result<()> {
@@ -749,46 +719,6 @@ fn build_wrapper(opencv: &Library) {
 	cc.compile("ocvrs");
 }
 
-fn install_wrapper(opencv: &Library) -> Result<()> {
-	let (rust_hub_dir, cpp_hub_dir) = get_versioned_hub_dirs(&opencv.version);
-	let target_hub_dir = SRC_DIR.join("opencv");
-	let target_module_dir = target_hub_dir.join("hub");
-
-	for entry in glob(&format!("{}/*.cpp", cpp_hub_dir.to_str().unwrap()))? {
-		let entry = entry?;
-		file_copy_to_dir(&entry, &OUT_DIR)?;
-	}
-	for entry in glob(&format!("{}/*.hpp", cpp_hub_dir.to_str().unwrap()))? {
-		let entry = entry?;
-		file_copy_to_dir(&entry, &OUT_DIR)?;
-	}
-
-	if !cfg!(feature = "docs-only") {
-		for entry in glob(&format!("{}/*.rs", target_module_dir.to_str().unwrap()))? {
-			let _ = fs::remove_file(entry?);
-		}
-		for entry in glob(&format!("{}/**/*.rs", rust_hub_dir.to_str().unwrap())).unwrap() {
-			let entry = entry?;
-			let target_file = target_hub_dir.join(entry.strip_prefix(&rust_hub_dir)?);
-			if let Some(target_dir) = target_file.parent() {
-				if !target_dir.exists() {
-					fs::create_dir_all(target_dir)?;
-				}
-			}
-			fs::copy(&entry, target_file)?;
-		}
-	}
-	Ok(())
-}
-
-fn cleanup() -> Result<()> {
-	// fixme, shouldn't be needed
-	for entry in glob(&format!("{}/*.rs", OUT_DIR.to_str().ok_or_else(|| "Can't convert OUT_DIR to UTF-8 string")?))? {
-		let _ = fs::remove_file(entry?);
-	}
-	Ok(())
-}
-
 fn main() -> Result<()> {
 	if cfg!(feature = "docs-only") { // fake setup for docs.rs
 		println!(r#"cargo:rustc-cfg=ocvrs_opencv_branch_4"#);
@@ -878,10 +808,8 @@ fn main() -> Result<()> {
 	setup_rerun()?;
 
 	generator::gen_wrapper(opencv_header_dir, &opencv, generator_build)?;
-	install_wrapper(&opencv)?;
 	build_wrapper(&opencv);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
-	cleanup()?;
 	Ok(())
 }
