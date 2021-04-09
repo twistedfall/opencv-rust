@@ -2,6 +2,10 @@
 
 set -vex
 
+#brew -v update
+#brew install cmake eigen ffmpeg
+#brew unlink protobuf # otherwise it will use the system libprotobuf instead of the bundled
+
 base_dir="$HOME/build/opencv/"
 mkdir -p "$base_dir"
 

@@ -135,7 +135,7 @@ fn main() {
 					.map(|f| f.to_string())
 			});
 		let clang = Clang::new().expect("Cannot initialize clang");
-		let gen = Generator::new(None, &opencv_header_dir, &src_cpp_dir, clang);
+		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir, clang);
 		for module in modules {
 			println!("  {}", module);
 			gen.process_module(&module, false, |root_tu| {

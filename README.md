@@ -216,11 +216,6 @@ The following variables are rarely used, but you might need them under some circ
       cmake (cmake related environment variables are applicable with this probe)
     * vcpkg
 
-* `OPENCV_CLANG_STDLIB_PATH`
-  Path that contains the stdlib headers for parsing with libclang. Should be used only as a workaround for
-  the rare cases where it doesn't get picked up automatically. Should help with issues like
-  [this](https://github.com/twistedfall/opencv-rust/issues/125).
-
 * `OPENCV_MODULE_WHITELIST` and `OPENCV_MODULE_BLACKLIST`
   Comma separated lists that affect modules that get their bindings generated. Setting whitelist will only
   generate the specified modules, setting blacklist will exclude the specified modules from generation. If the

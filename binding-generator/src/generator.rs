@@ -478,11 +478,11 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 }
 
 impl Generator {
-	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, clang: Clang) -> Self {
+	pub fn new(opencv_include_dir: &Path, additional_include_dirs: &[PathBuf], src_cpp_dir: &Path, clang: Clang) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
-		if let Some(clang_stdlib_include_dir) = clang_stdlib_include_dir {
-			clang_include_dirs.push(canonicalize(clang_stdlib_include_dir.to_path_buf()).expect("Cannot canonicalize clang_stdlib_include_dir"))
+		for additional_dir in additional_include_dirs {
+			clang_include_dirs.push(canonicalize(additional_dir).expect("Cannot canonicalize one of the additional_include_dirs"))
 		}
 		Self {
 			clang_include_dirs,

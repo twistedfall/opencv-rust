@@ -73,9 +73,10 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 		}
 	}
 
-	let clang_stdlib_include_dir = Arc::new(env::var_os("OPENCV_CLANG_STDLIB_PATH")
-		.map(PathBuf::from)
-	);
+	let additional_include_dirs = opencv.include_paths.iter()
+		.filter(|&include_path| include_path != opencv_header_dir)
+		.cloned()
+		.collect::<Vec<_>>();
 	let num_jobs = env::var("NUM_JOBS").ok()
 		.and_then(|jobs| jobs.parse().ok())
 		.unwrap_or(2);
@@ -84,7 +85,11 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 	let start;
 	let clang = clang::Clang::new().expect("Cannot initialize clang");
 	println!("=== Clang: {}", clang::get_version());
-	let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, clang);
+	let gen = binding_generator::Generator::new(&opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
+	let additional_include_dirs = Arc::new(additional_include_dirs.iter().cloned()
+		.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string").to_string())
+		.collect::<Vec<_>>()
+	);
 	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 	if cfg!(feature = "clang-runtime") {
 		let status = generator_build.expect("Impossible").wait()?;
@@ -97,12 +102,9 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 			let token = job_server.acquire().expect("Can't acquire token from job server");
 			let opencv_version = opencv.version.to_string();
 			let join_handle = thread::spawn({
-				let clang_stdlib_include_dir = Arc::clone(&clang_stdlib_include_dir);
+				let additional_include_dirs = Arc::clone(&additional_include_dirs);
 				let opencv_header_dir = Arc::clone(&opencv_header_dir);
 				move || {
-					let clang_stdlib_include_dir = (*clang_stdlib_include_dir).as_ref()
-						.and_then(|p| p.to_str())
-						.unwrap_or("None");
 					let mut bin_generator = match HOST_TRIPLE.as_ref() {
 						Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
 						None => Command::new(OUT_DIR.join("release/binding-generator")),
@@ -112,7 +114,7 @@ pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_
 						.arg(&*OUT_DIR)
 						.arg(&module)
 						.arg(&opencv_version)
-						.arg(clang_stdlib_include_dir);
+						.arg(additional_include_dirs.join(","));
 					eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
 					let res = bin_generator.status().expect("Can't run bindings generator");
 					if !res.success() {
