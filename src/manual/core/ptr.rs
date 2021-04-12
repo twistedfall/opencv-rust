@@ -11,7 +11,6 @@ use crate::{
 	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
-#[cfg(not(feature = "opencv-32"))]
 mod ptr_f32;
 mod ptr_extern;
 

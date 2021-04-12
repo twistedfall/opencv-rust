@@ -1033,6 +1033,15 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		],
 		..Default::default()
 	},
+	"core" => ModuleTweak {
+		includes: vec![
+			"core.hpp",
+		],
+		generate_types: vec![
+			"cv::Ptr<float>", // for 3.2, no function uses that so it's not generated
+		],
+		..Default::default()
+	},
 	"dnn" => ModuleTweak {
 		includes: vec![
 			"dnn/dict.hpp",

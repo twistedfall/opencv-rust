@@ -1,4 +1,3 @@
-#[cfg(not(feature = "opencv-32"))]
 #[test]
 fn ptr_f32() {
 	use opencv::core::Ptr;

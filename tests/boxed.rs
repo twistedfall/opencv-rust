@@ -61,7 +61,6 @@ fn into_raw() -> Result<()> {
 }
 
 #[test]
-#[cfg(not(feature = "opencv-32"))]
 fn into_raw_ptroff32() -> Result<()> {
 	use opencv::types::PtrOff32;
 
