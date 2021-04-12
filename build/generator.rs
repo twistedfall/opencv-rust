@@ -51,7 +51,7 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	Ok(target_file)
 }
 
-pub(crate) fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: Option<Child>) -> Result<()> {
+pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: Option<Child>) -> Result<()> {
 	let out_dir_as_str = OUT_DIR.to_str().unwrap();
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
