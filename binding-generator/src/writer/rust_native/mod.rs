@@ -70,8 +70,9 @@ impl<'s> RustNativeBindingWriter<'s> {
 	pub fn new(src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
 		let out_dir = out_dir.into();
 		let debug_path = out_dir.join(format!("{}.log", module));
-		if debug {
-			if false {
+		#[allow(clippy::collapsible_if)]
+		if false {
+			if debug {
 				File::create(&debug_path).expect("Can't create debug log");
 			}
 		}
@@ -158,11 +159,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		let safe_id = typ.element_safe_id();
 
 		let path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
-		let file = if self.debug {
-			OpenOptions::new().create(true).write(true).truncate(true).open(&path)
-		} else {
-			OpenOptions::new().create_new(true).write(true).open(&path)
-		};
+		let file = OpenOptions::new().create_new(true).write(true).open(&path);
 		match file {
 			Ok(mut file) => {
 				let gen = typ.gen_rust(self.opencv_version);
@@ -181,11 +178,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		}
 
 		let path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
-		let file = if self.debug {
-			OpenOptions::new().create(true).write(true).truncate(true).open(&path)
-		} else {
-			OpenOptions::new().create_new(true).write(true).open(&path)
-		};
+		let file = OpenOptions::new().create_new(true).write(true).open(&path);
 		match file {
 			Ok(mut file) => {
 				let gen = typ.gen_cpp();
@@ -205,7 +198,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	}
 
 	fn visit_ephemeral_header(&mut self, contents: &str) {
-		if false {
+		if self.debug {
 			let mut file = File::create(self.types_dir.join(format!("ocvrs_ephemeral_{}.hpp", self.module))).expect("Can't create debug ephemeral file");
 			file.write_all(contents.as_bytes()).expect("Can't write debug ephemeral file");
 		}
