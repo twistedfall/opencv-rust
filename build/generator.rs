@@ -98,7 +98,6 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 		start = Instant::now();
 		modules.iter().for_each(|module| {
 			let token = job_server.acquire().expect("Can't acquire token from job server");
-			let opencv_version = opencv.version.to_string();
 			let join_handle = thread::spawn({
 				let additional_include_dirs = Arc::clone(&additional_include_dirs);
 				let opencv_header_dir = Arc::clone(&opencv_header_dir);
@@ -111,7 +110,6 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 						.arg(&*SRC_CPP_DIR)
 						.arg(&*OUT_DIR)
 						.arg(&module)
-						.arg(&opencv_version)
 						.arg(additional_include_dirs.join(","));
 					eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
 					let res = bin_generator.status().expect("Can't run bindings generator");
