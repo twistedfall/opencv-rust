@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
+
+cd "$script_dir"
+
+./regen.sh 32
+./regen.sh 34
+./regen.sh 4
+
+rm -rf target/release/build/opencv-*
