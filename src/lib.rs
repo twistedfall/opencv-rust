@@ -7,7 +7,7 @@ pub use crate::opencv::hub::*;
 #[macro_use]
 mod templ;
 
-mod error;
+pub mod error;
 mod opencv;
 mod manual;
 mod traits;
