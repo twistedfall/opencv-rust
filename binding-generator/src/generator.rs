@@ -482,7 +482,15 @@ impl Generator {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
 		for additional_dir in additional_include_dirs {
-			clang_include_dirs.push(canonicalize(additional_dir).expect("Cannot canonicalize one of the additional_include_dirs"))
+			match canonicalize(additional_dir) {
+				Ok(dir) => clang_include_dirs.push(dir),
+				Err(err) => {
+					eprintln!(
+						"=== Cannot canonicalize one of the additional_include_dirs: {:?}, Reason: {}",
+						additional_dir, err
+					);
+				}
+			};
 		}
 		Self {
 			clang_include_dirs,
