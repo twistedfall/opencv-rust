@@ -6,8 +6,6 @@ branch="${1:-4}"
 
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
-cd "$script_dir/.."
-
 . "$script_dir/env-$branch.sh"
 
 export RUSTFLAGS="-Clink-arg=-fuse-ld=lld"

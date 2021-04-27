@@ -486,8 +486,8 @@ impl Generator {
 				Ok(dir) => clang_include_dirs.push(dir),
 				Err(err) => {
 					eprintln!(
-						"=== Cannot canonicalize one of the additional_include_dirs: {:?}, Reason: {}",
-						additional_dir, err
+						"=== Cannot canonicalize one of the additional_include_dirs: {}, reason: {}",
+						additional_dir.display(), err
 					);
 				}
 			};
