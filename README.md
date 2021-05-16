@@ -305,6 +305,16 @@ or functions that are marked CV_NOEXCEPT in the OpenCV headers are infallible an
 Properties of OpenCV classes are accessible through setters and getters. Those functions are infallible, they
 return the value directly instead of `Result`.
 
+### C++ operators
+Some C++ operators are supported, they are converted to the corresponding functions on Rust side. Here is the
+list with the corresponding function name:
+* `[]` → `get()` or `get_mut()`
+* `+` → `add()`
+* `-` → `sub()`
+* `*` → `mul()`
+* `/` → `div()`
+* `*` (deref) → `deref()` or `deref_mut()`
+
 ### Infallible functions
 
 For infallible functions (like setters) that accept `&str` values the following logic applies: if a Rust

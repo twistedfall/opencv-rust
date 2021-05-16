@@ -20,7 +20,7 @@ fn main() -> Result<()> {
 	if !opened {
 		panic!("Unable to open default camera!");
 	}
-	let mut orb = features2d::ORB::default()?;
+	let mut orb = <dyn features2d::ORB>::default()?;
 	loop {
 		let mut frame = Mat::default();
 		cam.read(&mut frame)?;

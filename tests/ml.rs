@@ -5,12 +5,11 @@ use opencv::{
 	ml,
 	prelude::*,
 	Result,
-	types::PtrOfKNearest,
 };
 
 #[test]
 fn knn() -> Result<()> {
-	let mut knn: PtrOfKNearest = KNearest::create()?;
+	let mut knn = <dyn KNearest>::create()?;
 	assert!(StatModel::empty(&knn)?);
 	let samp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(1.))?;
 	let resp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(2.))?;
