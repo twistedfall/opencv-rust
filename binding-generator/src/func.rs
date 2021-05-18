@@ -38,6 +38,7 @@ pub enum OperatorKind {
 	Mul,
 	Div,
 	Deref,
+	Assign,
 }
 
 impl OperatorKind {
@@ -61,6 +62,9 @@ impl OperatorKind {
 			}
 			"/" => {
 				OperatorKind::Div
+			}
+			"=" => {
+				OperatorKind::Assign
 			}
 			_ => {
 				OperatorKind::Unsupported
@@ -303,6 +307,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self.kind() {
 			Kind::Constructor(cls) => {
 				cls.type_ref()
+			}
+			Kind::InstanceOperator(_, OperatorKind::Assign) => {
+				TypeRef::new(self.gen_env.resolve_type("void").expect("Can't resolve void type"), self.gen_env)
 			}
 			Kind::Function | Kind::InstanceMethod(..) | Kind::StaticMethod(..)
 			| Kind::ConversionMethod(..) | Kind::GenericInstanceMethod(..) | Kind::GenericFunction
@@ -639,6 +646,9 @@ impl Element for Func<'_, '_> {
 						} else {
 							"try_deref_mut".into()
 						}
+					}
+					OperatorKind::Assign => {
+						"assign".into()
 					}
 				}
 			} else {

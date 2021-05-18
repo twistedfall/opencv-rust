@@ -11,7 +11,7 @@ use crate::{
 	Element,
 	Field,
 	Func,
-	func::Kind,
+	func::{Kind, OperatorKind},
 	FunctionTypeHint,
 	get_debug,
 	IteratorExt,
@@ -196,6 +196,9 @@ fn cpp_call_invoke(f: &Func) -> String {
 		Kind::FieldAccessor(class) if f.type_hint() == FunctionTypeHint::FieldSetter => {
 			cpp_method_call_name(&class, DefaultElement::cpp_localname(f).as_ref()).into()
 		}
+		Kind::InstanceOperator(_, OperatorKind::Assign) => {
+			"*instance".into()
+		}
 		Kind::InstanceMethod(class) | Kind::FieldAccessor(class) | Kind::GenericInstanceMethod(class)
 		| Kind::ConversionMethod(class) | Kind::InstanceOperator(class, ..) => {
 			cpp_method_call_name(&class, f.cpp_localname().as_ref()).into()
@@ -229,6 +232,8 @@ fn cpp_call_invoke(f: &Func) -> String {
 		} else {
 			&FIELD_READ_TPL
 		}
+	} else if let Kind::InstanceOperator(_, OperatorKind::Assign) = f.kind() {
+		&FIELD_WRITE_TPL
 	} else if return_type.is_void() {
 		&VOID_TPL
 	} else {
