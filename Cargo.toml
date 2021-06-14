@@ -25,6 +25,9 @@ members = ["binding-generator"]
 #name = "cuda"
 
 [[example]]
+name = "discrete_fourier_transform"
+
+[[example]]
 name = "opencl"
 
 # requires OpenCV 4.5.1+
