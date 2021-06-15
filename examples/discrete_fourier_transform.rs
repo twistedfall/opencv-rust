@@ -12,7 +12,7 @@ use opencv::{
 fn main() -> opencv::Result<()> {
 	#![allow(non_snake_case)]
 	let filename = env::args().skip(1).next().expect("Must supply image filename");
-	let I = imgcodecs::imread(&core::find_file(&filename, true, false)?, imgcodecs::IMREAD_GRAYSCALE)?;
+	let I = imgcodecs::imread(&filename, imgcodecs::IMREAD_GRAYSCALE)?;
 	if I.empty()? {
 		panic!("Error opening image: {}", filename);
 	}
