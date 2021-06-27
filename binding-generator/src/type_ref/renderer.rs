@@ -15,26 +15,97 @@ pub trait TypeRefRenderer<'a> {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Lifetime {
-	number: u8
-}
-
-impl Default for Lifetime {
-	fn default() -> Self {
-		Self { number: 0 }
-	}
+ pub enum Lifetime {
+	Elided,
+	Static,
+	Explicit(u8),
 }
 
 impl Lifetime {
-	pub fn next(self) -> Self {
-		Self { number: self.number + 1 }
+	pub fn elided() -> Self {
+		Self::Elided
+	}
+
+	pub fn statik() -> Self {
+		Self::Static
+	}
+
+	pub fn explicit() -> Self {
+		Self::Explicit(0)
+	}
+
+	pub fn is_elided(&self) -> bool {
+		matches!(self, Self::Elided)
+	}
+
+	pub fn is_explicit(&self) -> bool {
+		matches!(self, Self::Explicit(_))
+	}
+
+	pub fn next(self) -> Option<Self> {
+		match self {
+			Self::Elided => Some(Self::Elided),
+			Self::Static => Some(Self::Static),
+			Self::Explicit(n) if n >= 25 => None,
+			Self::Explicit(n) => Some(Self::Explicit(n + 1)),
+		}
+	}
+}
+
+impl IntoIterator for Lifetime {
+	type Item = Lifetime;
+	type IntoIter = LifetimeIterator;
+
+	fn into_iter(self) -> LifetimeIterator {
+		LifetimeIterator { cur_lifetime: Some(self) }
 	}
 }
 
 impl fmt::Display for Lifetime {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let c = char::from(b'a' + self.number);
-		write!(f, "'{}", c)
+		#[inline]
+		fn write_align(f: &mut fmt::Formatter) -> fmt::Result {
+			if f.align().is_some() {
+				match f.fill() {
+					',' => f.write_str(", ")?,
+					' ' => f.write_char(' ')?,
+					_ => {}
+				}
+			}
+			Ok(())
+		}
+		match *self {
+			Self::Elided => {
+				Ok(())
+			},
+			Self::Static => {
+				let s = "'static";
+				f.write_str(s)?;
+				write_align(f)
+			}
+			Self::Explicit(n) if n >= 25 => {
+				panic!("Too many lifetimes")
+			}
+			Self::Explicit(n) => {
+				f.write_char('\'')?;
+				f.write_char(char::from(b'a' + n))?;
+				write_align(f)
+			}
+		}
+	}
+}
+
+pub struct LifetimeIterator {
+	cur_lifetime: Option<Lifetime>,
+}
+
+impl Iterator for LifetimeIterator {
+	type Item = Lifetime;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		let out = self.cur_lifetime;
+		self.cur_lifetime = self.cur_lifetime.and_then(|l| l.next());
+		out
 	}
 }
 
@@ -100,96 +171,70 @@ impl ConstnessOverride {
 	}
 }
 
-fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, full: bool, lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Cow<'t, str> {
-	if type_ref.as_string().is_some() {
-		#[allow(clippy::if_same_then_else)]
-		return if type_ref.constness().is_const() {
-			"String" // todo implement receiving const str's
-		} else {
-			"String"
-		}.into();
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum NameStyle {
+	Declaration,
+	Reference(FishStyle),
+}
+
+impl NameStyle {
+	pub fn is_declaration(&self) -> bool {
+		match self {
+			NameStyle::Declaration => true,
+			NameStyle::Reference(..) => false,
+		}
 	}
-	match type_ref.kind() {
-		Kind::Primitive(rust, _) => {
-			rust.into()
+
+	pub fn is_reference(&self) -> bool {
+		!self.is_declaration()
+	}
+
+	pub fn turbo_fish_style(&self) -> FishStyle {
+		match self {
+			NameStyle::Reference(fish_style) => *fish_style,
+			NameStyle::Declaration => FishStyle::No,
 		}
-		Kind::Array(elem, size) => {
-			let typ = type_ref.format_as_array(&elem.render(renderer.recurse()), size);
-			if type_ref.is_nullable() {
-				let turbo_fish = if use_turbo_fish { "::" } else { "" };
-				format!("Option{turbo_fish}<{typ}>", turbo_fish=turbo_fish, typ=typ)
-			} else {
-				typ
-			}.into()
-		}
-		Kind::StdVector(vec) => {
-			vec.rust_name(full).into_owned().into()
-		}
-		Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.constness().is_const() => {
-			// const references to simple classes are passed by value for performance
-			// fixme: it kind of works now, but probably it's not the best idea
-			//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
-			inner.render(renderer.recurse()).into_owned().into()
-		}
-		Kind::Pointer(inner) | Kind::Reference(inner) => {
-			if inner.is_void() {
-				format!(
-					"*{cnst}c_void",
-					cnst = type_ref.constness().rust_qual(true),
-				).into()
-			} else {
-				let lt = match lifetimes {
-					Some(lt) => format!("{} ", lt),
-					_ => "".to_string()
-				};
-				format!(
-					"&{lt}{cnst}{typ}",
-					cnst = type_ref.constness().rust_qual(false),
-					lt = lt,
-					typ = inner.render(renderer.recurse())
-				).into()
-			}
-		}
-		Kind::SmartPtr(ptr) => {
-			ptr.rust_name(full).into_owned().into()
-		}
-		Kind::Class(cls) => {
-			format!(
-				"{dyn}{name}{generic}",
-				dyn = if full && cls.is_abstract() { "dyn " } else { "" },
-				name = cls.rust_name(full),
-				generic = render_rust_tpl_decl(renderer, type_ref, use_turbo_fish),
-			).into()
-		}
-		Kind::Enum(enm) => {
-			enm.rust_name(full).into_owned().into()
-		}
-		Kind::Typedef(decl) => {
-			let mut out: String = decl.rust_name(full).into_owned();
-			let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
-			if lifetime_count >= 1 {
-				if lifetime_count >= 2 {
-					unimplemented!("Support for lifetime count >= 2 is not implemented yet");
-				}
-				if let Some(lt) = lifetimes {
-					out.write_fmt(format_args!("<{}>", lt)).expect("Impossible");
-				}
-			}
-			out.into()
-		}
-		Kind::Generic(name) => {
-			name.into()
-		}
-		Kind::Function(func) => {
-			func.rust_name(full).into_owned().into()
-		}
-		Kind::Ignored => {
-			"<ignored>".into()
+	}
+
+	pub fn rust_turbo_fish_qual(&self) -> &'static str {
+		match self {
+			NameStyle::Declaration => "",
+			NameStyle::Reference(fish) => fish.rust_qual(),
 		}
 	}
 }
 
-fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, use_turbo_fish: bool) -> String {
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum FishStyle {
+	No,
+	Turbo,
+}
+
+impl FishStyle {
+	pub fn from_is_turbo(is_turbo: bool) -> Self {
+		if is_turbo {
+			Self::Turbo
+		} else {
+			Self::No
+		}
+	}
+
+	pub fn is_turbo(&self) -> bool {
+		match self {
+			FishStyle::No => false,
+			FishStyle::Turbo => true,
+		}
+	}
+
+	pub fn rust_qual(&self) -> &'static str {
+		match self {
+			FishStyle::No => "",
+			FishStyle::Turbo => "::",
+		}
+	}
+}
+
+fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
 		let mut constant_suffix = String::new();
@@ -213,135 +258,13 @@ fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeR
 				}
 			})
 			.collect::<Vec<_>>();
-		let fish = if use_turbo_fish { "::" } else { "" };
-		format!("{cnst}{fish}<{typ}>", cnst = constant_suffix, fish = fish, typ = generic_types.join(", "))
+		format!("{cnst}{fish}<{typ}>", cnst=constant_suffix, fish=fish_style.rust_qual(), typ=generic_types.join(", "))
 	} else {
 		"".to_string()
 	}
 }
 
-fn render_cpp<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, is_full: bool, name: &str, extern_types: bool, constness: ConstnessOverride) -> Cow<'t, str> {
-	let cnst = constness.with(type_ref.clang_constness()).cpp_qual();
-	let (space_name, space_const_name) = if name.is_empty() {
-		("".to_string(), "".to_string())
-	} else {
-		(format!(" {}", name), format!(" {}{}", cnst, name))
-	};
-	match type_ref.kind() {
-		Kind::Primitive(_, cpp) => {
-			format!(
-				"{cnst}{typ}{name}",
-				cnst=cnst,
-				typ=cpp.to_string(),
-				name=space_name,
-			).into()
-		}
-		Kind::Array(inner, size) => {
-			if let Some(size) = size {
-				format!(
-					"{typ}(*{name})[{size}]",
-					typ=inner.render(renderer.recurse()),
-					name=name,
-					size=size,
-				).into()
-			} else {
-				format!(
-					"{typ}*{name}",
-					typ=inner.render(renderer.recurse()),
-					name=space_name,
-				).into()
-			}
-		}
-		Kind::StdVector(vec) => {
-			format!(
-				"{cnst}{vec_type}<{elem_type}>{name}",
-				cnst=cnst,
-				vec_type=vec.cpp_name(is_full),
-				elem_type=vec.element_type().render(renderer.recurse()),
-				name=space_name,
-			).into()
-		}
-		Kind::Reference(inner) if !extern_types => {
-			format!(
-				"{typ}&{name}",
-				typ=inner.render(renderer.recurse()),
-				name=space_const_name,
-			).into()
-		}
-		Kind::Pointer(inner) | Kind::Reference(inner) => {
-			format!(
-				"{typ}*{name}",
-				typ=inner.render(renderer.recurse()),
-				name=space_const_name,
-			).into()
-		}
-		Kind::SmartPtr(ptr) => {
-			format!(
-				"{cnst}{ptr_type}<{inner_type}>{name}",
-				cnst=cnst,
-				ptr_type=ptr.cpp_name(is_full),
-				inner_type=ptr.pointee().render(renderer.recurse()),
-				name=space_name,
-			).into()
-		}
-		Kind::Class(cls) => {
-			let mut out: String = cls.cpp_name(is_full).into_owned();
-			if !type_ref.is_std_string() { // fixme prevents emission of std::string<char>
-				out += &render_cpp_tpl_decl(renderer, type_ref);
-			}
-			format!(
-				"{cnst}{typ}{name}",
-				cnst=cnst,
-				typ=out,
-				name=space_name,
-			).into()
-		}
-		Kind::Enum(enm) => {
-			format!(
-				"{cnst}{typ}{name}",
-				cnst=cnst,
-				typ=enm.cpp_name(is_full),
-				name=space_name,
-			).into()
-		}
-		Kind::Typedef(tdef) => {
-			let underlying_type = tdef.underlying_type_ref();
-			let typ = if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
-				underlying_type.render(renderer.recurse())
-			} else {
-				tdef.cpp_name(is_full).into_owned().into()
-			};
-			format!(
-				"{cnst}{typ}{name}",
-				cnst=cnst,
-				typ=typ,
-				name=space_name,
-			).into()
-		}
-		Kind::Generic(generic_name) => {
-			format!(
-				"{cnst}{typ}{name}",
-				cnst=cnst,
-				typ=generic_name,
-				name=space_name,
-			).into()
-		}
-		Kind::Function(func) => {
-			let mut typ = func.cpp_name(is_full);
-			if typ.contains("(*)") {
-				typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name = name));
-				typ.into_owned().into()
-			} else {
-				format!("{typ}{name}", typ=typ, name=space_name).into()
-			}
-		}
-		Kind::Ignored => {
-			format!("<ignored>{name}", name=space_name).into()
-		}
-	}
-}
-
-fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
+ fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
 		let generic_types = generic_types.into_iter()
@@ -369,105 +292,256 @@ fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRe
 	}
 }
 
-#[derive(Clone, Debug)]
-pub struct RustDeclarationRenderer {}
+#[derive(Debug)]
+pub struct RustRenderer {
+	pub name_style: NameStyle,
+	pub lifetime: Lifetime,
+}
 
-impl RustDeclarationRenderer {
-	pub fn new() -> Self {
-		Self {}
+impl RustRenderer {
+	pub fn new(name_style: NameStyle, lifetime: Lifetime) -> Self {
+		Self { name_style, lifetime }
 	}
 }
 
-impl<'a> TypeRefRenderer<'a> for RustDeclarationRenderer {
+impl TypeRefRenderer<'_> for RustRenderer {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		render_rust(self, type_ref, false, None, false)
-	}
-
-	fn recurse(&self) -> Self {
-		self.clone()
-	}
-}
-
-#[derive(Clone, Debug)]
-pub struct RustReferenceRenderer {
-	pub lifetimes: Option<Lifetime>,
-	pub use_turbo_fish: bool,
-}
-
-impl RustReferenceRenderer {
-	pub fn new(lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Self {
-		Self { lifetimes, use_turbo_fish }
-	}
-}
-
-impl<'a> TypeRefRenderer<'a> for RustReferenceRenderer {
-	type Recursed = Self;
-
-	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		let lifetimes = self.lifetimes;
-		let use_turbo_fish = self.use_turbo_fish;
-		render_rust(self, type_ref, true, lifetimes, use_turbo_fish)
+		if type_ref.as_string().is_some() {
+			#[allow(clippy::if_same_then_else)]
+				return if type_ref.constness().is_const() {
+				"String" // todo implement receiving const str's
+			} else {
+				"String"
+			}.into();
+		}
+		match type_ref.kind() {
+			Kind::Primitive(rust, _) => {
+				rust.into()
+			}
+			Kind::Array(elem, size) => {
+				let typ = type_ref.format_as_array(&elem.render(self.recurse()), size);
+				if type_ref.is_nullable() {
+					format!("Option{fish}<{typ}>", fish=self.name_style.rust_turbo_fish_qual(), typ=typ)
+				} else {
+					typ
+				}.into()
+			}
+			Kind::StdVector(vec) => {
+				vec.rust_name(self.name_style).into_owned().into()
+			}
+			Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.constness().is_const() => {
+				// const references to simple classes are passed by value for performance
+				// fixme: it kind of works now, but probably it's not the best idea
+				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
+				inner.render(self.recurse()).into_owned().into()
+			}
+			Kind::Pointer(inner) | Kind::Reference(inner) => {
+				if inner.is_void() {
+					format!(
+						"*{cnst}c_void",
+						cnst=type_ref.constness().rust_qual(true),
+					).into()
+				} else {
+					format!(
+						"&{lt: <}{cnst}{typ}",
+						cnst=type_ref.constness().rust_qual(false),
+						lt=self.lifetime,
+						typ=inner.render(self.recurse())
+					).into()
+				}
+			}
+			Kind::SmartPtr(ptr) => {
+				ptr.rust_name(self.name_style).into_owned().into()
+			}
+			Kind::Class(cls) => {
+				let fish_style = self.name_style.turbo_fish_style();
+				format!(
+					"{dyn}{name}{generic}",
+					dyn=if self.name_style.is_reference() && cls.is_abstract() { "dyn " } else { "" },
+					name=cls.rust_name(self.name_style),
+					generic=render_rust_tpl_decl(self, type_ref, fish_style),
+				).into()
+			}
+			Kind::Enum(enm) => {
+				enm.rust_name(self.name_style).into_owned().into()
+			}
+			Kind::Typedef(decl) => {
+				let mut out: String = decl.rust_name(self.name_style).into_owned();
+				let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
+				if lifetime_count >= 1 {
+					if lifetime_count >= 2 {
+						unimplemented!("Support for lifetime count >= 2 is not implemented yet");
+					}
+					if self.lifetime.is_explicit() {
+						out.write_fmt(format_args!("<{}>", self.lifetime)).expect("Impossible");
+					}
+				}
+				out.into()
+			}
+			Kind::Generic(name) => {
+				name.into()
+			}
+			Kind::Function(func) => {
+				func.rust_name(self.name_style).into_owned().into()
+			}
+			Kind::Ignored => {
+				"<ignored>".into()
+			}
+		}
 	}
 
 	fn recurse(&self) -> Self {
 		Self {
-			lifetimes: self.lifetimes.map(Lifetime::next),
-			use_turbo_fish: self.use_turbo_fish,
+			name_style: self.name_style,
+			lifetime: self.lifetime.next().expect("Too many lifetimes"),
 		}
 	}
 }
 
-#[derive(Clone, Debug)]
-pub struct CppDeclarationRenderer {
-	pub extern_types: bool,
-}
-
-impl CppDeclarationRenderer {
-	pub fn new(extern_types: bool) -> Self {
-		Self { extern_types }
-	}
-}
-
-impl<'a> TypeRefRenderer<'a> for CppDeclarationRenderer {
-	type Recursed = Self;
-
-	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		let extern_types = self.extern_types;
-		render_cpp(self, type_ref, false, "", extern_types, ConstnessOverride::No)
-	}
-
-	fn recurse(&self) -> Self {
-		self.clone()
-	}
-}
-
-#[derive(Clone, Debug)]
-pub struct CppReferenceRenderer<'s> {
+#[derive(Debug)]
+pub struct CppRenderer<'s> {
+	pub name_style: NameStyle,
 	pub name: &'s str,
 	pub extern_types: bool,
 	pub constness_override: ConstnessOverride,
 }
 
-impl<'s> CppReferenceRenderer<'s> {
-	pub fn new(name: &'s str, extern_types: bool) -> Self {
-		Self { name, extern_types, constness_override: ConstnessOverride::No }
+impl<'s> CppRenderer<'s> {
+	pub fn new(name_style: NameStyle, name: &'s str, extern_types: bool) -> Self {
+		Self { name_style, name, extern_types, constness_override: ConstnessOverride::No }
 	}
 }
 
-impl<'a> TypeRefRenderer<'a> for CppReferenceRenderer<'_> {
+impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		let name = self.name;
-		let extern_types = self.extern_types;
-		let constness = self.constness_override;
-		render_cpp(self, type_ref, true, name, extern_types, constness)
+		let cnst = self.constness_override.with(type_ref.clang_constness()).cpp_qual();
+		let (space_name, space_const_name) = if self.name.is_empty() {
+			("".to_string(), "".to_string())
+		} else {
+			(format!(" {}", self.name), format!(" {}{}", cnst, self.name))
+		};
+		match type_ref.kind() {
+			Kind::Primitive(_, cpp) => {
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=cpp.to_string(),
+					name=space_name,
+				).into()
+			}
+			Kind::Array(inner, size) => {
+				if let Some(size) = size {
+					format!(
+						"{typ}(*{name})[{size}]",
+						typ=inner.render(self.recurse()),
+						name=self.name,
+						size=size,
+					).into()
+				} else {
+					format!(
+						"{typ}*{name}",
+						typ=inner.render(self.recurse()),
+						name=space_name,
+					).into()
+				}
+			}
+			Kind::StdVector(vec) => {
+				format!(
+					"{cnst}{vec_type}<{elem_type}>{name}",
+					cnst=cnst,
+					vec_type=vec.cpp_name(self.name_style),
+					elem_type=vec.element_type().render(self.recurse()),
+					name=space_name,
+				).into()
+			}
+			Kind::Reference(inner) if !self.extern_types => {
+				format!(
+					"{typ}&{name}",
+					typ=inner.render(self.recurse()),
+					name=space_const_name,
+				).into()
+			}
+			Kind::Pointer(inner) | Kind::Reference(inner) => {
+				format!(
+					"{typ}*{name}",
+					typ=inner.render(self.recurse()),
+					name=space_const_name,
+				).into()
+			}
+			Kind::SmartPtr(ptr) => {
+				format!(
+					"{cnst}{ptr_type}<{inner_type}>{name}",
+					cnst=cnst,
+					ptr_type=ptr.cpp_name(self.name_style),
+					inner_type=ptr.pointee().render(self.recurse()),
+					name=space_name,
+				).into()
+			}
+			Kind::Class(cls) => {
+				let mut out: String = cls.cpp_name(self.name_style).into_owned();
+				if !type_ref.is_std_string() { // fixme prevents emission of std::string<char>
+					out += &render_cpp_tpl_decl(self, type_ref);
+				}
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=out,
+					name=space_name,
+				).into()
+			}
+			Kind::Enum(enm) => {
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=enm.cpp_name(self.name_style),
+					name=space_name,
+				).into()
+			}
+			Kind::Typedef(tdef) => {
+				let underlying_type = tdef.underlying_type_ref();
+				let typ = if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
+					underlying_type.render(self.recurse())
+				} else {
+					tdef.cpp_name(self.name_style).into_owned().into()
+				};
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=typ,
+					name=space_name,
+				).into()
+			}
+			Kind::Generic(generic_name) => {
+				format!(
+					"{cnst}{typ}{name}",
+					cnst=cnst,
+					typ=generic_name,
+					name=space_name,
+				).into()
+			}
+			Kind::Function(func) => {
+				let mut typ = func.cpp_name(self.name_style);
+				if typ.contains("(*)") {
+					typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=self.name));
+					typ.into_owned().into()
+				} else {
+					format!("{typ}{name}", typ=typ, name=space_name).into()
+				}
+			}
+			Kind::Ignored => {
+				format!("<ignored>{name}", name=space_name).into()
+			}
+		}
+		// render_cpp(self, type_ref, name_style, name, extern_types, constness)
 	}
 
 	fn recurse(&self) -> Self {
 		Self {
+			name_style: self.name_style,
 			name: "",
 			extern_types: self.extern_types,
 			constness_override: ConstnessOverride::No,
@@ -487,20 +561,20 @@ impl<'s> CppExternReturnRenderer {
 }
 
 impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
-	type Recursed = CppReferenceRenderer<'a>;
+	type Recursed = CppRenderer<'a>;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		if type_ref.as_string().is_some() {
 			"void*".into()
 		} else if type_ref.is_by_ptr() && !type_ref.as_abstract_class_ptr().is_some() {
-			format!("{typ}*", typ=self.recurse().render(type_ref)).into()
+			format!("{typ}*", typ = self.recurse().render(type_ref)).into()
 		} else {
 			self.recurse().render(type_ref)
 		}
 	}
 
 	fn recurse(&self) -> Self::Recursed {
-		let mut out = CppReferenceRenderer::new("", true);
+		let mut out = CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), "", true);
 		out.constness_override = self.constness_override;
 		out
 	}

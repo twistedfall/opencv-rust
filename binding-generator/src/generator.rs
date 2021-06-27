@@ -43,7 +43,7 @@ use crate::{
 	settings,
 	smart_ptr::SmartPtr,
 	StrExt,
-	type_ref::Kind as TypeRefKind,
+	type_ref::{FishStyle, Kind as TypeRefKind},
 	Typedef,
 	vector::Vector,
 };
@@ -317,7 +317,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
-					if enm.rust_leafname() != "unnamed" {
+					if enm.rust_leafname(FishStyle::No) != "unnamed" {
 						if !enm.is_excluded() {
 							visitor.visit_enum(enm);
 						}
@@ -362,7 +362,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					}
 				}
 			}
-			if enm.rust_leafname() != "unnamed" {
+			if enm.rust_leafname(FishStyle::No) != "unnamed" {
 				visitor.visit_enum(enm);
 			}
 		}
@@ -380,7 +380,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				for type_hint in specs {
 					let mut name_hint = None;
 					if !only_dependent_types {
-						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env).rust_leafname().into_owned().into();
+						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env).rust_leafname(FishStyle::No).into_owned().into();
 						gen_env.func_names.make_unique_name(&mut name);
 						if let Cow::Owned(name) = name {
 							name_hint = Some(name);

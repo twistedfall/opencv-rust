@@ -15,6 +15,7 @@ use crate::{
 	IteratorExt,
 	NamePool,
 	StrExt,
+	type_ref::{FishStyle, NameStyle},
 };
 
 use super::RustNativeGeneratedElement;
@@ -82,7 +83,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	if is_trait {
 		let mut bases = c.bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
-			.map(|x| x.rust_trait_fullname().into_owned())
+			.map(|x| x.rust_trait_name(NameStyle::Reference, Constness::Const).into_owned())
 			.collect::<Vec<_>>();
 		bases.sort_unstable();
 		let mut trait_bases: String = bases.join(" + ");
@@ -104,7 +105,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			);
 			if !methods.is_empty() || !consts.is_empty() {
 				TRAIT_DYN_TPL.interpolate(&hashmap! {
-					"rust_local" => c.rust_trait_localname(),
+					"rust_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
 					"consts" => consts.into(),
 					"methods" => methods.into(),
 				})
@@ -117,7 +118,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		out = TRAIT_TPL.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
-			"rust_trait_local" => c.rust_trait_localname(),
+			"rust_trait_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
 			"rust_local" => type_ref.rust_local(),
 			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
@@ -128,7 +129,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	}
 
 	if !is_abstract {
-		let rust_local = c.rust_localname();
+		let rust_local = c.rust_localname(FishStyle::No);
 		let mut impls = if methods.iter().any(|m| m.is_clone()) {
 			IMPL_CLONE_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local.as_ref(),
@@ -148,8 +149,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					.collect::<Vec<_>>();
 				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 				for d in descendants {
-					let desc_local = d.rust_localname();
-					let desc_full = d.rust_fullname();
+					let desc_local = d.rust_localname(FishStyle::No);
+					let desc_full = d.rust_fullname(FishStyle::No);
 					impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
 						"descendant_rust_local" => desc_local.as_ref(),
@@ -159,8 +160,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			}
 			for b in &bases {
 				if !b.is_abstract() {
-					let base_local = b.rust_localname();
-					let base_full = b.rust_fullname();
+					let base_local = b.rust_localname(FishStyle::No);
+					let base_full = b.rust_fullname(FishStyle::No);
 					impls += &BASE_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
 						"base_rust_local" => base_local.as_ref(),
@@ -182,7 +183,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					&BASE_TPL
 				};
 				tpl.interpolate(&hashmap! {
-					"base_rust_full" => base.rust_trait_fullname(),
+					"base_rust_full" => base.rust_trait_name(NameStyle::Reference, Constness::Const),
 					"rust_local" => type_ref.rust_local(),
 					"base_rust_local" => base_type_ref.rust_local(),
 					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
@@ -205,7 +206,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					SIMPLE_FIELD_TPL.interpolate(&hashmap! {
 						"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
 						"visibility" => "pub ".into(),
-						"name" => f.rust_leafname(),
+						"name" => f.rust_leafname(FishStyle::No),
 						"type" => typ,
 					})
 				})
@@ -251,7 +252,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
-			"rust_full" => c.rust_fullname(),
+			"rust_full" => c.rust_fullname(FishStyle::No),
 			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"fields" => fields.join("").into(),
@@ -301,7 +302,7 @@ fn gen_cpp_boxed(c: &Class) -> String {
 
 	let mut casts = String::new();
 	if !c.is_abstract() {
-		let rust_local = c.rust_localname();
+		let rust_local = c.rust_localname(FishStyle::No);
 		let mut bases = c.all_bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
 			.collect::<Vec<_>>();
@@ -314,7 +315,7 @@ fn gen_cpp_boxed(c: &Class) -> String {
 					.collect::<Vec<_>>();
 				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 				for d in descendants {
-					let desc_rust_local = d.rust_localname();
+					let desc_rust_local = d.rust_localname(FishStyle::No);
 					let desc_cpp_full = d.cpp_fullname();
 					casts += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
@@ -325,7 +326,7 @@ fn gen_cpp_boxed(c: &Class) -> String {
 				}
 			}
 			for b in bases {
-				let base_rust_local = b.rust_localname();
+				let base_rust_local = b.rust_localname(FishStyle::No);
 				let base_cpp_full = b.cpp_fullname();
 				casts += &BASE_CAST_TPL.interpolate(&hashmap! {
 					"rust_local" => rust_local.as_ref(),
@@ -351,7 +352,7 @@ fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>
 	let name_pool = NamePool::with_capacity(fns.size_hint().1.unwrap_or_default());
 	let fns = fns.into_iter()
 		.filter(|f| !f.is_excluded());
-	name_pool.into_disambiguator(fns, |f| f.rust_leafname())
+	name_pool.into_disambiguator(fns, |f| f.rust_leafname(FishStyle::No))
 		.map(|(name, func)| {
 			let mut func = func.clone();
 			func.set_name_hint(Some(name));
@@ -362,7 +363,7 @@ fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>
 
 impl RustNativeGeneratedElement for Class<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

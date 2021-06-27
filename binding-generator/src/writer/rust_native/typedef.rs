@@ -9,6 +9,7 @@ use crate::{
 	get_debug,
 	IteratorExt,
 	StrExt,
+	type_ref::{FishStyle, Lifetime, NameStyle},
 	Typedef,
 };
 
@@ -16,7 +17,7 @@ use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -24,19 +25,21 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 			|| include_str!("tpl/typedef/tpl.rs").compile_interpolation()
 		);
 		let underlying_type = self.underlying_type_ref();
-		let lifetimes = underlying_type.rust_lifetimes();
+		let lifetimes = Lifetime::explicit().into_iter().take(underlying_type.rust_lifetime_count())
+			.map(|l| l.to_string())
+			.join(", ");
 		let generic_args = if lifetimes.is_empty() {
 			"".to_string()
 		} else {
-			format!("<{}>", lifetimes.into_iter().map(|l| l.to_string()).join(", "))
+			format!("<{}>", lifetimes)
 		};
 
 		TPL.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_localname(),
+			"rust_local" => self.rust_localname(FishStyle::No),
 			"generic_args" => generic_args.into(),
-			"definition" => underlying_type.rust_full_ext(false, false),
+			"definition" => underlying_type.rust_name(NameStyle::Reference(FishStyle::No), Lifetime::explicit()),
 		})
 	}
 }

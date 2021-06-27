@@ -11,7 +11,7 @@ use crate::{
 	Element,
 	EntityElement,
 	GeneratorEnv,
-	type_ref::{DependentTypeMode, TemplateArg},
+	type_ref::{DependentTypeMode, FishStyle, Lifetime, NameStyle, TemplateArg},
 	TypeRef,
 };
 
@@ -103,12 +103,16 @@ impl Element for SmartPtr<'_, '_> {
 		"core".into()
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
-		format!("Ptr::<{typ}>", typ=self.pointee().rust_full_ext(true, true)).into()
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+		format!(
+			"Ptr{fish}<{typ}>",
+			fish=fish_style.rust_qual(),
+			typ=self.pointee().rust_name(NameStyle::Reference(FishStyle::Turbo), Lifetime::elided()),
+		).into()
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

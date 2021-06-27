@@ -10,6 +10,7 @@ use crate::{
 	Element,
 	settings,
 	StrExt,
+	type_ref::FishStyle,
 	Vector,
 };
 
@@ -48,7 +49,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let element_type = self.element_type();
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
-			"rust_full" => self.rust_fullname(),
+			"rust_full" => self.rust_fullname(FishStyle::No),
 			"rust_extern_const" => vec_type.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => vec_type.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"inner_rust_full" => element_type.rust_full(),

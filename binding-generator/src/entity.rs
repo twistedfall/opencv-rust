@@ -5,6 +5,7 @@ use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 use crate::{
 	element::{DefaultElement, EntityElement},
 	Element,
+	type_ref::FishStyle,
 };
 
 impl<'tu> EntityElement<'tu> for Entity<'tu> {
@@ -31,7 +32,7 @@ impl Element for Entity<'_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		DefaultElement::cpp_namespace(self).into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
@@ -42,8 +43,8 @@ impl Element for Entity<'_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

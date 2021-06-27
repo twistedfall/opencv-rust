@@ -14,12 +14,12 @@ use regex::{Captures, Regex};
 pub use renderer::{
 	Constness,
 	ConstnessOverride,
-	CppDeclarationRenderer,
 	CppExternReturnRenderer,
-	CppReferenceRenderer,
+	CppRenderer,
+	FishStyle,
 	Lifetime,
-	RustDeclarationRenderer,
-	RustReferenceRenderer,
+	NameStyle,
+	RustRenderer,
 	TypeRefRenderer,
 };
 
@@ -122,8 +122,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		)
 	}
 
-	pub fn specialize(&mut self, typ: Type<'tu>) {
-		self.type_hint = TypeRefTypeHint::Specialized(typ);
+	pub fn set_type_hint(&mut self, typ: TypeRefTypeHint<'tu>) {
+		self.type_hint = typ;
 	}
 
 	pub fn clang_type(&self) -> Type<'tu> {
@@ -430,7 +430,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn constness(&self) -> Constness {
-		if let Constness::Const = self.clang_constness() {
+		if self.clang_constness().is_const() {
 			Constness::Const
 		} else {
 			match self.kind() {
@@ -773,8 +773,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-//	}
-
 	pub fn is_by_ptr(&self) -> bool {
 		match self.canonical().kind() {
 			Kind::Class(inner) => {
@@ -856,7 +854,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				ptr.rust_localalias().into_owned()
 			}
 			Kind::Class(cls) => {
-				cls.rust_localname().into_owned()
+				cls.rust_localname(FishStyle::No).into_owned()
 			}
 			Kind::Primitive(..) | Kind::Enum(..)
 			| Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..)
@@ -900,20 +898,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn rust_name(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
+		self.render(RustRenderer::new(name_style, lifetime))
+	}
+
 	pub fn rust_local(&self) -> Cow<str> {
-		self.render(RustDeclarationRenderer::new())
+		self.rust_name(NameStyle::Declaration, Lifetime::elided())
 	}
 
 	pub fn rust_full(&self) -> Cow<str> {
-		self.rust_full_ext(true, false)
+		self.rust_name(NameStyle::Reference(FishStyle::No), Lifetime::elided())
 	}
 
-	pub fn rust_full_ext(&self, elided_lifetimes: bool, use_turbo_fish: bool) -> Cow<str> {
-		let lifetimes = if !elided_lifetimes && self.rust_lifetime_count() > 0 { Some(Lifetime::default()) } else { None };
-		self.render(RustReferenceRenderer::new(lifetimes, use_turbo_fish))
-	}
-
-	fn rust_lifetime_count(&self) -> usize {
+	pub fn rust_lifetime_count(&self) -> usize {
 		if self.as_string().is_some() {
 			0
 		} else {
@@ -942,15 +939,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_lifetimes(&self) -> Vec<Lifetime> {
-		let mut cur_lifetime = Lifetime::default();
-		(0..self.rust_lifetime_count())
-			.map(|_| {
-				let out = cur_lifetime;
-				cur_lifetime = cur_lifetime.next();
-				out
-			})
-			.collect()
+	pub fn rust_lifetimes(&self) -> impl Iterator<Item=Lifetime> {
+		Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
 	}
 
 	pub fn rust_extern(&self) -> Cow<str> {
@@ -1062,19 +1052,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		format!("{mutable}{name}: {typ}", mutable=mutable, name=name, typ=typ)
 	}
 
-	pub fn rust_return_func_decl(&self, with_turbofish: bool, is_static_func: bool) -> Cow<str> {
+	pub fn rust_return_func_decl(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
 		if self.as_abstract_class_ptr().is_some() {
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
 				mut_suf=if self.constness().is_const() { "" } else { "Mut" },
-				fish=if with_turbofish { "::" } else { "" },
+				fish=turbo_fish_style.rust_qual(),
 				lt=if is_static_func { "'static, " } else { "" },
-				typ=self.source().rust_full_ext(true, with_turbofish),
+				typ=self.source().rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided()),
 			).into()
 		} else if self.is_by_ptr() {
-			self.source().rust_full_ext(true, with_turbofish).into_owned().into()
+			self.source().rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided()).into_owned().into()
 		} else {
-			self.rust_full_ext(true, with_turbofish)
+			self.rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided())
 		}
 	}
 
@@ -1084,7 +1074,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			format!(
 				".map(|r| {unsafety_call}{{ {typ}::opencv_from_extern(r) }} )",
 				unsafety_call=unsafety_call,
-				typ=self.rust_return_func_decl(true, is_static_func),
+				typ=self.rust_return_func_decl(FishStyle::Turbo, is_static_func),
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.constness().is_const() { "ref" } else { "mut" };
@@ -1387,7 +1377,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn cpp_local_ext(&self, extern_types: bool) -> Cow<str> {
-		self.render(CppDeclarationRenderer::new(extern_types))
+		self.render(CppRenderer::new(NameStyle::Declaration, "", extern_types))
 	}
 
 	pub fn cpp_full(&self) -> Cow<str> {
@@ -1395,7 +1385,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn cpp_full_ext(&self, name: &str, extern_types: bool) -> Cow<str> {
-		self.render(CppReferenceRenderer::new(name, extern_types))
+		self.render(CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), name, extern_types))
 	}
 
 	pub fn cpp_extern(&self) -> Cow<str> {

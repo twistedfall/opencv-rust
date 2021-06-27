@@ -9,13 +9,14 @@ use crate::{
 	Enum,
 	get_debug,
 	StrExt,
+	type_ref::FishStyle,
 };
 
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Enum<'_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -35,7 +36,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		let mut generated_values = HashSet::with_capacity(consts.len());
 		let consts = consts.into_iter()
 			.map(|c| {
-				let name = c.rust_leafname();
+				let name = c.rust_leafname(FishStyle::No);
 				let value = c.value().expect("Can't get value of enum variant").to_string();
 				let is_ignored = generated_values.contains(&value);
 				let tpl = if is_ignored {
@@ -58,8 +59,8 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		ENUM_TPL.interpolate(&hashmap! {
 			"doc_comment" => self.rendered_doc_comment(opencv_version).into(),
 			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_localname(),
-			"rust_full" => self.rust_fullname(),
+			"rust_local" => self.rust_localname(FishStyle::No),
+			"rust_full" => self.rust_fullname(FishStyle::No),
 			"consts" => consts.join("").into(),
 		})
 	}

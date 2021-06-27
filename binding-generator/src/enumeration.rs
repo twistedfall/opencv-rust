@@ -12,6 +12,7 @@ use crate::{
 	EntityElement,
 	EntityExt,
 	StrExt,
+	type_ref::FishStyle,
 };
 
 #[derive(Clone)]
@@ -81,7 +82,7 @@ impl Element for Enum<'_> {
 		if self.custom_fullname.is_some() {
 			self.cpp_fullname().namespace().to_string().into()
 		} else {
-			DefaultElement::cpp_namespace(self)
+			DefaultElement::cpp_namespace(self).into()
 		}
 	}
 
@@ -105,12 +106,12 @@ impl Element for Enum<'_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		self.cpp_localname()
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

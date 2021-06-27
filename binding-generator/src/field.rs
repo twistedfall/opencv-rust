@@ -22,8 +22,8 @@ use crate::{
 	EntityElement,
 	GeneratorEnv,
 	NamePool,
+	type_ref::{FishStyle, TypeRefTypeHint},
 	TypeRef,
-	TypeRefTypeHint,
 };
 
 #[derive(Clone, Copy, Debug)]
@@ -61,7 +61,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu, 'ge>>>(args: I) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
 		let args = args.into_iter();
 		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
-			.into_disambiguator(args, |f| f.rust_leafname())
+			.into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
 	}
 
 	pub fn cpp_disambiguate_names(args: impl IntoIterator<Item=Field<'tu, 'ge>>) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
@@ -167,7 +167,7 @@ impl Element for Field<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		DefaultElement::cpp_namespace(self).into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
@@ -182,7 +182,7 @@ impl Element for Field<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		if matches!(self.type_hint, FieldTypeHint::FieldSetter) {
 			"val".into()
 		} else {
@@ -190,8 +190,8 @@ impl Element for Field<'_, '_> {
 		}
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 
@@ -204,7 +204,7 @@ impl fmt::Display for Field<'_, '_> {
 impl fmt::Debug for Field<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_struct("Field")
-			.field("rust_name", &self.rust_localname())
+			.field("rust_name", &self.rust_localname(FishStyle::No))
 			.field("type_hint", &self.type_hint)
 			.field("type_ref", &self.type_ref())
 			.field("default_value", &self.default_value())

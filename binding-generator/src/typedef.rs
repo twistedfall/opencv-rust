@@ -12,9 +12,8 @@ use crate::{
 	EntityElement,
 	GeneratorEnv,
 	settings,
-	type_ref::{DependentTypeMode, Kind},
+	type_ref::{DependentTypeMode, FishStyle, Kind, TypeRefTypeHint},
 	TypeRef,
-	TypeRefTypeHint,
 };
 
 #[derive(Clone)]
@@ -55,7 +54,7 @@ impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 impl Element for Typedef<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
-			|| self.rust_fullname() == self.underlying_type_ref().rust_full() // fixes recursive typedefs like Cv16suf
+			|| self.rust_fullname(FishStyle::No) == self.underlying_type_ref().rust_full() // fixes recursive typedefs like Cv16suf
 			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_fullname().as_ref())
 	}
 
@@ -80,7 +79,7 @@ impl Element for Typedef<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		DefaultElement::cpp_namespace(self).into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
@@ -91,7 +90,7 @@ impl Element for Typedef<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		match self.underlying_type_ref().source().kind() {
 			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..)
 			| Kind::SmartPtr(..) => {
@@ -103,8 +102,8 @@ impl Element for Typedef<'_, '_> {
 		}
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

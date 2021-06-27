@@ -11,6 +11,7 @@ use clang::Entity;
 
 use crate::{
 	Const,
+	Constness,
 	DefaultElement,
 	DefinitionLocation,
 	DependentType,
@@ -24,6 +25,7 @@ use crate::{
 	GeneratorEnv,
 	settings,
 	StrExt,
+	type_ref::{FishStyle, NameStyle},
 	TypeRef,
 };
 use crate::return_type_wrapper::ReturnTypeWrapper;
@@ -145,20 +147,15 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.for_each_method(|m| !m.is_clone())
 	}
 
-	pub fn rust_trait_name(&self, full: bool) -> Cow<str> {
-		let mut out = self.rust_name(full);
+	pub fn rust_trait_name(&self, name_style: NameStyle, constness: Constness) -> Cow<str> {
+		let mut out = self.rust_name(name_style);
 		if self.is_trait() && !self.is_abstract() {
 			out.to_mut().push_str("Trait");
+			if constness.is_mut() {
+				out.to_mut().push_str("Mut");
+			}
 		}
 		out
-	}
-
-	pub fn rust_trait_localname(&self) -> Cow<str> {
-		self.rust_trait_name(false)
-	}
-
-	pub fn rust_trait_fullname(&self) -> Cow<str> {
-		self.rust_trait_name(true)
 	}
 
 	pub fn has_bases(&self) -> bool {
@@ -358,7 +355,7 @@ impl Element for Class<'_, '_> {
 		if self.custom_fullname.is_some() {
 			self.cpp_fullname().namespace().to_string().into()
 		} else {
-			DefaultElement::cpp_namespace(self)
+			DefaultElement::cpp_namespace(self).into()
 		}
 	}
 
@@ -382,7 +379,7 @@ impl Element for Class<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		if self.type_ref().as_string().is_some() {
 			"String".into()
 		} else {
@@ -390,8 +387,8 @@ impl Element for Class<'_, '_> {
 		}
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

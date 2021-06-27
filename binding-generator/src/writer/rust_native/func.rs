@@ -18,7 +18,7 @@ use crate::{
 	settings,
 	StrExt,
 	StringExt,
-	type_ref::{Dir, StrType},
+	type_ref::{Dir, FishStyle, StrType},
 };
 
 use super::RustNativeGeneratedElement;
@@ -95,9 +95,9 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let is_static_func = matches!(f.kind(), Kind::StaticMethod(..) | Kind::Function);
 	let return_type = f.return_type();
 	let return_type_func_decl = if is_infallible {
-		return_type.rust_return_func_decl(false, is_static_func)
+		return_type.rust_return_func_decl(FishStyle::No, is_static_func)
 	} else {
-		format!("Result<{}>", return_type.rust_return_func_decl(false, is_static_func)).into()
+		format!("Result<{}>", return_type.rust_return_func_decl(FishStyle::No, is_static_func)).into()
 	};
 	let mut prefix = String::new();
 	let mut suffix = if is_infallible {
@@ -282,7 +282,7 @@ fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
 
 impl RustNativeGeneratedElement for Func<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -291,7 +291,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else if let Some(name_hint) = self.name_hint() {
 			name_hint.into()
 		} else {
-			self.rust_leafname()
+			self.rust_leafname(FishStyle::No)
 		};
 		gen_rust_with_name(self, &name, opencv_version)
 	}

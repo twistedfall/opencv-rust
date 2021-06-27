@@ -16,6 +16,7 @@ use crate::{
 	comment,
 	CompiledInterpolation,
 	Const,
+	Constness,
 	DependentType,
 	Element,
 	Enum,
@@ -26,6 +27,7 @@ use crate::{
 	opencv_module_from_path,
 	settings,
 	StrExt,
+	type_ref::{FishStyle, NameStyle},
 	Typedef,
 };
 
@@ -122,12 +124,12 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_const(&mut self, cnst: Const) {
 		self.emit_debug_log(&cnst);
-		self.consts.push((cnst.rust_localname().into_owned(), cnst.gen_rust(self.opencv_version)));
+		self.consts.push((cnst.rust_localname(FishStyle::No).into_owned(), cnst.gen_rust(self.opencv_version)));
 	}
 
 	fn visit_enum(&mut self, enm: Enum) {
 		self.emit_debug_log(&enm);
-		self.enums.push((enm.rust_localname().into_owned(), enm.gen_rust(self.opencv_version)));
+		self.enums.push((enm.rust_localname(FishStyle::No).into_owned(), enm.gen_rust(self.opencv_version)));
 	}
 
 	fn visit_func(&mut self, func: Func) {
@@ -146,7 +148,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
 		if class.is_trait() {
-			self.found_traits.push(format!("super::{}", class.rust_trait_localname().into_owned()));
+			self.found_traits.push(format!("super::{}", class.rust_trait_name(NameStyle::Declaration, Constness::Const).into_owned()));
 		}
 		let name: String = class.cpp_fullname().into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));

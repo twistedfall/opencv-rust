@@ -93,14 +93,13 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 	}
 }
 
-fn sorted<'a>(c: impl IntoIterator<Item=&'a str>) -> Vec<&'a str> {
-	let mut out = c.into_iter().collect::<Vec<_>>();
-	out.sort_unstable();
-	out
-}
-
-fn show<'a>(c: impl IntoIterator<Item=&'a str>) {
-	for f in sorted(c) {
+fn show<S: AsRef<str>>(c: impl IntoIterator<Item=S>) {
+	let v = c.into_iter().collect::<Vec<_>>();
+	let mut sorted = v.iter()
+		.map(|s| s.as_ref())
+		.collect::<Vec<_>>();
+	sorted.sort_unstable();
+	for f in sorted {
 		println!("{}", f);
 	}
 }

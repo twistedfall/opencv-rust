@@ -26,7 +26,7 @@ use crate::{
 	settings::{self, SliceHint},
 	StrExt,
 	StringExt,
-	type_ref::{Dir, StrType},
+	type_ref::{Dir, StrType, FishStyle, TypeRefTypeHint},
 	TypeRef,
 };
 
@@ -285,7 +285,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn is_clone(&self) -> bool {
-		if self.rust_leafname() == "clone" {
+		if self.rust_leafname(FishStyle::No) == "clone" {
 			if let Some(c) = self.as_instance_method() {
 				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == c)
 			} else {
@@ -312,23 +312,21 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			Kind::Function | Kind::InstanceMethod(..) | Kind::StaticMethod(..)
 			| Kind::ConversionMethod(..) | Kind::GenericInstanceMethod(..) | Kind::GenericFunction
 			| Kind::FunctionOperator(..) | Kind::InstanceOperator(..) => {
-				let mut out = TypeRef::new(
-					self.entity.get_result_type().expect("Can't get return type"),
-					self.gen_env,
-				);
-				if let Some(type_ref) = out.as_reference() {
-					out = type_ref
-				}
+				let mut out = TypeRef::new(self.entity.get_result_type().expect("Can't get return type"), self.gen_env);
 				if let Some(spec) = self.as_specialized() {
 					if out.is_generic() {
 						let spec_type = spec.get(out.base().cpp_full().as_ref())
 							.and_then(|s| self.gen_env.resolve_type(s));
 						if let Some(spec_type) = spec_type {
-							out.specialize(spec_type);
+							out.set_type_hint(TypeRefTypeHint::Specialized(spec_type));
 						}
 					}
 				}
-				out
+				if let Some(type_ref) = out.as_reference() {
+					type_ref
+				} else {
+					out
+				}
 			}
 			Kind::FieldAccessor(..) => {
 				if self.type_hint == FunctionTypeHint::FieldSetter {
@@ -389,7 +387,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(slice_arg) = slice_args.and_then(|o| o.get(a.rust_leafname().as_ref())) {
+				if let Some(slice_arg) = slice_args.and_then(|o| o.get(a.rust_leafname(FishStyle::No).as_ref())) {
 					return match *slice_arg {
 						SliceHint::Slice => {
 							Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
@@ -544,7 +542,7 @@ impl Element for Func<'_, '_> {
 					if default_args_comment.is_empty() {
 						default_args_comment += "## C++ default parameters";
 					}
-					default_args_comment += &format!("\n* {name}: {val}", name=arg.rust_leafname(), val=def_val);
+					default_args_comment += &format!("\n* {name}: {val}", name=arg.rust_leafname(FishStyle::No), val=def_val);
 				}
 			}
 			if !default_args_comment.is_empty() {
@@ -557,7 +555,7 @@ impl Element for Func<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		DefaultElement::cpp_namespace(self).into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
@@ -576,7 +574,7 @@ impl Element for Func<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		let cpp_name = if let Some(name) = self.gen_env.get_rename_config(self.entity).map(|c| &c.rename) {
 			name.into()
 		} else {
@@ -663,8 +661,8 @@ impl Element for Func<'_, '_> {
 		}
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

@@ -13,13 +13,14 @@ use crate::{
 	get_debug,
 	settings,
 	StrExt,
+	type_ref::FishStyle,
 };
 
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Const<'_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -46,9 +47,9 @@ impl RustNativeGeneratedElement for Const<'_> {
 		let parent_is_class = self.entity().get_lexical_parent()
 			.map_or(false, |p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl));
 		let name = if parent_is_class {
-			self.rust_leafname()
+			self.rust_leafname(FishStyle::No)
 		} else {
-			self.rust_localname()
+			self.rust_localname(FishStyle::No)
 		};
 
 		if let Some(value) = self.value() {

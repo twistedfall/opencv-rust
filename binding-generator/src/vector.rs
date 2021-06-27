@@ -17,7 +17,7 @@ use crate::{
 	EntityElement,
 	GeneratorEnv,
 	ReturnTypeWrapper,
-	type_ref::TemplateArg,
+	type_ref::{FishStyle, TemplateArg},
 	TypeRef,
 };
 
@@ -135,16 +135,20 @@ impl Element for Vector<'_, '_> {
 		"core".into()
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		let mut inner_typ = self.element_type();
 		if let Some(inner) = inner_typ.as_pointer() { // fixme, implement references properly, use MatRef/Mut type
 			inner_typ = inner;
 		}
-		format!("Vector::<{typ}>", typ=inner_typ.rust_full()).into()
+		format!(
+			"Vector{fish}<{typ}>",
+			fish=fish_style.rust_qual(),
+			typ=inner_typ.rust_full(),
+		).into()
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
-		DefaultElement::rust_localname(self)
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

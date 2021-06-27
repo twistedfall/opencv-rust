@@ -17,6 +17,7 @@ use crate::{
 	reserved_rename,
 	settings,
 	StrExt,
+	type_ref::{FishStyle, NameStyle},
 };
 
 pub struct DefaultElement;
@@ -56,7 +57,7 @@ impl DefaultElement {
 		this.rendered_doc_comment_with_prefix("///", opencv_version)
 	}
 
-	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> String {
 		let mut parts = vec![];
 		let mut e = this.entity();
 		while let Some(parent) = e.get_semantic_parent() {
@@ -79,11 +80,10 @@ impl DefaultElement {
 		parts.into_iter()
 			.rev()
 			.join("::")
-			.into()
 	}
 
-	pub fn cpp_name(this: &(impl Element + ?Sized), full: bool) -> Cow<str> {
-		if full {
+	pub fn cpp_name(this: &(impl Element + ?Sized), style: NameStyle) -> Cow<str> {
+		if style.is_reference() {
 			this.cpp_fullname()
 		} else {
 			this.cpp_localname()
@@ -122,11 +122,14 @@ impl DefaultElement {
 		}
 	}
 
-	pub fn rust_name(this: &(impl Element + ?Sized), full: bool) -> Cow<str> {
-		if full {
-			this.rust_fullname()
-		} else {
-			this.rust_localname()
+	pub fn rust_name(this: &(impl Element + ?Sized), name_style: NameStyle) -> Cow<str> {
+		match name_style {
+			NameStyle::Declaration => {
+				this.rust_localname(FishStyle::No)
+			}
+			NameStyle::Reference(fish_style) => {
+				this.rust_fullname(fish_style)
+			}
 		}
 	}
 
@@ -134,9 +137,9 @@ impl DefaultElement {
 		reserved_rename(this.cpp_localname().to_snake_case().into())
 	}
 
-	pub fn rust_localname<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized)) -> Cow<str> {
+	pub fn rust_localname<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized), fish_style: FishStyle) -> Cow<str> {
 		let mut parts = Vec::with_capacity(4);
-		parts.push(this.rust_leafname().into_owned());
+		parts.push(this.rust_leafname(fish_style).into_owned());
 		let module = Self::rust_module(this);
 		let mut e = this.entity();
 		while let Some(parent) = e.get_semantic_parent() {
@@ -176,15 +179,15 @@ impl DefaultElement {
 			.into()
 	}
 
-	pub fn rust_fullname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		format!("{}::{}", this.rust_namespace(), this.rust_localname()).into()
+	pub fn rust_fullname(this: &(impl Element + ?Sized), fish_style: FishStyle) -> Cow<str> {
+		format!("{}::{}", this.rust_namespace(), this.rust_localname(fish_style)).into()
 	}
 }
 
 pub trait Element: fmt::Debug {
 	fn update_debug_struct<'dref, 'a, 'b>(&self, struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>) -> &'dref mut fmt::DebugStruct<'a, 'b> {
 		struct_debug.field("cpp_fullname", &self.cpp_fullname())
-			.field("rust_fullname", &self.rust_fullname())
+			.field("rust_fullname", &self.rust_fullname(FishStyle::No))
 			.field("is_excluded", &self.is_excluded())
 			.field("is_ignored", &self.is_ignored())
 			.field("is_system", &self.is_system())
@@ -215,8 +218,8 @@ pub trait Element: fmt::Debug {
 
 	fn cpp_namespace(&self) -> Cow<str>;
 
-	fn cpp_name(&self, full: bool) -> Cow<str> {
-		DefaultElement::cpp_name(self, full)
+	fn cpp_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn cpp_localname(&self) -> Cow<str>;
@@ -231,18 +234,18 @@ pub trait Element: fmt::Debug {
 		DefaultElement::rust_namespace(self)
 	}
 
-	fn rust_name(&self, full: bool) -> Cow<str> {
-		DefaultElement::rust_name(self, full)
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 
-	fn rust_leafname(&self) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		DefaultElement::rust_leafname(self)
 	}
 
-	fn rust_localname(&self) -> Cow<str>;
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str>;
 
-	fn rust_fullname(&self) -> Cow<str> {
-		DefaultElement::rust_fullname(self)
+	fn rust_fullname(&self, fish_style: FishStyle) -> Cow<str> {
+		DefaultElement::rust_fullname(self, fish_style)
 	}
 }
 

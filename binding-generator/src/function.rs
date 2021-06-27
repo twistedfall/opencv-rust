@@ -10,6 +10,7 @@ use crate::{
 	Field,
 	GeneratorEnv,
 	IteratorExt,
+	type_ref::{FishStyle, NameStyle},
 	TypeRef,
 };
 
@@ -81,7 +82,7 @@ impl Element for Function<'_, '_> {
 		"<unset>".into()
 	}
 
-	fn cpp_name(&self, _full: bool) -> Cow<str> {
+	fn cpp_name(&self, _style: NameStyle) -> Cow<str> {
 		self.cpp_localname()
 	}
 
@@ -97,17 +98,22 @@ impl Element for Function<'_, '_> {
 		"<unset>".into()
 	}
 
-	fn rust_name(&self, _full: bool) -> Cow<str> {
-		self.rust_localname()
+	fn rust_name(&self, _style: NameStyle) -> Cow<str> {
+		self.rust_localname(FishStyle::No)
 	}
 
-	fn rust_localname(&self) -> Cow<str> {
+	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
 		let ret = self.return_type();
 		if self.has_userdata() {
 			let args = self.rust_arguments().into_iter()
 				.map(|a| a.type_ref().rust_extern().into_owned())
 				.join(", ");
-			format!("Option<Box<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>", args=args, ret=ret.rust_extern()).into()
+			format!(
+				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
+				fish = fish_style.rust_qual(),
+				args = args,
+				ret = ret.rust_extern(),
+			).into()
 		} else {
 			self.rust_extern()
 		}
