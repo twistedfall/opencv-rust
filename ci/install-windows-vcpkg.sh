@@ -11,6 +11,7 @@ if [ ! -e "$VCPKG_ROOT" ]; then
 fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
+git checkout .
 git checkout 2020.11-1
 cmd "/C bootstrap-vcpkg.bat -disableMetrics"
 #./vcpkg integrate install

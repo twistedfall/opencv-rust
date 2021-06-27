@@ -123,9 +123,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn specialize(&mut self, typ: Type<'tu>) {
-		if self.is_generic() {
-			self.type_hint = TypeRefTypeHint::Specialized(typ);
-		}
+		self.type_hint = TypeRefTypeHint::Specialized(typ);
 	}
 
 	pub fn clang_type(&self) -> Type<'tu> {
@@ -1025,9 +1023,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_self_func_decl(&self, is_method_const: bool) -> String {
+	pub fn rust_self_func_decl(&self, method_constness: Constness) -> String {
 		if self.is_by_ptr() {
-			if is_method_const {
+			if method_constness.is_const() {
 				"&self".to_string()
 			} else {
 				"&mut self".to_string()
@@ -1165,8 +1163,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		)
 	}
 
-	pub fn rust_self_func_call(&self, is_method_const: bool) -> String {
-		self.rust_arg_func_call("self", if is_method_const { ConstnessOverride::Yes(Constness::Const) } else { ConstnessOverride::No })
+	pub fn rust_self_func_call(&self, method_constness: Constness) -> String {
+		self.rust_arg_func_call("self", if method_constness.is_const() { ConstnessOverride::Yes(Constness::Const) } else { ConstnessOverride::No })
 	}
 
 	pub fn rust_arg_func_call(&self, name: &str, constness: ConstnessOverride) -> String {
@@ -1233,13 +1231,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		name.to_string()
 	}
 
-	pub fn rust_extern_self_func_decl(&self, is_method_const: bool) -> String {
-		let method_constness = if is_method_const {
-			ConstnessOverride::Yes(Constness::Const)
-		} else {
-			ConstnessOverride::Yes(Constness::Mut)
-		};
-		self.rust_extern_arg_func_decl("instance", method_constness)
+	pub fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String {
+		self.rust_extern_arg_func_decl("instance", ConstnessOverride::Yes(method_constness))
 	}
 
 	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
@@ -1274,15 +1267,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		self.dependent_types_with_mode(DependentTypeMode::None)
-	}
-
-	pub fn dependent_types_with_mode(&self, mode: DependentTypeMode) -> Vec<DependentType<'tu, 'ge>> {
-		let mut out = vec![];
+	pub fn dependent_types(&self, mode: DependentTypeMode) -> Vec<DependentType<'tu, 'ge>> {
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
-				out = vec.dependent_types();
+				let mut out = vec.dependent_types();
 				out.reserve(2);
 				if let Some(Dir::In(str_type)) = vec.element_type().as_string() {
 					// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
@@ -1293,8 +1281,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// That's why we try to resolve both types and check if they are the same, if they are we only generate
 					// vector<std::string> if not - both.
 					let vec_cv_string = self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>");
-					let vec_std_string = self.gen_env.resolve_type("std::vector<std::string>").expect("Can't resolve std::vector<std::string>");
 					if let DependentTypeMode::ForReturn(def_location) = mode {
+						let vec_std_string = self.gen_env.resolve_type("std::vector<std::string>").expect("Can't resolve std::vector<std::string>");
 						let vec_type_ref = if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
 							TypeRef::new(vec_std_string, self.gen_env)
 						} else {
@@ -1311,10 +1299,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// implement workaround for race when type with std::string gets generated first
 					// we only want vector<cv::String> because it's more compatible across OpenCV versions
 					if str_type == StrType::StdString {
-						let tref = TypeRef::new(
-							vec_cv_string,
-							self.gen_env,
-						);
+						let tref = TypeRef::new(vec_cv_string, self.gen_env);
 						out.push(DependentType::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
 					} else {
 						out.push(DependentType::from_vector(vec))
@@ -1332,9 +1317,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					}
 					out.push(DependentType::from_vector(vec));
 				}
+				out
 			},
 			Kind::SmartPtr(ptr) => {
-				out = ptr.dependent_types();
+				let mut out = ptr.dependent_types();
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					let ptr_type_ref = ptr.type_ref().canonical_clang();
 					let const_hint = self.get_const_hint(&ptr_type_ref);
@@ -1345,12 +1331,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						self.gen_env,
 					)));
 				}
-				out.push(DependentType::from_smart_ptr(ptr))
+				out.push(DependentType::from_smart_ptr(ptr));
+				out
 			},
 			Kind::Typedef(typedef) => {
-				out = typedef.dependent_types();
+				typedef.dependent_types()
 			}
 			_ => {
+				let mut out = vec![];
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					if !self.is_generic() && !self.is_void() {
 						if self.as_string().is_some() {
@@ -1378,9 +1366,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						}
 					}
 				}
+				out
 			}
 		}
-		out
 	}
 
 	pub fn cpp_safe_id(&self) -> Cow<str> {
@@ -1432,8 +1420,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn cpp_self_func_decl(&self, method_is_const: bool) -> String {
-		let cnst = if method_is_const {
+	pub fn cpp_self_func_decl(&self, method_constness: Constness) -> String {
+		let cnst = if method_constness.is_const() {
 			"const "
 		} else {
 			""

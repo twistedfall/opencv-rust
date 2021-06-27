@@ -188,7 +188,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				opencv_version,
 			)
 		} else {
-			rust_generate_funcs(&methods, opencv_version)
+			rust_generate_funcs(methods.iter(), opencv_version)
 		});
 
 		let tpl = if is_simple {
@@ -265,22 +265,17 @@ fn gen_cpp_boxed(c: &Class) -> String {
 	out
 }
 
-fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl IntoIterator<Item=&'f Func<'tu, 'ge>>, opencv_version: &str) -> String where 'tu: 'ge, 'ge: 'f {
+fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>, opencv_version: &str) -> String where 'tu: 'ge, 'ge: 'f {
+	let name_pool = NamePool::with_capacity(fns.size_hint().1.unwrap_or_default());
 	let fns = fns.into_iter()
 		.filter(|f| !f.is_excluded());
-	rust_disambiguate_names(fns)
+	name_pool.into_disambiguator(fns, |f| f.rust_leafname())
 		.map(|(name, func)| {
 			let mut func = func.clone();
-			func.set_name_hint(Some(name.as_str()));
+			func.set_name_hint(Some(name));
 			func.gen_rust(opencv_version) // fixme
 		})
 		.join("")
-}
-
-fn rust_disambiguate_names<'f, 'tu, 'ge>(fns: impl IntoIterator<Item=&'f Func<'tu, 'ge>>) -> impl Iterator<Item=(String, &'f Func<'tu, 'ge>)> where 'tu: 'ge, 'ge: 'f {
-	let args = fns.into_iter();
-	NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
-		.into_disambiguator(args, |f| f.rust_leafname())
 }
 
 impl RustNativeGeneratedElement for Class<'_, '_> {
@@ -290,10 +285,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		match self.kind() {
-			Kind::Simple => {
-				gen_rust_class(self, opencv_version)
-			}
-			Kind::Boxed => {
+			Kind::Simple | Kind::Boxed => {
 				gen_rust_class(self, opencv_version)
 			}
 			Kind::System | Kind::Excluded => {
@@ -304,13 +296,10 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_rust_exports(&self) -> String {
 		let out = match self.kind() {
-			Kind::Simple => {
-				"".to_string()
-			}
 			Kind::Boxed => {
 				gen_rust_exports_boxed(self)
 			}
-			Kind::System | Kind::Excluded => {
+			Kind::Simple | Kind::System | Kind::Excluded => {
 				"".to_string()
 			}
 		};
@@ -324,13 +313,10 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_cpp(&self) -> String {
 		let out = match self.kind() {
-			Kind::Simple => {
-				"".to_string()
-			}
 			Kind::Boxed => {
 				gen_cpp_boxed(self)
 			}
-			Kind::System | Kind::Excluded => {
+			Kind::Simple | Kind::System | Kind::Excluded => {
 				"".to_string()
 			}
 		};

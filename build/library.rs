@@ -325,23 +325,19 @@ impl Library {
 
 		let mut cargo_metadata = opencv.cargo_metadata;
 
-		if let Some(link_paths) = link_paths {
-			if !link_paths.is_extend() {
-				cargo_metadata = cargo_metadata.into_iter()
-					.filter(|p| !p.starts_with("cargo:rustc-link-search="))
-					.collect();
-			}
-			cargo_metadata.extend(link_paths.iter().map(|s| Self::emit_link_search(&Path::new(s), None)))
+		if link_paths.as_ref().map_or(false, |lp| !lp.is_extend()) {
+			cargo_metadata = cargo_metadata.into_iter()
+				.filter(|p| !p.starts_with("cargo:rustc-link-search="))
+				.collect();
 		}
+		cargo_metadata.extend(Self::process_link_paths(link_paths, vec![], None));
 
-		if let Some(link_libs) = link_libs {
-			if !link_libs.is_extend() {
-				cargo_metadata = cargo_metadata.into_iter()
-					.filter(|p| !p.starts_with("cargo:rustc-link-lib="))
-					.collect();
-			}
-			cargo_metadata.extend(link_libs.iter().map(|s| Self::emit_link_lib(s, None)))
+		if link_libs.as_ref().map_or(false, |ll| !ll.is_extend()) {
+			cargo_metadata = cargo_metadata.into_iter()
+				.filter(|p| !p.starts_with("cargo:rustc-link-lib="))
+				.collect();
 		}
+		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![], None));
 
 		Ok(Self {
 			include_paths,

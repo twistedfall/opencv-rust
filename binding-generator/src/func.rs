@@ -11,6 +11,7 @@ use regex::Regex;
 use crate::{
 	Class,
 	comment,
+	Constness,
 	DefaultElement,
 	DefinitionLocation,
 	DependentType,
@@ -94,7 +95,7 @@ pub enum FunctionTypeHint {
 pub struct Func<'tu, 'ge> {
 	entity: Entity<'tu>,
 	type_hint: FunctionTypeHint,
-	name_hint: Option<&'tu str>,
+	name_hint: Option<String>,
 	gen_env: &'ge GeneratorEnv<'tu>,
 }
 
@@ -103,16 +104,16 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		Self { entity, type_hint: FunctionTypeHint::None, name_hint: None, gen_env }
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FunctionTypeHint, name_hint: Option<&'tu str>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_hint: FunctionTypeHint, name_hint: Option<String>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self { entity, type_hint, name_hint, gen_env }
 	}
 
-	pub fn set_name_hint(&mut self, name_hint: Option<&'tu str>) {
+	pub fn set_name_hint(&mut self, name_hint: Option<String>) {
 		self.name_hint = name_hint;
 	}
 
-	pub fn name_hint(&self) -> Option<&'tu str> {
-		self.name_hint
+	pub fn name_hint(&self) -> Option<&str> {
+		self.name_hint.as_deref()
 	}
 
 	pub fn type_hint(&self) -> FunctionTypeHint {
@@ -242,17 +243,21 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn is_const(&self) -> bool {
+	pub fn constness(&self) -> Constness {
 		if settings::FORCE_CONSTANT_METHOD.contains(self.cpp_fullname().as_ref()) {
-			true
-		}
-		else if let Some(fld) = self.as_field_accessor() {
-			self.type_hint != FunctionTypeHint::FieldSetter && {
+			Constness::Const
+		} else if let Some(fld) = self.as_field_accessor() {
+			if self.type_hint == FunctionTypeHint::FieldSetter {
+				Constness::Mut
+			} else {
 				let type_ref = fld.type_ref();
-				type_ref.constness().is_const() || type_ref.is_copy() || matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
+				Constness::from_is_const(type_ref.constness().is_const()
+					|| type_ref.is_copy()
+					|| matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
+				)
 			}
 		} else {
-			self.entity.is_const_method()
+			Constness::from_is_const(self.entity.is_const_method())
 		}
 	}
 
@@ -416,9 +421,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		self.arguments().into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
-			.map(|t| t.dependent_types())
+			.map(|t| t.dependent_types(DependentTypeMode::None))
 			.flatten()
-			.chain(self.return_type().dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
+			.chain(self.return_type().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.collect()
 	}
 
@@ -448,7 +453,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				out.push_str(&typ);
 			}
 		}
-		if self.is_const() {
+		if self.constness().is_const() {
 			out += "_const";
 		}
 		for arg in self.arguments() {
@@ -615,7 +620,7 @@ impl Element for Func<'_, '_> {
 						cpp_name
 					}
 					OperatorKind::Index => {
-						if self.is_const() {
+						if self.constness().is_const() {
 							"get".into()
 						} else {
 							"get_mut".into()
@@ -634,7 +639,7 @@ impl Element for Func<'_, '_> {
 						"div".into()
 					}
 					OperatorKind::Deref => {
-						if self.is_const() {
+						if self.constness().is_const() {
 							"try_deref".into()
 						} else {
 							"try_deref_mut".into()
@@ -674,7 +679,7 @@ impl fmt::Debug for Func<'_, '_> {
 		let mut debug_struct = f.debug_struct("Func");
 		self.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
-			.field("is_const", &self.is_const())
+			.field("is_const", &self.constness())
 			.field("type_hint", &self.type_hint)
 			.field("kind", &self.kind())
 			.field("return_type", &self.return_type())

@@ -52,7 +52,7 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		let element_type = self.element_type();
 		let is_data_type = self.is_data_type(&element_type);
-		let mut out = element_type.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Type));
+		let mut out = element_type.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Type));
 		out.reserve(1 + if is_data_type { 3 } else { 0 });
 		if element_type.as_string().is_some() {
 			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(

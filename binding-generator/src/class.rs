@@ -104,6 +104,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn is_abstract(&self) -> bool {
 		self.entity.is_abstract_record()
+		// fixme, or maybe we want?
 		// is_abstract_record() also check parent classes for presence of pure virtual methods, we don't want that
 //		self.entity.walk_methods_while(|child| !Func::new(child, self.gen_env).is_abstract())
 	}
@@ -121,7 +122,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn has_clone(&self) -> bool {
-		self.methods().into_iter().any(|m| m.is_clone())
+		self.for_each_method(|m| !m.is_clone())
 	}
 
 	pub fn rust_trait_name(&self, full: bool) -> Cow<str> {
@@ -173,14 +174,18 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.entity.walk_methods_while(|_| false)
 	}
 
+	#[inline]
+	pub fn for_each_method(&self, mut predicate: impl FnMut(Func<'tu, 'ge>) -> bool) -> bool {
+		self.entity.walk_methods_while(|f| predicate(Func::new(f, self.gen_env)))
+	}
+
 	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(64);
-		self.entity.walk_methods_while(|child| {
-			let func = Func::new(child, self.gen_env);
+		self.for_each_method(|func| {
 			if func.is_generic() {
 				if let Some(specs) = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()) {
 					for spec in specs {
-						out.push(Func::new_ext(child, FunctionTypeHint::Specialized(spec), None, self.gen_env));
+						out.push(Func::new_ext(func.entity(), FunctionTypeHint::Specialized(spec), None, self.gen_env));
 					}
 					return true;
 				}
@@ -195,10 +200,15 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.entity.walk_fields_while(|_| false)
 	}
 
+	#[inline]
+	pub fn for_each_field(&self, mut predicate: impl FnMut(Field<'tu, 'ge>) -> bool) -> bool {
+		self.entity.walk_fields_while(|f| predicate(Field::new(f, self.gen_env)))
+	}
+
 	pub fn fields(&self) -> Vec<Field<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
-		self.entity.walk_fields_while(|child| {
-			out.push(Field::new(child, self.gen_env));
+		self.for_each_field(|f| {
+			out.push(f);
 			true
 		});
 		out
@@ -232,7 +242,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		self.fields().into_iter()
 			.filter(|f| !f.is_excluded())
-			.map(|f| f.type_ref().dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
+			.map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.flatten()
 			.chain(self.methods().into_iter()
 				.filter(|m| !m.is_excluded())

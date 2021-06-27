@@ -12,7 +12,7 @@ use crate::{
 	EntityElement,
 	GeneratorEnv,
 	settings,
-	type_ref::Kind,
+	type_ref::{DependentTypeMode, Kind},
 	TypeRef,
 	TypeRefTypeHint,
 };
@@ -42,7 +42,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 	}
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		self.underlying_type_ref().dependent_types()
+		self.underlying_type_ref().dependent_types(DependentTypeMode::None)
 	}
 }
 

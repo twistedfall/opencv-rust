@@ -11,7 +11,7 @@ use crate::{
 	Element,
 	EntityElement,
 	GeneratorEnv,
-	type_ref::TemplateArg,
+	type_ref::{DependentTypeMode, TemplateArg},
 	TypeRef,
 };
 
@@ -41,7 +41,7 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		if self.pointee().as_typedef().is_some() {
-			self.type_ref().canonical_clang().dependent_types()
+			self.type_ref().canonical_clang().dependent_types(DependentTypeMode::None)
 		} else {
 			vec![]
 		}

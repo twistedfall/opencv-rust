@@ -57,20 +57,19 @@ static ENV_VARS: [&str; 16] = [
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 	let mut strip_performed = false;
 	let mut filename_path = Path::new(filename);
-	const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
+	// used to check for the file extension (with dots stripped) and for the part of the filename
+	const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
 	if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
-		if LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
+		if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
 			filename_path = Path::new(stem);
 			strip_performed = true;
 		}
 	}
 
-	// same, but with dots therearound
-	const LIB_EXTS_INNER: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
 	if let Some(mut file) = filename_path.file_name().and_then(OsStr::to_str) {
 		let orig_len = file.len();
 		file = file.strip_prefix("lib").unwrap_or(file);
-		LIB_EXTS_INNER.iter()
+		LIB_EXTS.iter()
 			.for_each(|&inner_ext| if let Some(inner_ext_idx) = file.find(inner_ext) {
 				file = &file[..inner_ext_idx];
 			});

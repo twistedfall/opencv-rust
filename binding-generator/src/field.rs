@@ -1,7 +1,10 @@
 // todo public static properties like opencv2/core/base.hpp:384 Hamming::normType
 // todo test returning reference to array like cv_MatStep_buf
 
-use std::fmt;
+use std::{
+	borrow::Cow,
+	fmt,
+};
 
 use clang::{
 	Entity,
@@ -14,7 +17,6 @@ use clang::{
 use crate::{
 	Class,
 	constant,
-	Cow,
 	DefaultElement,
 	Element,
 	EntityElement,

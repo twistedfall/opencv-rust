@@ -378,15 +378,15 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						.collect::<Vec<_>>(),
 					);
 				for type_hint in specs {
-					let func = Func::new_ext(func_decl, type_hint, None, gen_env);
-					let name = func.rust_leafname().into_owned().into();
-					let name = if !only_dependent_types {
-						gen_env.func_names.get_name(name)
-					} else {
-						name
-					};
-					// we need to stop holding &gen_env for a while to be able to mutate it above
-					let func = Func::new_ext(func_decl, type_hint, Some(name.as_ref()), gen_env);
+					let mut name_hint = None;
+					if !only_dependent_types {
+						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env).rust_leafname().into_owned().into();
+						gen_env.func_names.make_unique_name(&mut name);
+						if let Cow::Owned(name) = name {
+							name_hint = Some(name);
+						}
+					}
+					let func = Func::new_ext(func_decl, type_hint, name_hint, gen_env);
 					func.dependent_types().into_iter()
 						.for_each(|dep| {
 							visitor.visit_dependent_type(dep);

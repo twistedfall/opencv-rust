@@ -1,4 +1,5 @@
 opencv_lib_base_dir="<home of the separate opencv install>"
+BINDINGS_OUT_DIR="$opencv_lib_base_dir/bindings"
 
 # 3.2
 OPENCV_32_PKG_CONFIG_PATH="$opencv_lib_base_dir/opencv-3.2/install/lib/pkgconfig/"
@@ -17,6 +18,5 @@ OPENCV_4_LD_LIBRARY_PATH="$opencv_lib_base_dir/opencv-4/install/lib64/"
 OPENCV_4_OPENCV_INCLUDE_PATHS=+,/opt/cuda/targets/x86_64-linux/include/
 
 # other OS machines
-BINDINGS_OUT_DIR="$opencv_lib_base_dir/bindings"
 MACOS_ADDR="<ssh address for macos machine>"
 WIN_ADDR="<ssh address for win machine>"

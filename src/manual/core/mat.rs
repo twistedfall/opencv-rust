@@ -468,7 +468,7 @@ pub trait MatTraitManual: MatTrait {
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let total = self.total()?;
-		self.data().map(|x| slice::from_raw_parts(x as *const _ as *const _, total))
+		self.data().map(|x| slice::from_raw_parts(x as *const u8 as *const T, total))
 	}
 
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {

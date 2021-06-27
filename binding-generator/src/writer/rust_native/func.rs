@@ -37,7 +37,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 
 	let args = Field::rust_disambiguate_names(f.arguments()).collect::<Vec<_>>();
 	let as_instance_method = f.as_instance_method();
-	let is_method_const = f.is_const();
+	let method_constness = f.constness();
 	let is_infallible = f.is_infallible();
 	let mut decl_args = Vec::with_capacity(args.len());
 	let mut call_args = Vec::with_capacity(args.len());
@@ -45,8 +45,8 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let mut pre_call_args = Vec::with_capacity(args.len());
 	let mut post_call_args = Vec::with_capacity(args.len());
 	if let Some(cls) = &as_instance_method {
-		decl_args.push(cls.type_ref().rust_self_func_decl(is_method_const));
-		call_args.push(cls.type_ref().rust_self_func_call(is_method_const));
+		decl_args.push(cls.type_ref().rust_self_func_decl(method_constness));
+		call_args.push(cls.type_ref().rust_self_func_call(method_constness));
 	}
 	let mut callback_arg_name: Option<String> = None;
 	for (name, arg) in args {
@@ -313,7 +313,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		}
 		let mut args = vec![];
 		if let Some(cls) = self.as_instance_method() {
-			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
+			args.push(cls.type_ref().rust_extern_self_func_decl(self.constness()));
 		}
 		for (name, arg) in Field::rust_disambiguate_names(self.arguments()) {
 			args.push(arg.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
@@ -352,7 +352,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut post_call_args = Vec::with_capacity(args.len());
 		let mut cleanup_args = Vec::with_capacity(args.len());
 		if let Some(cls) = self.as_instance_method() {
-			decl_args.push(cls.type_ref().cpp_self_func_decl(self.is_const()));
+			decl_args.push(cls.type_ref().cpp_self_func_decl(self.constness()));
 		}
 		for (name, arg) in args {
 			let type_ref = arg.type_ref();

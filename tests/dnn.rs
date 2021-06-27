@@ -10,13 +10,10 @@ use opencv::{
 	Result,
 	types::VectorOfMat,
 };
-#[cfg(all(ocvrs_opencv_branch_4, not(target_env = "msvc")))]
-use opencv::dnn::NetTrait;
 
 #[test]
 #[cfg(not(ocvrs_opencv_branch_32))]
 fn net() -> Result<()> {
-	use opencv::dnn::DictTrait;
 	let mut net = Net::default()?;
 	assert!(net.empty()?);
 	net.enable_fusion(false)?;

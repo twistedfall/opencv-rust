@@ -1,7 +1,6 @@
 use opencv::{
 	core,
 	features2d,
-	features2d::Feature2DTrait,
 	highgui,
 	imgproc,
 	prelude::*,

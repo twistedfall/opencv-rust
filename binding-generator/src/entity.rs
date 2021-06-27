@@ -59,113 +59,100 @@ pub trait EntityExt<'tu> {
 }
 
 impl<'tu> EntityExt<'tu> for Entity<'tu> {
+	/// # Arguments
+	/// * `predicate`: returns true to continue iteration or false to break
+	/// returns: true if predicate returned false, false otherwise
 	fn walk_children_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.visit_children(|child, _| {
-			if predicate(child) {
-				EntityVisitResult::Continue
-			} else {
-				EntityVisitResult::Break
-			}
+		self.visit_children(|child, _| if predicate(child) {
+			EntityVisitResult::Continue
+		} else {
+			EntityVisitResult::Break
 		})
 	}
 
 	fn walk_bases_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::BaseSpecifier => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::BaseSpecifier => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_enums_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::EnumDecl => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::EnumDecl => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_classes_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::ClassDecl | EntityKind::StructDecl => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::ClassDecl | EntityKind::StructDecl => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_typedefs_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_fields_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::FieldDecl => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::FieldDecl => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_consts_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::VarDecl => {
-					if let Some(StorageClass::Static) = child.get_storage_class() {
-						if child.evaluate().is_some() {
-							predicate(child)
-						} else {
-							true
-							// panic!("Non-evaluatable constant: {:#?}", child)
-						}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::VarDecl => {
+				if let Some(StorageClass::Static) = child.get_storage_class() {
+					if child.evaluate().is_some() {
+						predicate(child)
 					} else {
-						panic!("Non-static constant: {:#?}", child)
+						true
+						// panic!("Non-evaluatable constant: {:#?}", child)
 					}
+				} else {
+					panic!("Non-static constant: {:#?}", child)
 				}
-				_ => {
-					true
-				}
+			}
+			_ => {
+				true
 			}
 		})
 	}
 
 	fn walk_methods_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.walk_children_while(|child| {
-			match child.get_kind() {
-				EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
-				| EntityKind::ConversionFunction => {
-					predicate(child)
-				}
-				_ => {
-					true
-				}
+		self.walk_children_while(|child| match child.get_kind() {
+			EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
+			| EntityKind::ConversionFunction => {
+				predicate(child)
+			}
+			_ => {
+				true
 			}
 		})
 	}

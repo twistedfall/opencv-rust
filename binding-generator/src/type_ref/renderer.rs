@@ -45,6 +45,14 @@ pub enum Constness {
 }
 
 impl Constness {
+	pub fn from_is_const(is_const: bool) -> Self {
+		if is_const {
+			Self::Const
+		} else {
+			Self::Mut
+		}
+	}
+
 	pub fn is_const(self) -> bool {
 		match self {
 			Constness::Const => true,
@@ -53,10 +61,7 @@ impl Constness {
 	}
 
 	pub fn is_mut(self) -> bool {
-		match self {
-			Constness::Const => false,
-			Constness::Mut => true,
-		}
+		!self.is_const()
 	}
 
 	pub fn rust_qual(self, pointer: bool) -> &'static str {
@@ -95,7 +100,7 @@ impl ConstnessOverride {
 	}
 }
 
-fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, is_full: bool, lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Cow<'t, str> {
+fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef, full: bool, lifetimes: Option<Lifetime>, use_turbo_fish: bool) -> Cow<'t, str> {
 	if type_ref.as_string().is_some() {
 		#[allow(clippy::if_same_then_else)]
 		return if type_ref.constness().is_const() {
@@ -118,7 +123,7 @@ fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef
 			}.into()
 		}
 		Kind::StdVector(vec) => {
-			vec.rust_name(is_full).into_owned().into()
+			vec.rust_name(full).into_owned().into()
 		}
 		Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.constness().is_const() => {
 			// const references to simple classes are passed by value for performance
@@ -146,21 +151,21 @@ fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef
 			}
 		}
 		Kind::SmartPtr(ptr) => {
-			ptr.rust_name(is_full).into_owned().into()
+			ptr.rust_name(full).into_owned().into()
 		}
 		Kind::Class(cls) => {
 			format!(
 				"{dyn}{name}{generic}",
-				dyn = if is_full && cls.is_abstract() { "dyn " } else { "" },
-				name = cls.rust_name(is_full),
+				dyn = if full && cls.is_abstract() { "dyn " } else { "" },
+				name = cls.rust_name(full),
 				generic = render_rust_tpl_decl(renderer, type_ref, use_turbo_fish),
 			).into()
 		}
 		Kind::Enum(enm) => {
-			enm.rust_name(is_full).into_owned().into()
+			enm.rust_name(full).into_owned().into()
 		}
 		Kind::Typedef(decl) => {
-			let mut out: String = decl.rust_name(is_full).into_owned();
+			let mut out: String = decl.rust_name(full).into_owned();
 			let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
 			if lifetime_count >= 1 {
 				if lifetime_count >= 2 {
@@ -176,7 +181,7 @@ fn render_rust<'a, 't>(renderer: impl TypeRefRenderer<'a>, type_ref: &'t TypeRef
 			name.into()
 		}
 		Kind::Function(func) => {
-			func.rust_name(is_full).into_owned().into()
+			func.rust_name(full).into_owned().into()
 		}
 		Kind::Ignored => {
 			"<ignored>".into()
