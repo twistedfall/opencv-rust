@@ -13,11 +13,6 @@ impl Drop for {{rust_local}} {
 	}
 }
 
-impl {{rust_local}} {
-	#[inline] pub fn as_raw_{{rust_local}}(&self) -> {{rust_extern_const}} { self.as_raw() }
-	#[inline] pub fn as_raw_mut_{{rust_local}}(&mut self) -> {{rust_extern_mut}} { self.as_raw_mut() }
-}
-
 unsafe impl Send for {{rust_local}} {}
 
 {{bases}}

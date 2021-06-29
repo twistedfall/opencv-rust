@@ -124,6 +124,14 @@ impl Constness {
 		}
 	}
 
+	pub fn from_is_mut(is_mut: bool) -> Self {
+		if is_mut {
+			Self::Mut
+		} else {
+			Self::Const
+		}
+	}
+
 	pub fn is_const(self) -> bool {
 		match self {
 			Constness::Const => true,

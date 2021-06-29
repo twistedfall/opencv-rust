@@ -59,8 +59,8 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 				let c = Class::new(entity, &self.gen_env);
 				if !c.is_template() {
 					let fields = c.fields();
-					let mut methods = c.methods().into_iter()
-						.chain(c.field_methods(fields.iter()))
+					let mut methods = c.methods(None).into_iter()
+						.chain(c.field_methods(fields.iter(), None))
 						.collect::<Vec<_>>();
 					entity.walk_methods_while(|child| {
 						let func = Func::new(child, &self.gen_env);

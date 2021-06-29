@@ -1,6 +1,7 @@
 impl {{rust_local}} {
 	{{consts}}
-	{{methods}}
+	{{const_methods}}
+	{{mut_methods}}
 }
 
 

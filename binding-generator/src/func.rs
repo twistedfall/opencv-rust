@@ -27,7 +27,7 @@ use crate::{
 	settings::{self, SliceHint},
 	StrExt,
 	StringExt,
-	type_ref::{Dir, StrType, FishStyle, TypeRefTypeHint},
+	type_ref::{FishStyle, TypeRefTypeHint},
 	TypeRef,
 };
 
@@ -302,9 +302,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				Constness::Mut
 			} else {
 				let type_ref = fld.type_ref();
-				Constness::from_is_const(type_ref.constness().is_const()
-					|| type_ref.is_copy()
-					|| matches!(type_ref.as_string(), Some(Dir::In(StrType::CvString)) | Some(Dir::In(StrType::StdString)))
+				Constness::from_is_mut(
+					type_ref.as_array().is_some()
+						|| type_ref.as_smart_ptr().is_some()
+						|| type_ref.as_pointer().map_or(false, |r| r.constness().is_mut())
 				)
 			}
 		} else {

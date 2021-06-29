@@ -149,6 +149,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		self.emit_debug_log(&class);
 		if class.is_trait() {
 			self.found_traits.push(format!("super::{}", class.rust_trait_name(NameStyle::Declaration, Constness::Const).into_owned()));
+			self.found_traits.push(format!("super::{}", class.rust_trait_name(NameStyle::Declaration, Constness::Mut).into_owned()));
 		}
 		let name: String = class.cpp_fullname().into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));

@@ -147,13 +147,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.for_each_method(|m| !m.is_clone())
 	}
 
-	pub fn rust_trait_name(&self, name_style: NameStyle, constness: Constness) -> Cow<str> {
-		let mut out = self.rust_name(name_style);
+	pub fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
+		let mut out = self.rust_name(style);
 		if self.is_trait() && !self.is_abstract() {
 			out.to_mut().push_str("Trait");
-			if constness.is_mut() {
-				out.to_mut().push_str("Mut");
-			}
+		}
+		if constness.is_const() {
+			out.to_mut().push_str("Const");
 		}
 		out
 	}
@@ -203,18 +203,20 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.entity.walk_methods_while(|f| predicate(Func::new(f, self.gen_env)))
 	}
 
-	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
+	pub fn methods(&self, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(64);
 		self.for_each_method(|func| {
-			if func.is_generic() {
-				if let Some(specs) = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()) {
-					for spec in specs {
-						out.push(Func::new_ext(func.entity(), FunctionTypeHint::Specialized(spec), None, self.gen_env));
+			if constness_filter.map_or(true, |c| c == func.constness()) {
+				if func.is_generic() {
+					if let Some(specs) = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()) {
+						for spec in specs {
+							out.push(Func::new_ext(func.entity(), FunctionTypeHint::Specialized(spec), None, self.gen_env));
+						}
+						return true;
 					}
-					return true;
 				}
+				out.push(func);
 			}
-			out.push(func);
 			true
 		});
 		out
@@ -247,6 +249,31 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		out
 	}
 
+	pub fn field_methods<'f>(&self, fields: impl Iterator<Item=&'f Field<'tu, 'ge>>, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> where 'tu: 'f, 'ge: 'f {
+		let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
+		out.extend(fields
+			.map(|fld| {
+				iter::from_fn({
+					let fld_type_ref = fld.type_ref();
+					let read_func = Func::new(fld.entity(), self.gen_env);
+					let mut read_yield = if constness_filter.map_or(true, |c| c == read_func.constness()) {
+						Some(read_func)
+					} else {
+						None
+					};
+					let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut()) && !fld_type_ref.constness().is_const() && !fld_type_ref.as_fixed_array().is_some() {
+						Some(Func::new_ext(fld.entity(), FunctionTypeHint::FieldSetter, None, self.gen_env))
+					} else {
+						None
+					};
+					move || read_yield.take().or_else(|| write_yield.take())
+				})
+			})
+			.flatten()
+		);
+		out
+	}
+
 	pub fn is_definition(&self) -> bool {
 		let class_loc = self.entity.get_location();
 		let def_loc = self.entity.get_definition().and_then(|d| d.get_location());
@@ -268,7 +295,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			.filter(|f| !f.is_excluded())
 			.map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.flatten()
-			.chain(self.methods().into_iter()
+			.chain(self.methods(None).into_iter()
 				.filter(|m| !m.is_excluded())
 				.map(|m| m.dependent_types())
 				.flatten()
@@ -286,32 +313,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		} else {
 			dep_types.collect()
 		}
-	}
-
-	pub fn field_methods<'f>(&self, fields: impl Iterator<Item=&'f Field<'tu, 'ge>>) -> Vec<Func<'tu, 'ge>> where 'tu: 'ge, 'ge: 'f {
-		let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
-		out.extend(fields
-			.map(|fld| {
-				iter::from_fn({
-					let fld_type_ref = fld.type_ref();
-					let mut need_to_yield_read = true;
-					let mut need_to_yield_write = !fld_type_ref.constness().is_const() && !fld_type_ref.as_fixed_array().is_some();
-					move || {
-						if need_to_yield_read {
-							need_to_yield_read = false;
-							Some(Func::new(fld.entity(), self.gen_env))
-						} else if need_to_yield_write {
-							need_to_yield_write = false;
-							Some(Func::new_ext(fld.entity(), FunctionTypeHint::FieldSetter, None, self.gen_env))
-						} else {
-							None
-						}
-					}
-				})
-			})
-			.flatten()
-		);
-		out
 	}
 }
 

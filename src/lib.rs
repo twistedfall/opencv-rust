@@ -41,6 +41,7 @@ pub(crate) mod mod_prelude {
 		Error,
 		Result,
 		core::{CV_MAKE_TYPE, CV_MAKETYPE},
+		hub_prelude::*,
 		mod_prelude_types::*,
 		boxed_cast_base,
 		boxed_cast_descendant,

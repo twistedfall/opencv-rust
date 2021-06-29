@@ -74,24 +74,46 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	let consts = c.consts();
 	let fields = c.fields();
-	let mut methods = if is_simple {
-		vec![]
+	let (mut const_methods, mut mut_methods) = if is_simple {
+		(vec![], vec![])
 	} else {
-		c.field_methods(fields.iter())
+		(
+			c.field_methods(fields.iter(), Some(Constness::Const)),
+			c.field_methods(fields.iter(), Some(Constness::Mut)),
+		)
 	};
-	methods.extend(c.methods());
+	const_methods.extend(c.methods(Some(Constness::Const)));
+	mut_methods.extend(c.methods(Some(Constness::Mut)));
+	let method_count = const_methods.len() + mut_methods.len();
 	if is_trait {
-		let mut bases = c.bases().into_iter()
-			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
-			.map(|x| x.rust_trait_name(NameStyle::Reference, Constness::Const).into_owned())
-			.collect::<Vec<_>>();
-		bases.sort_unstable();
-		let mut trait_bases: String = bases.join(" + ");
-		if !trait_bases.is_empty() {
-			trait_bases.insert_str(0, ": ");
+		let bases = c.bases();
+		let mut bases_const = Vec::with_capacity(bases.len());
+		let mut bases_mut = Vec::with_capacity(bases.len() + 1);
+		bases_mut.push(c.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned());
+		// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
+		for b in bases.into_iter().filter(|b| !b.is_excluded() && !b.is_simple()) {
+			bases_const.push(b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned());
+			bases_mut.push(b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned());
+		}
+		bases_const.sort_unstable();
+		bases_mut.sort_unstable();
+		let mut trait_bases_const: String = bases_const.join(" + ");
+		if !trait_bases_const.is_empty() {
+			trait_bases_const.insert_str(0, ": ");
 		};
-		let trait_methods = rust_generate_funcs(
-			methods.iter().filter(|m| m.as_instance_method().is_some()),
+		let mut trait_bases_mut: String = bases_mut.join(" + ");
+		if !trait_bases_mut.is_empty() {
+			trait_bases_mut.insert_str(0, ": ");
+		};
+		let mut trait_methods_pool = NamePool::with_capacity(method_count);
+		let trait_const_methods = rust_generate_funcs(
+			const_methods.iter().filter(|m| m.as_instance_method().is_some()),
+			&mut trait_methods_pool,
+			opencv_version,
+		);
+		let trait_mut_methods = rust_generate_funcs(
+			mut_methods.iter().filter(|m| m.as_instance_method().is_some()),
+			&mut trait_methods_pool,
 			opencv_version,
 		);
 		let dyn_impl = if is_abstract {
@@ -99,15 +121,23 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				.map(|c| c.gen_rust(opencv_version))
 				.join("");
 
-			let methods = rust_generate_funcs(
-				methods.iter().filter(|m| m.as_static_method().is_some()),
+			let mut methods_pool = NamePool::with_capacity(method_count);
+			let const_methods = rust_generate_funcs(
+				const_methods.iter().filter(|m| m.as_static_method().is_some()),
+				&mut methods_pool,
 				opencv_version,
 			);
-			if !methods.is_empty() || !consts.is_empty() {
+			let mut_methods = rust_generate_funcs(
+				mut_methods.iter().filter(|m| m.as_static_method().is_some()),
+				&mut methods_pool,
+				opencv_version,
+			);
+			if !const_methods.is_empty() || !mut_methods.is_empty() || !consts.is_empty() {
 				TRAIT_DYN_TPL.interpolate(&hashmap! {
-					"rust_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
+					"rust_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Mut),
 					"consts" => consts.into(),
-					"methods" => methods.into(),
+					"const_methods" => const_methods.into(),
+					"mut_methods" => mut_methods.into(),
 				})
 			} else {
 				String::new()
@@ -118,19 +148,22 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		out = TRAIT_TPL.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
-			"rust_trait_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
+			"rust_trait_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Mut),
+			"rust_trait_local_const" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
 			"rust_local" => type_ref.rust_local(),
 			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
-			"bases" => trait_bases.into(),
-			"trait_methods" => trait_methods.into(),
+			"trait_bases_const" => trait_bases_const.into(),
+			"trait_bases_mut" => trait_bases_mut.into(),
+			"trait_const_methods" => trait_const_methods.into(),
+			"trait_mut_methods" => trait_mut_methods.into(),
 			"dyn_impl" => dyn_impl.into(),
 		});
 	}
 
 	if !is_abstract {
 		let rust_local = c.rust_localname(FishStyle::No);
-		let mut impls = if methods.iter().any(|m| m.is_clone()) {
+		let mut impls = if const_methods.iter().any(|m| m.is_clone()) {
 			IMPL_CLONE_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local.as_ref(),
 			})
@@ -183,7 +216,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					&BASE_TPL
 				};
 				tpl.interpolate(&hashmap! {
-					"base_rust_full" => base.rust_trait_name(NameStyle::Reference, Constness::Const),
+					"base_rust_full" => base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut),
+					"base_const_rust_full" => base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const),
 					"rust_local" => type_ref.rust_local(),
 					"base_rust_local" => base_type_ref.rust_local(),
 					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
@@ -226,16 +260,30 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			vec![]
 		};
 
-		let mut inherent_methods = String::with_capacity(512 * methods.len());
+		let mut inherent_const_methods = String::with_capacity(512 * const_methods.len());
+		let mut inherent_mut_methods = String::with_capacity(512 * mut_methods.len());
+		let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 		let is_trait = c.is_trait();
-		inherent_methods.push_str(&if is_trait {
+
+		inherent_const_methods.push_str(&if is_trait {
 			rust_generate_funcs(
-				methods.iter()
+				const_methods.iter()
 					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
+				&mut inherent_methods_pool,
 				opencv_version,
 			)
 		} else {
-			rust_generate_funcs(methods.iter(), opencv_version)
+			rust_generate_funcs(const_methods.iter(), &mut inherent_methods_pool, opencv_version)
+		});
+		inherent_mut_methods.push_str(&if is_trait {
+			rust_generate_funcs(
+				mut_methods.iter()
+					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
+				&mut inherent_methods_pool,
+				opencv_version,
+			)
+		} else {
+			rust_generate_funcs(mut_methods.iter(), &mut inherent_methods_pool, opencv_version)
 		});
 
 		let tpl = if is_simple {
@@ -260,7 +308,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"impl" => IMPL_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local,
 				"consts" => consts.into(),
-				"methods" => inherent_methods.into(),
+				"const_methods" => inherent_const_methods.into(),
+				"mut_methods" => inherent_mut_methods.into(),
 			}).into(),
 			"impls" => impls.into(),
 		});
@@ -271,7 +320,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 fn gen_rust_exports_boxed(c: &Class) -> String {
 	let fields = c.fields();
 	let mut out = String::with_capacity((fields.len() + 1) * 128);
-	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded())) {
+	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded()), None) {
 		if !func.is_excluded() {
 			out += &func.gen_rust_exports();
 		}
@@ -294,7 +343,7 @@ fn gen_cpp_boxed(c: &Class) -> String {
 
 	let fields = c.fields();
 	let mut out = String::with_capacity(fields.len() * 512);
-	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded())) {
+	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded()), None) {
 		if !func.is_excluded() {
 			out += &func.gen_cpp();
 		}
@@ -348,16 +397,17 @@ fn gen_cpp_boxed(c: &Class) -> String {
 	out
 }
 
-fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>, opencv_version: &str) -> String where 'tu: 'ge, 'ge: 'f {
-	let name_pool = NamePool::with_capacity(fns.size_hint().1.unwrap_or_default());
-	let fns = fns.into_iter()
-		.filter(|f| !f.is_excluded());
-	name_pool.into_disambiguator(fns, |f| f.rust_leafname(FishStyle::No))
-		.map(|(name, func)| {
-			let mut func = func.clone();
-			func.set_name_hint(Some(name));
-			func.gen_rust(opencv_version) // fixme
-		})
+fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>, name_pool: &mut NamePool, opencv_version: &str) -> String where 'tu: 'ge, 'ge: 'f {
+	let fns = fns.filter(|f| !f.is_excluded());
+	fns.map(move |func| {
+		let mut func = Cow::Borrowed(func);
+		let mut name = func.rust_leafname(FishStyle::No);
+		name_pool.make_unique_name(&mut name);
+		if let Cow::Owned(name) = name {
+			func.to_mut().set_name_hint(Some(name));
+		}
+		func.gen_rust(opencv_version) // fixme
+	})
 		.join("")
 }
 
@@ -387,7 +437,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 			}
 		};
 
-		let mut methods = self.methods().into_iter()
+		let mut methods = self.methods(None).into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_rust_exports());
 
@@ -404,7 +454,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 			}
 		};
 
-		let methods: Vec<_> = self.methods().into_iter()
+		let methods: Vec<_> = self.methods(None).into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_cpp())
 			.collect();

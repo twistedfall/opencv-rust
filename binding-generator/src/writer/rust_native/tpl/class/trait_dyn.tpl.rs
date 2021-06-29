@@ -1,5 +1,6 @@
 impl dyn {{rust_local}} + '_ {
 	{{consts}}
-	{{methods}}
+	{{const_methods}}
+	{{mut_methods}}
 }
 

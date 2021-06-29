@@ -6,13 +6,13 @@ use std::{
 };
 
 use crate::{
-	core::{_InputArray, Mat, MatTrait, ToInputArray},
+	core::{_InputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray},
 	Error,
 	Result,
 	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
-use super::{DataType, match_dims, match_format, match_is_continuous, match_total, MatTraitManual};
+use super::{DataType, match_dims, match_format, match_is_continuous, match_total};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
 ///
@@ -89,10 +89,12 @@ impl<T: DataType> Mat_<T> {
 	}
 }
 
-impl<T> MatTrait for Mat_<T> {
+impl<T> MatTraitConst for Mat_<T> {
 	#[inline]
 	fn as_raw_Mat(&self) -> *const c_void { self.inner.as_raw_Mat() }
+}
 
+impl<T> MatTrait for Mat_<T> {
 	#[inline]
 	fn as_raw_mut_Mat(&mut self) -> *mut c_void { self.inner.as_raw_mut_Mat() }
 }

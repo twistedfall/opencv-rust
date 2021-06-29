@@ -9,7 +9,7 @@ use crate::{
 	EntityElement,
 	SmartPtr,
 	StrExt,
-	type_ref::{self, NameStyle},
+	type_ref::{self, FishStyle, NameStyle},
 };
 
 use super::RustNativeGeneratedElement;
@@ -53,7 +53,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
 				inter_vars.insert("base_rust_local", cls.rust_localname(FishStyle::No).into_owned().into());
-				inter_vars.insert("base_rust_full", cls.rust_trait_name(NameStyle::Reference, Constness::Const).into_owned().into());
+				inter_vars.insert("base_rust_full", cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned().into());
+				inter_vars.insert("base_const_rust_full", cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned().into());
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 				let mut all_bases = cls.all_bases().into_iter()
 					.filter(|b| !b.is_excluded())
@@ -61,7 +62,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
 				for base in all_bases {
 					inter_vars.insert("base_rust_local", base.rust_localname(FishStyle::No).into_owned().into());
-					inter_vars.insert("base_rust_full", base.rust_trait_name(NameStyle::Reference, Constness::Const).into_owned().into());
+					inter_vars.insert("base_rust_full", base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned().into());
+					inter_vars.insert("base_const_rust_full", base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned().into());
 					inter_vars.insert("base_rust_full_ref", base.type_ref().rust_full().into_owned().into());
 					impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 					if self.gen_env.is_used_in_smart_ptr(base.entity()) {
@@ -104,7 +106,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			inner_cpp_extern_const.to_mut().push('*');
 		}
 
-		let mut const_renderer = type_ref::CppRenderer::new(NameStyle::Reference, "", true);
+		let mut const_renderer = type_ref::CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), "", true);
 		const_renderer.constness_override = ConstnessOverride::Yes(Constness::Const);
 		let cpp_full_const = type_ref.render(const_renderer);
 

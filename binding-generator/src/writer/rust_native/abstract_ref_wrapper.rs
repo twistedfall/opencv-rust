@@ -1,7 +1,14 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{AbstractRefWrapper, CompiledInterpolation, Constness, ConstnessOverride, StrExt};
+use crate::{
+	AbstractRefWrapper,
+	CompiledInterpolation,
+	Constness,
+	ConstnessOverride,
+	StrExt,
+	type_ref::{FishStyle, NameStyle},
+};
 
 use super::RustNativeGeneratedElement;
 
@@ -21,12 +28,10 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 		);
 
 		let type_ref = self.type_ref().source();
-		let mut rust_full = type_ref.rust_full().into_owned(); // fixme
-		if rust_full.starts_with("dyn ") {
-			rust_full.drain(..4);
-		}
+		let cls = type_ref.as_class().expect("Can only make an abstract ref to a class");
 		RUST.interpolate(&hashmap! {
-			"rust_full" => rust_full.into(),
+			"rust_full" => cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut),
+			"rust_const_full" => cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const),
 			"rust_local" => type_ref.rust_local(),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
 			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
