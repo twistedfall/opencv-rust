@@ -42,6 +42,8 @@ pub(crate) mod mod_prelude {
 		Result,
 		core::{CV_MAKE_TYPE, CV_MAKETYPE},
 		mod_prelude_types::*,
+		boxed_cast_base,
+		boxed_cast_descendant,
 		opencv_type_boxed,
 		opencv_type_enum,
 		opencv_type_simple,

@@ -106,3 +106,33 @@ macro_rules! opencv_type_boxed {
 		}
 	};
 }
+
+#[macro_export]
+macro_rules! boxed_cast_base {
+	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
+		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
+
+		impl ::std::convert::From<$type> for $base {
+			#[inline]
+			fn from(s: $type) -> Self {
+				unsafe { Self::from_raw($extern_convert(s.into_raw())) }
+			}
+		}
+	};
+}
+
+#[macro_export]
+macro_rules! boxed_cast_descendant {
+	($type: ty, $descendant: ty, $extern_convert: ident $(,)?) => {
+		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
+
+		impl ::std::convert::TryFrom<$type> for $descendant {
+			type Error = $crate::Error;
+
+			#[inline]
+			fn try_from(s: $type) -> $crate::Result<Self> {
+				Ok(unsafe { Self::from_raw($extern_convert(s.into_raw())) })
+			}
+		}
+	};
+}

@@ -4,11 +4,12 @@ use std::{
 };
 
 use opencv::{
-	core::{Scalar, Vec4f},
+	core::{Algorithm, NORM_L2, Scalar, Vec4f},
+	features2d::BFMatcher,
 	flann::IndexParams,
 	prelude::*,
 	Result,
-	types::{PtrOfIndexParams, VectorOfVec4f},
+	types::{PtrOfFeature2D, PtrOfIndexParams, VectorOfVec4f},
 };
 
 #[test]
@@ -98,5 +99,39 @@ fn into_raw_ptrofboxed() -> Result<()> {
 	assert_eq!(3, b.get_int("int_non_existent", 3)?);
 	assert_eq!(12.34, b.get_double("double", 99.99)?);
 	assert_eq!("my string", b.get_string("string", "-")?);
+	Ok(())
+}
+
+#[test]
+fn smart_ptr_cast_base() -> Result<()> {
+	#[cfg(ocvrs_opencv_branch_4)]
+	use opencv::features2d::{AKAZE_DescriptorType::DESCRIPTOR_MLDB, KAZE_DiffusivityType::DIFF_PM_G2};
+	#[cfg(not(ocvrs_opencv_branch_4))]
+	use opencv::features2d::{AKAZE_DESCRIPTOR_MLDB as DESCRIPTOR_MLDB, KAZE_DIFF_PM_G2 as DIFF_PM_G2};
+	let d = <dyn AKAZE>::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
+	assert_eq!(true, Feature2DTrait::empty(&d)?);
+	if !cfg!(ocvrs_opencv_branch_32) {
+		assert_eq!("Feature2D.AKAZE", Feature2DTrait::get_default_name(&d)?);
+	} else {
+		assert_eq!("my_object", Feature2DTrait::get_default_name(&d)?);
+	}
+	let a = PtrOfFeature2D::from(d);
+	assert_eq!(true, Feature2DTrait::empty(&a)?);
+	if !cfg!(ocvrs_opencv_branch_32) {
+		assert_eq!("Feature2D.AKAZE", Feature2DTrait::get_default_name(&a)?);
+	} else {
+		assert_eq!("my_object", Feature2DTrait::get_default_name(&a)?);
+	}
+	Ok(())
+}
+
+#[test]
+fn cast_base() -> Result<()> {
+	let m = BFMatcher::new(NORM_L2, false)?;
+	assert_eq!(true, AlgorithmTrait::empty(&m)?);
+	assert_eq!("my_object", &m.get_default_name()?);
+	let a = Algorithm::from(m);
+	assert_eq!(true, a.empty()?);
+	assert_eq!("my_object", &a.get_default_name()?);
 	Ok(())
 }

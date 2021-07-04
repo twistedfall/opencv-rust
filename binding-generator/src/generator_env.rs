@@ -111,6 +111,12 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
 				entity.visit_children(|c, _| {
 					match c.get_kind() {
+						EntityKind::BaseSpecifier => {
+							let c_decl = c.get_definition().expect("Can't get base class definition");
+							self.gen_env.descendants.entry(c_decl.cpp_fullname().into_owned())
+								.or_insert_with(|| HashSet::with_capacity(4))
+								.insert(entity);
+						}
 						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
@@ -148,6 +154,7 @@ pub struct GeneratorEnv<'tu> {
 	class_constants: HashMap<String, Const<'tu>>,
 	type_resolve_cache: HashMap<String, Type<'tu>>,
 	used_in_smart_ptr: HashSet<Entity<'tu>>,
+	pub descendants: HashMap<String, HashSet<Entity<'tu>>>,
 }
 
 impl<'tu> GeneratorEnv<'tu> {
@@ -162,6 +169,7 @@ impl<'tu> GeneratorEnv<'tu> {
 			class_constants: HashMap::with_capacity(32),
 			type_resolve_cache: HashMap::with_capacity(32),
 			used_in_smart_ptr: HashSet::with_capacity(32),
+			descendants: HashMap::with_capacity(16),
 		};
 		let walker = EntityWalker::new(root_entity);
 		walker.walk_opencv_entities(DbPopulator { gen_env: &mut out });

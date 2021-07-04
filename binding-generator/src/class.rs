@@ -26,6 +26,7 @@ use crate::{
 	StrExt,
 	TypeRef,
 };
+use crate::return_type_wrapper::ReturnTypeWrapper;
 
 #[derive(Clone, Copy, Debug, PartialOrd, PartialEq)]
 pub enum Kind {
@@ -109,6 +110,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 //		self.entity.walk_methods_while(|child| !Func::new(child, self.gen_env).is_abstract())
 	}
 
+	pub fn is_polymorphic(&self) -> bool {
+		self.entity.walk_methods_while(|f| !f.is_virtual_method())
+	}
+
 	pub fn is_trait(&self) -> bool {
 		self.is_boxed()
 //		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_fullname().as_ref())
@@ -168,6 +173,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			})
 			.flatten()
 			.collect()
+	}
+
+	pub fn descendants(&self) -> impl Iterator<Item=Class<'tu, 'ge>> {
+		let gen_env = self.gen_env;
+		gen_env.descendants.get(self.cpp_fullname().as_ref()).into_iter()
+			.map(move |desc| desc.iter().map(move |e| Class::new(*e, gen_env)))
+			.flatten()
 	}
 
 	pub fn has_methods(&self) -> bool {
@@ -240,7 +252,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		self.fields().into_iter()
+		let dep_types = self.fields().into_iter()
 			.filter(|f| !f.is_excluded())
 			.map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.flatten()
@@ -248,8 +260,20 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				.filter(|m| !m.is_excluded())
 				.map(|m| m.dependent_types())
 				.flatten()
+			);
+		if !self.is_simple() {
+			dep_types.chain(self.descendants().into_iter()
+				.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
+				.map(|b| DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
+					b.type_ref(),
+					DefinitionLocation::Type,
+					self.gen_env,
+				)))
 			)
-			.collect()
+				.collect()
+		} else {
+			dep_types.collect()
+		}
 	}
 
 	pub fn field_methods<'f>(&self, fields: impl Iterator<Item=&'f Field<'tu, 'ge>>) -> Vec<Func<'tu, 'ge>> where 'tu: 'ge, 'ge: 'f {
@@ -390,6 +414,9 @@ impl fmt::Debug for Class<'_, '_> {
 		}
 		if self.is_trait() {
 			props.push("trait");
+		}
+		if self.is_polymorphic() {
+			props.push("polymorphic");
 		}
 		if self.is_by_ptr() {
 			props.push("by_ptr");

@@ -44,6 +44,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		|| include_str!("tpl/class/base.tpl.rs").compile_interpolation()
 	);
 
+	static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/base_cast.tpl.rs").compile_interpolation()
+	);
+
+	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/descendant_cast.tpl.rs").compile_interpolation()
+	);
+
 	static SIMPLE_BASE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 		|| include_str!("tpl/class/simple_base.tpl.rs").compile_interpolation()
 	);
@@ -120,13 +128,51 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	}
 
 	if !is_abstract {
+		let rust_local = c.rust_localname();
+		let mut impls = if methods.iter().any(|m| m.is_clone()) {
+			IMPL_CLONE_TPL.interpolate(&hashmap! {
+				"rust_local" => rust_local.as_ref(),
+			})
+		} else {
+			"".to_string()
+		};
+
 		let mut bases = c.all_bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 			.collect::<Vec<_>>();
+		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+		if !is_simple {
+			if c.is_polymorphic() {
+				let mut descendants = c.descendants()
+					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
+					.collect::<Vec<_>>();
+				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+				for d in descendants {
+					let desc_local = d.rust_localname();
+					let desc_full = d.rust_fullname();
+					impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
+						"rust_local" => rust_local.as_ref(),
+						"descendant_rust_local" => desc_local.as_ref(),
+						"descendant_rust_full" => desc_full.as_ref(),
+					});
+				}
+			}
+			for b in &bases {
+				if !b.is_abstract() {
+					let base_local = b.rust_localname();
+					let base_full = b.rust_fullname();
+					impls += &BASE_CAST_TPL.interpolate(&hashmap! {
+						"rust_local" => rust_local.as_ref(),
+						"base_rust_local" => base_local.as_ref(),
+						"base_rust_full" => base_full.as_ref(),
+					});
+				}
+			}
+		}
+
 		if is_trait {
 			bases.push(c.clone());
 		}
-		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 		let bases = bases.into_iter()
 			.map(|base| {
 				let base_type_ref = base.type_ref();
@@ -201,15 +247,6 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.map(|c| c.gen_rust(opencv_version))
 			.join("");
 
-		let rust_local = c.rust_localname();
-		let impls = if methods.iter().any(|m| m.is_clone()) {
-			IMPL_CLONE_TPL.interpolate(&hashmap! {
-				"rust_local" => rust_local.clone(),
-			})
-		} else {
-			"".to_string()
-		};
-
 		out += &tpl.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
@@ -243,7 +280,15 @@ fn gen_rust_exports_boxed(c: &Class) -> String {
 
 fn gen_cpp_boxed(c: &Class) -> String {
 	static BOXED_CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/boxed_dtor.tpl.cpp").compile_interpolation()
+		|| include_str!("tpl/class/boxed.tpl.cpp").compile_interpolation()
+	);
+
+	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/descendant_cast.tpl.cpp").compile_interpolation()
+	);
+
+	static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/base_cast.tpl.cpp").compile_interpolation()
 	);
 
 	let fields = c.fields();
@@ -254,12 +299,49 @@ fn gen_cpp_boxed(c: &Class) -> String {
 		}
 	}
 
+	let mut casts = String::new();
 	if !c.is_abstract() {
+		let rust_local = c.rust_localname();
+		let mut bases = c.all_bases().into_iter()
+			.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
+			.collect::<Vec<_>>();
+		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+		if !c.is_simple() {
+			let cpp_decl = c.type_ref().cpp_arg_func_decl("instance");
+			if c.is_polymorphic() {
+				let mut descendants = c.descendants()
+					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
+					.collect::<Vec<_>>();
+				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+				for d in descendants {
+					let desc_rust_local = d.rust_localname();
+					let desc_cpp_full = d.cpp_fullname();
+					casts += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
+						"rust_local" => rust_local.as_ref(),
+						"descendant_rust_local" => desc_rust_local.as_ref(),
+						"descendant_cpp_full" => desc_cpp_full.as_ref(),
+						"cpp_decl" => &cpp_decl,
+					});
+				}
+			}
+			for b in bases {
+				let base_rust_local = b.rust_localname();
+				let base_cpp_full = b.cpp_fullname();
+				casts += &BASE_CAST_TPL.interpolate(&hashmap! {
+					"rust_local" => rust_local.as_ref(),
+					"base_rust_local" => base_rust_local.as_ref(),
+					"base_cpp_full" => base_cpp_full.as_ref(),
+					"cpp_decl" => &cpp_decl,
+				});
+			}
+		}
+
 		let type_ref = c.type_ref();
 		out += &BOXED_CPP_TPL.interpolate(&hashmap! {
 				"rust_local" => type_ref.rust_local(),
 				"cpp_full" => type_ref.cpp_full(),
 				"cpp_extern" => type_ref.cpp_extern(),
+				"casts" => casts.into(),
 			})
 	}
 	out
