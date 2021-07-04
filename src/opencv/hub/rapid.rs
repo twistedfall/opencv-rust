@@ -9,10 +9,10 @@
 )]
 //! # silhouette based 3D object tracking
 //! 
-//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_drummond2002real)
+//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_drummond2002real)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Tracker, super::Rapid, super::OLSTracker };
+	pub use { super::Tracker, super::Rapid, super::OLSTracker, super::GOSTracker };
 }
 
 /// Collect corresponding 2d and 3d points based on correspondencies and mask
@@ -82,7 +82,7 @@ pub fn draw_wireframe(img: &mut dyn core::ToInputOutputArray, pts2d: &dyn core::
 
 /// Extract control points from the projected silhouette of a mesh
 /// 
-/// see [drummond2002real](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
+/// see [drummond2002real](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
 /// ## Parameters
 /// * num: number of control points
 /// * len: search radius (used to restrict the ROI)
@@ -137,7 +137,7 @@ pub fn find_correspondencies(bundle: &dyn core::ToInputArray, cols: &mut dyn cor
 	unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), cols.as_raw__OutputArray(), response.as_raw__OutputArray()) }.into_result()
 }
 
-/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
 /// 
 /// 1. @ref extractControlPoints
 /// 2. @ref extractLineBundle
@@ -170,8 +170,26 @@ pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core:
 	unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), rmsd) }.into_result()
 }
 
+/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_wang2015global)
+pub trait GOSTracker: crate::rapid::Tracker {
+	fn as_raw_GOSTracker(&self) -> *const c_void;
+	fn as_raw_mut_GOSTracker(&mut self) -> *mut c_void;
+
+}
+
+impl dyn GOSTracker + '_ {
+	/// ## C++ default parameters
+	/// * hist_bins: 4
+	/// * sobel_thesh: 10
+	pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr::<dyn crate::rapid::OLSTracker>> {
+		input_array_arg!(pts3d);
+		input_array_arg!(tris);
+		unsafe { sys::cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rapid::OLSTracker>::opencv_from_extern(r) } )
+	}
+	
+}
 /// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
-/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_seo2013optimal)
+/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_seo2013optimal)
 pub trait OLSTracker: crate::rapid::Tracker {
 	fn as_raw_OLSTracker(&self) -> *const c_void;
 	fn as_raw_mut_OLSTracker(&mut self) -> *mut c_void;

@@ -53,7 +53,7 @@ pub const DNN_TARGET_MYRIAD: i32 = 3;
 pub const DNN_TARGET_OPENCL: i32 = 1;
 pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub const DNN_TARGET_VULKAN: i32 = 4;
-pub const OPENCV_DNN_API_VERSION: i32 = 20210301;
+pub const OPENCV_DNN_API_VERSION: i32 = 20210608;
 /// Enum of computation backends supported by layers.
 /// ## See also
 /// Net::setPreferableBackend
@@ -778,11 +778,6 @@ impl AccumLayer {
 
 unsafe impl Send for AccumLayer {}
 
-impl crate::dnn::AccumLayerTrait for AccumLayer {
-	#[inline] fn as_raw_AccumLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl core::AlgorithmTrait for AccumLayer {
 	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -793,12 +788,21 @@ impl crate::dnn::LayerTrait for AccumLayer {
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::dnn::AccumLayerTrait for AccumLayer {
+	#[inline] fn as_raw_AccumLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl AccumLayer {
 	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr::<crate::dnn::AccumLayer>> {
 		unsafe { sys::cv_dnn_AccumLayer_create_const_LayerParamsR(params.as_raw_LayerParams()) }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn::AccumLayer>::opencv_from_extern(r) } )
 	}
 	
 }
+
+boxed_cast_base! { AccumLayer, core::Algorithm, cv_AccumLayer_to_Algorithm }
+
+boxed_cast_base! { AccumLayer, crate::dnn::Layer, cv_AccumLayer_to_Layer }
 
 pub trait ActivationLayer: crate::dnn::LayerTrait {
 	fn as_raw_ActivationLayer(&self) -> *const c_void;
@@ -1041,18 +1045,22 @@ impl core::AlgorithmTrait for BaseConvolutionLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::BaseConvolutionLayerTrait for BaseConvolutionLayer {
-	#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for BaseConvolutionLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::dnn::BaseConvolutionLayerTrait for BaseConvolutionLayer {
+	#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl BaseConvolutionLayer {
 }
+
+boxed_cast_base! { BaseConvolutionLayer, core::Algorithm, cv_BaseConvolutionLayer_to_Algorithm }
+
+boxed_cast_base! { BaseConvolutionLayer, crate::dnn::Layer, cv_BaseConvolutionLayer_to_Layer }
 
 pub trait BatchNormLayer: crate::dnn::ActivationLayer {
 	fn as_raw_BatchNormLayer(&self) -> *const c_void;
@@ -1159,14 +1167,14 @@ impl core::AlgorithmTrait for BlankLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::BlankLayerTrait for BlankLayer {
-	#[inline] fn as_raw_BlankLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_BlankLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for BlankLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::BlankLayerTrait for BlankLayer {
+	#[inline] fn as_raw_BlankLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_BlankLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BlankLayer {
@@ -1175,6 +1183,10 @@ impl BlankLayer {
 	}
 	
 }
+
+boxed_cast_base! { BlankLayer, core::Algorithm, cv_BlankLayer_to_Algorithm }
+
+boxed_cast_base! { BlankLayer, crate::dnn::Layer, cv_BlankLayer_to_Layer }
 
 pub trait ChannelsPReLULayer: crate::dnn::ActivationLayer {
 	fn as_raw_ChannelsPReLULayer(&self) -> *const c_void;
@@ -1234,14 +1246,14 @@ impl ClassificationModel {
 
 unsafe impl Send for ClassificationModel {}
 
-impl crate::dnn::ClassificationModelTrait for ClassificationModel {
-	#[inline] fn as_raw_ClassificationModel(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ClassificationModel(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::ModelTrait for ClassificationModel {
 	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ClassificationModelTrait for ClassificationModel {
+	#[inline] fn as_raw_ClassificationModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ClassificationModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ClassificationModel {
@@ -1267,6 +1279,8 @@ impl ClassificationModel {
 	}
 	
 }
+
+boxed_cast_base! { ClassificationModel, crate::dnn::Model, cv_ClassificationModel_to_Model }
 
 pub trait ConcatLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ConcatLayer(&self) -> *const c_void;
@@ -1323,14 +1337,14 @@ impl core::AlgorithmTrait for ConcatLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::ConcatLayerTrait for ConcatLayer {
-	#[inline] fn as_raw_ConcatLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for ConcatLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ConcatLayerTrait for ConcatLayer {
+	#[inline] fn as_raw_ConcatLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ConcatLayer {
@@ -1339,6 +1353,10 @@ impl ConcatLayer {
 	}
 	
 }
+
+boxed_cast_base! { ConcatLayer, core::Algorithm, cv_ConcatLayer_to_Algorithm }
+
+boxed_cast_base! { ConcatLayer, crate::dnn::Layer, cv_ConcatLayer_to_Layer }
 
 /// Constant layer produces the same data blob at an every forward pass.
 pub trait ConstLayerTrait: crate::dnn::LayerTrait {
@@ -1373,14 +1391,14 @@ impl core::AlgorithmTrait for ConstLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::ConstLayerTrait for ConstLayer {
-	#[inline] fn as_raw_ConstLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ConstLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for ConstLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ConstLayerTrait for ConstLayer {
+	#[inline] fn as_raw_ConstLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ConstLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ConstLayer {
@@ -1389,6 +1407,10 @@ impl ConstLayer {
 	}
 	
 }
+
+boxed_cast_base! { ConstLayer, core::Algorithm, cv_ConstLayer_to_Algorithm }
+
+boxed_cast_base! { ConstLayer, crate::dnn::Layer, cv_ConstLayer_to_Layer }
 
 pub trait ConvolutionLayerTrait: crate::dnn::BaseConvolutionLayerTrait {
 	fn as_raw_ConvolutionLayer(&self) -> *const c_void;
@@ -1426,14 +1448,14 @@ impl crate::dnn::BaseConvolutionLayerTrait for ConvolutionLayer {
 	#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::ConvolutionLayerTrait for ConvolutionLayer {
-	#[inline] fn as_raw_ConvolutionLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for ConvolutionLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ConvolutionLayerTrait for ConvolutionLayer {
+	#[inline] fn as_raw_ConvolutionLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ConvolutionLayer {
@@ -1442,6 +1464,12 @@ impl ConvolutionLayer {
 	}
 	
 }
+
+boxed_cast_base! { ConvolutionLayer, core::Algorithm, cv_ConvolutionLayer_to_Algorithm }
+
+boxed_cast_base! { ConvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_ConvolutionLayer_to_BaseConvolutionLayer }
+
+boxed_cast_base! { ConvolutionLayer, crate::dnn::Layer, cv_ConvolutionLayer_to_Layer }
 
 pub trait CorrelationLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CorrelationLayer(&self) -> *const c_void;
@@ -1474,14 +1502,14 @@ impl core::AlgorithmTrait for CorrelationLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::CorrelationLayerTrait for CorrelationLayer {
-	#[inline] fn as_raw_CorrelationLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for CorrelationLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::CorrelationLayerTrait for CorrelationLayer {
+	#[inline] fn as_raw_CorrelationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CorrelationLayer {
@@ -1490,6 +1518,10 @@ impl CorrelationLayer {
 	}
 	
 }
+
+boxed_cast_base! { CorrelationLayer, core::Algorithm, cv_CorrelationLayer_to_Algorithm }
+
+boxed_cast_base! { CorrelationLayer, crate::dnn::Layer, cv_CorrelationLayer_to_Layer }
 
 pub trait CropAndResizeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CropAndResizeLayer(&self) -> *const c_void;
@@ -1522,14 +1554,14 @@ impl core::AlgorithmTrait for CropAndResizeLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::CropAndResizeLayerTrait for CropAndResizeLayer {
-	#[inline] fn as_raw_CropAndResizeLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CropAndResizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for CropAndResizeLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::CropAndResizeLayerTrait for CropAndResizeLayer {
+	#[inline] fn as_raw_CropAndResizeLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CropAndResizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CropAndResizeLayer {
@@ -1538,6 +1570,10 @@ impl CropAndResizeLayer {
 	}
 	
 }
+
+boxed_cast_base! { CropAndResizeLayer, core::Algorithm, cv_CropAndResizeLayer_to_Algorithm }
+
+boxed_cast_base! { CropAndResizeLayer, crate::dnn::Layer, cv_CropAndResizeLayer_to_Layer }
 
 pub trait CropLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CropLayer(&self) -> *const c_void;
@@ -1570,14 +1606,14 @@ impl core::AlgorithmTrait for CropLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::CropLayerTrait for CropLayer {
-	#[inline] fn as_raw_CropLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CropLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for CropLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::CropLayerTrait for CropLayer {
+	#[inline] fn as_raw_CropLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CropLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CropLayer {
@@ -1586,6 +1622,10 @@ impl CropLayer {
 	}
 	
 }
+
+boxed_cast_base! { CropLayer, core::Algorithm, cv_CropLayer_to_Algorithm }
+
+boxed_cast_base! { CropLayer, crate::dnn::Layer, cv_CropLayer_to_Layer }
 
 pub trait DataAugmentationLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_DataAugmentationLayer(&self) -> *const c_void;
@@ -1618,14 +1658,14 @@ impl core::AlgorithmTrait for DataAugmentationLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::DataAugmentationLayerTrait for DataAugmentationLayer {
-	#[inline] fn as_raw_DataAugmentationLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for DataAugmentationLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::DataAugmentationLayerTrait for DataAugmentationLayer {
+	#[inline] fn as_raw_DataAugmentationLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DataAugmentationLayer {
@@ -1634,6 +1674,10 @@ impl DataAugmentationLayer {
 	}
 	
 }
+
+boxed_cast_base! { DataAugmentationLayer, core::Algorithm, cv_DataAugmentationLayer_to_Algorithm }
+
+boxed_cast_base! { DataAugmentationLayer, crate::dnn::Layer, cv_DataAugmentationLayer_to_Layer }
 
 pub trait DeconvolutionLayerTrait: crate::dnn::BaseConvolutionLayerTrait {
 	fn as_raw_DeconvolutionLayer(&self) -> *const c_void;
@@ -1671,14 +1715,14 @@ impl crate::dnn::BaseConvolutionLayerTrait for DeconvolutionLayer {
 	#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::DeconvolutionLayerTrait for DeconvolutionLayer {
-	#[inline] fn as_raw_DeconvolutionLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_DeconvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for DeconvolutionLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::DeconvolutionLayerTrait for DeconvolutionLayer {
+	#[inline] fn as_raw_DeconvolutionLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DeconvolutionLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DeconvolutionLayer {
@@ -1687,6 +1731,12 @@ impl DeconvolutionLayer {
 	}
 	
 }
+
+boxed_cast_base! { DeconvolutionLayer, core::Algorithm, cv_DeconvolutionLayer_to_Algorithm }
+
+boxed_cast_base! { DeconvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_DeconvolutionLayer_to_BaseConvolutionLayer }
+
+boxed_cast_base! { DeconvolutionLayer, crate::dnn::Layer, cv_DeconvolutionLayer_to_Layer }
 
 /// This class represents high-level API for object detection networks.
 /// 
@@ -1758,14 +1808,14 @@ impl DetectionModel {
 
 unsafe impl Send for DetectionModel {}
 
-impl crate::dnn::DetectionModelTrait for DetectionModel {
-	#[inline] fn as_raw_DetectionModel(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_DetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::ModelTrait for DetectionModel {
 	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::DetectionModelTrait for DetectionModel {
+	#[inline] fn as_raw_DetectionModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionModel {
@@ -1795,6 +1845,8 @@ impl DetectionModel {
 	}
 	
 }
+
+boxed_cast_base! { DetectionModel, crate::dnn::Model, cv_DetectionModel_to_Model }
 
 /// Detection output layer.
 /// 
@@ -1839,14 +1891,14 @@ impl core::AlgorithmTrait for DetectionOutputLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::DetectionOutputLayerTrait for DetectionOutputLayer {
-	#[inline] fn as_raw_DetectionOutputLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for DetectionOutputLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::DetectionOutputLayerTrait for DetectionOutputLayer {
+	#[inline] fn as_raw_DetectionOutputLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectionOutputLayer {
@@ -1855,6 +1907,10 @@ impl DetectionOutputLayer {
 	}
 	
 }
+
+boxed_cast_base! { DetectionOutputLayer, core::Algorithm, cv_DetectionOutputLayer_to_Algorithm }
+
+boxed_cast_base! { DetectionOutputLayer, crate::dnn::Layer, cv_DetectionOutputLayer_to_Layer }
 
 /// This class implements name-value dictionary, values are instances of DictValue.
 pub trait DictTrait {
@@ -2131,14 +2187,14 @@ impl core::AlgorithmTrait for EltwiseLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::EltwiseLayerTrait for EltwiseLayer {
-	#[inline] fn as_raw_EltwiseLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_EltwiseLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for EltwiseLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::EltwiseLayerTrait for EltwiseLayer {
+	#[inline] fn as_raw_EltwiseLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_EltwiseLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl EltwiseLayer {
@@ -2147,6 +2203,10 @@ impl EltwiseLayer {
 	}
 	
 }
+
+boxed_cast_base! { EltwiseLayer, core::Algorithm, cv_EltwiseLayer_to_Algorithm }
+
+boxed_cast_base! { EltwiseLayer, crate::dnn::Layer, cv_EltwiseLayer_to_Layer }
 
 pub trait ExpLayer: crate::dnn::ActivationLayer {
 	fn as_raw_ExpLayer(&self) -> *const c_void;
@@ -2215,14 +2275,14 @@ impl core::AlgorithmTrait for FlattenLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::FlattenLayerTrait for FlattenLayer {
-	#[inline] fn as_raw_FlattenLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for FlattenLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::FlattenLayerTrait for FlattenLayer {
+	#[inline] fn as_raw_FlattenLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FlattenLayer {
@@ -2231,6 +2291,10 @@ impl FlattenLayer {
 	}
 	
 }
+
+boxed_cast_base! { FlattenLayer, core::Algorithm, cv_FlattenLayer_to_Algorithm }
+
+boxed_cast_base! { FlattenLayer, crate::dnn::Layer, cv_FlattenLayer_to_Layer }
 
 pub trait FlowWarpLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_FlowWarpLayer(&self) -> *const c_void;
@@ -2263,14 +2327,14 @@ impl core::AlgorithmTrait for FlowWarpLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::FlowWarpLayerTrait for FlowWarpLayer {
-	#[inline] fn as_raw_FlowWarpLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for FlowWarpLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::FlowWarpLayerTrait for FlowWarpLayer {
+	#[inline] fn as_raw_FlowWarpLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FlowWarpLayer {
@@ -2279,6 +2343,10 @@ impl FlowWarpLayer {
 	}
 	
 }
+
+boxed_cast_base! { FlowWarpLayer, core::Algorithm, cv_FlowWarpLayer_to_Algorithm }
+
+boxed_cast_base! { FlowWarpLayer, crate::dnn::Layer, cv_FlowWarpLayer_to_Layer }
 
 pub trait InnerProductLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_InnerProductLayer(&self) -> *const c_void;
@@ -2319,14 +2387,14 @@ impl core::AlgorithmTrait for InnerProductLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::InnerProductLayerTrait for InnerProductLayer {
-	#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for InnerProductLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::InnerProductLayerTrait for InnerProductLayer {
+	#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl InnerProductLayer {
@@ -2335,6 +2403,10 @@ impl InnerProductLayer {
 	}
 	
 }
+
+boxed_cast_base! { InnerProductLayer, core::Algorithm, cv_InnerProductLayer_to_Algorithm }
+
+boxed_cast_base! { InnerProductLayer, crate::dnn::Layer, cv_InnerProductLayer_to_Layer }
 
 /// Bilinear resize layer from https://github.com/cdmh/deeplab-public-ver2
 /// 
@@ -2373,14 +2445,14 @@ impl core::AlgorithmTrait for InterpLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::InterpLayerTrait for InterpLayer {
-	#[inline] fn as_raw_InterpLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_InterpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for InterpLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::InterpLayerTrait for InterpLayer {
+	#[inline] fn as_raw_InterpLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_InterpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl InterpLayer {
@@ -2389,6 +2461,10 @@ impl InterpLayer {
 	}
 	
 }
+
+boxed_cast_base! { InterpLayer, core::Algorithm, cv_InterpLayer_to_Algorithm }
+
+boxed_cast_base! { InterpLayer, crate::dnn::Layer, cv_InterpLayer_to_Layer }
 
 /// This class represents high-level API for keypoints models
 /// 
@@ -2440,14 +2516,14 @@ impl KeypointsModel {
 
 unsafe impl Send for KeypointsModel {}
 
-impl crate::dnn::KeypointsModelTrait for KeypointsModel {
-	#[inline] fn as_raw_KeypointsModel(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_KeypointsModel(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::ModelTrait for KeypointsModel {
 	#[inline] fn as_raw_Model(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::KeypointsModelTrait for KeypointsModel {
+	#[inline] fn as_raw_KeypointsModel(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_KeypointsModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl KeypointsModel {
@@ -2473,6 +2549,8 @@ impl KeypointsModel {
 	}
 	
 }
+
+boxed_cast_base! { KeypointsModel, crate::dnn::Model, cv_KeypointsModel_to_Model }
 
 pub trait LRNLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_LRNLayer(&self) -> *const c_void;
@@ -2553,14 +2631,14 @@ impl core::AlgorithmTrait for LRNLayer {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::dnn::LRNLayerTrait for LRNLayer {
-	#[inline] fn as_raw_LRNLayer(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::dnn::LayerTrait for LRNLayer {
 	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LRNLayerTrait for LRNLayer {
+	#[inline] fn as_raw_LRNLayer(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LRNLayer {
@@ -2569,6 +2647,10 @@ impl LRNLayer {
 	}
 	
 }
+
+boxed_cast_base! { LRNLayer, core::Algorithm, cv_LRNLayer_to_Algorithm }
+
+boxed_cast_base! { LRNLayer, crate::dnn::Layer, cv_LRNLayer_to_Layer }
 
 /// LSTM recurrent layer
 pub trait LSTMLayer: crate::dnn::LayerTrait {
@@ -3008,6 +3090,76 @@ impl Layer {
 	
 }
 
+boxed_cast_descendant! { Layer, crate::dnn::AccumLayer, cv_Layer_to_AccumLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::BaseConvolutionLayer, cv_Layer_to_BaseConvolutionLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::BlankLayer, cv_Layer_to_BlankLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ConcatLayer, cv_Layer_to_ConcatLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ConstLayer, cv_Layer_to_ConstLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::CorrelationLayer, cv_Layer_to_CorrelationLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::CropAndResizeLayer, cv_Layer_to_CropAndResizeLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::CropLayer, cv_Layer_to_CropLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::DataAugmentationLayer, cv_Layer_to_DataAugmentationLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::DetectionOutputLayer, cv_Layer_to_DetectionOutputLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::EltwiseLayer, cv_Layer_to_EltwiseLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::FlattenLayer, cv_Layer_to_FlattenLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::FlowWarpLayer, cv_Layer_to_FlowWarpLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::InnerProductLayer, cv_Layer_to_InnerProductLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::InterpLayer, cv_Layer_to_InterpLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::LRNLayer, cv_Layer_to_LRNLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::MVNLayer, cv_Layer_to_MVNLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::MaxUnpoolLayer, cv_Layer_to_MaxUnpoolLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::NormalizeBBoxLayer, cv_Layer_to_NormalizeBBoxLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::PaddingLayer, cv_Layer_to_PaddingLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::PermuteLayer, cv_Layer_to_PermuteLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::PoolingLayer, cv_Layer_to_PoolingLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::PriorBoxLayer, cv_Layer_to_PriorBoxLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ProposalLayer, cv_Layer_to_ProposalLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::RegionLayer, cv_Layer_to_RegionLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ReorgLayer, cv_Layer_to_ReorgLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ReshapeLayer, cv_Layer_to_ReshapeLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ResizeLayer, cv_Layer_to_ResizeLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ScaleLayer, cv_Layer_to_ScaleLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ShiftLayer, cv_Layer_to_ShiftLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::ShuffleChannelLayer, cv_Layer_to_ShuffleChannelLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::SliceLayer, cv_Layer_to_SliceLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::SoftmaxLayer, cv_Layer_to_SoftmaxLayer }
+
+boxed_cast_descendant! { Layer, crate::dnn::SplitLayer, cv_Layer_to_SplitLayer }
+
+boxed_cast_base! { Layer, core::Algorithm, cv_Layer_to_Algorithm }
+
 /// %Layer factory allows to create instances of registered layers.
 pub trait LayerFactoryTrait {
 	fn as_raw_LayerFactory(&self) -> *const c_void;
@@ -3146,6 +3298,8 @@ impl crate::dnn::LayerParamsTrait for LayerParams {
 impl LayerParams {
 }
 
+boxed_cast_base! { LayerParams, crate::dnn::Dict, cv_LayerParams_to_Dict }
+
 pub trait MVNLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_MVNLayer(&self) -> *const c_void;
 	fn as_raw_mut_MVNLayer(&mut self) -> *mut c_void;
@@ -3218,6 +3372,10 @@ impl MVNLayer {
 	
 }
 
+boxed_cast_base! { MVNLayer, core::Algorithm, cv_MVNLayer_to_Algorithm }
+
+boxed_cast_base! { MVNLayer, crate::dnn::Layer, cv_MVNLayer_to_Layer }
+
 pub trait MaxUnpoolLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_MaxUnpoolLayer(&self) -> *const c_void;
 	fn as_raw_mut_MaxUnpoolLayer(&mut self) -> *mut c_void;
@@ -3289,6 +3447,10 @@ impl MaxUnpoolLayer {
 	}
 	
 }
+
+boxed_cast_base! { MaxUnpoolLayer, core::Algorithm, cv_MaxUnpoolLayer_to_Algorithm }
+
+boxed_cast_base! { MaxUnpoolLayer, crate::dnn::Layer, cv_MaxUnpoolLayer_to_Layer }
 
 pub trait MishLayer: crate::dnn::ActivationLayer {
 	fn as_raw_MishLayer(&self) -> *const c_void;
@@ -3967,10 +4129,12 @@ pub trait NetTrait {
 	}
 	
 	/// Returns overall time for inference and timings (in ticks) for layers.
+	/// 
 	/// Indexes in returned vector correspond to layers ids. Some layers can be fused with others,
-	/// in this case zero ticks count will be return for that skipped layers.
+	/// in this case zero ticks count will be return for that skipped layers. Supported by DNN_BACKEND_OPENCV on DNN_TARGET_CPU only.
+	/// 
 	/// ## Parameters
-	/// * timings: vector for tick timings for all layers.
+	/// * timings:[out] vector for tick timings for all layers.
 	/// ## Returns
 	/// overall ticks for model inference.
 	fn get_perf_profile(&mut self, timings: &mut core::Vector::<f64>) -> Result<i64> {
@@ -4174,6 +4338,10 @@ impl NormalizeBBoxLayer {
 	
 }
 
+boxed_cast_base! { NormalizeBBoxLayer, core::Algorithm, cv_NormalizeBBoxLayer_to_Algorithm }
+
+boxed_cast_base! { NormalizeBBoxLayer, crate::dnn::Layer, cv_NormalizeBBoxLayer_to_Layer }
+
 /// Adds extra values for specific axes.
 /// ## Parameters
 /// * paddings: Vector of paddings in format
@@ -4262,6 +4430,10 @@ impl PaddingLayer {
 	
 }
 
+boxed_cast_base! { PaddingLayer, core::Algorithm, cv_PaddingLayer_to_Algorithm }
+
+boxed_cast_base! { PaddingLayer, crate::dnn::Layer, cv_PaddingLayer_to_Layer }
+
 pub trait PermuteLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PermuteLayer(&self) -> *const c_void;
 	fn as_raw_mut_PermuteLayer(&mut self) -> *mut c_void;
@@ -4309,6 +4481,10 @@ impl PermuteLayer {
 	}
 	
 }
+
+boxed_cast_base! { PermuteLayer, core::Algorithm, cv_PermuteLayer_to_Algorithm }
+
+boxed_cast_base! { PermuteLayer, crate::dnn::Layer, cv_PermuteLayer_to_Layer }
 
 pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PoolingLayer(&self) -> *const c_void;
@@ -4473,6 +4649,10 @@ impl PoolingLayer {
 	
 }
 
+boxed_cast_base! { PoolingLayer, core::Algorithm, cv_PoolingLayer_to_Algorithm }
+
+boxed_cast_base! { PoolingLayer, crate::dnn::Layer, cv_PoolingLayer_to_Layer }
+
 pub trait PowerLayer: crate::dnn::ActivationLayer {
 	fn as_raw_PowerLayer(&self) -> *const c_void;
 	fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void;
@@ -4557,6 +4737,10 @@ impl PriorBoxLayer {
 	
 }
 
+boxed_cast_base! { PriorBoxLayer, core::Algorithm, cv_PriorBoxLayer_to_Algorithm }
+
+boxed_cast_base! { PriorBoxLayer, crate::dnn::Layer, cv_PriorBoxLayer_to_Layer }
+
 pub trait ProposalLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ProposalLayer(&self) -> *const c_void;
 	fn as_raw_mut_ProposalLayer(&mut self) -> *mut c_void;
@@ -4604,6 +4788,10 @@ impl ProposalLayer {
 	}
 	
 }
+
+boxed_cast_base! { ProposalLayer, core::Algorithm, cv_ProposalLayer_to_Algorithm }
+
+boxed_cast_base! { ProposalLayer, crate::dnn::Layer, cv_ProposalLayer_to_Layer }
 
 /// Classical recurrent layer
 /// 
@@ -4761,6 +4949,10 @@ impl RegionLayer {
 	
 }
 
+boxed_cast_base! { RegionLayer, core::Algorithm, cv_RegionLayer_to_Algorithm }
+
+boxed_cast_base! { RegionLayer, crate::dnn::Layer, cv_RegionLayer_to_Layer }
+
 pub trait ReorgLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ReorgLayer(&self) -> *const c_void;
 	fn as_raw_mut_ReorgLayer(&mut self) -> *mut c_void;
@@ -4808,6 +5000,10 @@ impl ReorgLayer {
 	}
 	
 }
+
+boxed_cast_base! { ReorgLayer, core::Algorithm, cv_ReorgLayer_to_Algorithm }
+
+boxed_cast_base! { ReorgLayer, crate::dnn::Layer, cv_ReorgLayer_to_Layer }
 
 pub trait ReshapeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ReshapeLayer(&self) -> *const c_void;
@@ -4873,6 +5069,10 @@ impl ReshapeLayer {
 	
 }
 
+boxed_cast_base! { ReshapeLayer, core::Algorithm, cv_ReshapeLayer_to_Algorithm }
+
+boxed_cast_base! { ReshapeLayer, crate::dnn::Layer, cv_ReshapeLayer_to_Layer }
+
 /// Resize input 4-dimensional blob by nearest neighbor or bilinear strategy.
 /// 
 /// Layer is used to support TensorFlow's resize_nearest_neighbor and resize_bilinear ops.
@@ -4926,6 +5126,10 @@ impl ResizeLayer {
 	}
 	
 }
+
+boxed_cast_base! { ResizeLayer, core::Algorithm, cv_ResizeLayer_to_Algorithm }
+
+boxed_cast_base! { ResizeLayer, crate::dnn::Layer, cv_ResizeLayer_to_Layer }
 
 pub trait ScaleLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ScaleLayer(&self) -> *const c_void;
@@ -4990,6 +5194,10 @@ impl ScaleLayer {
 	}
 	
 }
+
+boxed_cast_base! { ScaleLayer, core::Algorithm, cv_ScaleLayer_to_Algorithm }
+
+boxed_cast_base! { ScaleLayer, crate::dnn::Layer, cv_ScaleLayer_to_Layer }
 
 /// This class represents high-level API for segmentation  models
 /// 
@@ -5071,6 +5279,8 @@ impl SegmentationModel {
 	
 }
 
+boxed_cast_base! { SegmentationModel, crate::dnn::Model, cv_SegmentationModel_to_Model }
+
 pub trait ShiftLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ShiftLayer(&self) -> *const c_void;
 	fn as_raw_mut_ShiftLayer(&mut self) -> *mut c_void;
@@ -5118,6 +5328,10 @@ impl ShiftLayer {
 	}
 	
 }
+
+boxed_cast_base! { ShiftLayer, core::Algorithm, cv_ShiftLayer_to_Algorithm }
+
+boxed_cast_base! { ShiftLayer, crate::dnn::Layer, cv_ShiftLayer_to_Layer }
 
 /// Permute channels of 4-dimensional input blob.
 /// ## Parameters
@@ -5190,6 +5404,10 @@ impl ShuffleChannelLayer {
 	}
 	
 }
+
+boxed_cast_base! { ShuffleChannelLayer, core::Algorithm, cv_ShuffleChannelLayer_to_Algorithm }
+
+boxed_cast_base! { ShuffleChannelLayer, crate::dnn::Layer, cv_ShuffleChannelLayer_to_Layer }
 
 pub trait SigmoidLayer: crate::dnn::ActivationLayer {
 	fn as_raw_SigmoidLayer(&self) -> *const c_void;
@@ -5337,6 +5555,10 @@ impl SliceLayer {
 	
 }
 
+boxed_cast_base! { SliceLayer, core::Algorithm, cv_SliceLayer_to_Algorithm }
+
+boxed_cast_base! { SliceLayer, crate::dnn::Layer, cv_SliceLayer_to_Layer }
+
 pub trait SoftmaxLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_SoftmaxLayer(&self) -> *const c_void;
 	fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void;
@@ -5392,6 +5614,10 @@ impl SoftmaxLayer {
 	}
 	
 }
+
+boxed_cast_base! { SoftmaxLayer, core::Algorithm, cv_SoftmaxLayer_to_Algorithm }
+
+boxed_cast_base! { SoftmaxLayer, crate::dnn::Layer, cv_SoftmaxLayer_to_Layer }
 
 pub trait SplitLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_SplitLayer(&self) -> *const c_void;
@@ -5450,6 +5676,10 @@ impl SplitLayer {
 	}
 	
 }
+
+boxed_cast_base! { SplitLayer, core::Algorithm, cv_SplitLayer_to_Algorithm }
+
+boxed_cast_base! { SplitLayer, crate::dnn::Layer, cv_SplitLayer_to_Layer }
 
 pub trait SwishLayer: crate::dnn::ActivationLayer {
 	fn as_raw_SwishLayer(&self) -> *const c_void;
@@ -5577,7 +5807,7 @@ impl TextDetectionModel {
 
 /// This class represents high-level API for text detection DL networks compatible with DB model.
 /// 
-/// Related publications: [liao2020real](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Related publications: [liao2020real](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_liao2020real)
 /// Paper: https://arxiv.org/abs/1911.08947
 /// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
 /// 
@@ -5626,7 +5856,7 @@ pub trait TextDetectionModel_DBTrait {
 
 /// This class represents high-level API for text detection DL networks compatible with DB model.
 /// 
-/// Related publications: [liao2020real](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Related publications: [liao2020real](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_liao2020real)
 /// Paper: https://arxiv.org/abs/1911.08947
 /// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
 /// 
@@ -5692,6 +5922,8 @@ impl TextDetectionModel_DB {
 	}
 	
 }
+
+boxed_cast_base! { TextDetectionModel_DB, crate::dnn::Model, cv_TextDetectionModel_DB_to_Model }
 
 /// This class represents high-level API for text detection DL networks compatible with EAST model.
 /// 
@@ -5790,6 +6022,8 @@ impl TextDetectionModel_EAST {
 	}
 	
 }
+
+boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::Model, cv_TextDetectionModel_EAST_to_Model }
 
 /// This class represents high-level API for text recognition networks.
 /// 
@@ -5918,6 +6152,8 @@ impl TextRecognitionModel {
 	
 }
 
+boxed_cast_base! { TextRecognitionModel, crate::dnn::Model, cv_TextRecognitionModel_to_Model }
+
 pub trait _RangeTrait: core::RangeTrait {
 	fn as_raw__Range(&self) -> *const c_void;
 	fn as_raw_mut__Range(&mut self) -> *mut c_void;
@@ -5966,4 +6202,6 @@ impl _Range {
 	}
 	
 }
+
+boxed_cast_base! { _Range, core::Range, cv__Range_to_Range }
 pub use crate::manual::dnn::*;

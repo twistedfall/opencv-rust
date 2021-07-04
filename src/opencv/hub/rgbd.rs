@@ -8,11 +8,14 @@
 	clippy::unused_unit,
 )]
 //! # RGB-Depth Processing
+//! 
+//! @ref kinfu_icp
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_Volume, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_DynaFu, super::ParamsTrait, super::LargeKinfu, super::Kinfu_Detail_PoseGraph };
+	pub use { super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramid, super::Linemod_Modality, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTrait, super::Linemod_MatchTrait, super::Linemod_DetectorTrait, super::RgbdNormalsTrait, super::DepthCleanerTrait, super::RgbdPlaneTrait, super::RgbdFrameTrait, super::OdometryFrameTrait, super::Odometry, super::RgbdOdometryTrait, super::ICPOdometryTrait, super::RgbdICPOdometryTrait, super::FastICPOdometryTrait, super::Kinfu_Volume, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTrait, super::Kinfu_KinFu, super::Dynafu_DynaFu, super::ParamsTrait, super::LargeKinfu, super::Kinfu_Detail_PoseGraph, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFu };
 }
 
+pub const Kinfu_VolumeType_COLOREDTSDF: i32 = 2;
 pub const Kinfu_VolumeType_HASHTSDF: i32 = 1;
 pub const Kinfu_VolumeType_TSDF: i32 = 0;
 pub const OdometryFrame_CACHE_ALL: i32 = 3;
@@ -37,6 +40,7 @@ opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
 pub enum Kinfu_VolumeType {
 	TSDF = 0,
 	HASHTSDF = 1,
+	COLOREDTSDF = 2,
 }
 
 opencv_type_enum! { crate::rgbd::Kinfu_VolumeType }
@@ -231,6 +235,481 @@ pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &c
 	output_array_arg!(warped_depth);
 	output_array_arg!(warped_mask);
 	unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw__OutputArray(), warped_depth.as_raw__OutputArray(), warped_mask.as_raw__OutputArray()) }.into_result()
+}
+
+/// KinectFusion implementation
+/// 
+/// This class implements a 3d reconstruction algorithm described in
+/// [kinectfusion](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+/// 
+/// It takes a sequence of depth images taken from depth sensor
+/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
+/// The output can be obtained as a vector of points and their normals
+/// or can be Phong-rendered from given camera pose.
+/// 
+/// An internal representation of a model is a voxel cuboid that keeps TSDF values
+/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+/// There is no interface to that representation yet.
+/// 
+/// KinFu uses OpenCL acceleration automatically if available.
+/// To enable or disable it explicitly use cv::setUseOptimized() or cv::ocl::setUseOpenCL().
+/// 
+/// This implementation is based on [kinfu-remake](https://github.com/Nerei/kinfu_remake).
+/// 
+/// Note that the KinectFusion algorithm was patented and its use may be restricted by
+/// the list of patents mentioned in README.md file in this module directory.
+/// 
+/// That's why you need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
+pub trait ColoredKinfu_ColoredKinFu {
+	fn as_raw_ColoredKinfu_ColoredKinFu(&self) -> *const c_void;
+	fn as_raw_mut_ColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void;
+
+	/// Get current parameters
+	fn get_params(&self) -> Result<crate::rgbd::ColoredKinfu_Params> {
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_getParams_const(self.as_raw_ColoredKinfu_ColoredKinFu()) }.into_result().map(|r| unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(r) } )
+	}
+	
+	/// Renders a volume into an image
+	/// 
+	/// Renders a 0-surface of TSDF using Phong shading into a CV_8UC4 Mat.
+	/// Light pose is fixed in KinFu params.
+	/// 
+	/// ## Parameters
+	/// * image: resulting image
+	fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(image);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Renders a volume into an image
+	/// 
+	/// Renders a 0-surface of TSDF using Phong shading into a CV_8UC4 Mat.
+	/// Light pose is fixed in KinFu params.
+	/// 
+	/// ## Parameters
+	/// * image: resulting image
+	/// * cameraPose: pose of camera to render from. If empty then render from current pose
+	///   which is a last frame camera pose.
+	fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+		output_array_arg!(image);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray(), &camera_pose) }.into_result()
+	}
+	
+	/// Gets points and normals of current 3d mesh
+	/// 
+	/// The order of normals corresponds to order of points.
+	/// The order of points is undefined.
+	/// 
+	/// ## Parameters
+	/// * points: vector of points which are 4-float vectors
+	/// * normals: vector of normals which are 4-float vectors
+	fn get_cloud(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(points);
+		output_array_arg!(normals);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Gets points of current 3d mesh
+	/// 
+	/// The order of points is undefined.
+	/// 
+	/// ## Parameters
+	/// * points: vector of points which are 4-float vectors
+	fn get_points(&self, points: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(points);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_getPoints_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Calculates normals for given points
+	/// ## Parameters
+	/// * points: input vector of points which are 4-float vectors
+	/// * normals: output vector of corresponding normals which are 4-float vectors
+	fn get_normals(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(normals);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Resets the algorithm
+	/// 
+	/// Clears current model and resets a pose.
+	fn reset(&mut self) -> Result<()> {
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_reset(self.as_raw_mut_ColoredKinfu_ColoredKinFu()) }.into_result()
+	}
+	
+	/// Get current pose in voxel space
+	fn get_pose(&self) -> Result<core::Affine3f> {
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_getPose_const(self.as_raw_ColoredKinfu_ColoredKinFu()) }.into_result()
+	}
+	
+	/// Process next depth frame
+	/// ## Parameters
+	/// * depth: input Mat of depth frame
+	/// * rgb: input Mat of rgb (colored) frame
+	/// 
+	/// ## Returns
+	/// true if succeeded to align new frame with current scene, false if opposite
+	fn update(&mut self, depth: &dyn core::ToInputArray, rgb: &dyn core::ToInputArray) -> Result<bool> {
+		input_array_arg!(depth);
+		input_array_arg!(rgb);
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ColoredKinfu_ColoredKinFu(), depth.as_raw__InputArray(), rgb.as_raw__InputArray()) }.into_result()
+	}
+	
+}
+
+impl dyn ColoredKinfu_ColoredKinFu + '_ {
+	pub fn create(_params: &core::Ptr::<crate::rgbd::ColoredKinfu_Params>) -> Result<core::Ptr::<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>> {
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_create_const_Ptr_Params_R(_params.as_raw_PtrOfColoredKinfu_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>::opencv_from_extern(r) } )
+	}
+	
+}
+pub trait ColoredKinfu_ParamsTrait {
+	fn as_raw_ColoredKinfu_Params(&self) -> *const c_void;
+	fn as_raw_mut_ColoredKinfu_Params(&mut self) -> *mut c_void;
+
+	/// frame size in pixels
+	fn frame_size(&self) -> core::Size {
+		unsafe { sys::cv_colored_kinfu_Params_getPropFrameSize_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: frame_size")
+	}
+	
+	/// frame size in pixels
+	fn set_frame_size(&mut self, val: core::Size) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
+	}
+	
+	/// rgb frame size in pixels
+	fn rgb_frame_size(&self) -> core::Size {
+		unsafe { sys::cv_colored_kinfu_Params_getPropRgb_frameSize_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: rgb_frame_size")
+	}
+	
+	/// rgb frame size in pixels
+	fn set_rgb_frame_size(&mut self, val: core::Size) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropRgb_frameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rgb_frame_size")
+	}
+	
+	fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
+		unsafe { sys::cv_colored_kinfu_Params_getPropVolumeType_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: volume_type")
+	}
+	
+	fn set_volume_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropVolumeType_VolumeType(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_volume_type")
+	}
+	
+	/// camera intrinsics
+	fn intr(&self) -> core::Matx33f {
+		unsafe { sys::cv_colored_kinfu_Params_getPropIntr_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: intr")
+	}
+	
+	/// camera intrinsics
+	fn set_intr(&mut self, val: core::Matx33f) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn rgb_intr(&self) -> core::Matx33f {
+		unsafe { sys::cv_colored_kinfu_Params_getPropRgb_intr_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: rgb_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn set_rgb_intr(&mut self, val: core::Matx33f) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rgb_intr")
+	}
+	
+	/// pre-scale per 1 meter for input values
+	/// 
+	/// Typical values are:
+	///      * 5000 per 1 meter for the 16-bit PNG files of TUM database
+	///      * 1000 per 1 meter for Kinect 2 device
+	///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
+	fn depth_factor(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropDepthFactor_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: depth_factor")
+	}
+	
+	/// pre-scale per 1 meter for input values
+	/// 
+	/// Typical values are:
+	///      * 5000 per 1 meter for the 16-bit PNG files of TUM database
+	///      * 1000 per 1 meter for Kinect 2 device
+	///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
+	fn set_depth_factor(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropDepthFactor_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_depth_factor")
+	}
+	
+	/// Depth sigma in meters for bilateral smooth
+	fn bilateral_sigma_depth(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_sigma_depth_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: bilateral_sigma_depth")
+	}
+	
+	/// Depth sigma in meters for bilateral smooth
+	fn set_bilateral_sigma_depth(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_sigma_depth_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_bilateral_sigma_depth")
+	}
+	
+	/// Spatial sigma in pixels for bilateral smooth
+	fn bilateral_sigma_spatial(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_sigma_spatial_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: bilateral_sigma_spatial")
+	}
+	
+	/// Spatial sigma in pixels for bilateral smooth
+	fn set_bilateral_sigma_spatial(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_sigma_spatial_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_bilateral_sigma_spatial")
+	}
+	
+	/// Kernel size in pixels for bilateral smooth
+	fn bilateral_kernel_size(&self) -> i32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_kernel_size_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: bilateral_kernel_size")
+	}
+	
+	/// Kernel size in pixels for bilateral smooth
+	fn set_bilateral_kernel_size(&mut self, val: i32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_kernel_size_int(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_bilateral_kernel_size")
+	}
+	
+	/// Number of pyramid levels for ICP
+	fn pyramid_levels(&self) -> i32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropPyramidLevels_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: pyramid_levels")
+	}
+	
+	/// Number of pyramid levels for ICP
+	fn set_pyramid_levels(&mut self, val: i32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropPyramidLevels_int(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_pyramid_levels")
+	}
+	
+	/// Resolution of voxel space
+	/// 
+	/// Number of voxels in each dimension.
+	fn volume_dims(&self) -> core::Vec3i {
+		unsafe { sys::cv_colored_kinfu_Params_getPropVolumeDims_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: volume_dims")
+	}
+	
+	/// Resolution of voxel space
+	/// 
+	/// Number of voxels in each dimension.
+	fn set_volume_dims(&mut self, val: core::Vec3i) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_dims")
+	}
+	
+	/// Size of voxel in meters
+	fn voxel_size(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropVoxelSize_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: voxel_size")
+	}
+	
+	/// Size of voxel in meters
+	fn set_voxel_size(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropVoxelSize_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_voxel_size")
+	}
+	
+	/// Minimal camera movement in meters
+	/// 
+	/// Integrate new depth frame only if camera movement exceeds this value.
+	fn tsdf_min_camera_movement(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_min_camera_movement_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: tsdf_min_camera_movement")
+	}
+	
+	/// Minimal camera movement in meters
+	/// 
+	/// Integrate new depth frame only if camera movement exceeds this value.
+	fn set_tsdf_min_camera_movement(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_min_camera_movement_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_tsdf_min_camera_movement")
+	}
+	
+	/// initial volume pose in meters
+	fn volume_pose(&self) -> core::Affine3f {
+		unsafe { sys::cv_colored_kinfu_Params_getPropVolumePose_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: volume_pose")
+	}
+	
+	/// initial volume pose in meters
+	fn set_volume_pose(&mut self, val: core::Affine3f) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_volume_pose")
+	}
+	
+	/// distance to truncate in meters
+	/// 
+	/// Distances to surface that exceed this value will be truncated to 1.0.
+	fn tsdf_trunc_dist(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_trunc_dist_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: tsdf_trunc_dist")
+	}
+	
+	/// distance to truncate in meters
+	/// 
+	/// Distances to surface that exceed this value will be truncated to 1.0.
+	fn set_tsdf_trunc_dist(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_trunc_dist_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_tsdf_trunc_dist")
+	}
+	
+	/// max number of frames per voxel
+	/// 
+	/// Each voxel keeps running average of distances no longer than this value.
+	fn tsdf_max_weight(&self) -> i32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_max_weight_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: tsdf_max_weight")
+	}
+	
+	/// max number of frames per voxel
+	/// 
+	/// Each voxel keeps running average of distances no longer than this value.
+	fn set_tsdf_max_weight(&mut self, val: i32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_max_weight_int(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_tsdf_max_weight")
+	}
+	
+	/// A length of one raycast step
+	/// 
+	/// How much voxel sizes we skip each raycast step
+	fn raycast_step_factor(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropRaycast_step_factor_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: raycast_step_factor")
+	}
+	
+	/// A length of one raycast step
+	/// 
+	/// How much voxel sizes we skip each raycast step
+	fn set_raycast_step_factor(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropRaycast_step_factor_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_raycast_step_factor")
+	}
+	
+	/// light pose for rendering in meters
+	fn light_pose(&self) -> core::Vec3f {
+		unsafe { sys::cv_colored_kinfu_Params_getPropLightPose_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: light_pose")
+	}
+	
+	/// light pose for rendering in meters
+	fn set_light_pose(&mut self, val: core::Vec3f) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_light_pose")
+	}
+	
+	/// distance theshold for ICP in meters
+	fn icp_dist_thresh(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropIcpDistThresh_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: icp_dist_thresh")
+	}
+	
+	/// distance theshold for ICP in meters
+	fn set_icp_dist_thresh(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropIcpDistThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_icp_dist_thresh")
+	}
+	
+	/// angle threshold for ICP in radians
+	fn icp_angle_thresh(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropIcpAngleThresh_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: icp_angle_thresh")
+	}
+	
+	/// angle threshold for ICP in radians
+	fn set_icp_angle_thresh(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropIcpAngleThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_icp_angle_thresh")
+	}
+	
+	/// number of ICP iterations for each pyramid level
+	fn icp_iterations(&mut self) -> core::Vector::<i32> {
+		unsafe { sys::cv_colored_kinfu_Params_getPropIcpIterations(self.as_raw_mut_ColoredKinfu_Params()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: icp_iterations")
+	}
+	
+	/// number of ICP iterations for each pyramid level
+	fn set_icp_iterations(&mut self, mut val: core::Vector::<i32>) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropIcpIterations_vector_int_(self.as_raw_mut_ColoredKinfu_Params(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_icp_iterations")
+	}
+	
+	/// Threshold for depth truncation in meters
+	/// 
+	/// All depth values beyond this threshold will be set to zero
+	fn truncate_threshold(&self) -> f32 {
+		unsafe { sys::cv_colored_kinfu_Params_getPropTruncateThreshold_const(self.as_raw_ColoredKinfu_Params()) }.into_result().expect("Infallible function failed: truncate_threshold")
+	}
+	
+	/// Threshold for depth truncation in meters
+	/// 
+	/// All depth values beyond this threshold will be set to zero
+	fn set_truncate_threshold(&mut self, val: f32) -> () {
+		unsafe { sys::cv_colored_kinfu_Params_setPropTruncateThreshold_float(self.as_raw_mut_ColoredKinfu_Params(), val) }.into_result().expect("Infallible function failed: set_truncate_threshold")
+	}
+	
+	/// Set Initial Volume Pose
+	/// Sets the initial pose of the TSDF volume.
+	/// ## Parameters
+	/// * R: rotation matrix
+	/// * t: translation vector
+	fn set_initial_volume_pose(&mut self, r: core::Matx33f, t: core::Vec3f) -> Result<()> {
+		unsafe { sys::cv_colored_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(self.as_raw_mut_ColoredKinfu_Params(), r.opencv_as_extern(), t.opencv_as_extern()) }.into_result()
+	}
+	
+	/// Set Initial Volume Pose
+	/// Sets the initial pose of the TSDF volume.
+	/// ## Parameters
+	/// * homogen_tf: 4 by 4 Homogeneous Transform matrix to set the intial pose of TSDF volume
+	fn set_initial_volume_pose_1(&mut self, homogen_tf: core::Matx44f) -> Result<()> {
+		unsafe { sys::cv_colored_kinfu_Params_setInitialVolumePose_Matx44f(self.as_raw_mut_ColoredKinfu_Params(), homogen_tf.opencv_as_extern()) }.into_result()
+	}
+	
+}
+
+pub struct ColoredKinfu_Params {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ColoredKinfu_Params }
+
+impl Drop for ColoredKinfu_Params {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ColoredKinfu_Params_delete(instance: *mut c_void); }
+		unsafe { cv_ColoredKinfu_Params_delete(self.as_raw_mut_ColoredKinfu_Params()) };
+	}
+}
+
+impl ColoredKinfu_Params {
+	#[inline] pub fn as_raw_ColoredKinfu_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_ColoredKinfu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for ColoredKinfu_Params {}
+
+impl crate::rgbd::ColoredKinfu_ParamsTrait for ColoredKinfu_Params {
+	#[inline] fn as_raw_ColoredKinfu_Params(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ColoredKinfu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ColoredKinfu_Params {
+	pub fn default() -> Result<crate::rgbd::ColoredKinfu_Params> {
+		unsafe { sys::cv_colored_kinfu_Params_Params() }.into_result().map(|r| unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(r) } )
+	}
+	
+	/// Constructor for Params
+	/// Sets the initial pose of the TSDF volume.
+	/// ## Parameters
+	/// * volumeInitialPoseRot: rotation matrix
+	/// * volumeInitialPoseTransl: translation vector
+	pub fn new(volume_initial_pose_rot: core::Matx33f, volume_initial_pose_transl: core::Vec3f) -> Result<crate::rgbd::ColoredKinfu_Params> {
+		unsafe { sys::cv_colored_kinfu_Params_Params_Matx33f_Vec3f(volume_initial_pose_rot.opencv_as_extern(), volume_initial_pose_transl.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(r) } )
+	}
+	
+	/// Constructor for Params
+	/// Sets the initial pose of the TSDF volume.
+	/// ## Parameters
+	/// * volumeInitialPose: 4 by 4 Homogeneous Transform matrix to set the intial pose of TSDF volume
+	pub fn new_1(volume_initial_pose: core::Matx44f) -> Result<crate::rgbd::ColoredKinfu_Params> {
+		unsafe { sys::cv_colored_kinfu_Params_Params_Matx44f(volume_initial_pose.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(r) } )
+	}
+	
+	/// Default parameters
+	/// A set of parameters which provides better model quality, can be very slow.
+	pub fn default_params() -> Result<core::Ptr::<crate::rgbd::ColoredKinfu_Params>> {
+		unsafe { sys::cv_colored_kinfu_Params_defaultParams() }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(r) } )
+	}
+	
+	/// Coarse parameters
+	/// A set of parameters which provides better speed, can fail to match frames
+	/// in case of rapid sensor motion.
+	pub fn coarse_params() -> Result<core::Ptr::<crate::rgbd::ColoredKinfu_Params>> {
+		unsafe { sys::cv_colored_kinfu_Params_coarseParams() }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(r) } )
+	}
+	
+	/// HashTSDF parameters
+	/// A set of parameters suitable for use with HashTSDFVolume
+	pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr::<crate::rgbd::ColoredKinfu_Params>> {
+		unsafe { sys::cv_colored_kinfu_Params_hashTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(r) } )
+	}
+	
+	/// ColoredTSDF parameters
+	/// A set of parameters suitable for use with HashTSDFVolume
+	pub fn colored_tsdf_params(is_coarse: bool) -> Result<core::Ptr::<crate::rgbd::ColoredKinfu_Params>> {
+		unsafe { sys::cv_colored_kinfu_Params_coloredTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(r) } )
+	}
+	
 }
 
 pub trait Dynafu_DynaFu {
@@ -435,7 +914,7 @@ impl Kinfu_Intr_Reprojector {
 /// KinectFusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm described in
-/// [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+/// [kinectfusion](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 /// 
 /// It takes a sequence of depth images taken from depth sensor
 /// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -443,7 +922,7 @@ impl Kinfu_Intr_Reprojector {
 /// or can be Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a voxel cuboid that keeps TSDF values
-/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 /// There is no interface to that representation yet.
 /// 
 /// KinFu uses OpenCL acceleration automatically if available.
@@ -471,12 +950,21 @@ pub trait Kinfu_KinFu {
 	/// 
 	/// ## Parameters
 	/// * image: resulting image
+	fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(image);
+		unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Renders a volume into an image
+	/// 
+	/// Renders a 0-surface of TSDF using Phong shading into a CV_8UC4 Mat.
+	/// Light pose is fixed in KinFu params.
+	/// 
+	/// ## Parameters
+	/// * image: resulting image
 	/// * cameraPose: pose of camera to render from. If empty then render from current pose
 	///   which is a last frame camera pose.
-	/// 
-	/// ## C++ default parameters
-	/// * camera_pose: Matx44f::eye()
-	fn render(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+	fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
 		output_array_arg!(image);
 		unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray(), &camera_pose) }.into_result()
 	}
@@ -564,10 +1052,12 @@ pub trait Kinfu_ParamsTrait {
 		unsafe { sys::cv_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_frame_size")
 	}
 	
+	/// rgb frame size in pixels
 	fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
 		unsafe { sys::cv_kinfu_Params_getPropVolumeType_const(self.as_raw_Kinfu_Params()) }.into_result().expect("Infallible function failed: volume_type")
 	}
 	
+	/// rgb frame size in pixels
 	fn set_volume_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) -> () {
 		unsafe { sys::cv_kinfu_Params_setPropVolumeType_VolumeType(self.as_raw_mut_Kinfu_Params(), val) }.into_result().expect("Infallible function failed: set_volume_type")
 	}
@@ -580,6 +1070,16 @@ pub trait Kinfu_ParamsTrait {
 	/// camera intrinsics
 	fn set_intr(&mut self, val: core::Matx33f) -> () {
 		unsafe { sys::cv_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn rgb_intr(&self) -> core::Matx33f {
+		unsafe { sys::cv_kinfu_Params_getPropRgb_intr_const(self.as_raw_Kinfu_Params()) }.into_result().expect("Infallible function failed: rgb_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn set_rgb_intr(&mut self, val: core::Matx33f) -> () {
+		unsafe { sys::cv_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rgb_intr")
 	}
 	
 	/// pre-scale per 1 meter for input values
@@ -871,6 +1371,12 @@ impl Kinfu_Params {
 		unsafe { sys::cv_kinfu_Params_hashTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(r) } )
 	}
 	
+	/// ColoredTSDF parameters
+	/// A set of parameters suitable for use with ColoredTSDFVolume
+	pub fn colored_tsdf_params(is_coarse: bool) -> Result<core::Ptr::<crate::rgbd::Kinfu_Params>> {
+		unsafe { sys::cv_kinfu_Params_coloredTSDFParams_bool(is_coarse) }.into_result().map(|r| unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(r) } )
+	}
+	
 }
 
 pub trait Kinfu_Volume {
@@ -900,10 +1406,25 @@ pub trait Kinfu_Volume {
 		unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, frame_id) }.into_result()
 	}
 	
+	/// ## C++ default parameters
+	/// * frame_id: 0
+	fn integrate_1(&mut self, _depth: &dyn core::ToInputArray, _rgb: &dyn core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, rgb_intrinsics: crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result<()> {
+		input_array_arg!(_depth);
+		input_array_arg!(_rgb);
+		unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, frame_id) }.into_result()
+	}
+	
 	fn raycast(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(points);
 		output_array_arg!(normals);
 		unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn raycast_1(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray, colors: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(points);
+		output_array_arg!(normals);
+		output_array_arg!(colors);
+		unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray(), colors.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn fetch_normals(&self, points: &dyn core::ToInputArray, _normals: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -1172,7 +1693,7 @@ impl dyn Kinfu_Detail_PoseGraph + '_ {
 /// Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a spatially hashed voxel cube that stores TSDF values
-/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_kinectfusion) article
+/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_kinectfusion) article
 /// about TSDF). There is no interface to that representation yet.
 /// 
 /// For posegraph optimization, a Submap abstraction over the Volume class is created.
@@ -1194,9 +1715,12 @@ pub trait LargeKinfu {
 		unsafe { sys::cv_large_kinfu_LargeKinfu_getParams_const(self.as_raw_LargeKinfu()) }.into_result().map(|r| unsafe { crate::rgbd::Params::opencv_from_extern(r) } )
 	}
 	
-	/// ## C++ default parameters
-	/// * camera_pose: Matx44f::eye()
-	fn render(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+	fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
+		output_array_arg!(image);
+		unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray()) }.into_result()
+	}
+	
+	fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
 		output_array_arg!(image);
 		unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray(), &camera_pose) }.into_result()
 	}
@@ -1261,6 +1785,16 @@ pub trait ParamsTrait {
 	/// camera intrinsics
 	fn set_intr(&mut self, val: core::Matx33f) -> () {
 		unsafe { sys::cv_large_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn rgb_intr(&self) -> core::Matx33f {
+		unsafe { sys::cv_large_kinfu_Params_getPropRgb_intr_const(self.as_raw_Params()) }.into_result().expect("Infallible function failed: rgb_intr")
+	}
+	
+	/// rgb camera intrinsics
+	fn set_rgb_intr(&mut self, val: core::Matx33f) -> () {
+		unsafe { sys::cv_large_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rgb_intr")
 	}
 	
 	/// pre-scale per 1 meter for input values
@@ -1508,14 +2042,14 @@ impl Linemod_ColorGradient {
 
 unsafe impl Send for Linemod_ColorGradient {}
 
-impl crate::rgbd::Linemod_ColorGradientTrait for Linemod_ColorGradient {
-	#[inline] fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::rgbd::Linemod_Modality for Linemod_ColorGradient {
 	#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::rgbd::Linemod_ColorGradientTrait for Linemod_ColorGradient {
+	#[inline] fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_ColorGradient {
@@ -1612,14 +2146,14 @@ impl Linemod_DepthNormal {
 
 unsafe impl Send for Linemod_DepthNormal {}
 
-impl crate::rgbd::Linemod_DepthNormalTrait for Linemod_DepthNormal {
-	#[inline] fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::rgbd::Linemod_Modality for Linemod_DepthNormal {
 	#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::rgbd::Linemod_DepthNormalTrait for Linemod_DepthNormal {
+	#[inline] fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Linemod_DepthNormal {
@@ -2188,6 +2722,8 @@ impl DepthCleaner {
 	
 }
 
+boxed_cast_base! { DepthCleaner, core::Algorithm, cv_DepthCleaner_to_Algorithm }
+
 /// A faster version of ICPOdometry which is used in KinectFusion implementation
 /// Partial list of differences:
 /// - Works in parallel
@@ -2307,14 +2843,14 @@ impl core::AlgorithmTrait for FastICPOdometry {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::rgbd::FastICPOdometryTrait for FastICPOdometry {
-	#[inline] fn as_raw_FastICPOdometry(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_FastICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::rgbd::Odometry for FastICPOdometry {
 	#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::rgbd::FastICPOdometryTrait for FastICPOdometry {
+	#[inline] fn as_raw_FastICPOdometry(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_FastICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FastICPOdometry {
@@ -2357,6 +2893,8 @@ impl FastICPOdometry {
 	}
 	
 }
+
+boxed_cast_base! { FastICPOdometry, core::Algorithm, cv_FastICPOdometry_to_Algorithm }
 
 /// Odometry based on the paper "KinectFusion: Real-Time Dense Surface Mapping and Tracking",
 /// Richard A. Newcombe, Andrew Fitzgibbon, at al, SIGGRAPH, 2011.
@@ -2473,14 +3011,14 @@ impl core::AlgorithmTrait for ICPOdometry {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::rgbd::ICPOdometryTrait for ICPOdometry {
-	#[inline] fn as_raw_ICPOdometry(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::rgbd::Odometry for ICPOdometry {
 	#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::rgbd::ICPOdometryTrait for ICPOdometry {
+	#[inline] fn as_raw_ICPOdometry(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ICPOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ICPOdometry {
@@ -2523,6 +3061,8 @@ impl ICPOdometry {
 	}
 	
 }
+
+boxed_cast_base! { ICPOdometry, core::Algorithm, cv_ICPOdometry_to_Algorithm }
 
 /// Base class for computation of odometry.
 pub trait Odometry: core::AlgorithmTrait {
@@ -2744,14 +3284,14 @@ impl OdometryFrame {
 
 unsafe impl Send for OdometryFrame {}
 
-impl crate::rgbd::OdometryFrameTrait for OdometryFrame {
-	#[inline] fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::rgbd::RgbdFrameTrait for OdometryFrame {
 	#[inline] fn as_raw_RgbdFrame(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::rgbd::OdometryFrameTrait for OdometryFrame {
+	#[inline] fn as_raw_OdometryFrame(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_OdometryFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OdometryFrame {
@@ -2778,6 +3318,8 @@ impl OdometryFrame {
 	}
 	
 }
+
+boxed_cast_base! { OdometryFrame, crate::rgbd::RgbdFrame, cv_OdometryFrame_to_RgbdFrame }
 
 /// Object that contains a frame data.
 pub trait RgbdFrameTrait {
@@ -2880,6 +3422,8 @@ impl RgbdFrame {
 	}
 	
 }
+
+boxed_cast_descendant! { RgbdFrame, crate::rgbd::OdometryFrame, cv_RgbdFrame_to_OdometryFrame }
 
 /// Odometry that merges RgbdOdometry and ICPOdometry by minimize sum of their energy functions.
 pub trait RgbdICPOdometryTrait: crate::rgbd::Odometry {
@@ -3057,6 +3601,8 @@ impl RgbdICPOdometry {
 	
 }
 
+boxed_cast_base! { RgbdICPOdometry, core::Algorithm, cv_RgbdICPOdometry_to_Algorithm }
+
 /// Object that can compute the normals in an image.
 /// It is an object as it can cache data for speed efficiency
 /// The implemented methods are either:
@@ -3196,6 +3742,8 @@ impl RgbdNormals {
 	}
 	
 }
+
+boxed_cast_base! { RgbdNormals, core::Algorithm, cv_RgbdNormals_to_Algorithm }
 
 /// Odometry based on the paper "Real-Time Visual Odometry from Dense RGB-D Images",
 /// F. Steinbucker, J. Strum, D. Cremers, ICCV, 2011.
@@ -3371,6 +3919,8 @@ impl RgbdOdometry {
 	
 }
 
+boxed_cast_base! { RgbdOdometry, core::Algorithm, cv_RgbdOdometry_to_Algorithm }
+
 /// Object that can compute planes in an image
 pub trait RgbdPlaneTrait: core::AlgorithmTrait {
 	fn as_raw_RgbdPlane(&self) -> *const c_void;
@@ -3499,3 +4049,5 @@ impl RgbdPlane {
 	}
 	
 }
+
+boxed_cast_base! { RgbdPlane, core::Algorithm, cv_RgbdPlane_to_Algorithm }

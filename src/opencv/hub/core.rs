@@ -39,7 +39,7 @@
 //!        # Parallel backends API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::OpenCLExecutionContextTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::GpuDataTrait, super::GpuMatNDTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
+	pub use { super::HammingTrait, super::Detail_CheckContextTrait, super::Matx_AddOpTrait, super::Matx_SubOpTrait, super::Matx_ScaleOpTrait, super::Matx_MulOpTrait, super::Matx_DivOpTrait, super::Matx_MatMulOpTrait, super::Matx_TOpTrait, super::RotatedRectTrait, super::RangeTrait, super::_InputArrayTrait, super::_OutputArrayTrait, super::_InputOutputArrayTrait, super::UMatDataTrait, super::MatSizeTrait, super::MatStepTrait, super::MatTrait, super::UMatTrait, super::SparseMat_HdrTrait, super::SparseMat_NodeTrait, super::SparseMatTrait, super::MatConstIteratorTrait, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTrait, super::MatOp, super::MatExprTrait, super::FileStorageTrait, super::FileNodeTrait, super::FileNodeIteratorTrait, super::WriteStructContextTrait, super::ExceptionTrait, super::PCATrait, super::LDATrait, super::SVDTrait, super::RNGTrait, super::RNG_MT19937Trait, super::Formatted, super::Formatter, super::AlgorithmTrait, super::TickMeterTrait, super::ParallelLoopBody, super::CommandLineParserTrait, super::TLSDataContainer, super::NodeDataTrait, super::MinProblemSolver_Function, super::MinProblemSolver, super::DownhillSolver, super::ConjGradSolver, super::DeviceTrait, super::Context_UserContextTrait, super::ContextTrait, super::PlatformTrait, super::QueueTrait, super::KernelArgTrait, super::KernelTrait, super::ProgramTrait, super::ProgramSourceTrait, super::PlatformInfoTrait, super::Image2DTrait, super::TimerTrait, super::OpenCLExecutionContextTrait, super::GpuMat_Allocator, super::GpuMatTrait, super::GpuDataTrait, super::GpuMatNDTrait, super::BufferPoolTrait, super::HostMemTrait, super::StreamTrait, super::EventTrait, super::TargetArchsTrait, super::DeviceInfoTrait, super::BufferTrait, super::Texture2DTrait, super::ArraysTrait, super::AsyncArrayTrait, super::AsyncPromiseTrait, super::LogTagTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -174,6 +174,7 @@ pub const CPU_MMX: i32 = 1;
 pub const CPU_MSA: i32 = 150;
 pub const CPU_NEON: i32 = 100;
 pub const CPU_POPCNT: i32 = 8;
+pub const CPU_RISCVV: i32 = 170;
 pub const CPU_RVV: i32 = 210;
 pub const CPU_SSE: i32 = 2;
 pub const CPU_SSE2: i32 = 3;
@@ -283,6 +284,7 @@ pub const CV_CPU_MSA: i32 = 150;
 pub const CV_CPU_NEON: i32 = 100;
 pub const CV_CPU_NONE: i32 = 0;
 pub const CV_CPU_POPCNT: i32 = 8;
+pub const CV_CPU_RISCVV: i32 = 170;
 pub const CV_CPU_RVV: i32 = 210;
 pub const CV_CPU_SSE: i32 = 2;
 pub const CV_CPU_SSE2: i32 = 3;
@@ -359,6 +361,7 @@ pub const CV_NEON: i32 = 0;
 pub const CV_PI: f64 = 3.1415926535897932384626433832795;
 pub const CV_POPCNT: i32 = 0;
 pub const CV_RVV: i32 = 0;
+pub const CV_RVV071: i32 = 0;
 pub const CV_SSE: i32 = 1;
 pub const CV_SSE2: i32 = 1;
 pub const CV_SSE3: i32 = 0;
@@ -369,10 +372,10 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &str = "4.5.2";
+pub const CV_VERSION: &str = "4.5.3";
 pub const CV_VERSION_MAJOR: i32 = 4;
 pub const CV_VERSION_MINOR: i32 = 5;
-pub const CV_VERSION_REVISION: i32 = 2;
+pub const CV_VERSION_REVISION: i32 = 3;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -1008,6 +1011,7 @@ pub enum CpuFeatures {
 	CPU_AVX_5124FMAPS = 27,
 	CPU_NEON = 100,
 	CPU_MSA = 150,
+	CPU_RISCVV = 170,
 	CPU_VSX = 200,
 	CPU_VSX3 = 201,
 	CPU_RVV = 210,
@@ -3944,7 +3948,7 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -3969,7 +3973,7 @@ pub fn merge_slice(mv: &core::Mat, count: size_t, dst: &mut dyn core::ToOutputAr
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -4464,7 +4468,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.5.2/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.5.3/NormTypes_OneArray_1-2-INF.png)
 /// 
 /// When the mask parameter is specified and it is not empty, the norm is
 /// 
@@ -5328,10 +5332,10 @@ pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut core::Vec
 /// And multi-channel arrays are also supported in these two reduction modes.
 /// 
 /// The following code demonstrates its usage for a single channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// And the following code demonstrates its usage for a two-channel matrix.
-/// [example2](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example2](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input 2D matrix.
@@ -5764,7 +5768,7 @@ pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -5784,7 +5788,7 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -6339,7 +6343,7 @@ pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<(
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub trait AlgorithmTrait {
 	fn as_raw_Algorithm(&self) -> *const c_void;
 	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void;
@@ -6400,7 +6404,7 @@ pub trait AlgorithmTrait {
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub struct Algorithm {
 	ptr: *mut c_void
 }
@@ -8063,38 +8067,38 @@ impl KeyPoint {
 	}
 	
 	/// ## Parameters
-	/// * _pt: x & y coordinates of the keypoint
-	/// * _size: keypoint diameter
-	/// * _angle: keypoint orientation
-	/// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
-	/// * _octave: pyramid octave in which the keypoint has been detected
-	/// * _class_id: object id
+	/// * pt: x & y coordinates of the keypoint
+	/// * size: keypoint diameter
+	/// * angle: keypoint orientation
+	/// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+	/// * octave: pyramid octave in which the keypoint has been detected
+	/// * class_id: object id
 	/// 
 	/// ## C++ default parameters
-	/// * _angle: -1
-	/// * _response: 0
-	/// * _octave: 0
-	/// * _class_id: -1
-	pub fn new_point(_pt: core::Point2f, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
-		unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(_pt.opencv_as_extern(), _size, _angle, _response, _octave, _class_id) }.into_result()
+	/// * angle: -1
+	/// * response: 0
+	/// * octave: 0
+	/// * class_id: -1
+	pub fn new_point(pt: core::Point2f, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
+		unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(pt.opencv_as_extern(), size, angle, response, octave, class_id) }.into_result()
 	}
 	
 	/// ## Parameters
 	/// * x: x-coordinate of the keypoint
 	/// * y: y-coordinate of the keypoint
-	/// * _size: keypoint diameter
-	/// * _angle: keypoint orientation
-	/// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
-	/// * _octave: pyramid octave in which the keypoint has been detected
-	/// * _class_id: object id
+	/// * size: keypoint diameter
+	/// * angle: keypoint orientation
+	/// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+	/// * octave: pyramid octave in which the keypoint has been detected
+	/// * class_id: object id
 	/// 
 	/// ## C++ default parameters
-	/// * _angle: -1
-	/// * _response: 0
-	/// * _octave: 0
-	/// * _class_id: -1
-	pub fn new_coords(x: f32, y: f32, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
-		unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, _size, _angle, _response, _octave, _class_id) }.into_result()
+	/// * angle: -1
+	/// * response: 0
+	/// * octave: 0
+	/// * class_id: -1
+	pub fn new_coords(x: f32, y: f32, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
+		unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id) }.into_result()
 	}
 	
 	pub fn hash(self) -> Result<size_t> {
@@ -9524,10 +9528,10 @@ pub trait MatTrait {
 	///        that an element may have multiple channels.
 	/// 
 	/// The following code demonstrates its usage for a 2-d matrix:
-	/// [example-2d](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-2d](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// The following code demonstrates its usage for a 3-d matrix:
-	/// [example-3d](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-3d](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// ## C++ default parameters
 	/// * depth: -1
@@ -12772,8 +12776,8 @@ impl Range {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.5.2/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.5.3/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub trait RotatedRectTrait {
@@ -12835,8 +12839,8 @@ pub trait RotatedRectTrait {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.5.2/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.5.3/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub struct RotatedRect {
@@ -13944,6 +13948,8 @@ impl SparseMatIterator {
 	
 }
 
+boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
+
 /// TLS container base implementation
 /// 
 /// Don't use directly.
@@ -14000,10 +14006,10 @@ impl TermCriteria {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub trait TickMeterTrait {
@@ -14071,10 +14077,10 @@ pub trait TickMeterTrait {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.2/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.3/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub struct TickMeter {
@@ -14143,54 +14149,62 @@ pub trait UMatTrait {
 		unsafe { sys::cv_UMat_setPropDims_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_dims")
 	}
 	
-	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+	/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 	fn rows(&self) -> i32 {
 		unsafe { sys::cv_UMat_getPropRows_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: rows")
 	}
 	
-	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+	/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 	fn set_rows(&mut self, val: i32) -> () {
 		unsafe { sys::cv_UMat_setPropRows_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_rows")
 	}
 	
-	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+	/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 	fn cols(&self) -> i32 {
 		unsafe { sys::cv_UMat_getPropCols_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: cols")
 	}
 	
-	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+	/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 	fn set_cols(&mut self, val: i32) -> () {
 		unsafe { sys::cv_UMat_setPropCols_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_cols")
 	}
 	
+	/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 	fn usage_flags(&self) -> core::UMatUsageFlags {
 		unsafe { sys::cv_UMat_getPropUsageFlags_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: usage_flags")
 	}
 	
+	/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 	fn set_usage_flags(&mut self, val: core::UMatUsageFlags) -> () {
 		unsafe { sys::cv_UMat_setPropUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_usage_flags")
 	}
 	
+	/// black-box container of UMat data
 	fn u(&mut self) -> core::UMatData {
 		unsafe { sys::cv_UMat_getPropU(self.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMatData::opencv_from_extern(r) } ).expect("Infallible function failed: u")
 	}
 	
+	/// black-box container of UMat data
 	fn set_u(&mut self, val: &mut core::UMatData) -> () {
 		unsafe { sys::cv_UMat_setPropU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: set_u")
 	}
 	
+	/// offset of the submatrix (or 0)
 	fn offset(&self) -> size_t {
 		unsafe { sys::cv_UMat_getPropOffset_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: offset")
 	}
 	
+	/// offset of the submatrix (or 0)
 	fn set_offset(&mut self, val: size_t) -> () {
 		unsafe { sys::cv_UMat_setPropOffset_size_t(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_offset")
 	}
 	
+	/// dimensional size of the matrix; accessible in various formats
 	fn mat_size(&self) -> core::MatSize {
 		unsafe { sys::cv_UMat_getPropSize_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: mat_size")
 	}
 	
+	/// number of bytes each matrix element/row/plane/dimension occupies
 	fn mat_step(&self) -> core::MatStep {
 		unsafe { sys::cv_UMat_getPropStep_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: mat_step")
 	}
@@ -14552,40 +14566,76 @@ impl UMat {
 	}
 	
 	/// constructs a square diagonal matrix which main diagonal is vector "d"
-	pub fn diag(d: &core::UMat) -> Result<core::UMat> {
+	pub fn diag(d: &core::UMat, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn diag_1(d: &core::UMat) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
 	/// Matlab-style matrix initialization
-	pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+	pub fn zeros(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn zeros_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn zeros_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn zeros_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn zeros_1(size: core::Size, typ: i32) -> Result<core::UMat> {
+	pub fn zeros_4(size: core::Size, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn zeros_2(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
+	pub fn zeros_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_zeros_int_const_intX_int(ndims, sz, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+	pub fn ones(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn ones_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn ones_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn ones_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn ones_1(size: core::Size, typ: i32) -> Result<core::UMat> {
+	pub fn ones_4(size: core::Size, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn ones_2(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
+	pub fn ones_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_ones_int_const_intX_int(ndims, sz, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+	pub fn eye(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn eye_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	}
+	
+	pub fn eye_2(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
-	pub fn eye_1(size: core::Size, typ: i32) -> Result<core::UMat> {
+	pub fn eye_3(size: core::Size, typ: i32) -> Result<core::UMat> {
 		unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
 	}
 	
@@ -15242,14 +15292,14 @@ impl core::_InputArrayTrait for _InputOutputArray {
 	#[inline] fn as_raw_mut__InputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl core::_InputOutputArrayTrait for _InputOutputArray {
-	#[inline] fn as_raw__InputOutputArray(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl core::_OutputArrayTrait for _InputOutputArray {
 	#[inline] fn as_raw__OutputArray(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut__OutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl core::_InputOutputArrayTrait for _InputOutputArray {
+	#[inline] fn as_raw__InputOutputArray(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl _InputOutputArray {
@@ -15323,6 +15373,10 @@ impl _InputOutputArray {
 	}
 	
 }
+
+boxed_cast_base! { _InputOutputArray, core::_InputArray, cv__InputOutputArray_to__InputArray }
+
+boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_to__OutputArray }
 
 /// This type is very similar to InputArray except that it is used for input/output and output function
 /// parameters.
@@ -15590,6 +15644,8 @@ impl _OutputArray {
 	}
 	
 }
+
+boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArray }
 
 /// BufferPool for use with CUDA streams
 /// 
@@ -18002,6 +18058,15 @@ pub trait ContextTrait {
 		unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result()
 	}
 	
+	/// Get OpenCL context property specified on context creation
+	/// ## Parameters
+	/// * propertyId: Property id (CL_CONTEXT_* as defined in cl_context_properties type)
+	/// ## Returns
+	/// Property value if property was specified on clCreateContext, or NULL if context created without the property
+	fn get_opencl_context_property(&self, property_id: i32) -> Result<*mut c_void> {
+		unsafe { sys::cv_ocl_Context_getOpenCLContextProperty_const_int(self.as_raw_Context(), property_id) }.into_result()
+	}
+	
 	fn use_svm(&self) -> Result<bool> {
 		unsafe { sys::cv_ocl_Context_useSVM_const(self.as_raw_Context()) }.into_result()
 	}
@@ -18083,6 +18148,40 @@ impl Context {
 		unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
 	}
 	
+}
+
+pub trait Context_UserContextTrait {
+	fn as_raw_Context_UserContext(&self) -> *const c_void;
+	fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void;
+
+}
+
+pub struct Context_UserContext {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Context_UserContext }
+
+impl Drop for Context_UserContext {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Context_UserContext_delete(instance: *mut c_void); }
+		unsafe { cv_Context_UserContext_delete(self.as_raw_mut_Context_UserContext()) };
+	}
+}
+
+impl Context_UserContext {
+	#[inline] pub fn as_raw_Context_UserContext(&self) -> *const c_void { self.as_raw() }
+	#[inline] pub fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+unsafe impl Send for Context_UserContext {}
+
+impl core::Context_UserContextTrait for Context_UserContext {
+	#[inline] fn as_raw_Context_UserContext(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Context_UserContext {
 }
 
 pub trait DeviceTrait {

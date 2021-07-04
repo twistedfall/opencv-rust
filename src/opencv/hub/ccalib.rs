@@ -508,6 +508,8 @@ impl CustomPattern {
 	
 }
 
+boxed_cast_base! { CustomPattern, core::Algorithm, cv_CustomPattern_to_Algorithm }
+
 /// Class for multiple camera calibration that supports pinhole camera and omnidirection camera.
 /// For omnidirectional camera model, please refer to omnidir.hpp in ccalib module.
 /// It first calibrate each camera individually, then a bundle adjustment like optimization is applied to

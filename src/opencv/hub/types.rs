@@ -107,6 +107,37 @@ mod aruco_types {
 #[cfg(ocvrs_has_module_aruco)]
 pub use aruco_types::*;
 
+#[cfg(ocvrs_has_module_barcode)]
+mod barcode_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type VectorOfBarcodeType = core::Vector::<crate::barcode::BarcodeType>;
+	
+	impl VectorOfBarcodeType {
+		pub fn as_raw_VectorOfBarcodeType(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfBarcodeType(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::barcode::BarcodeType, *const c_void, *mut c_void,
+		cv_VectorOfBarcodeType_new, cv_VectorOfBarcodeType_delete,
+		cv_VectorOfBarcodeType_len, cv_VectorOfBarcodeType_is_empty,
+		cv_VectorOfBarcodeType_capacity, cv_VectorOfBarcodeType_shrink_to_fit,
+		cv_VectorOfBarcodeType_reserve, cv_VectorOfBarcodeType_remove,
+		cv_VectorOfBarcodeType_swap, cv_VectorOfBarcodeType_clear,
+		cv_VectorOfBarcodeType_get, cv_VectorOfBarcodeType_set,
+		cv_VectorOfBarcodeType_push, cv_VectorOfBarcodeType_insert,
+	}
+	vector_copy_non_bool! { crate::barcode::BarcodeType, *const c_void, *mut c_void,
+		cv_VectorOfBarcodeType_data, cv_VectorOfBarcodeType_data_mut,
+		cv_VectorOfBarcodeType_clone,
+	}
+	
+	unsafe impl Send for core::Vector::<crate::barcode::BarcodeType> {}
+	
+}
+#[cfg(ocvrs_has_module_barcode)]
+pub use barcode_types::*;
+
 #[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
@@ -8259,6 +8290,40 @@ pub use rapid_types::*;
 mod rgbd_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	pub type PtrOfColoredKinfu_ColoredKinFu = core::Ptr::<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>;
+	
+	ptr_extern! { dyn crate::rgbd::ColoredKinfu_ColoredKinFu,
+		cv_PtrOfColoredKinfu_ColoredKinFu_delete, cv_PtrOfColoredKinfu_ColoredKinFu_get_inner_ptr, cv_PtrOfColoredKinfu_ColoredKinFu_get_inner_ptr_mut
+	}
+	
+	impl PtrOfColoredKinfu_ColoredKinFu {
+		#[inline] pub fn as_raw_PtrOfColoredKinfu_ColoredKinFu(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::ColoredKinfu_ColoredKinFu for PtrOfColoredKinfu_ColoredKinFu {
+		#[inline] fn as_raw_ColoredKinfu_ColoredKinFu(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfColoredKinfu_Params = core::Ptr::<crate::rgbd::ColoredKinfu_Params>;
+	
+	ptr_extern! { crate::rgbd::ColoredKinfu_Params,
+		cv_PtrOfColoredKinfu_Params_delete, cv_PtrOfColoredKinfu_Params_get_inner_ptr, cv_PtrOfColoredKinfu_Params_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::rgbd::ColoredKinfu_Params, cv_PtrOfColoredKinfu_Params_new }
+	
+	impl PtrOfColoredKinfu_Params {
+		#[inline] pub fn as_raw_PtrOfColoredKinfu_Params(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfColoredKinfu_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::ColoredKinfu_ParamsTrait for PtrOfColoredKinfu_Params {
+		#[inline] fn as_raw_ColoredKinfu_Params(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_ColoredKinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfDepthCleaner = core::Ptr::<crate::rgbd::DepthCleaner>;
 	
 	ptr_extern! { crate::rgbd::DepthCleaner,
@@ -11250,6 +11315,27 @@ mod video_types {
 	impl crate::video::SparseOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTrackerDaSiamRPN = core::Ptr::<dyn crate::video::TrackerDaSiamRPN>;
+	
+	ptr_extern! { dyn crate::video::TrackerDaSiamRPN,
+		cv_PtrOfTrackerDaSiamRPN_delete, cv_PtrOfTrackerDaSiamRPN_get_inner_ptr, cv_PtrOfTrackerDaSiamRPN_get_inner_ptr_mut
+	}
+	
+	impl PtrOfTrackerDaSiamRPN {
+		#[inline] pub fn as_raw_PtrOfTrackerDaSiamRPN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerDaSiamRPN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::TrackerDaSiamRPN for PtrOfTrackerDaSiamRPN {
+		#[inline] fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::Tracker for PtrOfTrackerDaSiamRPN {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOfTrackerGOTURN = core::Ptr::<dyn crate::video::TrackerGOTURN>;

@@ -49,9 +49,9 @@ pub const IMWRITE_EXR_COMPRESSION: i32 = 49;
 pub const IMWRITE_EXR_COMPRESSION_B44: i32 = 6;
 /// lossy 4-by-4 pixel block compression, flat fields are compressed more
 pub const IMWRITE_EXR_COMPRESSION_B44A: i32 = 7;
-/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access.
+/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access. Supported since OpenEXR 2.2.0.
 pub const IMWRITE_EXR_COMPRESSION_DWAA: i32 = 8;
-/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION.
+/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION. Supported since OpenEXR 2.2.0.
 pub const IMWRITE_EXR_COMPRESSION_DWAB: i32 = 9;
 /// no compression
 pub const IMWRITE_EXR_COMPRESSION_NO: i32 = 0;
@@ -174,9 +174,9 @@ pub enum ImwriteEXRCompressionFlags {
 	IMWRITE_EXR_COMPRESSION_B44 = 6,
 	/// lossy 4-by-4 pixel block compression, flat fields are compressed more
 	IMWRITE_EXR_COMPRESSION_B44A = 7,
-	/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access.
+	/// lossy DCT based compression, in blocks of 32 scanlines. More efficient for partial buffer access. Supported since OpenEXR 2.2.0.
 	IMWRITE_EXR_COMPRESSION_DWAA = 8,
-	/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION.
+	/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION. Supported since OpenEXR 2.2.0.
 	IMWRITE_EXR_COMPRESSION_DWAB = 9,
 }
 
@@ -293,6 +293,20 @@ pub fn have_image_reader(filename: &str) -> Result<bool> {
 pub fn have_image_writer(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
 	unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_as_extern()) }.into_result()
+}
+
+/// Returns the number of images inside the give file
+/// 
+/// The function imcount will return the number of pages in a multi-page image, or 1 for single-page images
+/// ## Parameters
+/// * filename: Name of file to be loaded.
+/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+/// 
+/// ## C++ default parameters
+/// * flags: IMREAD_ANYCOLOR
+pub fn imcount(filename: &str, flags: i32) -> Result<size_t> {
+	extern_container_arg!(filename);
+	unsafe { sys::cv_imcount_const_StringR_int(filename.opencv_as_extern(), flags) }.into_result()
 }
 
 /// Reads an image from a buffer in memory.
@@ -432,6 +446,25 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
 }
 
+/// Loads a of images of a multi-page image from a file.
+/// 
+/// The function imreadmulti loads a specified range from a multi-page image from the specified file into a vector of Mat objects.
+/// ## Parameters
+/// * filename: Name of file to be loaded.
+/// * start: Start index of the image to load
+/// * count: Count number of images to load
+/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+/// * mats: A vector of Mat objects holding each page, if more than one.
+/// ## See also
+/// cv::imread
+/// 
+/// ## C++ default parameters
+/// * flags: IMREAD_ANYCOLOR
+pub fn imreadmulti_1(filename: &str, mats: &mut core::Vector::<core::Mat>, start: i32, count: i32, flags: i32) -> Result<bool> {
+	extern_container_arg!(filename);
+	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, flags) }.into_result()
+}
+
 /// Saves an image to a specified file.
 /// 
 /// The function imwrite saves the image to the specified file. The image format is chosen based on the
@@ -447,6 +480,8 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 /// 8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
 /// should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
 /// - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
+/// 
+/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 /// 
 /// If the format, depth or channel order is different, use
 /// Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O

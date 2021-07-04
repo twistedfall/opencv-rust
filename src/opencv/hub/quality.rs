@@ -15,10 +15,10 @@ pub mod prelude {
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub trait QualityBRISQUETrait: crate::quality::QualityBase {
 	fn as_raw_QualityBRISQUE(&self) -> *const c_void;
@@ -39,10 +39,10 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBase {
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub struct QualityBRISQUE {
 	ptr: *mut c_void
@@ -69,14 +69,14 @@ impl core::AlgorithmTrait for QualityBRISQUE {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::quality::QualityBRISQUETrait for QualityBRISQUE {
-	#[inline] fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::quality::QualityBase for QualityBRISQUE {
 	#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::quality::QualityBRISQUETrait for QualityBRISQUE {
+	#[inline] fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QualityBRISQUE {
@@ -123,6 +123,8 @@ impl QualityBRISQUE {
 	}
 	
 }
+
+boxed_cast_base! { QualityBRISQUE, core::Algorithm, cv_QualityBRISQUE_to_Algorithm }
 
 /// ********************************* Quality Base Class ***********************************
 pub trait QualityBase: core::AlgorithmTrait {
@@ -245,6 +247,8 @@ impl QualityGMSD {
 	
 }
 
+boxed_cast_base! { QualityGMSD, core::Algorithm, cv_QualityGMSD_to_Algorithm }
+
 /// Full reference mean square error algorithm  https://en.wikipedia.org/wiki/Mean_squared_error
 pub trait QualityMSETrait: crate::quality::QualityBase {
 	fn as_raw_QualityMSE(&self) -> *const c_void;
@@ -332,6 +336,8 @@ impl QualityMSE {
 	}
 	
 }
+
+boxed_cast_base! { QualityMSE, core::Algorithm, cv_QualityMSE_to_Algorithm }
 
 /// Full reference peak signal to noise ratio (PSNR) algorithm  https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio
 pub trait QualityPSNRTrait: crate::quality::QualityBase {
@@ -442,6 +448,8 @@ impl QualityPSNR {
 	
 }
 
+boxed_cast_base! { QualityPSNR, core::Algorithm, cv_QualityPSNR_to_Algorithm }
+
 /// Full reference structural similarity algorithm  https://en.wikipedia.org/wiki/Structural_similarity
 pub trait QualitySSIMTrait: crate::quality::QualityBase {
 	fn as_raw_QualitySSIM(&self) -> *const c_void;
@@ -529,3 +537,5 @@ impl QualitySSIM {
 	}
 	
 }
+
+boxed_cast_base! { QualitySSIM, core::Algorithm, cv_QualitySSIM_to_Algorithm }

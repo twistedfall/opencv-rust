@@ -197,7 +197,9 @@ pub const CAP_PROP_GUID: i32 = 29;
 pub const CAP_PROP_HUE: i32 = 13;
 /// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in cv::VideoCapture constructor / .open() method. Default value is backend-specific.
 pub const CAP_PROP_HW_ACCELERATION: i32 = 50;
-/// (**open-only**) Hardware device index (select GPU if multiple available)
+/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between HW accelerated decoder and cv::UMat.
+pub const CAP_PROP_HW_ACCELERATION_USE_OPENCL: i32 = 52;
+/// (**open-only**) Hardware device index (select GPU if multiple available). Device enumeration is acceleration type specific.
 pub const CAP_PROP_HW_DEVICE: i32 = 51;
 pub const CAP_PROP_IMAGES_BASE: i32 = 18000;
 pub const CAP_PROP_IMAGES_LAST: i32 = 19000;
@@ -644,15 +646,17 @@ pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
-pub const CV__CAP_PROP_LATEST: i32 = 52;
-pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 8;
+pub const CV__CAP_PROP_LATEST: i32 = 53;
+pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 9;
 /// Defaults to CV_8U.
 pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 /// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
 pub const VIDEOWRITER_PROP_HW_ACCELERATION: i32 = 6;
-/// (**open-only**) Hardware device index (select GPU if multiple available)
+/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between cv::UMat and HW accelerated encoder.
+pub const VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL: i32 = 8;
+/// (**open-only**) Hardware device index (select GPU if multiple available). Device enumeration is acceleration type specific.
 pub const VIDEOWRITER_PROP_HW_DEVICE: i32 = 7;
 /// If it is not zero, the encoder will expect and encode color frames, otherwise it
 /// will work with grayscale frames.
@@ -882,9 +886,11 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_ORIENTATION_AUTO = 49,
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in cv::VideoCapture constructor / .open() method. Default value is backend-specific.
 	CAP_PROP_HW_ACCELERATION = 50,
-	/// (**open-only**) Hardware device index (select GPU if multiple available)
+	/// (**open-only**) Hardware device index (select GPU if multiple available). Device enumeration is acceleration type specific.
 	CAP_PROP_HW_DEVICE = 51,
-	CV__CAP_PROP_LATEST = 52,
+	/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between HW accelerated decoder and cv::UMat.
+	CAP_PROP_HW_ACCELERATION_USE_OPENCL = 52,
+	CV__CAP_PROP_LATEST = 53,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureProperties }
@@ -908,9 +914,11 @@ pub enum VideoWriterProperties {
 	VIDEOWRITER_PROP_DEPTH = 5,
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
 	VIDEOWRITER_PROP_HW_ACCELERATION = 6,
-	/// (**open-only**) Hardware device index (select GPU if multiple available)
+	/// (**open-only**) Hardware device index (select GPU if multiple available). Device enumeration is acceleration type specific.
 	VIDEOWRITER_PROP_HW_DEVICE = 7,
-	CV__VIDEOWRITER_PROP_LATEST = 8,
+	/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between cv::UMat and HW accelerated encoder.
+	VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL = 8,
+	CV__VIDEOWRITER_PROP_LATEST = 9,
 }
 
 opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -927,14 +935,29 @@ pub fn get_backends() -> Result<core::Vector::<crate::videoio::VideoCaptureAPIs>
 	unsafe { sys::cv_videoio_registry_getBackends() }.into_result().map(|r| unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(r) } )
 }
 
+/// Returns description and ABI/API version of videoio plugin's camera interface
+pub fn get_camera_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
+	unsafe { sys::cv_videoio_registry_getCameraBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 /// Returns list of available backends which works via `cv::VideoCapture(int index)`
 pub fn get_camera_backends() -> Result<core::Vector::<crate::videoio::VideoCaptureAPIs>> {
 	unsafe { sys::cv_videoio_registry_getCameraBackends() }.into_result().map(|r| unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(r) } )
 }
 
+/// Returns description and ABI/API version of videoio plugin's stream capture interface
+pub fn get_stream_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
+	unsafe { sys::cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+}
+
 /// Returns list of available backends which works via `cv::VideoCapture(filename)`
 pub fn get_stream_backends() -> Result<core::Vector::<crate::videoio::VideoCaptureAPIs>> {
 	unsafe { sys::cv_videoio_registry_getStreamBackends() }.into_result().map(|r| unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(r) } )
+}
+
+/// Returns description and ABI/API version of videoio plugin's writer interface
+pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
+	unsafe { sys::cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 }
 
 /// Returns list of available backends which works via `cv::VideoWriter()`
@@ -945,6 +968,11 @@ pub fn get_writer_backends() -> Result<core::Vector::<crate::videoio::VideoCaptu
 /// Returns true if backend is available
 pub fn has_backend(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
 	unsafe { sys::cv_videoio_registry_hasBackend_VideoCaptureAPIs(api) }.into_result()
+}
+
+/// Returns true if backend is built in (false if backend is used as plugin)
+pub fn is_backend_built_in(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
+	unsafe { sys::cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api) }.into_result()
 }
 
 /// Class for video capturing from video files, image sequences or cameras.

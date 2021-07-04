@@ -252,12 +252,12 @@ pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_s
 	unsafe { sys::cv_cuda_createCannyEdgeDetector_double_double_int_bool(low_thresh, high_thresh, apperture_size, l2gradient) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(r) } )
 }
 
-/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Ballard1981) .
+/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub fn create_generalized_hough_ballard() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>> {
 	unsafe { sys::cv_cuda_createGeneralizedHoughBallard() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(r) } )
 }
 
-/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Guil1999) .
+/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>> {
 	unsafe { sys::cv_cuda_createGeneralizedHoughGuil() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(r) } )
 }
@@ -457,7 +457,7 @@ pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 ///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 ///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 /// 
-/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_MHT2011))
+/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MHT2011))
 /// 
 ///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 ///    >     COLOR_BayerGR2GRAY_MHT
@@ -673,7 +673,7 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait {
 	fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void;
 	fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 
-	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 	/// 
 	/// ## Parameters
 	/// * image: Single-channel 8-bit input image.
@@ -688,7 +688,7 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait {
 		unsafe { sys::cv_cuda_CannyEdgeDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CannyEdgeDetector(), image.as_raw__InputArray(), edges.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 	}
 	
-	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 	/// 
 	/// ## Parameters
 	/// * image: Single-channel 8-bit input image.

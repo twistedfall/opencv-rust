@@ -12,7 +12,7 @@
 //! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 //! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 //! neighbor search in large datasets and for high dimensional features. More information about FLANN
-//! can be found in [Muja2009](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Muja2009) .
+//! can be found in [Muja2009](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Muja2009) .
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::IndexParamsTrait, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTrait, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTrait, super::LshIndexParamsTrait, super::SavedIndexParamsTrait, super::SearchParamsTrait, super::IndexTrait };
@@ -263,14 +263,14 @@ impl AutotunedIndexParams {
 
 unsafe impl Send for AutotunedIndexParams {}
 
-impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
-	#[inline] fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::flann::IndexParamsTrait for AutotunedIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
+	#[inline] fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl AutotunedIndexParams {
@@ -284,6 +284,8 @@ impl AutotunedIndexParams {
 	}
 	
 }
+
+boxed_cast_base! { AutotunedIndexParams, crate::flann::IndexParams, cv_AutotunedIndexParams_to_IndexParams }
 
 pub trait CompositeIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_CompositeIndexParams(&self) -> *const c_void;
@@ -311,14 +313,14 @@ impl CompositeIndexParams {
 
 unsafe impl Send for CompositeIndexParams {}
 
-impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
-	#[inline] fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::flann::IndexParamsTrait for CompositeIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
+	#[inline] fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CompositeIndexParams {
@@ -333,6 +335,8 @@ impl CompositeIndexParams {
 	}
 	
 }
+
+boxed_cast_base! { CompositeIndexParams, crate::flann::IndexParams, cv_CompositeIndexParams_to_IndexParams }
 
 pub trait HierarchicalClusteringIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void;
@@ -360,14 +364,14 @@ impl HierarchicalClusteringIndexParams {
 
 unsafe impl Send for HierarchicalClusteringIndexParams {}
 
-impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
-	#[inline] fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::flann::IndexParamsTrait for HierarchicalClusteringIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
+	#[inline] fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl HierarchicalClusteringIndexParams {
@@ -381,6 +385,8 @@ impl HierarchicalClusteringIndexParams {
 	}
 	
 }
+
+boxed_cast_base! { HierarchicalClusteringIndexParams, crate::flann::IndexParams, cv_HierarchicalClusteringIndexParams_to_IndexParams }
 
 pub trait IndexTrait {
 	fn as_raw_Index(&self) -> *const c_void;
@@ -622,6 +628,8 @@ impl KDTreeIndexParams {
 	
 }
 
+boxed_cast_base! { KDTreeIndexParams, crate::flann::IndexParams, cv_KDTreeIndexParams_to_IndexParams }
+
 pub trait KMeansIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_KMeansIndexParams(&self) -> *const c_void;
 	fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void;
@@ -670,6 +678,8 @@ impl KMeansIndexParams {
 	
 }
 
+boxed_cast_base! { KMeansIndexParams, crate::flann::IndexParams, cv_KMeansIndexParams_to_IndexParams }
+
 pub trait LinearIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_LinearIndexParams(&self) -> *const c_void;
 	fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void;
@@ -712,6 +722,8 @@ impl LinearIndexParams {
 	}
 	
 }
+
+boxed_cast_base! { LinearIndexParams, crate::flann::IndexParams, cv_LinearIndexParams_to_IndexParams }
 
 pub trait LshIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_LshIndexParams(&self) -> *const c_void;
@@ -756,6 +768,8 @@ impl LshIndexParams {
 	
 }
 
+boxed_cast_base! { LshIndexParams, crate::flann::IndexParams, cv_LshIndexParams_to_IndexParams }
+
 pub trait SavedIndexParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_SavedIndexParams(&self) -> *const c_void;
 	fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void;
@@ -799,6 +813,8 @@ impl SavedIndexParams {
 	}
 	
 }
+
+boxed_cast_base! { SavedIndexParams, crate::flann::IndexParams, cv_SavedIndexParams_to_IndexParams }
 
 pub trait SearchParamsTrait: crate::flann::IndexParamsTrait {
 	fn as_raw_SearchParams(&self) -> *const c_void;
@@ -850,3 +866,5 @@ impl SearchParams {
 	}
 	
 }
+
+boxed_cast_base! { SearchParams, crate::flann::IndexParams, cv_SearchParams_to_IndexParams }

@@ -14,9 +14,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //! 
-//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BL07) .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BL07) .
 //! 
-//! ![stitching pipeline](https://docs.opencv.org/4.5.2/StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/4.5.3/StitchingPipeline.jpg)
 //! 
 //! Camera models
 //! -------------
@@ -283,14 +283,14 @@ impl AffineWarper {
 
 unsafe impl Send for AffineWarper {}
 
-impl crate::stitching::AffineWarperTrait for AffineWarper {
-	#[inline] fn as_raw_AffineWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_AffineWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for AffineWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::AffineWarperTrait for AffineWarper {
+	#[inline] fn as_raw_AffineWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_AffineWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl AffineWarper {
@@ -326,14 +326,14 @@ impl CompressedRectilinearPortraitWarper {
 
 unsafe impl Send for CompressedRectilinearPortraitWarper {}
 
-impl crate::stitching::CompressedRectilinearPortraitWarperTrait for CompressedRectilinearPortraitWarper {
-	#[inline] fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for CompressedRectilinearPortraitWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::CompressedRectilinearPortraitWarperTrait for CompressedRectilinearPortraitWarper {
+	#[inline] fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CompressedRectilinearPortraitWarper {
@@ -376,14 +376,14 @@ impl CompressedRectilinearWarper {
 
 unsafe impl Send for CompressedRectilinearWarper {}
 
-impl crate::stitching::CompressedRectilinearWarperTrait for CompressedRectilinearWarper {
-	#[inline] fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for CompressedRectilinearWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::CompressedRectilinearWarperTrait for CompressedRectilinearWarper {
+	#[inline] fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CompressedRectilinearWarper {
@@ -432,14 +432,14 @@ impl CylindricalWarper {
 
 unsafe impl Send for CylindricalWarper {}
 
-impl crate::stitching::CylindricalWarperTrait for CylindricalWarper {
-	#[inline] fn as_raw_CylindricalWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CylindricalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for CylindricalWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::CylindricalWarperTrait for CylindricalWarper {
+	#[inline] fn as_raw_CylindricalWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CylindricalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CylindricalWarper {
@@ -475,14 +475,14 @@ impl CylindricalWarperGpu {
 
 unsafe impl Send for CylindricalWarperGpu {}
 
-impl crate::stitching::CylindricalWarperGpuTrait for CylindricalWarperGpu {
-	#[inline] fn as_raw_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for CylindricalWarperGpu {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::CylindricalWarperGpuTrait for CylindricalWarperGpu {
+	#[inline] fn as_raw_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CylindricalWarperGpu {
@@ -518,14 +518,14 @@ impl FisheyeWarper {
 
 unsafe impl Send for FisheyeWarper {}
 
-impl crate::stitching::FisheyeWarperTrait for FisheyeWarper {
-	#[inline] fn as_raw_FisheyeWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_FisheyeWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for FisheyeWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::FisheyeWarperTrait for FisheyeWarper {
+	#[inline] fn as_raw_FisheyeWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_FisheyeWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FisheyeWarper {
@@ -561,14 +561,14 @@ impl MercatorWarper {
 
 unsafe impl Send for MercatorWarper {}
 
-impl crate::stitching::MercatorWarperTrait for MercatorWarper {
-	#[inline] fn as_raw_MercatorWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_MercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for MercatorWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::MercatorWarperTrait for MercatorWarper {
+	#[inline] fn as_raw_MercatorWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MercatorWarper {
@@ -604,14 +604,14 @@ impl PaniniPortraitWarper {
 
 unsafe impl Send for PaniniPortraitWarper {}
 
-impl crate::stitching::PaniniPortraitWarperTrait for PaniniPortraitWarper {
-	#[inline] fn as_raw_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for PaniniPortraitWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::PaniniPortraitWarperTrait for PaniniPortraitWarper {
+	#[inline] fn as_raw_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PaniniPortraitWarper {
@@ -654,14 +654,14 @@ impl PaniniWarper {
 
 unsafe impl Send for PaniniWarper {}
 
-impl crate::stitching::PaniniWarperTrait for PaniniWarper {
-	#[inline] fn as_raw_PaniniWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for PaniniWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::PaniniWarperTrait for PaniniWarper {
+	#[inline] fn as_raw_PaniniWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PaniniWarper {
@@ -710,14 +710,14 @@ impl PlaneWarper {
 
 unsafe impl Send for PlaneWarper {}
 
-impl crate::stitching::PlaneWarperTrait for PlaneWarper {
-	#[inline] fn as_raw_PlaneWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for PlaneWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::PlaneWarperTrait for PlaneWarper {
+	#[inline] fn as_raw_PlaneWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PlaneWarper {
@@ -753,14 +753,14 @@ impl PlaneWarperGpu {
 
 unsafe impl Send for PlaneWarperGpu {}
 
-impl crate::stitching::PlaneWarperGpuTrait for PlaneWarperGpu {
-	#[inline] fn as_raw_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for PlaneWarperGpu {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::PlaneWarperGpuTrait for PlaneWarperGpu {
+	#[inline] fn as_raw_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PlaneWarperGpu {
@@ -936,14 +936,14 @@ impl SphericalWarper {
 
 unsafe impl Send for SphericalWarper {}
 
-impl crate::stitching::SphericalWarperTrait for SphericalWarper {
-	#[inline] fn as_raw_SphericalWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_SphericalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for SphericalWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::SphericalWarperTrait for SphericalWarper {
+	#[inline] fn as_raw_SphericalWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SphericalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SphericalWarper {
@@ -979,14 +979,14 @@ impl SphericalWarperGpu {
 
 unsafe impl Send for SphericalWarperGpu {}
 
-impl crate::stitching::SphericalWarperGpuTrait for SphericalWarperGpu {
-	#[inline] fn as_raw_SphericalWarperGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_SphericalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for SphericalWarperGpu {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::SphericalWarperGpuTrait for SphericalWarperGpu {
+	#[inline] fn as_raw_SphericalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_SphericalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SphericalWarperGpu {
@@ -1022,14 +1022,14 @@ impl StereographicWarper {
 
 unsafe impl Send for StereographicWarper {}
 
-impl crate::stitching::StereographicWarperTrait for StereographicWarper {
-	#[inline] fn as_raw_StereographicWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_StereographicWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for StereographicWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::StereographicWarperTrait for StereographicWarper {
+	#[inline] fn as_raw_StereographicWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_StereographicWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl StereographicWarper {
@@ -1439,14 +1439,14 @@ impl TransverseMercatorWarper {
 
 unsafe impl Send for TransverseMercatorWarper {}
 
-impl crate::stitching::TransverseMercatorWarperTrait for TransverseMercatorWarper {
-	#[inline] fn as_raw_TransverseMercatorWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_TransverseMercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::WarperCreator for TransverseMercatorWarper {
 	#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::TransverseMercatorWarperTrait for TransverseMercatorWarper {
+	#[inline] fn as_raw_TransverseMercatorWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_TransverseMercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl TransverseMercatorWarper {
@@ -1501,14 +1501,14 @@ impl Detail_AffineBasedEstimator {
 
 unsafe impl Send for Detail_AffineBasedEstimator {}
 
-impl crate::stitching::Detail_AffineBasedEstimatorTrait for Detail_AffineBasedEstimator {
-	#[inline] fn as_raw_Detail_AffineBasedEstimator(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_AffineBasedEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_Estimator for Detail_AffineBasedEstimator {
 	#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_AffineBasedEstimatorTrait for Detail_AffineBasedEstimator {
+	#[inline] fn as_raw_Detail_AffineBasedEstimator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_AffineBasedEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_AffineBasedEstimator {
@@ -1560,11 +1560,6 @@ impl Detail_AffineBestOf2NearestMatcher {
 
 unsafe impl Send for Detail_AffineBestOf2NearestMatcher {}
 
-impl crate::stitching::Detail_AffineBestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
-	#[inline] fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
 	#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -1573,6 +1568,11 @@ impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_AffineBestOf
 impl crate::stitching::Detail_FeaturesMatcher for Detail_AffineBestOf2NearestMatcher {
 	#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_AffineBestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
+	#[inline] fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_AffineBestOf2NearestMatcher {
@@ -1599,6 +1599,8 @@ impl Detail_AffineBestOf2NearestMatcher {
 	}
 	
 }
+
+boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_Detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
 
 /// Affine warper that uses rotations and translations
 /// 
@@ -1711,11 +1713,6 @@ impl Detail_AffineWarper {
 
 unsafe impl Send for Detail_AffineWarper {}
 
-impl crate::stitching::Detail_AffineWarperTrait for Detail_AffineWarper {
-	#[inline] fn as_raw_Detail_AffineWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_AffineWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_PlaneWarperTrait for Detail_AffineWarper {
 	#[inline] fn as_raw_Detail_PlaneWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -1724,6 +1721,11 @@ impl crate::stitching::Detail_PlaneWarperTrait for Detail_AffineWarper {
 impl crate::stitching::Detail_RotationWarper for Detail_AffineWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_AffineWarperTrait for Detail_AffineWarper {
+	#[inline] fn as_raw_Detail_AffineWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_AffineWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_AffineWarper {
@@ -1739,6 +1741,8 @@ impl Detail_AffineWarper {
 	}
 	
 }
+
+boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_Detail_AffineWarper_to_Detail_PlaneWarper }
 
 /// Features matcher which finds two best matches for each feature and leaves the best one only if the
 /// ratio between descriptor distances is greater than the threshold match_conf
@@ -1778,14 +1782,14 @@ impl Detail_BestOf2NearestMatcher {
 
 unsafe impl Send for Detail_BestOf2NearestMatcher {}
 
-impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestMatcher {
-	#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_FeaturesMatcher for Detail_BestOf2NearestMatcher {
 	#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestMatcher {
+	#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BestOf2NearestMatcher {
@@ -1819,6 +1823,10 @@ impl Detail_BestOf2NearestMatcher {
 	
 }
 
+boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_Detail_BestOf2NearestMatcher_to_Detail_AffineBestOf2NearestMatcher }
+
+boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_Detail_BestOf2NearestMatcher_to_Detail_BestOf2NearestRangeMatcher }
+
 pub trait Detail_BestOf2NearestRangeMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait {
 	fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void;
 	fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void;
@@ -1850,14 +1858,14 @@ impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2Neare
 	#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_BestOf2NearestRangeMatcherTrait for Detail_BestOf2NearestRangeMatcher {
-	#[inline] fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_FeaturesMatcher for Detail_BestOf2NearestRangeMatcher {
 	#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BestOf2NearestRangeMatcherTrait for Detail_BestOf2NearestRangeMatcher {
+	#[inline] fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BestOf2NearestRangeMatcher {
@@ -1872,6 +1880,8 @@ impl Detail_BestOf2NearestRangeMatcher {
 	}
 	
 }
+
+boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_Detail_BestOf2NearestRangeMatcher_to_Detail_BestOf2NearestMatcher }
 
 /// Base class for all blenders.
 /// 
@@ -1962,6 +1972,10 @@ impl Detail_Blender {
 	
 }
 
+boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_Detail_Blender_to_Detail_FeatherBlender }
+
+boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_MultiBandBlender, cv_Detail_Blender_to_Detail_MultiBandBlender }
+
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
 /// on each channel.
 pub trait Detail_BlocksChannelsCompensatorTrait: crate::stitching::Detail_BlocksCompensator {
@@ -1992,11 +2006,6 @@ impl Detail_BlocksChannelsCompensator {
 
 unsafe impl Send for Detail_BlocksChannelsCompensator {}
 
-impl crate::stitching::Detail_BlocksChannelsCompensatorTrait for Detail_BlocksChannelsCompensator {
-	#[inline] fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_BlocksCompensator for Detail_BlocksChannelsCompensator {
 	#[inline] fn as_raw_Detail_BlocksCompensator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -2005,6 +2014,11 @@ impl crate::stitching::Detail_BlocksCompensator for Detail_BlocksChannelsCompens
 impl crate::stitching::Detail_ExposureCompensator for Detail_BlocksChannelsCompensator {
 	#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BlocksChannelsCompensatorTrait for Detail_BlocksChannelsCompensator {
+	#[inline] fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BlocksChannelsCompensator {
@@ -2076,7 +2090,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_ExposureCompensator
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksCompensator {
 	fn as_raw_Detail_BlocksGainCompensator(&self) -> *const c_void;
 	fn as_raw_mut_Detail_BlocksGainCompensator(&mut self) -> *mut c_void;
@@ -2098,7 +2112,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub struct Detail_BlocksGainCompensator {
 	ptr: *mut c_void
 }
@@ -2124,14 +2138,14 @@ impl crate::stitching::Detail_BlocksCompensator for Detail_BlocksGainCompensator
 	#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_BlocksGainCompensatorTrait for Detail_BlocksGainCompensator {
-	#[inline] fn as_raw_Detail_BlocksGainCompensator(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BlocksGainCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ExposureCompensator for Detail_BlocksGainCompensator {
 	#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BlocksGainCompensatorTrait for Detail_BlocksGainCompensator {
+	#[inline] fn as_raw_Detail_BlocksGainCompensator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BlocksGainCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BlocksGainCompensator {
@@ -2190,11 +2204,6 @@ impl Detail_BundleAdjusterAffine {
 
 unsafe impl Send for Detail_BundleAdjusterAffine {}
 
-impl crate::stitching::Detail_BundleAdjusterAffineTrait for Detail_BundleAdjusterAffine {
-	#[inline] fn as_raw_Detail_BundleAdjusterAffine(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BundleAdjusterAffine(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterAffine {
 	#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -2203,6 +2212,11 @@ impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterAffine
 impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterAffine {
 	#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BundleAdjusterAffineTrait for Detail_BundleAdjusterAffine {
+	#[inline] fn as_raw_Detail_BundleAdjusterAffine(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BundleAdjusterAffine(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BundleAdjusterAffine {
@@ -2254,11 +2268,6 @@ impl Detail_BundleAdjusterAffinePartial {
 
 unsafe impl Send for Detail_BundleAdjusterAffinePartial {}
 
-impl crate::stitching::Detail_BundleAdjusterAffinePartialTrait for Detail_BundleAdjusterAffinePartial {
-	#[inline] fn as_raw_Detail_BundleAdjusterAffinePartial(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BundleAdjusterAffinePartial(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterAffinePartial {
 	#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -2267,6 +2276,11 @@ impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterAffine
 impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterAffinePartial {
 	#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BundleAdjusterAffinePartialTrait for Detail_BundleAdjusterAffinePartial {
+	#[inline] fn as_raw_Detail_BundleAdjusterAffinePartial(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BundleAdjusterAffinePartial(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BundleAdjusterAffinePartial {
@@ -2346,14 +2360,14 @@ impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterRay {
 	#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_BundleAdjusterRayTrait for Detail_BundleAdjusterRay {
-	#[inline] fn as_raw_Detail_BundleAdjusterRay(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BundleAdjusterRay(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterRay {
 	#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BundleAdjusterRayTrait for Detail_BundleAdjusterRay {
+	#[inline] fn as_raw_Detail_BundleAdjusterRay(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BundleAdjusterRay(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BundleAdjusterRay {
@@ -2404,14 +2418,14 @@ impl crate::stitching::Detail_BundleAdjusterBase for Detail_BundleAdjusterReproj
 	#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_BundleAdjusterReprojTrait for Detail_BundleAdjusterReproj {
-	#[inline] fn as_raw_Detail_BundleAdjusterReproj(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_BundleAdjusterReproj(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_Estimator for Detail_BundleAdjusterReproj {
 	#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_BundleAdjusterReprojTrait for Detail_BundleAdjusterReproj {
+	#[inline] fn as_raw_Detail_BundleAdjusterReproj(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_BundleAdjusterReproj(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_BundleAdjusterReproj {
@@ -2587,14 +2601,14 @@ impl Detail_ChannelsCompensator {
 
 unsafe impl Send for Detail_ChannelsCompensator {}
 
-impl crate::stitching::Detail_ChannelsCompensatorTrait for Detail_ChannelsCompensator {
-	#[inline] fn as_raw_Detail_ChannelsCompensator(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_ChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ExposureCompensator for Detail_ChannelsCompensator {
 	#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_ChannelsCompensatorTrait for Detail_ChannelsCompensator {
+	#[inline] fn as_raw_Detail_ChannelsCompensator(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_ChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_ChannelsCompensator {
@@ -2656,18 +2670,20 @@ impl Detail_CompressedRectilinearPortraitProjector {
 
 unsafe impl Send for Detail_CompressedRectilinearPortraitProjector {}
 
-impl crate::stitching::Detail_CompressedRectilinearPortraitProjectorTrait for Detail_CompressedRectilinearPortraitProjector {
-	#[inline] fn as_raw_Detail_CompressedRectilinearPortraitProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CompressedRectilinearPortraitProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_CompressedRectilinearPortraitProjectorTrait for Detail_CompressedRectilinearPortraitProjector {
+	#[inline] fn as_raw_Detail_CompressedRectilinearPortraitProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_CompressedRectilinearPortraitProjector {
 }
+
+boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_CompressedRectilinearPortraitWarperTrait {
 	fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void;
@@ -2695,14 +2711,14 @@ impl Detail_CompressedRectilinearPortraitWarper {
 
 unsafe impl Send for Detail_CompressedRectilinearPortraitWarper {}
 
-impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait for Detail_CompressedRectilinearPortraitWarper {
-	#[inline] fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_CompressedRectilinearPortraitWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait for Detail_CompressedRectilinearPortraitWarper {
+	#[inline] fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_CompressedRectilinearPortraitWarper {
@@ -2765,18 +2781,20 @@ impl Detail_CompressedRectilinearProjector {
 
 unsafe impl Send for Detail_CompressedRectilinearProjector {}
 
-impl crate::stitching::Detail_CompressedRectilinearProjectorTrait for Detail_CompressedRectilinearProjector {
-	#[inline] fn as_raw_Detail_CompressedRectilinearProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CompressedRectilinearProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CompressedRectilinearProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_CompressedRectilinearProjectorTrait for Detail_CompressedRectilinearProjector {
+	#[inline] fn as_raw_Detail_CompressedRectilinearProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CompressedRectilinearProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_CompressedRectilinearProjector {
 }
+
+boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_CompressedRectilinearWarperTrait {
 	fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void;
@@ -2804,14 +2822,14 @@ impl Detail_CompressedRectilinearWarper {
 
 unsafe impl Send for Detail_CompressedRectilinearWarper {}
 
-impl crate::stitching::Detail_CompressedRectilinearWarperTrait for Detail_CompressedRectilinearWarper {
-	#[inline] fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_CompressedRectilinearWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_CompressedRectilinearWarperTrait for Detail_CompressedRectilinearWarper {
+	#[inline] fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_CompressedRectilinearWarper {
@@ -2858,18 +2876,20 @@ impl Detail_CylindricalPortraitProjector {
 
 unsafe impl Send for Detail_CylindricalPortraitProjector {}
 
-impl crate::stitching::Detail_CylindricalPortraitProjectorTrait for Detail_CylindricalPortraitProjector {
-	#[inline] fn as_raw_Detail_CylindricalPortraitProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CylindricalPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CylindricalPortraitProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_CylindricalPortraitProjectorTrait for Detail_CylindricalPortraitProjector {
+	#[inline] fn as_raw_Detail_CylindricalPortraitProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CylindricalPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_CylindricalPortraitProjector {
 }
+
+boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_CylindricalPortraitWarperTrait {
 	fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *const c_void;
@@ -2897,14 +2917,14 @@ impl Detail_CylindricalPortraitWarper {
 
 unsafe impl Send for Detail_CylindricalPortraitWarper {}
 
-impl crate::stitching::Detail_CylindricalPortraitWarperTrait for Detail_CylindricalPortraitWarper {
-	#[inline] fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CylindricalPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_CylindricalPortraitWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_CylindricalPortraitWarperTrait for Detail_CylindricalPortraitWarper {
+	#[inline] fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CylindricalPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_CylindricalPortraitWarper {
@@ -2948,18 +2968,20 @@ impl Detail_CylindricalProjector {
 
 unsafe impl Send for Detail_CylindricalProjector {}
 
-impl crate::stitching::Detail_CylindricalProjectorTrait for Detail_CylindricalProjector {
-	#[inline] fn as_raw_Detail_CylindricalProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CylindricalProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CylindricalProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_CylindricalProjectorTrait for Detail_CylindricalProjector {
+	#[inline] fn as_raw_Detail_CylindricalProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CylindricalProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_CylindricalProjector {
 }
+
+boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CylindricalProjector_to_Detail_ProjectorBase }
 
 /// Warper that maps an image onto the x\*x + z\*z = 1 cylinder.
 pub trait Detail_CylindricalWarperTrait {
@@ -3005,14 +3027,14 @@ impl Detail_CylindricalWarper {
 
 unsafe impl Send for Detail_CylindricalWarper {}
 
-impl crate::stitching::Detail_CylindricalWarperTrait for Detail_CylindricalWarper {
-	#[inline] fn as_raw_Detail_CylindricalWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CylindricalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_CylindricalWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_CylindricalWarperTrait for Detail_CylindricalWarper {
+	#[inline] fn as_raw_Detail_CylindricalWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CylindricalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_CylindricalWarper {
@@ -3025,6 +3047,8 @@ impl Detail_CylindricalWarper {
 	}
 	
 }
+
+boxed_cast_descendant! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperGpu, cv_Detail_CylindricalWarper_to_Detail_CylindricalWarperGpu }
 
 pub trait Detail_CylindricalWarperGpuTrait: crate::stitching::Detail_CylindricalWarperTrait {
 	fn as_raw_Detail_CylindricalWarperGpu(&self) -> *const c_void;
@@ -3085,14 +3109,14 @@ impl crate::stitching::Detail_CylindricalWarperTrait for Detail_CylindricalWarpe
 	#[inline] fn as_raw_mut_Detail_CylindricalWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_CylindricalWarperGpuTrait for Detail_CylindricalWarperGpu {
-	#[inline] fn as_raw_Detail_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_CylindricalWarperGpu {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_CylindricalWarperGpuTrait for Detail_CylindricalWarperGpu {
+	#[inline] fn as_raw_Detail_CylindricalWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_CylindricalWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_CylindricalWarperGpu {
@@ -3101,6 +3125,8 @@ impl Detail_CylindricalWarperGpu {
 	}
 	
 }
+
+boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarper, cv_Detail_CylindricalWarperGpu_to_Detail_CylindricalWarper }
 
 pub trait Detail_DisjointSetsTrait {
 	fn as_raw_Detail_DisjointSets(&self) -> *const c_void;
@@ -3213,14 +3239,14 @@ impl Detail_DpSeamFinder {
 
 unsafe impl Send for Detail_DpSeamFinder {}
 
-impl crate::stitching::Detail_DpSeamFinderTrait for Detail_DpSeamFinder {
-	#[inline] fn as_raw_Detail_DpSeamFinder(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_DpSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_SeamFinder for Detail_DpSeamFinder {
 	#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_DpSeamFinderTrait for Detail_DpSeamFinder {
+	#[inline] fn as_raw_Detail_DpSeamFinder(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_DpSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_DpSeamFinder {
@@ -3379,6 +3405,8 @@ impl Detail_FeatherBlender {
 	
 }
 
+boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_Detail_FeatherBlender_to_Detail_Blender }
+
 /// Feature matchers base class.
 pub trait Detail_FeaturesMatcher {
 	fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void;
@@ -3431,18 +3459,20 @@ impl Detail_FisheyeProjector {
 
 unsafe impl Send for Detail_FisheyeProjector {}
 
-impl crate::stitching::Detail_FisheyeProjectorTrait for Detail_FisheyeProjector {
-	#[inline] fn as_raw_Detail_FisheyeProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_FisheyeProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_FisheyeProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_FisheyeProjectorTrait for Detail_FisheyeProjector {
+	#[inline] fn as_raw_Detail_FisheyeProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_FisheyeProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_FisheyeProjector {
 }
+
+boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_FisheyeProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_FisheyeWarperTrait {
 	fn as_raw_Detail_FisheyeWarper(&self) -> *const c_void;
@@ -3470,14 +3500,14 @@ impl Detail_FisheyeWarper {
 
 unsafe impl Send for Detail_FisheyeWarper {}
 
-impl crate::stitching::Detail_FisheyeWarperTrait for Detail_FisheyeWarper {
-	#[inline] fn as_raw_Detail_FisheyeWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_FisheyeWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_FisheyeWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_FisheyeWarperTrait for Detail_FisheyeWarper {
+	#[inline] fn as_raw_Detail_FisheyeWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_FisheyeWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_FisheyeWarper {
@@ -3488,7 +3518,7 @@ impl Detail_FisheyeWarper {
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensator {
 	fn as_raw_Detail_GainCompensator(&self) -> *const c_void;
 	fn as_raw_mut_Detail_GainCompensator(&mut self) -> *mut c_void;
@@ -3534,7 +3564,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub struct Detail_GainCompensator {
 	ptr: *mut c_void
 }
@@ -3628,7 +3658,7 @@ impl Detail_Graph {
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_V03) .
 pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTrait + crate::stitching::Detail_SeamFinder {
 	fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void;
 	fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void;
@@ -3639,7 +3669,7 @@ pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamF
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_V03) .
 pub struct Detail_GraphCutSeamFinder {
 	ptr: *mut c_void
 }
@@ -3660,11 +3690,6 @@ impl Detail_GraphCutSeamFinder {
 
 unsafe impl Send for Detail_GraphCutSeamFinder {}
 
-impl crate::stitching::Detail_GraphCutSeamFinderTrait for Detail_GraphCutSeamFinder {
-	#[inline] fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSeamFinder {
 	#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -3673,6 +3698,11 @@ impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSea
 impl crate::stitching::Detail_SeamFinder for Detail_GraphCutSeamFinder {
 	#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_GraphCutSeamFinderTrait for Detail_GraphCutSeamFinder {
+	#[inline] fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_GraphCutSeamFinder {
@@ -3693,6 +3723,8 @@ impl Detail_GraphCutSeamFinder {
 	}
 	
 }
+
+boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBase, cv_Detail_GraphCutSeamFinder_to_Detail_GraphCutSeamFinderBase }
 
 /// Base class for all minimum graph-cut-based seam estimators.
 pub trait Detail_GraphCutSeamFinderBaseTrait {
@@ -3769,11 +3801,6 @@ impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSea
 	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_GraphCutSeamFinderGpuTrait for Detail_GraphCutSeamFinderGpu {
-	#[inline] fn as_raw_Detail_GraphCutSeamFinderGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_PairwiseSeamFinder for Detail_GraphCutSeamFinderGpu {
 	#[inline] fn as_raw_Detail_PairwiseSeamFinder(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_PairwiseSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
@@ -3782,6 +3809,11 @@ impl crate::stitching::Detail_PairwiseSeamFinder for Detail_GraphCutSeamFinderGp
 impl crate::stitching::Detail_SeamFinder for Detail_GraphCutSeamFinderGpu {
 	#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_GraphCutSeamFinderGpuTrait for Detail_GraphCutSeamFinderGpu {
+	#[inline] fn as_raw_Detail_GraphCutSeamFinderGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_GraphCutSeamFinderGpu {
@@ -3794,6 +3826,8 @@ impl Detail_GraphCutSeamFinderGpu {
 	}
 	
 }
+
+boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderBase, cv_Detail_GraphCutSeamFinderGpu_to_Detail_GraphCutSeamFinderBase }
 
 pub trait Detail_GraphEdgeTrait {
 	fn as_raw_Detail_GraphEdge(&self) -> *const c_void;
@@ -4138,18 +4172,20 @@ impl Detail_MercatorProjector {
 
 unsafe impl Send for Detail_MercatorProjector {}
 
-impl crate::stitching::Detail_MercatorProjectorTrait for Detail_MercatorProjector {
-	#[inline] fn as_raw_Detail_MercatorProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_MercatorProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_MercatorProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_MercatorProjectorTrait for Detail_MercatorProjector {
+	#[inline] fn as_raw_Detail_MercatorProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_MercatorProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_MercatorProjector {
 }
+
+boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_MercatorProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_MercatorWarperTrait {
 	fn as_raw_Detail_MercatorWarper(&self) -> *const c_void;
@@ -4177,14 +4213,14 @@ impl Detail_MercatorWarper {
 
 unsafe impl Send for Detail_MercatorWarper {}
 
-impl crate::stitching::Detail_MercatorWarperTrait for Detail_MercatorWarper {
-	#[inline] fn as_raw_Detail_MercatorWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_MercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_MercatorWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_MercatorWarperTrait for Detail_MercatorWarper {
+	#[inline] fn as_raw_Detail_MercatorWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_MercatorWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_MercatorWarper {
@@ -4194,7 +4230,7 @@ impl Detail_MercatorWarper {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BA83)).
 pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	fn as_raw_Detail_MultiBandBlender(&self) -> *const c_void;
 	fn as_raw_mut_Detail_MultiBandBlender(&mut self) -> *mut c_void;
@@ -4225,7 +4261,7 @@ pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BA83)).
 pub struct Detail_MultiBandBlender {
 	ptr: *mut c_void
 }
@@ -4266,6 +4302,8 @@ impl Detail_MultiBandBlender {
 	}
 	
 }
+
+boxed_cast_base! { Detail_MultiBandBlender, crate::stitching::Detail_Blender, cv_Detail_MultiBandBlender_to_Detail_Blender }
 
 /// Stub bundle adjuster that does nothing.
 pub trait Detail_NoBundleAdjusterTrait: crate::stitching::Detail_BundleAdjusterBase {
@@ -4404,14 +4442,14 @@ impl Detail_NoSeamFinder {
 
 unsafe impl Send for Detail_NoSeamFinder {}
 
-impl crate::stitching::Detail_NoSeamFinderTrait for Detail_NoSeamFinder {
-	#[inline] fn as_raw_Detail_NoSeamFinder(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_NoSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_SeamFinder for Detail_NoSeamFinder {
 	#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_NoSeamFinderTrait for Detail_NoSeamFinder {
+	#[inline] fn as_raw_Detail_NoSeamFinder(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_NoSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_NoSeamFinder {
@@ -4478,18 +4516,20 @@ impl Detail_PaniniPortraitProjector {
 
 unsafe impl Send for Detail_PaniniPortraitProjector {}
 
-impl crate::stitching::Detail_PaniniPortraitProjectorTrait for Detail_PaniniPortraitProjector {
-	#[inline] fn as_raw_Detail_PaniniPortraitProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PaniniPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PaniniPortraitProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_PaniniPortraitProjectorTrait for Detail_PaniniPortraitProjector {
+	#[inline] fn as_raw_Detail_PaniniPortraitProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PaniniPortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_PaniniPortraitProjector {
 }
+
+boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_PaniniPortraitWarperTrait {
 	fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void;
@@ -4517,14 +4557,14 @@ impl Detail_PaniniPortraitWarper {
 
 unsafe impl Send for Detail_PaniniPortraitWarper {}
 
-impl crate::stitching::Detail_PaniniPortraitWarperTrait for Detail_PaniniPortraitWarper {
-	#[inline] fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_PaniniPortraitWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_PaniniPortraitWarperTrait for Detail_PaniniPortraitWarper {
+	#[inline] fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_PaniniPortraitWarper {
@@ -4587,18 +4627,20 @@ impl Detail_PaniniProjector {
 
 unsafe impl Send for Detail_PaniniProjector {}
 
-impl crate::stitching::Detail_PaniniProjectorTrait for Detail_PaniniProjector {
-	#[inline] fn as_raw_Detail_PaniniProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PaniniProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PaniniProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_PaniniProjectorTrait for Detail_PaniniProjector {
+	#[inline] fn as_raw_Detail_PaniniProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PaniniProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_PaniniProjector {
 }
+
+boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PaniniProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_PaniniWarperTrait {
 	fn as_raw_Detail_PaniniWarper(&self) -> *const c_void;
@@ -4626,14 +4668,14 @@ impl Detail_PaniniWarper {
 
 unsafe impl Send for Detail_PaniniWarper {}
 
-impl crate::stitching::Detail_PaniniWarperTrait for Detail_PaniniWarper {
-	#[inline] fn as_raw_Detail_PaniniWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_PaniniWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_PaniniWarperTrait for Detail_PaniniWarper {
+	#[inline] fn as_raw_Detail_PaniniWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_PaniniWarper {
@@ -4680,18 +4722,20 @@ impl Detail_PlanePortraitProjector {
 
 unsafe impl Send for Detail_PlanePortraitProjector {}
 
-impl crate::stitching::Detail_PlanePortraitProjectorTrait for Detail_PlanePortraitProjector {
-	#[inline] fn as_raw_Detail_PlanePortraitProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PlanePortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PlanePortraitProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_PlanePortraitProjectorTrait for Detail_PlanePortraitProjector {
+	#[inline] fn as_raw_Detail_PlanePortraitProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PlanePortraitProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_PlanePortraitProjector {
 }
+
+boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PlanePortraitProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_PlanePortraitWarperTrait {
 	fn as_raw_Detail_PlanePortraitWarper(&self) -> *const c_void;
@@ -4719,14 +4763,14 @@ impl Detail_PlanePortraitWarper {
 
 unsafe impl Send for Detail_PlanePortraitWarper {}
 
-impl crate::stitching::Detail_PlanePortraitWarperTrait for Detail_PlanePortraitWarper {
-	#[inline] fn as_raw_Detail_PlanePortraitWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PlanePortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_PlanePortraitWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_PlanePortraitWarperTrait for Detail_PlanePortraitWarper {
+	#[inline] fn as_raw_Detail_PlanePortraitWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PlanePortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_PlanePortraitWarper {
@@ -4770,18 +4814,20 @@ impl Detail_PlaneProjector {
 
 unsafe impl Send for Detail_PlaneProjector {}
 
-impl crate::stitching::Detail_PlaneProjectorTrait for Detail_PlaneProjector {
-	#[inline] fn as_raw_Detail_PlaneProjector(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PlaneProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PlaneProjector {
 	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
+impl crate::stitching::Detail_PlaneProjectorTrait for Detail_PlaneProjector {
+	#[inline] fn as_raw_Detail_PlaneProjector(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PlaneProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl Detail_PlaneProjector {
 }
+
+boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PlaneProjector_to_Detail_ProjectorBase }
 
 /// Warper that maps an image onto the z = 1 plane.
 pub trait Detail_PlaneWarperTrait {
@@ -4884,14 +4930,14 @@ impl Detail_PlaneWarper {
 
 unsafe impl Send for Detail_PlaneWarper {}
 
-impl crate::stitching::Detail_PlaneWarperTrait for Detail_PlaneWarper {
-	#[inline] fn as_raw_Detail_PlaneWarper(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_PlaneWarper {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_PlaneWarperTrait for Detail_PlaneWarper {
+	#[inline] fn as_raw_Detail_PlaneWarper(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_PlaneWarper {
@@ -4907,6 +4953,10 @@ impl Detail_PlaneWarper {
 	}
 	
 }
+
+boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_Detail_PlaneWarper_to_Detail_AffineWarper }
+
+boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperGpu, cv_Detail_PlaneWarper_to_Detail_PlaneWarperGpu }
 
 pub trait Detail_PlaneWarperGpuTrait: crate::stitching::Detail_PlaneWarperTrait {
 	fn as_raw_Detail_PlaneWarperGpu(&self) -> *const c_void;
@@ -4999,14 +5049,14 @@ impl crate::stitching::Detail_PlaneWarperTrait for Detail_PlaneWarperGpu {
 	#[inline] fn as_raw_mut_Detail_PlaneWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::stitching::Detail_PlaneWarperGpuTrait for Detail_PlaneWarperGpu {
-	#[inline] fn as_raw_Detail_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_Detail_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::stitching::Detail_RotationWarper for Detail_PlaneWarperGpu {
 	#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_PlaneWarperGpuTrait for Detail_PlaneWarperGpu {
+	#[inline] fn as_raw_Detail_PlaneWarperGpu(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_Detail_PlaneWarperGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Detail_PlaneWarperGpu {
@@ -5017,6 +5067,8 @@ impl Detail_PlaneWarperGpu {
 	}
 	
 }
+
+boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_Detail_PlaneWarperGpu_to_Detail_PlaneWarper }
 
 /// Base class for warping logic implementation.
 pub trait Detail_ProjectorBaseTrait {
@@ -5265,6 +5317,8 @@ impl crate::stitching::Detail_SphericalPortraitProjectorTrait for Detail_Spheric
 impl Detail_SphericalPortraitProjector {
 }
 
+boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
+
 pub trait Detail_SphericalPortraitWarperTrait {
 	fn as_raw_Detail_SphericalPortraitWarper(&self) -> *const c_void;
 	fn as_raw_mut_Detail_SphericalPortraitWarper(&mut self) -> *mut c_void;
@@ -5401,6 +5455,8 @@ impl Detail_SphericalWarper {
 	
 }
 
+boxed_cast_descendant! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperGpu, cv_Detail_SphericalWarper_to_Detail_SphericalWarperGpu }
+
 pub trait Detail_SphericalWarperGpuTrait: crate::stitching::Detail_SphericalWarperTrait {
 	fn as_raw_Detail_SphericalWarperGpu(&self) -> *const c_void;
 	fn as_raw_mut_Detail_SphericalWarperGpu(&mut self) -> *mut c_void;
@@ -5477,6 +5533,8 @@ impl Detail_SphericalWarperGpu {
 	
 }
 
+boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarper, cv_Detail_SphericalWarperGpu_to_Detail_SphericalWarper }
+
 pub trait Detail_StereographicProjectorTrait: crate::stitching::Detail_ProjectorBaseTrait {
 	fn as_raw_Detail_StereographicProjector(&self) -> *const c_void;
 	fn as_raw_mut_Detail_StereographicProjector(&mut self) -> *mut c_void;
@@ -5523,6 +5581,8 @@ impl crate::stitching::Detail_StereographicProjectorTrait for Detail_Stereograph
 
 impl Detail_StereographicProjector {
 }
+
+boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_StereographicProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_StereographicWarperTrait {
 	fn as_raw_Detail_StereographicWarper(&self) -> *const c_void;
@@ -5613,6 +5673,8 @@ impl crate::stitching::Detail_TransverseMercatorProjectorTrait for Detail_Transv
 
 impl Detail_TransverseMercatorProjector {
 }
+
+boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
 
 pub trait Detail_TransverseMercatorWarperTrait {
 	fn as_raw_Detail_TransverseMercatorWarper(&self) -> *const c_void;

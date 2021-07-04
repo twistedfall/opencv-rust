@@ -157,7 +157,7 @@ impl dyn CascadeClassifier + '_ {
 	}
 	
 }
-/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 /// 
 /// 
 /// Note:

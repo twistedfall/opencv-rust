@@ -47,6 +47,7 @@ mod aruco_sys {
 		pub fn cv_aruco_Board_getPropIds(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_aruco_Board_setPropIds_vector_int_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_aruco_Board_create_const__InputArrayR_const_Ptr_Dictionary_R_const__InputArrayR(obj_points: *const c_void, dictionary: *const c_void, ids: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_aruco_Board_setIds_const__InputArrayR(instance: *mut c_void, ids: *const c_void) -> Result_void;
 		pub fn cv_aruco_CharucoBoard_getPropChessboardCorners(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_aruco_CharucoBoard_setPropChessboardCorners_vector_Point3f_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_aruco_CharucoBoard_getPropNearestMarkerIdx(instance: *mut c_void) -> Result<*mut c_void>;
@@ -143,6 +144,20 @@ mod aruco_sys {
 }
 #[cfg(ocvrs_has_module_aruco)]
 pub use aruco_sys::*;
+
+#[cfg(ocvrs_has_module_barcode)]
+mod barcode_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_barcode_BarcodeDetector_BarcodeDetector_const_stringR_const_stringR(prototxt_path: *const c_char, model_path: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_barcode_BarcodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void) -> Result<bool>;
+		pub fn cv_barcode_BarcodeDetector_decode_const_const__InputArrayR_const__InputArrayR_vector_string_R_vector_BarcodeType_R(instance: *const c_void, img: *const c_void, points: *const c_void, decoded_info: *mut c_void, decoded_type: *mut c_void) -> Result<bool>;
+		pub fn cv_barcode_BarcodeDetector_detectAndDecode_const_const__InputArrayR_vector_string_R_vector_BarcodeType_R_const__OutputArrayR(instance: *const c_void, img: *const c_void, decoded_info: *mut c_void, decoded_type: *mut c_void, points: *const c_void) -> Result<bool>;
+	}
+}
+#[cfg(ocvrs_has_module_barcode)]
+pub use barcode_sys::*;
 
 #[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_sys {
@@ -293,6 +308,7 @@ mod calib3d_sys {
 		pub fn cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(pts1: *const c_void, pts2: *const c_void, inliers: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from: *const c_void, to: *const c_void, inliers: *const c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
 		pub fn cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src: *const c_void, dst: *const c_void, out: *const c_void, inliers: *const c_void, ransac_threshold: f64, confidence: f64) -> Result<i32>;
+		pub fn cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src: *const c_void, dst: *const c_void, scale: *mut f64, force_rotation: bool) -> Result<*mut c_void>;
 		pub fn cv_estimateAffinePartial2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from: *const c_void, to: *const c_void, inliers: *const c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
 		pub fn cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image: *const c_void, pattern_size: *const core::Size, corners: *const c_void, rise_distance: f32, vertical: bool, sharpness: *const c_void) -> Result<core::Scalar>;
 		pub fn cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src: *const c_void, dst: *const c_void, out: *const c_void, inliers: *const c_void, ransac_threshold: f64, confidence: f64) -> Result<i32>;
@@ -307,7 +323,9 @@ mod calib3d_sys {
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1: *const c_void, points2: *const c_void, camera_matrix1: *const c_void, camera_matrix2: *const c_void, dist_coeff1: *const c_void, dist_coeff2: *const c_void, mask: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, camera_matrix1: *const c_void, dist_coeffs1: *const c_void, camera_matrix2: *const c_void, dist_coeffs2: *const c_void, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, camera_matrix: *const c_void, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1: *const c_void, points2: *const c_void, camera_matrix: *const c_void, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, focal: f64, pp: *const core::Point2d, method: i32, prob: f64, threshold: f64, mask: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1: *const c_void, points2: *const c_void, focal: f64, pp: *const core::Point2d, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1: *const c_void, points2: *const c_void, mask: *const c_void, params: *const crate::calib3d::UsacParams) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(points1: *const c_void, points2: *const c_void, mask: *const c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1: *const c_void, points2: *const c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: *const c_void) -> Result<*mut c_void>;
@@ -329,6 +347,7 @@ mod calib3d_sys {
 		pub fn cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix: *const c_void, dist_coeffs: *const c_void, image_size: *const core::Size, alpha: f64, new_img_size: *const core::Size, valid_pix_roi: *mut core::Rect, center_principal_point: bool) -> Result<*mut c_void>;
 		pub fn cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1: *const core::Rect, roi2: *const core::Rect, min_disparity: i32, number_of_disparities: i32, block_size: i32) -> Result<core::Rect>;
 		pub fn cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, aspect_ratio: f64) -> Result<*mut c_void>;
+		pub fn cv_initInverseRectificationMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(camera_matrix: *const c_void, dist_coeffs: *const c_void, r: *const c_void, new_camera_matrix: *const c_void, size: *const core::Size, m1type: i32, map1: *const c_void, map2: *const c_void) -> Result_void;
 		pub fn cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix: *const c_void, dist_coeffs: *const c_void, r: *const c_void, new_camera_matrix: *const c_void, size: *const core::Size, m1type: i32, map1: *const c_void, map2: *const c_void) -> Result_void;
 		pub fn cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix: *const c_void, dist_coeffs: *const c_void, image_size: *const core::Size, dest_image_width: i32, m1type: i32, map1: *const c_void, map2: *const c_void, proj_type: crate::calib3d::UndistortTypes, alpha: f64) -> Result<f32>;
 		pub fn cv_matMulDeriv_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(a: *const c_void, b: *const c_void, d_a_bd_a: *const c_void, d_a_bd_b: *const c_void) -> Result_void;
@@ -946,8 +965,8 @@ mod core_sys {
 		pub fn cv_Formatter_setMultiline_bool(instance: *mut c_void, ml: bool) -> Result_void;
 		pub fn cv_Formatter_get_FormatType(fmt: core::Formatter_FormatType) -> Result<*mut c_void>;
 		pub fn cv_KeyPoint_KeyPoint() -> Result<core::KeyPoint>;
-		pub fn cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(_pt: *const core::Point2f, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint>;
-		pub fn cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x: f32, y: f32, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint>;
+		pub fn cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(pt: *const core::Point2f, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint>;
+		pub fn cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x: f32, y: f32, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint>;
 		pub fn cv_KeyPoint_hash_const(instance: *const core::KeyPoint) -> Result<size_t>;
 		pub fn cv_KeyPoint_convert_const_vector_KeyPoint_R_vector_Point2f_R_const_vector_int_R(keypoints: *const c_void, points2f: *mut c_void, keypoint_indexes: *const c_void) -> Result_void;
 		pub fn cv_KeyPoint_convert_const_vector_Point2f_R_vector_KeyPoint_R_float_float_int_int(points2f: *const c_void, keypoints: *mut c_void, size: f32, response: f32, octave: i32, class_id: i32) -> Result_void;
@@ -1395,6 +1414,7 @@ mod core_sys {
 		pub fn cv_UMat_colRange_const_int_int(instance: *const c_void, startcol: i32, endcol: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_colRange_const_const_RangeR(instance: *const c_void, r: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_UMat_diag_const_int(instance: *const c_void, d: i32) -> Result<*mut c_void>;
+		pub fn cv_UMat_diag_const_UMatR_UMatUsageFlags(d: *const c_void, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
 		pub fn cv_UMat_diag_const_UMatR(d: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_UMat_clone_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_UMat_copyTo_const_const__OutputArrayR(instance: *const c_void, m: *const c_void) -> Result_void;
@@ -1408,12 +1428,20 @@ mod core_sys {
 		pub fn cv_UMat_inv_const_int(instance: *const c_void, method: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_mul_const_const__InputArrayR_double(instance: *const c_void, m: *const c_void, scale: f64) -> Result<*mut c_void>;
 		pub fn cv_UMat_dot_const_const__InputArrayR(instance: *const c_void, m: *const c_void) -> Result<f64>;
+		pub fn cv_UMat_zeros_int_int_int_UMatUsageFlags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
+		pub fn cv_UMat_zeros_Size_int_UMatUsageFlags(size: *const core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
+		pub fn cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims: i32, sz: *const i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
 		pub fn cv_UMat_zeros_int_int_int(rows: i32, cols: i32, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_zeros_Size_int(size: *const core::Size, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_zeros_int_const_intX_int(ndims: i32, sz: *const i32, typ: i32) -> Result<*mut c_void>;
+		pub fn cv_UMat_ones_int_int_int_UMatUsageFlags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
+		pub fn cv_UMat_ones_Size_int_UMatUsageFlags(size: *const core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
+		pub fn cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims: i32, sz: *const i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
 		pub fn cv_UMat_ones_int_int_int(rows: i32, cols: i32, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_ones_Size_int(size: *const core::Size, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_ones_int_const_intX_int(ndims: i32, sz: *const i32, typ: i32) -> Result<*mut c_void>;
+		pub fn cv_UMat_eye_int_int_int_UMatUsageFlags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
+		pub fn cv_UMat_eye_Size_int_UMatUsageFlags(size: *const core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<*mut c_void>;
 		pub fn cv_UMat_eye_int_int_int(rows: i32, cols: i32, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_eye_Size_int(size: *const core::Size, typ: i32) -> Result<*mut c_void>;
 		pub fn cv_UMat_create_int_int_int_UMatUsageFlags(instance: *mut c_void, rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result_void;
@@ -1868,6 +1896,7 @@ mod core_sys {
 		pub fn cv_ocl_Context_unloadProg_ProgramR(instance: *mut c_void, prog: *mut c_void) -> Result_void;
 		pub fn cv_ocl_Context_getDefault_bool(initialize: bool) -> Result<*mut c_void>;
 		pub fn cv_ocl_Context_ptr_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_ocl_Context_getOpenCLContextProperty_const_int(instance: *const c_void, property_id: i32) -> Result<*mut c_void>;
 		pub fn cv_ocl_Context_useSVM_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_ocl_Context_setUseSVM_bool(instance: *mut c_void, enabled: bool) -> Result_void;
 		pub fn cv_ocl_Context_fromHandle_voidX(context: *mut c_void) -> Result<*mut c_void>;
@@ -3474,6 +3503,7 @@ mod features2d_sys {
 		pub fn cv_computeRecallPrecisionCurve_const_vector_vector_DMatch__R_const_vector_vector_unsigned_char__R_vector_Point2f_R(matches1to2: *const c_void, correct_matches1to2_mask: *const c_void, recall_precision_curve: *mut c_void) -> Result_void;
 		pub fn cv_drawKeypoints_const__InputArrayR_const_vector_KeyPoint_R_const__InputOutputArrayR_const_ScalarR_DrawMatchesFlags(image: *const c_void, keypoints: *const c_void, out_image: *const c_void, color: *const core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result_void;
 		pub fn cv_drawMatches_const__InputArrayR_const_vector_KeyPoint_R_const__InputArrayR_const_vector_KeyPoint_R_const_vector_DMatch_R_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vector_char_R_DrawMatchesFlags(img1: *const c_void, keypoints1: *const c_void, img2: *const c_void, keypoints2: *const c_void, matches1to2: *const c_void, out_img: *const c_void, match_color: *const core::Scalar, single_point_color: *const core::Scalar, matches_mask: *const c_void, flags: crate::features2d::DrawMatchesFlags) -> Result_void;
+		pub fn cv_drawMatches_const__InputArrayR_const_vector_KeyPoint_R_const__InputArrayR_const_vector_KeyPoint_R_const_vector_DMatch_R_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vector_char_R_DrawMatchesFlags(img1: *const c_void, keypoints1: *const c_void, img2: *const c_void, keypoints2: *const c_void, matches1to2: *const c_void, out_img: *const c_void, matches_thickness: i32, match_color: *const core::Scalar, single_point_color: *const core::Scalar, matches_mask: *const c_void, flags: crate::features2d::DrawMatchesFlags) -> Result_void;
 		pub fn cv_drawMatches_const__InputArrayR_const_vector_KeyPoint_R_const__InputArrayR_const_vector_KeyPoint_R_const_vector_vector_DMatch__R_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vector_vector_char__R_DrawMatchesFlags(img1: *const c_void, keypoints1: *const c_void, img2: *const c_void, keypoints2: *const c_void, matches1to2: *const c_void, out_img: *const c_void, match_color: *const core::Scalar, single_point_color: *const core::Scalar, matches_mask: *const c_void, flags: crate::features2d::DrawMatchesFlags) -> Result_void;
 		pub fn cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vector_KeyPoint_X_vector_KeyPoint_X_floatR_intR_const_Ptr_Feature2D_R(img1: *const c_void, img2: *const c_void, h1to2: *const c_void, keypoints1: *mut c_void, keypoints2: *mut c_void, repeatability: *mut f32, corresp_count: *mut i32, fdetector: *const c_void) -> Result_void;
 		pub fn cv_getNearestPoint_const_vector_Point2f_R_float(recall_precision_curve: *const c_void, l_precision: f32) -> Result<i32>;
@@ -3624,7 +3654,7 @@ mod features2d_sys {
 		pub fn cv_KeyPointsFilter_removeDuplicated_vector_KeyPoint_R(keypoints: *mut c_void) -> Result_void;
 		pub fn cv_KeyPointsFilter_removeDuplicatedSorted_vector_KeyPoint_R(keypoints: *mut c_void) -> Result_void;
 		pub fn cv_KeyPointsFilter_retainBest_vector_KeyPoint_R_int(keypoints: *mut c_void, npoints: i32) -> Result_void;
-		pub fn cv_MSER_create_int_int_int_double_double_int_double_double_int(_delta: i32, _min_area: i32, _max_area: i32, _max_variation: f64, _min_diversity: f64, _max_evolution: i32, _area_threshold: f64, _min_margin: f64, _edge_blur_size: i32) -> Result<*mut c_void>;
+		pub fn cv_MSER_create_int_int_int_double_double_int_double_double_int(delta: i32, min_area: i32, max_area: i32, max_variation: f64, min_diversity: f64, max_evolution: i32, area_threshold: f64, min_margin: f64, edge_blur_size: i32) -> Result<*mut c_void>;
 		pub fn cv_MSER_detectRegions_const__InputArrayR_vector_vector_Point__R_vector_Rect_R(instance: *mut c_void, image: *const c_void, msers: *mut c_void, bboxes: *mut c_void) -> Result_void;
 		pub fn cv_MSER_setDelta_int(instance: *mut c_void, delta: i32) -> Result_void;
 		pub fn cv_MSER_getDelta_const(instance: *const c_void) -> Result<i32>;
@@ -3944,11 +3974,13 @@ mod imgcodecs_sys {
 	extern "C" {
 		pub fn cv_haveImageReader_const_StringR(filename: *const c_char) -> Result<bool>;
 		pub fn cv_haveImageWriter_const_StringR(filename: *const c_char) -> Result<bool>;
+		pub fn cv_imcount_const_StringR_int(filename: *const c_char, flags: i32) -> Result<size_t>;
 		pub fn cv_imdecode_const__InputArrayR_int(buf: *const c_void, flags: i32) -> Result<*mut c_void>;
 		pub fn cv_imdecode_const__InputArrayR_int_MatX(buf: *const c_void, flags: i32, dst: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext: *const c_char, img: *const c_void, buf: *mut c_void, params: *const c_void) -> Result<bool>;
 		pub fn cv_imread_const_StringR_int(filename: *const c_char, flags: i32) -> Result<*mut c_void>;
 		pub fn cv_imreadmulti_const_StringR_vector_Mat_R_int(filename: *const c_char, mats: *mut c_void, flags: i32) -> Result<bool>;
+		pub fn cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int(filename: *const c_char, mats: *mut c_void, start: i32, count: i32, flags: i32) -> Result<bool>;
 		pub fn cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
 		pub fn cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename: *const c_char, img: *const c_void, params: *const c_void) -> Result<bool>;
 	}
@@ -3967,7 +3999,7 @@ mod imgproc_sys {
 		pub fn cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src: *const c_void, dst: *const c_void, ksize: *const core::Size, sigma_x: f64, sigma_y: f64, border_type: i32) -> Result_void;
 		pub fn cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double_double_double_int_int(image: *const c_void, circles: *const c_void, method: i32, dp: f64, min_dist: f64, param1: f64, param2: f64, min_radius: i32, max_radius: i32) -> Result_void;
 		pub fn cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int_double_double(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, min_line_length: f64, max_line_gap: f64) -> Result_void;
-		pub fn cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(_point: *const c_void, _lines: *const c_void, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64) -> Result_void;
+		pub fn cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(point: *const c_void, lines: *const c_void, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64) -> Result_void;
 		pub fn cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64) -> Result_void;
 		pub fn cv_HuMoments_const_MomentsR_const__OutputArrayR(m: *const core::Moments, hu: *const c_void) -> Result_void;
 		pub fn cv_HuMoments_const_MomentsR_double_X__7_(moments: *const core::Moments, hu: *mut [f64; 7]) -> Result_void;
@@ -4015,13 +4047,14 @@ mod imgproc_sys {
 		pub fn cv_createGeneralizedHoughBallard() -> Result<*mut c_void>;
 		pub fn cv_createGeneralizedHoughGuil() -> Result<*mut c_void>;
 		pub fn cv_createHanningWindow_const__OutputArrayR_Size_int(dst: *const c_void, win_size: *const core::Size, typ: i32) -> Result_void;
-		pub fn cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(_refine: i32, _scale: f64, _sigma_scale: f64, _quant: f64, _ang_th: f64, _log_eps: f64, _density_th: f64, _n_bins: i32) -> Result<*mut c_void>;
+		pub fn cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<*mut c_void>;
 		pub fn cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1: *const c_void, src2: *const c_void, dst: *const c_void, code: i32) -> Result_void;
 		pub fn cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int(src: *const c_void, dst: *const c_void, code: i32, dst_cn: i32) -> Result_void;
 		pub fn cv_demosaicing_const__InputArrayR_const__OutputArrayR_int_int(src: *const c_void, dst: *const c_void, code: i32, dst_cn: i32) -> Result_void;
 		pub fn cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src: *const c_void, dst: *const c_void, kernel: *const c_void, anchor: *const core::Point, iterations: i32, border_type: i32, border_value: *const core::Scalar) -> Result_void;
 		pub fn cv_distanceTransform_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(src: *const c_void, dst: *const c_void, labels: *const c_void, distance_type: i32, mask_size: i32, label_type: i32) -> Result_void;
 		pub fn cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int_int(src: *const c_void, dst: *const c_void, distance_type: i32, mask_size: i32, dst_type: i32) -> Result_void;
+		pub fn cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a: *const c_void, b: *const c_void, c: *const c_void, flags: i32, conj_b: bool) -> Result_void;
 		pub fn cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image: *const c_void, contours: *const c_void, contour_idx: i32, color: *const core::Scalar, thickness: i32, line_type: i32, hierarchy: *const c_void, max_level: i32, offset: *const core::Point) -> Result_void;
 		pub fn cv_drawMarker_const__InputOutputArrayR_Point_const_ScalarR_int_int_int_int(img: *const c_void, position: *const core::Point, color: *const core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result_void;
 		pub fn cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center: *const core::Point2d, axes: *const core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: *mut c_void) -> Result_void;
@@ -4062,7 +4095,7 @@ mod imgproc_sys {
 		pub fn cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src: *const c_void, sum: *const c_void, sqsum: *const c_void, tilted: *const c_void, sdepth: i32, sqdepth: i32) -> Result_void;
 		pub fn cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src: *const c_void, sum: *const c_void, sqsum: *const c_void, sdepth: i32, sqdepth: i32) -> Result_void;
 		pub fn cv_integral_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, sum: *const c_void, sdepth: i32) -> Result_void;
-		pub fn cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(_p1: *const c_void, _p2: *const c_void, _p12: *const c_void, handle_nested: bool) -> Result<f32>;
+		pub fn cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(p1: *const c_void, p2: *const c_void, p12: *const c_void, handle_nested: bool) -> Result<f32>;
 		pub fn cv_invertAffineTransform_const__InputArrayR_const__OutputArrayR(m: *const c_void, i_m: *const c_void) -> Result_void;
 		pub fn cv_isContourConvex_const__InputArrayR(contour: *const c_void) -> Result<bool>;
 		pub fn cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img: *const c_void, pt1: *const core::Point, pt2: *const core::Point, color: *const core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result_void;
@@ -4181,9 +4214,9 @@ mod imgproc_sys {
 		pub fn cv_LineIterator_init_const_MatX_Rect_Point_Point_int_bool(instance: *mut c_void, img: *const c_void, bounding_area_rect: *const core::Rect, pt1: *const core::Point, pt2: *const core::Point, connectivity: i32, left_to_right: bool) -> Result_void;
 		pub fn cv_LineIterator_operatorX(instance: *mut c_void) -> Result<*mut u8>;
 		pub fn cv_LineIterator_pos_const(instance: *const c_void) -> Result<core::Point>;
-		pub fn cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, _image: *const c_void, _lines: *const c_void, width: *const c_void, prec: *const c_void, nfa: *const c_void) -> Result_void;
-		pub fn cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(instance: *mut c_void, _image: *const c_void, lines: *const c_void) -> Result_void;
-		pub fn cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(instance: *mut c_void, size: *const core::Size, lines1: *const c_void, lines2: *const c_void, _image: *const c_void) -> Result<i32>;
+		pub fn cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, image: *const c_void, lines: *const c_void, width: *const c_void, prec: *const c_void, nfa: *const c_void) -> Result_void;
+		pub fn cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(instance: *mut c_void, image: *const c_void, lines: *const c_void) -> Result_void;
+		pub fn cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(instance: *mut c_void, size: *const core::Size, lines1: *const c_void, lines2: *const c_void, image: *const c_void) -> Result<i32>;
 		pub fn cv_Subdiv2D_Subdiv2D() -> Result<*mut c_void>;
 		pub fn cv_Subdiv2D_Subdiv2D_Rect(rect: *const core::Rect) -> Result<*mut c_void>;
 		pub fn cv_Subdiv2D_initDelaunay_Rect(instance: *mut c_void, rect: *const core::Rect) -> Result_void;
@@ -5229,6 +5262,7 @@ mod rapid_sys {
 		pub fn cv_rapid_extractLineBundle_int_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(len: i32, ctl2d: *const c_void, img: *const c_void, bundle: *const c_void, src_locations: *const c_void) -> Result_void;
 		pub fn cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle: *const c_void, cols: *const c_void, response: *const c_void) -> Result_void;
 		pub fn cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img: *const c_void, num: i32, len: i32, pts3d: *const c_void, tris: *const c_void, k: *const c_void, rvec: *const c_void, tvec: *const c_void, rmsd: *mut f64) -> Result<f32>;
+		pub fn cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d: *const c_void, tris: *const c_void, hist_bins: i32, sobel_thesh: u8) -> Result<*mut c_void>;
 		pub fn cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d: *const c_void, tris: *const c_void, hist_bins: i32, sobel_thesh: u8) -> Result<*mut c_void>;
 		pub fn cv_rapid_Rapid_create_const__InputArrayR_const__InputArrayR(pts3d: *const c_void, tris: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_TermCriteriaR(instance: *mut c_void, img: *const c_void, num: i32, len: i32, k: *const c_void, rvec: *const c_void, tvec: *const c_void, termcrit: *const core::TermCriteria) -> Result<f32>;
@@ -5259,6 +5293,69 @@ mod rgbd_sys {
 		pub fn cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(unregistered_camera_matrix: *const c_void, registered_camera_matrix: *const c_void, registered_dist_coeffs: *const c_void, rt: *const c_void, unregistered_depth: *const c_void, output_image_plane_size: *const core::Size, registered_depth: *const c_void, depth_dilation: bool) -> Result_void;
 		pub fn cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR_double(in_: *const c_void, depth: i32, out: *const c_void, depth_factor: f64) -> Result_void;
 		pub fn cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image: *const c_void, depth: *const c_void, mask: *const c_void, rt: *const c_void, camera_matrix: *const c_void, dist_coeff: *const c_void, warped_image: *const c_void, warped_depth: *const c_void, warped_mask: *const c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_create_const_Ptr_Params_R(_params: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_ColoredKinFu_getParams_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR(instance: *const c_void, image: *const c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR_const_Matx44fR(instance: *const c_void, image: *const c_void, camera_pose: *const core::Matx44f) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_getPoints_const_const__OutputArrayR(instance: *const c_void, points: *const c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_reset(instance: *mut c_void) -> Result_void;
+		pub fn cv_colored_kinfu_ColoredKinFu_getPose_const(instance: *const c_void) -> Result<core::Affine3f>;
+		pub fn cv_colored_kinfu_ColoredKinFu_update_const__InputArrayR_const__InputArrayR(instance: *mut c_void, depth: *const c_void, rgb: *const c_void) -> Result<bool>;
+		pub fn cv_colored_kinfu_Params_getPropFrameSize_const(instance: *const c_void) -> Result<core::Size>;
+		pub fn cv_colored_kinfu_Params_setPropFrameSize_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropRgb_frameSize_const(instance: *const c_void) -> Result<core::Size>;
+		pub fn cv_colored_kinfu_Params_setPropRgb_frameSize_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropVolumeType_const(instance: *const c_void) -> Result<crate::rgbd::Kinfu_VolumeType>;
+		pub fn cv_colored_kinfu_Params_setPropVolumeType_VolumeType(instance: *mut c_void, val: crate::rgbd::Kinfu_VolumeType) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropIntr_const(instance: *const c_void) -> Result<core::Matx33f>;
+		pub fn cv_colored_kinfu_Params_setPropIntr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropRgb_intr_const(instance: *const c_void) -> Result<core::Matx33f>;
+		pub fn cv_colored_kinfu_Params_setPropRgb_intr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropDepthFactor_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropDepthFactor_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropBilateral_sigma_depth_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropBilateral_sigma_depth_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropBilateral_sigma_spatial_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropBilateral_sigma_spatial_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropBilateral_kernel_size_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_colored_kinfu_Params_setPropBilateral_kernel_size_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropPyramidLevels_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_colored_kinfu_Params_setPropPyramidLevels_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropVolumeDims_const(instance: *const c_void) -> Result<core::Vec3i>;
+		pub fn cv_colored_kinfu_Params_setPropVolumeDims_Vec3i(instance: *mut c_void, val: *const core::Vec3i) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropVoxelSize_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropVoxelSize_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropTsdf_min_camera_movement_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropTsdf_min_camera_movement_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropVolumePose_const(instance: *const c_void) -> Result<core::Affine3f>;
+		pub fn cv_colored_kinfu_Params_setPropVolumePose_Affine3f(instance: *mut c_void, val: *const core::Affine3f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropTsdf_trunc_dist_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropTsdf_trunc_dist_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropTsdf_max_weight_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_colored_kinfu_Params_setPropTsdf_max_weight_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropRaycast_step_factor_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropRaycast_step_factor_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropLightPose_const(instance: *const c_void) -> Result<core::Vec3f>;
+		pub fn cv_colored_kinfu_Params_setPropLightPose_Vec3f(instance: *mut c_void, val: *const core::Vec3f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropIcpDistThresh_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropIcpDistThresh_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropIcpAngleThresh_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropIcpAngleThresh_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropIcpIterations(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_setPropIcpIterations_vector_int_(instance: *mut c_void, val: *mut c_void) -> Result_void;
+		pub fn cv_colored_kinfu_Params_getPropTruncateThreshold_const(instance: *const c_void) -> Result<f32>;
+		pub fn cv_colored_kinfu_Params_setPropTruncateThreshold_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_colored_kinfu_Params_Params() -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_Params_Matx33f_Vec3f(volume_initial_pose_rot: *const core::Matx33f, volume_initial_pose_transl: *const core::Vec3f) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_Params_Matx44f(volume_initial_pose: *const core::Matx44f) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(instance: *mut c_void, r: *const core::Matx33f, t: *const core::Vec3f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_setInitialVolumePose_Matx44f(instance: *mut c_void, homogen_tf: *const core::Matx44f) -> Result_void;
+		pub fn cv_colored_kinfu_Params_defaultParams() -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_coarseParams() -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_hashTSDFParams_bool(is_coarse: bool) -> Result<*mut c_void>;
+		pub fn cv_colored_kinfu_Params_coloredTSDFParams_bool(is_coarse: bool) -> Result<*mut c_void>;
 		pub fn cv_dynafu_DynaFu_create_const_Ptr_Params_R(_params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dynafu_DynaFu_getParams_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dynafu_DynaFu_render_const_const__OutputArrayR_const_Matx44fR(instance: *const c_void, image: *const c_void, camera_pose: *const core::Matx44f) -> Result_void;
@@ -5283,6 +5380,7 @@ mod rgbd_sys {
 		pub fn cv_kinfu_Intr_Reprojector_Reprojector_Intr(intr: *const crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Reprojector>;
 		pub fn cv_kinfu_KinFu_create_const_Ptr_Params_R(_params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_kinfu_KinFu_getParams_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_kinfu_KinFu_render_const_const__OutputArrayR(instance: *const c_void, image: *const c_void) -> Result_void;
 		pub fn cv_kinfu_KinFu_render_const_const__OutputArrayR_const_Matx44fR(instance: *const c_void, image: *const c_void, camera_pose: *const core::Matx44f) -> Result_void;
 		pub fn cv_kinfu_KinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
 		pub fn cv_kinfu_KinFu_getPoints_const_const__OutputArrayR(instance: *const c_void, points: *const c_void) -> Result_void;
@@ -5296,6 +5394,8 @@ mod rgbd_sys {
 		pub fn cv_kinfu_Params_setPropVolumeType_VolumeType(instance: *mut c_void, val: crate::rgbd::Kinfu_VolumeType) -> Result_void;
 		pub fn cv_kinfu_Params_getPropIntr_const(instance: *const c_void) -> Result<core::Matx33f>;
 		pub fn cv_kinfu_Params_setPropIntr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
+		pub fn cv_kinfu_Params_getPropRgb_intr_const(instance: *const c_void) -> Result<core::Matx33f>;
+		pub fn cv_kinfu_Params_setPropRgb_intr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
 		pub fn cv_kinfu_Params_getPropDepthFactor_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_kinfu_Params_setPropDepthFactor_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_kinfu_Params_getPropBilateral_sigma_depth_const(instance: *const c_void) -> Result<f32>;
@@ -5338,12 +5438,15 @@ mod rgbd_sys {
 		pub fn cv_kinfu_Params_defaultParams() -> Result<*mut c_void>;
 		pub fn cv_kinfu_Params_coarseParams() -> Result<*mut c_void>;
 		pub fn cv_kinfu_Params_hashTSDFParams_bool(is_coarse: bool) -> Result<*mut c_void>;
+		pub fn cv_kinfu_Params_coloredTSDFParams_bool(is_coarse: bool) -> Result<*mut c_void>;
 		pub fn cv_kinfu_Volume_getPropVoxelSize_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_kinfu_Volume_getPropVoxelSizeInv_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_kinfu_Volume_getPropPose_const(instance: *const c_void) -> Result<core::Affine3f>;
 		pub fn cv_kinfu_Volume_getPropRaycastStepFactor_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_int(instance: *mut c_void, _depth: *const c_void, depth_factor: f32, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result_void;
+		pub fn cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR_const_int(instance: *mut c_void, _depth: *const c_void, _rgb: *const c_void, depth_factor: f32, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr, rgb_intrinsics: *const crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result_void;
 		pub fn cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr, frame_size: *const core::Size, points: *const c_void, normals: *const c_void) -> Result_void;
+		pub fn cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, camera_pose: *const core::Matx44f, intrinsics: *const crate::rgbd::Kinfu_Intr, frame_size: *const core::Size, points: *const c_void, normals: *const c_void, colors: *const c_void) -> Result_void;
 		pub fn cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, _normals: *const c_void) -> Result_void;
 		pub fn cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
 		pub fn cv_kinfu_Volume_reset(instance: *mut c_void) -> Result_void;
@@ -5384,6 +5487,7 @@ mod rgbd_sys {
 		pub fn cv_kinfu_detail_PoseGraph_calcEnergy_const(instance: *const c_void) -> Result<f64>;
 		pub fn cv_large_kinfu_LargeKinfu_create_const_Ptr_Params_R(_params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_large_kinfu_LargeKinfu_getParams_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR(instance: *const c_void, image: *const c_void) -> Result_void;
 		pub fn cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR_const_Matx44fR(instance: *const c_void, image: *const c_void, camera_pose: *const core::Matx44f) -> Result_void;
 		pub fn cv_large_kinfu_LargeKinfu_getCloud_const_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, points: *const c_void, normals: *const c_void) -> Result_void;
 		pub fn cv_large_kinfu_LargeKinfu_getPoints_const_const__OutputArrayR(instance: *const c_void, points: *const c_void) -> Result_void;
@@ -5395,6 +5499,8 @@ mod rgbd_sys {
 		pub fn cv_large_kinfu_Params_setPropFrameSize_Size(instance: *mut c_void, val: *const core::Size) -> Result_void;
 		pub fn cv_large_kinfu_Params_getPropIntr_const(instance: *const c_void) -> Result<core::Matx33f>;
 		pub fn cv_large_kinfu_Params_setPropIntr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
+		pub fn cv_large_kinfu_Params_getPropRgb_intr_const(instance: *const c_void) -> Result<core::Matx33f>;
+		pub fn cv_large_kinfu_Params_setPropRgb_intr_Matx33f(instance: *mut c_void, val: *const core::Matx33f) -> Result_void;
 		pub fn cv_large_kinfu_Params_getPropDepthFactor_const(instance: *const c_void) -> Result<f32>;
 		pub fn cv_large_kinfu_Params_setPropDepthFactor_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_large_kinfu_Params_getPropBilateral_sigma_depth_const(instance: *const c_void) -> Result<f32>;
@@ -6819,6 +6925,19 @@ mod video_sys {
 		pub fn cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size: *const core::Size, max_level: i32, crit: *const core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<*mut c_void>;
 		pub fn cv_Tracker_init_const__InputArrayR_const_RectR(instance: *mut c_void, image: *const c_void, bounding_box: *const core::Rect) -> Result_void;
 		pub fn cv_Tracker_update_const__InputArrayR_RectR(instance: *mut c_void, image: *const c_void, bounding_box: *mut core::Rect) -> Result<bool>;
+		pub fn cv_TrackerDaSiamRPN_create_const_ParamsR(parameters: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerDaSiamRPN_getTrackingScore(instance: *mut c_void) -> Result<f32>;
+		pub fn cv_TrackerDaSiamRPN_Params_getPropModel_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerDaSiamRPN_Params_setPropModel_string(instance: *mut c_void, val: *mut c_char) -> Result_void;
+		pub fn cv_TrackerDaSiamRPN_Params_getPropKernel_cls1_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerDaSiamRPN_Params_setPropKernel_cls1_string(instance: *mut c_void, val: *mut c_char) -> Result_void;
+		pub fn cv_TrackerDaSiamRPN_Params_getPropKernel_r1_const(instance: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_TrackerDaSiamRPN_Params_setPropKernel_r1_string(instance: *mut c_void, val: *mut c_char) -> Result_void;
+		pub fn cv_TrackerDaSiamRPN_Params_getPropBackend_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_TrackerDaSiamRPN_Params_setPropBackend_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_TrackerDaSiamRPN_Params_getPropTarget_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_TrackerDaSiamRPN_Params_setPropTarget_int(instance: *mut c_void, val: i32) -> Result_void;
+		pub fn cv_TrackerDaSiamRPN_Params_Params() -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_create_const_ParamsR(parameters: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_Params_getPropModelTxt_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_TrackerGOTURN_Params_setPropModelTxt_string(instance: *mut c_void, val: *mut c_char) -> Result_void;
@@ -6853,10 +6972,14 @@ mod videoio_sys {
 	extern "C" {
 		pub fn cv_videoio_registry_getBackendName_VideoCaptureAPIs(api: crate::videoio::VideoCaptureAPIs) -> Result<*mut c_void>;
 		pub fn cv_videoio_registry_getBackends() -> Result<*mut c_void>;
+		pub fn cv_videoio_registry_getCameraBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32) -> Result<*mut c_void>;
 		pub fn cv_videoio_registry_getCameraBackends() -> Result<*mut c_void>;
+		pub fn cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32) -> Result<*mut c_void>;
 		pub fn cv_videoio_registry_getStreamBackends() -> Result<*mut c_void>;
+		pub fn cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32) -> Result<*mut c_void>;
 		pub fn cv_videoio_registry_getWriterBackends() -> Result<*mut c_void>;
 		pub fn cv_videoio_registry_hasBackend_VideoCaptureAPIs(api: crate::videoio::VideoCaptureAPIs) -> Result<bool>;
+		pub fn cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api: crate::videoio::VideoCaptureAPIs) -> Result<bool>;
 		pub fn cv_VideoCapture_VideoCapture() -> Result<*mut c_void>;
 		pub fn cv_VideoCapture_VideoCapture_const_StringR_int(filename: *const c_char, api_preference: i32) -> Result<*mut c_void>;
 		pub fn cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(filename: *const c_char, api_preference: i32, params: *const c_void) -> Result<*mut c_void>;
@@ -7566,7 +7689,7 @@ mod ximgproc_sys {
 		pub fn cv_ximgproc_createEdgeDrawing() -> Result<*mut c_void>;
 		pub fn cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double_double_int_double(guide: *const c_void, sigma_spatial: f64, sigma_luma: f64, sigma_chroma: f64, lambda: f64, num_iter: i32, max_tol: f64) -> Result<*mut c_void>;
 		pub fn cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double_double_int(guide: *const c_void, lambda: f64, sigma_color: f64, lambda_attenuation: f64, num_iter: i32) -> Result<*mut c_void>;
-		pub fn cv_ximgproc_createFastLineDetector_int_float_double_double_int_bool(_length_threshold: i32, _distance_threshold: f32, _canny_th1: f64, _canny_th2: f64, _canny_aperture_size: i32, _do_merge: bool) -> Result<*mut c_void>;
+		pub fn cv_ximgproc_createFastLineDetector_int_float_double_double_int_bool(length_threshold: i32, distance_threshold: f32, canny_th1: f64, canny_th2: f64, canny_aperture_size: i32, do_merge: bool) -> Result<*mut c_void>;
 		pub fn cv_ximgproc_createGuidedFilter_const__InputArrayR_int_double(guide: *const c_void, radius: i32, eps: f64) -> Result<*mut c_void>;
 		pub fn cv_ximgproc_createQuaternionImage_const__InputArrayR_const__OutputArrayR(img: *const c_void, qimg: *const c_void) -> Result_void;
 		pub fn cv_ximgproc_createRFFeatureGetter() -> Result<*mut c_void>;
@@ -7591,7 +7714,7 @@ mod ximgproc_sys {
 		pub fn cv_ximgproc_qmultiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void) -> Result_void;
 		pub fn cv_ximgproc_qunitary_const__InputArrayR_const__OutputArrayR(qimg: *const c_void, qnimg: *const c_void) -> Result_void;
 		pub fn cv_ximgproc_readGT_String_const__OutputArrayR(src_path: *mut c_char, dst: *const c_void) -> Result<i32>;
-		pub fn cv_ximgproc_rl_createRLEImage_vector_Point3i_R_const__OutputArrayR_Size(runs: *mut c_void, res: *const c_void, size: *const core::Size) -> Result_void;
+		pub fn cv_ximgproc_rl_createRLEImage_const_vector_Point3i_R_const__OutputArrayR_Size(runs: *const c_void, res: *const c_void, size: *const core::Size) -> Result_void;
 		pub fn cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(rl_src: *const c_void, rl_dest: *const c_void, rl_kernel: *const c_void, anchor: *const core::Point) -> Result_void;
 		pub fn cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_Point(rl_src: *const c_void, rl_dest: *const c_void, rl_kernel: *const c_void, b_boundary_on: bool, anchor: *const core::Point) -> Result_void;
 		pub fn cv_ximgproc_rl_getStructuringElement_int_Size(shape: i32, ksize: *const core::Size) -> Result<*mut c_void>;
@@ -7700,8 +7823,8 @@ mod ximgproc_sys {
 		pub fn cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(instance: *const crate::ximgproc::EdgeDrawing_Params, fs: *mut c_void) -> Result_void;
 		pub fn cv_ximgproc_FastBilateralSolverFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, src: *const c_void, confidence: *const c_void, dst: *const c_void) -> Result_void;
 		pub fn cv_ximgproc_FastGlobalSmootherFilter_filter_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, src: *const c_void, dst: *const c_void) -> Result_void;
-		pub fn cv_ximgproc_FastLineDetector_detect_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, _image: *const c_void, _lines: *const c_void) -> Result_void;
-		pub fn cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR_bool(instance: *mut c_void, _image: *const c_void, lines: *const c_void, draw_arrow: bool) -> Result_void;
+		pub fn cv_ximgproc_FastLineDetector_detect_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, image: *const c_void, lines: *const c_void) -> Result_void;
+		pub fn cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR_bool_Scalar_int(instance: *mut c_void, image: *const c_void, lines: *const c_void, draw_arrow: bool, linecolor: *const core::Scalar, linethickness: i32) -> Result_void;
 		pub fn cv_ximgproc_GuidedFilter_filter_const__InputArrayR_const__OutputArrayR_int(instance: *mut c_void, src: *const c_void, dst: *const c_void, d_depth: i32) -> Result_void;
 		pub fn cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_const_int_const_int_const_int_const_int_const_int(instance: *const c_void, src: *const c_void, features: *mut c_void, gnrm_rad: i32, gsmth_rad: i32, shrink: i32, out_num: i32, grad_num: i32) -> Result_void;
 		pub fn cv_ximgproc_RICInterpolator_setK_int(instance: *mut c_void, k: i32) -> Result_void;

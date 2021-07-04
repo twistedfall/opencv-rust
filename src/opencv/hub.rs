@@ -2,6 +2,8 @@
 pub mod alphamat;
 #[cfg(ocvrs_has_module_aruco)]
 pub mod aruco;
+#[cfg(ocvrs_has_module_barcode)]
+pub mod barcode;
 #[cfg(ocvrs_has_module_bgsegm)]
 pub mod bgsegm;
 #[cfg(ocvrs_has_module_bioinspired)]
@@ -134,6 +136,8 @@ pub mod hub_prelude {
 	pub use super::alphamat::prelude::*;
 	#[cfg(ocvrs_has_module_aruco)]
 	pub use super::aruco::prelude::*;
+	#[cfg(ocvrs_has_module_barcode)]
+	pub use super::barcode::prelude::*;
 	#[cfg(ocvrs_has_module_bgsegm)]
 	pub use super::bgsegm::prelude::*;
 	#[cfg(ocvrs_has_module_bioinspired)]

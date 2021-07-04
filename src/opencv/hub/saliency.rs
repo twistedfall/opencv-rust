@@ -33,7 +33,7 @@
 //! to cover all objects in an image. Being able to perceive objects before identifying them is closely
 //! related to bottom up visual attention (saliency).
 //! 
-//! ![Saliency diagram](https://docs.opencv.org/4.5.2/saliency.png)
+//! ![Saliency diagram](https://docs.opencv.org/4.5.3/saliency.png)
 //! 
 //! To see how API works, try tracker demo:
 //! <https://github.com/fpuja/opencv_contrib/blob/saliencyModuleDevelop/modules/saliency/samples/computeSaliency.cpp>
@@ -59,7 +59,7 @@ pub trait MotionSaliency: crate::saliency::Saliency {
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency {
 	fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void;
 	fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void;
@@ -110,7 +110,7 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency {
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub struct MotionSaliencyBinWangApr2014 {
 	ptr: *mut c_void
 }
@@ -141,14 +141,14 @@ impl crate::saliency::MotionSaliency for MotionSaliencyBinWangApr2014 {
 	#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::saliency::MotionSaliencyBinWangApr2014Trait for MotionSaliencyBinWangApr2014 {
-	#[inline] fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::saliency::Saliency for MotionSaliencyBinWangApr2014 {
 	#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::saliency::MotionSaliencyBinWangApr2014Trait for MotionSaliencyBinWangApr2014 {
+	#[inline] fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MotionSaliencyBinWangApr2014 {
@@ -162,6 +162,8 @@ impl MotionSaliencyBinWangApr2014 {
 	
 }
 
+boxed_cast_base! { MotionSaliencyBinWangApr2014, core::Algorithm, cv_MotionSaliencyBinWangApr2014_to_Algorithm }
+
 /// ********************************* Objectness Base Class ***********************************
 pub trait Objectness: crate::saliency::Saliency {
 	fn as_raw_Objectness(&self) -> *const c_void;
@@ -169,7 +171,7 @@ pub trait Objectness: crate::saliency::Saliency {
 
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BING)
 pub trait ObjectnessBINGTrait: crate::saliency::Objectness {
 	fn as_raw_ObjectnessBING(&self) -> *const c_void;
 	fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void;
@@ -244,7 +246,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness {
 	
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BING)
 pub struct ObjectnessBING {
 	ptr: *mut c_void
 }
@@ -275,14 +277,14 @@ impl crate::saliency::Objectness for ObjectnessBING {
 	#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::saliency::ObjectnessBINGTrait for ObjectnessBING {
-	#[inline] fn as_raw_ObjectnessBING(&self) -> *const c_void { self.as_raw() }
-	#[inline] fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 impl crate::saliency::Saliency for ObjectnessBING {
 	#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::saliency::ObjectnessBINGTrait for ObjectnessBING {
+	#[inline] fn as_raw_ObjectnessBING(&self) -> *const c_void { self.as_raw() }
+	#[inline] fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ObjectnessBING {
@@ -295,6 +297,8 @@ impl ObjectnessBING {
 	}
 	
 }
+
+boxed_cast_base! { ObjectnessBING, core::Algorithm, cv_ObjectnessBING_to_Algorithm }
 
 /// ********************************* Saliency Base Class ***********************************
 pub trait Saliency: core::AlgorithmTrait {
@@ -341,7 +345,7 @@ pub trait StaticSaliency: crate::saliency::Saliency {
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -357,7 +361,7 @@ pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency {
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -412,7 +416,9 @@ impl StaticSaliencyFineGrained {
 	
 }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_SR)
+boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_StaticSaliencyFineGrained_to_Algorithm }
+
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -454,7 +460,7 @@ pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliency {
 	
 }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_SR)
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -510,3 +516,5 @@ impl StaticSaliencySpectralResidual {
 	}
 	
 }
+
+boxed_cast_base! { StaticSaliencySpectralResidual, core::Algorithm, cv_StaticSaliencySpectralResidual_to_Algorithm }

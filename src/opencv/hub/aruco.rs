@@ -19,9 +19,9 @@
 //! - Detection of ChArUco diamond markers
 //! The samples directory includes easy examples of how to use the module.
 //! 
-//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_Aruco2014).
+//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Aruco2014).
 //! 
-//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 //! ## See also
 //! S. Garrido-Jurado, R. Muñoz-Salinas, F. J. Madrid-Cuevas, and M. J. Marín-Jiménez. 2014.
 //! "Automatic generation and detection of highly reliable fiducial markers under occlusion".
@@ -36,7 +36,7 @@ pub mod prelude {
 	pub use { super::DictionaryTrait, super::DetectorParametersTrait, super::BoardTrait, super::GridBoardTrait, super::CharucoBoardTrait };
 }
 
-/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_wang2016iros)
+/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_wang2016iros)
 pub const CORNER_REFINE_APRILTAG: i32 = 3;
 /// ArUco approach and refine the corners locations using the contour-points line fitting
 pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -78,7 +78,7 @@ pub enum CornerRefineMethod {
 	CORNER_REFINE_SUBPIX = 1,
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	CORNER_REFINE_CONTOUR = 2,
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.2/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_wang2016iros)
 	CORNER_REFINE_APRILTAG = 3,
 }
 
@@ -805,6 +805,19 @@ pub trait BoardTrait {
 		unsafe { sys::cv_aruco_Board_setPropIds_vector_int_(self.as_raw_mut_Board(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_ids")
 	}
 	
+	/// Set ids vector
+	/// 
+	/// ## Parameters
+	/// * ids: vector of the identifiers of the markers in the board (should be the same size
+	/// as objPoints)
+	/// 
+	/// Recommended way to set ids vector, which will fail if the size of ids does not match size
+	/// of objPoints.
+	fn set_ids_1(&mut self, ids: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(ids);
+		unsafe { sys::cv_aruco_Board_setIds_const__InputArrayR(self.as_raw_mut_Board(), ids.as_raw__InputArray()) }.into_result()
+	}
+	
 }
 
 /// Board of markers
@@ -978,6 +991,8 @@ impl CharucoBoard {
 	}
 	
 }
+
+boxed_cast_base! { CharucoBoard, crate::aruco::Board, cv_CharucoBoard_to_Board }
 
 /// Parameters for the detectMarker process:
 /// - adaptiveThreshWinSizeMin: minimum window size for adaptive thresholding before finding
@@ -1614,3 +1629,5 @@ impl GridBoard {
 	}
 	
 }
+
+boxed_cast_base! { GridBoard, crate::aruco::Board, cv_GridBoard_to_Board }
