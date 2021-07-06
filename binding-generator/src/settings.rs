@@ -661,11 +661,6 @@ pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(
 });
 
 pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = Lazy::new(|| hashmap! {
-	"cv::TrackerGOTURN::Params" => ExportConfig::make_boxed as _, // contains String, so no Copy
-	"cv::detail::CameraParams" => ExportConfig::make_boxed as _, // contains non-copy stuff
-	"cv::detail::ImageFeatures" => ExportConfig::make_boxed as _, // contains non-copy stuff
-	"cv::detail::MatchesInfo" => ExportConfig::make_boxed as _, // contains non-copy stuff
-	"cv::detail::ProjectorBase" => ExportConfig::make_boxed as _, // other classes inherit from this one
 	"cv::dnn::ClassificationModel" => ExportConfig::make_boxed as _,
 	"cv::dnn::DetectionModel" => ExportConfig::make_boxed as _,
 	"cv::dnn::KeypointsModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
@@ -674,11 +669,6 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = L
 	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // incorrectly marked as simple
 	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // incorrectly marked as simple
 	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-	"cv::linemod::Match" => ExportConfig::make_boxed as _, // contains String
-	"cv::linemod::Template" => ExportConfig::make_boxed as _, // contains String
-	"cv::segmentation::IntelligentScissorsMB" => ExportConfig::make_boxed as _,
-	"cv::tracking::TrackerCSRT::Params" => ExportConfig::make_boxed as _, // contains String, so no Copy
-	"cv::viz::Mesh" => ExportConfig::make_boxed as _, // contains Mat, so no Copy
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()

@@ -53,11 +53,26 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn kind(&self) -> Kind {
-		if settings::ELEMENT_EXCLUDE.contains(self.cpp_fullname().as_ref()) {
+		let cpp_fullname = self.cpp_fullname();
+		if settings::ELEMENT_EXCLUDE.contains(cpp_fullname.as_ref()) {
 			return Kind::Excluded
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
-			Some(true) => Kind::Simple,
+			Some(true) => {
+				let has_non_copy_fields = self.entity.walk_fields_while(|f| {
+					let type_ref = Field::new(f, self.gen_env).type_ref();
+					let non_copy_field = type_ref.as_string().is_some()
+						|| type_ref.as_vector().is_some()
+						|| type_ref.as_class().map_or(false, |c| !c.is_simple())
+						|| self.gen_env.descendants.contains_key(cpp_fullname.as_ref());
+					!non_copy_field
+				});
+				if has_non_copy_fields {
+					Kind::Boxed
+				} else {
+					Kind::Simple
+				}
+			},
 			Some(false) => Kind::Boxed,
 			None => {
 				if self.is_system() {
