@@ -12,7 +12,7 @@ fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git checkout .
-git checkout 2020.11-1
+git checkout 2021.05.12
 cmd "/C bootstrap-vcpkg.bat -disableMetrics"
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows.cmake
@@ -20,7 +20,7 @@ echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows-static.cmake
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x86-windows.cmake
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
-choco install -y llvm --version 11.0.0
-./vcpkg install "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
+choco install -y llvm --version 12.0.0
 ./vcpkg upgrade --no-dry-run
+./vcpkg install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
 popd

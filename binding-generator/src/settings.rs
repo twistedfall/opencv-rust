@@ -956,6 +956,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 		"dynafu" => "Dynafu",
 		"fisheye" => "Fisheye",
 		"kinfu" => "Kinfu",
+		"colored_kinfu" => "ColoredKinfu",
 		"linemod" => "Linemod",
 		"superres" => "Superres",
 	},

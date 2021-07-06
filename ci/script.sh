@@ -39,6 +39,8 @@ elif [[ "$OS_FAMILY" == "linux" ]]; then
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
+		# link order is often broken when vcpkg detection on Linux is used
+		export OPENCV_LINK_LIBS="+,opencv_imgcodecs,opencv_imgproc,opencv_core,png,tiff,jpeg,webp,lzma,z"
 	fi
 fi
 

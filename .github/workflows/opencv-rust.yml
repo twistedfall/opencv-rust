@@ -22,13 +22,13 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.14
-          - opencv: 4.5.2
+          - opencv: 3.4.15
+          - opencv: 4.5.3
         exclude:
           - os:
               family: osx
             version:
-              opencv: 3.4.14
+              opencv: 3.4.15
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
@@ -129,29 +129,32 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.2.0
-            brew: "@2"
-          - opencv: 3.4.14
+          - branch: 3.2
+            opencv: 3.2.0
+            brew: "excluded"
+          - branch: 3.4
+            opencv: 3.4.14
             brew: "@3"
-          - opencv: 4.5.2
+          - branch: 4
+            opencv: 4.5.2
             brew: "@4"
         exclude:
           - os:
               family: osx
             version:
-              brew: "@2"
+              branch: 3.2
           - os:
               family: windows
             version:
-              opencv: 3.2.0
+              branch: 3.2
           - os:
               family: linux
             version:
-              opencv: 3.4.14
+              branch: 3.4
           - os:
               family: linux
             version:
-              opencv: 4.5.2
+              branch: 4
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
