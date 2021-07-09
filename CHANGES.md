@@ -1,3 +1,9 @@
+* 0.53.1
+  * Add support for casting classes to their bases. You can now call `.into()` on the descendant class to cast
+    it to the parent.
+  * Add support for newly released OpenCV 4.5.3 and 3.4.15.
+  * Minor improvements in the `vcpkg` support.
+
 * 0.53.0
   * This release removes some features and environment variables to make the crate easier to use:
     * `buildtime-bindgen` is removed. With all the possible OpenCV configurations out there it was practically
@@ -45,7 +51,7 @@
   * Using `dnn_superres` now requires `contrib` feature enabled, it was incorrectly marked as core module
 
 * 0.47.0
-  * Fix building with OpenCV 4.5.1 and 3.4.15
+  * Fix building with OpenCV 4.5.1 and 3.4.13
   * Due to the code adjustments, some `VectorOf...` types are no longer generated (e.g. `VectorOfPoint3i`)
   * The documentation for `tracking` module is now a copy of `imgproc`, which is a bug
 
