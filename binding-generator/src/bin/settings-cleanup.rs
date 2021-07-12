@@ -26,7 +26,7 @@ struct FunctionFinder<'tu, 'f> {
 	pub func_unsafe_unused: &'f mut HashSet<&'static str>,
 	pub func_manual_unused: &'f mut HashSet<&'static str>,
 	pub func_specialize_unused: &'f mut HashSet<&'static str>,
-	pub slice_argument_unused: &'f mut HashSet<&'static str>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
+	pub slice_argument_unused: &'f mut HashSet<String>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
 }
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
@@ -116,8 +116,8 @@ fn main() {
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
 	let mut func_manual_unused = settings::FUNC_MANUAL.keys().copied().collect::<HashSet<_>>();
 	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().copied().collect::<HashSet<_>>();
-	let mut slice_argument_unused = settings::SLICE_ARGUMENT.keys().copied()
-		.map(|(cpp_fullname, _)| cpp_fullname)
+	let mut slice_argument_unused = settings::SLICE_ARGUMENT.keys().cloned()
+		.map(|func_id| func_id.name().to_string())
 		.collect::<HashSet<_>>();
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());

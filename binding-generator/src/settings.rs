@@ -6,7 +6,7 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 use maplit::{btreeset, hashmap, hashset};
 use once_cell::sync::Lazy;
 
-use crate::{CompiledInterpolation, ExportConfig, StrExt};
+use crate::{CompiledInterpolation, ExportConfig, func::FuncId, StrExt};
 
 /// map of functions to rename or skip, key is Func.identifier(), value is new name ("+" will be replaced by old name) or "-" to skip
 pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
@@ -881,60 +881,65 @@ pub enum SliceHint {
 }
 
 /// (cpp_fullname, argument count)
-pub static SLICE_ARGUMENT: Lazy<HashMap<(&str, usize), HashMap<&str, SliceHint>>> = Lazy::new(|| hashmap! {
-	("cv::Mat::at", 1) => hashmap! {
+pub static SLICE_ARGUMENT: Lazy<HashMap<FuncId, HashMap<&str, SliceHint>>> = Lazy::new(|| hashmap! {
+	FuncId::new("cv::Mat::at", ["idx"]) => hashmap! {
 		"idx" => SliceHint::Slice
 	},
-	("cv::Mat::ptr", 1) => hashmap! {
+	FuncId::new("cv::Mat::ptr", ["idx"])  => hashmap! {
 		"idx" => SliceHint::Slice
 	},
-	("cv::Mat::Mat", 4) => hashmap! {
+	FuncId::new("cv::Mat::Mat", ["sizes", "type", "data", "steps"]) => hashmap! {
 		"steps" => SliceHint::NullableSlice,
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::Mat::Mat", 5) => hashmap! {
+	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "s"]) => hashmap! {
 		"steps" => SliceHint::NullableSlice,
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::Mat::zeros", 3) => hashmap! {
-		"sz" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sz", 1),
-	},
-	("cv::Mat::ones", 3) => hashmap! {
-		"sz" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sz", 1),
-	},
-	("cv::Mat::create", 3) => hashmap! {
+	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "data", "steps"]) => hashmap! {
+		"steps" => SliceHint::NullableSlice,
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::Mat::reshape", 3) => hashmap! {
+	FuncId::new("cv::Mat::zeros", ["ndims", "sz", "type"]) => hashmap! {
+		"sz" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sz", 1),
+	},
+	FuncId::new("cv::Mat::ones", ["ndims", "sz", "type"]) => hashmap! {
+		"sz" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sz", 1),
+	},
+	FuncId::new("cv::Mat::create", ["ndims", "sizes", "type"]) => hashmap! {
+		"sizes" => SliceHint::Slice,
+		"ndims" => SliceHint::LenForSlice("sizes", 1),
+	},
+	FuncId::new("cv::Mat::reshape", ["cn", "newndims", "newsz"]) => hashmap! {
 		"newsz" => SliceHint::Slice,
 		"newndims" => SliceHint::LenForSlice("newsz", 1),
 	},
-	("cv::SparseMat::Hdr::Hdr", 3) => hashmap! {
+	FuncId::new("cv::SparseMat::Hdr::Hdr", ["_dims", "_sizes", "_type"]) => hashmap! {
 		"_sizes" => SliceHint::Slice,
 		"_dims" => SliceHint::LenForSlice("_sizes", 1),
 	},
-	("cv::UMat::UMat", 4) => hashmap! {
+	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::UMat::UMat", 5) => hashmap! {
+	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "s", "usageFlags"]) => hashmap! {
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::UMat::create", 4) => hashmap! {
+	FuncId::new("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
 		"sizes" => SliceHint::Slice,
 		"ndims" => SliceHint::LenForSlice("sizes", 1),
 	},
-	("cv::_OutputArray::create", 6) => hashmap! {
+	FuncId::new("cv::_OutputArray::create", ["dims", "size", "type", "i", "allowTransposed", "fixedDepthMask"]) => hashmap! {
 		"size" => SliceHint::Slice,
 		"dims" => SliceHint::LenForSlice("size", 1),
 	},
-	("cv::mixChannels", 4) => hashmap! {
+	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
 		"from_to" => SliceHint::Slice,
 		"npairs" => SliceHint::LenForSlice("from_to", 2),
 	},

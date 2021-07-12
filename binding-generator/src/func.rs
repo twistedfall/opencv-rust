@@ -1,4 +1,5 @@
 use std::{
+	array::IntoIter,
 	borrow::Cow,
 	collections::HashMap,
 	fmt,
@@ -89,6 +90,56 @@ pub enum FunctionTypeHint {
 	None,
 	FieldSetter,
 	Specialized(&'static HashMap<&'static str, &'static str>),
+}
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+pub struct FuncId<'f> {
+	name: Cow<'f, str>,
+	args: Vec<Cow<'f, str>>,
+}
+
+impl<'f> FuncId<'f> {
+	/// # Parameters
+	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
+	/// args: C++ argument names ("unnamed", "unnamed_1", ... for unnamed ones)
+	pub fn new<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
+		FuncId {
+			name: name.into(),
+			args: IntoIter::new(args).map(|a| a.into()).collect(),
+		}
+	}
+
+	pub fn from_entity(entity: Entity) -> Self {
+		let name = entity.cpp_fullname().into_owned().into();
+		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
+			let mut args = vec![];
+			entity.walk_children_while(|child| {
+				if child.get_kind() == EntityKind::ParmDecl {
+					args.push(child.get_name()
+						.map(Cow::Owned)
+						.unwrap_or_else(|| "unnamed".into()));
+				}
+				true
+			});
+			args
+		} else {
+			entity.get_arguments().into_iter()
+				.flatten()
+				.map(|a| a.get_name()
+					.map(Cow::Owned)
+					.unwrap_or_else(|| "unnamed".into()))
+				.collect()
+		};
+		Self { name, args }
+	}
+
+	pub fn name(&self) -> &str {
+		self.name.as_ref()
+	}
+
+	pub fn args(&self) -> &[Cow<str>] {
+		&self.args
+	}
 }
 
 #[derive(Clone)]
@@ -376,10 +427,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		} else {
 			&empty_hashmap
 		};
-		let args_len = args.len();
-		let func_name = self.cpp_fullname();
 		let is_field_setter = self.as_field_setter().is_some();
-		let slice_args = settings::SLICE_ARGUMENT.get(&(func_name.as_ref(), args_len));
+		let slice_args = settings::SLICE_ARGUMENT.get(&self.func_id());
 
 		args.into_iter()
 			.map(|a| {
@@ -460,6 +509,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			out += &type_ref.cpp_safe_id();
 		}
 		out.into()
+	}
+
+	pub fn func_id(&self) -> FuncId {
+		FuncId::from_entity(self.entity)
 	}
 }
 
