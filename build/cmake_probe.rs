@@ -55,10 +55,7 @@ impl<'r> CmakeProbe<'r> {
 	fn make_cmd(&self) -> Command {
 		let mut out = Command::new(&self.cmake_bin);
 		out.current_dir(&self.build_dir)
-			.args(&[
-				"--log-level=NOTICE",
-				"-S"
-			])
+			.args(&["-S"])
 			.arg(&self.src_dir)
 			.arg(format!("-DOCVRS_PACKAGE_NAME={}", &self.package_name));
 

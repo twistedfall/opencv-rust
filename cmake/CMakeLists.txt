@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.0)
 
 find_package(${OCVRS_PACKAGE_NAME} REQUIRED)
 
-message(NOTICE "OCVRS_INCLUDE_DIRS:${OpenCV_INCLUDE_DIRS}")
-message(NOTICE "OCVRS_VERSION:${OpenCV_VERSION}")
+message("OCVRS_INCLUDE_DIRS:${OpenCV_INCLUDE_DIRS}")
+message("OCVRS_VERSION:${OpenCV_VERSION}")
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(ocvrs_probe ocvrs_probe.cpp)
