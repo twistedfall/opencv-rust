@@ -3,6 +3,7 @@
 set -vex
 
 export VCPKG_ROOT="$HOME/build/vcpkg"
+rm -rf "VCPKG_ROOT"
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"
 fi
