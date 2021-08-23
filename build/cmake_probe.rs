@@ -232,15 +232,16 @@ impl<'r> CmakeProbe<'r> {
 		let mut include_paths = Vec::with_capacity(2);
 		let mut link_paths = Vec::with_capacity(2);
 		let mut link_libs = Vec::with_capacity(64);
-		self.make_cmd()
-			.args(&[
+		let mut cmd = self.make_cmd();
+		cmd.args(&[
 				"--find-package",
 				"-DCOMPILER_ID=GNU",
 				"-DLANGUAGE=CXX",
 				"-DMODE=COMPILE",
 			])
-			.arg(format!("-DNAME={}", self.package_name))
-			.output()
+			.arg(format!("-DNAME={}", self.package_name));
+		eprintln!("=== cmake find-package compile probe command: {:?}", cmd);
+		cmd.output()
 			.map_err(Box::<dyn std::error::Error>::from)
 			.and_then(|output| if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
@@ -255,15 +256,16 @@ impl<'r> CmakeProbe<'r> {
 				).into())
 			})?;
 
-		self.make_cmd()
-			.args(&[
+		cmd = self.make_cmd();
+		cmd.args(&[
 				"--find-package",
 				"-DCOMPILER_ID=GNU",
 				"-DLANGUAGE=CXX",
 				"-DMODE=LINK",
 			])
-			.arg(format!("-DNAME={}", self.package_name))
-			.output()
+			.arg(format!("-DNAME={}", self.package_name));
+		eprintln!("=== cmake find-package link probe command: {:?}", cmd);
+		cmd.output()
 			.map_err(Box::<dyn std::error::Error>::from)
 			.and_then(|output| if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
