@@ -1,3 +1,6 @@
+* 0.53.2
+  * Fix building with cmake versions below 3.15
+
 * 0.53.1
   * Add support for casting classes to their bases. You can now call `.into()` on the descendant class to cast
     it to the parent.
