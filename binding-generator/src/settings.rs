@@ -873,75 +873,75 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Vec",
 });
 
-#[derive(Debug)]
-pub enum SliceHint {
+#[derive(Clone, Copy, Debug)]
+pub enum ArgumentOverride {
 	Slice,
 	NullableSlice,
 	LenForSlice(&'static str, usize),
 }
 
 /// (cpp_fullname, argument count)
-pub static SLICE_ARGUMENT: Lazy<HashMap<FuncId, HashMap<&str, SliceHint>>> = Lazy::new(|| hashmap! {
+pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverride>>> = Lazy::new(|| hashmap! {
 	FuncId::new("cv::Mat::at", ["idx"]) => hashmap! {
-		"idx" => SliceHint::Slice
+		"idx" => ArgumentOverride::Slice
 	},
 	FuncId::new("cv::Mat::ptr", ["idx"])  => hashmap! {
-		"idx" => SliceHint::Slice
+		"idx" => ArgumentOverride::Slice
 	},
 	FuncId::new("cv::Mat::Mat", ["sizes", "type", "data", "steps"]) => hashmap! {
-		"steps" => SliceHint::NullableSlice,
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"steps" => ArgumentOverride::NullableSlice,
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "s"]) => hashmap! {
-		"steps" => SliceHint::NullableSlice,
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"steps" => ArgumentOverride::NullableSlice,
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "data", "steps"]) => hashmap! {
-		"steps" => SliceHint::NullableSlice,
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"steps" => ArgumentOverride::NullableSlice,
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::zeros", ["ndims", "sz", "type"]) => hashmap! {
-		"sz" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sz", 1),
+		"sz" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sz", 1),
 	},
 	FuncId::new("cv::Mat::ones", ["ndims", "sz", "type"]) => hashmap! {
-		"sz" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sz", 1),
+		"sz" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sz", 1),
 	},
 	FuncId::new("cv::Mat::create", ["ndims", "sizes", "type"]) => hashmap! {
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::reshape", ["cn", "newndims", "newsz"]) => hashmap! {
-		"newsz" => SliceHint::Slice,
-		"newndims" => SliceHint::LenForSlice("newsz", 1),
+		"newsz" => ArgumentOverride::Slice,
+		"newndims" => ArgumentOverride::LenForSlice("newsz", 1),
 	},
 	FuncId::new("cv::SparseMat::Hdr::Hdr", ["_dims", "_sizes", "_type"]) => hashmap! {
-		"_sizes" => SliceHint::Slice,
-		"_dims" => SliceHint::LenForSlice("_sizes", 1),
+		"_sizes" => ArgumentOverride::Slice,
+		"_dims" => ArgumentOverride::LenForSlice("_sizes", 1),
 	},
 	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "s", "usageFlags"]) => hashmap! {
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
-		"sizes" => SliceHint::Slice,
-		"ndims" => SliceHint::LenForSlice("sizes", 1),
+		"sizes" => ArgumentOverride::Slice,
+		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::_OutputArray::create", ["dims", "size", "type", "i", "allowTransposed", "fixedDepthMask"]) => hashmap! {
-		"size" => SliceHint::Slice,
-		"dims" => SliceHint::LenForSlice("size", 1),
+		"size" => ArgumentOverride::Slice,
+		"dims" => ArgumentOverride::LenForSlice("size", 1),
 	},
 	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
-		"from_to" => SliceHint::Slice,
-		"npairs" => SliceHint::LenForSlice("from_to", 2),
+		"from_to" => ArgumentOverride::Slice,
+		"npairs" => ArgumentOverride::LenForSlice("from_to", 2),
 	},
 });
 

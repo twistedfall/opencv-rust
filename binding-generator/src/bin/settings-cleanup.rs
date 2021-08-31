@@ -26,7 +26,7 @@ struct FunctionFinder<'tu, 'f> {
 	pub func_unsafe_unused: &'f mut HashSet<&'static str>,
 	pub func_manual_unused: &'f mut HashSet<&'static str>,
 	pub func_specialize_unused: &'f mut HashSet<&'static str>,
-	pub slice_argument_unused: &'f mut HashSet<String>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
+	pub argument_override_unused: &'f mut HashSet<String>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
 }
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
@@ -39,7 +39,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 	}
 
 	pub fn update_used_func_cpp_fullname(&mut self, cpp_fullname: &str) {
-		self.slice_argument_unused.remove(cpp_fullname);
+		self.argument_override_unused.remove(cpp_fullname);
 	}
 }
 
@@ -116,7 +116,7 @@ fn main() {
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
 	let mut func_manual_unused = settings::FUNC_MANUAL.keys().copied().collect::<HashSet<_>>();
 	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().copied().collect::<HashSet<_>>();
-	let mut slice_argument_unused = settings::SLICE_ARGUMENT.keys().cloned()
+	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE.keys().cloned()
 		.map(|func_id| func_id.name().to_string())
 		.collect::<HashSet<_>>();
 	for opencv_header_dir in opencv_header_dirs {
@@ -148,7 +148,7 @@ fn main() {
 					func_unsafe_unused: &mut func_unsafe_unused,
 					func_manual_unused: &mut func_manual_unused,
 					func_specialize_unused: &mut func_specialize_unused,
-					slice_argument_unused: &mut slice_argument_unused,
+					argument_override_unused: &mut argument_override_unused,
 					});
 				});
 		}
@@ -163,6 +163,6 @@ fn main() {
 	show(func_manual_unused);
 	println!("Unused entries in settings::FUNC_SPECIALIZE ({}):", func_specialize_unused.len());
 	show(func_specialize_unused);
-	println!("Unused entries in settings::SLICE_ARGUMENT ({}):", slice_argument_unused.len());
-	show(slice_argument_unused);
+	println!("Unused entries in settings::ARGUMENT_OVERRIDE ({}):", argument_override_unused.len());
+	show(argument_override_unused);
 }

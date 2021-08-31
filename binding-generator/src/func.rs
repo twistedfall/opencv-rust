@@ -24,7 +24,7 @@ use crate::{
 	FieldTypeHint,
 	GeneratorEnv,
 	reserved_rename,
-	settings::{self, SliceHint},
+	settings,
 	StrExt,
 	StringExt,
 	type_ref::{FishStyle, TypeRefTypeHint},
@@ -429,7 +429,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			&empty_hashmap
 		};
 		let is_field_setter = self.as_field_setter().is_some();
-		let slice_args = settings::SLICE_ARGUMENT.get(&self.func_id());
+		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 
 		args.into_iter()
 			.map(|a| {
@@ -437,18 +437,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(slice_arg) = slice_args.and_then(|o| o.get(a.rust_leafname(FishStyle::No).as_ref())) {
-					return match *slice_arg {
-						SliceHint::Slice => {
-							Field::new_ext(a, FieldTypeHint::Slice, self.gen_env)
-						},
-						SliceHint::NullableSlice => {
-							Field::new_ext(a, FieldTypeHint::NullableSlice, self.gen_env)
-						},
-						SliceHint::LenForSlice(slice, len_div) => {
-							Field::new_ext(a, FieldTypeHint::LenForSlice(slice, len_div), self.gen_env)
-						}
-					}
+				if let Some(arg_override) = arg_overrides.and_then(|o| o.get(a.rust_leafname(FishStyle::No).as_ref())) {
+					return Field::new_ext(a, FieldTypeHint::ArgOverride(*arg_override), self.gen_env);
 				}
 
 				let out = Field::new(a, self.gen_env);

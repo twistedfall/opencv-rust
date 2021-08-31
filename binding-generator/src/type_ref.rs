@@ -85,6 +85,7 @@ pub enum Kind<'tu, 'ge> {
 #[derive(Clone, Copy, Debug)]
 pub enum TypeRefTypeHint<'tu> {
 	None,
+	Nullable,
 	Slice,
 	NullableSlice,
 	Specialized(Type<'tu>),
