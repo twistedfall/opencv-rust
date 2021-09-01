@@ -7,12 +7,12 @@ if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"
 fi
 if [ ! -e "$VCPKG_ROOT" ]; then
-	git clone --depth=1 https://github.com/Microsoft/vcpkg.git "$VCPKG_ROOT"
+	git clone https://github.com/Microsoft/vcpkg.git "$VCPKG_ROOT"
 fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git checkout .
-git checkout 5bc27e8a5073ba139e29432a1b0d8ced50794a41
+git checkout 409c1c4a05f853e3204b5914e693221576525cd6
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-linux.cmake
