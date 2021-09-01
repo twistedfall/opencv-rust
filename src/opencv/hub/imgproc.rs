@@ -152,7 +152,7 @@
 //!        # Interface
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::GeneralizedHough, super::GeneralizedHoughBallard, super::GeneralizedHoughGuil, super::CLAHE, super::Subdiv2DTrait, super::LineSegmentDetector, super::LineIteratorTrait, super::IntelligentScissorsMBTrait };
+	pub use { super::GeneralizedHoughConst, super::GeneralizedHough, super::GeneralizedHoughBallardConst, super::GeneralizedHoughBallard, super::GeneralizedHoughGuilConst, super::GeneralizedHoughGuil, super::CLAHEConst, super::CLAHE, super::Subdiv2DTraitConst, super::Subdiv2DTrait, super::LineSegmentDetectorConst, super::LineSegmentDetector, super::LineIteratorTraitConst, super::LineIteratorTrait, super::IntelligentScissorsMBTraitConst, super::IntelligentScissorsMBTrait };
 }
 
 /// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is a weighted sum (cross-correlation with a Gaussian
@@ -2725,7 +2725,7 @@ pub fn build_pyramid(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// calcHist, compareHist
 /// 
 /// ## Overloaded parameters
-pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vector::<i32>, hist: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ranges: &core::Vector::<f32>, scale: f64) -> Result<()> {
+pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, hist: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ranges: &core::Vector<f32>, scale: f64) -> Result<()> {
 	input_array_arg!(images);
 	input_array_arg!(hist);
 	output_array_arg!(dst);
@@ -2770,7 +2770,7 @@ pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vecto
 /// 
 /// ## C++ default parameters
 /// * accumulate: false
-pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector::<i32>, mask: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArray, hist_size: &core::Vector::<i32>, ranges: &core::Vector::<f32>, accumulate: bool) -> Result<()> {
+pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, mask: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArray, hist_size: &core::Vector<i32>, ranges: &core::Vector<f32>, accumulate: bool) -> Result<()> {
 	input_array_arg!(images);
 	input_array_arg!(mask);
 	output_array_arg!(hist);
@@ -3310,17 +3310,17 @@ pub fn corner_sub_pix(image: &dyn core::ToInputArray, corners: &mut dyn core::To
 /// ## C++ default parameters
 /// * clip_limit: 40.0
 /// * tile_grid_size: Size(8,8)
-pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr::<dyn crate::imgproc::CLAHE>> {
+pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<dyn crate::imgproc::CLAHE>> {
 	unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::CLAHE>::opencv_from_extern(r) } )
 }
 
 /// Creates a smart pointer to a cv::GeneralizedHoughBallard class and initializes it.
-pub fn create_generalized_hough_ballard() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>> {
+pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
 	unsafe { sys::cv_createGeneralizedHoughBallard() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(r) } )
 }
 
 /// Creates a smart pointer to a cv::GeneralizedHoughGuil class and initializes it.
-pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>> {
+pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
 	unsafe { sys::cv_createGeneralizedHoughGuil() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(r) } )
 }
 
@@ -3372,7 +3372,7 @@ pub fn create_hanning_window(dst: &mut dyn core::ToOutputArray, win_size: core::
 /// * log_eps: 0
 /// * density_th: 0.7
 /// * n_bins: 1024
-pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr::<dyn crate::imgproc::LineSegmentDetector>> {
+pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<dyn crate::imgproc::LineSegmentDetector>> {
 	unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::LineSegmentDetector>::opencv_from_extern(r) } )
 }
 
@@ -3775,7 +3775,7 @@ pub fn draw_marker(img: &mut dyn core::ToInputOutputArray, position: core::Point
 /// * arcEnd: Ending angle of the elliptic arc in degrees.
 /// * delta: Angle between the subsequent polyline vertices. It defines the approximation accuracy.
 /// * pts: Output vector of polyline vertices.
-pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point2d>) -> Result<()> {
+pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point2d>) -> Result<()> {
 	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d()) }.into_result()
 }
 
@@ -3793,7 +3793,7 @@ pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32,
 /// * delta: Angle between the subsequent polyline vertices. It defines the approximation
 /// accuracy.
 /// * pts: Output vector of polyline vertices.
-pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector::<core::Point>) -> Result<()> {
+pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point>) -> Result<()> {
 	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint()) }.into_result()
 }
 
@@ -6050,7 +6050,7 @@ pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInput
 /// * cost: noArray()
 /// * lower_bound: Ptr<float>()
 /// * flow: noArray()
-pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray, dist_type: i32, cost: &dyn core::ToInputArray, mut lower_bound: core::Ptr::<f32>, flow: &mut dyn core::ToOutputArray) -> Result<f32> {
+pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray, dist_type: i32, cost: &dyn core::ToInputArray, mut lower_bound: core::Ptr<f32>, flow: &mut dyn core::ToOutputArray) -> Result<f32> {
 	input_array_arg!(signature1);
 	input_array_arg!(signature2);
 	input_array_arg!(cost);
@@ -6059,8 +6059,22 @@ pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInput
 }
 
 /// Base class for Contrast Limited Adaptive Histogram Equalization.
-pub trait CLAHE: core::AlgorithmTrait {
+pub trait CLAHEConst: core::AlgorithmTraitConst {
 	fn as_raw_CLAHE(&self) -> *const c_void;
+
+	/// Returns threshold value for contrast limiting.
+	fn get_clip_limit(&self) -> Result<f64> {
+		unsafe { sys::cv_CLAHE_getClipLimit_const(self.as_raw_CLAHE()) }.into_result()
+	}
+	
+	/// Returns Size defines the number of tiles in row and column.
+	fn get_tiles_grid_size(&self) -> Result<core::Size> {
+		unsafe { sys::cv_CLAHE_getTilesGridSize_const(self.as_raw_CLAHE()) }.into_result()
+	}
+	
+}
+
+pub trait CLAHE: core::AlgorithmTrait + crate::imgproc::CLAHEConst {
 	fn as_raw_mut_CLAHE(&mut self) -> *mut c_void;
 
 	/// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
@@ -6082,11 +6096,6 @@ pub trait CLAHE: core::AlgorithmTrait {
 		unsafe { sys::cv_CLAHE_setClipLimit_double(self.as_raw_mut_CLAHE(), clip_limit) }.into_result()
 	}
 	
-	/// Returns threshold value for contrast limiting.
-	fn get_clip_limit(&self) -> Result<f64> {
-		unsafe { sys::cv_CLAHE_getClipLimit_const(self.as_raw_CLAHE()) }.into_result()
-	}
-	
 	/// Sets size of grid for histogram equalization. Input image will be divided into
 	/// equally sized rectangular tiles.
 	/// 
@@ -6096,11 +6105,6 @@ pub trait CLAHE: core::AlgorithmTrait {
 		unsafe { sys::cv_CLAHE_setTilesGridSize_Size(self.as_raw_mut_CLAHE(), tile_grid_size.opencv_as_extern()) }.into_result()
 	}
 	
-	/// Returns Size defines the number of tiles in row and column.
-	fn get_tiles_grid_size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_CLAHE_getTilesGridSize_const(self.as_raw_CLAHE()) }.into_result()
-	}
-	
 	fn collect_garbage(&mut self) -> Result<()> {
 		unsafe { sys::cv_CLAHE_collectGarbage(self.as_raw_mut_CLAHE()) }.into_result()
 	}
@@ -6108,8 +6112,32 @@ pub trait CLAHE: core::AlgorithmTrait {
 }
 
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
-pub trait GeneralizedHough: core::AlgorithmTrait {
+pub trait GeneralizedHoughConst: core::AlgorithmTraitConst {
 	fn as_raw_GeneralizedHough(&self) -> *const c_void;
+
+	fn get_canny_low_thresh(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHough_getCannyLowThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
+	}
+	
+	fn get_canny_high_thresh(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHough_getCannyHighThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
+	}
+	
+	fn get_min_dist(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHough_getMinDist_const(self.as_raw_GeneralizedHough()) }.into_result()
+	}
+	
+	fn get_dp(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHough_getDp_const(self.as_raw_GeneralizedHough()) }.into_result()
+	}
+	
+	fn get_max_buffer_size(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHough_getMaxBufferSize_const(self.as_raw_GeneralizedHough()) }.into_result()
+	}
+	
+}
+
+pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void;
 
 	/// set template to search
@@ -6157,17 +6185,9 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		unsafe { sys::cv_GeneralizedHough_setCannyLowThresh_int(self.as_raw_mut_GeneralizedHough(), canny_low_thresh) }.into_result()
 	}
 	
-	fn get_canny_low_thresh(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHough_getCannyLowThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
-	}
-	
 	/// Canny high threshold.
 	fn set_canny_high_thresh(&mut self, canny_high_thresh: i32) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHough_setCannyHighThresh_int(self.as_raw_mut_GeneralizedHough(), canny_high_thresh) }.into_result()
-	}
-	
-	fn get_canny_high_thresh(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHough_getCannyHighThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
 	}
 	
 	/// Minimum distance between the centers of the detected objects.
@@ -6175,17 +6195,9 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		unsafe { sys::cv_GeneralizedHough_setMinDist_double(self.as_raw_mut_GeneralizedHough(), min_dist) }.into_result()
 	}
 	
-	fn get_min_dist(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHough_getMinDist_const(self.as_raw_GeneralizedHough()) }.into_result()
-	}
-	
 	/// Inverse ratio of the accumulator resolution to the image resolution.
 	fn set_dp(&mut self, dp: f64) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHough_setDp_double(self.as_raw_mut_GeneralizedHough(), dp) }.into_result()
-	}
-	
-	fn get_dp(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHough_getDp_const(self.as_raw_GeneralizedHough()) }.into_result()
 	}
 	
 	/// Maximal size of inner buffers.
@@ -6193,31 +6205,16 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 		unsafe { sys::cv_GeneralizedHough_setMaxBufferSize_int(self.as_raw_mut_GeneralizedHough(), max_buffer_size) }.into_result()
 	}
 	
-	fn get_max_buffer_size(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHough_getMaxBufferSize_const(self.as_raw_GeneralizedHough()) }.into_result()
-	}
-	
 }
 
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ballard1981) .
-pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughBallardConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void;
-	fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void;
 
-	/// R-Table levels.
-	fn set_levels(&mut self, levels: i32) -> Result<()> {
-		unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_mut_GeneralizedHoughBallard(), levels) }.into_result()
-	}
-	
 	fn get_levels(&self) -> Result<i32> {
 		unsafe { sys::cv_GeneralizedHoughBallard_getLevels_const(self.as_raw_GeneralizedHoughBallard()) }.into_result()
-	}
-	
-	/// The accumulator threshold for the template centers at the detection stage. The smaller it is, the more false positions may be detected.
-	fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_GeneralizedHoughBallard_setVotesThreshold_int(self.as_raw_mut_GeneralizedHoughBallard(), votes_threshold) }.into_result()
 	}
 	
 	fn get_votes_threshold(&self) -> Result<i32> {
@@ -6226,11 +6223,78 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 	
 }
 
+pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughBallardConst {
+	fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void;
+
+	/// R-Table levels.
+	fn set_levels(&mut self, levels: i32) -> Result<()> {
+		unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_mut_GeneralizedHoughBallard(), levels) }.into_result()
+	}
+	
+	/// The accumulator threshold for the template centers at the detection stage. The smaller it is, the more false positions may be detected.
+	fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
+		unsafe { sys::cv_GeneralizedHoughBallard_setVotesThreshold_int(self.as_raw_mut_GeneralizedHoughBallard(), votes_threshold) }.into_result()
+	}
+	
+}
+
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Guil1999) .
-pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughGuilConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void;
+
+	fn get_xi(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getXi_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_levels(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getLevels_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_angle_epsilon(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getAngleEpsilon_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_min_angle(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getMinAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_max_angle(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getMaxAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_angle_step(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getAngleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_angle_thresh(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getAngleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_min_scale(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getMinScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_max_scale(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getMaxScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_scale_step(&self) -> Result<f64> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getScaleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_scale_thresh(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getScaleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+	fn get_pos_thresh(&self) -> Result<i32> {
+		unsafe { sys::cv_GeneralizedHoughGuil_getPosThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
+	}
+	
+}
+
+pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughGuilConst {
 	fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void;
 
 	/// Angle difference in degrees between two points in feature.
@@ -6238,17 +6302,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_mut_GeneralizedHoughGuil(), xi) }.into_result()
 	}
 	
-	fn get_xi(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getXi_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Feature table levels.
 	fn set_levels(&mut self, levels: i32) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setLevels_int(self.as_raw_mut_GeneralizedHoughGuil(), levels) }.into_result()
-	}
-	
-	fn get_levels(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getLevels_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 	/// Maximal difference between angles that treated as equal.
@@ -6256,17 +6312,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setAngleEpsilon_double(self.as_raw_mut_GeneralizedHoughGuil(), angle_epsilon) }.into_result()
 	}
 	
-	fn get_angle_epsilon(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getAngleEpsilon_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Minimal rotation angle to detect in degrees.
 	fn set_min_angle(&mut self, min_angle: f64) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setMinAngle_double(self.as_raw_mut_GeneralizedHoughGuil(), min_angle) }.into_result()
-	}
-	
-	fn get_min_angle(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getMinAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 	/// Maximal rotation angle to detect in degrees.
@@ -6274,17 +6322,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setMaxAngle_double(self.as_raw_mut_GeneralizedHoughGuil(), max_angle) }.into_result()
 	}
 	
-	fn get_max_angle(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getMaxAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Angle step in degrees.
 	fn set_angle_step(&mut self, angle_step: f64) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setAngleStep_double(self.as_raw_mut_GeneralizedHoughGuil(), angle_step) }.into_result()
-	}
-	
-	fn get_angle_step(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getAngleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 	/// Angle votes threshold.
@@ -6292,17 +6332,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setAngleThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), angle_thresh) }.into_result()
 	}
 	
-	fn get_angle_thresh(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getAngleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Minimal scale to detect.
 	fn set_min_scale(&mut self, min_scale: f64) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setMinScale_double(self.as_raw_mut_GeneralizedHoughGuil(), min_scale) }.into_result()
-	}
-	
-	fn get_min_scale(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getMinScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 	/// Maximal scale to detect.
@@ -6310,17 +6342,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setMaxScale_double(self.as_raw_mut_GeneralizedHoughGuil(), max_scale) }.into_result()
 	}
 	
-	fn get_max_scale(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getMaxScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Scale step.
 	fn set_scale_step(&mut self, scale_step: f64) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setScaleStep_double(self.as_raw_mut_GeneralizedHoughGuil(), scale_step) }.into_result()
-	}
-	
-	fn get_scale_step(&self) -> Result<f64> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getScaleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 	/// Scale votes threshold.
@@ -6328,17 +6352,9 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 		unsafe { sys::cv_GeneralizedHoughGuil_setScaleThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), scale_thresh) }.into_result()
 	}
 	
-	fn get_scale_thresh(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getScaleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
-	}
-	
 	/// Position votes threshold.
 	fn set_pos_thresh(&mut self, pos_thresh: i32) -> Result<()> {
 		unsafe { sys::cv_GeneralizedHoughGuil_setPosThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), pos_thresh) }.into_result()
-	}
-	
-	fn get_pos_thresh(&self) -> Result<i32> {
-		unsafe { sys::cv_GeneralizedHoughGuil_getPosThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
 	}
 	
 }
@@ -6375,8 +6391,69 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 /// }
 /// ```
 /// 
-pub trait LineIteratorTrait {
+pub trait LineIteratorTraitConst {
 	fn as_raw_LineIterator(&self) -> *const c_void;
+
+	fn ptr0(&self) -> &u8 {
+		unsafe { sys::cv_LineIterator_getPropPtr0_const(self.as_raw_LineIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ptr0")
+	}
+	
+	fn step(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: step")
+	}
+	
+	fn elem_size(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropElemSize_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: elem_size")
+	}
+	
+	fn err(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropErr_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: err")
+	}
+	
+	fn count(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropCount_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: count")
+	}
+	
+	fn minus_delta(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropMinusDelta_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_delta")
+	}
+	
+	fn plus_delta(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropPlusDelta_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_delta")
+	}
+	
+	fn minus_step(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropMinusStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_step")
+	}
+	
+	fn plus_step(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropPlusStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_step")
+	}
+	
+	fn minus_shift(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropMinusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_shift")
+	}
+	
+	fn plus_shift(&self) -> i32 {
+		unsafe { sys::cv_LineIterator_getPropPlusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_shift")
+	}
+	
+	fn p(&self) -> core::Point {
+		unsafe { sys::cv_LineIterator_getPropP_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: p")
+	}
+	
+	fn ptmode(&self) -> bool {
+		unsafe { sys::cv_LineIterator_getPropPtmode_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: ptmode")
+	}
+	
+	/// returns coordinates of the current pixel
+	fn pos(&self) -> Result<core::Point> {
+		unsafe { sys::cv_LineIterator_pos_const(self.as_raw_LineIterator()) }.into_result()
+	}
+	
+}
+
+pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 	fn as_raw_mut_LineIterator(&mut self) -> *mut c_void;
 
 	fn ptr(&mut self) -> &mut u8 {
@@ -6387,100 +6464,48 @@ pub trait LineIteratorTrait {
 		unsafe { sys::cv_LineIterator_setPropPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_ptr")
 	}
 	
-	fn ptr0(&self) -> &u8 {
-		unsafe { sys::cv_LineIterator_getPropPtr0_const(self.as_raw_LineIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ptr0")
-	}
-	
-	fn step(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: step")
-	}
-	
 	fn set_step(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropStep_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_step")
-	}
-	
-	fn elem_size(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropElemSize_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: elem_size")
 	}
 	
 	fn set_elem_size(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropElemSize_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_elem_size")
 	}
 	
-	fn err(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropErr_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: err")
-	}
-	
 	fn set_err(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropErr_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_err")
-	}
-	
-	fn count(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropCount_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: count")
 	}
 	
 	fn set_count(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropCount_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_count")
 	}
 	
-	fn minus_delta(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropMinusDelta_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_delta")
-	}
-	
 	fn set_minus_delta(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropMinusDelta_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_minus_delta")
-	}
-	
-	fn plus_delta(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropPlusDelta_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_delta")
 	}
 	
 	fn set_plus_delta(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropPlusDelta_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_plus_delta")
 	}
 	
-	fn minus_step(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropMinusStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_step")
-	}
-	
 	fn set_minus_step(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropMinusStep_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_minus_step")
-	}
-	
-	fn plus_step(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropPlusStep_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_step")
 	}
 	
 	fn set_plus_step(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropPlusStep_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_plus_step")
 	}
 	
-	fn minus_shift(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropMinusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: minus_shift")
-	}
-	
 	fn set_minus_shift(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropMinusShift_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_minus_shift")
-	}
-	
-	fn plus_shift(&self) -> i32 {
-		unsafe { sys::cv_LineIterator_getPropPlusShift_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: plus_shift")
 	}
 	
 	fn set_plus_shift(&mut self, val: i32) -> () {
 		unsafe { sys::cv_LineIterator_setPropPlusShift_int(self.as_raw_mut_LineIterator(), val) }.into_result().expect("Infallible function failed: set_plus_shift")
 	}
 	
-	fn p(&self) -> core::Point {
-		unsafe { sys::cv_LineIterator_getPropP_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: p")
-	}
-	
 	fn set_p(&mut self, val: core::Point) -> () {
 		unsafe { sys::cv_LineIterator_setPropP_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_p")
-	}
-	
-	fn ptmode(&self) -> bool {
-		unsafe { sys::cv_LineIterator_getPropPtmode_const(self.as_raw_LineIterator()) }.into_result().expect("Infallible function failed: ptmode")
 	}
 	
 	fn set_ptmode(&mut self, val: bool) -> () {
@@ -6494,11 +6519,6 @@ pub trait LineIteratorTrait {
 	/// returns pointer to the current pixel
 	fn try_deref_mut(&mut self) -> Result<&mut u8> {
 		unsafe { sys::cv_LineIterator_operatorX(self.as_raw_mut_LineIterator()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
-	}
-	
-	/// returns coordinates of the current pixel
-	fn pos(&self) -> Result<core::Point> {
-		unsafe { sys::cv_LineIterator_pos_const(self.as_raw_LineIterator()) }.into_result()
 	}
 	
 }
@@ -6548,15 +6568,13 @@ impl Drop for LineIterator {
 	}
 }
 
-impl LineIterator {
-	#[inline] pub fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for LineIterator {}
 
-impl crate::imgproc::LineIteratorTrait for LineIterator {
+impl crate::imgproc::LineIteratorTraitConst for LineIterator {
 	#[inline] fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::imgproc::LineIteratorTrait for LineIterator {
 	#[inline] fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -6606,8 +6624,12 @@ impl LineIterator {
 /// 
 /// 
 /// Note: Implementation has been removed due original code license conflict
-pub trait LineSegmentDetector: core::AlgorithmTrait {
+pub trait LineSegmentDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_LineSegmentDetector(&self) -> *const c_void;
+
+}
+
+pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmentDetectorConst {
 	fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void;
 
 	/// Finds lines in the input image.
@@ -6675,90 +6697,9 @@ pub trait LineSegmentDetector: core::AlgorithmTrait {
 	
 }
 
-pub trait Subdiv2DTrait {
+pub trait Subdiv2DTraitConst {
 	fn as_raw_Subdiv2D(&self) -> *const c_void;
-	fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void;
 
-	/// Creates a new empty Delaunay subdivision
-	/// 
-	/// ## Parameters
-	/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
-	fn init_delaunay(&mut self, rect: core::Rect) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), rect.opencv_as_extern()) }.into_result()
-	}
-	
-	/// Insert a single point into a Delaunay triangulation.
-	/// 
-	/// ## Parameters
-	/// * pt: Point to insert.
-	/// 
-	/// The function inserts a single point into a subdivision and modifies the subdivision topology
-	/// appropriately. If a point with the same coordinates exists already, no new point is added.
-	/// ## Returns
-	/// the ID of the point.
-	/// 
-	/// 
-	/// Note: If the point is outside of the triangulation specified rect a runtime error is raised.
-	fn insert(&mut self, pt: core::Point2f) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern()) }.into_result()
-	}
-	
-	/// Insert multiple points into a Delaunay triangulation.
-	/// 
-	/// ## Parameters
-	/// * ptvec: Points to insert.
-	/// 
-	/// The function inserts a vector of points into a subdivision and modifies the subdivision topology
-	/// appropriately.
-	fn insert_multiple(&mut self, ptvec: &core::Vector::<core::Point2f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_insert_const_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f()) }.into_result()
-	}
-	
-	/// Returns the location of a point within a Delaunay triangulation.
-	/// 
-	/// ## Parameters
-	/// * pt: Point to locate.
-	/// * edge: Output edge that the point belongs to or is located to the right of it.
-	/// * vertex: Optional output vertex the input point coincides with.
-	/// 
-	/// The function locates the input point within the subdivision and gives one of the triangle edges
-	/// or vertices.
-	/// 
-	/// ## Returns
-	/// an integer which specify one of the following five cases for point location:
-	/// *  The point falls into some facet. The function returns #PTLOC_INSIDE and edge will contain one of
-	///    edges of the facet.
-	/// *  The point falls onto the edge. The function returns #PTLOC_ON_EDGE and edge will contain this edge.
-	/// *  The point coincides with one of the subdivision vertices. The function returns #PTLOC_VERTEX and
-	///    vertex will contain a pointer to the vertex.
-	/// *  The point is outside the subdivision reference rectangle. The function returns #PTLOC_OUTSIDE_RECT
-	///    and no pointers are filled.
-	/// *  One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error
-	///    processing mode is selected, #PTLOC_ERROR is returned.
-	fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), edge, vertex) }.into_result()
-	}
-	
-	/// Finds the subdivision vertex closest to the given point.
-	/// 
-	/// ## Parameters
-	/// * pt: Input point.
-	/// * nearestPt: Output subdivision vertex point.
-	/// 
-	/// The function is another function that locates the input point within the subdivision. It finds the
-	/// subdivision vertex that is the closest to the input point. It is not necessarily one of vertices
-	/// of the facet containing the input point, though the facet (located using locate() ) is used as a
-	/// starting point.
-	/// 
-	/// ## Returns
-	/// vertex ID.
-	/// 
-	/// ## C++ default parameters
-	/// * nearest_pt: 0
-	fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
-		unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), nearest_pt) }.into_result()
-	}
-	
 	/// Returns a list of all edges.
 	/// 
 	/// ## Parameters
@@ -6766,7 +6707,7 @@ pub trait Subdiv2DTrait {
 	/// 
 	/// The function gives each edge as a 4 numbers vector, where each two are one of the edge
 	/// vertices. i.e. org_x = v[0], org_y = v[1], dst_x = v[2], dst_y = v[3].
-	fn get_edge_list(&self, edge_list: &mut core::Vector::<core::Vec4f>) -> Result<()> {
+	fn get_edge_list(&self, edge_list: &mut core::Vector<core::Vec4f>) -> Result<()> {
 		unsafe { sys::cv_Subdiv2D_getEdgeList_const_vector_Vec4f_R(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f()) }.into_result()
 	}
 	
@@ -6776,7 +6717,7 @@ pub trait Subdiv2DTrait {
 	/// * leadingEdgeList: Output vector.
 	/// 
 	/// The function gives one edge ID for each triangle.
-	fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector::<i32>) -> Result<()> {
+	fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector<i32>) -> Result<()> {
 		unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vector_int_R(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32()) }.into_result()
 	}
 	
@@ -6787,18 +6728,8 @@ pub trait Subdiv2DTrait {
 	/// 
 	/// The function gives each triangle as a 6 numbers vector, where each two are one of the triangle
 	/// vertices. i.e. p1_x = v[0], p1_y = v[1], p2_x = v[2], p2_y = v[3], p3_x = v[4], p3_y = v[5].
-	fn get_triangle_list(&self, triangle_list: &mut core::Vector::<core::Vec6f>) -> Result<()> {
+	fn get_triangle_list(&self, triangle_list: &mut core::Vector<core::Vec6f>) -> Result<()> {
 		unsafe { sys::cv_Subdiv2D_getTriangleList_const_vector_Vec6f_R(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f()) }.into_result()
-	}
-	
-	/// Returns a list of all Voronoi facets.
-	/// 
-	/// ## Parameters
-	/// * idx: Vector of vertices IDs to consider. For all vertices you can pass empty vector.
-	/// * facetList: Output vector of the Voronoi facets.
-	/// * facetCenters: Output vector of the Voronoi facets center points.
-	fn get_voronoi_facet_list(&mut self, idx: &core::Vector::<i32>, facet_list: &mut core::Vector::<core::Vector::<core::Point2f>>, facet_centers: &mut core::Vector::<core::Point2f>) -> Result<()> {
-		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vector_int_R_vector_vector_Point2f__R_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f()) }.into_result()
 	}
 	
 	/// Returns vertex location from vertex ID.
@@ -6903,6 +6834,101 @@ pub trait Subdiv2DTrait {
 	
 }
 
+pub trait Subdiv2DTrait: crate::imgproc::Subdiv2DTraitConst {
+	fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void;
+
+	/// Creates a new empty Delaunay subdivision
+	/// 
+	/// ## Parameters
+	/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
+	fn init_delaunay(&mut self, rect: core::Rect) -> Result<()> {
+		unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), rect.opencv_as_extern()) }.into_result()
+	}
+	
+	/// Insert a single point into a Delaunay triangulation.
+	/// 
+	/// ## Parameters
+	/// * pt: Point to insert.
+	/// 
+	/// The function inserts a single point into a subdivision and modifies the subdivision topology
+	/// appropriately. If a point with the same coordinates exists already, no new point is added.
+	/// ## Returns
+	/// the ID of the point.
+	/// 
+	/// 
+	/// Note: If the point is outside of the triangulation specified rect a runtime error is raised.
+	fn insert(&mut self, pt: core::Point2f) -> Result<i32> {
+		unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern()) }.into_result()
+	}
+	
+	/// Insert multiple points into a Delaunay triangulation.
+	/// 
+	/// ## Parameters
+	/// * ptvec: Points to insert.
+	/// 
+	/// The function inserts a vector of points into a subdivision and modifies the subdivision topology
+	/// appropriately.
+	fn insert_multiple(&mut self, ptvec: &core::Vector<core::Point2f>) -> Result<()> {
+		unsafe { sys::cv_Subdiv2D_insert_const_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f()) }.into_result()
+	}
+	
+	/// Returns the location of a point within a Delaunay triangulation.
+	/// 
+	/// ## Parameters
+	/// * pt: Point to locate.
+	/// * edge: Output edge that the point belongs to or is located to the right of it.
+	/// * vertex: Optional output vertex the input point coincides with.
+	/// 
+	/// The function locates the input point within the subdivision and gives one of the triangle edges
+	/// or vertices.
+	/// 
+	/// ## Returns
+	/// an integer which specify one of the following five cases for point location:
+	/// *  The point falls into some facet. The function returns #PTLOC_INSIDE and edge will contain one of
+	///    edges of the facet.
+	/// *  The point falls onto the edge. The function returns #PTLOC_ON_EDGE and edge will contain this edge.
+	/// *  The point coincides with one of the subdivision vertices. The function returns #PTLOC_VERTEX and
+	///    vertex will contain a pointer to the vertex.
+	/// *  The point is outside the subdivision reference rectangle. The function returns #PTLOC_OUTSIDE_RECT
+	///    and no pointers are filled.
+	/// *  One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error
+	///    processing mode is selected, #PTLOC_ERROR is returned.
+	fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
+		unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), edge, vertex) }.into_result()
+	}
+	
+	/// Finds the subdivision vertex closest to the given point.
+	/// 
+	/// ## Parameters
+	/// * pt: Input point.
+	/// * nearestPt: Output subdivision vertex point.
+	/// 
+	/// The function is another function that locates the input point within the subdivision. It finds the
+	/// subdivision vertex that is the closest to the input point. It is not necessarily one of vertices
+	/// of the facet containing the input point, though the facet (located using locate() ) is used as a
+	/// starting point.
+	/// 
+	/// ## Returns
+	/// vertex ID.
+	/// 
+	/// ## C++ default parameters
+	/// * nearest_pt: 0
+	fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
+		unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), pt.opencv_as_extern(), nearest_pt) }.into_result()
+	}
+	
+	/// Returns a list of all Voronoi facets.
+	/// 
+	/// ## Parameters
+	/// * idx: Vector of vertices IDs to consider. For all vertices you can pass empty vector.
+	/// * facetList: Output vector of the Voronoi facets.
+	/// * facetCenters: Output vector of the Voronoi facets center points.
+	fn get_voronoi_facet_list(&mut self, idx: &core::Vector<i32>, facet_list: &mut core::Vector<core::Vector<core::Point2f>>, facet_centers: &mut core::Vector<core::Point2f>) -> Result<()> {
+		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vector_int_R_vector_vector_Point2f__R_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f()) }.into_result()
+	}
+	
+}
+
 pub struct Subdiv2D {
 	ptr: *mut c_void
 }
@@ -6916,15 +6942,13 @@ impl Drop for Subdiv2D {
 	}
 }
 
-impl Subdiv2D {
-	#[inline] pub fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for Subdiv2D {}
 
-impl crate::imgproc::Subdiv2DTrait for Subdiv2D {
+impl crate::imgproc::Subdiv2DTraitConst for Subdiv2D {
 	#[inline] fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::imgproc::Subdiv2DTrait for Subdiv2D {
 	#[inline] fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -6964,8 +6988,29 @@ impl Subdiv2D {
 /// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
 /// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
 /// [Mortensen95intelligentscissors](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
-pub trait IntelligentScissorsMBTrait {
+pub trait IntelligentScissorsMBTraitConst {
 	fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
+
+	/// Extracts optimal contour for the given target point on the image
+	/// 
+	/// 
+	/// Note: buildMap() must be called before this call
+	/// 
+	/// ## Parameters
+	/// * targetPt: The target point
+	/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
+	/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
+	/// 
+	/// ## C++ default parameters
+	/// * backward: false
+	fn get_contour(&self, target_pt: core::Point, contour: &mut dyn core::ToOutputArray, backward: bool) -> Result<()> {
+		output_array_arg!(contour);
+		unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward) }.into_result()
+	}
+	
+}
+
+pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTraitConst {
 	fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void;
 
 	/// Specify weights of feature functions
@@ -7074,23 +7119,6 @@ pub trait IntelligentScissorsMBTrait {
 		unsafe { sys::cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(self.as_raw_mut_IntelligentScissorsMB(), &source_pt) }.into_result()
 	}
 	
-	/// Extracts optimal contour for the given target point on the image
-	/// 
-	/// 
-	/// Note: buildMap() must be called before this call
-	/// 
-	/// ## Parameters
-	/// * targetPt: The target point
-	/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
-	/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
-	/// 
-	/// ## C++ default parameters
-	/// * backward: false
-	fn get_contour(&self, target_pt: core::Point, contour: &mut dyn core::ToOutputArray, backward: bool) -> Result<()> {
-		output_array_arg!(contour);
-		unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward) }.into_result()
-	}
-	
 }
 
 /// Intelligent Scissors image segmentation
@@ -7117,15 +7145,13 @@ impl Drop for IntelligentScissorsMB {
 	}
 }
 
-impl IntelligentScissorsMB {
-	#[inline] pub fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for IntelligentScissorsMB {}
 
-impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
+impl crate::imgproc::IntelligentScissorsMBTraitConst for IntelligentScissorsMB {
 	#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
 	#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 

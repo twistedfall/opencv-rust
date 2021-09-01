@@ -14,7 +14,7 @@
 //!       # Arithm Operations on Matrices
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::LookUpTable, super::DFT, super::Convolution };
+	pub use { super::LookUpTableConst, super::LookUpTable, super::DFTConst, super::DFT, super::ConvolutionConst, super::Convolution };
 }
 
 /// Returns the sum of absolute values for matrix elements.
@@ -372,7 +372,7 @@ pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// 
 /// ## C++ default parameters
 /// * user_block_size: Size()
-pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaarithm::Convolution>> {
+pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaarithm::Convolution>> {
 	unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(r) } )
 }
 
@@ -389,7 +389,7 @@ pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr::<dyn
 /// *   **DFT_COMPLEX_INPUT** Specifies that inputs will be complex with 2 channels.
 /// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 /// real-complex transform, so the destination matrix must be real.
-pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr::<dyn crate::cudaarithm::DFT>> {
+pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::cudaarithm::DFT>> {
 	unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(r) } )
 }
 
@@ -397,7 +397,7 @@ pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr::<dyn cr
 /// 
 /// ## Parameters
 /// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
-pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::cudaarithm::LookUpTable>> {
+pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::cudaarithm::LookUpTable>> {
 	input_array_arg!(lut);
 	unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::LookUpTable>::opencv_from_extern(r) } )
 }
@@ -828,7 +828,7 @@ pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, s
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
-pub fn merge_1(src: &core::Vector::<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
 	unsafe { sys::cv_cuda_merge_const_vector_GpuMat_R_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
 }
@@ -1201,7 +1201,7 @@ pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut 
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
-pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector::<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	unsafe { sys::cv_cuda_split_const__InputArrayR_vector_GpuMat_R_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream()) }.into_result()
 }
@@ -1349,8 +1349,12 @@ pub fn transpose(src1: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 }
 
 /// Base class for convolution (or cross-correlation) operator. :
-pub trait Convolution: core::AlgorithmTrait {
+pub trait ConvolutionConst: core::AlgorithmTraitConst {
 	fn as_raw_Convolution(&self) -> *const c_void;
+
+}
+
+pub trait Convolution: core::AlgorithmTrait + crate::cudaarithm::ConvolutionConst {
 	fn as_raw_mut_Convolution(&mut self) -> *mut c_void;
 
 	/// Computes a convolution (or cross-correlation) of two images.
@@ -1377,8 +1381,12 @@ pub trait Convolution: core::AlgorithmTrait {
 }
 
 /// Base class for DFT operator as a cv::Algorithm. :
-pub trait DFT: core::AlgorithmTrait {
+pub trait DFTConst: core::AlgorithmTraitConst {
 	fn as_raw_DFT(&self) -> *const c_void;
+
+}
+
+pub trait DFT: core::AlgorithmTrait + crate::cudaarithm::DFTConst {
 	fn as_raw_mut_DFT(&mut self) -> *mut c_void;
 
 	/// Computes an FFT of a given image.
@@ -1399,8 +1407,12 @@ pub trait DFT: core::AlgorithmTrait {
 }
 
 /// Base class for transform using lookup table.
-pub trait LookUpTable: core::AlgorithmTrait {
+pub trait LookUpTableConst: core::AlgorithmTraitConst {
 	fn as_raw_LookUpTable(&self) -> *const c_void;
+
+}
+
+pub trait LookUpTable: core::AlgorithmTrait + crate::cudaarithm::LookUpTableConst {
 	fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void;
 
 	/// Transforms the source matrix into the destination matrix using the given look-up table:

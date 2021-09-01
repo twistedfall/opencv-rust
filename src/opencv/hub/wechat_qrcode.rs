@@ -10,7 +10,7 @@
 //! # WeChat QR code detector for detecting and parsing QR code.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::WeChatQRCodeTrait };
+	pub use { super::WeChatQRCodeTraitConst, super::WeChatQRCodeTrait };
 }
 
 /// *  WeChat QRCode includes two CNN-based models:
@@ -18,8 +18,12 @@ pub mod prelude {
 /// * Object detection model is applied to detect QRCode with the bounding box.
 /// * super resolution model is applied to zoom in QRCode when it is small.
 /// *
-pub trait WeChatQRCodeTrait {
+pub trait WeChatQRCodeTraitConst {
 	fn as_raw_WeChatQRCode(&self) -> *const c_void;
+
+}
+
+pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void;
 
 	///  Both detects and decodes QR code.
@@ -34,7 +38,7 @@ pub trait WeChatQRCodeTrait {
 	/// 
 	/// ## C++ default parameters
 	/// * points: noArray()
-	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector::<String>> {
+	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector<String>> {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
@@ -60,15 +64,13 @@ impl Drop for WeChatQRCode {
 	}
 }
 
-impl WeChatQRCode {
-	#[inline] pub fn as_raw_WeChatQRCode(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for WeChatQRCode {}
 
-impl crate::wechat_qrcode::WeChatQRCodeTrait for WeChatQRCode {
+impl crate::wechat_qrcode::WeChatQRCodeTraitConst for WeChatQRCode {
 	#[inline] fn as_raw_WeChatQRCode(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::wechat_qrcode::WeChatQRCodeTrait for WeChatQRCode {
 	#[inline] fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 

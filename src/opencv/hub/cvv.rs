@@ -20,10 +20,10 @@
 //! See cvv tutorial for a commented example application using cvv.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::CallMetaDataTrait };
+	pub use { super::CallMetaDataTraitConst, super::CallMetaDataTrait };
 }
 
-pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector::<core::KeyPoint>, img2: &dyn core::ToInputArray, mut keypoints2: core::Vector::<core::KeyPoint>, mut matches: core::Vector::<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
+pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
 	input_array_arg!(img1);
 	input_array_arg!(img2);
 	extern_container_arg!(description);
@@ -51,9 +51,8 @@ pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData,
 }
 
 /// Optional information about a location in Code.
-pub trait CallMetaDataTrait {
+pub trait CallMetaDataTraitConst {
 	fn as_raw_CallMetaData(&self) -> *const c_void;
-	fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void;
 
 	fn file(&self) -> String {
 		unsafe { sys::cvv_impl_CallMetaData_getPropFile_const(self.as_raw_CallMetaData()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: file")
@@ -72,6 +71,11 @@ pub trait CallMetaDataTrait {
 		unsafe { sys::cvv_impl_CallMetaData_getPropIsKnown_const(self.as_raw_CallMetaData()) }.into_result().expect("Infallible function failed: is_known")
 	}
 	
+}
+
+pub trait CallMetaDataTrait: crate::cvv::CallMetaDataTraitConst {
+	fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void;
+
 	fn to_bool(&mut self) -> Result<bool> {
 		unsafe { sys::cvv_impl_CallMetaData_operator_bool(self.as_raw_mut_CallMetaData()) }.into_result()
 	}
@@ -92,15 +96,13 @@ impl Drop for CallMetaData {
 	}
 }
 
-impl CallMetaData {
-	#[inline] pub fn as_raw_CallMetaData(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for CallMetaData {}
 
-impl crate::cvv::CallMetaDataTrait for CallMetaData {
+impl crate::cvv::CallMetaDataTraitConst for CallMetaData {
 	#[inline] fn as_raw_CallMetaData(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::cvv::CallMetaDataTrait for CallMetaData {
 	#[inline] fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 

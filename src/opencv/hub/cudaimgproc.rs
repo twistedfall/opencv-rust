@@ -14,7 +14,7 @@
 //!    # Feature Detection
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::CUDA_CLAHE, super::CUDA_CannyEdgeDetector, super::CUDA_HoughLinesDetector, super::CUDA_HoughSegmentDetector, super::CUDA_HoughCirclesDetector, super::CUDA_CornernessCriteria, super::CUDA_CornersDetector, super::CUDA_TemplateMatching };
+	pub use { super::CUDA_CLAHEConst, super::CUDA_CLAHE, super::CUDA_CannyEdgeDetectorConst, super::CUDA_CannyEdgeDetector, super::CUDA_HoughLinesDetectorConst, super::CUDA_HoughLinesDetector, super::CUDA_HoughSegmentDetectorConst, super::CUDA_HoughSegmentDetector, super::CUDA_HoughCirclesDetectorConst, super::CUDA_HoughCirclesDetector, super::CUDA_CornernessCriteriaConst, super::CUDA_CornernessCriteria, super::CUDA_CornersDetectorConst, super::CUDA_CornersDetector, super::CUDA_TemplateMatchingConst, super::CUDA_TemplateMatching };
 }
 
 pub const CUDA_ALPHA_ATOP: i32 = 3;
@@ -230,7 +230,7 @@ pub fn calc_hist(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArra
 /// ## C++ default parameters
 /// * clip_limit: 40.0
 /// * tile_grid_size: Size(8,8)
-pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>> {
+pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CLAHE>> {
 	unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(r) } )
 }
 
@@ -248,17 +248,17 @@ pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core:
 /// ## C++ default parameters
 /// * apperture_size: 3
 /// * l2gradient: false
-pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_size: i32, l2gradient: bool) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>> {
+pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_size: i32, l2gradient: bool) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>> {
 	unsafe { sys::cv_cuda_createCannyEdgeDetector_double_double_int_bool(low_thresh, high_thresh, apperture_size, l2gradient) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(r) } )
 }
 
 /// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ballard1981) .
-pub fn create_generalized_hough_ballard() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>> {
+pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
 	unsafe { sys::cv_cuda_createGeneralizedHoughBallard() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(r) } )
 }
 
 /// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Guil1999) .
-pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>> {
+pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
 	unsafe { sys::cv_cuda_createGeneralizedHoughGuil() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(r) } )
 }
 
@@ -288,7 +288,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr::<dyn crate::imgproc:
 /// * block_size: 3
 /// * use_harris_detector: false
 /// * harris_k: 0.04
-pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>> {
+pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornersDetector>> {
 	unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(r) } )
 }
 
@@ -306,7 +306,7 @@ pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, q
 /// 
 /// ## C++ default parameters
 /// * border_type: BORDER_REFLECT101
-pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
+pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
 	unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(r) } )
 }
 
@@ -329,7 +329,7 @@ pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, 
 /// 
 /// ## C++ default parameters
 /// * max_circles: 4096
-pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i32, votes_threshold: i32, min_radius: i32, max_radius: i32, max_circles: i32) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>> {
+pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i32, votes_threshold: i32, min_radius: i32, max_radius: i32, max_circles: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>> {
 	unsafe { sys::cv_cuda_createHoughCirclesDetector_float_float_int_int_int_int_int(dp, min_dist, canny_threshold, votes_threshold, min_radius, max_radius, max_circles) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(r) } )
 }
 
@@ -346,7 +346,7 @@ pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i3
 /// ## C++ default parameters
 /// * do_sort: false
 /// * max_lines: 4096
-pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort: bool, max_lines: i32) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>> {
+pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort: bool, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>> {
 	unsafe { sys::cv_cuda_createHoughLinesDetector_float_float_int_bool_int(rho, theta, threshold, do_sort, max_lines) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(r) } )
 }
 
@@ -361,7 +361,7 @@ pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort
 /// 
 /// ## C++ default parameters
 /// * max_lines: 4096
-pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
+pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
 	unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(r) } )
 }
 
@@ -379,7 +379,7 @@ pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32,
 /// 
 /// ## C++ default parameters
 /// * border_type: BORDER_REFLECT101
-pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
+pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
 	unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(r) } )
 }
 
@@ -412,7 +412,7 @@ pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, b
 /// 
 /// ## C++ default parameters
 /// * user_block_size: Size()
-pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>> {
+pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_TemplateMatching>> {
 	unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(r) } )
 }
 
@@ -650,8 +650,12 @@ pub fn swap_channels(image: &mut dyn core::ToInputOutputArray, dst_order: &[i32;
 }
 
 /// Base class for Contrast Limited Adaptive Histogram Equalization. :
-pub trait CUDA_CLAHE: crate::imgproc::CLAHE {
+pub trait CUDA_CLAHEConst: crate::imgproc::CLAHEConst {
 	fn as_raw_CUDA_CLAHE(&self) -> *const c_void;
+
+}
+
+pub trait CUDA_CLAHE: crate::cudaimgproc::CUDA_CLAHEConst + crate::imgproc::CLAHE {
 	fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void;
 
 	/// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
@@ -669,8 +673,28 @@ pub trait CUDA_CLAHE: crate::imgproc::CLAHE {
 }
 
 /// Base class for Canny Edge Detector. :
-pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait {
+pub trait CUDA_CannyEdgeDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void;
+
+	fn get_low_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_cuda_CannyEdgeDetector_getLowThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+	}
+	
+	fn get_high_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_cuda_CannyEdgeDetector_getHighThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+	}
+	
+	fn get_apperture_size(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_CannyEdgeDetector_getAppertureSize_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+	}
+	
+	fn get_l2_gradient(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_CannyEdgeDetector_getL2Gradient_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+	}
+	
+}
+
+pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorConst {
 	fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 
 	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
@@ -715,39 +739,27 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait {
 		unsafe { sys::cv_cuda_CannyEdgeDetector_setLowThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), low_thresh) }.into_result()
 	}
 	
-	fn get_low_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getLowThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
-	}
-	
 	fn set_high_threshold(&mut self, high_thresh: f64) -> Result<()> {
 		unsafe { sys::cv_cuda_CannyEdgeDetector_setHighThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), high_thresh) }.into_result()
-	}
-	
-	fn get_high_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getHighThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
 	}
 	
 	fn set_apperture_size(&mut self, apperture_size: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_CannyEdgeDetector_setAppertureSize_int(self.as_raw_mut_CUDA_CannyEdgeDetector(), apperture_size) }.into_result()
 	}
 	
-	fn get_apperture_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getAppertureSize_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
-	}
-	
 	fn set_l2_gradient(&mut self, l2gradient: bool) -> Result<()> {
 		unsafe { sys::cv_cuda_CannyEdgeDetector_setL2Gradient_bool(self.as_raw_mut_CUDA_CannyEdgeDetector(), l2gradient) }.into_result()
-	}
-	
-	fn get_l2_gradient(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getL2Gradient_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
 	}
 	
 }
 
 /// Base class for Cornerness Criteria computation. :
-pub trait CUDA_CornernessCriteria: core::AlgorithmTrait {
+pub trait CUDA_CornernessCriteriaConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
+
+}
+
+pub trait CUDA_CornernessCriteria: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornernessCriteriaConst {
 	fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void;
 
 	/// Computes the cornerness criteria at each image pixel.
@@ -769,8 +781,12 @@ pub trait CUDA_CornernessCriteria: core::AlgorithmTrait {
 }
 
 /// Base class for Corners Detector. :
-pub trait CUDA_CornersDetector: core::AlgorithmTrait {
+pub trait CUDA_CornersDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_CornersDetector(&self) -> *const c_void;
+
+}
+
+pub trait CUDA_CornersDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornersDetectorConst {
 	fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void;
 
 	/// Determines strong corners on an image.
@@ -796,8 +812,40 @@ pub trait CUDA_CornersDetector: core::AlgorithmTrait {
 }
 
 /// Base class for circles detector algorithm. :
-pub trait CUDA_HoughCirclesDetector: core::AlgorithmTrait {
+pub trait CUDA_HoughCirclesDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void;
+
+	fn get_dp(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getDp_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_min_dist(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinDist_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_canny_threshold(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getCannyThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_votes_threshold(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getVotesThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_min_radius(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_max_radius(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+	fn get_max_circles(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxCircles_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+	}
+	
+}
+
+pub trait CUDA_HoughCirclesDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughCirclesDetectorConst {
 	fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void;
 
 	/// Finds circles in a grayscale image using the Hough transform.
@@ -822,63 +870,59 @@ pub trait CUDA_HoughCirclesDetector: core::AlgorithmTrait {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setDp_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), dp) }.into_result()
 	}
 	
-	fn get_dp(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getDp_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
-	}
-	
 	fn set_min_dist(&mut self, min_dist: f32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setMinDist_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_dist) }.into_result()
-	}
-	
-	fn get_min_dist(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinDist_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
 	}
 	
 	fn set_canny_threshold(&mut self, canny_threshold: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setCannyThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), canny_threshold) }.into_result()
 	}
 	
-	fn get_canny_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getCannyThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
-	}
-	
 	fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setVotesThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), votes_threshold) }.into_result()
-	}
-	
-	fn get_votes_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getVotesThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
 	}
 	
 	fn set_min_radius(&mut self, min_radius: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setMinRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_radius) }.into_result()
 	}
 	
-	fn get_min_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
-	}
-	
 	fn set_max_radius(&mut self, max_radius: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_radius) }.into_result()
-	}
-	
-	fn get_max_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
 	}
 	
 	fn set_max_circles(&mut self, max_circles: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxCircles_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_circles) }.into_result()
 	}
 	
-	fn get_max_circles(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxCircles_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+}
+
+/// Base class for lines detector algorithm. :
+pub trait CUDA_HoughLinesDetectorConst: core::AlgorithmTraitConst {
+	fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void;
+
+	fn get_rho(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughLinesDetector_getRho_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+	}
+	
+	fn get_theta(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughLinesDetector_getTheta_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+	}
+	
+	fn get_threshold(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughLinesDetector_getThreshold_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+	}
+	
+	fn get_do_sort(&self) -> Result<bool> {
+		unsafe { sys::cv_cuda_HoughLinesDetector_getDoSort_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+	}
+	
+	fn get_max_lines(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughLinesDetector_getMaxLines_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
 	}
 	
 }
 
-/// Base class for lines detector algorithm. :
-pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait {
-	fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void;
+pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughLinesDetectorConst {
 	fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void;
 
 	/// Finds lines in a binary image using the classical Hough transform.
@@ -923,47 +967,51 @@ pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait {
 		unsafe { sys::cv_cuda_HoughLinesDetector_setRho_float(self.as_raw_mut_CUDA_HoughLinesDetector(), rho) }.into_result()
 	}
 	
-	fn get_rho(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getRho_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
-	}
-	
 	fn set_theta(&mut self, theta: f32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughLinesDetector_setTheta_float(self.as_raw_mut_CUDA_HoughLinesDetector(), theta) }.into_result()
-	}
-	
-	fn get_theta(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getTheta_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
 	}
 	
 	fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughLinesDetector_setThreshold_int(self.as_raw_mut_CUDA_HoughLinesDetector(), threshold) }.into_result()
 	}
 	
-	fn get_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getThreshold_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
-	}
-	
 	fn set_do_sort(&mut self, do_sort: bool) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughLinesDetector_setDoSort_bool(self.as_raw_mut_CUDA_HoughLinesDetector(), do_sort) }.into_result()
-	}
-	
-	fn get_do_sort(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getDoSort_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
 	}
 	
 	fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughLinesDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughLinesDetector(), max_lines) }.into_result()
 	}
 	
+}
+
+/// Base class for line segments detector algorithm. :
+pub trait CUDA_HoughSegmentDetectorConst: core::AlgorithmTraitConst {
+	fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void;
+
+	fn get_rho(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughSegmentDetector_getRho_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+	}
+	
+	fn get_theta(&self) -> Result<f32> {
+		unsafe { sys::cv_cuda_HoughSegmentDetector_getTheta_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+	}
+	
+	fn get_min_line_length(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughSegmentDetector_getMinLineLength_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+	}
+	
+	fn get_max_line_gap(&self) -> Result<i32> {
+		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLineGap_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+	}
+	
 	fn get_max_lines(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getMaxLines_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLines_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
 	}
 	
 }
 
-/// Base class for line segments detector algorithm. :
-pub trait CUDA_HoughSegmentDetector: core::AlgorithmTrait {
-	fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void;
+pub trait CUDA_HoughSegmentDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughSegmentDetectorConst {
 	fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void;
 
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
@@ -989,47 +1037,31 @@ pub trait CUDA_HoughSegmentDetector: core::AlgorithmTrait {
 		unsafe { sys::cv_cuda_HoughSegmentDetector_setRho_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), rho) }.into_result()
 	}
 	
-	fn get_rho(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getRho_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
-	}
-	
 	fn set_theta(&mut self, theta: f32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughSegmentDetector_setTheta_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), theta) }.into_result()
-	}
-	
-	fn get_theta(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getTheta_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
 	}
 	
 	fn set_min_line_length(&mut self, min_line_length: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughSegmentDetector_setMinLineLength_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), min_line_length) }.into_result()
 	}
 	
-	fn get_min_line_length(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMinLineLength_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
-	}
-	
 	fn set_max_line_gap(&mut self, max_line_gap: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLineGap_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_line_gap) }.into_result()
-	}
-	
-	fn get_max_line_gap(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLineGap_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
 	}
 	
 	fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
 		unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_lines) }.into_result()
 	}
 	
-	fn get_max_lines(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLines_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
-	}
-	
 }
 
 /// Base class for Template Matching. :
-pub trait CUDA_TemplateMatching: core::AlgorithmTrait {
+pub trait CUDA_TemplateMatchingConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void;
+
+}
+
+pub trait CUDA_TemplateMatching: core::AlgorithmTrait + crate::cudaimgproc::CUDA_TemplateMatchingConst {
 	fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void;
 
 	/// Computes a proximity map for a raster template and an image where the template is searched for.

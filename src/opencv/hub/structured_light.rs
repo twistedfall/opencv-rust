@@ -26,7 +26,7 @@
 //! For more details, see @ref tutorial_structured_light.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::StructuredLightPattern, super::GrayCodePattern_ParamsTrait, super::GrayCodePattern, super::SinusoidalPattern_ParamsTrait, super::SinusoidalPattern };
+	pub use { super::StructuredLightPatternConst, super::StructuredLightPattern, super::GrayCodePattern_ParamsTraitConst, super::GrayCodePattern_ParamsTrait, super::GrayCodePatternConst, super::GrayCodePattern, super::SinusoidalPattern_ParamsTraitConst, super::SinusoidalPattern_ParamsTrait, super::SinusoidalPatternConst, super::SinusoidalPattern };
 }
 
 /// Kyriakos Herakleous, Charalambos Poullis. "3DUNDERWORLD-SLS: An Open-Source Structured-Light Scanning System for Rapid Geometry Acquisition", arXiv preprint arXiv:1406.6595 (2014).
@@ -47,9 +47,8 @@ pub const PSP: i32 = 1;
 /// with the same structure as the original but with inverted colors.
 /// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
 /// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
-pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
+pub trait GrayCodePatternConst: crate::structured_light::StructuredLightPatternConst {
 	fn as_raw_GrayCodePattern(&self) -> *const c_void;
-	fn as_raw_mut_GrayCodePattern(&mut self) -> *mut c_void;
 
 	/// Get the number of pattern images needed for the graycode pattern.
 	/// 
@@ -57,26 +56,6 @@ pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
 	/// The number of pattern images needed for the graycode pattern.
 	fn get_number_of_pattern_images(&self) -> Result<size_t> {
 		unsafe { sys::cv_structured_light_GrayCodePattern_getNumberOfPatternImages_const(self.as_raw_GrayCodePattern()) }.into_result()
-	}
-	
-	/// Sets the value for white threshold, needed for decoding.
-	/// 
-	/// White threshold is a number between 0-255 that represents the minimum brightness difference required for valid pixels, between the graycode pattern and its inverse images; used in getProjPixel method.
-	/// 
-	/// ## Parameters
-	/// * value: The desired white threshold value.
-	fn set_white_threshold(&mut self, value: size_t) -> Result<()> {
-		unsafe { sys::cv_structured_light_GrayCodePattern_setWhiteThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value) }.into_result()
-	}
-	
-	/// Sets the value for black threshold, needed for decoding (shadowsmasks computation).
-	/// 
-	/// Black threshold is a number between 0-255 that represents the minimum brightness difference required for valid pixels, between the fully illuminated (white) and the not illuminated images (black); used in computeShadowMasks method.
-	/// 
-	/// ## Parameters
-	/// * value: The desired black threshold value.
-	fn set_black_threshold(&mut self, value: size_t) -> Result<()> {
-		unsafe { sys::cv_structured_light_GrayCodePattern_setBlackThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value) }.into_result()
 	}
 	
 	/// Generates the all-black and all-white images needed for shadowMasks computation.
@@ -111,6 +90,31 @@ pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
 	
 }
 
+pub trait GrayCodePattern: crate::structured_light::GrayCodePatternConst + crate::structured_light::StructuredLightPattern {
+	fn as_raw_mut_GrayCodePattern(&mut self) -> *mut c_void;
+
+	/// Sets the value for white threshold, needed for decoding.
+	/// 
+	/// White threshold is a number between 0-255 that represents the minimum brightness difference required for valid pixels, between the graycode pattern and its inverse images; used in getProjPixel method.
+	/// 
+	/// ## Parameters
+	/// * value: The desired white threshold value.
+	fn set_white_threshold(&mut self, value: size_t) -> Result<()> {
+		unsafe { sys::cv_structured_light_GrayCodePattern_setWhiteThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value) }.into_result()
+	}
+	
+	/// Sets the value for black threshold, needed for decoding (shadowsmasks computation).
+	/// 
+	/// Black threshold is a number between 0-255 that represents the minimum brightness difference required for valid pixels, between the fully illuminated (white) and the not illuminated images (black); used in computeShadowMasks method.
+	/// 
+	/// ## Parameters
+	/// * value: The desired black threshold value.
+	fn set_black_threshold(&mut self, value: size_t) -> Result<()> {
+		unsafe { sys::cv_structured_light_GrayCodePattern_setBlackThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value) }.into_result()
+	}
+	
+}
+
 impl dyn GrayCodePattern + '_ {
 	/// Constructor
 	/// ## Parameters
@@ -118,11 +122,11 @@ impl dyn GrayCodePattern + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: GrayCodePattern::Params()
-	pub fn create(parameters: &crate::structured_light::GrayCodePattern_Params) -> Result<core::Ptr::<dyn crate::structured_light::GrayCodePattern>> {
+	pub fn create(parameters: &crate::structured_light::GrayCodePattern_Params) -> Result<core::Ptr<dyn crate::structured_light::GrayCodePattern>> {
 		unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsR(parameters.as_raw_GrayCodePattern_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::opencv_from_extern(r) } )
 	}
 	
-	pub fn create_1(width: i32, height: i32) -> Result<core::Ptr::<dyn crate::structured_light::GrayCodePattern>> {
+	pub fn create_1(width: i32, height: i32) -> Result<core::Ptr<dyn crate::structured_light::GrayCodePattern>> {
 		unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::GrayCodePattern>::opencv_from_extern(r) } )
 	}
 	
@@ -131,20 +135,24 @@ impl dyn GrayCodePattern + '_ {
 /// ## Parameters
 /// * width: Projector's width. Default value is 1024.
 /// * height: Projector's height. Default value is 768.
-pub trait GrayCodePattern_ParamsTrait {
+pub trait GrayCodePattern_ParamsTraitConst {
 	fn as_raw_GrayCodePattern_Params(&self) -> *const c_void;
-	fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void;
 
 	fn width(&self) -> i32 {
 		unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropWidth_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: width")
 	}
 	
-	fn set_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
-	}
-	
 	fn height(&self) -> i32 {
 		unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropHeight_const(self.as_raw_GrayCodePattern_Params()) }.into_result().expect("Infallible function failed: height")
+	}
+	
+}
+
+pub trait GrayCodePattern_ParamsTrait: crate::structured_light::GrayCodePattern_ParamsTraitConst {
+	fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void;
+
+	fn set_width(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
 	}
 	
 	fn set_height(&mut self, val: i32) -> () {
@@ -170,15 +178,13 @@ impl Drop for GrayCodePattern_Params {
 	}
 }
 
-impl GrayCodePattern_Params {
-	#[inline] pub fn as_raw_GrayCodePattern_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for GrayCodePattern_Params {}
 
-impl crate::structured_light::GrayCodePattern_ParamsTrait for GrayCodePattern_Params {
+impl crate::structured_light::GrayCodePattern_ParamsTraitConst for GrayCodePattern_Params {
 	#[inline] fn as_raw_GrayCodePattern_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::structured_light::GrayCodePattern_ParamsTrait for GrayCodePattern_Params {
 	#[inline] fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -193,8 +199,12 @@ impl GrayCodePattern_Params {
 /// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_faps).
 /// 
 /// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
-pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
+pub trait SinusoidalPatternConst: crate::structured_light::StructuredLightPatternConst {
 	fn as_raw_SinusoidalPattern(&self) -> *const c_void;
+
+}
+
+pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + crate::structured_light::StructuredLightPattern {
 	fn as_raw_mut_SinusoidalPattern(&mut self) -> *mut c_void;
 
 	/// Compute a wrapped phase map from sinusoidal patterns.
@@ -264,7 +274,7 @@ impl dyn SinusoidalPattern + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: makePtr<SinusoidalPattern::Params>()
-	pub fn create(mut parameters: core::Ptr::<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr::<dyn crate::structured_light::SinusoidalPattern>> {
+	pub fn create(mut parameters: core::Ptr<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr<dyn crate::structured_light::SinusoidalPattern>> {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_create_Ptr_Params_(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::structured_light::SinusoidalPattern>::opencv_from_extern(r) } )
 	}
 	
@@ -279,79 +289,83 @@ impl dyn SinusoidalPattern + '_ {
 /// * nbrOfPixelsBetweenMarkers: Number of pixels between two consecutive markers on the same row.
 /// * setMarkers: Allow to set markers on the patterns.
 /// * markersLocation: vector used to store markers location on the patterns.
-pub trait SinusoidalPattern_ParamsTrait {
+pub trait SinusoidalPattern_ParamsTraitConst {
 	fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void;
-	fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void;
 
 	fn width(&self) -> i32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropWidth_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: width")
-	}
-	
-	fn set_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
 	}
 	
 	fn height(&self) -> i32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHeight_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: height")
 	}
 	
-	fn set_height(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
-	}
-	
 	fn nbr_of_periods(&self) -> i32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_periods")
-	}
-	
-	fn set_nbr_of_periods(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_periods")
 	}
 	
 	fn shift_value(&self) -> f32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropShiftValue_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: shift_value")
 	}
 	
-	fn set_shift_value(&mut self, val: f32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_shift_value")
-	}
-	
 	fn method_id(&self) -> i32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMethodId_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: method_id")
-	}
-	
-	fn set_method_id(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_method_id")
 	}
 	
 	fn nbr_of_pixels_between_markers(&self) -> i32 {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: nbr_of_pixels_between_markers")
 	}
 	
-	fn set_nbr_of_pixels_between_markers(&mut self, val: i32) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_pixels_between_markers")
-	}
-	
 	fn horizontal(&self) -> bool {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHorizontal_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: horizontal")
-	}
-	
-	fn set_horizontal(&mut self, val: bool) -> () {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_horizontal")
 	}
 	
 	fn set_markers(&self) -> bool {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropSetMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().expect("Infallible function failed: set_markers")
 	}
 	
+	fn markers_location(&self) -> core::Vector<core::Point2f> {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMarkersLocation_const(self.as_raw_SinusoidalPattern_Params()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: markers_location")
+	}
+	
+}
+
+pub trait SinusoidalPattern_ParamsTrait: crate::structured_light::SinusoidalPattern_ParamsTraitConst {
+	fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void;
+
+	fn set_width(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_width")
+	}
+	
+	fn set_height(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_height")
+	}
+	
+	fn set_nbr_of_periods(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_periods")
+	}
+	
+	fn set_shift_value(&mut self, val: f32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_shift_value")
+	}
+	
+	fn set_method_id(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_method_id")
+	}
+	
+	fn set_nbr_of_pixels_between_markers(&mut self, val: i32) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_nbr_of_pixels_between_markers")
+	}
+	
+	fn set_horizontal(&mut self, val: bool) -> () {
+		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_horizontal")
+	}
+	
 	fn set_set_markers(&mut self, val: bool) -> () {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) }.into_result().expect("Infallible function failed: set_set_markers")
 	}
 	
-	fn markers_location(&mut self) -> core::Vector::<core::Point2f> {
-		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMarkersLocation(self.as_raw_mut_SinusoidalPattern_Params()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: markers_location")
-	}
-	
-	fn set_markers_location(&mut self, mut val: core::Vector::<core::Point2f>) -> () {
+	fn set_markers_location(&mut self, mut val: core::Vector<core::Point2f>) -> () {
 		unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMarkersLocation_vector_Point2f_(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_markers_location")
 	}
 	
@@ -380,15 +394,13 @@ impl Drop for SinusoidalPattern_Params {
 	}
 }
 
-impl SinusoidalPattern_Params {
-	#[inline] pub fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for SinusoidalPattern_Params {}
 
-impl crate::structured_light::SinusoidalPattern_ParamsTrait for SinusoidalPattern_Params {
+impl crate::structured_light::SinusoidalPattern_ParamsTraitConst for SinusoidalPattern_Params {
 	#[inline] fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::structured_light::SinusoidalPattern_ParamsTrait for SinusoidalPattern_Params {
 	#[inline] fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -400,19 +412,9 @@ impl SinusoidalPattern_Params {
 }
 
 /// Abstract base class for generating and decoding structured light patterns.
-pub trait StructuredLightPattern: core::AlgorithmTrait {
+pub trait StructuredLightPatternConst: core::AlgorithmTraitConst {
 	fn as_raw_StructuredLightPattern(&self) -> *const c_void;
-	fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void;
 
-	/// Generates the structured light pattern to project.
-	/// 
-	/// ## Parameters
-	/// * patternImages: The generated pattern: a vector<Mat>, in which each image is a CV_8U Mat at projector's resolution.
-	fn generate(&mut self, pattern_images: &mut dyn core::ToOutputArray) -> Result<bool> {
-		output_array_arg!(pattern_images);
-		unsafe { sys::cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(self.as_raw_mut_StructuredLightPattern(), pattern_images.as_raw__OutputArray()) }.into_result()
-	}
-	
 	/// Decodes the structured light pattern, generating a disparity map
 	/// 
 	/// ## Parameters
@@ -428,11 +430,25 @@ pub trait StructuredLightPattern: core::AlgorithmTrait {
 	/// * black_images: noArray()
 	/// * white_images: noArray()
 	/// * flags: DECODE_3D_UNDERWORLD
-	fn decode(&self, pattern_images: &core::Vector::<core::Vector::<core::Mat>>, disparity_map: &mut dyn core::ToOutputArray, black_images: &dyn core::ToInputArray, white_images: &dyn core::ToInputArray, flags: i32) -> Result<bool> {
+	fn decode(&self, pattern_images: &core::Vector<core::Vector<core::Mat>>, disparity_map: &mut dyn core::ToOutputArray, black_images: &dyn core::ToInputArray, white_images: &dyn core::ToInputArray, flags: i32) -> Result<bool> {
 		output_array_arg!(disparity_map);
 		input_array_arg!(black_images);
 		input_array_arg!(white_images);
 		unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__R_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags) }.into_result()
+	}
+	
+}
+
+pub trait StructuredLightPattern: core::AlgorithmTrait + crate::structured_light::StructuredLightPatternConst {
+	fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void;
+
+	/// Generates the structured light pattern to project.
+	/// 
+	/// ## Parameters
+	/// * patternImages: The generated pattern: a vector<Mat>, in which each image is a CV_8U Mat at projector's resolution.
+	fn generate(&mut self, pattern_images: &mut dyn core::ToOutputArray) -> Result<bool> {
+		output_array_arg!(pattern_images);
+		unsafe { sys::cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(self.as_raw_mut_StructuredLightPattern(), pattern_images.as_raw__OutputArray()) }.into_result()
 	}
 	
 }

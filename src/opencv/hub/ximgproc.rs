@@ -58,7 +58,7 @@
 //!    "on".
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DTFilter, super::GuidedFilter, super::AdaptiveManifoldFilter, super::FastBilateralSolverFilter, super::FastGlobalSmootherFilter, super::DisparityFilter, super::DisparityWLSFilter, super::SparseMatchInterpolator, super::EdgeAwareInterpolator, super::RICInterpolator, super::RFFeatureGetter, super::StructuredEdgeDetection, super::EdgeBoxes, super::EdgeDrawing, super::SuperpixelSEEDS, super::GraphSegmentation, super::SelectiveSearchSegmentationStrategy, super::SelectiveSearchSegmentationStrategyColor, super::SelectiveSearchSegmentationStrategySize, super::SelectiveSearchSegmentationStrategyTexture, super::SelectiveSearchSegmentationStrategyFill, super::SelectiveSearchSegmentationStrategyMultiple, super::SelectiveSearchSegmentation, super::SuperpixelSLIC, super::SuperpixelLSC, super::FastLineDetector, super::ContourFittingTrait, super::RidgeDetectionFilter };
+	pub use { super::DTFilterConst, super::DTFilter, super::GuidedFilterConst, super::GuidedFilter, super::AdaptiveManifoldFilterConst, super::AdaptiveManifoldFilter, super::FastBilateralSolverFilterConst, super::FastBilateralSolverFilter, super::FastGlobalSmootherFilterConst, super::FastGlobalSmootherFilter, super::DisparityFilterConst, super::DisparityFilter, super::DisparityWLSFilterConst, super::DisparityWLSFilter, super::SparseMatchInterpolatorConst, super::SparseMatchInterpolator, super::EdgeAwareInterpolatorConst, super::EdgeAwareInterpolator, super::RICInterpolatorConst, super::RICInterpolator, super::RFFeatureGetterConst, super::RFFeatureGetter, super::StructuredEdgeDetectionConst, super::StructuredEdgeDetection, super::EdgeBoxesConst, super::EdgeBoxes, super::EdgeDrawingConst, super::EdgeDrawing, super::SuperpixelSEEDSConst, super::SuperpixelSEEDS, super::GraphSegmentationConst, super::GraphSegmentation, super::SelectiveSearchSegmentationStrategyConst, super::SelectiveSearchSegmentationStrategy, super::SelectiveSearchSegmentationStrategyColorConst, super::SelectiveSearchSegmentationStrategyColor, super::SelectiveSearchSegmentationStrategySizeConst, super::SelectiveSearchSegmentationStrategySize, super::SelectiveSearchSegmentationStrategyTextureConst, super::SelectiveSearchSegmentationStrategyTexture, super::SelectiveSearchSegmentationStrategyFillConst, super::SelectiveSearchSegmentationStrategyFill, super::SelectiveSearchSegmentationStrategyMultipleConst, super::SelectiveSearchSegmentationStrategyMultiple, super::SelectiveSearchSegmentationConst, super::SelectiveSearchSegmentation, super::SuperpixelSLICConst, super::SuperpixelSLIC, super::SuperpixelLSCConst, super::SuperpixelLSC, super::FastLineDetectorConst, super::FastLineDetector, super::ContourFittingTraitConst, super::ContourFittingTrait, super::RidgeDetectionFilterConst, super::RidgeDetectionFilter };
 }
 
 pub const AM_FILTER: i32 = 4;
@@ -590,7 +590,7 @@ pub fn covariance_estimation(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 /// 
 /// ## C++ default parameters
 /// * adjust_outliers: false
-pub fn create_am_filter(sigma_s: f64, sigma_r: f64, adjust_outliers: bool) -> Result<core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>> {
+pub fn create_am_filter(sigma_s: f64, sigma_r: f64, adjust_outliers: bool) -> Result<core::Ptr<dyn crate::ximgproc::AdaptiveManifoldFilter>> {
 	unsafe { sys::cv_ximgproc_createAMFilter_double_double_bool(sigma_s, sigma_r, adjust_outliers) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(r) } )
 }
 
@@ -603,7 +603,7 @@ pub fn create_am_filter(sigma_s: f64, sigma_r: f64, adjust_outliers: bool) -> Re
 /// ## C++ default parameters
 /// * ctr: 1024
 /// * fd: 16
-pub fn create_contour_fitting(ctr: i32, fd: i32) -> Result<core::Ptr::<crate::ximgproc::ContourFitting>> {
+pub fn create_contour_fitting(ctr: i32, fd: i32) -> Result<core::Ptr<crate::ximgproc::ContourFitting>> {
 	unsafe { sys::cv_ximgproc_createContourFitting_int_int(ctr, fd) }.into_result().map(|r| unsafe { core::Ptr::<crate::ximgproc::ContourFitting>::opencv_from_extern(r) } )
 }
 
@@ -630,7 +630,7 @@ pub fn create_contour_fitting(ctr: i32, fd: i32) -> Result<core::Ptr::<crate::xi
 /// ## C++ default parameters
 /// * mode: DTF_NC
 /// * num_iters: 3
-pub fn create_dt_filter(guide: &dyn core::ToInputArray, sigma_spatial: f64, sigma_color: f64, mode: i32, num_iters: i32) -> Result<core::Ptr::<dyn crate::ximgproc::DTFilter>> {
+pub fn create_dt_filter(guide: &dyn core::ToInputArray, sigma_spatial: f64, sigma_color: f64, mode: i32, num_iters: i32) -> Result<core::Ptr<dyn crate::ximgproc::DTFilter>> {
 	input_array_arg!(guide);
 	unsafe { sys::cv_ximgproc_createDTFilter_const__InputArrayR_double_double_int_int(guide.as_raw__InputArray(), sigma_spatial, sigma_color, mode, num_iters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::DTFilter>::opencv_from_extern(r) } )
 }
@@ -642,7 +642,7 @@ pub fn create_dt_filter(guide: &dyn core::ToInputArray, sigma_spatial: f64, sigm
 /// ## Parameters
 /// * use_confidence: filtering with confidence requires two disparity maps (for the left and right views) and is
 /// approximately two times slower. However, quality is typically significantly better.
-pub fn create_disparity_wls_filter_generic(use_confidence: bool) -> Result<core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>> {
+pub fn create_disparity_wls_filter_generic(use_confidence: bool) -> Result<core::Ptr<dyn crate::ximgproc::DisparityWLSFilter>> {
 	unsafe { sys::cv_ximgproc_createDisparityWLSFilterGeneric_bool(use_confidence) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>::opencv_from_extern(r) } )
 }
 
@@ -651,13 +651,13 @@ pub fn create_disparity_wls_filter_generic(use_confidence: bool) -> Result<core:
 /// 
 /// ## Parameters
 /// * matcher_left: stereo matcher instance that will be used with the filter
-pub fn create_disparity_wls_filter(mut matcher_left: core::Ptr::<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>> {
+pub fn create_disparity_wls_filter(mut matcher_left: core::Ptr<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr<dyn crate::ximgproc::DisparityWLSFilter>> {
 	unsafe { sys::cv_ximgproc_createDisparityWLSFilter_Ptr_StereoMatcher_(matcher_left.as_raw_mut_PtrOfStereoMatcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>::opencv_from_extern(r) } )
 }
 
 /// Factory method that creates an instance of the
 /// EdgeAwareInterpolator.
-pub fn create_edge_aware_interpolator() -> Result<core::Ptr::<dyn crate::ximgproc::EdgeAwareInterpolator>> {
+pub fn create_edge_aware_interpolator() -> Result<core::Ptr<dyn crate::ximgproc::EdgeAwareInterpolator>> {
 	unsafe { sys::cv_ximgproc_createEdgeAwareInterpolator() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::EdgeAwareInterpolator>::opencv_from_extern(r) } )
 }
 
@@ -690,12 +690,12 @@ pub fn create_edge_aware_interpolator() -> Result<core::Ptr::<dyn crate::ximgpro
 /// * min_box_area: 1000
 /// * gamma: 2
 /// * kappa: 1.5f
-pub fn create_edge_boxes(alpha: f32, beta: f32, eta: f32, min_score: f32, max_boxes: i32, edge_min_mag: f32, edge_merge_thr: f32, cluster_min_mag: f32, max_aspect_ratio: f32, min_box_area: f32, gamma: f32, kappa: f32) -> Result<core::Ptr::<dyn crate::ximgproc::EdgeBoxes>> {
+pub fn create_edge_boxes(alpha: f32, beta: f32, eta: f32, min_score: f32, max_boxes: i32, edge_min_mag: f32, edge_merge_thr: f32, cluster_min_mag: f32, max_aspect_ratio: f32, min_box_area: f32, gamma: f32, kappa: f32) -> Result<core::Ptr<dyn crate::ximgproc::EdgeBoxes>> {
 	unsafe { sys::cv_ximgproc_createEdgeBoxes_float_float_float_float_int_float_float_float_float_float_float_float(alpha, beta, eta, min_score, max_boxes, edge_min_mag, edge_merge_thr, cluster_min_mag, max_aspect_ratio, min_box_area, gamma, kappa) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::EdgeBoxes>::opencv_from_extern(r) } )
 }
 
 /// Creates a smart pointer to a EdgeDrawing object and initializes it
-pub fn create_edge_drawing() -> Result<core::Ptr::<dyn crate::ximgproc::EdgeDrawing>> {
+pub fn create_edge_drawing() -> Result<core::Ptr<dyn crate::ximgproc::EdgeDrawing>> {
 	unsafe { sys::cv_ximgproc_createEdgeDrawing() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::EdgeDrawing>::opencv_from_extern(r) } )
 }
 
@@ -722,7 +722,7 @@ pub fn create_edge_drawing() -> Result<core::Ptr::<dyn crate::ximgproc::EdgeDraw
 /// * lambda: 128.0
 /// * num_iter: 25
 /// * max_tol: 1e-5
-pub fn create_fast_bilateral_solver_filter(guide: &dyn core::ToInputArray, sigma_spatial: f64, sigma_luma: f64, sigma_chroma: f64, lambda: f64, num_iter: i32, max_tol: f64) -> Result<core::Ptr::<dyn crate::ximgproc::FastBilateralSolverFilter>> {
+pub fn create_fast_bilateral_solver_filter(guide: &dyn core::ToInputArray, sigma_spatial: f64, sigma_luma: f64, sigma_chroma: f64, lambda: f64, num_iter: i32, max_tol: f64) -> Result<core::Ptr<dyn crate::ximgproc::FastBilateralSolverFilter>> {
 	input_array_arg!(guide);
 	unsafe { sys::cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double_double_int_double(guide.as_raw__InputArray(), sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::FastBilateralSolverFilter>::opencv_from_extern(r) } )
 }
@@ -751,7 +751,7 @@ pub fn create_fast_bilateral_solver_filter(guide: &dyn core::ToInputArray, sigma
 /// ## C++ default parameters
 /// * lambda_attenuation: 0.25
 /// * num_iter: 3
-pub fn create_fast_global_smoother_filter(guide: &dyn core::ToInputArray, lambda: f64, sigma_color: f64, lambda_attenuation: f64, num_iter: i32) -> Result<core::Ptr::<dyn crate::ximgproc::FastGlobalSmootherFilter>> {
+pub fn create_fast_global_smoother_filter(guide: &dyn core::ToInputArray, lambda: f64, sigma_color: f64, lambda_attenuation: f64, num_iter: i32) -> Result<core::Ptr<dyn crate::ximgproc::FastGlobalSmootherFilter>> {
 	input_array_arg!(guide);
 	unsafe { sys::cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double_double_int(guide.as_raw__InputArray(), lambda, sigma_color, lambda_attenuation, num_iter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::FastGlobalSmootherFilter>::opencv_from_extern(r) } )
 }
@@ -775,7 +775,7 @@ pub fn create_fast_global_smoother_filter(guide: &dyn core::ToInputArray, lambda
 /// * canny_th2: 50.0
 /// * canny_aperture_size: 3
 /// * do_merge: false
-pub fn create_fast_line_detector(length_threshold: i32, distance_threshold: f32, canny_th1: f64, canny_th2: f64, canny_aperture_size: i32, do_merge: bool) -> Result<core::Ptr::<dyn crate::ximgproc::FastLineDetector>> {
+pub fn create_fast_line_detector(length_threshold: i32, distance_threshold: f32, canny_th1: f64, canny_th2: f64, canny_aperture_size: i32, do_merge: bool) -> Result<core::Ptr<dyn crate::ximgproc::FastLineDetector>> {
 	unsafe { sys::cv_ximgproc_createFastLineDetector_int_float_double_double_int_bool(length_threshold, distance_threshold, canny_th1, canny_th2, canny_aperture_size, do_merge) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::FastLineDetector>::opencv_from_extern(r) } )
 }
 
@@ -791,7 +791,7 @@ pub fn create_fast_line_detector(length_threshold: i32, distance_threshold: f32,
 /// space into bilateralFilter.
 /// 
 /// For more details about Guided Filter parameters, see the original article [Kaiming10](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Kaiming10) .
-pub fn create_guided_filter(guide: &dyn core::ToInputArray, radius: i32, eps: f64) -> Result<core::Ptr::<dyn crate::ximgproc::GuidedFilter>> {
+pub fn create_guided_filter(guide: &dyn core::ToInputArray, radius: i32, eps: f64) -> Result<core::Ptr<dyn crate::ximgproc::GuidedFilter>> {
 	input_array_arg!(guide);
 	unsafe { sys::cv_ximgproc_createGuidedFilter_const__InputArrayR_int_double(guide.as_raw__InputArray(), radius, eps) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::GuidedFilter>::opencv_from_extern(r) } )
 }
@@ -807,13 +807,13 @@ pub fn create_quaternion_image(img: &dyn core::ToInputArray, qimg: &mut dyn core
 	unsafe { sys::cv_ximgproc_createQuaternionImage_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), qimg.as_raw__OutputArray()) }.into_result()
 }
 
-pub fn create_rf_feature_getter() -> Result<core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>> {
+pub fn create_rf_feature_getter() -> Result<core::Ptr<dyn crate::ximgproc::RFFeatureGetter>> {
 	unsafe { sys::cv_ximgproc_createRFFeatureGetter() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>::opencv_from_extern(r) } )
 }
 
 /// Factory method that creates an instance of the
 /// RICInterpolator.
-pub fn create_ric_interpolator() -> Result<core::Ptr::<dyn crate::ximgproc::RICInterpolator>> {
+pub fn create_ric_interpolator() -> Result<core::Ptr<dyn crate::ximgproc::RICInterpolator>> {
 	unsafe { sys::cv_ximgproc_createRICInterpolator() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::RICInterpolator>::opencv_from_extern(r) } )
 }
 
@@ -822,7 +822,7 @@ pub fn create_ric_interpolator() -> Result<core::Ptr::<dyn crate::ximgproc::RICI
 /// 
 /// ## Parameters
 /// * matcher_left: main stereo matcher instance that will be used with the filter
-pub fn create_right_matcher(mut matcher_left: core::Ptr::<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr::<dyn crate::calib3d::StereoMatcher>> {
+pub fn create_right_matcher(mut matcher_left: core::Ptr<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr<dyn crate::calib3d::StereoMatcher>> {
 	unsafe { sys::cv_ximgproc_createRightMatcher_Ptr_StereoMatcher_(matcher_left.as_raw_mut_PtrOfStereoMatcher()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::calib3d::StereoMatcher>::opencv_from_extern(r) } )
 }
 
@@ -836,7 +836,7 @@ pub fn create_right_matcher(mut matcher_left: core::Ptr::<dyn crate::calib3d::St
 /// 
 /// ## C++ default parameters
 /// * how_to_get_features: Ptr<RFFeatureGetter>()
-pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr::<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>> {
+pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
 	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(r) } )
 }
@@ -859,7 +859,7 @@ pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::
 /// ## C++ default parameters
 /// * region_size: 10
 /// * ratio: 0.075f
-pub fn create_superpixel_lsc(image: &dyn core::ToInputArray, region_size: i32, ratio: f32) -> Result<core::Ptr::<dyn crate::ximgproc::SuperpixelLSC>> {
+pub fn create_superpixel_lsc(image: &dyn core::ToInputArray, region_size: i32, ratio: f32) -> Result<core::Ptr<dyn crate::ximgproc::SuperpixelLSC>> {
 	input_array_arg!(image);
 	unsafe { sys::cv_ximgproc_createSuperpixelLSC_const__InputArrayR_int_float(image.as_raw__InputArray(), region_size, ratio) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SuperpixelLSC>::opencv_from_extern(r) } )
 }
@@ -898,7 +898,7 @@ pub fn create_superpixel_lsc(image: &dyn core::ToInputArray, region_size: i32, r
 /// * prior: 2
 /// * histogram_bins: 5
 /// * double_step: false
-pub fn create_superpixel_seeds(image_width: i32, image_height: i32, image_channels: i32, num_superpixels: i32, num_levels: i32, prior: i32, histogram_bins: i32, double_step: bool) -> Result<core::Ptr::<dyn crate::ximgproc::SuperpixelSEEDS>> {
+pub fn create_superpixel_seeds(image_width: i32, image_height: i32, image_channels: i32, num_superpixels: i32, num_levels: i32, prior: i32, histogram_bins: i32, double_step: bool) -> Result<core::Ptr<dyn crate::ximgproc::SuperpixelSEEDS>> {
 	unsafe { sys::cv_ximgproc_createSuperpixelSEEDS_int_int_int_int_int_int_int_bool(image_width, image_height, image_channels, num_superpixels, num_levels, prior, histogram_bins, double_step) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SuperpixelSEEDS>::opencv_from_extern(r) } )
 }
 
@@ -924,7 +924,7 @@ pub fn create_superpixel_seeds(image_width: i32, image_height: i32, image_channe
 /// * algorithm: SLICO
 /// * region_size: 10
 /// * ruler: 10.0f
-pub fn create_superpixel_slic(image: &dyn core::ToInputArray, algorithm: i32, region_size: i32, ruler: f32) -> Result<core::Ptr::<dyn crate::ximgproc::SuperpixelSLIC>> {
+pub fn create_superpixel_slic(image: &dyn core::ToInputArray, algorithm: i32, region_size: i32, ruler: f32) -> Result<core::Ptr<dyn crate::ximgproc::SuperpixelSLIC>> {
 	input_array_arg!(image);
 	unsafe { sys::cv_ximgproc_createSuperpixelSLIC_const__InputArrayR_int_int_float(image.as_raw__InputArray(), algorithm, region_size, ruler) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SuperpixelSLIC>::opencv_from_extern(r) } )
 }
@@ -1290,7 +1290,7 @@ pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32>
 /// 
 /// ## C++ default parameters
 /// * size: Size(0,0)
-pub fn create_rle_image(runs: &core::Vector::<core::Point3i>, res: &mut dyn core::ToOutputArray, size: core::Size) -> Result<()> {
+pub fn create_rle_image(runs: &core::Vector<core::Point3i>, res: &mut dyn core::ToOutputArray, size: core::Size) -> Result<()> {
 	output_array_arg!(res);
 	unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vector_Point3i_R_const__OutputArrayR_Size(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_as_extern()) }.into_result()
 }
@@ -1458,34 +1458,34 @@ pub fn rolling_guidance_filter(src: &dyn core::ToInputArray, dst: &mut dyn core:
 /// * sigma: 0.5
 /// * k: 300
 /// * min_size: 100
-pub fn create_graph_segmentation(sigma: f64, k: f32, min_size: i32) -> Result<core::Ptr::<dyn crate::ximgproc::GraphSegmentation>> {
+pub fn create_graph_segmentation(sigma: f64, k: f32, min_size: i32) -> Result<core::Ptr<dyn crate::ximgproc::GraphSegmentation>> {
 	unsafe { sys::cv_ximgproc_segmentation_createGraphSegmentation_double_float_int(sigma, k, min_size) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::GraphSegmentation>::opencv_from_extern(r) } )
 }
 
 /// Create a new SelectiveSearchSegmentation class.
-pub fn create_selective_search_segmentation() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentation>> {
+pub fn create_selective_search_segmentation() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentation>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentation() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentation>::opencv_from_extern(r) } )
 }
 
 /// Create a new color-based strategy
-pub fn create_selective_search_segmentation_strategy_color() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>> {
+pub fn create_selective_search_segmentation_strategy_color() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyColor() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyColor>::opencv_from_extern(r) } )
 }
 
 /// Create a new fill-based strategy
-pub fn create_selective_search_segmentation_strategy_fill() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>> {
+pub fn create_selective_search_segmentation_strategy_fill() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyFill() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyFill>::opencv_from_extern(r) } )
 }
 
 /// Create a new multiple strategy
-pub fn create_selective_search_segmentation_strategy_multiple() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
+pub fn create_selective_search_segmentation_strategy_multiple() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(r) } )
 }
 
 /// Create a new multiple strategy and set one subtrategy
 /// ## Parameters
 /// * s1: The first strategy
-pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
+pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(r) } )
 }
 
@@ -1493,7 +1493,7 @@ pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Pt
 /// ## Parameters
 /// * s1: The first strategy
 /// * s2: The second strategy
-pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
+pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(r) } )
 }
 
@@ -1502,7 +1502,7 @@ pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Pt
 /// * s1: The first strategy
 /// * s2: The second strategy
 /// * s3: The third strategy
-pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
+pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(r) } )
 }
 
@@ -1512,17 +1512,17 @@ pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Pt
 /// * s2: The second strategy
 /// * s3: The third strategy
 /// * s4: The forth strategy
-pub fn create_selective_search_segmentation_strategy_multiple_4(mut s1: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s4: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
+pub fn create_selective_search_segmentation_strategy_multiple_4(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s4: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s4.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(r) } )
 }
 
 /// Create a new size-based strategy
-pub fn create_selective_search_segmentation_strategy_size() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>> {
+pub fn create_selective_search_segmentation_strategy_size() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategySize() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategySize>::opencv_from_extern(r) } )
 }
 
 /// Create a new size-based strategy
-pub fn create_selective_search_segmentation_strategy_texture() -> Result<core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>> {
+pub fn create_selective_search_segmentation_strategy_texture() -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>> {
 	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyTexture() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>::opencv_from_extern(r) } )
 }
 
@@ -1605,8 +1605,48 @@ pub fn weighted_median_filter(joint: &dyn core::ToInputArray, src: &dyn core::To
 /// Specify adjust outliers using Eq. 9 or not.
 /// *   member bool use_RNG = true
 /// Specify use random number generator to compute eigenvector or not.
-pub trait AdaptiveManifoldFilter: core::AlgorithmTrait {
+pub trait AdaptiveManifoldFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_AdaptiveManifoldFilter(&self) -> *const c_void;
+
+	/// ## See also
+	/// setSigmaS
+	fn get_sigma_s(&self) -> Result<f64> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaS_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+	/// ## See also
+	/// setSigmaR
+	fn get_sigma_r(&self) -> Result<f64> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaR_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+	/// ## See also
+	/// setTreeHeight
+	fn get_tree_height(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getTreeHeight_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+	/// ## See also
+	/// setPCAIterations
+	fn get_pca_iterations(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getPCAIterations_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+	/// ## See also
+	/// setAdjustOutliers
+	fn get_adjust_outliers(&self) -> Result<bool> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getAdjustOutliers_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+	/// ## See also
+	/// setUseRNG
+	fn get_use_rng(&self) -> Result<bool> {
+		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getUseRNG_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
+	}
+	
+}
+
+pub trait AdaptiveManifoldFilter: core::AlgorithmTrait + crate::ximgproc::AdaptiveManifoldFilterConst {
 	fn as_raw_mut_AdaptiveManifoldFilter(&mut self) -> *mut c_void;
 
 	/// Apply high-dimensional filtering using adaptive manifolds.
@@ -1632,21 +1672,9 @@ pub trait AdaptiveManifoldFilter: core::AlgorithmTrait {
 	}
 	
 	/// ## See also
-	/// setSigmaS
-	fn get_sigma_s(&self) -> Result<f64> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaS_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
-	}
-	
-	/// ## See also
 	/// setSigmaS getSigmaS
 	fn set_sigma_s(&mut self, val: f64) -> Result<()> {
 		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setSigmaS_double(self.as_raw_mut_AdaptiveManifoldFilter(), val) }.into_result()
-	}
-	
-	/// ## See also
-	/// setSigmaR
-	fn get_sigma_r(&self) -> Result<f64> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaR_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
 	}
 	
 	/// ## See also
@@ -1656,21 +1684,9 @@ pub trait AdaptiveManifoldFilter: core::AlgorithmTrait {
 	}
 	
 	/// ## See also
-	/// setTreeHeight
-	fn get_tree_height(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getTreeHeight_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
-	}
-	
-	/// ## See also
 	/// setTreeHeight getTreeHeight
 	fn set_tree_height(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setTreeHeight_int(self.as_raw_mut_AdaptiveManifoldFilter(), val) }.into_result()
-	}
-	
-	/// ## See also
-	/// setPCAIterations
-	fn get_pca_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getPCAIterations_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
 	}
 	
 	/// ## See also
@@ -1680,21 +1696,9 @@ pub trait AdaptiveManifoldFilter: core::AlgorithmTrait {
 	}
 	
 	/// ## See also
-	/// setAdjustOutliers
-	fn get_adjust_outliers(&self) -> Result<bool> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getAdjustOutliers_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
-	}
-	
-	/// ## See also
 	/// setAdjustOutliers getAdjustOutliers
 	fn set_adjust_outliers(&mut self, val: bool) -> Result<()> {
 		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setAdjustOutliers_bool(self.as_raw_mut_AdaptiveManifoldFilter(), val) }.into_result()
-	}
-	
-	/// ## See also
-	/// setUseRNG
-	fn get_use_rng(&self) -> Result<bool> {
-		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getUseRNG_const(self.as_raw_AdaptiveManifoldFilter()) }.into_result()
 	}
 	
 	/// ## See also
@@ -1706,7 +1710,7 @@ pub trait AdaptiveManifoldFilter: core::AlgorithmTrait {
 }
 
 impl dyn AdaptiveManifoldFilter + '_ {
-	pub fn create() -> Result<core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>> {
+	pub fn create() -> Result<core::Ptr<dyn crate::ximgproc::AdaptiveManifoldFilter>> {
 		unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(r) } )
 	}
 	
@@ -1714,8 +1718,12 @@ impl dyn AdaptiveManifoldFilter + '_ {
 /// Class for ContourFitting algorithms.
 /// ContourFitting match two contours ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) minimizing distance
 /// ![block formula](https://latex.codecogs.com/png.latex?%20d%28z%5Fa%2Cz%5Fb%29%3D%5Csum%20%28a%5Fn%20%2D%20s%20%20b%5Fn%20e%5E%7Bj%28n%20%5Calpha%20%2B%5Cphi%20%29%7D%29%5E2%20) where ![inline formula](https://latex.codecogs.com/png.latex?%20a%5Fn%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20b%5Fn%20) are Fourier descriptors of ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) and s is a scaling factor and  ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cphi%20) is angle rotation and ![inline formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20) is starting point factor adjustement
-pub trait ContourFittingTrait: core::AlgorithmTrait {
+pub trait ContourFittingTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_ContourFitting(&self) -> *const c_void;
+
+}
+
+pub trait ContourFittingTrait: core::AlgorithmTrait + crate::ximgproc::ContourFittingTraitConst {
 	fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void;
 
 	/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
@@ -1801,20 +1809,21 @@ impl Drop for ContourFitting {
 	}
 }
 
-impl ContourFitting {
-	#[inline] pub fn as_raw_ContourFitting(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ContourFitting {}
 
-impl core::AlgorithmTrait for ContourFitting {
+impl core::AlgorithmTraitConst for ContourFitting {
 	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ContourFitting {
 	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::ximgproc::ContourFittingTrait for ContourFitting {
+impl crate::ximgproc::ContourFittingTraitConst for ContourFitting {
 	#[inline] fn as_raw_ContourFitting(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::ximgproc::ContourFittingTrait for ContourFitting {
 	#[inline] fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1839,8 +1848,12 @@ boxed_cast_base! { ContourFitting, core::Algorithm, cv_ContourFitting_to_Algorit
 /// Interface for realizations of Domain Transform filter.
 /// 
 /// For more details about this filter see [Gastal11](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Gastal11) .
-pub trait DTFilter: core::AlgorithmTrait {
+pub trait DTFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_DTFilter(&self) -> *const c_void;
+
+}
+
+pub trait DTFilter: core::AlgorithmTrait + crate::ximgproc::DTFilterConst {
 	fn as_raw_mut_DTFilter(&mut self) -> *mut c_void;
 
 	/// Produce domain transform filtering operation on source image.
@@ -1864,8 +1877,12 @@ pub trait DTFilter: core::AlgorithmTrait {
 }
 
 /// Main interface for all disparity map filters.
-pub trait DisparityFilter: core::AlgorithmTrait {
+pub trait DisparityFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_DisparityFilter(&self) -> *const c_void;
+
+}
+
+pub trait DisparityFilter: core::AlgorithmTrait + crate::ximgproc::DisparityFilterConst {
 	fn as_raw_mut_DisparityFilter(&mut self) -> *mut c_void;
 
 	/// Apply filtering to the disparity map.
@@ -1906,8 +1923,12 @@ pub trait DisparityFilter: core::AlgorithmTrait {
 /// Disparity map filter based on Weighted Least Squares filter (in form of Fast Global Smoother that
 /// is a lot faster than traditional Weighted Least Squares filter implementations) and optional use of
 /// left-right-consistency-based confidence to refine the results in half-occlusions and uniform areas.
-pub trait DisparityWLSFilter: crate::ximgproc::DisparityFilter {
+pub trait DisparityWLSFilterConst: crate::ximgproc::DisparityFilterConst {
 	fn as_raw_DisparityWLSFilter(&self) -> *const c_void;
+
+}
+
+pub trait DisparityWLSFilter: crate::ximgproc::DisparityFilter + crate::ximgproc::DisparityWLSFilterConst {
 	fn as_raw_mut_DisparityWLSFilter(&mut self) -> *mut c_void;
 
 	/// Lambda is a parameter defining the amount of regularization during filtering. Larger values force
@@ -1975,8 +1996,12 @@ pub trait DisparityWLSFilter: crate::ximgproc::DisparityFilter {
 
 /// Sparse match interpolation algorithm based on modified locally-weighted affine
 /// estimator from [Revaud2015](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
-pub trait EdgeAwareInterpolator: crate::ximgproc::SparseMatchInterpolator {
+pub trait EdgeAwareInterpolatorConst: crate::ximgproc::SparseMatchInterpolatorConst {
 	fn as_raw_EdgeAwareInterpolator(&self) -> *const c_void;
+
+}
+
+pub trait EdgeAwareInterpolator: crate::ximgproc::EdgeAwareInterpolatorConst + crate::ximgproc::SparseMatchInterpolator {
 	fn as_raw_mut_EdgeAwareInterpolator(&mut self) -> *mut c_void;
 
 	/// Interface to provide a more elaborated cost map, i.e. edge map, for the edge-aware term.
@@ -2072,8 +2097,72 @@ pub trait EdgeAwareInterpolator: crate::ximgproc::SparseMatchInterpolator {
 }
 
 /// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
-pub trait EdgeBoxes: core::AlgorithmTrait {
+pub trait EdgeBoxesConst: core::AlgorithmTraitConst {
 	fn as_raw_EdgeBoxes(&self) -> *const c_void;
+
+	/// Returns the step size of sliding window search.
+	fn get_alpha(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getAlpha_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the nms threshold for object proposals.
+	fn get_beta(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getBeta_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns adaptation rate for nms threshold.
+	fn get_eta(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getEta_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the min score of boxes to detect.
+	fn get_min_score(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getMinScore_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the max number of boxes to detect.
+	fn get_max_boxes(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxBoxes_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the edge min magnitude.
+	fn get_edge_min_mag(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMinMag_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the edge merge threshold.
+	fn get_edge_merge_thr(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMergeThr_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the cluster min magnitude.
+	fn get_cluster_min_mag(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getClusterMinMag_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the max aspect ratio of boxes.
+	fn get_max_aspect_ratio(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxAspectRatio_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the minimum area of boxes.
+	fn get_min_box_area(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getMinBoxArea_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the affinity sensitivity.
+	fn get_gamma(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getGamma_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+	/// Returns the scale sensitivity.
+	fn get_kappa(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getKappa_const(self.as_raw_EdgeBoxes()) }.into_result()
+	}
+	
+}
+
+pub trait EdgeBoxes: core::AlgorithmTrait + crate::ximgproc::EdgeBoxesConst {
 	fn as_raw_mut_EdgeBoxes(&mut self) -> *mut c_void;
 
 	/// Returns array containing proposal boxes.
@@ -2086,16 +2175,11 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 	/// 
 	/// ## C++ default parameters
 	/// * scores: noArray()
-	fn get_bounding_boxes(&mut self, edge_map: &dyn core::ToInputArray, orientation_map: &dyn core::ToInputArray, boxes: &mut core::Vector::<core::Rect>, scores: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn get_bounding_boxes(&mut self, edge_map: &dyn core::ToInputArray, orientation_map: &dyn core::ToInputArray, boxes: &mut core::Vector<core::Rect>, scores: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(edge_map);
 		input_array_arg!(orientation_map);
 		output_array_arg!(scores);
 		unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vector_Rect_R_const__OutputArrayR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), scores.as_raw__OutputArray()) }.into_result()
-	}
-	
-	/// Returns the step size of sliding window search.
-	fn get_alpha(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getAlpha_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets the step size of sliding window search.
@@ -2103,19 +2187,9 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setAlpha_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the nms threshold for object proposals.
-	fn get_beta(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getBeta_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the nms threshold for object proposals.
 	fn set_beta(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setBeta_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
-	}
-	
-	/// Returns adaptation rate for nms threshold.
-	fn get_eta(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getEta_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets the adaptation rate for nms threshold.
@@ -2123,19 +2197,9 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setEta_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the min score of boxes to detect.
-	fn get_min_score(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getMinScore_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the min score of boxes to detect.
 	fn set_min_score(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setMinScore_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
-	}
-	
-	/// Returns the max number of boxes to detect.
-	fn get_max_boxes(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxBoxes_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets max number of boxes to detect.
@@ -2143,19 +2207,9 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setMaxBoxes_int(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the edge min magnitude.
-	fn get_edge_min_mag(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMinMag_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the edge min magnitude.
 	fn set_edge_min_mag(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setEdgeMinMag_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
-	}
-	
-	/// Returns the edge merge threshold.
-	fn get_edge_merge_thr(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMergeThr_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets the edge merge threshold.
@@ -2163,19 +2217,9 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setEdgeMergeThr_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the cluster min magnitude.
-	fn get_cluster_min_mag(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getClusterMinMag_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the cluster min magnitude.
 	fn set_cluster_min_mag(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setClusterMinMag_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
-	}
-	
-	/// Returns the max aspect ratio of boxes.
-	fn get_max_aspect_ratio(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxAspectRatio_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets the max aspect ratio of boxes.
@@ -2183,29 +2227,14 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setMaxAspectRatio_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the minimum area of boxes.
-	fn get_min_box_area(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getMinBoxArea_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the minimum area of boxes.
 	fn set_min_box_area(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setMinBoxArea_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
 	}
 	
-	/// Returns the affinity sensitivity.
-	fn get_gamma(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getGamma_const(self.as_raw_EdgeBoxes()) }.into_result()
-	}
-	
 	/// Sets the affinity sensitivity
 	fn set_gamma(&mut self, value: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_EdgeBoxes_setGamma_float(self.as_raw_mut_EdgeBoxes(), value) }.into_result()
-	}
-	
-	/// Returns the scale sensitivity.
-	fn get_kappa(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getKappa_const(self.as_raw_EdgeBoxes()) }.into_result()
 	}
 	
 	/// Sets the scale sensitivity.
@@ -2216,14 +2245,18 @@ pub trait EdgeBoxes: core::AlgorithmTrait {
 }
 
 /// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
-pub trait EdgeDrawing: core::AlgorithmTrait {
+pub trait EdgeDrawingConst: core::AlgorithmTraitConst {
 	fn as_raw_EdgeDrawing(&self) -> *const c_void;
-	fn as_raw_mut_EdgeDrawing(&mut self) -> *mut c_void;
 
 	fn params(&self) -> crate::ximgproc::EdgeDrawing_Params {
 		unsafe { sys::cv_ximgproc_EdgeDrawing_getPropParams_const(self.as_raw_EdgeDrawing()) }.into_result().expect("Infallible function failed: params")
 	}
 	
+}
+
+pub trait EdgeDrawing: core::AlgorithmTrait + crate::ximgproc::EdgeDrawingConst {
+	fn as_raw_mut_EdgeDrawing(&mut self) -> *mut c_void;
+
 	fn set_params(&mut self, val: crate::ximgproc::EdgeDrawing_Params) -> () {
 		unsafe { sys::cv_ximgproc_EdgeDrawing_setPropParams_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_params")
 	}
@@ -2247,8 +2280,8 @@ pub trait EdgeDrawing: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_EdgeDrawing_getGradientImage_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
-	fn get_segments(&mut self) -> Result<core::Vector::<core::Vector::<core::Point>>> {
-		unsafe { sys::cv_ximgproc_EdgeDrawing_getSegments(self.as_raw_mut_EdgeDrawing()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector::<core::Point>>::opencv_from_extern(r) } )
+	fn get_segments(&mut self) -> Result<core::Vector<core::Vector<core::Point>>> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_getSegments(self.as_raw_mut_EdgeDrawing()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector<core::Point>>::opencv_from_extern(r) } )
 	}
 	
 	/// Detects lines.
@@ -2311,6 +2344,10 @@ pub struct EdgeDrawing_Params {
 opencv_type_simple! { crate::ximgproc::EdgeDrawing_Params }
 
 impl EdgeDrawing_Params {
+	pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
 	pub fn default() -> Result<crate::ximgproc::EdgeDrawing_Params> {
 		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_Params() }.into_result()
 	}
@@ -2319,17 +2356,17 @@ impl EdgeDrawing_Params {
 		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_read_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
-	pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage()) }.into_result()
-	}
-	
 }
 
 /// Interface for implementations of Fast Bilateral Solver.
 /// 
 /// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
-pub trait FastBilateralSolverFilter: core::AlgorithmTrait {
+pub trait FastBilateralSolverFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_FastBilateralSolverFilter(&self) -> *const c_void;
+
+}
+
+pub trait FastBilateralSolverFilter: core::AlgorithmTrait + crate::ximgproc::FastBilateralSolverFilterConst {
 	fn as_raw_mut_FastBilateralSolverFilter(&mut self) -> *mut c_void;
 
 	/// Apply smoothing operation to the source image.
@@ -2355,8 +2392,12 @@ pub trait FastBilateralSolverFilter: core::AlgorithmTrait {
 /// Interface for implementations of Fast Global Smoother filter.
 /// 
 /// For more details about this filter see [Min2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Farbman2008) .
-pub trait FastGlobalSmootherFilter: core::AlgorithmTrait {
+pub trait FastGlobalSmootherFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_FastGlobalSmootherFilter(&self) -> *const c_void;
+
+}
+
+pub trait FastGlobalSmootherFilter: core::AlgorithmTrait + crate::ximgproc::FastGlobalSmootherFilterConst {
 	fn as_raw_mut_FastGlobalSmootherFilter(&mut self) -> *mut c_void;
 
 	/// Apply smoothing operation to the source image.
@@ -2374,8 +2415,12 @@ pub trait FastGlobalSmootherFilter: core::AlgorithmTrait {
 }
 
 /// @include samples/fld_lines.cpp
-pub trait FastLineDetector: core::AlgorithmTrait {
+pub trait FastLineDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_FastLineDetector(&self) -> *const c_void;
+
+}
+
+pub trait FastLineDetector: core::AlgorithmTrait + crate::ximgproc::FastLineDetectorConst {
 	fn as_raw_mut_FastLineDetector(&mut self) -> *mut c_void;
 
 	/// @example fld_lines.cpp
@@ -2425,8 +2470,12 @@ pub trait FastLineDetector: core::AlgorithmTrait {
 /// Interface for realizations of Guided Filter.
 /// 
 /// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Kaiming10) .
-pub trait GuidedFilter: core::AlgorithmTrait {
+pub trait GuidedFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_GuidedFilter(&self) -> *const c_void;
+
+}
+
+pub trait GuidedFilter: core::AlgorithmTrait + crate::ximgproc::GuidedFilterConst {
 	fn as_raw_mut_GuidedFilter(&mut self) -> *mut c_void;
 
 	/// Apply Guided Filter to the filtering image.
@@ -2451,9 +2500,8 @@ pub trait GuidedFilter: core::AlgorithmTrait {
 
 /// !
 /// Helper class for training part of [P. Dollar and C. L. Zitnick. Structured Forests for Fast Edge Detection, 2013].
-pub trait RFFeatureGetter: core::AlgorithmTrait {
+pub trait RFFeatureGetterConst: core::AlgorithmTraitConst {
 	fn as_raw_RFFeatureGetter(&self) -> *const c_void;
-	fn as_raw_mut_RFFeatureGetter(&mut self) -> *mut c_void;
 
 	/// !
 	/// * This functions extracts feature channels from src.
@@ -2474,13 +2522,120 @@ pub trait RFFeatureGetter: core::AlgorithmTrait {
 	
 }
 
+pub trait RFFeatureGetter: core::AlgorithmTrait + crate::ximgproc::RFFeatureGetterConst {
+	fn as_raw_mut_RFFeatureGetter(&mut self) -> *mut c_void;
+
+}
+
 /// Sparse match interpolation algorithm based on modified piecewise locally-weighted affine
 /// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
 /// and Fast Global Smoother as post-processing filter. The RICInterpolator is a extension of the EdgeAwareInterpolator.
 /// Main concept of this extension is an piece-wise affine model based on over-segmentation via SLIC superpixel estimation.
 /// The method contains an efficient propagation mechanism to estimate among the pieces-wise models.
-pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
+pub trait RICInterpolatorConst: crate::ximgproc::SparseMatchInterpolatorConst {
 	fn as_raw_RICInterpolator(&self) -> *const c_void;
+
+	/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
+	/// model for a superpixel segment. However, lower values would make the interpolation
+	/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+	///      *  see also: setK
+	fn get_k(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getK_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Get the internal cost, i.e. edge map, used for estimating the edge-aware term.
+	/// ## See also
+	/// setCostMap
+	///      *  setSuperpixelSize
+	fn get_superpixel_size(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelSize_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
+	/// model.
+	///      *  see also: setSuperpixelNNCnt
+	fn get_superpixel_nn_cnt(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelNNCnt_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter to tune enforcement of superpixel smoothness factor used for oversegmentation.
+	/// ## See also
+	/// cv::ximgproc::createSuperpixelSLIC
+	///      *  setSuperpixelRuler
+	fn get_superpixel_ruler(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelRuler_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter to choose superpixel algorithm variant to use:
+	/// - cv::ximgproc::SLICType SLIC segments image using a desired region_size (value: 100)
+	/// - cv::ximgproc::SLICType SLICO will optimize using adaptive compactness factor (value: 101)
+	/// - cv::ximgproc::SLICType MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels (value: 102).
+	/// ## See also
+	/// cv::ximgproc::createSuperpixelSLIC
+	///      *  setSuperpixelMode
+	fn get_superpixel_mode(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelMode_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
+	/// ## See also
+	/// setAlpha
+	fn get_alpha(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getAlpha_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter defining the number of iterations for piece-wise affine model estimation.
+	/// ## See also
+	/// setModelIter
+	fn get_model_iter(&self) -> Result<i32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getModelIter_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
+	/// ## See also
+	/// setRefineModels
+	fn get_refine_models(&self) -> Result<bool> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getRefineModels_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// MaxFlow is a threshold to validate the predictions using a certain piece-wise affine model.
+	/// If the prediction exceeds the treshold the translational model will be applied instead.
+	///      *  see also: setMaxFlow
+	fn get_max_flow(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getMaxFlow_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
+	/// ## See also
+	/// setUseVariationalRefinement
+	fn get_use_variational_refinement(&self) -> Result<bool> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getUseVariationalRefinement_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
+	/// ## See also
+	/// setUseGlobalSmootherFilter
+	fn get_use_global_smoother_filter(&self) -> Result<bool> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getUseGlobalSmootherFilter_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Sets the respective fastGlobalSmootherFilter() parameter.
+	/// ## See also
+	/// setFGSLambda
+	fn get_fgs_lambda(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getFGSLambda_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+	/// Sets the respective fastGlobalSmootherFilter() parameter.
+	/// ## See also
+	/// setFGSSigma
+	fn get_fgs_sigma(&self) -> Result<f32> {
+		unsafe { sys::cv_ximgproc_RICInterpolator_getFGSSigma_const(self.as_raw_RICInterpolator()) }.into_result()
+	}
+	
+}
+
+pub trait RICInterpolator: crate::ximgproc::RICInterpolatorConst + crate::ximgproc::SparseMatchInterpolator {
 	fn as_raw_mut_RICInterpolator(&mut self) -> *mut c_void;
 
 	/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
@@ -2491,14 +2646,6 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 	/// * k: 32
 	fn set_k(&mut self, k: i32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setK_int(self.as_raw_mut_RICInterpolator(), k) }.into_result()
-	}
-	
-	/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
-	/// model for a superpixel segment. However, lower values would make the interpolation
-	/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
-	///      *  see also: setK
-	fn get_k(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getK_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// Interface to provide a more elaborated cost map, i.e. edge map, for the edge-aware term.
@@ -2524,14 +2671,6 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelSize_int(self.as_raw_mut_RICInterpolator(), sp_size) }.into_result()
 	}
 	
-	/// Get the internal cost, i.e. edge map, used for estimating the edge-aware term.
-	/// ## See also
-	/// setCostMap
-	///      *  setSuperpixelSize
-	fn get_superpixel_size(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelSize_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
 	/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
 	/// model.
 	/// 
@@ -2539,13 +2678,6 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 	/// * sp_nn: 150
 	fn set_superpixel_nn_cnt(&mut self, sp_nn: i32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelNNCnt_int(self.as_raw_mut_RICInterpolator(), sp_nn) }.into_result()
-	}
-	
-	/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
-	/// model.
-	///      *  see also: setSuperpixelNNCnt
-	fn get_superpixel_nn_cnt(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelNNCnt_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// Parameter to tune enforcement of superpixel smoothness factor used for oversegmentation.
@@ -2556,14 +2688,6 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 	/// * ruler: 15.f
 	fn set_superpixel_ruler(&mut self, ruler: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelRuler_float(self.as_raw_mut_RICInterpolator(), ruler) }.into_result()
-	}
-	
-	/// Parameter to tune enforcement of superpixel smoothness factor used for oversegmentation.
-	/// ## See also
-	/// cv::ximgproc::createSuperpixelSLIC
-	///      *  setSuperpixelRuler
-	fn get_superpixel_ruler(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelRuler_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// Parameter to choose superpixel algorithm variant to use:
@@ -2579,30 +2703,12 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelMode_int(self.as_raw_mut_RICInterpolator(), mode) }.into_result()
 	}
 	
-	/// Parameter to choose superpixel algorithm variant to use:
-	/// - cv::ximgproc::SLICType SLIC segments image using a desired region_size (value: 100)
-	/// - cv::ximgproc::SLICType SLICO will optimize using adaptive compactness factor (value: 101)
-	/// - cv::ximgproc::SLICType MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels (value: 102).
-	/// ## See also
-	/// cv::ximgproc::createSuperpixelSLIC
-	///      *  setSuperpixelMode
-	fn get_superpixel_mode(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelMode_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
 	/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
 	/// 
 	/// ## C++ default parameters
 	/// * alpha: 0.7f
 	fn set_alpha(&mut self, alpha: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setAlpha_float(self.as_raw_mut_RICInterpolator(), alpha) }.into_result()
-	}
-	
-	/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
-	/// ## See also
-	/// setAlpha
-	fn get_alpha(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getAlpha_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// Parameter defining the number of iterations for piece-wise affine model estimation.
@@ -2613,26 +2719,12 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setModelIter_int(self.as_raw_mut_RICInterpolator(), model_iter) }.into_result()
 	}
 	
-	/// Parameter defining the number of iterations for piece-wise affine model estimation.
-	/// ## See also
-	/// setModelIter
-	fn get_model_iter(&self) -> Result<i32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getModelIter_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
 	/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
 	/// 
 	/// ## C++ default parameters
 	/// * refine_modles: true
 	fn set_refine_models(&mut self, refine_modles: bool) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setRefineModels_bool(self.as_raw_mut_RICInterpolator(), refine_modles) }.into_result()
-	}
-	
-	/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
-	/// ## See also
-	/// setRefineModels
-	fn get_refine_models(&self) -> Result<bool> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getRefineModels_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// MaxFlow is a threshold to validate the predictions using a certain piece-wise affine model.
@@ -2644,13 +2736,6 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setMaxFlow_float(self.as_raw_mut_RICInterpolator(), max_flow) }.into_result()
 	}
 	
-	/// MaxFlow is a threshold to validate the predictions using a certain piece-wise affine model.
-	/// If the prediction exceeds the treshold the translational model will be applied instead.
-	///      *  see also: setMaxFlow
-	fn get_max_flow(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getMaxFlow_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
 	/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
 	/// 
 	/// ## C++ default parameters
@@ -2659,26 +2744,12 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setUseVariationalRefinement_bool(self.as_raw_mut_RICInterpolator(), use_variational_refinement) }.into_result()
 	}
 	
-	/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
-	/// ## See also
-	/// setUseVariationalRefinement
-	fn get_use_variational_refinement(&self) -> Result<bool> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getUseVariationalRefinement_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
 	/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
 	/// 
 	/// ## C++ default parameters
 	/// * use_fgs: true
 	fn set_use_global_smoother_filter(&mut self, use_fgs: bool) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setUseGlobalSmootherFilter_bool(self.as_raw_mut_RICInterpolator(), use_fgs) }.into_result()
-	}
-	
-	/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
-	/// ## See also
-	/// setUseGlobalSmootherFilter
-	fn get_use_global_smoother_filter(&self) -> Result<bool> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getUseGlobalSmootherFilter_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 	/// Sets the respective fastGlobalSmootherFilter() parameter.
@@ -2690,25 +2761,11 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 	}
 	
 	/// Sets the respective fastGlobalSmootherFilter() parameter.
-	/// ## See also
-	/// setFGSLambda
-	fn get_fgs_lambda(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getFGSLambda_const(self.as_raw_RICInterpolator()) }.into_result()
-	}
-	
-	/// Sets the respective fastGlobalSmootherFilter() parameter.
 	/// 
 	/// ## C++ default parameters
 	/// * sigma: 1.5f
 	fn set_fgs_sigma(&mut self, sigma: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_RICInterpolator_setFGSSigma_float(self.as_raw_mut_RICInterpolator(), sigma) }.into_result()
-	}
-	
-	/// Sets the respective fastGlobalSmootherFilter() parameter.
-	/// ## See also
-	/// setFGSSigma
-	fn get_fgs_sigma(&self) -> Result<f32> {
-		unsafe { sys::cv_ximgproc_RICInterpolator_getFGSSigma_const(self.as_raw_RICInterpolator()) }.into_result()
 	}
 	
 }
@@ -2717,8 +2774,12 @@ pub trait RICInterpolator: crate::ximgproc::SparseMatchInterpolator {
 /// Implements Ridge detection similar to the one in [Mathematica](http://reference.wolfram.com/language/ref/RidgeFilter.html)
 /// using the eigen values from the Hessian Matrix of the input image using Sobel Derivatives.
 /// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_M_RF)
-pub trait RidgeDetectionFilter: core::AlgorithmTrait {
+pub trait RidgeDetectionFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_RidgeDetectionFilter(&self) -> *const c_void;
+
+}
+
+pub trait RidgeDetectionFilter: core::AlgorithmTrait + crate::ximgproc::RidgeDetectionFilterConst {
 	fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void;
 
 	/// Apply Ridge detection filter on input image.
@@ -2756,15 +2817,19 @@ impl dyn RidgeDetectionFilter + '_ {
 	/// * scale: 1
 	/// * delta: 0
 	/// * border_type: BORDER_DEFAULT
-	pub fn create(ddepth: i32, dx: i32, dy: i32, ksize: i32, out_dtype: i32, scale: f64, delta: f64, border_type: i32) -> Result<core::Ptr::<dyn crate::ximgproc::RidgeDetectionFilter>> {
+	pub fn create(ddepth: i32, dx: i32, dy: i32, ksize: i32, out_dtype: i32, scale: f64, delta: f64, border_type: i32) -> Result<core::Ptr<dyn crate::ximgproc::RidgeDetectionFilter>> {
 		unsafe { sys::cv_ximgproc_RidgeDetectionFilter_create_int_int_int_int_int_double_double_int(ddepth, dx, dy, ksize, out_dtype, scale, delta, border_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ximgproc::RidgeDetectionFilter>::opencv_from_extern(r) } )
 	}
 	
 }
 /// Main interface for all filters, that take sparse matches as an
 /// input and produce a dense per-pixel matching (optical flow) as an output.
-pub trait SparseMatchInterpolator: core::AlgorithmTrait {
+pub trait SparseMatchInterpolatorConst: core::AlgorithmTraitConst {
 	fn as_raw_SparseMatchInterpolator(&self) -> *const c_void;
+
+}
+
+pub trait SparseMatchInterpolator: core::AlgorithmTrait + crate::ximgproc::SparseMatchInterpolatorConst {
 	fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void;
 
 	/// Interpolate input sparse matches.
@@ -2793,9 +2858,8 @@ pub trait SparseMatchInterpolator: core::AlgorithmTrait {
 }
 
 /// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Dollar2013) :
-pub trait StructuredEdgeDetection: core::AlgorithmTrait {
+pub trait StructuredEdgeDetectionConst: core::AlgorithmTraitConst {
 	fn as_raw_StructuredEdgeDetection(&self) -> *const c_void;
-	fn as_raw_mut_StructuredEdgeDetection(&mut self) -> *mut c_void;
 
 	/// The function detects edges in src and draw them to dst.
 	/// 
@@ -2848,6 +2912,11 @@ pub trait StructuredEdgeDetection: core::AlgorithmTrait {
 	
 }
 
+pub trait StructuredEdgeDetection: core::AlgorithmTrait + crate::ximgproc::StructuredEdgeDetectionConst {
+	fn as_raw_mut_StructuredEdgeDetection(&mut self) -> *mut c_void;
+
+}
+
 /// Class implementing the LSC (Linear Spectral Clustering) superpixels
 /// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
 /// 
@@ -2856,34 +2925,13 @@ pub trait StructuredEdgeDetection: core::AlgorithmTrait {
 /// segmentation is adopted based on a similarity metric that measures the color
 /// similarity and space proximity between image pixels. LSC is of linear computational
 /// complexity and high memory efficiency and is able to preserve global properties of images
-pub trait SuperpixelLSC: core::AlgorithmTrait {
+pub trait SuperpixelLSCConst: core::AlgorithmTraitConst {
 	fn as_raw_SuperpixelLSC(&self) -> *const c_void;
-	fn as_raw_mut_SuperpixelLSC(&mut self) -> *mut c_void;
 
 	/// Calculates the actual amount of superpixels on a given segmentation computed
 	/// and stored in SuperpixelLSC object.
 	fn get_number_of_superpixels(&self) -> Result<i32> {
 		unsafe { sys::cv_ximgproc_SuperpixelLSC_getNumberOfSuperpixels_const(self.as_raw_SuperpixelLSC()) }.into_result()
-	}
-	
-	/// Calculates the superpixel segmentation on a given image with the initialized
-	/// parameters in the SuperpixelLSC object.
-	/// 
-	/// This function can be called again without the need of initializing the algorithm with
-	/// createSuperpixelLSC(). This save the computational cost of allocating memory for all the
-	/// structures of the algorithm.
-	/// 
-	/// ## Parameters
-	/// * num_iterations: Number of iterations. Higher number improves the result.
-	/// 
-	/// The function computes the superpixels segmentation of an image with the parameters initialized
-	/// with the function createSuperpixelLSC(). The algorithms starts from a grid of superpixels and
-	/// then refines the boundaries by proposing updates of edges boundaries.
-	/// 
-	/// ## C++ default parameters
-	/// * num_iterations: 10
-	fn iterate(&mut self, num_iterations: i32) -> Result<()> {
-		unsafe { sys::cv_ximgproc_SuperpixelLSC_iterate_int(self.as_raw_mut_SuperpixelLSC(), num_iterations) }.into_result()
 	}
 	
 	/// Returns the segmentation labeling of the image.
@@ -2919,6 +2967,31 @@ pub trait SuperpixelLSC: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayR_bool(self.as_raw_SuperpixelLSC(), image.as_raw__OutputArray(), thick_line) }.into_result()
 	}
 	
+}
+
+pub trait SuperpixelLSC: core::AlgorithmTrait + crate::ximgproc::SuperpixelLSCConst {
+	fn as_raw_mut_SuperpixelLSC(&mut self) -> *mut c_void;
+
+	/// Calculates the superpixel segmentation on a given image with the initialized
+	/// parameters in the SuperpixelLSC object.
+	/// 
+	/// This function can be called again without the need of initializing the algorithm with
+	/// createSuperpixelLSC(). This save the computational cost of allocating memory for all the
+	/// structures of the algorithm.
+	/// 
+	/// ## Parameters
+	/// * num_iterations: Number of iterations. Higher number improves the result.
+	/// 
+	/// The function computes the superpixels segmentation of an image with the parameters initialized
+	/// with the function createSuperpixelLSC(). The algorithms starts from a grid of superpixels and
+	/// then refines the boundaries by proposing updates of edges boundaries.
+	/// 
+	/// ## C++ default parameters
+	/// * num_iterations: 10
+	fn iterate(&mut self, num_iterations: i32) -> Result<()> {
+		unsafe { sys::cv_ximgproc_SuperpixelLSC_iterate_int(self.as_raw_mut_SuperpixelLSC(), num_iterations) }.into_result()
+	}
+	
 	/// Enforce label connectivity.
 	/// 
 	/// ## Parameters
@@ -2946,8 +3019,12 @@ pub trait SuperpixelLSC: core::AlgorithmTrait {
 /// superpixels have smooth boundaries and are of similar shape. In practice it starts from a regular
 /// grid of superpixels and moves the pixels or blocks of pixels at the boundaries to refine the
 /// solution. The algorithm runs in real-time using a single CPU.
-pub trait SuperpixelSEEDS: core::AlgorithmTrait {
+pub trait SuperpixelSEEDSConst: core::AlgorithmTraitConst {
 	fn as_raw_SuperpixelSEEDS(&self) -> *const c_void;
+
+}
+
+pub trait SuperpixelSEEDS: core::AlgorithmTrait + crate::ximgproc::SuperpixelSEEDSConst {
 	fn as_raw_mut_SuperpixelSEEDS(&mut self) -> *mut c_void;
 
 	/// Calculates the superpixel segmentation on a given image stored in SuperpixelSEEDS object.
@@ -3050,34 +3127,13 @@ pub trait SuperpixelSEEDS: core::AlgorithmTrait {
 /// Several optimizations are available for SLIC class:
 /// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Achanta2012).
 /// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
-pub trait SuperpixelSLIC: core::AlgorithmTrait {
+pub trait SuperpixelSLICConst: core::AlgorithmTraitConst {
 	fn as_raw_SuperpixelSLIC(&self) -> *const c_void;
-	fn as_raw_mut_SuperpixelSLIC(&mut self) -> *mut c_void;
 
 	/// Calculates the actual amount of superpixels on a given segmentation computed
 	/// and stored in SuperpixelSLIC object.
 	fn get_number_of_superpixels(&self) -> Result<i32> {
 		unsafe { sys::cv_ximgproc_SuperpixelSLIC_getNumberOfSuperpixels_const(self.as_raw_SuperpixelSLIC()) }.into_result()
-	}
-	
-	/// Calculates the superpixel segmentation on a given image with the initialized
-	/// parameters in the SuperpixelSLIC object.
-	/// 
-	/// This function can be called again without the need of initializing the algorithm with
-	/// createSuperpixelSLIC(). This save the computational cost of allocating memory for all the
-	/// structures of the algorithm.
-	/// 
-	/// ## Parameters
-	/// * num_iterations: Number of iterations. Higher number improves the result.
-	/// 
-	/// The function computes the superpixels segmentation of an image with the parameters initialized
-	/// with the function createSuperpixelSLIC(). The algorithms starts from a grid of superpixels and
-	/// then refines the boundaries by proposing updates of edges boundaries.
-	/// 
-	/// ## C++ default parameters
-	/// * num_iterations: 10
-	fn iterate(&mut self, num_iterations: i32) -> Result<()> {
-		unsafe { sys::cv_ximgproc_SuperpixelSLIC_iterate_int(self.as_raw_mut_SuperpixelSLIC(), num_iterations) }.into_result()
 	}
 	
 	/// Returns the segmentation labeling of the image.
@@ -3113,6 +3169,31 @@ pub trait SuperpixelSLIC: core::AlgorithmTrait {
 		unsafe { sys::cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayR_bool(self.as_raw_SuperpixelSLIC(), image.as_raw__OutputArray(), thick_line) }.into_result()
 	}
 	
+}
+
+pub trait SuperpixelSLIC: core::AlgorithmTrait + crate::ximgproc::SuperpixelSLICConst {
+	fn as_raw_mut_SuperpixelSLIC(&mut self) -> *mut c_void;
+
+	/// Calculates the superpixel segmentation on a given image with the initialized
+	/// parameters in the SuperpixelSLIC object.
+	/// 
+	/// This function can be called again without the need of initializing the algorithm with
+	/// createSuperpixelSLIC(). This save the computational cost of allocating memory for all the
+	/// structures of the algorithm.
+	/// 
+	/// ## Parameters
+	/// * num_iterations: Number of iterations. Higher number improves the result.
+	/// 
+	/// The function computes the superpixels segmentation of an image with the parameters initialized
+	/// with the function createSuperpixelSLIC(). The algorithms starts from a grid of superpixels and
+	/// then refines the boundaries by proposing updates of edges boundaries.
+	/// 
+	/// ## C++ default parameters
+	/// * num_iterations: 10
+	fn iterate(&mut self, num_iterations: i32) -> Result<()> {
+		unsafe { sys::cv_ximgproc_SuperpixelSLIC_iterate_int(self.as_raw_mut_SuperpixelSLIC(), num_iterations) }.into_result()
+	}
+	
 	/// Enforce label connectivity.
 	/// 
 	/// ## Parameters
@@ -3133,8 +3214,12 @@ pub trait SuperpixelSLIC: core::AlgorithmTrait {
 
 /// Graph Based Segmentation Algorithm.
 /// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_PFF2004) .
-pub trait GraphSegmentation: core::AlgorithmTrait {
+pub trait GraphSegmentationConst: core::AlgorithmTraitConst {
 	fn as_raw_GraphSegmentation(&self) -> *const c_void;
+
+}
+
+pub trait GraphSegmentation: core::AlgorithmTrait + crate::ximgproc::GraphSegmentationConst {
 	fn as_raw_mut_GraphSegmentation(&mut self) -> *mut c_void;
 
 	/// Segment an image and store output in dst
@@ -3175,8 +3260,12 @@ pub trait GraphSegmentation: core::AlgorithmTrait {
 
 /// Selective search segmentation algorithm
 /// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentation: core::AlgorithmTrait {
+pub trait SelectiveSearchSegmentationConst: core::AlgorithmTraitConst {
 	fn as_raw_SelectiveSearchSegmentation(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentation: core::AlgorithmTrait + crate::ximgproc::SelectiveSearchSegmentationConst {
 	fn as_raw_mut_SelectiveSearchSegmentation(&mut self) -> *mut c_void;
 
 	/// Set a image used by switch* functions to initialize the class
@@ -3243,7 +3332,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait {
 	/// Add a new graph segmentation in the list of graph segementations to process.
 	/// ## Parameters
 	/// * g: The graph segmentation
-	fn add_graph_segmentation(&mut self, mut g: core::Ptr::<dyn crate::ximgproc::GraphSegmentation>) -> Result<()> {
+	fn add_graph_segmentation(&mut self, mut g: core::Ptr<dyn crate::ximgproc::GraphSegmentation>) -> Result<()> {
 		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addGraphSegmentation_Ptr_GraphSegmentation_(self.as_raw_mut_SelectiveSearchSegmentation(), g.as_raw_mut_PtrOfGraphSegmentation()) }.into_result()
 	}
 	
@@ -3255,7 +3344,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait {
 	/// Add a new strategy in the list of strategy to process.
 	/// ## Parameters
 	/// * s: The strategy
-	fn add_strategy(&mut self, mut s: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<()> {
+	fn add_strategy(&mut self, mut s: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<()> {
 		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addStrategy_Ptr_SelectiveSearchSegmentationStrategy_(self.as_raw_mut_SelectiveSearchSegmentation(), s.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy()) }.into_result()
 	}
 	
@@ -3267,7 +3356,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait {
 	/// Based on all images, graph segmentations and stragies, computes all possible rects and return them
 	/// ## Parameters
 	/// * rects: The list of rects. The first ones are more relevents than the lasts ones.
-	fn process(&mut self, rects: &mut core::Vector::<core::Rect>) -> Result<()> {
+	fn process(&mut self, rects: &mut core::Vector<core::Rect>) -> Result<()> {
 		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vector_Rect_R(self.as_raw_mut_SelectiveSearchSegmentation(), rects.as_raw_mut_VectorOfRect()) }.into_result()
 	}
 	
@@ -3275,8 +3364,12 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait {
 
 /// Strategie for the selective search segmentation algorithm
 /// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentationStrategy: core::AlgorithmTrait {
+pub trait SelectiveSearchSegmentationStrategyConst: core::AlgorithmTraitConst {
 	fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategy: core::AlgorithmTrait + crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void;
 
 	/// Set a initial image, with a segmentation.
@@ -3315,30 +3408,42 @@ pub trait SelectiveSearchSegmentationStrategy: core::AlgorithmTrait {
 
 /// Color-based strategy for the selective search segmentation algorithm
 /// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentationStrategyColor: crate::ximgproc::SelectiveSearchSegmentationStrategy {
+pub trait SelectiveSearchSegmentationStrategyColorConst: crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategyColor: crate::ximgproc::SelectiveSearchSegmentationStrategy + crate::ximgproc::SelectiveSearchSegmentationStrategyColorConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void;
 
 }
 
 /// Fill-based strategy for the selective search segmentation algorithm
 /// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentationStrategyFill: crate::ximgproc::SelectiveSearchSegmentationStrategy {
+pub trait SelectiveSearchSegmentationStrategyFillConst: crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategyFill: crate::ximgproc::SelectiveSearchSegmentationStrategy + crate::ximgproc::SelectiveSearchSegmentationStrategyFillConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void;
 
 }
 
 /// Regroup multiple strategies for the selective search segmentation algorithm
-pub trait SelectiveSearchSegmentationStrategyMultiple: crate::ximgproc::SelectiveSearchSegmentationStrategy {
+pub trait SelectiveSearchSegmentationStrategyMultipleConst: crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_SelectiveSearchSegmentationStrategyMultiple(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategyMultiple: crate::ximgproc::SelectiveSearchSegmentationStrategy + crate::ximgproc::SelectiveSearchSegmentationStrategyMultipleConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(&mut self) -> *mut c_void;
 
 	/// Add a new sub-strategy
 	/// ## Parameters
 	/// * g: The strategy
 	/// * weight: The weight of the strategy
-	fn add_strategy(&mut self, mut g: core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, weight: f32) -> Result<()> {
+	fn add_strategy(&mut self, mut g: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, weight: f32) -> Result<()> {
 		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_addStrategy_Ptr_SelectiveSearchSegmentationStrategy__float(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(), g.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), weight) }.into_result()
 	}
 	
@@ -3351,16 +3456,24 @@ pub trait SelectiveSearchSegmentationStrategyMultiple: crate::ximgproc::Selectiv
 
 /// Size-based strategy for the selective search segmentation algorithm
 /// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentationStrategySize: crate::ximgproc::SelectiveSearchSegmentationStrategy {
+pub trait SelectiveSearchSegmentationStrategySizeConst: crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategySize: crate::ximgproc::SelectiveSearchSegmentationStrategy + crate::ximgproc::SelectiveSearchSegmentationStrategySizeConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void;
 
 }
 
 /// Texture-based strategy for the selective search segmentation algorithm
 /// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-pub trait SelectiveSearchSegmentationStrategyTexture: crate::ximgproc::SelectiveSearchSegmentationStrategy {
+pub trait SelectiveSearchSegmentationStrategyTextureConst: crate::ximgproc::SelectiveSearchSegmentationStrategyConst {
 	fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void;
+
+}
+
+pub trait SelectiveSearchSegmentationStrategyTexture: crate::ximgproc::SelectiveSearchSegmentationStrategy + crate::ximgproc::SelectiveSearchSegmentationStrategyTextureConst {
 	fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void;
 
 }

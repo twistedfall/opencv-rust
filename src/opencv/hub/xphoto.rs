@@ -10,7 +10,7 @@
 //! # Additional photo processing algorithms
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::WhiteBalancer, super::SimpleWB, super::GrayworldWB, super::LearningBasedWB, super::TonemapDurand };
+	pub use { super::WhiteBalancerConst, super::WhiteBalancer, super::SimpleWBConst, super::SimpleWB, super::GrayworldWBConst, super::GrayworldWB, super::LearningBasedWBConst, super::LearningBasedWB, super::TonemapDurandConst, super::TonemapDurand };
 }
 
 /// Execute only first step of the algorithm
@@ -232,7 +232,7 @@ pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 }
 
 /// Creates an instance of GrayworldWB
-pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldWB>> {
+pub fn create_grayworld_wb() -> Result<core::Ptr<dyn crate::xphoto::GrayworldWB>> {
 	unsafe { sys::cv_xphoto_createGrayworldWB() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::GrayworldWB>::opencv_from_extern(r) } )
 }
 
@@ -243,13 +243,13 @@ pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldW
 /// 
 /// ## C++ default parameters
 /// * path_to_model: String()
-pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr::<dyn crate::xphoto::LearningBasedWB>> {
+pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr<dyn crate::xphoto::LearningBasedWB>> {
 	extern_container_arg!(path_to_model);
 	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringR(path_to_model.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::opencv_from_extern(r) } )
 }
 
 /// Creates an instance of SimpleWB
-pub fn create_simple_wb() -> Result<core::Ptr::<dyn crate::xphoto::SimpleWB>> {
+pub fn create_simple_wb() -> Result<core::Ptr<dyn crate::xphoto::SimpleWB>> {
 	unsafe { sys::cv_xphoto_createSimpleWB() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::SimpleWB>::opencv_from_extern(r) } )
 }
 
@@ -271,7 +271,7 @@ pub fn create_simple_wb() -> Result<core::Ptr::<dyn crate::xphoto::SimpleWB>> {
 /// * saturation: 1.0f
 /// * sigma_color: 2.0f
 /// * sigma_space: 2.0f
-pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<core::Ptr::<dyn crate::xphoto::TonemapDurand>> {
+pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<core::Ptr<dyn crate::xphoto::TonemapDurand>> {
 	unsafe { sys::cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_color, sigma_space) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xphoto::TonemapDurand>::opencv_from_extern(r) } )
 }
 
@@ -358,9 +358,8 @@ pub fn oil_painting(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// white-balancing saturated images.
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
-pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
+pub trait GrayworldWBConst: crate::xphoto::WhiteBalancerConst {
 	fn as_raw_GrayworldWB(&self) -> *const c_void;
-	fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void;
 
 	/// Maximum saturation for a pixel to be included in the
 	///    gray-world assumption
@@ -370,6 +369,11 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 		unsafe { sys::cv_xphoto_GrayworldWB_getSaturationThreshold_const(self.as_raw_GrayworldWB()) }.into_result()
 	}
 	
+}
+
+pub trait GrayworldWB: crate::xphoto::GrayworldWBConst + crate::xphoto::WhiteBalancer {
+	fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void;
+
 	/// Maximum saturation for a pixel to be included in the
 	///    gray-world assumption
 	/// ## See also
@@ -393,8 +397,37 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 /// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
-pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
+pub trait LearningBasedWBConst: crate::xphoto::WhiteBalancerConst {
 	fn as_raw_LearningBasedWB(&self) -> *const c_void;
+
+	/// Maximum possible value of the input image (e.g. 255 for 8 bit images,
+	///            4095 for 12 bit images)
+	/// ## See also
+	/// setRangeMaxVal
+	fn get_range_max_val(&self) -> Result<i32> {
+		unsafe { sys::cv_xphoto_LearningBasedWB_getRangeMaxVal_const(self.as_raw_LearningBasedWB()) }.into_result()
+	}
+	
+	/// Threshold that is used to determine saturated pixels, i.e. pixels where at least one of the
+	///    channels exceeds ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsaturation%5Fthreshold%7D%5Ctimes%5Ctexttt%7Brange%5Fmax%5Fval%7D) are ignored.
+	/// ## See also
+	/// setSaturationThreshold
+	fn get_saturation_threshold(&self) -> Result<f32> {
+		unsafe { sys::cv_xphoto_LearningBasedWB_getSaturationThreshold_const(self.as_raw_LearningBasedWB()) }.into_result()
+	}
+	
+	/// Defines the size of one dimension of a three-dimensional RGB histogram that is used internally
+	///    by the algorithm. It often makes sense to increase the number of bins for images with higher bit depth
+	///    (e.g. 256 bins for a 12 bit image).
+	/// ## See also
+	/// setHistBinNum
+	fn get_hist_bin_num(&self) -> Result<i32> {
+		unsafe { sys::cv_xphoto_LearningBasedWB_getHistBinNum_const(self.as_raw_LearningBasedWB()) }.into_result()
+	}
+	
+}
+
+pub trait LearningBasedWB: crate::xphoto::LearningBasedWBConst + crate::xphoto::WhiteBalancer {
 	fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void;
 
 	/// Implements the feature extraction part of the algorithm.
@@ -420,14 +453,6 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	/// Maximum possible value of the input image (e.g. 255 for 8 bit images,
 	///            4095 for 12 bit images)
 	/// ## See also
-	/// setRangeMaxVal
-	fn get_range_max_val(&self) -> Result<i32> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_getRangeMaxVal_const(self.as_raw_LearningBasedWB()) }.into_result()
-	}
-	
-	/// Maximum possible value of the input image (e.g. 255 for 8 bit images,
-	///            4095 for 12 bit images)
-	/// ## See also
 	/// setRangeMaxVal getRangeMaxVal
 	fn set_range_max_val(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_xphoto_LearningBasedWB_setRangeMaxVal_int(self.as_raw_mut_LearningBasedWB(), val) }.into_result()
@@ -436,26 +461,9 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	/// Threshold that is used to determine saturated pixels, i.e. pixels where at least one of the
 	///    channels exceeds ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsaturation%5Fthreshold%7D%5Ctimes%5Ctexttt%7Brange%5Fmax%5Fval%7D) are ignored.
 	/// ## See also
-	/// setSaturationThreshold
-	fn get_saturation_threshold(&self) -> Result<f32> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_getSaturationThreshold_const(self.as_raw_LearningBasedWB()) }.into_result()
-	}
-	
-	/// Threshold that is used to determine saturated pixels, i.e. pixels where at least one of the
-	///    channels exceeds ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsaturation%5Fthreshold%7D%5Ctimes%5Ctexttt%7Brange%5Fmax%5Fval%7D) are ignored.
-	/// ## See also
 	/// setSaturationThreshold getSaturationThreshold
 	fn set_saturation_threshold(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_xphoto_LearningBasedWB_setSaturationThreshold_float(self.as_raw_mut_LearningBasedWB(), val) }.into_result()
-	}
-	
-	/// Defines the size of one dimension of a three-dimensional RGB histogram that is used internally
-	///    by the algorithm. It often makes sense to increase the number of bins for images with higher bit depth
-	///    (e.g. 256 bins for a 12 bit image).
-	/// ## See also
-	/// setHistBinNum
-	fn get_hist_bin_num(&self) -> Result<i32> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_getHistBinNum_const(self.as_raw_LearningBasedWB()) }.into_result()
 	}
 	
 	/// Defines the size of one dimension of a three-dimensional RGB histogram that is used internally
@@ -472,9 +480,8 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 /// A simple white balance algorithm that works by independently stretching
 /// each of the input image channels to the specified range. For increased robustness
 /// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
-pub trait SimpleWB: crate::xphoto::WhiteBalancer {
+pub trait SimpleWBConst: crate::xphoto::WhiteBalancerConst {
 	fn as_raw_SimpleWB(&self) -> *const c_void;
-	fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void;
 
 	/// Input image range minimum value
 	/// ## See also
@@ -483,18 +490,44 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 		unsafe { sys::cv_xphoto_SimpleWB_getInputMin_const(self.as_raw_SimpleWB()) }.into_result()
 	}
 	
-	/// Input image range minimum value
-	/// ## See also
-	/// setInputMin getInputMin
-	fn set_input_min(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setInputMin_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
-	}
-	
 	/// Input image range maximum value
 	/// ## See also
 	/// setInputMax
 	fn get_input_max(&self) -> Result<f32> {
 		unsafe { sys::cv_xphoto_SimpleWB_getInputMax_const(self.as_raw_SimpleWB()) }.into_result()
+	}
+	
+	/// Output image range minimum value
+	/// ## See also
+	/// setOutputMin
+	fn get_output_min(&self) -> Result<f32> {
+		unsafe { sys::cv_xphoto_SimpleWB_getOutputMin_const(self.as_raw_SimpleWB()) }.into_result()
+	}
+	
+	/// Output image range maximum value
+	/// ## See also
+	/// setOutputMax
+	fn get_output_max(&self) -> Result<f32> {
+		unsafe { sys::cv_xphoto_SimpleWB_getOutputMax_const(self.as_raw_SimpleWB()) }.into_result()
+	}
+	
+	/// Percent of top/bottom values to ignore
+	/// ## See also
+	/// setP
+	fn get_p(&self) -> Result<f32> {
+		unsafe { sys::cv_xphoto_SimpleWB_getP_const(self.as_raw_SimpleWB()) }.into_result()
+	}
+	
+}
+
+pub trait SimpleWB: crate::xphoto::SimpleWBConst + crate::xphoto::WhiteBalancer {
+	fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void;
+
+	/// Input image range minimum value
+	/// ## See also
+	/// setInputMin getInputMin
+	fn set_input_min(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_xphoto_SimpleWB_setInputMin_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 	/// Input image range maximum value
@@ -506,13 +539,6 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	
 	/// Output image range minimum value
 	/// ## See also
-	/// setOutputMin
-	fn get_output_min(&self) -> Result<f32> {
-		unsafe { sys::cv_xphoto_SimpleWB_getOutputMin_const(self.as_raw_SimpleWB()) }.into_result()
-	}
-	
-	/// Output image range minimum value
-	/// ## See also
 	/// setOutputMin getOutputMin
 	fn set_output_min(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_xphoto_SimpleWB_setOutputMin_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
@@ -520,23 +546,9 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	
 	/// Output image range maximum value
 	/// ## See also
-	/// setOutputMax
-	fn get_output_max(&self) -> Result<f32> {
-		unsafe { sys::cv_xphoto_SimpleWB_getOutputMax_const(self.as_raw_SimpleWB()) }.into_result()
-	}
-	
-	/// Output image range maximum value
-	/// ## See also
 	/// setOutputMax getOutputMax
 	fn set_output_max(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_xphoto_SimpleWB_setOutputMax_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
-	}
-	
-	/// Percent of top/bottom values to ignore
-	/// ## See also
-	/// setP
-	fn get_p(&self) -> Result<f32> {
-		unsafe { sys::cv_xphoto_SimpleWB_getP_const(self.as_raw_SimpleWB()) }.into_result()
 	}
 	
 	/// Percent of top/bottom values to ignore
@@ -556,36 +568,40 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 /// Saturation enhancement is possible as in cv::TonemapDrago.
 /// 
 /// For more information see [DD02](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_DD02) .
-pub trait TonemapDurand: crate::photo::Tonemap {
+pub trait TonemapDurandConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapDurand(&self) -> *const c_void;
-	fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void;
 
 	fn get_saturation(&self) -> Result<f32> {
 		unsafe { sys::cv_xphoto_TonemapDurand_getSaturation_const(self.as_raw_TonemapDurand()) }.into_result()
-	}
-	
-	fn set_saturation(&mut self, saturation: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_TonemapDurand_setSaturation_float(self.as_raw_mut_TonemapDurand(), saturation) }.into_result()
 	}
 	
 	fn get_contrast(&self) -> Result<f32> {
 		unsafe { sys::cv_xphoto_TonemapDurand_getContrast_const(self.as_raw_TonemapDurand()) }.into_result()
 	}
 	
-	fn set_contrast(&mut self, contrast: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_TonemapDurand_setContrast_float(self.as_raw_mut_TonemapDurand(), contrast) }.into_result()
-	}
-	
 	fn get_sigma_space(&self) -> Result<f32> {
 		unsafe { sys::cv_xphoto_TonemapDurand_getSigmaSpace_const(self.as_raw_TonemapDurand()) }.into_result()
 	}
 	
-	fn set_sigma_space(&mut self, sigma_space: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_TonemapDurand_setSigmaSpace_float(self.as_raw_mut_TonemapDurand(), sigma_space) }.into_result()
-	}
-	
 	fn get_sigma_color(&self) -> Result<f32> {
 		unsafe { sys::cv_xphoto_TonemapDurand_getSigmaColor_const(self.as_raw_TonemapDurand()) }.into_result()
+	}
+	
+}
+
+pub trait TonemapDurand: crate::photo::Tonemap + crate::xphoto::TonemapDurandConst {
+	fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void;
+
+	fn set_saturation(&mut self, saturation: f32) -> Result<()> {
+		unsafe { sys::cv_xphoto_TonemapDurand_setSaturation_float(self.as_raw_mut_TonemapDurand(), saturation) }.into_result()
+	}
+	
+	fn set_contrast(&mut self, contrast: f32) -> Result<()> {
+		unsafe { sys::cv_xphoto_TonemapDurand_setContrast_float(self.as_raw_mut_TonemapDurand(), contrast) }.into_result()
+	}
+	
+	fn set_sigma_space(&mut self, sigma_space: f32) -> Result<()> {
+		unsafe { sys::cv_xphoto_TonemapDurand_setSigmaSpace_float(self.as_raw_mut_TonemapDurand(), sigma_space) }.into_result()
 	}
 	
 	fn set_sigma_color(&mut self, sigma_color: f32) -> Result<()> {
@@ -595,8 +611,12 @@ pub trait TonemapDurand: crate::photo::Tonemap {
 }
 
 /// The base class for auto white balance algorithms.
-pub trait WhiteBalancer: core::AlgorithmTrait {
+pub trait WhiteBalancerConst: core::AlgorithmTraitConst {
 	fn as_raw_WhiteBalancer(&self) -> *const c_void;
+
+}
+
+pub trait WhiteBalancer: core::AlgorithmTrait + crate::xphoto::WhiteBalancerConst {
 	fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void;
 
 	/// Applies white balancing to the input image

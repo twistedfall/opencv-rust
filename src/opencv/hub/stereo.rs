@@ -10,7 +10,7 @@
 //! # Stereo Correspondance Algorithms
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::QuasiDenseStereo };
+	pub use { super::QuasiDenseStereoConst, super::QuasiDenseStereo };
 }
 
 pub const CV_CS_CENSUS: i32 = 2;
@@ -143,14 +143,18 @@ impl PropagationParameters {
 /// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Stoyanov2010).
 /// 
 /// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Lhuillier2000)
-pub trait QuasiDenseStereo {
+pub trait QuasiDenseStereoConst {
 	fn as_raw_QuasiDenseStereo(&self) -> *const c_void;
-	fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void;
 
 	fn param(&self) -> crate::stereo::PropagationParameters {
 		unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo()) }.into_result().expect("Infallible function failed: param")
 	}
 	
+}
+
+pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
+	fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void;
+
 	fn set_param(&mut self, val: crate::stereo::PropagationParameters) -> () {
 		unsafe { sys::cv_stereo_QuasiDenseStereo_setPropParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_param")
 	}
@@ -198,7 +202,7 @@ pub trait QuasiDenseStereo {
 	/// Note: The method clears the sMatches vector.
 	/// 
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
-	fn get_sparse_matches(&mut self, s_matches: &mut core::Vector::<crate::stereo::MatchQuasiDense>) -> Result<()> {
+	fn get_sparse_matches(&mut self, s_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
 		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()
 	}
 	
@@ -209,7 +213,7 @@ pub trait QuasiDenseStereo {
 	/// Note: The method clears the denseMatches vector.
 	/// 
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
-	fn get_dense_matches(&mut self, dense_matches: &mut core::Vector::<crate::stereo::MatchQuasiDense>) -> Result<()> {
+	fn get_dense_matches(&mut self, dense_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
 		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()
 	}
 	
@@ -259,7 +263,7 @@ pub trait QuasiDenseStereo {
 impl dyn QuasiDenseStereo + '_ {
 	/// ## C++ default parameters
 	/// * param_filepath: cv::String()
-	pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr::<dyn crate::stereo::QuasiDenseStereo>> {
+	pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<dyn crate::stereo::QuasiDenseStereo>> {
 		extern_container_arg!(mut param_filepath);
 		unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(r) } )
 	}

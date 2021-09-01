@@ -15,7 +15,7 @@
 //! @ref bioinspired_retina
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::RetinaParametersTrait, super::Retina, super::RetinaFastToneMapping, super::TransientAreasSegmentationModule };
+	pub use { super::RetinaParametersTraitConst, super::RetinaParametersTrait, super::RetinaConst, super::Retina, super::RetinaFastToneMappingConst, super::RetinaFastToneMapping, super::TransientAreasSegmentationModuleConst, super::TransientAreasSegmentationModule };
 }
 
 /// standard bayer sampling
@@ -46,8 +46,49 @@ pub const RETINA_COLOR_RANDOM: i32 = 0;
 /// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
 /// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
 /// more informations in the above cited Jeanny Heraults's book.
-pub trait Retina: core::AlgorithmTrait {
+pub trait RetinaConst: core::AlgorithmTraitConst {
 	fn as_raw_Retina(&self) -> *const c_void;
+
+	/// Write xml/yml formated parameters information
+	/// ## Parameters
+	/// * fs: the filename of the xml file that will be open and writen with formatted parameters
+	/// information
+	fn write(&self, fs: &str) -> Result<()> {
+		extern_container_arg!(mut fs);
+		unsafe { sys::cv_bioinspired_Retina_write_const_String(self.as_raw_Retina(), fs.opencv_as_extern_mut()) }.into_result()
+	}
+	
+	/// Write xml/yml formated parameters information
+	/// ## Parameters
+	/// * fs: the filename of the xml file that will be open and writen with formatted parameters
+	/// information
+	/// 
+	/// ## Overloaded parameters
+	fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_bioinspired_Retina_write_const_FileStorageR(self.as_raw_Retina(), fs.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+	/// Accessor of the motion channel of the retina (models peripheral vision).
+	/// ## See also
+	/// getMagno
+	/// 
+	/// ## Overloaded parameters
+	fn get_magno_raw(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const(self.as_raw_Retina()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	/// Accessor of the details channel of the retina (models foveal vision).
+	/// ## See also
+	/// getParvo
+	/// 
+	/// ## Overloaded parameters
+	fn get_parvo_raw(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const(self.as_raw_Retina()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	fn as_raw_mut_Retina(&mut self) -> *mut c_void;
 
 	/// Retreive retina input buffer size
@@ -135,25 +176,6 @@ pub trait Retina: core::AlgorithmTrait {
 	/// a string which contains formated parameters information
 	fn print_setup(&mut self) -> Result<String> {
 		unsafe { sys::cv_bioinspired_Retina_printSetup(self.as_raw_mut_Retina()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
-	}
-	
-	/// Write xml/yml formated parameters information
-	/// ## Parameters
-	/// * fs: the filename of the xml file that will be open and writen with formatted parameters
-	/// information
-	fn write(&self, fs: &str) -> Result<()> {
-		extern_container_arg!(mut fs);
-		unsafe { sys::cv_bioinspired_Retina_write_const_String(self.as_raw_Retina(), fs.opencv_as_extern_mut()) }.into_result()
-	}
-	
-	/// Write xml/yml formated parameters information
-	/// ## Parameters
-	/// * fs: the filename of the xml file that will be open and writen with formatted parameters
-	/// information
-	/// 
-	/// ## Overloaded parameters
-	fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_bioinspired_Retina_write_const_FileStorageR(self.as_raw_Retina(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// Setup the OPL and IPL parvo channels (see biologocal model)
@@ -328,24 +350,6 @@ pub trait Retina: core::AlgorithmTrait {
 		unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray()) }.into_result()
 	}
 	
-	/// Accessor of the motion channel of the retina (models peripheral vision).
-	/// ## See also
-	/// getMagno
-	/// 
-	/// ## Overloaded parameters
-	fn get_magno_raw(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const(self.as_raw_Retina()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
-	/// Accessor of the details channel of the retina (models foveal vision).
-	/// ## See also
-	/// getParvo
-	/// 
-	/// ## Overloaded parameters
-	fn get_parvo_raw(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const(self.as_raw_Retina()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
 	/// Activate color saturation as the final step of the color demultiplexing process -\> this
 	/// saturation is a sigmoide function applied to each channel of the demultiplexed image.
 	/// ## Parameters
@@ -408,7 +412,7 @@ impl dyn Retina + '_ {
 	/// the log scale that is applied
 	/// 
 	/// ## Overloaded parameters
-	pub fn create(input_size: core::Size) -> Result<core::Ptr::<dyn crate::bioinspired::Retina>> {
+	pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::Retina>> {
 		unsafe { sys::cv_bioinspired_Retina_create_Size(input_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bioinspired::Retina>::opencv_from_extern(r) } )
 	}
 	
@@ -434,7 +438,7 @@ impl dyn Retina + '_ {
 	/// * use_retina_log_sampling: false
 	/// * reduction_factor: 1.0f
 	/// * sampling_strength: 10.0f
-	pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<core::Ptr::<dyn crate::bioinspired::Retina>> {
+	pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<core::Ptr<dyn crate::bioinspired::Retina>> {
 		unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool_int_const_bool_const_float_const_float(input_size.opencv_as_extern(), color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strength) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bioinspired::Retina>::opencv_from_extern(r) } )
 	}
 	
@@ -453,8 +457,12 @@ impl dyn Retina + '_ {
 /// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
 /// regarding spatio-temporal filter and the bigger retina model :
 /// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-pub trait RetinaFastToneMapping: core::AlgorithmTrait {
+pub trait RetinaFastToneMappingConst: core::AlgorithmTraitConst {
 	fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
+
+}
+
+pub trait RetinaFastToneMapping: core::AlgorithmTrait + crate::bioinspired::RetinaFastToneMappingConst {
 	fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void;
 
 	/// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
@@ -498,7 +506,7 @@ pub trait RetinaFastToneMapping: core::AlgorithmTrait {
 }
 
 impl dyn RetinaFastToneMapping + '_ {
-	pub fn create(input_size: core::Size) -> Result<core::Ptr::<dyn crate::bioinspired::RetinaFastToneMapping>> {
+	pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::RetinaFastToneMapping>> {
 		unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bioinspired::RetinaFastToneMapping>::opencv_from_extern(r) } )
 	}
 	
@@ -563,20 +571,24 @@ impl dyn RetinaFastToneMapping + '_ {
 /// </opencv_storage>
 /// ```
 /// 
-pub trait RetinaParametersTrait {
+pub trait RetinaParametersTraitConst {
 	fn as_raw_RetinaParameters(&self) -> *const c_void;
-	fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void;
 
 	fn op_land_ipl_parvo(&self) -> crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
 		unsafe { sys::cv_bioinspired_RetinaParameters_getPropOPLandIplParvo_const(self.as_raw_RetinaParameters()) }.into_result().expect("Infallible function failed: op_land_ipl_parvo")
 	}
 	
-	fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) -> () {
-		unsafe { sys::cv_bioinspired_RetinaParameters_setPropOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_op_land_ipl_parvo")
-	}
-	
 	fn ipl_magno(&self) -> crate::bioinspired::RetinaParameters_IplMagnoParameters {
 		unsafe { sys::cv_bioinspired_RetinaParameters_getPropIplMagno_const(self.as_raw_RetinaParameters()) }.into_result().expect("Infallible function failed: ipl_magno")
+	}
+	
+}
+
+pub trait RetinaParametersTrait: crate::bioinspired::RetinaParametersTraitConst {
+	fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void;
+
+	fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) -> () {
+		unsafe { sys::cv_bioinspired_RetinaParameters_setPropOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_op_land_ipl_parvo")
 	}
 	
 	fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) -> () {
@@ -658,15 +670,13 @@ impl Drop for RetinaParameters {
 	}
 }
 
-impl RetinaParameters {
-	#[inline] pub fn as_raw_RetinaParameters(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for RetinaParameters {}
 
-impl crate::bioinspired::RetinaParametersTrait for RetinaParameters {
+impl crate::bioinspired::RetinaParametersTraitConst for RetinaParameters {
 	#[inline] fn as_raw_RetinaParameters(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::bioinspired::RetinaParametersTrait for RetinaParameters {
 	#[inline] fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -759,8 +769,27 @@ impl SegmentationParameters {
 /// to the neighborhood otion energy, then the area is considered as moving and is segmented
 /// - a stronger third low pass filter helps decision by providing a smooth information about the
 /// "motion context" in a wider area
-pub trait TransientAreasSegmentationModule: core::AlgorithmTrait {
+pub trait TransientAreasSegmentationModuleConst: core::AlgorithmTraitConst {
 	fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void;
+
+	/// write xml/yml formated parameters information
+	/// ## Parameters
+	/// * fs: : the filename of the xml file that will be open and writen with formatted parameters information
+	fn write(&self, fs: &str) -> Result<()> {
+		extern_container_arg!(mut fs);
+		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_String(self.as_raw_TransientAreasSegmentationModule(), fs.opencv_as_extern_mut()) }.into_result()
+	}
+	
+	/// write xml/yml formated parameters information
+	/// ## Parameters
+	/// * fs: : a cv::Filestorage object ready to be filled
+	fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageR(self.as_raw_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+}
+
+pub trait TransientAreasSegmentationModule: core::AlgorithmTrait + crate::bioinspired::TransientAreasSegmentationModuleConst {
 	fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void;
 
 	/// return the sze of the manage input and output images
@@ -820,21 +849,6 @@ pub trait TransientAreasSegmentationModule: core::AlgorithmTrait {
 		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_printSetup(self.as_raw_mut_TransientAreasSegmentationModule()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
-	/// write xml/yml formated parameters information
-	/// ## Parameters
-	/// * fs: : the filename of the xml file that will be open and writen with formatted parameters information
-	fn write(&self, fs: &str) -> Result<()> {
-		extern_container_arg!(mut fs);
-		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_String(self.as_raw_TransientAreasSegmentationModule(), fs.opencv_as_extern_mut()) }.into_result()
-	}
-	
-	/// write xml/yml formated parameters information
-	/// ## Parameters
-	/// * fs: : a cv::Filestorage object ready to be filled
-	fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageR(self.as_raw_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage()) }.into_result()
-	}
-	
 	/// main processing method, get result using methods getSegmentationPicture()
 	/// ## Parameters
 	/// * inputToSegment: : the image to process, it must match the instance buffer size !
@@ -865,7 +879,7 @@ impl dyn TransientAreasSegmentationModule + '_ {
 	/// allocator
 	/// ## Parameters
 	/// * inputSize: : size of the images input to segment (output will be the same size)
-	pub fn create(input_size: core::Size) -> Result<core::Ptr::<dyn crate::bioinspired::TransientAreasSegmentationModule>> {
+	pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::TransientAreasSegmentationModule>> {
 		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::bioinspired::TransientAreasSegmentationModule>::opencv_from_extern(r) } )
 	}
 	

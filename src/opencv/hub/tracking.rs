@@ -12,7 +12,7 @@
 //!    # Legacy Tracking API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::TrackerCSRT_ParamsTrait, super::TrackerCSRT, super::TrackerKCF };
+	pub use { super::TrackerCSRT_ParamsTraitConst, super::TrackerCSRT_ParamsTrait, super::TrackerCSRTConst, super::TrackerCSRT, super::TrackerKCFConst, super::TrackerKCF };
 }
 
 /// \brief Feature type to be used in the tracking grayscale, colornames, compressed color-names
@@ -33,8 +33,12 @@ pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*co
 /// the CSRT tracker
 /// 
 /// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
-pub trait TrackerCSRT: crate::video::Tracker {
+pub trait TrackerCSRTConst: crate::video::TrackerConst {
 	fn as_raw_TrackerCSRT(&self) -> *const c_void;
+
+}
+
+pub trait TrackerCSRT: crate::tracking::TrackerCSRTConst + crate::video::Tracker {
 	fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 
 	fn set_initial_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -51,66 +55,151 @@ impl dyn TrackerCSRT + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: TrackerCSRT::Params()
-	pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerCSRT>> {
+	pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr<dyn crate::tracking::TrackerCSRT>> {
 		unsafe { sys::cv_tracking_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerCSRT>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait TrackerCSRT_ParamsTrait {
+pub trait TrackerCSRT_ParamsTraitConst {
 	fn as_raw_TrackerCSRT_Params(&self) -> *const c_void;
-	fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void;
 
 	fn use_hog(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_hog_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_hog")
-	}
-	
-	fn set_use_hog(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_hog")
 	}
 	
 	fn use_color_names(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_color_names_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_color_names")
 	}
 	
-	fn set_use_color_names(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_color_names")
-	}
-	
 	fn use_gray(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_gray_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_gray")
-	}
-	
-	fn set_use_gray(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_gray")
 	}
 	
 	fn use_rgb(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_rgb_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_rgb")
 	}
 	
-	fn set_use_rgb(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_rgb")
-	}
-	
 	fn use_channel_weights(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_channel_weights_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_channel_weights")
-	}
-	
-	fn set_use_channel_weights(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_channel_weights")
 	}
 	
 	fn use_segmentation(&self) -> bool {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_segmentation_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: use_segmentation")
 	}
 	
-	fn set_use_segmentation(&mut self, val: bool) -> () {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_segmentation")
-	}
-	
 	/// Window function: "hann", "cheb", "kaiser"
 	fn window_function(&self) -> String {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropWindow_function_const(self.as_raw_TrackerCSRT_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: window_function")
+	}
+	
+	fn kaiser_alpha(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropKaiser_alpha_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: kaiser_alpha")
+	}
+	
+	fn cheb_attenuation(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropCheb_attenuation_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: cheb_attenuation")
+	}
+	
+	fn template_size(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropTemplate_size_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: template_size")
+	}
+	
+	fn gsl_sigma(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropGsl_sigma_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: gsl_sigma")
+	}
+	
+	fn hog_orientations(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_orientations_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: hog_orientations")
+	}
+	
+	fn hog_clip(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_clip_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: hog_clip")
+	}
+	
+	fn padding(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPadding_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: padding")
+	}
+	
+	fn filter_lr(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropFilter_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: filter_lr")
+	}
+	
+	fn weights_lr(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropWeights_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: weights_lr")
+	}
+	
+	fn num_hog_channels_used(&self) -> i32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNum_hog_channels_used_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: num_hog_channels_used")
+	}
+	
+	fn admm_iterations(&self) -> i32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropAdmm_iterations_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: admm_iterations")
+	}
+	
+	fn histogram_bins(&self) -> i32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_bins_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: histogram_bins")
+	}
+	
+	fn histogram_lr(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: histogram_lr")
+	}
+	
+	fn background_ratio(&self) -> i32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropBackground_ratio_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: background_ratio")
+	}
+	
+	fn number_of_scales(&self) -> i32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNumber_of_scales_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: number_of_scales")
+	}
+	
+	fn scale_sigma_factor(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_sigma_factor_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_sigma_factor")
+	}
+	
+	fn scale_model_max_area(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_model_max_area_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_model_max_area")
+	}
+	
+	fn scale_lr(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_lr")
+	}
+	
+	fn scale_step(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_step_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_step")
+	}
+	
+	/// we lost the target, if the psr is lower than this.
+	fn psr_threshold(&self) -> f32 {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPsr_threshold_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: psr_threshold")
+	}
+	
+}
+
+pub trait TrackerCSRT_ParamsTrait: crate::tracking::TrackerCSRT_ParamsTraitConst {
+	fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void;
+
+	fn set_use_hog(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_hog")
+	}
+	
+	fn set_use_color_names(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_color_names")
+	}
+	
+	fn set_use_gray(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_gray")
+	}
+	
+	fn set_use_rgb(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_rgb")
+	}
+	
+	fn set_use_channel_weights(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_channel_weights")
+	}
+	
+	fn set_use_segmentation(&mut self, val: bool) -> () {
+		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_use_segmentation")
 	}
 	
 	/// Window function: "hann", "cheb", "kaiser"
@@ -119,161 +208,80 @@ pub trait TrackerCSRT_ParamsTrait {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_window_function")
 	}
 	
-	fn kaiser_alpha(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropKaiser_alpha_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: kaiser_alpha")
-	}
-	
 	fn set_kaiser_alpha(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropKaiser_alpha_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_kaiser_alpha")
-	}
-	
-	fn cheb_attenuation(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropCheb_attenuation_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: cheb_attenuation")
 	}
 	
 	fn set_cheb_attenuation(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropCheb_attenuation_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_cheb_attenuation")
 	}
 	
-	fn template_size(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropTemplate_size_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: template_size")
-	}
-	
 	fn set_template_size(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropTemplate_size_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_template_size")
-	}
-	
-	fn gsl_sigma(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropGsl_sigma_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: gsl_sigma")
 	}
 	
 	fn set_gsl_sigma(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropGsl_sigma_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_gsl_sigma")
 	}
 	
-	fn hog_orientations(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_orientations_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: hog_orientations")
-	}
-	
 	fn set_hog_orientations(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHog_orientations_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_hog_orientations")
-	}
-	
-	fn hog_clip(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_clip_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: hog_clip")
 	}
 	
 	fn set_hog_clip(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHog_clip_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_hog_clip")
 	}
 	
-	fn padding(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPadding_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: padding")
-	}
-	
 	fn set_padding(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropPadding_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_padding")
-	}
-	
-	fn filter_lr(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropFilter_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: filter_lr")
 	}
 	
 	fn set_filter_lr(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropFilter_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_filter_lr")
 	}
 	
-	fn weights_lr(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropWeights_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: weights_lr")
-	}
-	
 	fn set_weights_lr(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropWeights_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_weights_lr")
-	}
-	
-	fn num_hog_channels_used(&self) -> i32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNum_hog_channels_used_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: num_hog_channels_used")
 	}
 	
 	fn set_num_hog_channels_used(&mut self, val: i32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropNum_hog_channels_used_int(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_num_hog_channels_used")
 	}
 	
-	fn admm_iterations(&self) -> i32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropAdmm_iterations_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: admm_iterations")
-	}
-	
 	fn set_admm_iterations(&mut self, val: i32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropAdmm_iterations_int(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_admm_iterations")
-	}
-	
-	fn histogram_bins(&self) -> i32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_bins_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: histogram_bins")
 	}
 	
 	fn set_histogram_bins(&mut self, val: i32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHistogram_bins_int(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_histogram_bins")
 	}
 	
-	fn histogram_lr(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: histogram_lr")
-	}
-	
 	fn set_histogram_lr(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHistogram_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_histogram_lr")
-	}
-	
-	fn background_ratio(&self) -> i32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropBackground_ratio_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: background_ratio")
 	}
 	
 	fn set_background_ratio(&mut self, val: i32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropBackground_ratio_int(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_background_ratio")
 	}
 	
-	fn number_of_scales(&self) -> i32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNumber_of_scales_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: number_of_scales")
-	}
-	
 	fn set_number_of_scales(&mut self, val: i32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropNumber_of_scales_int(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_number_of_scales")
-	}
-	
-	fn scale_sigma_factor(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_sigma_factor_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_sigma_factor")
 	}
 	
 	fn set_scale_sigma_factor(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_sigma_factor_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_scale_sigma_factor")
 	}
 	
-	fn scale_model_max_area(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_model_max_area_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_model_max_area")
-	}
-	
 	fn set_scale_model_max_area(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_model_max_area_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_scale_model_max_area")
-	}
-	
-	fn scale_lr(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_lr_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_lr")
 	}
 	
 	fn set_scale_lr(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_scale_lr")
 	}
 	
-	fn scale_step(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_step_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: scale_step")
-	}
-	
 	fn set_scale_step(&mut self, val: f32) -> () {
 		unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_step_float(self.as_raw_mut_TrackerCSRT_Params(), val) }.into_result().expect("Infallible function failed: set_scale_step")
-	}
-	
-	/// we lost the target, if the psr is lower than this.
-	fn psr_threshold(&self) -> f32 {
-		unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPsr_threshold_const(self.as_raw_TrackerCSRT_Params()) }.into_result().expect("Infallible function failed: psr_threshold")
 	}
 	
 	/// we lost the target, if the psr is lower than this.
@@ -296,15 +304,13 @@ impl Drop for TrackerCSRT_Params {
 	}
 }
 
-impl TrackerCSRT_Params {
-	#[inline] pub fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for TrackerCSRT_Params {}
 
-impl crate::tracking::TrackerCSRT_ParamsTrait for TrackerCSRT_Params {
+impl crate::tracking::TrackerCSRT_ParamsTraitConst for TrackerCSRT_Params {
 	#[inline] fn as_raw_TrackerCSRT_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::tracking::TrackerCSRT_ParamsTrait for TrackerCSRT_Params {
 	#[inline] fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -322,8 +328,12 @@ impl TrackerCSRT_Params {
 /// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 /// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 /// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
-pub trait TrackerKCF: crate::video::Tracker {
+pub trait TrackerKCFConst: crate::video::TrackerConst {
 	fn as_raw_TrackerKCF(&self) -> *const c_void;
+
+}
+
+pub trait TrackerKCF: crate::tracking::TrackerKCFConst + crate::video::Tracker {
 	fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void;
 
 	/// ## C++ default parameters
@@ -341,7 +351,7 @@ impl dyn TrackerKCF + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: TrackerKCF::Params()
-	pub fn create(parameters: crate::tracking::TrackerKCF_Params) -> Result<core::Ptr::<dyn crate::tracking::TrackerKCF>> {
+	pub fn create(parameters: crate::tracking::TrackerKCF_Params) -> Result<core::Ptr<dyn crate::tracking::TrackerKCF>> {
 		unsafe { sys::cv_tracking_TrackerKCF_create_const_ParamsR(&parameters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::tracking::TrackerKCF>::opencv_from_extern(r) } )
 	}
 	

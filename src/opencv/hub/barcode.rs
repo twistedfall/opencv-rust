@@ -10,7 +10,7 @@
 //! # Barcode detecting and decoding methods
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::BarcodeDetectorTrait };
+	pub use { super::BarcodeDetectorTraitConst, super::BarcodeDetectorTrait };
 }
 
 pub const EAN_13: i32 = 2;
@@ -32,9 +32,8 @@ pub enum BarcodeType {
 
 opencv_type_enum! { crate::barcode::BarcodeType }
 
-pub trait BarcodeDetectorTrait {
+pub trait BarcodeDetectorTraitConst {
 	fn as_raw_BarcodeDetector(&self) -> *const c_void;
-	fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void;
 
 	/// Detects Barcode in image and returns the rectangle(s) containing the code.
 	/// 
@@ -58,7 +57,7 @@ pub trait BarcodeDetectorTrait {
 	/// Order of four points in vector<Point2f> is bottomLeft, topLeft, topRight, bottomRight.
 	/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
 	/// * decoded_type: vector of BarcodeType, specifies the type of these barcodes
-	fn decode(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut core::Vector::<String>, decoded_type: &mut core::Vector::<crate::barcode::BarcodeType>) -> Result<bool> {
+	fn decode(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>) -> Result<bool> {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		unsafe { sys::cv_barcode_BarcodeDetector_decode_const_const__InputArrayR_const__InputArrayR_vector_string_R_vector_BarcodeType_R(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType()) }.into_result()
@@ -74,12 +73,17 @@ pub trait BarcodeDetectorTrait {
 	/// 
 	/// ## C++ default parameters
 	/// * points: noArray()
-	fn detect_and_decode(&self, img: &dyn core::ToInputArray, decoded_info: &mut core::Vector::<String>, decoded_type: &mut core::Vector::<crate::barcode::BarcodeType>, points: &mut dyn core::ToOutputArray) -> Result<bool> {
+	fn detect_and_decode(&self, img: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>, points: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecode_const_const__InputArrayR_vector_string_R_vector_BarcodeType_R_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), points.as_raw__OutputArray()) }.into_result()
 	}
 	
+}
+
+pub trait BarcodeDetectorTrait: crate::barcode::BarcodeDetectorTraitConst {
+	fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void;
+
 }
 
 pub struct BarcodeDetector {
@@ -95,15 +99,13 @@ impl Drop for BarcodeDetector {
 	}
 }
 
-impl BarcodeDetector {
-	#[inline] pub fn as_raw_BarcodeDetector(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for BarcodeDetector {}
 
-impl crate::barcode::BarcodeDetectorTrait for BarcodeDetector {
+impl crate::barcode::BarcodeDetectorTraitConst for BarcodeDetector {
 	#[inline] fn as_raw_BarcodeDetector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::barcode::BarcodeDetectorTrait for BarcodeDetector {
 	#[inline] fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 

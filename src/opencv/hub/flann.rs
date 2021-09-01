@@ -15,7 +15,7 @@
 //! can be found in [Muja2009](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Muja2009) .
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::IndexParamsTrait, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTrait, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTrait, super::LshIndexParamsTrait, super::SavedIndexParamsTrait, super::SearchParamsTrait, super::IndexTrait };
+	pub use { super::IndexParamsTraitConst, super::IndexParamsTrait, super::KDTreeIndexParamsTraitConst, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTraitConst, super::LinearIndexParamsTrait, super::CompositeIndexParamsTraitConst, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTraitConst, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTraitConst, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTraitConst, super::KMeansIndexParamsTrait, super::LshIndexParamsTraitConst, super::LshIndexParamsTrait, super::SavedIndexParamsTraitConst, super::SavedIndexParamsTrait, super::SearchParamsTraitConst, super::SearchParamsTrait, super::IndexTraitConst, super::IndexTrait };
 }
 
 pub const AUTOTUNED: i32 = 255;
@@ -237,8 +237,12 @@ pub fn set_distance_type(distance_type: crate::flann::flann_distance_t, order: i
 	unsafe { sys::cvflann_set_distance_type_flann_distance_t_int(distance_type, order) }.into_result()
 }
 
-pub trait AutotunedIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait AutotunedIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_AutotunedIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait AutotunedIndexParamsTrait: crate::flann::AutotunedIndexParamsTraitConst + crate::flann::IndexParamsTrait {
 	fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -256,20 +260,21 @@ impl Drop for AutotunedIndexParams {
 	}
 }
 
-impl AutotunedIndexParams {
-	#[inline] pub fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for AutotunedIndexParams {}
 
-impl crate::flann::IndexParamsTrait for AutotunedIndexParams {
+impl crate::flann::IndexParamsTraitConst for AutotunedIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for AutotunedIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
+impl crate::flann::AutotunedIndexParamsTraitConst for AutotunedIndexParams {
 	#[inline] fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
 	#[inline] fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -287,8 +292,12 @@ impl AutotunedIndexParams {
 
 boxed_cast_base! { AutotunedIndexParams, crate::flann::IndexParams, cv_AutotunedIndexParams_to_IndexParams }
 
-pub trait CompositeIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait CompositeIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_CompositeIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait CompositeIndexParamsTrait: crate::flann::CompositeIndexParamsTraitConst + crate::flann::IndexParamsTrait {
 	fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -306,20 +315,21 @@ impl Drop for CompositeIndexParams {
 	}
 }
 
-impl CompositeIndexParams {
-	#[inline] pub fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for CompositeIndexParams {}
 
-impl crate::flann::IndexParamsTrait for CompositeIndexParams {
+impl crate::flann::IndexParamsTraitConst for CompositeIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for CompositeIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
+impl crate::flann::CompositeIndexParamsTraitConst for CompositeIndexParams {
 	#[inline] fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
 	#[inline] fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -338,8 +348,12 @@ impl CompositeIndexParams {
 
 boxed_cast_base! { CompositeIndexParams, crate::flann::IndexParams, cv_CompositeIndexParams_to_IndexParams }
 
-pub trait HierarchicalClusteringIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait HierarchicalClusteringIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait HierarchicalClusteringIndexParamsTrait: crate::flann::HierarchicalClusteringIndexParamsTraitConst + crate::flann::IndexParamsTrait {
 	fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -357,20 +371,21 @@ impl Drop for HierarchicalClusteringIndexParams {
 	}
 }
 
-impl HierarchicalClusteringIndexParams {
-	#[inline] pub fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for HierarchicalClusteringIndexParams {}
 
-impl crate::flann::IndexParamsTrait for HierarchicalClusteringIndexParams {
+impl crate::flann::IndexParamsTraitConst for HierarchicalClusteringIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for HierarchicalClusteringIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
+impl crate::flann::HierarchicalClusteringIndexParamsTraitConst for HierarchicalClusteringIndexParams {
 	#[inline] fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
 	#[inline] fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -388,8 +403,25 @@ impl HierarchicalClusteringIndexParams {
 
 boxed_cast_base! { HierarchicalClusteringIndexParams, crate::flann::IndexParams, cv_HierarchicalClusteringIndexParams_to_IndexParams }
 
-pub trait IndexTrait {
+pub trait IndexTraitConst {
 	fn as_raw_Index(&self) -> *const c_void;
+
+	fn save(&self, filename: &str) -> Result<()> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_flann_Index_save_const_const_StringR(self.as_raw_Index(), filename.opencv_as_extern()) }.into_result()
+	}
+	
+	fn get_distance(&self) -> Result<crate::flann::flann_distance_t> {
+		unsafe { sys::cv_flann_Index_getDistance_const(self.as_raw_Index()) }.into_result()
+	}
+	
+	fn get_algorithm(&self) -> Result<crate::flann::flann_algorithm_t> {
+		unsafe { sys::cv_flann_Index_getAlgorithm_const(self.as_raw_Index()) }.into_result()
+	}
+	
+}
+
+pub trait IndexTrait: crate::flann::IndexTraitConst {
 	fn as_raw_mut_Index(&mut self) -> *mut c_void;
 
 	/// ## C++ default parameters
@@ -417,11 +449,6 @@ pub trait IndexTrait {
 		unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int_const_SearchParamsR(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, params.as_raw_SearchParams()) }.into_result()
 	}
 	
-	fn save(&self, filename: &str) -> Result<()> {
-		extern_container_arg!(filename);
-		unsafe { sys::cv_flann_Index_save_const_const_StringR(self.as_raw_Index(), filename.opencv_as_extern()) }.into_result()
-	}
-	
 	fn load(&mut self, features: &dyn core::ToInputArray, filename: &str) -> Result<bool> {
 		input_array_arg!(features);
 		extern_container_arg!(filename);
@@ -430,14 +457,6 @@ pub trait IndexTrait {
 	
 	fn release(&mut self) -> Result<()> {
 		unsafe { sys::cv_flann_Index_release(self.as_raw_mut_Index()) }.into_result()
-	}
-	
-	fn get_distance(&self) -> Result<crate::flann::flann_distance_t> {
-		unsafe { sys::cv_flann_Index_getDistance_const(self.as_raw_Index()) }.into_result()
-	}
-	
-	fn get_algorithm(&self) -> Result<crate::flann::flann_algorithm_t> {
-		unsafe { sys::cv_flann_Index_getAlgorithm_const(self.as_raw_Index()) }.into_result()
 	}
 	
 }
@@ -455,15 +474,13 @@ impl Drop for Index {
 	}
 }
 
-impl Index {
-	#[inline] pub fn as_raw_Index(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_Index(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for Index {}
 
-impl crate::flann::IndexTrait for Index {
+impl crate::flann::IndexTraitConst for Index {
 	#[inline] fn as_raw_Index(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexTrait for Index {
 	#[inline] fn as_raw_mut_Index(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -481,18 +498,9 @@ impl Index {
 	
 }
 
-pub trait IndexParamsTrait {
+pub trait IndexParamsTraitConst {
 	fn as_raw_IndexParams(&self) -> *const c_void;
-	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void;
 
-	fn params(&mut self) -> *mut c_void {
-		unsafe { sys::cv_flann_IndexParams_getPropParams(self.as_raw_mut_IndexParams()) }.into_result().expect("Infallible function failed: params")
-	}
-	
-	fn set_params(&mut self, val: *mut c_void) -> () {
-		unsafe { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
-	}
-	
 	/// ## C++ default parameters
 	/// * default_val: String()
 	fn get_string(&self, key: &str, default_val: &str) -> Result<String> {
@@ -513,6 +521,23 @@ pub trait IndexParamsTrait {
 	fn get_double(&self, key: &str, default_val: f64) -> Result<f64> {
 		extern_container_arg!(key);
 		unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR_double(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val) }.into_result()
+	}
+	
+	fn get_all(&self, names: &mut core::Vector<String>, types: &mut core::Vector<crate::flann::FlannIndexType>, str_values: &mut core::Vector<String>, num_values: &mut core::Vector<f64>) -> Result<()> {
+		unsafe { sys::cv_flann_IndexParams_getAll_const_vector_String_R_vector_FlannIndexType_R_vector_String_R_vector_double_R(self.as_raw_IndexParams(), names.as_raw_mut_VectorOfString(), types.as_raw_mut_VectorOfFlannIndexType(), str_values.as_raw_mut_VectorOfString(), num_values.as_raw_mut_VectorOff64()) }.into_result()
+	}
+	
+}
+
+pub trait IndexParamsTrait: crate::flann::IndexParamsTraitConst {
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void;
+
+	fn params(&mut self) -> *mut c_void {
+		unsafe { sys::cv_flann_IndexParams_getPropParams(self.as_raw_mut_IndexParams()) }.into_result().expect("Infallible function failed: params")
+	}
+	
+	fn set_params(&mut self, val: *mut c_void) -> () {
+		unsafe { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
 	}
 	
 	fn set_string(&mut self, key: &str, value: &str) -> Result<()> {
@@ -545,10 +570,6 @@ pub trait IndexParamsTrait {
 		unsafe { sys::cv_flann_IndexParams_setAlgorithm_int(self.as_raw_mut_IndexParams(), value) }.into_result()
 	}
 	
-	fn get_all(&self, names: &mut core::Vector::<String>, types: &mut core::Vector::<crate::flann::FlannIndexType>, str_values: &mut core::Vector::<String>, num_values: &mut core::Vector::<f64>) -> Result<()> {
-		unsafe { sys::cv_flann_IndexParams_getAll_const_vector_String_R_vector_FlannIndexType_R_vector_String_R_vector_double_R(self.as_raw_IndexParams(), names.as_raw_mut_VectorOfString(), types.as_raw_mut_VectorOfFlannIndexType(), str_values.as_raw_mut_VectorOfString(), num_values.as_raw_mut_VectorOff64()) }.into_result()
-	}
-	
 }
 
 pub struct IndexParams {
@@ -564,15 +585,13 @@ impl Drop for IndexParams {
 	}
 }
 
-impl IndexParams {
-	#[inline] pub fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for IndexParams {}
 
-impl crate::flann::IndexParamsTrait for IndexParams {
+impl crate::flann::IndexParamsTraitConst for IndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for IndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -583,8 +602,12 @@ impl IndexParams {
 	
 }
 
-pub trait KDTreeIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait KDTreeIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_KDTreeIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait KDTreeIndexParamsTrait: crate::flann::IndexParamsTrait + crate::flann::KDTreeIndexParamsTraitConst {
 	fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -602,20 +625,21 @@ impl Drop for KDTreeIndexParams {
 	}
 }
 
-impl KDTreeIndexParams {
-	#[inline] pub fn as_raw_KDTreeIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for KDTreeIndexParams {}
 
-impl crate::flann::IndexParamsTrait for KDTreeIndexParams {
+impl crate::flann::IndexParamsTraitConst for KDTreeIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for KDTreeIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::KDTreeIndexParamsTrait for KDTreeIndexParams {
+impl crate::flann::KDTreeIndexParamsTraitConst for KDTreeIndexParams {
 	#[inline] fn as_raw_KDTreeIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::KDTreeIndexParamsTrait for KDTreeIndexParams {
 	#[inline] fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -630,8 +654,12 @@ impl KDTreeIndexParams {
 
 boxed_cast_base! { KDTreeIndexParams, crate::flann::IndexParams, cv_KDTreeIndexParams_to_IndexParams }
 
-pub trait KMeansIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait KMeansIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_KMeansIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait KMeansIndexParamsTrait: crate::flann::IndexParamsTrait + crate::flann::KMeansIndexParamsTraitConst {
 	fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -649,20 +677,21 @@ impl Drop for KMeansIndexParams {
 	}
 }
 
-impl KMeansIndexParams {
-	#[inline] pub fn as_raw_KMeansIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for KMeansIndexParams {}
 
-impl crate::flann::IndexParamsTrait for KMeansIndexParams {
+impl crate::flann::IndexParamsTraitConst for KMeansIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for KMeansIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::KMeansIndexParamsTrait for KMeansIndexParams {
+impl crate::flann::KMeansIndexParamsTraitConst for KMeansIndexParams {
 	#[inline] fn as_raw_KMeansIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::KMeansIndexParamsTrait for KMeansIndexParams {
 	#[inline] fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -680,8 +709,12 @@ impl KMeansIndexParams {
 
 boxed_cast_base! { KMeansIndexParams, crate::flann::IndexParams, cv_KMeansIndexParams_to_IndexParams }
 
-pub trait LinearIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait LinearIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_LinearIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait LinearIndexParamsTrait: crate::flann::IndexParamsTrait + crate::flann::LinearIndexParamsTraitConst {
 	fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -699,20 +732,21 @@ impl Drop for LinearIndexParams {
 	}
 }
 
-impl LinearIndexParams {
-	#[inline] pub fn as_raw_LinearIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for LinearIndexParams {}
 
-impl crate::flann::IndexParamsTrait for LinearIndexParams {
+impl crate::flann::IndexParamsTraitConst for LinearIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for LinearIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::LinearIndexParamsTrait for LinearIndexParams {
+impl crate::flann::LinearIndexParamsTraitConst for LinearIndexParams {
 	#[inline] fn as_raw_LinearIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::LinearIndexParamsTrait for LinearIndexParams {
 	#[inline] fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -725,8 +759,12 @@ impl LinearIndexParams {
 
 boxed_cast_base! { LinearIndexParams, crate::flann::IndexParams, cv_LinearIndexParams_to_IndexParams }
 
-pub trait LshIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait LshIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_LshIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait LshIndexParamsTrait: crate::flann::IndexParamsTrait + crate::flann::LshIndexParamsTraitConst {
 	fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -744,20 +782,21 @@ impl Drop for LshIndexParams {
 	}
 }
 
-impl LshIndexParams {
-	#[inline] pub fn as_raw_LshIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for LshIndexParams {}
 
-impl crate::flann::IndexParamsTrait for LshIndexParams {
+impl crate::flann::IndexParamsTraitConst for LshIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for LshIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::LshIndexParamsTrait for LshIndexParams {
+impl crate::flann::LshIndexParamsTraitConst for LshIndexParams {
 	#[inline] fn as_raw_LshIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::LshIndexParamsTrait for LshIndexParams {
 	#[inline] fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -770,8 +809,12 @@ impl LshIndexParams {
 
 boxed_cast_base! { LshIndexParams, crate::flann::IndexParams, cv_LshIndexParams_to_IndexParams }
 
-pub trait SavedIndexParamsTrait: crate::flann::IndexParamsTrait {
+pub trait SavedIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_SavedIndexParams(&self) -> *const c_void;
+
+}
+
+pub trait SavedIndexParamsTrait: crate::flann::IndexParamsTrait + crate::flann::SavedIndexParamsTraitConst {
 	fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void;
 
 }
@@ -789,20 +832,21 @@ impl Drop for SavedIndexParams {
 	}
 }
 
-impl SavedIndexParams {
-	#[inline] pub fn as_raw_SavedIndexParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for SavedIndexParams {}
 
-impl crate::flann::IndexParamsTrait for SavedIndexParams {
+impl crate::flann::IndexParamsTraitConst for SavedIndexParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for SavedIndexParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
+impl crate::flann::SavedIndexParamsTraitConst for SavedIndexParams {
 	#[inline] fn as_raw_SavedIndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
 	#[inline] fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -816,8 +860,12 @@ impl SavedIndexParams {
 
 boxed_cast_base! { SavedIndexParams, crate::flann::IndexParams, cv_SavedIndexParams_to_IndexParams }
 
-pub trait SearchParamsTrait: crate::flann::IndexParamsTrait {
+pub trait SearchParamsTraitConst: crate::flann::IndexParamsTraitConst {
 	fn as_raw_SearchParams(&self) -> *const c_void;
+
+}
+
+pub trait SearchParamsTrait: crate::flann::IndexParamsTrait + crate::flann::SearchParamsTraitConst {
 	fn as_raw_mut_SearchParams(&mut self) -> *mut c_void;
 
 }
@@ -835,20 +883,21 @@ impl Drop for SearchParams {
 	}
 }
 
-impl SearchParams {
-	#[inline] pub fn as_raw_SearchParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for SearchParams {}
 
-impl crate::flann::IndexParamsTrait for SearchParams {
+impl crate::flann::IndexParamsTraitConst for SearchParams {
 	#[inline] fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::IndexParamsTrait for SearchParams {
 	#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::flann::SearchParamsTrait for SearchParams {
+impl crate::flann::SearchParamsTraitConst for SearchParams {
 	#[inline] fn as_raw_SearchParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::flann::SearchParamsTrait for SearchParams {
 	#[inline] fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 

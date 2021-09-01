@@ -13,22 +13,22 @@
 //! - @ref tutorial_face_main
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::PredictCollector, super::StandardCollectorTrait, super::FaceRecognizer, super::BasicFaceRecognizer, super::EigenFaceRecognizer, super::FisherFaceRecognizer, super::LBPHFaceRecognizer, super::Facemark, super::CParamsTrait, super::FacemarkTrain, super::FacemarkLBF_ParamsTrait, super::FacemarkLBF, super::FacemarkAAM_ParamsTrait, super::FacemarkAAM_ConfigTrait, super::FacemarkAAM_DataTrait, super::FacemarkAAM_Model_TextureTrait, super::FacemarkAAM_ModelTrait, super::FacemarkAAM, super::FacemarkKazemi_ParamsTrait, super::FacemarkKazemi, super::MACE, super::BIF };
+	pub use { super::PredictCollectorConst, super::PredictCollector, super::StandardCollectorTraitConst, super::StandardCollectorTrait, super::FaceRecognizerConst, super::FaceRecognizer, super::BasicFaceRecognizerConst, super::BasicFaceRecognizer, super::EigenFaceRecognizerConst, super::EigenFaceRecognizer, super::FisherFaceRecognizerConst, super::FisherFaceRecognizer, super::LBPHFaceRecognizerConst, super::LBPHFaceRecognizer, super::FacemarkConst, super::Facemark, super::CParamsTraitConst, super::CParamsTrait, super::FacemarkTrainConst, super::FacemarkTrain, super::FacemarkLBF_ParamsTraitConst, super::FacemarkLBF_ParamsTrait, super::FacemarkLBFConst, super::FacemarkLBF, super::FacemarkAAM_ParamsTraitConst, super::FacemarkAAM_ParamsTrait, super::FacemarkAAM_ConfigTraitConst, super::FacemarkAAM_ConfigTrait, super::FacemarkAAM_DataTraitConst, super::FacemarkAAM_DataTrait, super::FacemarkAAM_Model_TextureTraitConst, super::FacemarkAAM_Model_TextureTrait, super::FacemarkAAM_ModelTraitConst, super::FacemarkAAM_ModelTrait, super::FacemarkAAMConst, super::FacemarkAAM, super::FacemarkKazemi_ParamsTraitConst, super::FacemarkKazemi_ParamsTrait, super::FacemarkKazemiConst, super::FacemarkKazemi, super::MACEConst, super::MACE, super::BIFConst, super::BIF };
 }
 
 pub type FN_FaceDetector = Option<Box<dyn FnMut(*const c_void, *const c_void) -> bool + Send + Sync + 'static>>;
 /// construct an AAM facemark detector
-pub fn create_facemark_aam() -> Result<core::Ptr::<dyn crate::face::Facemark>> {
+pub fn create_facemark_aam() -> Result<core::Ptr<dyn crate::face::Facemark>> {
 	unsafe { sys::cv_face_createFacemarkAAM() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::Facemark>::opencv_from_extern(r) } )
 }
 
 /// construct a Kazemi facemark detector
-pub fn create_facemark_kazemi() -> Result<core::Ptr::<dyn crate::face::Facemark>> {
+pub fn create_facemark_kazemi() -> Result<core::Ptr<dyn crate::face::Facemark>> {
 	unsafe { sys::cv_face_createFacemarkKazemi() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::Facemark>::opencv_from_extern(r) } )
 }
 
 /// construct an LBF facemark detector
-pub fn create_facemark_lbf() -> Result<core::Ptr::<dyn crate::face::Facemark>> {
+pub fn create_facemark_lbf() -> Result<core::Ptr<dyn crate::face::Facemark>> {
 	unsafe { sys::cv_face_createFacemarkLBF() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::Facemark>::opencv_from_extern(r) } )
 }
 
@@ -110,7 +110,7 @@ pub fn get_faces(image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputA
 /// loadDatasetList(imageFiles,ptsFiles,images_train,landmarks_train);
 /// ```
 /// 
-pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut core::Vector::<String>, annotations: &mut core::Vector::<String>) -> Result<bool> {
+pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut core::Vector<String>, annotations: &mut core::Vector<String>) -> Result<bool> {
 	extern_container_arg!(mut image_list);
 	extern_container_arg!(mut annotation_list);
 	unsafe { sys::cv_face_loadDatasetList_String_String_vector_String_R_vector_String_R(image_list.opencv_as_extern_mut(), annotation_list.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString()) }.into_result()
@@ -194,7 +194,7 @@ pub fn load_face_points(filename: &str, points: &mut dyn core::ToOutputArray, of
 /// 
 /// ## C++ default parameters
 /// * offset: 0.0f
-pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut core::Vector::<String>, face_points: &mut dyn core::ToOutputArray, offset: f32) -> Result<bool> {
+pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut core::Vector<String>, face_points: &mut dyn core::ToOutputArray, offset: f32) -> Result<bool> {
 	extern_container_arg!(mut image_list);
 	extern_container_arg!(mut ground_truth);
 	output_array_arg!(face_points);
@@ -232,7 +232,7 @@ pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut c
 /// ## C++ default parameters
 /// * delim: ' '
 /// * offset: 0.0f
-pub fn load_training_data(filename: &str, images: &mut core::Vector::<String>, face_points: &mut dyn core::ToOutputArray, delim: i8, offset: f32) -> Result<bool> {
+pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, face_points: &mut dyn core::ToOutputArray, delim: i8, offset: f32) -> Result<bool> {
 	extern_container_arg!(mut filename);
 	output_array_arg!(face_points);
 	unsafe { sys::cv_face_loadTrainingData_String_vector_String_R_const__OutputArrayR_char_float(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), delim, offset) }.into_result()
@@ -255,16 +255,15 @@ pub fn load_training_data(filename: &str, images: &mut core::Vector::<String>, f
 /// * trainimages: A vector of type cv::String which stores the name of images whose landmarks are tracked
 /// ## Returns
 /// A boolean value. It returns true when it reads the data successfully and false otherwise
-pub fn load_training_data_2(mut filename: core::Vector::<String>, trainlandmarks: &mut core::Vector::<core::Vector::<core::Point2f>>, trainimages: &mut core::Vector::<String>) -> Result<bool> {
+pub fn load_training_data_2(mut filename: core::Vector<String>, trainlandmarks: &mut core::Vector<core::Vector<core::Point2f>>, trainimages: &mut core::Vector<String>) -> Result<bool> {
 	unsafe { sys::cv_face_loadTrainingData_vector_String__vector_vector_Point2f__R_vector_String_R(filename.as_raw_mut_VectorOfString(), trainlandmarks.as_raw_mut_VectorOfVectorOfPoint2f(), trainimages.as_raw_mut_VectorOfString()) }.into_result()
 }
 
 /// Implementation of bio-inspired features (BIF) from the paper:
 /// Guo, Guodong, et al. "Human age estimation using bio-inspired features."
 /// Computer Vision and Pattern Recognition, 2009. CVPR 2009.
-pub trait BIF: core::AlgorithmTrait {
+pub trait BIFConst: core::AlgorithmTraitConst {
 	fn as_raw_BIF(&self) -> *const c_void;
-	fn as_raw_mut_BIF(&mut self) -> *mut c_void;
 
 	/// ## Returns
 	/// The number of filter bands used for computing BIF.
@@ -290,6 +289,11 @@ pub trait BIF: core::AlgorithmTrait {
 	
 }
 
+pub trait BIF: core::AlgorithmTrait + crate::face::BIFConst {
+	fn as_raw_mut_BIF(&mut self) -> *mut c_void;
+
+}
+
 impl dyn BIF + '_ {
 	/// ## Parameters
 	/// * num_bands: The number of filter bands (<=8) used for computing BIF.
@@ -300,14 +304,13 @@ impl dyn BIF + '_ {
 	/// ## C++ default parameters
 	/// * num_bands: 8
 	/// * num_rotations: 12
-	pub fn create(num_bands: i32, num_rotations: i32) -> Result<core::Ptr::<dyn crate::face::BIF>> {
+	pub fn create(num_bands: i32, num_rotations: i32) -> Result<core::Ptr<dyn crate::face::BIF>> {
 		unsafe { sys::cv_face_BIF_create_int_int(num_bands, num_rotations) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::BIF>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
+pub trait BasicFaceRecognizerConst: crate::face::FaceRecognizerConst {
 	fn as_raw_BasicFaceRecognizer(&self) -> *const c_void;
-	fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void;
 
 	/// ## See also
 	/// setNumComponents
@@ -316,24 +319,12 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	}
 	
 	/// ## See also
-	/// setNumComponents getNumComponents
-	fn set_num_components(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_setNumComponents_int(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
-	}
-	
-	/// ## See also
 	/// setThreshold
 	fn get_threshold(&self) -> Result<f64> {
 		unsafe { sys::cv_face_BasicFaceRecognizer_getThreshold_const(self.as_raw_BasicFaceRecognizer()) }.into_result()
 	}
 	
-	/// ## See also
-	/// setThreshold getThreshold
-	fn set_threshold(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_setThreshold_double(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
-	}
-	
-	fn get_projections(&self) -> Result<core::Vector::<core::Mat>> {
+	fn get_projections(&self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_face_BasicFaceRecognizer_getProjections_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
@@ -353,10 +344,6 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 		unsafe { sys::cv_face_BasicFaceRecognizer_getMean_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
-	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_read_const_FileNodeR(self.as_raw_mut_BasicFaceRecognizer(), fn_.as_raw_FileNode()) }.into_result()
-	}
-	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 		unsafe { sys::cv_face_BasicFaceRecognizer_write_const_FileStorageR(self.as_raw_BasicFaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
@@ -367,24 +354,68 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	
 }
 
-pub trait CParamsTrait {
+pub trait BasicFaceRecognizer: crate::face::BasicFaceRecognizerConst + crate::face::FaceRecognizer {
+	fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void;
+
+	/// ## See also
+	/// setNumComponents getNumComponents
+	fn set_num_components(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_face_BasicFaceRecognizer_setNumComponents_int(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
+	}
+	
+	/// ## See also
+	/// setThreshold getThreshold
+	fn set_threshold(&mut self, val: f64) -> Result<()> {
+		unsafe { sys::cv_face_BasicFaceRecognizer_setThreshold_double(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
+	}
+	
+	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		unsafe { sys::cv_face_BasicFaceRecognizer_read_const_FileNodeR(self.as_raw_mut_BasicFaceRecognizer(), fn_.as_raw_FileNode()) }.into_result()
+	}
+	
+}
+
+pub trait CParamsTraitConst {
 	fn as_raw_CParams(&self) -> *const c_void;
-	fn as_raw_mut_CParams(&mut self) -> *mut c_void;
 
 	/// the face detector
 	fn cascade(&self) -> String {
 		unsafe { sys::cv_face_CParams_getPropCascade_const(self.as_raw_CParams()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: cascade")
 	}
 	
+	/// Parameter specifying how much the image size is reduced at each image scale.
+	fn scale_factor(&self) -> f64 {
+		unsafe { sys::cv_face_CParams_getPropScaleFactor_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: scale_factor")
+	}
+	
+	/// Parameter specifying how many neighbors each candidate rectangle should have to retain it.
+	fn min_neighbors(&self) -> i32 {
+		unsafe { sys::cv_face_CParams_getPropMinNeighbors_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: min_neighbors")
+	}
+	
+	/// Minimum possible object size.
+	fn min_size(&self) -> core::Size {
+		unsafe { sys::cv_face_CParams_getPropMinSize_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: min_size")
+	}
+	
+	/// Maximum possible object size.
+	fn max_size(&self) -> core::Size {
+		unsafe { sys::cv_face_CParams_getPropMaxSize_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: max_size")
+	}
+	
+	fn face_cascade(&self) -> crate::objdetect::CascadeClassifier {
+		unsafe { sys::cv_face_CParams_getPropFace_cascade_const(self.as_raw_CParams()) }.into_result().map(|r| unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(r) } ).expect("Infallible function failed: face_cascade")
+	}
+	
+}
+
+pub trait CParamsTrait: crate::face::CParamsTraitConst {
+	fn as_raw_mut_CParams(&mut self) -> *mut c_void;
+
 	/// the face detector
 	fn set_cascade(&mut self, val: &str) -> () {
 		extern_container_arg!(nofail mut val);
 		unsafe { sys::cv_face_CParams_setPropCascade_String(self.as_raw_mut_CParams(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_cascade")
-	}
-	
-	/// Parameter specifying how much the image size is reduced at each image scale.
-	fn scale_factor(&self) -> f64 {
-		unsafe { sys::cv_face_CParams_getPropScaleFactor_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: scale_factor")
 	}
 	
 	/// Parameter specifying how much the image size is reduced at each image scale.
@@ -393,18 +424,8 @@ pub trait CParamsTrait {
 	}
 	
 	/// Parameter specifying how many neighbors each candidate rectangle should have to retain it.
-	fn min_neighbors(&self) -> i32 {
-		unsafe { sys::cv_face_CParams_getPropMinNeighbors_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: min_neighbors")
-	}
-	
-	/// Parameter specifying how many neighbors each candidate rectangle should have to retain it.
 	fn set_min_neighbors(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_CParams_setPropMinNeighbors_int(self.as_raw_mut_CParams(), val) }.into_result().expect("Infallible function failed: set_min_neighbors")
-	}
-	
-	/// Minimum possible object size.
-	fn min_size(&self) -> core::Size {
-		unsafe { sys::cv_face_CParams_getPropMinSize_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: min_size")
 	}
 	
 	/// Minimum possible object size.
@@ -413,17 +434,8 @@ pub trait CParamsTrait {
 	}
 	
 	/// Maximum possible object size.
-	fn max_size(&self) -> core::Size {
-		unsafe { sys::cv_face_CParams_getPropMaxSize_const(self.as_raw_CParams()) }.into_result().expect("Infallible function failed: max_size")
-	}
-	
-	/// Maximum possible object size.
 	fn set_max_size(&mut self, val: core::Size) -> () {
 		unsafe { sys::cv_face_CParams_setPropMaxSize_Size(self.as_raw_mut_CParams(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_max_size")
-	}
-	
-	fn face_cascade(&mut self) -> crate::objdetect::CascadeClassifier {
-		unsafe { sys::cv_face_CParams_getPropFace_cascade(self.as_raw_mut_CParams()) }.into_result().map(|r| unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(r) } ).expect("Infallible function failed: face_cascade")
 	}
 	
 	fn set_face_cascade(&mut self, mut val: crate::objdetect::CascadeClassifier) -> () {
@@ -445,15 +457,13 @@ impl Drop for CParams {
 	}
 }
 
-impl CParams {
-	#[inline] pub fn as_raw_CParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_CParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for CParams {}
 
-impl crate::face::CParamsTrait for CParams {
+impl crate::face::CParamsTraitConst for CParams {
 	#[inline] fn as_raw_CParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::CParamsTrait for CParams {
 	#[inline] fn as_raw_mut_CParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -470,8 +480,12 @@ impl CParams {
 	
 }
 
-pub trait EigenFaceRecognizer: crate::face::BasicFaceRecognizer {
+pub trait EigenFaceRecognizerConst: crate::face::BasicFaceRecognizerConst {
 	fn as_raw_EigenFaceRecognizer(&self) -> *const c_void;
+
+}
+
+pub trait EigenFaceRecognizer: crate::face::BasicFaceRecognizer + crate::face::EigenFaceRecognizerConst {
 	fn as_raw_mut_EigenFaceRecognizer(&mut self) -> *mut c_void;
 
 }
@@ -509,7 +523,7 @@ impl dyn EigenFaceRecognizer + '_ {
 	/// ## C++ default parameters
 	/// * num_components: 0
 	/// * threshold: DBL_MAX
-	pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::EigenFaceRecognizer>> {
+	pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr<dyn crate::face::EigenFaceRecognizer>> {
 		unsafe { sys::cv_face_EigenFaceRecognizer_create_int_double(num_components, threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::EigenFaceRecognizer>::opencv_from_extern(r) } )
 	}
 	
@@ -615,8 +629,144 @@ impl dyn EigenFaceRecognizer + '_ {
 /// String name = model->name();
 /// ```
 /// 
-pub trait FaceRecognizer: core::AlgorithmTrait {
+pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	fn as_raw_FaceRecognizer(&self) -> *const c_void;
+
+	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
+	/// ## Parameters
+	/// * src: Sample image to get a prediction from.
+	/// * collector: User-defined collector object that accepts all results
+	/// 
+	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
+	/// not try to get "best@ result, just resend it to caller side with given collector
+	/// 
+	/// ## Overloaded parameters
+	fn predict_label(&self, src: &dyn core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src);
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray()) }.into_result()
+	}
+	
+	/// Predicts a label and associated confidence (e.g. distance) for a given input image.
+	/// 
+	/// ## Parameters
+	/// * src: Sample image to get a prediction from.
+	/// * label: The predicted label for the given image.
+	/// * confidence: Associated confidence (e.g. distance) for the predicted label.
+	/// 
+	/// The suffix const means that prediction does not affect the internal model state, so the method can
+	/// be safely called from within different threads.
+	/// 
+	/// The following example shows how to get a prediction from a trained model:
+	/// 
+	/// ```ignore
+	/// using namespace cv;
+	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
+	/// // ...
+	/// // Read in a sample image:
+	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
+	/// // And get a prediction from the cv::FaceRecognizer:
+	/// int predicted = model->predict(img);
+	/// ```
+	/// 
+	/// 
+	/// Or to get a prediction and the associated confidence (e.g. distance):
+	/// 
+	/// ```ignore
+	/// using namespace cv;
+	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
+	/// // ...
+	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
+	/// // Some variables for the predicted label and associated confidence (e.g. distance):
+	/// int predicted_label = -1;
+	/// double predicted_confidence = 0.0;
+	/// // Get the prediction and associated confidence from the model
+	/// model->predict(img, predicted_label, predicted_confidence);
+	/// ```
+	/// 
+	fn predict(&self, src: &dyn core::ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
+		input_array_arg!(src);
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence) }.into_result()
+	}
+	
+	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
+	/// ## Parameters
+	/// * src: Sample image to get a prediction from.
+	/// * collector: User-defined collector object that accepts all results
+	/// 
+	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
+	/// not try to get "best@ result, just resend it to caller side with given collector
+	fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr<dyn crate::face::PredictCollector>) -> Result<()> {
+		input_array_arg!(src);
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector()) }.into_result()
+	}
+	
+	/// Saves a FaceRecognizer and its model state.
+	/// 
+	/// Saves this model to a given filename, either as XML or YAML.
+	/// ## Parameters
+	/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
+	/// 
+	/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
+	/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
+	/// filename.
+	/// 
+	/// The suffix const means that prediction does not affect the internal model state, so the method can
+	/// be safely called from within different threads.
+	fn write(&self, filename: &str) -> Result<()> {
+		extern_container_arg!(filename);
+		unsafe { sys::cv_face_FaceRecognizer_write_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_as_extern()) }.into_result()
+	}
+	
+	/// Saves a FaceRecognizer and its model state.
+	/// 
+	/// Saves this model to a given filename, either as XML or YAML.
+	/// ## Parameters
+	/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
+	/// 
+	/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
+	/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
+	/// filename.
+	/// 
+	/// The suffix const means that prediction does not affect the internal model state, so the method can
+	/// be safely called from within different threads.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	///    Saves this model to a given FileStorage.
+	/// * fs: The FileStorage to store this FaceRecognizer to.
+	fn write_1(&self, fs: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_face_FaceRecognizer_write_const_FileStorageR(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+	fn empty(&self) -> Result<bool> {
+		unsafe { sys::cv_face_FaceRecognizer_empty_const(self.as_raw_FaceRecognizer()) }.into_result()
+	}
+	
+	/// Gets string information by label.
+	/// 
+	/// If an unknown label id is provided or there is no label information associated with the specified
+	/// label id the method returns an empty string.
+	fn get_label_info(&self, label: i32) -> Result<String> {
+		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	}
+	
+	/// Gets vector of labels by string.
+	/// 
+	/// The function searches for the labels containing the specified sub-string in the associated string
+	/// info.
+	fn get_labels_by_string(&self, str: &str) -> Result<core::Vector<i32>> {
+		extern_container_arg!(str);
+		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
+	}
+	
+	/// threshold parameter accessor - required for default BestMinDist collector
+	fn get_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_face_FaceRecognizer_getThreshold_const(self.as_raw_FaceRecognizer()) }.into_result()
+	}
+	
+}
+
+pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerConst {
 	fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void;
 
 	/// Trains a FaceRecognizer with given data and associated labels.
@@ -733,91 +883,6 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 		unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
 	}
 	
-	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
-	/// ## Parameters
-	/// * src: Sample image to get a prediction from.
-	/// * collector: User-defined collector object that accepts all results
-	/// 
-	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
-	/// not try to get "best@ result, just resend it to caller side with given collector
-	/// 
-	/// ## Overloaded parameters
-	fn predict_label(&self, src: &dyn core::ToInputArray) -> Result<i32> {
-		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray()) }.into_result()
-	}
-	
-	/// Predicts a label and associated confidence (e.g. distance) for a given input image.
-	/// 
-	/// ## Parameters
-	/// * src: Sample image to get a prediction from.
-	/// * label: The predicted label for the given image.
-	/// * confidence: Associated confidence (e.g. distance) for the predicted label.
-	/// 
-	/// The suffix const means that prediction does not affect the internal model state, so the method can
-	/// be safely called from within different threads.
-	/// 
-	/// The following example shows how to get a prediction from a trained model:
-	/// 
-	/// ```ignore
-	/// using namespace cv;
-	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
-	/// // ...
-	/// // Read in a sample image:
-	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
-	/// // And get a prediction from the cv::FaceRecognizer:
-	/// int predicted = model->predict(img);
-	/// ```
-	/// 
-	/// 
-	/// Or to get a prediction and the associated confidence (e.g. distance):
-	/// 
-	/// ```ignore
-	/// using namespace cv;
-	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
-	/// // ...
-	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
-	/// // Some variables for the predicted label and associated confidence (e.g. distance):
-	/// int predicted_label = -1;
-	/// double predicted_confidence = 0.0;
-	/// // Get the prediction and associated confidence from the model
-	/// model->predict(img, predicted_label, predicted_confidence);
-	/// ```
-	/// 
-	fn predict(&self, src: &dyn core::ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
-		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence) }.into_result()
-	}
-	
-	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
-	/// ## Parameters
-	/// * src: Sample image to get a prediction from.
-	/// * collector: User-defined collector object that accepts all results
-	/// 
-	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
-	/// not try to get "best@ result, just resend it to caller side with given collector
-	fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr::<dyn crate::face::PredictCollector>) -> Result<()> {
-		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector()) }.into_result()
-	}
-	
-	/// Saves a FaceRecognizer and its model state.
-	/// 
-	/// Saves this model to a given filename, either as XML or YAML.
-	/// ## Parameters
-	/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
-	/// 
-	/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
-	/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
-	/// filename.
-	/// 
-	/// The suffix const means that prediction does not affect the internal model state, so the method can
-	/// be safely called from within different threads.
-	fn write(&self, filename: &str) -> Result<()> {
-		extern_container_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_write_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_as_extern()) }.into_result()
-	}
-	
 	/// Loads a FaceRecognizer and its model state.
 	/// 
 	/// Loads a persisted model and state from a given XML or YAML file . Every FaceRecognizer has to
@@ -827,27 +892,6 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	fn read(&mut self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
 		unsafe { sys::cv_face_FaceRecognizer_read_const_StringR(self.as_raw_mut_FaceRecognizer(), filename.opencv_as_extern()) }.into_result()
-	}
-	
-	/// Saves a FaceRecognizer and its model state.
-	/// 
-	/// Saves this model to a given filename, either as XML or YAML.
-	/// ## Parameters
-	/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
-	/// 
-	/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
-	/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
-	/// filename.
-	/// 
-	/// The suffix const means that prediction does not affect the internal model state, so the method can
-	/// be safely called from within different threads.
-	/// 
-	/// ## Overloaded parameters
-	/// 
-	///    Saves this model to a given FileStorage.
-	/// * fs: The FileStorage to store this FaceRecognizer to.
-	fn write_1(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_write_const_FileStorageR(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// Loads a FaceRecognizer and its model state.
@@ -862,38 +906,12 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 		unsafe { sys::cv_face_FaceRecognizer_read_const_FileNodeR(self.as_raw_mut_FaceRecognizer(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
-	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_face_FaceRecognizer_empty_const(self.as_raw_FaceRecognizer()) }.into_result()
-	}
-	
 	/// Sets string info for the specified model's label.
 	/// 
 	/// The string info is replaced by the provided value if it was set before for the specified label.
 	fn set_label_info(&mut self, label: i32, str_info: &str) -> Result<()> {
 		extern_container_arg!(str_info);
 		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_as_extern()) }.into_result()
-	}
-	
-	/// Gets string information by label.
-	/// 
-	/// If an unknown label id is provided or there is no label information associated with the specified
-	/// label id the method returns an empty string.
-	fn get_label_info(&self, label: i32) -> Result<String> {
-		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
-	}
-	
-	/// Gets vector of labels by string.
-	/// 
-	/// The function searches for the labels containing the specified sub-string in the associated string
-	/// info.
-	fn get_labels_by_string(&self, str: &str) -> Result<core::Vector::<i32>> {
-		extern_container_arg!(str);
-		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
-	}
-	
-	/// threshold parameter accessor - required for default BestMinDist collector
-	fn get_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_face_FaceRecognizer_getThreshold_const(self.as_raw_FaceRecognizer()) }.into_result()
 	}
 	
 	/// Sets threshold of model
@@ -921,8 +939,12 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 /// The typical pipeline for facemark detection is as follows:
 /// - Load the trained model using Facemark::loadModel.
 /// - Perform the fitting on an image via Facemark::fit.
-pub trait Facemark: core::AlgorithmTrait {
+pub trait FacemarkConst: core::AlgorithmTraitConst {
 	fn as_raw_Facemark(&self) -> *const c_void;
+
+}
+
+pub trait Facemark: core::AlgorithmTrait + crate::face::FacemarkConst {
 	fn as_raw_mut_Facemark(&mut self) -> *mut c_void;
 
 	/// A function to load the trained model before the fitting process.
@@ -963,12 +985,16 @@ pub trait Facemark: core::AlgorithmTrait {
 	
 }
 
-pub trait FacemarkAAM: crate::face::FacemarkTrain {
+pub trait FacemarkAAMConst: crate::face::FacemarkTrainConst {
 	fn as_raw_FacemarkAAM(&self) -> *const c_void;
+
+}
+
+pub trait FacemarkAAM: crate::face::FacemarkAAMConst + crate::face::FacemarkTrain {
 	fn as_raw_mut_FacemarkAAM(&mut self) -> *mut c_void;
 
 	/// overload with additional Config structures
-	fn fit_config(&mut self, image: &dyn core::ToInputArray, roi: &dyn core::ToInputArray, _landmarks: &mut dyn core::ToOutputArray, runtime_params: &core::Vector::<crate::face::FacemarkAAM_Config>) -> Result<bool> {
+	fn fit_config(&mut self, image: &dyn core::ToInputArray, roi: &dyn core::ToInputArray, _landmarks: &mut dyn core::ToOutputArray, runtime_params: &core::Vector<crate::face::FacemarkAAM_Config>) -> Result<bool> {
 		input_array_arg!(image);
 		input_array_arg!(roi);
 		output_array_arg!(_landmarks);
@@ -982,42 +1008,46 @@ impl dyn FacemarkAAM + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: FacemarkAAM::Params()
-	pub fn create(parameters: &crate::face::FacemarkAAM_Params) -> Result<core::Ptr::<dyn crate::face::FacemarkAAM>> {
+	pub fn create(parameters: &crate::face::FacemarkAAM_Params) -> Result<core::Ptr<dyn crate::face::FacemarkAAM>> {
 		unsafe { sys::cv_face_FacemarkAAM_create_const_ParamsR(parameters.as_raw_FacemarkAAM_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::FacemarkAAM>::opencv_from_extern(r) } )
 	}
 	
 }
 /// \brief Optional parameter for fitting process.
-pub trait FacemarkAAM_ConfigTrait {
+pub trait FacemarkAAM_ConfigTraitConst {
 	fn as_raw_FacemarkAAM_Config(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void;
 
-	fn r(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Config_getPropR(self.as_raw_mut_FacemarkAAM_Config()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: r")
-	}
-	
-	fn set_r(&mut self, mut val: core::Mat) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Config_setPropR_Mat(self.as_raw_mut_FacemarkAAM_Config(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_r")
+	fn r(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Config_getPropR_const(self.as_raw_FacemarkAAM_Config()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: r")
 	}
 	
 	fn t(&self) -> core::Point2f {
 		unsafe { sys::cv_face_FacemarkAAM_Config_getPropT_const(self.as_raw_FacemarkAAM_Config()) }.into_result().expect("Infallible function failed: t")
 	}
 	
-	fn set_t(&mut self, val: core::Point2f) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Config_setPropT_Point2f(self.as_raw_mut_FacemarkAAM_Config(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_t")
-	}
-	
 	fn scale(&self) -> f32 {
 		unsafe { sys::cv_face_FacemarkAAM_Config_getPropScale_const(self.as_raw_FacemarkAAM_Config()) }.into_result().expect("Infallible function failed: scale")
 	}
 	
-	fn set_scale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Config_setPropScale_float(self.as_raw_mut_FacemarkAAM_Config(), val) }.into_result().expect("Infallible function failed: set_scale")
-	}
-	
 	fn model_scale_idx(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Config_getPropModel_scale_idx_const(self.as_raw_FacemarkAAM_Config()) }.into_result().expect("Infallible function failed: model_scale_idx")
+	}
+	
+}
+
+pub trait FacemarkAAM_ConfigTrait: crate::face::FacemarkAAM_ConfigTraitConst {
+	fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void;
+
+	fn set_r(&mut self, mut val: core::Mat) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Config_setPropR_Mat(self.as_raw_mut_FacemarkAAM_Config(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_r")
+	}
+	
+	fn set_t(&mut self, val: core::Point2f) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Config_setPropT_Point2f(self.as_raw_mut_FacemarkAAM_Config(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_t")
+	}
+	
+	fn set_scale(&mut self, val: f32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Config_setPropScale_float(self.as_raw_mut_FacemarkAAM_Config(), val) }.into_result().expect("Infallible function failed: set_scale")
 	}
 	
 	fn set_model_scale_idx(&mut self, val: i32) -> () {
@@ -1040,15 +1070,13 @@ impl Drop for FacemarkAAM_Config {
 	}
 }
 
-impl FacemarkAAM_Config {
-	#[inline] pub fn as_raw_FacemarkAAM_Config(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkAAM_Config {}
 
-impl crate::face::FacemarkAAM_ConfigTrait for FacemarkAAM_Config {
+impl crate::face::FacemarkAAM_ConfigTraitConst for FacemarkAAM_Config {
 	#[inline] fn as_raw_FacemarkAAM_Config(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkAAM_ConfigTrait for FacemarkAAM_Config {
 	#[inline] fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1065,15 +1093,19 @@ impl FacemarkAAM_Config {
 }
 
 /// \brief Data container for the facemark::getData function
-pub trait FacemarkAAM_DataTrait {
+pub trait FacemarkAAM_DataTraitConst {
 	fn as_raw_FacemarkAAM_Data(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void;
 
-	fn s0(&mut self) -> core::Vector::<core::Point2f> {
-		unsafe { sys::cv_face_FacemarkAAM_Data_getPropS0(self.as_raw_mut_FacemarkAAM_Data()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: s0")
+	fn s0(&self) -> core::Vector<core::Point2f> {
+		unsafe { sys::cv_face_FacemarkAAM_Data_getPropS0_const(self.as_raw_FacemarkAAM_Data()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: s0")
 	}
 	
-	fn set_s0(&mut self, mut val: core::Vector::<core::Point2f>) -> () {
+}
+
+pub trait FacemarkAAM_DataTrait: crate::face::FacemarkAAM_DataTraitConst {
+	fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void;
+
+	fn set_s0(&mut self, mut val: core::Vector<core::Point2f>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Data_setPropS0_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Data(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_s0")
 	}
 	
@@ -1093,15 +1125,13 @@ impl Drop for FacemarkAAM_Data {
 	}
 }
 
-impl FacemarkAAM_Data {
-	#[inline] pub fn as_raw_FacemarkAAM_Data(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkAAM_Data {}
 
-impl crate::face::FacemarkAAM_DataTrait for FacemarkAAM_Data {
+impl crate::face::FacemarkAAM_DataTraitConst for FacemarkAAM_Data {
 	#[inline] fn as_raw_FacemarkAAM_Data(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkAAM_DataTrait for FacemarkAAM_Data {
 	#[inline] fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1109,52 +1139,56 @@ impl FacemarkAAM_Data {
 }
 
 /// \brief The model of AAM Algorithm
-pub trait FacemarkAAM_ModelTrait {
+pub trait FacemarkAAM_ModelTraitConst {
 	fn as_raw_FacemarkAAM_Model(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void;
 
-	fn scales(&mut self) -> core::Vector::<f32> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropScales(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } ).expect("Infallible function failed: scales")
+	fn scales(&self) -> core::Vector<f32> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropScales_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } ).expect("Infallible function failed: scales")
 	}
 	
-	fn set_scales(&mut self, mut val: core::Vector::<f32>) -> () {
+	fn triangles(&self) -> core::Vector<core::Vec3i> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropTriangles_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<core::Vec3i>::opencv_from_extern(r) } ).expect("Infallible function failed: triangles")
+	}
+	
+	fn textures(&self) -> core::Vector<crate::face::FacemarkAAM_Model_Texture> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropTextures_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<crate::face::FacemarkAAM_Model_Texture>::opencv_from_extern(r) } ).expect("Infallible function failed: textures")
+	}
+	
+	fn s0(&self) -> core::Vector<core::Point2f> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropS0_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: s0")
+	}
+	
+	fn s(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropS_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: s")
+	}
+	
+	fn q(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_getPropQ_const(self.as_raw_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: q")
+	}
+	
+}
+
+pub trait FacemarkAAM_ModelTrait: crate::face::FacemarkAAM_ModelTraitConst {
+	fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void;
+
+	fn set_scales(&mut self, mut val: core::Vector<f32>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_setPropScales_vector_float_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOff32()) }.into_result().expect("Infallible function failed: set_scales")
 	}
 	
-	fn triangles(&mut self) -> core::Vector::<core::Vec3i> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropTriangles(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<core::Vec3i>::opencv_from_extern(r) } ).expect("Infallible function failed: triangles")
-	}
-	
-	fn set_triangles(&mut self, mut val: core::Vector::<core::Vec3i>) -> () {
+	fn set_triangles(&mut self, mut val: core::Vector<core::Vec3i>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_setPropTriangles_vector_Vec3i_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfVec3i()) }.into_result().expect("Infallible function failed: set_triangles")
 	}
 	
-	fn textures(&mut self) -> core::Vector::<crate::face::FacemarkAAM_Model_Texture> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropTextures(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<crate::face::FacemarkAAM_Model_Texture>::opencv_from_extern(r) } ).expect("Infallible function failed: textures")
-	}
-	
-	fn set_textures(&mut self, mut val: core::Vector::<crate::face::FacemarkAAM_Model_Texture>) -> () {
+	fn set_textures(&mut self, mut val: core::Vector<crate::face::FacemarkAAM_Model_Texture>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_setPropTextures_vector_Texture_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfFacemarkAAM_Model_Texture()) }.into_result().expect("Infallible function failed: set_textures")
 	}
 	
-	fn s0(&mut self) -> core::Vector::<core::Point2f> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropS0(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: s0")
-	}
-	
-	fn set_s0(&mut self, mut val: core::Vector::<core::Point2f>) -> () {
+	fn set_s0(&mut self, mut val: core::Vector<core::Point2f>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_setPropS0_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_s0")
-	}
-	
-	fn s(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropS(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: s")
 	}
 	
 	fn set_s(&mut self, mut val: core::Mat) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_setPropS_Mat(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_s")
-	}
-	
-	fn q(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_getPropQ(self.as_raw_mut_FacemarkAAM_Model()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: q")
 	}
 	
 	fn set_q(&mut self, mut val: core::Mat) -> () {
@@ -1177,104 +1211,106 @@ impl Drop for FacemarkAAM_Model {
 	}
 }
 
-impl FacemarkAAM_Model {
-	#[inline] pub fn as_raw_FacemarkAAM_Model(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkAAM_Model {}
 
-impl crate::face::FacemarkAAM_ModelTrait for FacemarkAAM_Model {
+impl crate::face::FacemarkAAM_ModelTraitConst for FacemarkAAM_Model {
 	#[inline] fn as_raw_FacemarkAAM_Model(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkAAM_ModelTrait for FacemarkAAM_Model {
 	#[inline] fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FacemarkAAM_Model {
 }
 
-pub trait FacemarkAAM_Model_TextureTrait {
+pub trait FacemarkAAM_Model_TextureTraitConst {
 	fn as_raw_FacemarkAAM_Model_Texture(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void;
 
 	/// unused delete
 	fn max_m(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropMax_m_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().expect("Infallible function failed: max_m")
 	}
 	
+	fn resolution(&self) -> core::Rect {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropResolution_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().expect("Infallible function failed: resolution")
+	}
+	
+	fn a(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropA_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: a")
+	}
+	
+	fn a0(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropA0_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: a0")
+	}
+	
+	fn aa(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropAA_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: aa")
+	}
+	
+	fn aa0(&self) -> core::Mat {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropAA0_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: aa0")
+	}
+	
+	fn texture_idx(&self) -> core::Vector<core::Vector<core::Point>> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropTextureIdx_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector<core::Point>>::opencv_from_extern(r) } ).expect("Infallible function failed: texture_idx")
+	}
+	
+	fn base_shape(&self) -> core::Vector<core::Point2f> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropBase_shape_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: base_shape")
+	}
+	
+	fn ind1(&self) -> core::Vector<i32> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropInd1_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: ind1")
+	}
+	
+	fn ind2(&self) -> core::Vector<i32> {
+		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropInd2_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: ind2")
+	}
+	
+}
+
+pub trait FacemarkAAM_Model_TextureTrait: crate::face::FacemarkAAM_Model_TextureTraitConst {
+	fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void;
+
 	/// unused delete
 	fn set_max_m(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropMax_m_int(self.as_raw_mut_FacemarkAAM_Model_Texture(), val) }.into_result().expect("Infallible function failed: set_max_m")
-	}
-	
-	fn resolution(&self) -> core::Rect {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropResolution_const(self.as_raw_FacemarkAAM_Model_Texture()) }.into_result().expect("Infallible function failed: resolution")
 	}
 	
 	fn set_resolution(&mut self, val: core::Rect) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropResolution_Rect(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_resolution")
 	}
 	
-	fn a(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropA(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: a")
-	}
-	
 	fn set_a(&mut self, mut val: core::Mat) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropA_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_a")
-	}
-	
-	fn a0(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropA0(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: a0")
 	}
 	
 	fn set_a0(&mut self, mut val: core::Mat) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropA0_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_a0")
 	}
 	
-	fn aa(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropAA(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: aa")
-	}
-	
 	fn set_aa(&mut self, mut val: core::Mat) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropAA_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_aa")
-	}
-	
-	fn aa0(&mut self) -> core::Mat {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropAA0(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: aa0")
 	}
 	
 	fn set_aa0(&mut self, mut val: core::Mat) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropAA0_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_aa0")
 	}
 	
-	fn texture_idx(&mut self) -> core::Vector::<core::Vector::<core::Point>> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropTextureIdx(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<core::Vector::<core::Point>>::opencv_from_extern(r) } ).expect("Infallible function failed: texture_idx")
-	}
-	
-	fn set_texture_idx(&mut self, mut val: core::Vector::<core::Vector::<core::Point>>) -> () {
+	fn set_texture_idx(&mut self, mut val: core::Vector<core::Vector<core::Point>>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropTextureIdx_vector_vector_Point__(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfVectorOfPoint()) }.into_result().expect("Infallible function failed: set_texture_idx")
 	}
 	
-	fn base_shape(&mut self) -> core::Vector::<core::Point2f> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropBase_shape(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } ).expect("Infallible function failed: base_shape")
-	}
-	
-	fn set_base_shape(&mut self, mut val: core::Vector::<core::Point2f>) -> () {
+	fn set_base_shape(&mut self, mut val: core::Vector<core::Point2f>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropBase_shape_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfPoint2f()) }.into_result().expect("Infallible function failed: set_base_shape")
 	}
 	
-	fn ind1(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropInd1(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: ind1")
-	}
-	
-	fn set_ind1(&mut self, mut val: core::Vector::<i32>) -> () {
+	fn set_ind1(&mut self, mut val: core::Vector<i32>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd1_vector_int_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_ind1")
 	}
 	
-	fn ind2(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_getPropInd2(self.as_raw_mut_FacemarkAAM_Model_Texture()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: ind2")
-	}
-	
-	fn set_ind2(&mut self, mut val: core::Vector::<i32>) -> () {
+	fn set_ind2(&mut self, mut val: core::Vector<i32>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd2_vector_int_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_ind2")
 	}
 	
@@ -1293,114 +1329,116 @@ impl Drop for FacemarkAAM_Model_Texture {
 	}
 }
 
-impl FacemarkAAM_Model_Texture {
-	#[inline] pub fn as_raw_FacemarkAAM_Model_Texture(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkAAM_Model_Texture {}
 
-impl crate::face::FacemarkAAM_Model_TextureTrait for FacemarkAAM_Model_Texture {
+impl crate::face::FacemarkAAM_Model_TextureTraitConst for FacemarkAAM_Model_Texture {
 	#[inline] fn as_raw_FacemarkAAM_Model_Texture(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkAAM_Model_TextureTrait for FacemarkAAM_Model_Texture {
 	#[inline] fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FacemarkAAM_Model_Texture {
 }
 
-pub trait FacemarkAAM_ParamsTrait {
+pub trait FacemarkAAM_ParamsTraitConst {
 	fn as_raw_FacemarkAAM_Params(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void;
 
 	fn model_filename(&self) -> String {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropModel_filename_const(self.as_raw_FacemarkAAM_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_filename")
-	}
-	
-	fn set_model_filename(&mut self, val: &str) -> () {
-		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropModel_filename_string(self.as_raw_mut_FacemarkAAM_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_filename")
 	}
 	
 	fn m(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropM_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: m")
 	}
 	
-	fn set_m(&mut self, val: i32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropM_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_m")
-	}
-	
 	fn n(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropN_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: n")
-	}
-	
-	fn set_n(&mut self, val: i32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropN_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_n")
 	}
 	
 	fn n_iter(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropN_iter_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: n_iter")
 	}
 	
-	fn set_n_iter(&mut self, val: i32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropN_iter_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_n_iter")
-	}
-	
 	fn verbose(&self) -> bool {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropVerbose_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: verbose")
-	}
-	
-	fn set_verbose(&mut self, val: bool) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropVerbose_bool(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_verbose")
 	}
 	
 	fn save_model(&self) -> bool {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropSave_model_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: save_model")
 	}
 	
-	fn set_save_model(&mut self, val: bool) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropSave_model_bool(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_save_model")
-	}
-	
 	fn max_m(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropMax_m_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: max_m")
-	}
-	
-	fn set_max_m(&mut self, val: i32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropMax_m_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_max_m")
 	}
 	
 	fn max_n(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropMax_n_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: max_n")
 	}
 	
-	fn set_max_n(&mut self, val: i32) -> () {
-		unsafe { sys::cv_face_FacemarkAAM_Params_setPropMax_n_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_max_n")
-	}
-	
 	fn texture_max_m(&self) -> i32 {
 		unsafe { sys::cv_face_FacemarkAAM_Params_getPropTexture_max_m_const(self.as_raw_FacemarkAAM_Params()) }.into_result().expect("Infallible function failed: texture_max_m")
+	}
+	
+	fn scales(&self) -> core::Vector<f32> {
+		unsafe { sys::cv_face_FacemarkAAM_Params_getPropScales_const(self.as_raw_FacemarkAAM_Params()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } ).expect("Infallible function failed: scales")
+	}
+	
+	/// \brief Read parameters from file, currently unused
+	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_face_FacemarkAAM_Params_write_const_FileStorageR(self.as_raw_FacemarkAAM_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+}
+
+pub trait FacemarkAAM_ParamsTrait: crate::face::FacemarkAAM_ParamsTraitConst {
+	fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void;
+
+	fn set_model_filename(&mut self, val: &str) -> () {
+		extern_container_arg!(nofail mut val);
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropModel_filename_string(self.as_raw_mut_FacemarkAAM_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_model_filename")
+	}
+	
+	fn set_m(&mut self, val: i32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropM_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_m")
+	}
+	
+	fn set_n(&mut self, val: i32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropN_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_n")
+	}
+	
+	fn set_n_iter(&mut self, val: i32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropN_iter_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_n_iter")
+	}
+	
+	fn set_verbose(&mut self, val: bool) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropVerbose_bool(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_verbose")
+	}
+	
+	fn set_save_model(&mut self, val: bool) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropSave_model_bool(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_save_model")
+	}
+	
+	fn set_max_m(&mut self, val: i32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropMax_m_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_max_m")
+	}
+	
+	fn set_max_n(&mut self, val: i32) -> () {
+		unsafe { sys::cv_face_FacemarkAAM_Params_setPropMax_n_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_max_n")
 	}
 	
 	fn set_texture_max_m(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Params_setPropTexture_max_m_int(self.as_raw_mut_FacemarkAAM_Params(), val) }.into_result().expect("Infallible function failed: set_texture_max_m")
 	}
 	
-	fn scales(&mut self) -> core::Vector::<f32> {
-		unsafe { sys::cv_face_FacemarkAAM_Params_getPropScales(self.as_raw_mut_FacemarkAAM_Params()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } ).expect("Infallible function failed: scales")
-	}
-	
-	fn set_scales(&mut self, mut val: core::Vector::<f32>) -> () {
+	fn set_scales(&mut self, mut val: core::Vector<f32>) -> () {
 		unsafe { sys::cv_face_FacemarkAAM_Params_setPropScales_vector_float_(self.as_raw_mut_FacemarkAAM_Params(), val.as_raw_mut_VectorOff32()) }.into_result().expect("Infallible function failed: set_scales")
 	}
 	
 	/// \brief Read parameters from file, currently unused
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_face_FacemarkAAM_Params_read_const_FileNodeR(self.as_raw_mut_FacemarkAAM_Params(), unnamed.as_raw_FileNode()) }.into_result()
-	}
-	
-	/// \brief Read parameters from file, currently unused
-	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FacemarkAAM_Params_write_const_FileStorageR(self.as_raw_FacemarkAAM_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1418,15 +1456,13 @@ impl Drop for FacemarkAAM_Params {
 	}
 }
 
-impl FacemarkAAM_Params {
-	#[inline] pub fn as_raw_FacemarkAAM_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkAAM_Params {}
 
-impl crate::face::FacemarkAAM_ParamsTrait for FacemarkAAM_Params {
+impl crate::face::FacemarkAAM_ParamsTraitConst for FacemarkAAM_Params {
 	#[inline] fn as_raw_FacemarkAAM_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkAAM_ParamsTrait for FacemarkAAM_Params {
 	#[inline] fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1438,8 +1474,12 @@ impl FacemarkAAM_Params {
 	
 }
 
-pub trait FacemarkKazemi: crate::face::Facemark {
+pub trait FacemarkKazemiConst: crate::face::FacemarkConst {
 	fn as_raw_FacemarkKazemi(&self) -> *const c_void;
+
+}
+
+pub trait FacemarkKazemi: crate::face::Facemark + crate::face::FacemarkKazemiConst {
 	fn as_raw_mut_FacemarkKazemi(&mut self) -> *mut c_void;
 
 	/// This function is used to train the model using gradient boosting to get a cascade of regressors
@@ -1455,7 +1495,7 @@ pub trait FacemarkKazemi: crate::face::Facemark {
 	/// 
 	/// ## C++ default parameters
 	/// * model_filename: "face_landmarks.dat"
-	fn training(&mut self, images: &mut core::Vector::<core::Mat>, landmarks: &mut core::Vector::<core::Vector::<core::Point2f>>, configfile: &str, scale: core::Size, model_filename: &str) -> Result<bool> {
+	fn training(&mut self, images: &mut core::Vector<core::Mat>, landmarks: &mut core::Vector<core::Vector<core::Point2f>>, configfile: &str, scale: core::Size, model_filename: &str) -> Result<bool> {
 		extern_container_arg!(mut configfile);
 		extern_container_arg!(mut model_filename);
 		unsafe { sys::cv_face_FacemarkKazemi_training_vector_Mat_R_vector_vector_Point2f__R_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern_mut(), scale.opencv_as_extern(), model_filename.opencv_as_extern_mut()) }.into_result()
@@ -1480,28 +1520,67 @@ pub trait FacemarkKazemi: crate::face::Facemark {
 impl dyn FacemarkKazemi + '_ {
 	/// ## C++ default parameters
 	/// * parameters: FacemarkKazemi::Params()
-	pub fn create(parameters: &crate::face::FacemarkKazemi_Params) -> Result<core::Ptr::<dyn crate::face::FacemarkKazemi>> {
+	pub fn create(parameters: &crate::face::FacemarkKazemi_Params) -> Result<core::Ptr<dyn crate::face::FacemarkKazemi>> {
 		unsafe { sys::cv_face_FacemarkKazemi_create_const_ParamsR(parameters.as_raw_FacemarkKazemi_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::FacemarkKazemi>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait FacemarkKazemi_ParamsTrait {
+pub trait FacemarkKazemi_ParamsTraitConst {
 	fn as_raw_FacemarkKazemi_Params(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void;
 
 	/// cascade_depth This stores the deapth of cascade used for training.
 	fn cascade_depth(&self) -> u32 {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropCascade_depth_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: cascade_depth")
 	}
 	
-	/// cascade_depth This stores the deapth of cascade used for training.
-	fn set_cascade_depth(&mut self, val: u32) -> () {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropCascade_depth_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_cascade_depth")
-	}
-	
 	/// tree_depth This stores the max height of the regression tree built.
 	fn tree_depth(&self) -> u32 {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropTree_depth_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: tree_depth")
+	}
+	
+	/// num_trees_per_cascade_level This stores number of trees fit per cascade level.
+	fn num_trees_per_cascade_level(&self) -> u32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_trees_per_cascade_level_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_trees_per_cascade_level")
+	}
+	
+	/// learning_rate stores the learning rate in gradient boosting, also referred as shrinkage.
+	fn learning_rate(&self) -> f32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropLearning_rate_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: learning_rate")
+	}
+	
+	/// oversampling_amount stores number of initialisations used to create training samples.
+	fn oversampling_amount(&self) -> u32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropOversampling_amount_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: oversampling_amount")
+	}
+	
+	/// num_test_coordinates stores number of test coordinates.
+	fn num_test_coordinates(&self) -> u32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_test_coordinates_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_test_coordinates")
+	}
+	
+	/// lambda stores a value to calculate probability of closeness of two coordinates.
+	fn lambda(&self) -> f32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropLambda_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: lambda")
+	}
+	
+	/// num_test_splits stores number of random test splits generated.
+	fn num_test_splits(&self) -> u32 {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_test_splits_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_test_splits")
+	}
+	
+	/// configfile stores the name of the file containing the values of training parameters
+	fn configfile(&self) -> String {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropConfigfile_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: configfile")
+	}
+	
+}
+
+pub trait FacemarkKazemi_ParamsTrait: crate::face::FacemarkKazemi_ParamsTraitConst {
+	fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void;
+
+	/// cascade_depth This stores the deapth of cascade used for training.
+	fn set_cascade_depth(&mut self, val: u32) -> () {
+		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropCascade_depth_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_cascade_depth")
 	}
 	
 	/// tree_depth This stores the max height of the regression tree built.
@@ -1510,18 +1589,8 @@ pub trait FacemarkKazemi_ParamsTrait {
 	}
 	
 	/// num_trees_per_cascade_level This stores number of trees fit per cascade level.
-	fn num_trees_per_cascade_level(&self) -> u32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_trees_per_cascade_level_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_trees_per_cascade_level")
-	}
-	
-	/// num_trees_per_cascade_level This stores number of trees fit per cascade level.
 	fn set_num_trees_per_cascade_level(&mut self, val: u32) -> () {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropNum_trees_per_cascade_level_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_num_trees_per_cascade_level")
-	}
-	
-	/// learning_rate stores the learning rate in gradient boosting, also referred as shrinkage.
-	fn learning_rate(&self) -> f32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropLearning_rate_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: learning_rate")
 	}
 	
 	/// learning_rate stores the learning rate in gradient boosting, also referred as shrinkage.
@@ -1530,18 +1599,8 @@ pub trait FacemarkKazemi_ParamsTrait {
 	}
 	
 	/// oversampling_amount stores number of initialisations used to create training samples.
-	fn oversampling_amount(&self) -> u32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropOversampling_amount_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: oversampling_amount")
-	}
-	
-	/// oversampling_amount stores number of initialisations used to create training samples.
 	fn set_oversampling_amount(&mut self, val: u32) -> () {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropOversampling_amount_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_oversampling_amount")
-	}
-	
-	/// num_test_coordinates stores number of test coordinates.
-	fn num_test_coordinates(&self) -> u32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_test_coordinates_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_test_coordinates")
 	}
 	
 	/// num_test_coordinates stores number of test coordinates.
@@ -1550,28 +1609,13 @@ pub trait FacemarkKazemi_ParamsTrait {
 	}
 	
 	/// lambda stores a value to calculate probability of closeness of two coordinates.
-	fn lambda(&self) -> f32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropLambda_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: lambda")
-	}
-	
-	/// lambda stores a value to calculate probability of closeness of two coordinates.
 	fn set_lambda(&mut self, val: f32) -> () {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropLambda_float(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_lambda")
 	}
 	
 	/// num_test_splits stores number of random test splits generated.
-	fn num_test_splits(&self) -> u32 {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropNum_test_splits_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().expect("Infallible function failed: num_test_splits")
-	}
-	
-	/// num_test_splits stores number of random test splits generated.
 	fn set_num_test_splits(&mut self, val: u32) -> () {
 		unsafe { sys::cv_face_FacemarkKazemi_Params_setPropNum_test_splits_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) }.into_result().expect("Infallible function failed: set_num_test_splits")
-	}
-	
-	/// configfile stores the name of the file containing the values of training parameters
-	fn configfile(&self) -> String {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_getPropConfigfile_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: configfile")
 	}
 	
 	/// configfile stores the name of the file containing the values of training parameters
@@ -1595,15 +1639,13 @@ impl Drop for FacemarkKazemi_Params {
 	}
 }
 
-impl FacemarkKazemi_Params {
-	#[inline] pub fn as_raw_FacemarkKazemi_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkKazemi_Params {}
 
-impl crate::face::FacemarkKazemi_ParamsTrait for FacemarkKazemi_Params {
+impl crate::face::FacemarkKazemi_ParamsTraitConst for FacemarkKazemi_Params {
 	#[inline] fn as_raw_FacemarkKazemi_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkKazemi_ParamsTrait for FacemarkKazemi_Params {
 	#[inline] fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1615,8 +1657,12 @@ impl FacemarkKazemi_Params {
 	
 }
 
-pub trait FacemarkLBF: crate::face::FacemarkTrain {
+pub trait FacemarkLBFConst: crate::face::FacemarkTrainConst {
 	fn as_raw_FacemarkLBF(&self) -> *const c_void;
+
+}
+
+pub trait FacemarkLBF: crate::face::FacemarkLBFConst + crate::face::FacemarkTrain {
 	fn as_raw_mut_FacemarkLBF(&mut self) -> *mut c_void;
 
 }
@@ -1624,25 +1670,87 @@ pub trait FacemarkLBF: crate::face::FacemarkTrain {
 impl dyn FacemarkLBF + '_ {
 	/// ## C++ default parameters
 	/// * parameters: FacemarkLBF::Params()
-	pub fn create(parameters: &crate::face::FacemarkLBF_Params) -> Result<core::Ptr::<dyn crate::face::FacemarkLBF>> {
+	pub fn create(parameters: &crate::face::FacemarkLBF_Params) -> Result<core::Ptr<dyn crate::face::FacemarkLBF>> {
 		unsafe { sys::cv_face_FacemarkLBF_create_const_ParamsR(parameters.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::FacemarkLBF>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait FacemarkLBF_ParamsTrait {
+pub trait FacemarkLBF_ParamsTraitConst {
 	fn as_raw_FacemarkLBF_Params(&self) -> *const c_void;
-	fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void;
 
 	fn shape_offset(&self) -> f64 {
 		unsafe { sys::cv_face_FacemarkLBF_Params_getPropShape_offset_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: shape_offset")
 	}
 	
-	fn set_shape_offset(&mut self, val: f64) -> () {
-		unsafe { sys::cv_face_FacemarkLBF_Params_setPropShape_offset_double(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_shape_offset")
-	}
-	
 	fn cascade_face(&self) -> String {
 		unsafe { sys::cv_face_FacemarkLBF_Params_getPropCascade_face_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: cascade_face")
+	}
+	
+	fn verbose(&self) -> bool {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropVerbose_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: verbose")
+	}
+	
+	fn n_landmarks(&self) -> i32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropN_landmarks_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: n_landmarks")
+	}
+	
+	fn init_shape_n(&self) -> i32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropInitShape_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: init_shape_n")
+	}
+	
+	fn stages_n(&self) -> i32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropStages_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: stages_n")
+	}
+	
+	fn tree_n(&self) -> i32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropTree_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: tree_n")
+	}
+	
+	fn tree_depth(&self) -> i32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropTree_depth_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: tree_depth")
+	}
+	
+	fn bagging_overlap(&self) -> f64 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropBagging_overlap_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: bagging_overlap")
+	}
+	
+	fn model_filename(&self) -> String {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropModel_filename_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_filename")
+	}
+	
+	/// flag to save the trained model or not
+	fn save_model(&self) -> bool {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropSave_model_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: save_model")
+	}
+	
+	/// seed for shuffling the training data
+	fn seed(&self) -> u32 {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropSeed_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: seed")
+	}
+	
+	fn feats_m(&self) -> core::Vector<i32> {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropFeats_m_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: feats_m")
+	}
+	
+	fn radius_m(&self) -> core::Vector<f64> {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropRadius_m_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } ).expect("Infallible function failed: radius_m")
+	}
+	
+	fn detect_roi(&self) -> core::Rect {
+		unsafe { sys::cv_face_FacemarkLBF_Params_getPropDetectROI_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: detect_roi")
+	}
+	
+	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
+		unsafe { sys::cv_face_FacemarkLBF_Params_write_const_FileStorageR(self.as_raw_FacemarkLBF_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
+	}
+	
+}
+
+pub trait FacemarkLBF_ParamsTrait: crate::face::FacemarkLBF_ParamsTraitConst {
+	fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void;
+
+	fn set_shape_offset(&mut self, val: f64) -> () {
+		unsafe { sys::cv_face_FacemarkLBF_Params_setPropShape_offset_double(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_shape_offset")
 	}
 	
 	fn set_cascade_face(&mut self, val: &str) -> () {
@@ -1650,64 +1758,32 @@ pub trait FacemarkLBF_ParamsTrait {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropCascade_face_String(self.as_raw_mut_FacemarkLBF_Params(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_cascade_face")
 	}
 	
-	fn verbose(&self) -> bool {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropVerbose_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: verbose")
-	}
-	
 	fn set_verbose(&mut self, val: bool) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropVerbose_bool(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_verbose")
-	}
-	
-	fn n_landmarks(&self) -> i32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropN_landmarks_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: n_landmarks")
 	}
 	
 	fn set_n_landmarks(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropN_landmarks_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_n_landmarks")
 	}
 	
-	fn init_shape_n(&self) -> i32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropInitShape_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: init_shape_n")
-	}
-	
 	fn set_init_shape_n(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropInitShape_n_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_init_shape_n")
-	}
-	
-	fn stages_n(&self) -> i32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropStages_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: stages_n")
 	}
 	
 	fn set_stages_n(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropStages_n_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_stages_n")
 	}
 	
-	fn tree_n(&self) -> i32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropTree_n_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: tree_n")
-	}
-	
 	fn set_tree_n(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropTree_n_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_tree_n")
-	}
-	
-	fn tree_depth(&self) -> i32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropTree_depth_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: tree_depth")
 	}
 	
 	fn set_tree_depth(&mut self, val: i32) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropTree_depth_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_tree_depth")
 	}
 	
-	fn bagging_overlap(&self) -> f64 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropBagging_overlap_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: bagging_overlap")
-	}
-	
 	fn set_bagging_overlap(&mut self, val: f64) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropBagging_overlap_double(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_bagging_overlap")
-	}
-	
-	fn model_filename(&self) -> String {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropModel_filename_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: model_filename")
 	}
 	
 	fn set_model_filename(&mut self, val: &str) -> () {
@@ -1716,18 +1792,8 @@ pub trait FacemarkLBF_ParamsTrait {
 	}
 	
 	/// flag to save the trained model or not
-	fn save_model(&self) -> bool {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropSave_model_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: save_model")
-	}
-	
-	/// flag to save the trained model or not
 	fn set_save_model(&mut self, val: bool) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropSave_model_bool(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_save_model")
-	}
-	
-	/// seed for shuffling the training data
-	fn seed(&self) -> u32 {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropSeed_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: seed")
 	}
 	
 	/// seed for shuffling the training data
@@ -1735,24 +1801,12 @@ pub trait FacemarkLBF_ParamsTrait {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropSeed_unsigned_int(self.as_raw_mut_FacemarkLBF_Params(), val) }.into_result().expect("Infallible function failed: set_seed")
 	}
 	
-	fn feats_m(&mut self) -> core::Vector::<i32> {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropFeats_m(self.as_raw_mut_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: feats_m")
-	}
-	
-	fn set_feats_m(&mut self, mut val: core::Vector::<i32>) -> () {
+	fn set_feats_m(&mut self, mut val: core::Vector<i32>) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropFeats_m_vector_int_(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_feats_m")
 	}
 	
-	fn radius_m(&mut self) -> core::Vector::<f64> {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropRadius_m(self.as_raw_mut_FacemarkLBF_Params()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } ).expect("Infallible function failed: radius_m")
-	}
-	
-	fn set_radius_m(&mut self, mut val: core::Vector::<f64>) -> () {
+	fn set_radius_m(&mut self, mut val: core::Vector<f64>) -> () {
 		unsafe { sys::cv_face_FacemarkLBF_Params_setPropRadius_m_vector_double_(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOff64()) }.into_result().expect("Infallible function failed: set_radius_m")
-	}
-	
-	fn detect_roi(&self) -> core::Rect {
-		unsafe { sys::cv_face_FacemarkLBF_Params_getPropDetectROI_const(self.as_raw_FacemarkLBF_Params()) }.into_result().expect("Infallible function failed: detect_roi")
 	}
 	
 	fn set_detect_roi(&mut self, val: core::Rect) -> () {
@@ -1761,10 +1815,6 @@ pub trait FacemarkLBF_ParamsTrait {
 	
 	fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_face_FacemarkLBF_Params_read_const_FileNodeR(self.as_raw_mut_FacemarkLBF_Params(), unnamed.as_raw_FileNode()) }.into_result()
-	}
-	
-	fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FacemarkLBF_Params_write_const_FileStorageR(self.as_raw_FacemarkLBF_Params(), unnamed.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -1782,15 +1832,13 @@ impl Drop for FacemarkLBF_Params {
 	}
 }
 
-impl FacemarkLBF_Params {
-	#[inline] pub fn as_raw_FacemarkLBF_Params(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FacemarkLBF_Params {}
 
-impl crate::face::FacemarkLBF_ParamsTrait for FacemarkLBF_Params {
+impl crate::face::FacemarkLBF_ParamsTraitConst for FacemarkLBF_Params {
 	#[inline] fn as_raw_FacemarkLBF_Params(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::FacemarkLBF_ParamsTrait for FacemarkLBF_Params {
 	#[inline] fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1829,8 +1877,12 @@ impl FacemarkLBF_Params {
 ///   If the user already have a trained model, then this part can be omitted.
 /// - Load the trained model using Facemark::loadModel.
 /// - Perform the fitting via the Facemark::fit.
-pub trait FacemarkTrain: crate::face::Facemark {
+pub trait FacemarkTrainConst: crate::face::FacemarkConst {
 	fn as_raw_FacemarkTrain(&self) -> *const c_void;
+
+}
+
+pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst {
 	fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void;
 
 	/// Add one training sample to the trainer.
@@ -1989,8 +2041,12 @@ pub trait FacemarkTrain: crate::face::Facemark {
 	
 }
 
-pub trait FisherFaceRecognizer: crate::face::BasicFaceRecognizer {
+pub trait FisherFaceRecognizerConst: crate::face::BasicFaceRecognizerConst {
 	fn as_raw_FisherFaceRecognizer(&self) -> *const c_void;
+
+}
+
+pub trait FisherFaceRecognizer: crate::face::BasicFaceRecognizer + crate::face::FisherFaceRecognizerConst {
 	fn as_raw_mut_FisherFaceRecognizer(&mut self) -> *mut c_void;
 
 }
@@ -2029,25 +2085,18 @@ impl dyn FisherFaceRecognizer + '_ {
 	/// ## C++ default parameters
 	/// * num_components: 0
 	/// * threshold: DBL_MAX
-	pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::FisherFaceRecognizer>> {
+	pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr<dyn crate::face::FisherFaceRecognizer>> {
 		unsafe { sys::cv_face_FisherFaceRecognizer_create_int_double(num_components, threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::FisherFaceRecognizer>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
+pub trait LBPHFaceRecognizerConst: crate::face::FaceRecognizerConst {
 	fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void;
-	fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void;
 
 	/// ## See also
 	/// setGridX
 	fn get_grid_x(&self) -> Result<i32> {
 		unsafe { sys::cv_face_LBPHFaceRecognizer_getGridX_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
-	}
-	
-	/// ## See also
-	/// setGridX getGridX
-	fn set_grid_x(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridX_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -2057,21 +2106,9 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	}
 	
 	/// ## See also
-	/// setGridY getGridY
-	fn set_grid_y(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridY_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
-	}
-	
-	/// ## See also
 	/// setRadius
 	fn get_radius(&self) -> Result<i32> {
 		unsafe { sys::cv_face_LBPHFaceRecognizer_getRadius_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
-	}
-	
-	/// ## See also
-	/// setRadius getRadius
-	fn set_radius(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setRadius_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -2081,29 +2118,52 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	}
 	
 	/// ## See also
+	/// setThreshold
+	fn get_threshold(&self) -> Result<f64> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_getThreshold_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
+	}
+	
+	fn get_histograms(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_getHistograms_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+	fn get_labels(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_getLabels_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer + crate::face::LBPHFaceRecognizerConst {
+	fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void;
+
+	/// ## See also
+	/// setGridX getGridX
+	fn set_grid_x(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridX_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
+	}
+	
+	/// ## See also
+	/// setGridY getGridY
+	fn set_grid_y(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridY_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
+	}
+	
+	/// ## See also
+	/// setRadius getRadius
+	fn set_radius(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setRadius_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
+	}
+	
+	/// ## See also
 	/// setNeighbors getNeighbors
 	fn set_neighbors(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_face_LBPHFaceRecognizer_setNeighbors_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
-	/// setThreshold
-	fn get_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_getThreshold_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
-	}
-	
-	/// ## See also
 	/// setThreshold getThreshold
 	fn set_threshold(&mut self, val: f64) -> Result<()> {
 		unsafe { sys::cv_face_LBPHFaceRecognizer_setThreshold_double(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
-	}
-	
-	fn get_histograms(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_getHistograms_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
-	}
-	
-	fn get_labels(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_getLabels_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 }
@@ -2147,7 +2207,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 	/// * grid_x: 8
 	/// * grid_y: 8
 	/// * threshold: DBL_MAX
-	pub fn create(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::LBPHFaceRecognizer>> {
+	pub fn create(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> Result<core::Ptr<dyn crate::face::LBPHFaceRecognizer>> {
 		unsafe { sys::cv_face_LBPHFaceRecognizer_create_int_int_int_int_double(radius, neighbors, grid_x, grid_y, threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::LBPHFaceRecognizer>::opencv_from_extern(r) } )
 	}
 	
@@ -2204,8 +2264,20 @@ impl dyn LBPHFaceRecognizer + '_ {
 ///    reloaded->same(some_image);
 ///    ```
 /// 
-pub trait MACE: core::AlgorithmTrait {
+pub trait MACEConst: core::AlgorithmTraitConst {
 	fn as_raw_MACE(&self) -> *const c_void;
+
+	/// correlate query img and threshold to min class value
+	/// ## Parameters
+	/// * query: a Mat with query image
+	fn same(&self, query: &dyn core::ToInputArray) -> Result<bool> {
+		input_array_arg!(query);
+		unsafe { sys::cv_face_MACE_same_const_const__InputArrayR(self.as_raw_MACE(), query.as_raw__InputArray()) }.into_result()
+	}
+	
+}
+
+pub trait MACE: core::AlgorithmTrait + crate::face::MACEConst {
 	fn as_raw_mut_MACE(&mut self) -> *mut c_void;
 
 	/// optionally encrypt images with random convolution
@@ -2226,14 +2298,6 @@ pub trait MACE: core::AlgorithmTrait {
 		unsafe { sys::cv_face_MACE_train_const__InputArrayR(self.as_raw_mut_MACE(), images.as_raw__InputArray()) }.into_result()
 	}
 	
-	/// correlate query img and threshold to min class value
-	/// ## Parameters
-	/// * query: a Mat with query image
-	fn same(&self, query: &dyn core::ToInputArray) -> Result<bool> {
-		input_array_arg!(query);
-		unsafe { sys::cv_face_MACE_same_const_const__InputArrayR(self.as_raw_MACE(), query.as_raw__InputArray()) }.into_result()
-	}
-	
 }
 
 impl dyn MACE + '_ {
@@ -2244,7 +2308,7 @@ impl dyn MACE + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * objname: String()
-	pub fn load(filename: &str, objname: &str) -> Result<core::Ptr::<dyn crate::face::MACE>> {
+	pub fn load(filename: &str, objname: &str) -> Result<core::Ptr<dyn crate::face::MACE>> {
 		extern_container_arg!(filename);
 		extern_container_arg!(objname);
 		unsafe { sys::cv_face_MACE_load_const_StringR_const_StringR(filename.opencv_as_extern(), objname.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::MACE>::opencv_from_extern(r) } )
@@ -2256,14 +2320,18 @@ impl dyn MACE + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * imgsize: 64
-	pub fn create(imgsize: i32) -> Result<core::Ptr::<dyn crate::face::MACE>> {
+	pub fn create(imgsize: i32) -> Result<core::Ptr<dyn crate::face::MACE>> {
 		unsafe { sys::cv_face_MACE_create_int(imgsize) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::face::MACE>::opencv_from_extern(r) } )
 	}
 	
 }
 /// Abstract base class for all strategies of prediction result handling
-pub trait PredictCollector {
+pub trait PredictCollectorConst {
 	fn as_raw_PredictCollector(&self) -> *const c_void;
+
+}
+
+pub trait PredictCollector: crate::face::PredictCollectorConst {
 	fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void;
 
 	/// Interface method called by face recognizer before results processing
@@ -2286,8 +2354,22 @@ pub trait PredictCollector {
 /// Default predict collector
 /// 
 /// Trace minimal distance with treshhold checking (that is default behavior for most predict logic)
-pub trait StandardCollectorTrait: crate::face::PredictCollector {
+pub trait StandardCollectorTraitConst: crate::face::PredictCollectorConst {
 	fn as_raw_StandardCollector(&self) -> *const c_void;
+
+	/// Returns label with minimal distance
+	fn get_min_label(&self) -> Result<i32> {
+		unsafe { sys::cv_face_StandardCollector_getMinLabel_const(self.as_raw_StandardCollector()) }.into_result()
+	}
+	
+	/// Returns minimal distance value
+	fn get_min_dist(&self) -> Result<f64> {
+		unsafe { sys::cv_face_StandardCollector_getMinDist_const(self.as_raw_StandardCollector()) }.into_result()
+	}
+	
+}
+
+pub trait StandardCollectorTrait: crate::face::PredictCollector + crate::face::StandardCollectorTraitConst {
 	fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void;
 
 	/// overloaded interface method
@@ -2298,16 +2380,6 @@ pub trait StandardCollectorTrait: crate::face::PredictCollector {
 	/// overloaded interface method
 	fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
 		unsafe { sys::cv_face_StandardCollector_collect_int_double(self.as_raw_mut_StandardCollector(), label, dist) }.into_result()
-	}
-	
-	/// Returns label with minimal distance
-	fn get_min_label(&self) -> Result<i32> {
-		unsafe { sys::cv_face_StandardCollector_getMinLabel_const(self.as_raw_StandardCollector()) }.into_result()
-	}
-	
-	/// Returns minimal distance value
-	fn get_min_dist(&self) -> Result<f64> {
-		unsafe { sys::cv_face_StandardCollector_getMinDist_const(self.as_raw_StandardCollector()) }.into_result()
 	}
 	
 }
@@ -2328,20 +2400,21 @@ impl Drop for StandardCollector {
 	}
 }
 
-impl StandardCollector {
-	#[inline] pub fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for StandardCollector {}
 
-impl crate::face::PredictCollector for StandardCollector {
+impl crate::face::PredictCollectorConst for StandardCollector {
 	#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::PredictCollector for StandardCollector {
 	#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::face::StandardCollectorTrait for StandardCollector {
+impl crate::face::StandardCollectorTraitConst for StandardCollector {
 	#[inline] fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::face::StandardCollectorTrait for StandardCollector {
 	#[inline] fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2362,7 +2435,7 @@ impl StandardCollector {
 	/// 
 	/// ## C++ default parameters
 	/// * threshold: DBL_MAX
-	pub fn create(threshold: f64) -> Result<core::Ptr::<crate::face::StandardCollector>> {
+	pub fn create(threshold: f64) -> Result<core::Ptr<crate::face::StandardCollector>> {
 		unsafe { sys::cv_face_StandardCollector_create_double(threshold) }.into_result().map(|r| unsafe { core::Ptr::<crate::face::StandardCollector>::opencv_from_extern(r) } )
 	}
 	

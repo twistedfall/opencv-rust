@@ -63,7 +63,7 @@
 //!            Check installation instructions in the following tutorial: @ref tutorial_sfm_installation
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::BaseSFM, super::SFMLibmvEuclideanReconstruction };
+	pub use { super::BaseSFMConst, super::BaseSFM, super::SFMLibmvEuclideanReconstructionConst, super::SFMLibmvEuclideanReconstruction };
 }
 
 pub const SFM_DISTORTION_MODEL_DIVISION: i32 = 1;
@@ -527,7 +527,7 @@ pub fn reconstruct_1(points2d: &dyn core::ToInputArray, rs: &mut dyn core::ToOut
 /// 
 /// ## C++ default parameters
 /// * is_projective: false
-pub fn reconstruct_2(images: core::Vector::<String>, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
+pub fn reconstruct_2(images: core::Vector<String>, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
 	output_array_arg!(ps);
 	output_array_arg!(points3d);
 	input_output_array_arg!(k);
@@ -553,7 +553,7 @@ pub fn reconstruct_2(images: core::Vector::<String>, ps: &mut dyn core::ToOutput
 /// 
 /// ## C++ default parameters
 /// * is_projective: false
-pub fn reconstruct_3(images: core::Vector::<String>, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
+pub fn reconstruct_3(images: core::Vector<String>, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
 	output_array_arg!(rs);
 	output_array_arg!(ts);
 	input_output_array_arg!(k);
@@ -609,8 +609,20 @@ pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices
 }
 
 /// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
-pub trait BaseSFM {
+pub trait BaseSFMConst {
 	fn as_raw_BaseSFM(&self) -> *const c_void;
+
+	fn get_error(&self) -> Result<f64> {
+		unsafe { sys::cv_sfm_BaseSFM_getError_const(self.as_raw_BaseSFM()) }.into_result()
+	}
+	
+	fn get_intrinsics(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_sfm_BaseSFM_getIntrinsics_const(self.as_raw_BaseSFM()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait BaseSFM: crate::sfm::BaseSFMConst {
 	fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void;
 
 	fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
@@ -627,11 +639,11 @@ pub trait BaseSFM {
 		unsafe { sys::cv_sfm_BaseSFM_run_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), points2d.as_raw__InputArray(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
 	}
 	
-	fn run_2(&mut self, images: &core::Vector::<String>) -> Result<()> {
+	fn run_2(&mut self, images: &core::Vector<String>) -> Result<()> {
 		unsafe { sys::cv_sfm_BaseSFM_run_const_vector_String_R(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString()) }.into_result()
 	}
 	
-	fn run_3(&mut self, images: &core::Vector::<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn run_3(&mut self, images: &core::Vector<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_output_array_arg!(k);
 		output_array_arg!(rs);
 		output_array_arg!(ts);
@@ -639,17 +651,9 @@ pub trait BaseSFM {
 		unsafe { sys::cv_sfm_BaseSFM_run_const_vector_String_R_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
 	}
 	
-	fn get_error(&self) -> Result<f64> {
-		unsafe { sys::cv_sfm_BaseSFM_getError_const(self.as_raw_BaseSFM()) }.into_result()
-	}
-	
 	fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(points3d);
 		unsafe { sys::cv_sfm_BaseSFM_getPoints_const__OutputArrayR(self.as_raw_mut_BaseSFM(), points3d.as_raw__OutputArray()) }.into_result()
-	}
-	
-	fn get_intrinsics(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_sfm_BaseSFM_getIntrinsics_const(self.as_raw_BaseSFM()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -669,8 +673,22 @@ pub trait BaseSFM {
 }
 
 /// SFMLibmvEuclideanReconstruction class provides an interface with the Libmv Structure From Motion pipeline.
-pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
+pub trait SFMLibmvEuclideanReconstructionConst: crate::sfm::BaseSFMConst {
 	fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *const c_void;
+
+	/// Returns the computed reprojection error.
+	fn get_error(&self) -> Result<f64> {
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getError_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result()
+	}
+	
+	/// Returns the refined camera calibration matrix.
+	fn get_intrinsics(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getIntrinsics_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM + crate::sfm::SFMLibmvEuclideanReconstructionConst {
 	fn as_raw_mut_SFMLibmvEuclideanReconstruction(&mut self) -> *mut c_void;
 
 	/// Calls the pipeline in order to perform Eclidean reconstruction.
@@ -713,7 +731,7 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
 	/// Note:
 	///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
 	///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
-	fn run_2(&mut self, images: &core::Vector::<String>) -> Result<()> {
+	fn run_2(&mut self, images: &core::Vector<String>) -> Result<()> {
 		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vector_String_R(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString()) }.into_result()
 	}
 	
@@ -729,17 +747,12 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
 	/// Note:
 	///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
 	///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
-	fn run_3(&mut self, images: &core::Vector::<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn run_3(&mut self, images: &core::Vector<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_output_array_arg!(k);
 		output_array_arg!(rs);
 		output_array_arg!(ts);
 		output_array_arg!(points3d);
 		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vector_String_R_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
-	}
-	
-	/// Returns the computed reprojection error.
-	fn get_error(&self) -> Result<f64> {
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getError_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result()
 	}
 	
 	/// Returns the estimated 3d points.
@@ -748,11 +761,6 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
 	fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(points3d);
 		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getPoints_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), points3d.as_raw__OutputArray()) }.into_result()
-	}
-	
-	/// Returns the refined camera calibration matrix.
-	fn get_intrinsics(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getIntrinsics_const(self.as_raw_SFMLibmvEuclideanReconstruction()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
 	/// Returns the estimated camera extrinsic parameters.
@@ -789,7 +797,7 @@ impl dyn SFMLibmvEuclideanReconstruction + '_ {
 	/// ## C++ default parameters
 	/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
 	/// * reconstruction_options: libmv_ReconstructionOptions()
-	pub fn create(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>> {
+	pub fn create(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<core::Ptr<dyn crate::sfm::SFMLibmvEuclideanReconstruction>> {
 		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create_const_libmv_CameraIntrinsicsOptionsR_const_libmv_ReconstructionOptionsR(&camera_instrinsic_options, &reconstruction_options) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(r) } )
 	}
 	

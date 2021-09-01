@@ -40,11 +40,15 @@
 //! Hierarchical Feature Selection for Efficient Image Segmentation, ECCV 2016
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HfsSegment };
+	pub use { super::HfsSegmentConst, super::HfsSegment };
 }
 
-pub trait HfsSegment: core::AlgorithmTrait {
+pub trait HfsSegmentConst: core::AlgorithmTraitConst {
 	fn as_raw_HfsSegment(&self) -> *const c_void;
+
+}
+
+pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void;
 
 	/// @brief: set and get the parameter segEgbThresholdI.
@@ -188,7 +192,7 @@ impl dyn HfsSegment + '_ {
 	/// * spatial_weight: 0.6f
 	/// * slic_spixel_size: 8
 	/// * num_slic_iter: 5
-	pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr::<dyn crate::hfs::HfsSegment>> {
+	pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<dyn crate::hfs::HfsSegment>> {
 		unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::hfs::HfsSegment>::opencv_from_extern(r) } )
 	}
 	

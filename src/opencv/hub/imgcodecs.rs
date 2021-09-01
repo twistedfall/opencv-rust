@@ -363,7 +363,7 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 /// 
 /// ## C++ default parameters
 /// * params: std::vector<int>()
-pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector::<u8>, params: &core::Vector::<i32>) -> Result<bool> {
+pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(ext);
 	input_array_arg!(img);
 	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()
@@ -441,7 +441,7 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// 
 /// ## C++ default parameters
 /// * flags: IMREAD_ANYCOLOR
-pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: i32) -> Result<bool> {
+pub fn imreadmulti(filename: &str, mats: &mut core::Vector<core::Mat>, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
 	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()
 }
@@ -460,7 +460,7 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector::<core::Mat>, flags: 
 /// 
 /// ## C++ default parameters
 /// * flags: IMREAD_ANYCOLOR
-pub fn imreadmulti_1(filename: &str, mats: &mut core::Vector::<core::Mat>, start: i32, count: i32, flags: i32) -> Result<bool> {
+pub fn imreadmulti_1(filename: &str, mats: &mut core::Vector<core::Mat>, start: i32, count: i32, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
 	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, flags) }.into_result()
 }
@@ -497,7 +497,7 @@ pub fn imreadmulti_1(filename: &str, mats: &mut core::Vector::<core::Mat>, start
 /// 
 /// ## C++ default parameters
 /// * params: std::vector<int>()
-pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector::<i32>) -> Result<bool> {
+pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
 	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()
@@ -507,7 +507,7 @@ pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vect
 /// 
 /// ## C++ default parameters
 /// * params: std::vector<int>()
-pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector::<i32>) -> Result<bool> {
+pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
 	unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()

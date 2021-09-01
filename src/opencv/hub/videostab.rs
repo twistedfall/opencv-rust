@@ -33,7 +33,7 @@
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::ISparseOptFlowEstimator, super::IDenseOptFlowEstimator, super::PyrLkOptFlowEstimatorBaseTrait, super::SparsePyrLkOptFlowEstimatorTrait, super::SparsePyrLkOptFlowEstimatorGpuTrait, super::DensePyrLkOptFlowEstimatorGpuTrait, super::RansacParamsTrait, super::IOutlierRejector, super::NullOutlierRejectorTrait, super::TranslationBasedLocalOutlierRejectorTrait, super::MotionEstimatorBase, super::MotionEstimatorRansacL2Trait, super::MotionEstimatorL1Trait, super::ImageMotionEstimatorBase, super::FromFileMotionReaderTrait, super::ToFileMotionWriterTrait, super::KeypointBasedMotionEstimatorTrait, super::KeypointBasedMotionEstimatorGpuTrait, super::IMotionStabilizer, super::MotionStabilizationPipelineTrait, super::MotionFilterBase, super::GaussianMotionFilterTrait, super::LpMotionStabilizerTrait, super::IFrameSource, super::NullFrameSourceTrait, super::VideoFileSourceTrait, super::MaskFrameSourceTrait, super::ILog, super::NullLogTrait, super::LogToStdoutTrait, super::FastMarchingMethodTrait, super::InpainterBase, super::NullInpainterTrait, super::InpaintingPipelineTrait, super::ConsistentMosaicInpainterTrait, super::MotionInpainterTrait, super::ColorAverageInpainterTrait, super::ColorInpainterTrait, super::DeblurerBase, super::NullDeblurerTrait, super::WeightingDeblurerTrait, super::WobbleSuppressorBase, super::NullWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorBase, super::MoreAccurateMotionWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorGpuTrait, super::StabilizerBase, super::OnePassStabilizerTrait, super::TwoPassStabilizerTrait };
+	pub use { super::ISparseOptFlowEstimatorConst, super::ISparseOptFlowEstimator, super::IDenseOptFlowEstimatorConst, super::IDenseOptFlowEstimator, super::PyrLkOptFlowEstimatorBaseTraitConst, super::PyrLkOptFlowEstimatorBaseTrait, super::SparsePyrLkOptFlowEstimatorTraitConst, super::SparsePyrLkOptFlowEstimatorTrait, super::SparsePyrLkOptFlowEstimatorGpuTraitConst, super::SparsePyrLkOptFlowEstimatorGpuTrait, super::DensePyrLkOptFlowEstimatorGpuTraitConst, super::DensePyrLkOptFlowEstimatorGpuTrait, super::RansacParamsTraitConst, super::RansacParamsTrait, super::IOutlierRejectorConst, super::IOutlierRejector, super::NullOutlierRejectorTraitConst, super::NullOutlierRejectorTrait, super::TranslationBasedLocalOutlierRejectorTraitConst, super::TranslationBasedLocalOutlierRejectorTrait, super::MotionEstimatorBaseConst, super::MotionEstimatorBase, super::MotionEstimatorRansacL2TraitConst, super::MotionEstimatorRansacL2Trait, super::MotionEstimatorL1TraitConst, super::MotionEstimatorL1Trait, super::ImageMotionEstimatorBaseConst, super::ImageMotionEstimatorBase, super::FromFileMotionReaderTraitConst, super::FromFileMotionReaderTrait, super::ToFileMotionWriterTraitConst, super::ToFileMotionWriterTrait, super::KeypointBasedMotionEstimatorTraitConst, super::KeypointBasedMotionEstimatorTrait, super::KeypointBasedMotionEstimatorGpuTraitConst, super::KeypointBasedMotionEstimatorGpuTrait, super::IMotionStabilizerConst, super::IMotionStabilizer, super::MotionStabilizationPipelineTraitConst, super::MotionStabilizationPipelineTrait, super::MotionFilterBaseConst, super::MotionFilterBase, super::GaussianMotionFilterTraitConst, super::GaussianMotionFilterTrait, super::LpMotionStabilizerTraitConst, super::LpMotionStabilizerTrait, super::IFrameSourceConst, super::IFrameSource, super::NullFrameSourceTraitConst, super::NullFrameSourceTrait, super::VideoFileSourceTraitConst, super::VideoFileSourceTrait, super::MaskFrameSourceTraitConst, super::MaskFrameSourceTrait, super::ILogConst, super::ILog, super::NullLogTraitConst, super::NullLogTrait, super::LogToStdoutTraitConst, super::LogToStdoutTrait, super::FastMarchingMethodTraitConst, super::FastMarchingMethodTrait, super::InpainterBaseConst, super::InpainterBase, super::NullInpainterTraitConst, super::NullInpainterTrait, super::InpaintingPipelineTraitConst, super::InpaintingPipelineTrait, super::ConsistentMosaicInpainterTraitConst, super::ConsistentMosaicInpainterTrait, super::MotionInpainterTraitConst, super::MotionInpainterTrait, super::ColorAverageInpainterTraitConst, super::ColorAverageInpainterTrait, super::ColorInpainterTraitConst, super::ColorInpainterTrait, super::DeblurerBaseConst, super::DeblurerBase, super::NullDeblurerTraitConst, super::NullDeblurerTrait, super::WeightingDeblurerTraitConst, super::WeightingDeblurerTrait, super::WobbleSuppressorBaseConst, super::WobbleSuppressorBase, super::NullWobbleSuppressorTraitConst, super::NullWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorBaseConst, super::MoreAccurateMotionWobbleSuppressorBase, super::MoreAccurateMotionWobbleSuppressorTraitConst, super::MoreAccurateMotionWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorGpuTraitConst, super::MoreAccurateMotionWobbleSuppressorGpuTrait, super::StabilizerBaseConst, super::StabilizerBase, super::OnePassStabilizerTraitConst, super::OnePassStabilizerTrait, super::TwoPassStabilizerTraitConst, super::TwoPassStabilizerTrait };
 }
 
 pub const MM_AFFINE: i32 = 5;
@@ -131,12 +131,16 @@ pub fn estimate_optimal_trim_ratio(m: &core::Mat, size: core::Size) -> Result<f3
 /// * motions: Pair-wise motions. motions[i] denotes motion from the frame i to the frame i+1
 /// ## Returns
 /// Motion from the Source frame to the Destination frame.
-pub fn get_motion(from: i32, to: i32, motions: &core::Vector::<core::Mat>) -> Result<core::Mat> {
+pub fn get_motion(from: i32, to: i32, motions: &core::Vector<core::Mat>) -> Result<core::Mat> {
 	unsafe { sys::cv_videostab_getMotion_int_int_const_vector_Mat_R(from, to, motions.as_raw_VectorOfMat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 }
 
-pub trait ColorAverageInpainterTrait: crate::videostab::InpainterBase {
+pub trait ColorAverageInpainterTraitConst: crate::videostab::InpainterBaseConst {
 	fn as_raw_ColorAverageInpainter(&self) -> *const c_void;
+
+}
+
+pub trait ColorAverageInpainterTrait: crate::videostab::ColorAverageInpainterTraitConst + crate::videostab::InpainterBase {
 	fn as_raw_mut_ColorAverageInpainter(&mut self) -> *mut c_void;
 
 	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
@@ -158,28 +162,33 @@ impl Drop for ColorAverageInpainter {
 	}
 }
 
-impl ColorAverageInpainter {
-	#[inline] pub fn as_raw_ColorAverageInpainter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ColorAverageInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ColorAverageInpainter {}
 
-impl crate::videostab::InpainterBase for ColorAverageInpainter {
+impl crate::videostab::InpainterBaseConst for ColorAverageInpainter {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for ColorAverageInpainter {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::ColorAverageInpainterTrait for ColorAverageInpainter {
+impl crate::videostab::ColorAverageInpainterTraitConst for ColorAverageInpainter {
 	#[inline] fn as_raw_ColorAverageInpainter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ColorAverageInpainterTrait for ColorAverageInpainter {
 	#[inline] fn as_raw_mut_ColorAverageInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ColorAverageInpainter {
 }
 
-pub trait ColorInpainterTrait: crate::videostab::InpainterBase {
+pub trait ColorInpainterTraitConst: crate::videostab::InpainterBaseConst {
 	fn as_raw_ColorInpainter(&self) -> *const c_void;
+
+}
+
+pub trait ColorInpainterTrait: crate::videostab::ColorInpainterTraitConst + crate::videostab::InpainterBase {
 	fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void;
 
 	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
@@ -201,20 +210,21 @@ impl Drop for ColorInpainter {
 	}
 }
 
-impl ColorInpainter {
-	#[inline] pub fn as_raw_ColorInpainter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ColorInpainter {}
 
-impl crate::videostab::InpainterBase for ColorInpainter {
+impl crate::videostab::InpainterBaseConst for ColorInpainter {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for ColorInpainter {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::ColorInpainterTrait for ColorInpainter {
+impl crate::videostab::ColorInpainterTraitConst for ColorInpainter {
 	#[inline] fn as_raw_ColorInpainter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ColorInpainterTrait for ColorInpainter {
 	#[inline] fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -228,16 +238,20 @@ impl ColorInpainter {
 	
 }
 
-pub trait ConsistentMosaicInpainterTrait: crate::videostab::InpainterBase {
+pub trait ConsistentMosaicInpainterTraitConst: crate::videostab::InpainterBaseConst {
 	fn as_raw_ConsistentMosaicInpainter(&self) -> *const c_void;
+
+	fn stdev_thresh(&self) -> Result<f32> {
+		unsafe { sys::cv_videostab_ConsistentMosaicInpainter_stdevThresh_const(self.as_raw_ConsistentMosaicInpainter()) }.into_result()
+	}
+	
+}
+
+pub trait ConsistentMosaicInpainterTrait: crate::videostab::ConsistentMosaicInpainterTraitConst + crate::videostab::InpainterBase {
 	fn as_raw_mut_ConsistentMosaicInpainter(&mut self) -> *mut c_void;
 
 	fn set_stdev_thresh(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_videostab_ConsistentMosaicInpainter_setStdevThresh_float(self.as_raw_mut_ConsistentMosaicInpainter(), val) }.into_result()
-	}
-	
-	fn stdev_thresh(&self) -> Result<f32> {
-		unsafe { sys::cv_videostab_ConsistentMosaicInpainter_stdevThresh_const(self.as_raw_ConsistentMosaicInpainter()) }.into_result()
 	}
 	
 	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
@@ -259,20 +273,21 @@ impl Drop for ConsistentMosaicInpainter {
 	}
 }
 
-impl ConsistentMosaicInpainter {
-	#[inline] pub fn as_raw_ConsistentMosaicInpainter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ConsistentMosaicInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ConsistentMosaicInpainter {}
 
-impl crate::videostab::InpainterBase for ConsistentMosaicInpainter {
+impl crate::videostab::InpainterBaseConst for ConsistentMosaicInpainter {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for ConsistentMosaicInpainter {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::ConsistentMosaicInpainterTrait for ConsistentMosaicInpainter {
+impl crate::videostab::ConsistentMosaicInpainterTraitConst for ConsistentMosaicInpainter {
 	#[inline] fn as_raw_ConsistentMosaicInpainter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ConsistentMosaicInpainterTrait for ConsistentMosaicInpainter {
 	#[inline] fn as_raw_mut_ConsistentMosaicInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -283,50 +298,58 @@ impl ConsistentMosaicInpainter {
 	
 }
 
-pub trait DeblurerBase {
+pub trait DeblurerBaseConst {
 	fn as_raw_DeblurerBase(&self) -> *const c_void;
+
+	fn radius(&self) -> Result<i32> {
+		unsafe { sys::cv_videostab_DeblurerBase_radius_const(self.as_raw_DeblurerBase()) }.into_result()
+	}
+	
+	fn frames(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_videostab_DeblurerBase_frames_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+	fn motions(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_videostab_DeblurerBase_motions_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+	fn blurriness_rates(&self) -> Result<core::Vector<f32>> {
+		unsafe { sys::cv_videostab_DeblurerBase_blurrinessRates_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait DeblurerBase: crate::videostab::DeblurerBaseConst {
 	fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void;
 
 	fn set_radius(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_videostab_DeblurerBase_setRadius_int(self.as_raw_mut_DeblurerBase(), val) }.into_result()
 	}
 	
-	fn radius(&self) -> Result<i32> {
-		unsafe { sys::cv_videostab_DeblurerBase_radius_const(self.as_raw_DeblurerBase()) }.into_result()
-	}
-	
 	fn deblur(&mut self, idx: i32, frame: &mut core::Mat, range: &core::Range) -> Result<()> {
 		unsafe { sys::cv_videostab_DeblurerBase_deblur_int_MatR_const_RangeR(self.as_raw_mut_DeblurerBase(), idx, frame.as_raw_mut_Mat(), range.as_raw_Range()) }.into_result()
 	}
 	
-	fn set_frames(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_frames(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_DeblurerBase_setFrames_const_vector_Mat_R(self.as_raw_mut_DeblurerBase(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn frames(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_videostab_DeblurerBase_frames_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
-	}
-	
-	fn set_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_DeblurerBase_setMotions_const_vector_Mat_R(self.as_raw_mut_DeblurerBase(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn motions(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_videostab_DeblurerBase_motions_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
-	}
-	
-	fn set_blurriness_rates(&mut self, val: &core::Vector::<f32>) -> Result<()> {
+	fn set_blurriness_rates(&mut self, val: &core::Vector<f32>) -> Result<()> {
 		unsafe { sys::cv_videostab_DeblurerBase_setBlurrinessRates_const_vector_float_R(self.as_raw_mut_DeblurerBase(), val.as_raw_VectorOff32()) }.into_result()
-	}
-	
-	fn blurriness_rates(&self) -> Result<core::Vector::<f32>> {
-		unsafe { sys::cv_videostab_DeblurerBase_blurrinessRates_const(self.as_raw_DeblurerBase()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait DensePyrLkOptFlowEstimatorGpuTrait: crate::videostab::IDenseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait {
+pub trait DensePyrLkOptFlowEstimatorGpuTraitConst: crate::videostab::IDenseOptFlowEstimatorConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 	fn as_raw_DensePyrLkOptFlowEstimatorGpu(&self) -> *const c_void;
+
+}
+
+pub trait DensePyrLkOptFlowEstimatorGpuTrait: crate::videostab::DensePyrLkOptFlowEstimatorGpuTraitConst + crate::videostab::IDenseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait {
 	fn as_raw_mut_DensePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void;
 
 	fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -353,25 +376,29 @@ impl Drop for DensePyrLkOptFlowEstimatorGpu {
 	}
 }
 
-impl DensePyrLkOptFlowEstimatorGpu {
-	#[inline] pub fn as_raw_DensePyrLkOptFlowEstimatorGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_DensePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for DensePyrLkOptFlowEstimatorGpu {}
 
-impl crate::videostab::IDenseOptFlowEstimator for DensePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::IDenseOptFlowEstimatorConst for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IDenseOptFlowEstimator for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for DensePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::DensePyrLkOptFlowEstimatorGpuTrait for DensePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::DensePyrLkOptFlowEstimatorGpuTraitConst for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_DensePyrLkOptFlowEstimatorGpu(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::DensePyrLkOptFlowEstimatorGpuTrait for DensePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_DensePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -387,9 +414,8 @@ boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlow
 /// Describes the Fast Marching Method implementation.
 /// 
 /// See http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf
-pub trait FastMarchingMethodTrait {
+pub trait FastMarchingMethodTraitConst {
 	fn as_raw_FastMarchingMethod(&self) -> *const c_void;
-	fn as_raw_mut_FastMarchingMethod(&mut self) -> *mut c_void;
 
 	/// ## Returns
 	/// Distance map that's created during working of the method.
@@ -397,6 +423,11 @@ pub trait FastMarchingMethodTrait {
 		unsafe { sys::cv_videostab_FastMarchingMethod_distanceMap_const(self.as_raw_FastMarchingMethod()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
+}
+
+pub trait FastMarchingMethodTrait: crate::videostab::FastMarchingMethodTraitConst {
+	fn as_raw_mut_FastMarchingMethod(&mut self) -> *mut c_void;
+
 }
 
 /// Describes the Fast Marching Method implementation.
@@ -415,15 +446,13 @@ impl Drop for FastMarchingMethod {
 	}
 }
 
-impl FastMarchingMethod {
-	#[inline] pub fn as_raw_FastMarchingMethod(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FastMarchingMethod(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FastMarchingMethod {}
 
-impl crate::videostab::FastMarchingMethodTrait for FastMarchingMethod {
+impl crate::videostab::FastMarchingMethodTraitConst for FastMarchingMethod {
 	#[inline] fn as_raw_FastMarchingMethod(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::FastMarchingMethodTrait for FastMarchingMethod {
 	#[inline] fn as_raw_mut_FastMarchingMethod(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -434,8 +463,12 @@ impl FastMarchingMethod {
 	
 }
 
-pub trait FromFileMotionReaderTrait: crate::videostab::ImageMotionEstimatorBase {
+pub trait FromFileMotionReaderTraitConst: crate::videostab::ImageMotionEstimatorBaseConst {
 	fn as_raw_FromFileMotionReader(&self) -> *const c_void;
+
+}
+
+pub trait FromFileMotionReaderTrait: crate::videostab::FromFileMotionReaderTraitConst + crate::videostab::ImageMotionEstimatorBase {
 	fn as_raw_mut_FromFileMotionReader(&mut self) -> *mut c_void;
 
 	/// ## C++ default parameters
@@ -459,20 +492,21 @@ impl Drop for FromFileMotionReader {
 	}
 }
 
-impl FromFileMotionReader {
-	#[inline] pub fn as_raw_FromFileMotionReader(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_FromFileMotionReader(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for FromFileMotionReader {}
 
-impl crate::videostab::ImageMotionEstimatorBase for FromFileMotionReader {
+impl crate::videostab::ImageMotionEstimatorBaseConst for FromFileMotionReader {
 	#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ImageMotionEstimatorBase for FromFileMotionReader {
 	#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::FromFileMotionReaderTrait for FromFileMotionReader {
+impl crate::videostab::FromFileMotionReaderTraitConst for FromFileMotionReader {
 	#[inline] fn as_raw_FromFileMotionReader(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::FromFileMotionReaderTrait for FromFileMotionReader {
 	#[inline] fn as_raw_mut_FromFileMotionReader(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -484,16 +518,9 @@ impl FromFileMotionReader {
 	
 }
 
-pub trait GaussianMotionFilterTrait: crate::videostab::MotionFilterBase {
+pub trait GaussianMotionFilterTraitConst: crate::videostab::MotionFilterBaseConst {
 	fn as_raw_GaussianMotionFilter(&self) -> *const c_void;
-	fn as_raw_mut_GaussianMotionFilter(&mut self) -> *mut c_void;
 
-	/// ## C++ default parameters
-	/// * stdev: -1.f
-	fn set_params(&mut self, radius: i32, stdev: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_GaussianMotionFilter_setParams_int_float(self.as_raw_mut_GaussianMotionFilter(), radius, stdev) }.into_result()
-	}
-	
 	fn radius(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_GaussianMotionFilter_radius_const(self.as_raw_GaussianMotionFilter()) }.into_result()
 	}
@@ -502,7 +529,18 @@ pub trait GaussianMotionFilterTrait: crate::videostab::MotionFilterBase {
 		unsafe { sys::cv_videostab_GaussianMotionFilter_stdev_const(self.as_raw_GaussianMotionFilter()) }.into_result()
 	}
 	
-	fn stabilize(&mut self, idx: i32, motions: &core::Vector::<core::Mat>, range: &core::Range) -> Result<core::Mat> {
+}
+
+pub trait GaussianMotionFilterTrait: crate::videostab::GaussianMotionFilterTraitConst + crate::videostab::MotionFilterBase {
+	fn as_raw_mut_GaussianMotionFilter(&mut self) -> *mut c_void;
+
+	/// ## C++ default parameters
+	/// * stdev: -1.f
+	fn set_params(&mut self, radius: i32, stdev: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_GaussianMotionFilter_setParams_int_float(self.as_raw_mut_GaussianMotionFilter(), radius, stdev) }.into_result()
+	}
+	
+	fn stabilize(&mut self, idx: i32, motions: &core::Vector<core::Mat>, range: &core::Range) -> Result<core::Mat> {
 		unsafe { sys::cv_videostab_GaussianMotionFilter_stabilize_int_const_vector_Mat_R_const_RangeR(self.as_raw_mut_GaussianMotionFilter(), idx, motions.as_raw_VectorOfMat(), range.as_raw_Range()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
@@ -521,25 +559,29 @@ impl Drop for GaussianMotionFilter {
 	}
 }
 
-impl GaussianMotionFilter {
-	#[inline] pub fn as_raw_GaussianMotionFilter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_GaussianMotionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for GaussianMotionFilter {}
 
-impl crate::videostab::IMotionStabilizer for GaussianMotionFilter {
+impl crate::videostab::IMotionStabilizerConst for GaussianMotionFilter {
 	#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IMotionStabilizer for GaussianMotionFilter {
 	#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MotionFilterBase for GaussianMotionFilter {
+impl crate::videostab::MotionFilterBaseConst for GaussianMotionFilter {
 	#[inline] fn as_raw_MotionFilterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionFilterBase for GaussianMotionFilter {
 	#[inline] fn as_raw_mut_MotionFilterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::GaussianMotionFilterTrait for GaussianMotionFilter {
+impl crate::videostab::GaussianMotionFilterTraitConst for GaussianMotionFilter {
 	#[inline] fn as_raw_GaussianMotionFilter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::GaussianMotionFilterTrait for GaussianMotionFilter {
 	#[inline] fn as_raw_mut_GaussianMotionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -553,8 +595,12 @@ impl GaussianMotionFilter {
 	
 }
 
-pub trait IDenseOptFlowEstimator {
+pub trait IDenseOptFlowEstimatorConst {
 	fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void;
+
+}
+
+pub trait IDenseOptFlowEstimator: crate::videostab::IDenseOptFlowEstimatorConst {
 	fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void;
 
 	fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -568,8 +614,12 @@ pub trait IDenseOptFlowEstimator {
 	
 }
 
-pub trait IFrameSource {
+pub trait IFrameSourceConst {
 	fn as_raw_IFrameSource(&self) -> *const c_void;
+
+}
+
+pub trait IFrameSource: crate::videostab::IFrameSourceConst {
 	fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void;
 
 	fn reset(&mut self) -> Result<()> {
@@ -582,8 +632,12 @@ pub trait IFrameSource {
 	
 }
 
-pub trait ILog {
+pub trait ILogConst {
 	fn as_raw_ILog(&self) -> *const c_void;
+
+}
+
+pub trait ILog: crate::videostab::ILogConst {
 	fn as_raw_mut_ILog(&mut self) -> *mut c_void;
 
 	fn print(&mut self, format: &str) -> Result<()> {
@@ -593,19 +647,27 @@ pub trait ILog {
 	
 }
 
-pub trait IMotionStabilizer {
+pub trait IMotionStabilizerConst {
 	fn as_raw_IMotionStabilizer(&self) -> *const c_void;
+
+}
+
+pub trait IMotionStabilizer: crate::videostab::IMotionStabilizerConst {
 	fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void;
 
 	/// assumes that [0, size-1) is in or equals to [range.first, range.second)
-	fn stabilize(&mut self, size: i32, motions: &core::Vector::<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+	fn stabilize(&mut self, size: i32, motions: &core::Vector<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
 		unsafe { sys::cv_videostab_IMotionStabilizer_stabilize_int_const_vector_Mat_R_const_RangeR_MatX(self.as_raw_mut_IMotionStabilizer(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_mut_Mat()) }.into_result()
 	}
 	
 }
 
-pub trait IOutlierRejector {
+pub trait IOutlierRejectorConst {
 	fn as_raw_IOutlierRejector(&self) -> *const c_void;
+
+}
+
+pub trait IOutlierRejector: crate::videostab::IOutlierRejectorConst {
 	fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void;
 
 	fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -617,8 +679,12 @@ pub trait IOutlierRejector {
 	
 }
 
-pub trait ISparseOptFlowEstimator {
+pub trait ISparseOptFlowEstimatorConst {
 	fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void;
+
+}
+
+pub trait ISparseOptFlowEstimator: crate::videostab::ISparseOptFlowEstimatorConst {
 	fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void;
 
 	fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -634,16 +700,20 @@ pub trait ISparseOptFlowEstimator {
 }
 
 /// Base class for global 2D motion estimation methods which take frames as input.
-pub trait ImageMotionEstimatorBase {
+pub trait ImageMotionEstimatorBaseConst {
 	fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void;
+
+	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
+		unsafe { sys::cv_videostab_ImageMotionEstimatorBase_motionModel_const(self.as_raw_ImageMotionEstimatorBase()) }.into_result()
+	}
+	
+}
+
+pub trait ImageMotionEstimatorBase: crate::videostab::ImageMotionEstimatorBaseConst {
 	fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void;
 
 	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
 		unsafe { sys::cv_videostab_ImageMotionEstimatorBase_setMotionModel_MotionModel(self.as_raw_mut_ImageMotionEstimatorBase(), val) }.into_result()
-	}
-	
-	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
-		unsafe { sys::cv_videostab_ImageMotionEstimatorBase_motionModel_const(self.as_raw_ImageMotionEstimatorBase()) }.into_result()
 	}
 	
 	fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -659,74 +729,82 @@ pub trait ImageMotionEstimatorBase {
 	
 }
 
-pub trait InpainterBase {
+pub trait InpainterBaseConst {
 	fn as_raw_InpainterBase(&self) -> *const c_void;
-	fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void;
 
-	fn set_radius(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setRadius_int(self.as_raw_mut_InpainterBase(), val) }.into_result()
-	}
-	
 	fn radius(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_InpainterBase_radius_const(self.as_raw_InpainterBase()) }.into_result()
-	}
-	
-	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setMotionModel_MotionModel(self.as_raw_mut_InpainterBase(), val) }.into_result()
 	}
 	
 	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
 		unsafe { sys::cv_videostab_InpainterBase_motionModel_const(self.as_raw_InpainterBase()) }.into_result()
 	}
 	
-	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_inpaint_int_MatR_MatR(self.as_raw_mut_InpainterBase(), idx, frame.as_raw_mut_Mat(), mask.as_raw_mut_Mat()) }.into_result()
-	}
-	
-	fn set_frames(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setFrames_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
-	}
-	
-	fn frames(&self) -> Result<core::Vector::<core::Mat>> {
+	fn frames(&self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_videostab_InpainterBase_frames_const(self.as_raw_InpainterBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
-	fn set_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setMotions_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
-	}
-	
-	fn motions(&self) -> Result<core::Vector::<core::Mat>> {
+	fn motions(&self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_videostab_InpainterBase_motions_const(self.as_raw_InpainterBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
-	fn set_stabilized_frames(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setStabilizedFrames_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
-	}
-	
-	fn stabilized_frames(&self) -> Result<core::Vector::<core::Mat>> {
+	fn stabilized_frames(&self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_videostab_InpainterBase_stabilizedFrames_const(self.as_raw_InpainterBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
-	fn set_stabilization_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_videostab_InpainterBase_setStabilizationMotions_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
-	}
-	
-	fn stabilization_motions(&self) -> Result<core::Vector::<core::Mat>> {
+	fn stabilization_motions(&self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_videostab_InpainterBase_stabilizationMotions_const(self.as_raw_InpainterBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait InpaintingPipelineTrait: crate::videostab::InpainterBase {
-	fn as_raw_InpaintingPipeline(&self) -> *const c_void;
-	fn as_raw_mut_InpaintingPipeline(&mut self) -> *mut c_void;
+pub trait InpainterBase: crate::videostab::InpainterBaseConst {
+	fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void;
 
-	fn push_back(&mut self, mut inpainter: core::Ptr::<dyn crate::videostab::InpainterBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_InpaintingPipeline_pushBack_Ptr_InpainterBase_(self.as_raw_mut_InpaintingPipeline(), inpainter.as_raw_mut_PtrOfInpainterBase()) }.into_result()
+	fn set_radius(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setRadius_int(self.as_raw_mut_InpainterBase(), val) }.into_result()
 	}
 	
+	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setMotionModel_MotionModel(self.as_raw_mut_InpainterBase(), val) }.into_result()
+	}
+	
+	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_inpaint_int_MatR_MatR(self.as_raw_mut_InpainterBase(), idx, frame.as_raw_mut_Mat(), mask.as_raw_mut_Mat()) }.into_result()
+	}
+	
+	fn set_frames(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setFrames_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
+	}
+	
+	fn set_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setMotions_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
+	}
+	
+	fn set_stabilized_frames(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setStabilizedFrames_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
+	}
+	
+	fn set_stabilization_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_videostab_InpainterBase_setStabilizationMotions_const_vector_Mat_R(self.as_raw_mut_InpainterBase(), val.as_raw_VectorOfMat()) }.into_result()
+	}
+	
+}
+
+pub trait InpaintingPipelineTraitConst: crate::videostab::InpainterBaseConst {
+	fn as_raw_InpaintingPipeline(&self) -> *const c_void;
+
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_videostab_InpaintingPipeline_empty_const(self.as_raw_InpaintingPipeline()) }.into_result()
+	}
+	
+}
+
+pub trait InpaintingPipelineTrait: crate::videostab::InpainterBase + crate::videostab::InpaintingPipelineTraitConst {
+	fn as_raw_mut_InpaintingPipeline(&mut self) -> *mut c_void;
+
+	fn push_back(&mut self, mut inpainter: core::Ptr<dyn crate::videostab::InpainterBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_InpaintingPipeline_pushBack_Ptr_InpainterBase_(self.as_raw_mut_InpaintingPipeline(), inpainter.as_raw_mut_PtrOfInpainterBase()) }.into_result()
 	}
 	
 	fn set_radius(&mut self, val: i32) -> Result<()> {
@@ -737,19 +815,19 @@ pub trait InpaintingPipelineTrait: crate::videostab::InpainterBase {
 		unsafe { sys::cv_videostab_InpaintingPipeline_setMotionModel_MotionModel(self.as_raw_mut_InpaintingPipeline(), val) }.into_result()
 	}
 	
-	fn set_frames(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_frames(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_InpaintingPipeline_setFrames_const_vector_Mat_R(self.as_raw_mut_InpaintingPipeline(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn set_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_InpaintingPipeline_setMotions_const_vector_Mat_R(self.as_raw_mut_InpaintingPipeline(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn set_stabilized_frames(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_stabilized_frames(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_InpaintingPipeline_setStabilizedFrames_const_vector_Mat_R(self.as_raw_mut_InpaintingPipeline(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn set_stabilization_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_stabilization_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_InpaintingPipeline_setStabilizationMotions_const_vector_Mat_R(self.as_raw_mut_InpaintingPipeline(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
@@ -772,20 +850,21 @@ impl Drop for InpaintingPipeline {
 	}
 }
 
-impl InpaintingPipeline {
-	#[inline] pub fn as_raw_InpaintingPipeline(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_InpaintingPipeline(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for InpaintingPipeline {}
 
-impl crate::videostab::InpainterBase for InpaintingPipeline {
+impl crate::videostab::InpainterBaseConst for InpaintingPipeline {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for InpaintingPipeline {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::InpaintingPipelineTrait for InpaintingPipeline {
+impl crate::videostab::InpaintingPipelineTraitConst for InpaintingPipeline {
 	#[inline] fn as_raw_InpaintingPipeline(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpaintingPipelineTrait for InpaintingPipeline {
 	#[inline] fn as_raw_mut_InpaintingPipeline(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -794,40 +873,44 @@ impl InpaintingPipeline {
 
 /// Describes a global 2D motion estimation method which uses keypoints detection and optical flow for
 /// matching.
-pub trait KeypointBasedMotionEstimatorTrait: crate::videostab::ImageMotionEstimatorBase {
+pub trait KeypointBasedMotionEstimatorTraitConst: crate::videostab::ImageMotionEstimatorBaseConst {
 	fn as_raw_KeypointBasedMotionEstimator(&self) -> *const c_void;
+
+	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_motionModel_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result()
+	}
+	
+	fn detector(&self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_detector_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(r) } )
+	}
+	
+	fn optical_flow_estimator(&self) -> Result<core::Ptr<dyn crate::videostab::ISparseOptFlowEstimator>> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_opticalFlowEstimator_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>::opencv_from_extern(r) } )
+	}
+	
+	fn outlier_rejector(&self) -> Result<core::Ptr<dyn crate::videostab::IOutlierRejector>> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_outlierRejector_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IOutlierRejector>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait KeypointBasedMotionEstimatorTrait: crate::videostab::ImageMotionEstimatorBase + crate::videostab::KeypointBasedMotionEstimatorTraitConst {
 	fn as_raw_mut_KeypointBasedMotionEstimator(&mut self) -> *mut c_void;
 
 	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setMotionModel_MotionModel(self.as_raw_mut_KeypointBasedMotionEstimator(), val) }.into_result()
 	}
 	
-	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_motionModel_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result()
-	}
-	
-	fn set_detector(&mut self, mut val: core::Ptr::<crate::features2d::Feature2D>) -> Result<()> {
+	fn set_detector(&mut self, mut val: core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setDetector_Ptr_Feature2D_(self.as_raw_mut_KeypointBasedMotionEstimator(), val.as_raw_mut_PtrOfFeature2D()) }.into_result()
 	}
 	
-	fn detector(&self) -> Result<core::Ptr::<crate::features2d::Feature2D>> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_detector_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(r) } )
-	}
-	
-	fn set_optical_flow_estimator(&mut self, mut val: core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>) -> Result<()> {
+	fn set_optical_flow_estimator(&mut self, mut val: core::Ptr<dyn crate::videostab::ISparseOptFlowEstimator>) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setOpticalFlowEstimator_Ptr_ISparseOptFlowEstimator_(self.as_raw_mut_KeypointBasedMotionEstimator(), val.as_raw_mut_PtrOfISparseOptFlowEstimator()) }.into_result()
 	}
 	
-	fn optical_flow_estimator(&self) -> Result<core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_opticalFlowEstimator_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ISparseOptFlowEstimator>::opencv_from_extern(r) } )
-	}
-	
-	fn set_outlier_rejector(&mut self, mut val: core::Ptr::<dyn crate::videostab::IOutlierRejector>) -> Result<()> {
+	fn set_outlier_rejector(&mut self, mut val: core::Ptr<dyn crate::videostab::IOutlierRejector>) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setOutlierRejector_Ptr_IOutlierRejector_(self.as_raw_mut_KeypointBasedMotionEstimator(), val.as_raw_mut_PtrOfIOutlierRejector()) }.into_result()
-	}
-	
-	fn outlier_rejector(&self) -> Result<core::Ptr::<dyn crate::videostab::IOutlierRejector>> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_outlierRejector_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IOutlierRejector>::opencv_from_extern(r) } )
 	}
 	
 	fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -866,48 +949,53 @@ impl Drop for KeypointBasedMotionEstimator {
 	}
 }
 
-impl KeypointBasedMotionEstimator {
-	#[inline] pub fn as_raw_KeypointBasedMotionEstimator(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_KeypointBasedMotionEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for KeypointBasedMotionEstimator {}
 
-impl crate::videostab::ImageMotionEstimatorBase for KeypointBasedMotionEstimator {
+impl crate::videostab::ImageMotionEstimatorBaseConst for KeypointBasedMotionEstimator {
 	#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ImageMotionEstimatorBase for KeypointBasedMotionEstimator {
 	#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::KeypointBasedMotionEstimatorTrait for KeypointBasedMotionEstimator {
+impl crate::videostab::KeypointBasedMotionEstimatorTraitConst for KeypointBasedMotionEstimator {
 	#[inline] fn as_raw_KeypointBasedMotionEstimator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::KeypointBasedMotionEstimatorTrait for KeypointBasedMotionEstimator {
 	#[inline] fn as_raw_mut_KeypointBasedMotionEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl KeypointBasedMotionEstimator {
-	pub fn new(mut estimator: core::Ptr::<dyn crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimator> {
+	pub fn new(mut estimator: core::Ptr<dyn crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimator> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_Ptr_MotionEstimatorBase_(estimator.as_raw_mut_PtrOfMotionEstimatorBase()) }.into_result().map(|r| unsafe { crate::videostab::KeypointBasedMotionEstimator::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait KeypointBasedMotionEstimatorGpuTrait: crate::videostab::ImageMotionEstimatorBase {
+pub trait KeypointBasedMotionEstimatorGpuTraitConst: crate::videostab::ImageMotionEstimatorBaseConst {
 	fn as_raw_KeypointBasedMotionEstimatorGpu(&self) -> *const c_void;
+
+	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_motionModel_const(self.as_raw_KeypointBasedMotionEstimatorGpu()) }.into_result()
+	}
+	
+	fn outlier_rejector(&self) -> Result<core::Ptr<dyn crate::videostab::IOutlierRejector>> {
+		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_outlierRejector_const(self.as_raw_KeypointBasedMotionEstimatorGpu()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IOutlierRejector>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait KeypointBasedMotionEstimatorGpuTrait: crate::videostab::ImageMotionEstimatorBase + crate::videostab::KeypointBasedMotionEstimatorGpuTraitConst {
 	fn as_raw_mut_KeypointBasedMotionEstimatorGpu(&mut self) -> *mut c_void;
 
 	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_setMotionModel_MotionModel(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), val) }.into_result()
 	}
 	
-	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_motionModel_const(self.as_raw_KeypointBasedMotionEstimatorGpu()) }.into_result()
-	}
-	
-	fn set_outlier_rejector(&mut self, mut val: core::Ptr::<dyn crate::videostab::IOutlierRejector>) -> Result<()> {
+	fn set_outlier_rejector(&mut self, mut val: core::Ptr<dyn crate::videostab::IOutlierRejector>) -> Result<()> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_setOutlierRejector_Ptr_IOutlierRejector_(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), val.as_raw_mut_PtrOfIOutlierRejector()) }.into_result()
-	}
-	
-	fn outlier_rejector(&self) -> Result<core::Ptr::<dyn crate::videostab::IOutlierRejector>> {
-		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_outlierRejector_const(self.as_raw_KeypointBasedMotionEstimatorGpu()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IOutlierRejector>::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
@@ -937,32 +1025,37 @@ impl Drop for KeypointBasedMotionEstimatorGpu {
 	}
 }
 
-impl KeypointBasedMotionEstimatorGpu {
-	#[inline] pub fn as_raw_KeypointBasedMotionEstimatorGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_KeypointBasedMotionEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for KeypointBasedMotionEstimatorGpu {}
 
-impl crate::videostab::ImageMotionEstimatorBase for KeypointBasedMotionEstimatorGpu {
+impl crate::videostab::ImageMotionEstimatorBaseConst for KeypointBasedMotionEstimatorGpu {
 	#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ImageMotionEstimatorBase for KeypointBasedMotionEstimatorGpu {
 	#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::KeypointBasedMotionEstimatorGpuTrait for KeypointBasedMotionEstimatorGpu {
+impl crate::videostab::KeypointBasedMotionEstimatorGpuTraitConst for KeypointBasedMotionEstimatorGpu {
 	#[inline] fn as_raw_KeypointBasedMotionEstimatorGpu(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::KeypointBasedMotionEstimatorGpuTrait for KeypointBasedMotionEstimatorGpu {
 	#[inline] fn as_raw_mut_KeypointBasedMotionEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl KeypointBasedMotionEstimatorGpu {
-	pub fn new(mut estimator: core::Ptr::<dyn crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimatorGpu> {
+	pub fn new(mut estimator: core::Ptr<dyn crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimatorGpu> {
 		unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_KeypointBasedMotionEstimatorGpu_Ptr_MotionEstimatorBase_(estimator.as_raw_mut_PtrOfMotionEstimatorBase()) }.into_result().map(|r| unsafe { crate::videostab::KeypointBasedMotionEstimatorGpu::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait LogToStdoutTrait: crate::videostab::ILog {
+pub trait LogToStdoutTraitConst: crate::videostab::ILogConst {
 	fn as_raw_LogToStdout(&self) -> *const c_void;
+
+}
+
+pub trait LogToStdoutTrait: crate::videostab::ILog + crate::videostab::LogToStdoutTraitConst {
 	fn as_raw_mut_LogToStdout(&mut self) -> *mut c_void;
 
 	fn print(&mut self, format: &str) -> Result<()> {
@@ -985,87 +1078,92 @@ impl Drop for LogToStdout {
 	}
 }
 
-impl LogToStdout {
-	#[inline] pub fn as_raw_LogToStdout(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_LogToStdout(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for LogToStdout {}
 
-impl crate::videostab::ILog for LogToStdout {
+impl crate::videostab::ILogConst for LogToStdout {
 	#[inline] fn as_raw_ILog(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ILog for LogToStdout {
 	#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::LogToStdoutTrait for LogToStdout {
+impl crate::videostab::LogToStdoutTraitConst for LogToStdout {
 	#[inline] fn as_raw_LogToStdout(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::LogToStdoutTrait for LogToStdout {
 	#[inline] fn as_raw_mut_LogToStdout(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LogToStdout {
 }
 
-pub trait LpMotionStabilizerTrait: crate::videostab::IMotionStabilizer {
+pub trait LpMotionStabilizerTraitConst: crate::videostab::IMotionStabilizerConst {
 	fn as_raw_LpMotionStabilizer(&self) -> *const c_void;
-	fn as_raw_mut_LpMotionStabilizer(&mut self) -> *mut c_void;
 
-	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setMotionModel_MotionModel(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
-	}
-	
 	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_motionModel_const(self.as_raw_LpMotionStabilizer()) }.into_result()
-	}
-	
-	fn set_frame_size(&mut self, val: core::Size) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setFrameSize_Size(self.as_raw_mut_LpMotionStabilizer(), val.opencv_as_extern()) }.into_result()
 	}
 	
 	fn frame_size(&self) -> Result<core::Size> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_frameSize_const(self.as_raw_LpMotionStabilizer()) }.into_result()
 	}
 	
-	fn set_trim_ratio(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setTrimRatio_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
-	}
-	
 	fn trim_ratio(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_trimRatio_const(self.as_raw_LpMotionStabilizer()) }.into_result()
-	}
-	
-	fn set_weight1(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight1_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
 	}
 	
 	fn weight1(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_weight1_const(self.as_raw_LpMotionStabilizer()) }.into_result()
 	}
 	
-	fn set_weight2(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight2_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
-	}
-	
 	fn weight2(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_weight2_const(self.as_raw_LpMotionStabilizer()) }.into_result()
-	}
-	
-	fn set_weight3(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight3_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
 	}
 	
 	fn weight3(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_weight3_const(self.as_raw_LpMotionStabilizer()) }.into_result()
 	}
 	
-	fn set_weight4(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight4_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
-	}
-	
 	fn weight4(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_weight4_const(self.as_raw_LpMotionStabilizer()) }.into_result()
 	}
 	
-	fn stabilize(&mut self, size: i32, motions: &core::Vector::<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+}
+
+pub trait LpMotionStabilizerTrait: crate::videostab::IMotionStabilizer + crate::videostab::LpMotionStabilizerTraitConst {
+	fn as_raw_mut_LpMotionStabilizer(&mut self) -> *mut c_void;
+
+	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setMotionModel_MotionModel(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn set_frame_size(&mut self, val: core::Size) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setFrameSize_Size(self.as_raw_mut_LpMotionStabilizer(), val.opencv_as_extern()) }.into_result()
+	}
+	
+	fn set_trim_ratio(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setTrimRatio_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn set_weight1(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight1_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn set_weight2(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight2_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn set_weight3(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight3_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn set_weight4(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_setWeight4_float(self.as_raw_mut_LpMotionStabilizer(), val) }.into_result()
+	}
+	
+	fn stabilize(&mut self, size: i32, motions: &core::Vector<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_stabilize_int_const_vector_Mat_R_const_RangeR_MatX(self.as_raw_mut_LpMotionStabilizer(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_mut_Mat()) }.into_result()
 	}
 	
@@ -1084,20 +1182,21 @@ impl Drop for LpMotionStabilizer {
 	}
 }
 
-impl LpMotionStabilizer {
-	#[inline] pub fn as_raw_LpMotionStabilizer(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_LpMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for LpMotionStabilizer {}
 
-impl crate::videostab::IMotionStabilizer for LpMotionStabilizer {
+impl crate::videostab::IMotionStabilizerConst for LpMotionStabilizer {
 	#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IMotionStabilizer for LpMotionStabilizer {
 	#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::LpMotionStabilizerTrait for LpMotionStabilizer {
+impl crate::videostab::LpMotionStabilizerTraitConst for LpMotionStabilizer {
 	#[inline] fn as_raw_LpMotionStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::LpMotionStabilizerTrait for LpMotionStabilizer {
 	#[inline] fn as_raw_mut_LpMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1110,8 +1209,12 @@ impl LpMotionStabilizer {
 	
 }
 
-pub trait MaskFrameSourceTrait: crate::videostab::IFrameSource {
+pub trait MaskFrameSourceTraitConst: crate::videostab::IFrameSourceConst {
 	fn as_raw_MaskFrameSource(&self) -> *const c_void;
+
+}
+
+pub trait MaskFrameSourceTrait: crate::videostab::IFrameSource + crate::videostab::MaskFrameSourceTraitConst {
 	fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void;
 
 	fn reset(&mut self) -> Result<()> {
@@ -1137,32 +1240,37 @@ impl Drop for MaskFrameSource {
 	}
 }
 
-impl MaskFrameSource {
-	#[inline] pub fn as_raw_MaskFrameSource(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MaskFrameSource {}
 
-impl crate::videostab::IFrameSource for MaskFrameSource {
+impl crate::videostab::IFrameSourceConst for MaskFrameSource {
 	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IFrameSource for MaskFrameSource {
 	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MaskFrameSourceTrait for MaskFrameSource {
+impl crate::videostab::MaskFrameSourceTraitConst for MaskFrameSource {
 	#[inline] fn as_raw_MaskFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MaskFrameSourceTrait for MaskFrameSource {
 	#[inline] fn as_raw_mut_MaskFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MaskFrameSource {
-	pub fn new(source: &core::Ptr::<dyn crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
+	pub fn new(source: &core::Ptr<dyn crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
 		unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_const_Ptr_IFrameSource_R(source.as_raw_PtrOfIFrameSource()) }.into_result().map(|r| unsafe { crate::videostab::MaskFrameSource::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait MoreAccurateMotionWobbleSuppressorTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase {
+pub trait MoreAccurateMotionWobbleSuppressorTraitConst: crate::videostab::MoreAccurateMotionWobbleSuppressorBaseConst {
 	fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *const c_void;
+
+}
+
+pub trait MoreAccurateMotionWobbleSuppressorTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase + crate::videostab::MoreAccurateMotionWobbleSuppressorTraitConst {
 	fn as_raw_mut_MoreAccurateMotionWobbleSuppressor(&mut self) -> *mut c_void;
 
 	fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
@@ -1184,47 +1292,59 @@ impl Drop for MoreAccurateMotionWobbleSuppressor {
 	}
 }
 
-impl MoreAccurateMotionWobbleSuppressor {
-	#[inline] pub fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MoreAccurateMotionWobbleSuppressor(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MoreAccurateMotionWobbleSuppressor {}
 
-impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorBaseConst for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
+impl crate::videostab::WobbleSuppressorBaseConst for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MoreAccurateMotionWobbleSuppressorTrait for MoreAccurateMotionWobbleSuppressor {
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorTraitConst for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorTrait for MoreAccurateMotionWobbleSuppressor {
 	#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MoreAccurateMotionWobbleSuppressor {
 }
 
-pub trait MoreAccurateMotionWobbleSuppressorBase: crate::videostab::WobbleSuppressorBase {
+pub trait MoreAccurateMotionWobbleSuppressorBaseConst: crate::videostab::WobbleSuppressorBaseConst {
 	fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *const c_void;
-	fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void;
 
-	fn set_period(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_setPeriod_int(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(), val) }.into_result()
-	}
-	
 	fn period(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_period_const(self.as_raw_MoreAccurateMotionWobbleSuppressorBase()) }.into_result()
 	}
 	
 }
 
-pub trait MoreAccurateMotionWobbleSuppressorGpuTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase {
+pub trait MoreAccurateMotionWobbleSuppressorBase: crate::videostab::MoreAccurateMotionWobbleSuppressorBaseConst + crate::videostab::WobbleSuppressorBase {
+	fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void;
+
+	fn set_period(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_setPeriod_int(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(), val) }.into_result()
+	}
+	
+}
+
+pub trait MoreAccurateMotionWobbleSuppressorGpuTraitConst: crate::videostab::MoreAccurateMotionWobbleSuppressorBaseConst {
 	fn as_raw_MoreAccurateMotionWobbleSuppressorGpu(&self) -> *const c_void;
+
+}
+
+pub trait MoreAccurateMotionWobbleSuppressorGpuTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase + crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTraitConst {
 	fn as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu(&mut self) -> *mut c_void;
 
 	fn suppress(&mut self, idx: i32, frame: &core::GpuMat, result: &mut core::GpuMat) -> Result<()> {
@@ -1250,25 +1370,29 @@ impl Drop for MoreAccurateMotionWobbleSuppressorGpu {
 	}
 }
 
-impl MoreAccurateMotionWobbleSuppressorGpu {
-	#[inline] pub fn as_raw_MoreAccurateMotionWobbleSuppressorGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MoreAccurateMotionWobbleSuppressorGpu {}
 
-impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMotionWobbleSuppressorGpu {
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorBaseConst for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppressorGpu {
+impl crate::videostab::WobbleSuppressorBaseConst for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTrait for MoreAccurateMotionWobbleSuppressorGpu {
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTraitConst for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressorGpu(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTrait for MoreAccurateMotionWobbleSuppressorGpu {
 	#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1276,8 +1400,18 @@ impl MoreAccurateMotionWobbleSuppressorGpu {
 }
 
 /// Base class for all global motion estimation methods.
-pub trait MotionEstimatorBase {
+pub trait MotionEstimatorBaseConst {
 	fn as_raw_MotionEstimatorBase(&self) -> *const c_void;
+
+	/// ## Returns
+	/// Motion model. See cv::videostab::MotionModel.
+	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
+		unsafe { sys::cv_videostab_MotionEstimatorBase_motionModel_const(self.as_raw_MotionEstimatorBase()) }.into_result()
+	}
+	
+}
+
+pub trait MotionEstimatorBase: crate::videostab::MotionEstimatorBaseConst {
 	fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void;
 
 	/// Sets motion model.
@@ -1286,12 +1420,6 @@ pub trait MotionEstimatorBase {
 	/// * val: Motion model. See cv::videostab::MotionModel.
 	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
 		unsafe { sys::cv_videostab_MotionEstimatorBase_setMotionModel_MotionModel(self.as_raw_mut_MotionEstimatorBase(), val) }.into_result()
-	}
-	
-	/// ## Returns
-	/// Motion model. See cv::videostab::MotionModel.
-	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
-		unsafe { sys::cv_videostab_MotionEstimatorBase_motionModel_const(self.as_raw_MotionEstimatorBase()) }.into_result()
 	}
 	
 	/// Estimates global motion between two 2D point clouds.
@@ -1317,8 +1445,12 @@ pub trait MotionEstimatorBase {
 /// 
 /// 
 /// Note: To be able to use this method you must build OpenCV with CLP library support. :
-pub trait MotionEstimatorL1Trait: crate::videostab::MotionEstimatorBase {
+pub trait MotionEstimatorL1TraitConst: crate::videostab::MotionEstimatorBaseConst {
 	fn as_raw_MotionEstimatorL1(&self) -> *const c_void;
+
+}
+
+pub trait MotionEstimatorL1Trait: crate::videostab::MotionEstimatorBase + crate::videostab::MotionEstimatorL1TraitConst {
 	fn as_raw_mut_MotionEstimatorL1(&mut self) -> *mut c_void;
 
 	/// ## C++ default parameters
@@ -1348,20 +1480,21 @@ impl Drop for MotionEstimatorL1 {
 	}
 }
 
-impl MotionEstimatorL1 {
-	#[inline] pub fn as_raw_MotionEstimatorL1(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MotionEstimatorL1(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MotionEstimatorL1 {}
 
-impl crate::videostab::MotionEstimatorBase for MotionEstimatorL1 {
+impl crate::videostab::MotionEstimatorBaseConst for MotionEstimatorL1 {
 	#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionEstimatorBase for MotionEstimatorL1 {
 	#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MotionEstimatorL1Trait for MotionEstimatorL1 {
+impl crate::videostab::MotionEstimatorL1TraitConst for MotionEstimatorL1 {
 	#[inline] fn as_raw_MotionEstimatorL1(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionEstimatorL1Trait for MotionEstimatorL1 {
 	#[inline] fn as_raw_mut_MotionEstimatorL1(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1375,24 +1508,28 @@ impl MotionEstimatorL1 {
 }
 
 /// Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
-pub trait MotionEstimatorRansacL2Trait: crate::videostab::MotionEstimatorBase {
+pub trait MotionEstimatorRansacL2TraitConst: crate::videostab::MotionEstimatorBaseConst {
 	fn as_raw_MotionEstimatorRansacL2(&self) -> *const c_void;
+
+	fn ransac_params(&self) -> Result<crate::videostab::RansacParams> {
+		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_ransacParams_const(self.as_raw_MotionEstimatorRansacL2()) }.into_result().map(|r| unsafe { crate::videostab::RansacParams::opencv_from_extern(r) } )
+	}
+	
+	fn min_inlier_ratio(&self) -> Result<f32> {
+		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_minInlierRatio_const(self.as_raw_MotionEstimatorRansacL2()) }.into_result()
+	}
+	
+}
+
+pub trait MotionEstimatorRansacL2Trait: crate::videostab::MotionEstimatorBase + crate::videostab::MotionEstimatorRansacL2TraitConst {
 	fn as_raw_mut_MotionEstimatorRansacL2(&mut self) -> *mut c_void;
 
 	fn set_ransac_params(&mut self, val: &crate::videostab::RansacParams) -> Result<()> {
 		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_setRansacParams_const_RansacParamsR(self.as_raw_mut_MotionEstimatorRansacL2(), val.as_raw_RansacParams()) }.into_result()
 	}
 	
-	fn ransac_params(&self) -> Result<crate::videostab::RansacParams> {
-		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_ransacParams_const(self.as_raw_MotionEstimatorRansacL2()) }.into_result().map(|r| unsafe { crate::videostab::RansacParams::opencv_from_extern(r) } )
-	}
-	
 	fn set_min_inlier_ratio(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_setMinInlierRatio_float(self.as_raw_mut_MotionEstimatorRansacL2(), val) }.into_result()
-	}
-	
-	fn min_inlier_ratio(&self) -> Result<f32> {
-		unsafe { sys::cv_videostab_MotionEstimatorRansacL2_minInlierRatio_const(self.as_raw_MotionEstimatorRansacL2()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -1419,20 +1556,21 @@ impl Drop for MotionEstimatorRansacL2 {
 	}
 }
 
-impl MotionEstimatorRansacL2 {
-	#[inline] pub fn as_raw_MotionEstimatorRansacL2(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MotionEstimatorRansacL2(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MotionEstimatorRansacL2 {}
 
-impl crate::videostab::MotionEstimatorBase for MotionEstimatorRansacL2 {
+impl crate::videostab::MotionEstimatorBaseConst for MotionEstimatorRansacL2 {
 	#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionEstimatorBase for MotionEstimatorRansacL2 {
 	#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MotionEstimatorRansacL2Trait for MotionEstimatorRansacL2 {
+impl crate::videostab::MotionEstimatorRansacL2TraitConst for MotionEstimatorRansacL2 {
 	#[inline] fn as_raw_MotionEstimatorRansacL2(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionEstimatorRansacL2Trait for MotionEstimatorRansacL2 {
 	#[inline] fn as_raw_mut_MotionEstimatorRansacL2(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1445,54 +1583,62 @@ impl MotionEstimatorRansacL2 {
 	
 }
 
-pub trait MotionFilterBase: crate::videostab::IMotionStabilizer {
+pub trait MotionFilterBaseConst: crate::videostab::IMotionStabilizerConst {
 	fn as_raw_MotionFilterBase(&self) -> *const c_void;
+
+}
+
+pub trait MotionFilterBase: crate::videostab::IMotionStabilizer + crate::videostab::MotionFilterBaseConst {
 	fn as_raw_mut_MotionFilterBase(&mut self) -> *mut c_void;
 
-	fn stabilize(&mut self, idx: i32, motions: &core::Vector::<core::Mat>, range: &core::Range) -> Result<core::Mat> {
+	fn stabilize(&mut self, idx: i32, motions: &core::Vector<core::Mat>, range: &core::Range) -> Result<core::Mat> {
 		unsafe { sys::cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_R_const_RangeR(self.as_raw_mut_MotionFilterBase(), idx, motions.as_raw_VectorOfMat(), range.as_raw_Range()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
-	fn stabilize_1(&mut self, size: i32, motions: &core::Vector::<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+	fn stabilize_1(&mut self, size: i32, motions: &core::Vector<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
 		unsafe { sys::cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_R_const_RangeR_MatX(self.as_raw_mut_MotionFilterBase(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_mut_Mat()) }.into_result()
 	}
 	
 }
 
-pub trait MotionInpainterTrait: crate::videostab::InpainterBase {
+pub trait MotionInpainterTraitConst: crate::videostab::InpainterBaseConst {
 	fn as_raw_MotionInpainter(&self) -> *const c_void;
-	fn as_raw_mut_MotionInpainter(&mut self) -> *mut c_void;
 
-	fn set_opt_flow_estimator(&mut self, mut val: core::Ptr::<dyn crate::videostab::IDenseOptFlowEstimator>) -> Result<()> {
-		unsafe { sys::cv_videostab_MotionInpainter_setOptFlowEstimator_Ptr_IDenseOptFlowEstimator_(self.as_raw_mut_MotionInpainter(), val.as_raw_mut_PtrOfIDenseOptFlowEstimator()) }.into_result()
-	}
-	
-	fn opt_flow_estimator(&self) -> Result<core::Ptr::<dyn crate::videostab::IDenseOptFlowEstimator>> {
+	fn opt_flow_estimator(&self) -> Result<core::Ptr<dyn crate::videostab::IDenseOptFlowEstimator>> {
 		unsafe { sys::cv_videostab_MotionInpainter_optFlowEstimator_const(self.as_raw_MotionInpainter()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IDenseOptFlowEstimator>::opencv_from_extern(r) } )
-	}
-	
-	fn set_flow_error_threshold(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_MotionInpainter_setFlowErrorThreshold_float(self.as_raw_mut_MotionInpainter(), val) }.into_result()
 	}
 	
 	fn flow_error_threshold(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_MotionInpainter_flowErrorThreshold_const(self.as_raw_MotionInpainter()) }.into_result()
 	}
 	
-	fn set_dist_threshold(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_MotionInpainter_setDistThreshold_float(self.as_raw_mut_MotionInpainter(), val) }.into_result()
-	}
-	
 	fn dist_thresh(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_MotionInpainter_distThresh_const(self.as_raw_MotionInpainter()) }.into_result()
 	}
 	
-	fn set_border_mode(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_videostab_MotionInpainter_setBorderMode_int(self.as_raw_mut_MotionInpainter(), val) }.into_result()
-	}
-	
 	fn border_mode(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_MotionInpainter_borderMode_const(self.as_raw_MotionInpainter()) }.into_result()
+	}
+	
+}
+
+pub trait MotionInpainterTrait: crate::videostab::InpainterBase + crate::videostab::MotionInpainterTraitConst {
+	fn as_raw_mut_MotionInpainter(&mut self) -> *mut c_void;
+
+	fn set_opt_flow_estimator(&mut self, mut val: core::Ptr<dyn crate::videostab::IDenseOptFlowEstimator>) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionInpainter_setOptFlowEstimator_Ptr_IDenseOptFlowEstimator_(self.as_raw_mut_MotionInpainter(), val.as_raw_mut_PtrOfIDenseOptFlowEstimator()) }.into_result()
+	}
+	
+	fn set_flow_error_threshold(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionInpainter_setFlowErrorThreshold_float(self.as_raw_mut_MotionInpainter(), val) }.into_result()
+	}
+	
+	fn set_dist_threshold(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionInpainter_setDistThreshold_float(self.as_raw_mut_MotionInpainter(), val) }.into_result()
+	}
+	
+	fn set_border_mode(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionInpainter_setBorderMode_int(self.as_raw_mut_MotionInpainter(), val) }.into_result()
 	}
 	
 	fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
@@ -1514,20 +1660,21 @@ impl Drop for MotionInpainter {
 	}
 }
 
-impl MotionInpainter {
-	#[inline] pub fn as_raw_MotionInpainter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MotionInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MotionInpainter {}
 
-impl crate::videostab::InpainterBase for MotionInpainter {
+impl crate::videostab::InpainterBaseConst for MotionInpainter {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for MotionInpainter {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MotionInpainterTrait for MotionInpainter {
+impl crate::videostab::MotionInpainterTraitConst for MotionInpainter {
 	#[inline] fn as_raw_MotionInpainter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionInpainterTrait for MotionInpainter {
 	#[inline] fn as_raw_mut_MotionInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1538,19 +1685,23 @@ impl MotionInpainter {
 	
 }
 
-pub trait MotionStabilizationPipelineTrait: crate::videostab::IMotionStabilizer {
+pub trait MotionStabilizationPipelineTraitConst: crate::videostab::IMotionStabilizerConst {
 	fn as_raw_MotionStabilizationPipeline(&self) -> *const c_void;
-	fn as_raw_mut_MotionStabilizationPipeline(&mut self) -> *mut c_void;
 
-	fn push_back(&mut self, mut stabilizer: core::Ptr::<dyn crate::videostab::IMotionStabilizer>) -> Result<()> {
-		unsafe { sys::cv_videostab_MotionStabilizationPipeline_pushBack_Ptr_IMotionStabilizer_(self.as_raw_mut_MotionStabilizationPipeline(), stabilizer.as_raw_mut_PtrOfIMotionStabilizer()) }.into_result()
-	}
-	
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_videostab_MotionStabilizationPipeline_empty_const(self.as_raw_MotionStabilizationPipeline()) }.into_result()
 	}
 	
-	fn stabilize(&mut self, size: i32, motions: &core::Vector::<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+}
+
+pub trait MotionStabilizationPipelineTrait: crate::videostab::IMotionStabilizer + crate::videostab::MotionStabilizationPipelineTraitConst {
+	fn as_raw_mut_MotionStabilizationPipeline(&mut self) -> *mut c_void;
+
+	fn push_back(&mut self, mut stabilizer: core::Ptr<dyn crate::videostab::IMotionStabilizer>) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionStabilizationPipeline_pushBack_Ptr_IMotionStabilizer_(self.as_raw_mut_MotionStabilizationPipeline(), stabilizer.as_raw_mut_PtrOfIMotionStabilizer()) }.into_result()
+	}
+	
+	fn stabilize(&mut self, size: i32, motions: &core::Vector<core::Mat>, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
 		unsafe { sys::cv_videostab_MotionStabilizationPipeline_stabilize_int_const_vector_Mat_R_const_RangeR_MatX(self.as_raw_mut_MotionStabilizationPipeline(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_mut_Mat()) }.into_result()
 	}
 	
@@ -1569,28 +1720,33 @@ impl Drop for MotionStabilizationPipeline {
 	}
 }
 
-impl MotionStabilizationPipeline {
-	#[inline] pub fn as_raw_MotionStabilizationPipeline(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MotionStabilizationPipeline(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MotionStabilizationPipeline {}
 
-impl crate::videostab::IMotionStabilizer for MotionStabilizationPipeline {
+impl crate::videostab::IMotionStabilizerConst for MotionStabilizationPipeline {
 	#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IMotionStabilizer for MotionStabilizationPipeline {
 	#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::MotionStabilizationPipelineTrait for MotionStabilizationPipeline {
+impl crate::videostab::MotionStabilizationPipelineTraitConst for MotionStabilizationPipeline {
 	#[inline] fn as_raw_MotionStabilizationPipeline(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::MotionStabilizationPipelineTrait for MotionStabilizationPipeline {
 	#[inline] fn as_raw_mut_MotionStabilizationPipeline(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MotionStabilizationPipeline {
 }
 
-pub trait NullDeblurerTrait: crate::videostab::DeblurerBase {
+pub trait NullDeblurerTraitConst: crate::videostab::DeblurerBaseConst {
 	fn as_raw_NullDeblurer(&self) -> *const c_void;
+
+}
+
+pub trait NullDeblurerTrait: crate::videostab::DeblurerBase + crate::videostab::NullDeblurerTraitConst {
 	fn as_raw_mut_NullDeblurer(&mut self) -> *mut c_void;
 
 	fn deblur(&mut self, unnamed: i32, unnamed_1: &mut core::Mat, unnamed_2: &core::Range) -> Result<()> {
@@ -1612,28 +1768,33 @@ impl Drop for NullDeblurer {
 	}
 }
 
-impl NullDeblurer {
-	#[inline] pub fn as_raw_NullDeblurer(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullDeblurer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullDeblurer {}
 
-impl crate::videostab::DeblurerBase for NullDeblurer {
+impl crate::videostab::DeblurerBaseConst for NullDeblurer {
 	#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::DeblurerBase for NullDeblurer {
 	#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullDeblurerTrait for NullDeblurer {
+impl crate::videostab::NullDeblurerTraitConst for NullDeblurer {
 	#[inline] fn as_raw_NullDeblurer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullDeblurerTrait for NullDeblurer {
 	#[inline] fn as_raw_mut_NullDeblurer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullDeblurer {
 }
 
-pub trait NullFrameSourceTrait: crate::videostab::IFrameSource {
+pub trait NullFrameSourceTraitConst: crate::videostab::IFrameSourceConst {
 	fn as_raw_NullFrameSource(&self) -> *const c_void;
+
+}
+
+pub trait NullFrameSourceTrait: crate::videostab::IFrameSource + crate::videostab::NullFrameSourceTraitConst {
 	fn as_raw_mut_NullFrameSource(&mut self) -> *mut c_void;
 
 	fn reset(&mut self) -> Result<()> {
@@ -1659,28 +1820,33 @@ impl Drop for NullFrameSource {
 	}
 }
 
-impl NullFrameSource {
-	#[inline] pub fn as_raw_NullFrameSource(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullFrameSource {}
 
-impl crate::videostab::IFrameSource for NullFrameSource {
+impl crate::videostab::IFrameSourceConst for NullFrameSource {
 	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IFrameSource for NullFrameSource {
 	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullFrameSourceTrait for NullFrameSource {
+impl crate::videostab::NullFrameSourceTraitConst for NullFrameSource {
 	#[inline] fn as_raw_NullFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullFrameSourceTrait for NullFrameSource {
 	#[inline] fn as_raw_mut_NullFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullFrameSource {
 }
 
-pub trait NullInpainterTrait: crate::videostab::InpainterBase {
+pub trait NullInpainterTraitConst: crate::videostab::InpainterBaseConst {
 	fn as_raw_NullInpainter(&self) -> *const c_void;
+
+}
+
+pub trait NullInpainterTrait: crate::videostab::InpainterBase + crate::videostab::NullInpainterTraitConst {
 	fn as_raw_mut_NullInpainter(&mut self) -> *mut c_void;
 
 	fn inpaint(&mut self, unnamed: i32, unnamed_1: &mut core::Mat, unnamed_2: &mut core::Mat) -> Result<()> {
@@ -1702,28 +1868,33 @@ impl Drop for NullInpainter {
 	}
 }
 
-impl NullInpainter {
-	#[inline] pub fn as_raw_NullInpainter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullInpainter {}
 
-impl crate::videostab::InpainterBase for NullInpainter {
+impl crate::videostab::InpainterBaseConst for NullInpainter {
 	#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::InpainterBase for NullInpainter {
 	#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullInpainterTrait for NullInpainter {
+impl crate::videostab::NullInpainterTraitConst for NullInpainter {
 	#[inline] fn as_raw_NullInpainter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullInpainterTrait for NullInpainter {
 	#[inline] fn as_raw_mut_NullInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullInpainter {
 }
 
-pub trait NullLogTrait: crate::videostab::ILog {
+pub trait NullLogTraitConst: crate::videostab::ILogConst {
 	fn as_raw_NullLog(&self) -> *const c_void;
+
+}
+
+pub trait NullLogTrait: crate::videostab::ILog + crate::videostab::NullLogTraitConst {
 	fn as_raw_mut_NullLog(&mut self) -> *mut c_void;
 
 	fn print(&mut self, unnamed: &str) -> Result<()> {
@@ -1746,28 +1917,33 @@ impl Drop for NullLog {
 	}
 }
 
-impl NullLog {
-	#[inline] pub fn as_raw_NullLog(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullLog(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullLog {}
 
-impl crate::videostab::ILog for NullLog {
+impl crate::videostab::ILogConst for NullLog {
 	#[inline] fn as_raw_ILog(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ILog for NullLog {
 	#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullLogTrait for NullLog {
+impl crate::videostab::NullLogTraitConst for NullLog {
 	#[inline] fn as_raw_NullLog(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullLogTrait for NullLog {
 	#[inline] fn as_raw_mut_NullLog(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullLog {
 }
 
-pub trait NullOutlierRejectorTrait: crate::videostab::IOutlierRejector {
+pub trait NullOutlierRejectorTraitConst: crate::videostab::IOutlierRejectorConst {
 	fn as_raw_NullOutlierRejector(&self) -> *const c_void;
+
+}
+
+pub trait NullOutlierRejectorTrait: crate::videostab::IOutlierRejector + crate::videostab::NullOutlierRejectorTraitConst {
 	fn as_raw_mut_NullOutlierRejector(&mut self) -> *mut c_void;
 
 	fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -1792,28 +1968,33 @@ impl Drop for NullOutlierRejector {
 	}
 }
 
-impl NullOutlierRejector {
-	#[inline] pub fn as_raw_NullOutlierRejector(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullOutlierRejector {}
 
-impl crate::videostab::IOutlierRejector for NullOutlierRejector {
+impl crate::videostab::IOutlierRejectorConst for NullOutlierRejector {
 	#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IOutlierRejector for NullOutlierRejector {
 	#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullOutlierRejectorTrait for NullOutlierRejector {
+impl crate::videostab::NullOutlierRejectorTraitConst for NullOutlierRejector {
 	#[inline] fn as_raw_NullOutlierRejector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullOutlierRejectorTrait for NullOutlierRejector {
 	#[inline] fn as_raw_mut_NullOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullOutlierRejector {
 }
 
-pub trait NullWobbleSuppressorTrait: crate::videostab::WobbleSuppressorBase {
+pub trait NullWobbleSuppressorTraitConst: crate::videostab::WobbleSuppressorBaseConst {
 	fn as_raw_NullWobbleSuppressor(&self) -> *const c_void;
+
+}
+
+pub trait NullWobbleSuppressorTrait: crate::videostab::NullWobbleSuppressorTraitConst + crate::videostab::WobbleSuppressorBase {
 	fn as_raw_mut_NullWobbleSuppressor(&mut self) -> *mut c_void;
 
 	fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
@@ -1835,36 +2016,41 @@ impl Drop for NullWobbleSuppressor {
 	}
 }
 
-impl NullWobbleSuppressor {
-	#[inline] pub fn as_raw_NullWobbleSuppressor(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_NullWobbleSuppressor(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for NullWobbleSuppressor {}
 
-impl crate::videostab::WobbleSuppressorBase for NullWobbleSuppressor {
+impl crate::videostab::WobbleSuppressorBaseConst for NullWobbleSuppressor {
 	#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::WobbleSuppressorBase for NullWobbleSuppressor {
 	#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::NullWobbleSuppressorTrait for NullWobbleSuppressor {
+impl crate::videostab::NullWobbleSuppressorTraitConst for NullWobbleSuppressor {
 	#[inline] fn as_raw_NullWobbleSuppressor(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::NullWobbleSuppressorTrait for NullWobbleSuppressor {
 	#[inline] fn as_raw_mut_NullWobbleSuppressor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl NullWobbleSuppressor {
 }
 
-pub trait OnePassStabilizerTrait: crate::videostab::IFrameSource + crate::videostab::StabilizerBase {
+pub trait OnePassStabilizerTraitConst: crate::videostab::IFrameSourceConst + crate::videostab::StabilizerBaseConst {
 	fn as_raw_OnePassStabilizer(&self) -> *const c_void;
-	fn as_raw_mut_OnePassStabilizer(&mut self) -> *mut c_void;
 
-	fn set_motion_filter(&mut self, mut val: core::Ptr::<dyn crate::videostab::MotionFilterBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_OnePassStabilizer_setMotionFilter_Ptr_MotionFilterBase_(self.as_raw_mut_OnePassStabilizer(), val.as_raw_mut_PtrOfMotionFilterBase()) }.into_result()
+	fn motion_filter(&self) -> Result<core::Ptr<dyn crate::videostab::MotionFilterBase>> {
+		unsafe { sys::cv_videostab_OnePassStabilizer_motionFilter_const(self.as_raw_OnePassStabilizer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::MotionFilterBase>::opencv_from_extern(r) } )
 	}
 	
-	fn motion_filter(&self) -> Result<core::Ptr::<dyn crate::videostab::MotionFilterBase>> {
-		unsafe { sys::cv_videostab_OnePassStabilizer_motionFilter_const(self.as_raw_OnePassStabilizer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::MotionFilterBase>::opencv_from_extern(r) } )
+}
+
+pub trait OnePassStabilizerTrait: crate::videostab::IFrameSource + crate::videostab::OnePassStabilizerTraitConst + crate::videostab::StabilizerBase {
+	fn as_raw_mut_OnePassStabilizer(&mut self) -> *mut c_void;
+
+	fn set_motion_filter(&mut self, mut val: core::Ptr<dyn crate::videostab::MotionFilterBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_OnePassStabilizer_setMotionFilter_Ptr_MotionFilterBase_(self.as_raw_mut_OnePassStabilizer(), val.as_raw_mut_PtrOfMotionFilterBase()) }.into_result()
 	}
 	
 	fn reset(&mut self) -> Result<()> {
@@ -1890,25 +2076,29 @@ impl Drop for OnePassStabilizer {
 	}
 }
 
-impl OnePassStabilizer {
-	#[inline] pub fn as_raw_OnePassStabilizer(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_OnePassStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for OnePassStabilizer {}
 
-impl crate::videostab::IFrameSource for OnePassStabilizer {
+impl crate::videostab::IFrameSourceConst for OnePassStabilizer {
 	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IFrameSource for OnePassStabilizer {
 	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::StabilizerBase for OnePassStabilizer {
+impl crate::videostab::StabilizerBaseConst for OnePassStabilizer {
 	#[inline] fn as_raw_StabilizerBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::StabilizerBase for OnePassStabilizer {
 	#[inline] fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::OnePassStabilizerTrait for OnePassStabilizer {
+impl crate::videostab::OnePassStabilizerTraitConst for OnePassStabilizer {
 	#[inline] fn as_raw_OnePassStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::OnePassStabilizerTrait for OnePassStabilizer {
 	#[inline] fn as_raw_mut_OnePassStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1919,24 +2109,28 @@ impl OnePassStabilizer {
 	
 }
 
-pub trait PyrLkOptFlowEstimatorBaseTrait {
+pub trait PyrLkOptFlowEstimatorBaseTraitConst {
 	fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void;
+
+	fn win_size(&self) -> Result<core::Size> {
+		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_winSize_const(self.as_raw_PyrLkOptFlowEstimatorBase()) }.into_result()
+	}
+	
+	fn max_level(&self) -> Result<i32> {
+		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_maxLevel_const(self.as_raw_PyrLkOptFlowEstimatorBase()) }.into_result()
+	}
+	
+}
+
+pub trait PyrLkOptFlowEstimatorBaseTrait: crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 	fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void;
 
 	fn set_win_size(&mut self, val: core::Size) -> Result<()> {
 		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(self.as_raw_mut_PyrLkOptFlowEstimatorBase(), val.opencv_as_extern()) }.into_result()
 	}
 	
-	fn win_size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_winSize_const(self.as_raw_PyrLkOptFlowEstimatorBase()) }.into_result()
-	}
-	
 	fn set_max_level(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_setMaxLevel_int(self.as_raw_mut_PyrLkOptFlowEstimatorBase(), val) }.into_result()
-	}
-	
-	fn max_level(&self) -> Result<i32> {
-		unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_maxLevel_const(self.as_raw_PyrLkOptFlowEstimatorBase()) }.into_result()
 	}
 	
 }
@@ -1954,15 +2148,13 @@ impl Drop for PyrLkOptFlowEstimatorBase {
 	}
 }
 
-impl PyrLkOptFlowEstimatorBase {
-	#[inline] pub fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for PyrLkOptFlowEstimatorBase {}
 
-impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for PyrLkOptFlowEstimatorBase {
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for PyrLkOptFlowEstimatorBase {
 	#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for PyrLkOptFlowEstimatorBase {
 	#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1980,23 +2172,43 @@ boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrL
 boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
 
 /// Describes RANSAC method parameters.
-pub trait RansacParamsTrait {
+pub trait RansacParamsTraitConst {
 	fn as_raw_RansacParams(&self) -> *const c_void;
-	fn as_raw_mut_RansacParams(&mut self) -> *mut c_void;
 
 	/// subset size
 	fn size(&self) -> i32 {
 		unsafe { sys::cv_videostab_RansacParams_getPropSize_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: size")
 	}
 	
-	/// subset size
-	fn set_size(&mut self, val: i32) -> () {
-		unsafe { sys::cv_videostab_RansacParams_setPropSize_int(self.as_raw_mut_RansacParams(), val) }.into_result().expect("Infallible function failed: set_size")
-	}
-	
 	/// max error to classify as inlier
 	fn thresh(&self) -> f32 {
 		unsafe { sys::cv_videostab_RansacParams_getPropThresh_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: thresh")
+	}
+	
+	/// max outliers ratio
+	fn eps(&self) -> f32 {
+		unsafe { sys::cv_videostab_RansacParams_getPropEps_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: eps")
+	}
+	
+	/// probability of success
+	fn prob(&self) -> f32 {
+		unsafe { sys::cv_videostab_RansacParams_getPropProb_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: prob")
+	}
+	
+	/// ## Returns
+	/// Number of iterations that'll be performed by RANSAC method.
+	fn niters(&self) -> Result<i32> {
+		unsafe { sys::cv_videostab_RansacParams_niters_const(self.as_raw_RansacParams()) }.into_result()
+	}
+	
+}
+
+pub trait RansacParamsTrait: crate::videostab::RansacParamsTraitConst {
+	fn as_raw_mut_RansacParams(&mut self) -> *mut c_void;
+
+	/// subset size
+	fn set_size(&mut self, val: i32) -> () {
+		unsafe { sys::cv_videostab_RansacParams_setPropSize_int(self.as_raw_mut_RansacParams(), val) }.into_result().expect("Infallible function failed: set_size")
 	}
 	
 	/// max error to classify as inlier
@@ -2005,29 +2217,13 @@ pub trait RansacParamsTrait {
 	}
 	
 	/// max outliers ratio
-	fn eps(&self) -> f32 {
-		unsafe { sys::cv_videostab_RansacParams_getPropEps_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: eps")
-	}
-	
-	/// max outliers ratio
 	fn set_eps(&mut self, val: f32) -> () {
 		unsafe { sys::cv_videostab_RansacParams_setPropEps_float(self.as_raw_mut_RansacParams(), val) }.into_result().expect("Infallible function failed: set_eps")
 	}
 	
 	/// probability of success
-	fn prob(&self) -> f32 {
-		unsafe { sys::cv_videostab_RansacParams_getPropProb_const(self.as_raw_RansacParams()) }.into_result().expect("Infallible function failed: prob")
-	}
-	
-	/// probability of success
 	fn set_prob(&mut self, val: f32) -> () {
 		unsafe { sys::cv_videostab_RansacParams_setPropProb_float(self.as_raw_mut_RansacParams(), val) }.into_result().expect("Infallible function failed: set_prob")
-	}
-	
-	/// ## Returns
-	/// Number of iterations that'll be performed by RANSAC method.
-	fn niters(&self) -> Result<i32> {
-		unsafe { sys::cv_videostab_RansacParams_niters_const(self.as_raw_RansacParams()) }.into_result()
 	}
 	
 }
@@ -2046,15 +2242,13 @@ impl Drop for RansacParams {
 	}
 }
 
-impl RansacParams {
-	#[inline] pub fn as_raw_RansacParams(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_RansacParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for RansacParams {}
 
-impl crate::videostab::RansacParamsTrait for RansacParams {
+impl crate::videostab::RansacParamsTraitConst for RansacParams {
 	#[inline] fn as_raw_RansacParams(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::RansacParamsTrait for RansacParams {
 	#[inline] fn as_raw_mut_RansacParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2083,8 +2277,12 @@ impl RansacParams {
 	
 }
 
-pub trait SparsePyrLkOptFlowEstimatorTrait: crate::videostab::ISparseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait {
+pub trait SparsePyrLkOptFlowEstimatorTraitConst: crate::videostab::ISparseOptFlowEstimatorConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 	fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *const c_void;
+
+}
+
+pub trait SparsePyrLkOptFlowEstimatorTrait: crate::videostab::ISparseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait + crate::videostab::SparsePyrLkOptFlowEstimatorTraitConst {
 	fn as_raw_mut_SparsePyrLkOptFlowEstimator(&mut self) -> *mut c_void;
 
 	fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -2112,25 +2310,29 @@ impl Drop for SparsePyrLkOptFlowEstimator {
 	}
 }
 
-impl SparsePyrLkOptFlowEstimator {
-	#[inline] pub fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_SparsePyrLkOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for SparsePyrLkOptFlowEstimator {}
 
-impl crate::videostab::ISparseOptFlowEstimator for SparsePyrLkOptFlowEstimator {
+impl crate::videostab::ISparseOptFlowEstimatorConst for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ISparseOptFlowEstimator for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for SparsePyrLkOptFlowEstimator {
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::SparsePyrLkOptFlowEstimatorTrait for SparsePyrLkOptFlowEstimator {
+impl crate::videostab::SparsePyrLkOptFlowEstimatorTraitConst for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::SparsePyrLkOptFlowEstimatorTrait for SparsePyrLkOptFlowEstimator {
 	#[inline] fn as_raw_mut_SparsePyrLkOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2139,8 +2341,12 @@ impl SparsePyrLkOptFlowEstimator {
 
 boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
 
-pub trait SparsePyrLkOptFlowEstimatorGpuTrait: crate::videostab::ISparseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait {
+pub trait SparsePyrLkOptFlowEstimatorGpuTraitConst: crate::videostab::ISparseOptFlowEstimatorConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 	fn as_raw_SparsePyrLkOptFlowEstimatorGpu(&self) -> *const c_void;
+
+}
+
+pub trait SparsePyrLkOptFlowEstimatorGpuTrait: crate::videostab::ISparseOptFlowEstimator + crate::videostab::PyrLkOptFlowEstimatorBaseTrait + crate::videostab::SparsePyrLkOptFlowEstimatorGpuTraitConst {
 	fn as_raw_mut_SparsePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void;
 
 	fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -2176,25 +2382,29 @@ impl Drop for SparsePyrLkOptFlowEstimatorGpu {
 	}
 }
 
-impl SparsePyrLkOptFlowEstimatorGpu {
-	#[inline] pub fn as_raw_SparsePyrLkOptFlowEstimatorGpu(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_SparsePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for SparsePyrLkOptFlowEstimatorGpu {}
 
-impl crate::videostab::ISparseOptFlowEstimator for SparsePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::ISparseOptFlowEstimatorConst for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ISparseOptFlowEstimator for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for SparsePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::PyrLkOptFlowEstimatorBaseTrait for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::SparsePyrLkOptFlowEstimatorGpuTrait for SparsePyrLkOptFlowEstimatorGpu {
+impl crate::videostab::SparsePyrLkOptFlowEstimatorGpuTraitConst for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_SparsePyrLkOptFlowEstimatorGpu(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::SparsePyrLkOptFlowEstimatorGpuTrait for SparsePyrLkOptFlowEstimatorGpu {
 	#[inline] fn as_raw_mut_SparsePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2207,102 +2417,110 @@ impl SparsePyrLkOptFlowEstimatorGpu {
 
 boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
 
-pub trait StabilizerBase {
+pub trait StabilizerBaseConst {
 	fn as_raw_StabilizerBase(&self) -> *const c_void;
-	fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void;
 
-	fn set_log(&mut self, mut ilog: core::Ptr::<dyn crate::videostab::ILog>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setLog_Ptr_ILog_(self.as_raw_mut_StabilizerBase(), ilog.as_raw_mut_PtrOfILog()) }.into_result()
-	}
-	
-	fn log(&self) -> Result<core::Ptr::<dyn crate::videostab::ILog>> {
+	fn log(&self) -> Result<core::Ptr<dyn crate::videostab::ILog>> {
 		unsafe { sys::cv_videostab_StabilizerBase_log_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ILog>::opencv_from_extern(r) } )
-	}
-	
-	fn set_radius(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setRadius_int(self.as_raw_mut_StabilizerBase(), val) }.into_result()
 	}
 	
 	fn radius(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_StabilizerBase_radius_const(self.as_raw_StabilizerBase()) }.into_result()
 	}
 	
-	fn set_frame_source(&mut self, mut val: core::Ptr::<dyn crate::videostab::IFrameSource>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setFrameSource_Ptr_IFrameSource_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfIFrameSource()) }.into_result()
-	}
-	
-	fn frame_source(&self) -> Result<core::Ptr::<dyn crate::videostab::IFrameSource>> {
+	fn frame_source(&self) -> Result<core::Ptr<dyn crate::videostab::IFrameSource>> {
 		unsafe { sys::cv_videostab_StabilizerBase_frameSource_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IFrameSource>::opencv_from_extern(r) } )
 	}
 	
-	fn set_mask_source(&mut self, val: &core::Ptr::<dyn crate::videostab::IFrameSource>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setMaskSource_const_Ptr_IFrameSource_R(self.as_raw_mut_StabilizerBase(), val.as_raw_PtrOfIFrameSource()) }.into_result()
-	}
-	
-	fn mask_source(&self) -> Result<core::Ptr::<dyn crate::videostab::IFrameSource>> {
+	fn mask_source(&self) -> Result<core::Ptr<dyn crate::videostab::IFrameSource>> {
 		unsafe { sys::cv_videostab_StabilizerBase_maskSource_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IFrameSource>::opencv_from_extern(r) } )
 	}
 	
-	fn set_motion_estimator(&mut self, mut val: core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setMotionEstimator_Ptr_ImageMotionEstimatorBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result()
-	}
-	
-	fn motion_estimator(&self) -> Result<core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>> {
+	fn motion_estimator(&self) -> Result<core::Ptr<dyn crate::videostab::ImageMotionEstimatorBase>> {
 		unsafe { sys::cv_videostab_StabilizerBase_motionEstimator_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>::opencv_from_extern(r) } )
 	}
 	
-	fn set_deblurer(&mut self, mut val: core::Ptr::<dyn crate::videostab::DeblurerBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setDeblurer_Ptr_DeblurerBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfDeblurerBase()) }.into_result()
-	}
-	
-	fn deblurrer(&self) -> Result<core::Ptr::<dyn crate::videostab::DeblurerBase>> {
+	fn deblurrer(&self) -> Result<core::Ptr<dyn crate::videostab::DeblurerBase>> {
 		unsafe { sys::cv_videostab_StabilizerBase_deblurrer_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::DeblurerBase>::opencv_from_extern(r) } )
-	}
-	
-	fn set_trim_ratio(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setTrimRatio_float(self.as_raw_mut_StabilizerBase(), val) }.into_result()
 	}
 	
 	fn trim_ratio(&self) -> Result<f32> {
 		unsafe { sys::cv_videostab_StabilizerBase_trimRatio_const(self.as_raw_StabilizerBase()) }.into_result()
 	}
 	
-	fn set_correction_for_inclusion(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setCorrectionForInclusion_bool(self.as_raw_mut_StabilizerBase(), val) }.into_result()
-	}
-	
 	fn do_correction_for_inclusion(&self) -> Result<bool> {
 		unsafe { sys::cv_videostab_StabilizerBase_doCorrectionForInclusion_const(self.as_raw_StabilizerBase()) }.into_result()
-	}
-	
-	fn set_border_mode(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setBorderMode_int(self.as_raw_mut_StabilizerBase(), val) }.into_result()
 	}
 	
 	fn border_mode(&self) -> Result<i32> {
 		unsafe { sys::cv_videostab_StabilizerBase_borderMode_const(self.as_raw_StabilizerBase()) }.into_result()
 	}
 	
-	fn set_inpainter(&mut self, mut val: core::Ptr::<dyn crate::videostab::InpainterBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_StabilizerBase_setInpainter_Ptr_InpainterBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfInpainterBase()) }.into_result()
-	}
-	
-	fn inpainter(&self) -> Result<core::Ptr::<dyn crate::videostab::InpainterBase>> {
+	fn inpainter(&self) -> Result<core::Ptr<dyn crate::videostab::InpainterBase>> {
 		unsafe { sys::cv_videostab_StabilizerBase_inpainter_const(self.as_raw_StabilizerBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::InpainterBase>::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait ToFileMotionWriterTrait: crate::videostab::ImageMotionEstimatorBase {
+pub trait StabilizerBase: crate::videostab::StabilizerBaseConst {
+	fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void;
+
+	fn set_log(&mut self, mut ilog: core::Ptr<dyn crate::videostab::ILog>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setLog_Ptr_ILog_(self.as_raw_mut_StabilizerBase(), ilog.as_raw_mut_PtrOfILog()) }.into_result()
+	}
+	
+	fn set_radius(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setRadius_int(self.as_raw_mut_StabilizerBase(), val) }.into_result()
+	}
+	
+	fn set_frame_source(&mut self, mut val: core::Ptr<dyn crate::videostab::IFrameSource>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setFrameSource_Ptr_IFrameSource_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfIFrameSource()) }.into_result()
+	}
+	
+	fn set_mask_source(&mut self, val: &core::Ptr<dyn crate::videostab::IFrameSource>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setMaskSource_const_Ptr_IFrameSource_R(self.as_raw_mut_StabilizerBase(), val.as_raw_PtrOfIFrameSource()) }.into_result()
+	}
+	
+	fn set_motion_estimator(&mut self, mut val: core::Ptr<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setMotionEstimator_Ptr_ImageMotionEstimatorBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result()
+	}
+	
+	fn set_deblurer(&mut self, mut val: core::Ptr<dyn crate::videostab::DeblurerBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setDeblurer_Ptr_DeblurerBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfDeblurerBase()) }.into_result()
+	}
+	
+	fn set_trim_ratio(&mut self, val: f32) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setTrimRatio_float(self.as_raw_mut_StabilizerBase(), val) }.into_result()
+	}
+	
+	fn set_correction_for_inclusion(&mut self, val: bool) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setCorrectionForInclusion_bool(self.as_raw_mut_StabilizerBase(), val) }.into_result()
+	}
+	
+	fn set_border_mode(&mut self, val: i32) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setBorderMode_int(self.as_raw_mut_StabilizerBase(), val) }.into_result()
+	}
+	
+	fn set_inpainter(&mut self, mut val: core::Ptr<dyn crate::videostab::InpainterBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_StabilizerBase_setInpainter_Ptr_InpainterBase_(self.as_raw_mut_StabilizerBase(), val.as_raw_mut_PtrOfInpainterBase()) }.into_result()
+	}
+	
+}
+
+pub trait ToFileMotionWriterTraitConst: crate::videostab::ImageMotionEstimatorBaseConst {
 	fn as_raw_ToFileMotionWriter(&self) -> *const c_void;
+
+	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
+		unsafe { sys::cv_videostab_ToFileMotionWriter_motionModel_const(self.as_raw_ToFileMotionWriter()) }.into_result()
+	}
+	
+}
+
+pub trait ToFileMotionWriterTrait: crate::videostab::ImageMotionEstimatorBase + crate::videostab::ToFileMotionWriterTraitConst {
 	fn as_raw_mut_ToFileMotionWriter(&mut self) -> *mut c_void;
 
 	fn set_motion_model(&mut self, val: crate::videostab::MotionModel) -> Result<()> {
 		unsafe { sys::cv_videostab_ToFileMotionWriter_setMotionModel_MotionModel(self.as_raw_mut_ToFileMotionWriter(), val) }.into_result()
-	}
-	
-	fn motion_model(&self) -> Result<crate::videostab::MotionModel> {
-		unsafe { sys::cv_videostab_ToFileMotionWriter_motionModel_const(self.as_raw_ToFileMotionWriter()) }.into_result()
 	}
 	
 	fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -2331,49 +2549,54 @@ impl Drop for ToFileMotionWriter {
 	}
 }
 
-impl ToFileMotionWriter {
-	#[inline] pub fn as_raw_ToFileMotionWriter(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ToFileMotionWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ToFileMotionWriter {}
 
-impl crate::videostab::ImageMotionEstimatorBase for ToFileMotionWriter {
+impl crate::videostab::ImageMotionEstimatorBaseConst for ToFileMotionWriter {
 	#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ImageMotionEstimatorBase for ToFileMotionWriter {
 	#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::ToFileMotionWriterTrait for ToFileMotionWriter {
+impl crate::videostab::ToFileMotionWriterTraitConst for ToFileMotionWriter {
 	#[inline] fn as_raw_ToFileMotionWriter(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::ToFileMotionWriterTrait for ToFileMotionWriter {
 	#[inline] fn as_raw_mut_ToFileMotionWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ToFileMotionWriter {
-	pub fn new(path: &str, mut estimator: core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<crate::videostab::ToFileMotionWriter> {
+	pub fn new(path: &str, mut estimator: core::Ptr<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<crate::videostab::ToFileMotionWriter> {
 		extern_container_arg!(path);
 		unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_Ptr_ImageMotionEstimatorBase_(path.opencv_as_extern(), estimator.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result().map(|r| unsafe { crate::videostab::ToFileMotionWriter::opencv_from_extern(r) } )
 	}
 	
 }
 
-pub trait TranslationBasedLocalOutlierRejectorTrait: crate::videostab::IOutlierRejector {
+pub trait TranslationBasedLocalOutlierRejectorTraitConst: crate::videostab::IOutlierRejectorConst {
 	fn as_raw_TranslationBasedLocalOutlierRejector(&self) -> *const c_void;
+
+	fn cell_size(&self) -> Result<core::Size> {
+		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_cellSize_const(self.as_raw_TranslationBasedLocalOutlierRejector()) }.into_result()
+	}
+	
+	fn ransac_params(&self) -> Result<crate::videostab::RansacParams> {
+		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_ransacParams_const(self.as_raw_TranslationBasedLocalOutlierRejector()) }.into_result().map(|r| unsafe { crate::videostab::RansacParams::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait TranslationBasedLocalOutlierRejectorTrait: crate::videostab::IOutlierRejector + crate::videostab::TranslationBasedLocalOutlierRejectorTraitConst {
 	fn as_raw_mut_TranslationBasedLocalOutlierRejector(&mut self) -> *mut c_void;
 
 	fn set_cell_size(&mut self, val: core::Size) -> Result<()> {
 		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), val.opencv_as_extern()) }.into_result()
 	}
 	
-	fn cell_size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_cellSize_const(self.as_raw_TranslationBasedLocalOutlierRejector()) }.into_result()
-	}
-	
 	fn set_ransac_params(&mut self, mut val: crate::videostab::RansacParams) -> Result<()> {
 		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_setRansacParams_RansacParams(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), val.as_raw_mut_RansacParams()) }.into_result()
-	}
-	
-	fn ransac_params(&self) -> Result<crate::videostab::RansacParams> {
-		unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_ransacParams_const(self.as_raw_TranslationBasedLocalOutlierRejector()) }.into_result().map(|r| unsafe { crate::videostab::RansacParams::opencv_from_extern(r) } )
 	}
 	
 	fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -2398,20 +2621,21 @@ impl Drop for TranslationBasedLocalOutlierRejector {
 	}
 }
 
-impl TranslationBasedLocalOutlierRejector {
-	#[inline] pub fn as_raw_TranslationBasedLocalOutlierRejector(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_TranslationBasedLocalOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for TranslationBasedLocalOutlierRejector {}
 
-impl crate::videostab::IOutlierRejector for TranslationBasedLocalOutlierRejector {
+impl crate::videostab::IOutlierRejectorConst for TranslationBasedLocalOutlierRejector {
 	#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IOutlierRejector for TranslationBasedLocalOutlierRejector {
 	#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::TranslationBasedLocalOutlierRejectorTrait for TranslationBasedLocalOutlierRejector {
+impl crate::videostab::TranslationBasedLocalOutlierRejectorTraitConst for TranslationBasedLocalOutlierRejector {
 	#[inline] fn as_raw_TranslationBasedLocalOutlierRejector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::TranslationBasedLocalOutlierRejectorTrait for TranslationBasedLocalOutlierRejector {
 	#[inline] fn as_raw_mut_TranslationBasedLocalOutlierRejector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2422,32 +2646,36 @@ impl TranslationBasedLocalOutlierRejector {
 	
 }
 
-pub trait TwoPassStabilizerTrait: crate::videostab::IFrameSource + crate::videostab::StabilizerBase {
+pub trait TwoPassStabilizerTraitConst: crate::videostab::IFrameSourceConst + crate::videostab::StabilizerBaseConst {
 	fn as_raw_TwoPassStabilizer(&self) -> *const c_void;
-	fn as_raw_mut_TwoPassStabilizer(&mut self) -> *mut c_void;
 
-	fn set_motion_stabilizer(&mut self, mut val: core::Ptr::<dyn crate::videostab::IMotionStabilizer>) -> Result<()> {
-		unsafe { sys::cv_videostab_TwoPassStabilizer_setMotionStabilizer_Ptr_IMotionStabilizer_(self.as_raw_mut_TwoPassStabilizer(), val.as_raw_mut_PtrOfIMotionStabilizer()) }.into_result()
-	}
-	
-	fn motion_stabilizer(&self) -> Result<core::Ptr::<dyn crate::videostab::IMotionStabilizer>> {
+	fn motion_stabilizer(&self) -> Result<core::Ptr<dyn crate::videostab::IMotionStabilizer>> {
 		unsafe { sys::cv_videostab_TwoPassStabilizer_motionStabilizer_const(self.as_raw_TwoPassStabilizer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::IMotionStabilizer>::opencv_from_extern(r) } )
 	}
 	
-	fn set_wobble_suppressor(&mut self, mut val: core::Ptr::<dyn crate::videostab::WobbleSuppressorBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_TwoPassStabilizer_setWobbleSuppressor_Ptr_WobbleSuppressorBase_(self.as_raw_mut_TwoPassStabilizer(), val.as_raw_mut_PtrOfWobbleSuppressorBase()) }.into_result()
-	}
-	
-	fn wobble_suppressor(&self) -> Result<core::Ptr::<dyn crate::videostab::WobbleSuppressorBase>> {
+	fn wobble_suppressor(&self) -> Result<core::Ptr<dyn crate::videostab::WobbleSuppressorBase>> {
 		unsafe { sys::cv_videostab_TwoPassStabilizer_wobbleSuppressor_const(self.as_raw_TwoPassStabilizer()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::WobbleSuppressorBase>::opencv_from_extern(r) } )
-	}
-	
-	fn set_estimate_trim_ratio(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_videostab_TwoPassStabilizer_setEstimateTrimRatio_bool(self.as_raw_mut_TwoPassStabilizer(), val) }.into_result()
 	}
 	
 	fn must_estimate_trima_ratio(&self) -> Result<bool> {
 		unsafe { sys::cv_videostab_TwoPassStabilizer_mustEstimateTrimaRatio_const(self.as_raw_TwoPassStabilizer()) }.into_result()
+	}
+	
+}
+
+pub trait TwoPassStabilizerTrait: crate::videostab::IFrameSource + crate::videostab::StabilizerBase + crate::videostab::TwoPassStabilizerTraitConst {
+	fn as_raw_mut_TwoPassStabilizer(&mut self) -> *mut c_void;
+
+	fn set_motion_stabilizer(&mut self, mut val: core::Ptr<dyn crate::videostab::IMotionStabilizer>) -> Result<()> {
+		unsafe { sys::cv_videostab_TwoPassStabilizer_setMotionStabilizer_Ptr_IMotionStabilizer_(self.as_raw_mut_TwoPassStabilizer(), val.as_raw_mut_PtrOfIMotionStabilizer()) }.into_result()
+	}
+	
+	fn set_wobble_suppressor(&mut self, mut val: core::Ptr<dyn crate::videostab::WobbleSuppressorBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_TwoPassStabilizer_setWobbleSuppressor_Ptr_WobbleSuppressorBase_(self.as_raw_mut_TwoPassStabilizer(), val.as_raw_mut_PtrOfWobbleSuppressorBase()) }.into_result()
+	}
+	
+	fn set_estimate_trim_ratio(&mut self, val: bool) -> Result<()> {
+		unsafe { sys::cv_videostab_TwoPassStabilizer_setEstimateTrimRatio_bool(self.as_raw_mut_TwoPassStabilizer(), val) }.into_result()
 	}
 	
 	fn reset(&mut self) -> Result<()> {
@@ -2473,25 +2701,29 @@ impl Drop for TwoPassStabilizer {
 	}
 }
 
-impl TwoPassStabilizer {
-	#[inline] pub fn as_raw_TwoPassStabilizer(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_TwoPassStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for TwoPassStabilizer {}
 
-impl crate::videostab::IFrameSource for TwoPassStabilizer {
+impl crate::videostab::IFrameSourceConst for TwoPassStabilizer {
 	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IFrameSource for TwoPassStabilizer {
 	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::StabilizerBase for TwoPassStabilizer {
+impl crate::videostab::StabilizerBaseConst for TwoPassStabilizer {
 	#[inline] fn as_raw_StabilizerBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::StabilizerBase for TwoPassStabilizer {
 	#[inline] fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::TwoPassStabilizerTrait for TwoPassStabilizer {
+impl crate::videostab::TwoPassStabilizerTraitConst for TwoPassStabilizer {
 	#[inline] fn as_raw_TwoPassStabilizer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::TwoPassStabilizerTrait for TwoPassStabilizer {
 	#[inline] fn as_raw_mut_TwoPassStabilizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2502,8 +2734,12 @@ impl TwoPassStabilizer {
 	
 }
 
-pub trait VideoFileSourceTrait: crate::videostab::IFrameSource {
+pub trait VideoFileSourceTraitConst: crate::videostab::IFrameSourceConst {
 	fn as_raw_VideoFileSource(&self) -> *const c_void;
+
+}
+
+pub trait VideoFileSourceTrait: crate::videostab::IFrameSource + crate::videostab::VideoFileSourceTraitConst {
 	fn as_raw_mut_VideoFileSource(&mut self) -> *mut c_void;
 
 	fn reset(&mut self) -> Result<()> {
@@ -2545,20 +2781,21 @@ impl Drop for VideoFileSource {
 	}
 }
 
-impl VideoFileSource {
-	#[inline] pub fn as_raw_VideoFileSource(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_VideoFileSource(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for VideoFileSource {}
 
-impl crate::videostab::IFrameSource for VideoFileSource {
+impl crate::videostab::IFrameSourceConst for VideoFileSource {
 	#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::IFrameSource for VideoFileSource {
 	#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::VideoFileSourceTrait for VideoFileSource {
+impl crate::videostab::VideoFileSourceTraitConst for VideoFileSource {
 	#[inline] fn as_raw_VideoFileSource(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::VideoFileSourceTrait for VideoFileSource {
 	#[inline] fn as_raw_mut_VideoFileSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2572,16 +2809,20 @@ impl VideoFileSource {
 	
 }
 
-pub trait WeightingDeblurerTrait: crate::videostab::DeblurerBase {
+pub trait WeightingDeblurerTraitConst: crate::videostab::DeblurerBaseConst {
 	fn as_raw_WeightingDeblurer(&self) -> *const c_void;
+
+	fn sensitivity(&self) -> Result<f32> {
+		unsafe { sys::cv_videostab_WeightingDeblurer_sensitivity_const(self.as_raw_WeightingDeblurer()) }.into_result()
+	}
+	
+}
+
+pub trait WeightingDeblurerTrait: crate::videostab::DeblurerBase + crate::videostab::WeightingDeblurerTraitConst {
 	fn as_raw_mut_WeightingDeblurer(&mut self) -> *mut c_void;
 
 	fn set_sensitivity(&mut self, val: f32) -> Result<()> {
 		unsafe { sys::cv_videostab_WeightingDeblurer_setSensitivity_float(self.as_raw_mut_WeightingDeblurer(), val) }.into_result()
-	}
-	
-	fn sensitivity(&self) -> Result<f32> {
-		unsafe { sys::cv_videostab_WeightingDeblurer_sensitivity_const(self.as_raw_WeightingDeblurer()) }.into_result()
 	}
 	
 	fn deblur(&mut self, idx: i32, frame: &mut core::Mat, range: &core::Range) -> Result<()> {
@@ -2603,20 +2844,21 @@ impl Drop for WeightingDeblurer {
 	}
 }
 
-impl WeightingDeblurer {
-	#[inline] pub fn as_raw_WeightingDeblurer(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_WeightingDeblurer(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for WeightingDeblurer {}
 
-impl crate::videostab::DeblurerBase for WeightingDeblurer {
+impl crate::videostab::DeblurerBaseConst for WeightingDeblurer {
 	#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::DeblurerBase for WeightingDeblurer {
 	#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
-impl crate::videostab::WeightingDeblurerTrait for WeightingDeblurer {
+impl crate::videostab::WeightingDeblurerTraitConst for WeightingDeblurer {
 	#[inline] fn as_raw_WeightingDeblurer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::videostab::WeightingDeblurerTrait for WeightingDeblurer {
 	#[inline] fn as_raw_mut_WeightingDeblurer(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -2627,16 +2869,36 @@ impl WeightingDeblurer {
 	
 }
 
-pub trait WobbleSuppressorBase {
+pub trait WobbleSuppressorBaseConst {
 	fn as_raw_WobbleSuppressorBase(&self) -> *const c_void;
-	fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void;
 
-	fn set_motion_estimator(&mut self, mut val: core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<()> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_setMotionEstimator_Ptr_ImageMotionEstimatorBase_(self.as_raw_mut_WobbleSuppressorBase(), val.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result()
+	fn motion_estimator(&self) -> Result<core::Ptr<dyn crate::videostab::ImageMotionEstimatorBase>> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_motionEstimator_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>::opencv_from_extern(r) } )
 	}
 	
-	fn motion_estimator(&self) -> Result<core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_motionEstimator_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::videostab::ImageMotionEstimatorBase>::opencv_from_extern(r) } )
+	fn frame_count(&self) -> Result<i32> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_frameCount_const(self.as_raw_WobbleSuppressorBase()) }.into_result()
+	}
+	
+	fn motions(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_motions_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+	fn motions2(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_motions2_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+	fn stabilization_motions(&self) -> Result<core::Vector<core::Mat>> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait WobbleSuppressorBase: crate::videostab::WobbleSuppressorBaseConst {
+	fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void;
+
+	fn set_motion_estimator(&mut self, mut val: core::Ptr<dyn crate::videostab::ImageMotionEstimatorBase>) -> Result<()> {
+		unsafe { sys::cv_videostab_WobbleSuppressorBase_setMotionEstimator_Ptr_ImageMotionEstimatorBase_(self.as_raw_mut_WobbleSuppressorBase(), val.as_raw_mut_PtrOfImageMotionEstimatorBase()) }.into_result()
 	}
 	
 	fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
@@ -2647,32 +2909,16 @@ pub trait WobbleSuppressorBase {
 		unsafe { sys::cv_videostab_WobbleSuppressorBase_setFrameCount_int(self.as_raw_mut_WobbleSuppressorBase(), val) }.into_result()
 	}
 	
-	fn frame_count(&self) -> Result<i32> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_frameCount_const(self.as_raw_WobbleSuppressorBase()) }.into_result()
-	}
-	
-	fn set_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_WobbleSuppressorBase_setMotions_const_vector_Mat_R(self.as_raw_mut_WobbleSuppressorBase(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn motions(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_motions_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
-	}
-	
-	fn set_motions2(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_motions2(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_WobbleSuppressorBase_setMotions2_const_vector_Mat_R(self.as_raw_mut_WobbleSuppressorBase(), val.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn motions2(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_motions2_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
-	}
-	
-	fn set_stabilization_motions(&mut self, val: &core::Vector::<core::Mat>) -> Result<()> {
+	fn set_stabilization_motions(&mut self, val: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_videostab_WobbleSuppressorBase_setStabilizationMotions_const_vector_Mat_R(self.as_raw_mut_WobbleSuppressorBase(), val.as_raw_VectorOfMat()) }.into_result()
-	}
-	
-	fn stabilization_motions(&self) -> Result<core::Vector::<core::Mat>> {
-		unsafe { sys::cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
 }

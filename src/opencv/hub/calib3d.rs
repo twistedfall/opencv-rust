@@ -250,7 +250,7 @@
 //!    # C API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::LMSolver_Callback, super::LMSolver, super::StereoMatcher, super::StereoBM, super::StereoSGBM };
+	pub use { super::LMSolver_CallbackConst, super::LMSolver_Callback, super::LMSolverConst, super::LMSolver, super::StereoMatcherConst, super::StereoMatcher, super::StereoBMConst, super::StereoBM, super::StereoSGBMConst, super::StereoSGBM };
 }
 
 pub const CALIB_CB_ACCURACY: i32 = 32;
@@ -2047,7 +2047,7 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 /// ## C++ default parameters
 /// * flags: CALIB_CB_SYMMETRIC_GRID
 /// * blob_detector: SimpleBlobDetector::create()
-pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr::<crate::features2d::Feature2D>) -> Result<bool> {
+pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
 	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D()) }.into_result()
@@ -2088,7 +2088,7 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// 
 /// Note: The function requires white space (like a square-thick border, the wider the better) around
 /// the board to make the detection more robust in various environments.
-pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr::<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
+pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
 	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters) }.into_result()
@@ -4800,9 +4800,8 @@ impl CirclesGridFinderParameters {
 /// (finds local minima of each target vector component absolute value).
 /// 
 /// When needed, it calls user-provided callback.
-pub trait LMSolver: core::AlgorithmTrait {
+pub trait LMSolverConst: core::AlgorithmTraitConst {
 	fn as_raw_LMSolver(&self) -> *const c_void;
-	fn as_raw_mut_LMSolver(&mut self) -> *mut c_void;
 
 	/// Runs Levenberg-Marquardt algorithm using the passed vector of parameters as the start point.
 	/// The final vector of parameters (whether the algorithm converged or not) is stored at the same
@@ -4820,16 +4819,21 @@ pub trait LMSolver: core::AlgorithmTrait {
 		unsafe { sys::cv_LMSolver_run_const_const__InputOutputArrayR(self.as_raw_LMSolver(), param.as_raw__InputOutputArray()) }.into_result()
 	}
 	
+	/// Retrieves the current maximum number of iterations
+	fn get_max_iters(&self) -> Result<i32> {
+		unsafe { sys::cv_LMSolver_getMaxIters_const(self.as_raw_LMSolver()) }.into_result()
+	}
+	
+}
+
+pub trait LMSolver: core::AlgorithmTrait + crate::calib3d::LMSolverConst {
+	fn as_raw_mut_LMSolver(&mut self) -> *mut c_void;
+
 	/// Sets the maximum number of iterations
 	/// ## Parameters
 	/// * maxIters: the number of iterations
 	fn set_max_iters(&mut self, max_iters: i32) -> Result<()> {
 		unsafe { sys::cv_LMSolver_setMaxIters_int(self.as_raw_mut_LMSolver(), max_iters) }.into_result()
-	}
-	
-	/// Retrieves the current maximum number of iterations
-	fn get_max_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_LMSolver_getMaxIters_const(self.as_raw_LMSolver()) }.into_result()
 	}
 	
 }
@@ -4841,18 +4845,17 @@ impl dyn LMSolver + '_ {
 	/// * cb: callback
 	/// * maxIters: maximum number of iterations that can be further
 	///   modified using setMaxIters() method.
-	pub fn create(cb: &core::Ptr::<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr::<dyn crate::calib3d::LMSolver>> {
+	pub fn create(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
 		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(r) } )
 	}
 	
-	pub fn create_ext(cb: &core::Ptr::<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr::<dyn crate::calib3d::LMSolver>> {
+	pub fn create_ext(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
 		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(r) } )
 	}
 	
 }
-pub trait LMSolver_Callback {
+pub trait LMSolver_CallbackConst {
 	fn as_raw_LMSolver_Callback(&self) -> *const c_void;
-	fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void;
 
 	/// computes error and Jacobian for the specified vector of parameters
 	/// 
@@ -4874,70 +4877,79 @@ pub trait LMSolver_Callback {
 	
 }
 
+pub trait LMSolver_Callback: crate::calib3d::LMSolver_CallbackConst {
+	fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void;
+
+}
+
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
-pub trait StereoBM: crate::calib3d::StereoMatcher {
+pub trait StereoBMConst: crate::calib3d::StereoMatcherConst {
 	fn as_raw_StereoBM(&self) -> *const c_void;
-	fn as_raw_mut_StereoBM(&mut self) -> *mut c_void;
 
 	fn get_pre_filter_type(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()
-	}
-	
-	fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_mut_StereoBM(), pre_filter_type) }.into_result()
 	}
 	
 	fn get_pre_filter_size(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getPreFilterSize_const(self.as_raw_StereoBM()) }.into_result()
 	}
 	
-	fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_mut_StereoBM(), pre_filter_size) }.into_result()
-	}
-	
 	fn get_pre_filter_cap(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getPreFilterCap_const(self.as_raw_StereoBM()) }.into_result()
-	}
-	
-	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_mut_StereoBM(), pre_filter_cap) }.into_result()
 	}
 	
 	fn get_texture_threshold(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getTextureThreshold_const(self.as_raw_StereoBM()) }.into_result()
 	}
 	
-	fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_mut_StereoBM(), texture_threshold) }.into_result()
-	}
-	
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getUniquenessRatio_const(self.as_raw_StereoBM()) }.into_result()
-	}
-	
-	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_mut_StereoBM(), uniqueness_ratio) }.into_result()
 	}
 	
 	fn get_smaller_block_size(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getSmallerBlockSize_const(self.as_raw_StereoBM()) }.into_result()
 	}
 	
-	fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_mut_StereoBM(), block_size) }.into_result()
-	}
-	
 	fn get_roi1(&self) -> Result<core::Rect> {
 		unsafe { sys::cv_StereoBM_getROI1_const(self.as_raw_StereoBM()) }.into_result()
 	}
 	
-	fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), roi1.opencv_as_extern()) }.into_result()
-	}
-	
 	fn get_roi2(&self) -> Result<core::Rect> {
 		unsafe { sys::cv_StereoBM_getROI2_const(self.as_raw_StereoBM()) }.into_result()
+	}
+	
+}
+
+pub trait StereoBM: crate::calib3d::StereoBMConst + crate::calib3d::StereoMatcher {
+	fn as_raw_mut_StereoBM(&mut self) -> *mut c_void;
+
+	fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_mut_StereoBM(), pre_filter_type) }.into_result()
+	}
+	
+	fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_mut_StereoBM(), pre_filter_size) }.into_result()
+	}
+	
+	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_mut_StereoBM(), pre_filter_cap) }.into_result()
+	}
+	
+	fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_mut_StereoBM(), texture_threshold) }.into_result()
+	}
+	
+	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_mut_StereoBM(), uniqueness_ratio) }.into_result()
+	}
+	
+	fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_mut_StereoBM(), block_size) }.into_result()
+	}
+	
+	fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
+		unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), roi1.opencv_as_extern()) }.into_result()
 	}
 	
 	fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
@@ -4964,14 +4976,42 @@ impl dyn StereoBM + '_ {
 	/// ## C++ default parameters
 	/// * num_disparities: 0
 	/// * block_size: 21
-	pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr::<dyn crate::calib3d::StereoBM>> {
+	pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr<dyn crate::calib3d::StereoBM>> {
 		unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::calib3d::StereoBM>::opencv_from_extern(r) } )
 	}
 	
 }
 /// The base class for stereo correspondence algorithms.
-pub trait StereoMatcher: core::AlgorithmTrait {
+pub trait StereoMatcherConst: core::AlgorithmTraitConst {
 	fn as_raw_StereoMatcher(&self) -> *const c_void;
+
+	fn get_min_disparity(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getMinDisparity_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+	fn get_num_disparities(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getNumDisparities_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+	fn get_block_size(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getBlockSize_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+	fn get_speckle_window_size(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getSpeckleWindowSize_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+	fn get_speckle_range(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getSpeckleRange_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+	fn get_disp12_max_diff(&self) -> Result<i32> {
+		unsafe { sys::cv_StereoMatcher_getDisp12MaxDiff_const(self.as_raw_StereoMatcher()) }.into_result()
+	}
+	
+}
+
+pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherConst {
 	fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void;
 
 	/// Computes disparity map for the specified stereo pair
@@ -4989,48 +5029,24 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 		unsafe { sys::cv_StereoMatcher_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
 	}
 	
-	fn get_min_disparity(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getMinDisparity_const(self.as_raw_StereoMatcher()) }.into_result()
-	}
-	
 	fn set_min_disparity(&mut self, min_disparity: i32) -> Result<()> {
 		unsafe { sys::cv_StereoMatcher_setMinDisparity_int(self.as_raw_mut_StereoMatcher(), min_disparity) }.into_result()
-	}
-	
-	fn get_num_disparities(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getNumDisparities_const(self.as_raw_StereoMatcher()) }.into_result()
 	}
 	
 	fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
 		unsafe { sys::cv_StereoMatcher_setNumDisparities_int(self.as_raw_mut_StereoMatcher(), num_disparities) }.into_result()
 	}
 	
-	fn get_block_size(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getBlockSize_const(self.as_raw_StereoMatcher()) }.into_result()
-	}
-	
 	fn set_block_size(&mut self, block_size: i32) -> Result<()> {
 		unsafe { sys::cv_StereoMatcher_setBlockSize_int(self.as_raw_mut_StereoMatcher(), block_size) }.into_result()
-	}
-	
-	fn get_speckle_window_size(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getSpeckleWindowSize_const(self.as_raw_StereoMatcher()) }.into_result()
 	}
 	
 	fn set_speckle_window_size(&mut self, speckle_window_size: i32) -> Result<()> {
 		unsafe { sys::cv_StereoMatcher_setSpeckleWindowSize_int(self.as_raw_mut_StereoMatcher(), speckle_window_size) }.into_result()
 	}
 	
-	fn get_speckle_range(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getSpeckleRange_const(self.as_raw_StereoMatcher()) }.into_result()
-	}
-	
 	fn set_speckle_range(&mut self, speckle_range: i32) -> Result<()> {
 		unsafe { sys::cv_StereoMatcher_setSpeckleRange_int(self.as_raw_mut_StereoMatcher(), speckle_range) }.into_result()
-	}
-	
-	fn get_disp12_max_diff(&self) -> Result<i32> {
-		unsafe { sys::cv_StereoMatcher_getDisp12MaxDiff_const(self.as_raw_StereoMatcher()) }.into_result()
 	}
 	
 	fn set_disp12_max_diff(&mut self, disp12_max_diff: i32) -> Result<()> {
@@ -5057,44 +5073,48 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 /// Note:
 ///    *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 ///        at opencv_source_code/samples/python/stereo_match.py
-pub trait StereoSGBM: crate::calib3d::StereoMatcher {
+pub trait StereoSGBMConst: crate::calib3d::StereoMatcherConst {
 	fn as_raw_StereoSGBM(&self) -> *const c_void;
-	fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
 
 	fn get_pre_filter_cap(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()
-	}
-	
-	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap) }.into_result()
 	}
 	
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM()) }.into_result()
 	}
 	
-	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio) }.into_result()
-	}
-	
 	fn get_p1(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM()) }.into_result()
-	}
-	
-	fn set_p1(&mut self, p1: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1) }.into_result()
 	}
 	
 	fn get_p2(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM()) }.into_result()
 	}
 	
-	fn set_p2(&mut self, p2: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2) }.into_result()
-	}
-	
 	fn get_mode(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM()) }.into_result()
+	}
+	
+}
+
+pub trait StereoSGBM: crate::calib3d::StereoMatcher + crate::calib3d::StereoSGBMConst {
+	fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
+
+	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
+		unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap) }.into_result()
+	}
+	
+	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
+		unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio) }.into_result()
+	}
+	
+	fn set_p1(&mut self, p1: i32) -> Result<()> {
+		unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1) }.into_result()
+	}
+	
+	fn set_p2(&mut self, p2: i32) -> Result<()> {
+		unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2) }.into_result()
 	}
 	
 	fn set_mode(&mut self, mode: i32) -> Result<()> {
@@ -5154,7 +5174,7 @@ impl dyn StereoSGBM + '_ {
 	/// * speckle_window_size: 0
 	/// * speckle_range: 0
 	/// * mode: StereoSGBM::MODE_SGBM
-	pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<core::Ptr::<dyn crate::calib3d::StereoSGBM>> {
+	pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<core::Ptr<dyn crate::calib3d::StereoSGBM>> {
 		unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::calib3d::StereoSGBM>::opencv_from_extern(r) } )
 	}
 	

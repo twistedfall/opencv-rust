@@ -18,7 +18,7 @@
 //! - LapSRN <https://arxiv.org/abs/1710.01992>
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DnnSuperResImplTrait };
+	pub use { super::DnnSuperResImplTraitConst, super::DnnSuperResImplTrait };
 }
 
 /// A class to upscale images via convolutional neural networks.
@@ -28,8 +28,12 @@ pub mod prelude {
 /// - espcn
 /// - fsrcnn
 /// - lapsrn
-pub trait DnnSuperResImplTrait {
+pub trait DnnSuperResImplTraitConst {
 	fn as_raw_DnnSuperResImpl(&self) -> *const c_void;
+
+}
+
+pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void;
 
 	/// Read the model from the given path
@@ -89,7 +93,7 @@ pub trait DnnSuperResImplTrait {
 	/// * imgs_new: Destination upscaled images
 	/// * scale_factors: Scaling factors of the output nodes
 	/// * node_names: Names of the output nodes in the neural network
-	fn upsample_multioutput(&mut self, img: &dyn core::ToInputArray, imgs_new: &mut core::Vector::<core::Mat>, scale_factors: &core::Vector::<i32>, node_names: &core::Vector::<String>) -> Result<()> {
+	fn upsample_multioutput(&mut self, img: &dyn core::ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
 		input_array_arg!(img);
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vector_Mat_R_const_vector_int_R_const_vector_String_R(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString()) }.into_result()
 	}
@@ -130,21 +134,19 @@ impl Drop for DnnSuperResImpl {
 	}
 }
 
-impl DnnSuperResImpl {
-	#[inline] pub fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for DnnSuperResImpl {}
 
-impl crate::dnn_superres::DnnSuperResImplTrait for DnnSuperResImpl {
+impl crate::dnn_superres::DnnSuperResImplTraitConst for DnnSuperResImpl {
 	#[inline] fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn_superres::DnnSuperResImplTrait for DnnSuperResImpl {
 	#[inline] fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DnnSuperResImpl {
 	/// Empty constructor for python
-	pub fn create() -> Result<core::Ptr::<crate::dnn_superres::DnnSuperResImpl>> {
+	pub fn create() -> Result<core::Ptr<crate::dnn_superres::DnnSuperResImpl>> {
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(r) } )
 	}
 	

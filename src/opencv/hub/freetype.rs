@@ -21,18 +21,22 @@
 //! - If line_type parameter is 16(or CV_AA), drawing glyph is smooth.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::FreeType2 };
+	pub use { super::FreeType2Const, super::FreeType2 };
 }
 
 /// Create FreeType2 Instance
 /// 
 /// The function createFreeType2 create instance to draw UTF-8 strings.
-pub fn create_free_type2() -> Result<core::Ptr::<dyn crate::freetype::FreeType2>> {
+pub fn create_free_type2() -> Result<core::Ptr<dyn crate::freetype::FreeType2>> {
 	unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(r) } )
 }
 
-pub trait FreeType2: core::AlgorithmTrait {
+pub trait FreeType2Const: core::AlgorithmTraitConst {
 	fn as_raw_FreeType2(&self) -> *const c_void;
+
+}
+
+pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	fn as_raw_mut_FreeType2(&mut self) -> *mut c_void;
 
 	/// Load font data.

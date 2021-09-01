@@ -24,7 +24,7 @@
 //! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::PhaseUnwrapping, super::HistogramPhaseUnwrapping };
+	pub use { super::PhaseUnwrappingConst, super::PhaseUnwrapping, super::HistogramPhaseUnwrappingConst, super::HistogramPhaseUnwrapping };
 }
 
 /// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
@@ -37,8 +37,12 @@ pub mod prelude {
 /// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
 /// 
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
-pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
+pub trait HistogramPhaseUnwrappingConst: crate::phase_unwrapping::PhaseUnwrappingConst {
 	fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
+
+}
+
+pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::HistogramPhaseUnwrappingConst + crate::phase_unwrapping::PhaseUnwrapping {
 	fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
 
 	/// Get the reliability map computed from the wrapped phase map.
@@ -60,7 +64,7 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: HistogramPhaseUnwrapping::Params()
-	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
+	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
 		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
 	}
 	
@@ -93,8 +97,12 @@ impl HistogramPhaseUnwrapping_Params {
 }
 
 /// Abstract base class for phase unwrapping.
-pub trait PhaseUnwrapping: core::AlgorithmTrait {
+pub trait PhaseUnwrappingConst: core::AlgorithmTraitConst {
 	fn as_raw_PhaseUnwrapping(&self) -> *const c_void;
+
+}
+
+pub trait PhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::PhaseUnwrappingConst {
 	fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void;
 
 	/// Unwraps a 2D phase map.

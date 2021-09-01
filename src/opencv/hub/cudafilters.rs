@@ -18,7 +18,7 @@
 //!        opencv_source_code/samples/gpu/morphology.cpp
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Filter };
+	pub use { super::FilterConst, super::Filter };
 }
 
 /// Creates a normalized 2D box filter.
@@ -38,7 +38,7 @@ pub mod prelude {
 /// * anchor: Point(-1,-1)
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_box_filter(src_type: i32, dst_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_box_filter(src_type: i32, dst_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createBoxFilter_int_int_Size_Point_int_Scalar(src_type, dst_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -55,7 +55,7 @@ pub fn create_box_filter(src_type: i32, dst_type: i32, ksize: core::Size, anchor
 /// * anchor: Point(-1,-1)
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_box_max_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_box_max_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createBoxMaxFilter_int_Size_Point_int_Scalar(src_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -72,7 +72,7 @@ pub fn create_box_max_filter(src_type: i32, ksize: core::Size, anchor: core::Poi
 /// * anchor: Point(-1,-1)
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_box_min_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_box_min_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createBoxMinFilter_int_Size_Point_int_Scalar(src_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -90,7 +90,7 @@ pub fn create_box_min_filter(src_type: i32, ksize: core::Size, anchor: core::Poi
 /// * anchor: -1
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_column_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_column_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createColumnSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -115,7 +115,7 @@ pub fn create_column_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor
 /// * scale: 1
 /// * row_border_mode: BORDER_DEFAULT
 /// * column_border_mode: -1
-pub fn create_deriv_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, ksize: i32, normalize: bool, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_deriv_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, ksize: i32, normalize: bool, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createDerivFilter_int_int_int_int_int_bool_double_int_int(src_type, dst_type, dx, dy, ksize, normalize, scale, row_border_mode, column_border_mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -138,7 +138,7 @@ pub fn create_deriv_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, ksize
 /// * sigma2: 0
 /// * row_border_mode: BORDER_DEFAULT
 /// * column_border_mode: -1
-pub fn create_gaussian_filter(src_type: i32, dst_type: i32, ksize: core::Size, sigma1: f64, sigma2: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_gaussian_filter(src_type: i32, dst_type: i32, ksize: core::Size, sigma1: f64, sigma2: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createGaussianFilter_int_int_Size_double_double_int_int(src_type, dst_type, ksize.opencv_as_extern(), sigma1, sigma2, row_border_mode, column_border_mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -161,7 +161,7 @@ pub fn create_gaussian_filter(src_type: i32, dst_type: i32, ksize: core::Size, s
 /// * scale: 1
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_laplacian_filter(src_type: i32, dst_type: i32, ksize: i32, scale: f64, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_laplacian_filter(src_type: i32, dst_type: i32, ksize: i32, scale: f64, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createLaplacianFilter_int_int_int_double_int_Scalar(src_type, dst_type, ksize, scale, border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -182,7 +182,7 @@ pub fn create_laplacian_filter(src_type: i32, dst_type: i32, ksize: i32, scale: 
 /// * anchor: Point(-1,-1)
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	input_array_arg!(kernel);
 	unsafe { sys::cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(src_type, dst_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
@@ -202,7 +202,7 @@ pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &dyn core::ToI
 /// 
 /// ## C++ default parameters
 /// * partition: 128
-pub fn create_median_filter(src_type: i32, window_size: i32, partition: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_median_filter(src_type: i32, window_size: i32, partition: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createMedianFilter_int_int_int(src_type, window_size, partition) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -228,7 +228,7 @@ pub fn create_median_filter(src_type: i32, window_size: i32, partition: i32) -> 
 /// ## C++ default parameters
 /// * anchor: Point(-1,-1)
 /// * iterations: 1
-pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	input_array_arg!(kernel);
 	unsafe { sys::cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(op, src_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
@@ -247,7 +247,7 @@ pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &dyn core::ToInp
 /// * anchor: -1
 /// * border_mode: BORDER_DEFAULT
 /// * border_val: Scalar::all(0)
-pub fn create_row_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_row_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createRowSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, border_val.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -270,7 +270,7 @@ pub fn create_row_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i
 /// * scale: 1
 /// * row_border_mode: BORDER_DEFAULT
 /// * column_border_mode: -1
-pub fn create_scharr_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_scharr_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createScharrFilter_int_int_int_int_double_int_int(src_type, dst_type, dx, dy, scale, row_border_mode, column_border_mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
@@ -293,7 +293,7 @@ pub fn create_scharr_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, scal
 /// * anchor: Point(-1,-1)
 /// * row_border_mode: BORDER_DEFAULT
 /// * column_border_mode: -1
-pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &dyn core::ToInputArray, column_kernel: &dyn core::ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &dyn core::ToInputArray, column_kernel: &dyn core::ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	input_array_arg!(row_kernel);
 	input_array_arg!(column_kernel);
 	unsafe { sys::cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(src_type, dst_type, row_kernel.as_raw__InputArray(), column_kernel.as_raw__InputArray(), anchor.opencv_as_extern(), row_border_mode, column_border_mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
@@ -320,13 +320,17 @@ pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: 
 /// * scale: 1
 /// * row_border_mode: BORDER_DEFAULT
 /// * column_border_mode: -1
-pub fn create_sobel_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, ksize: i32, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr::<dyn crate::cudafilters::Filter>> {
+pub fn create_sobel_filter(src_type: i32, dst_type: i32, dx: i32, dy: i32, ksize: i32, scale: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<dyn crate::cudafilters::Filter>> {
 	unsafe { sys::cv_cuda_createSobelFilter_int_int_int_int_int_double_int_int(src_type, dst_type, dx, dy, ksize, scale, row_border_mode, column_border_mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudafilters::Filter>::opencv_from_extern(r) } )
 }
 
 /// Common interface for all CUDA filters :
-pub trait Filter: core::AlgorithmTrait {
+pub trait FilterConst: core::AlgorithmTraitConst {
 	fn as_raw_Filter(&self) -> *const c_void;
+
+}
+
+pub trait Filter: core::AlgorithmTrait + crate::cudafilters::FilterConst {
 	fn as_raw_mut_Filter(&mut self) -> *mut c_void;
 
 	/// Applies the specified filter to the image.

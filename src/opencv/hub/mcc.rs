@@ -25,7 +25,7 @@
 //! image.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::MCC_CChecker, super::MCC_CCheckerDraw, super::MCC_DetectorParametersTrait, super::MCC_CCheckerDetector, super::ColorCorrectionModelTrait };
+	pub use { super::MCC_CCheckerConst, super::MCC_CChecker, super::MCC_CCheckerDrawConst, super::MCC_CCheckerDraw, super::MCC_DetectorParametersTraitConst, super::MCC_DetectorParametersTrait, super::MCC_CCheckerDetectorConst, super::MCC_CCheckerDetector, super::ColorCorrectionModelTraitConst, super::ColorCorrectionModelTrait };
 }
 
 /// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) performs linear transformation on color values.
@@ -465,8 +465,36 @@ opencv_type_enum! { crate::mcc::MCC_TYPECHART }
 /// Core class of ccm model
 /// 
 /// Produce a ColorCorrectionModel instance for inference
-pub trait ColorCorrectionModelTrait {
+pub trait ColorCorrectionModelTraitConst {
 	fn as_raw_ColorCorrectionModel(&self) -> *const c_void;
+
+	fn get_ccm(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_getCCM_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	fn get_loss(&self) -> Result<f64> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_getLoss_const(self.as_raw_ColorCorrectionModel()) }.into_result()
+	}
+	
+	fn get_src_rgbl(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_get_src_rgbl_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	fn get_dst_rgbl(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_get_dst_rgbl_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	fn get_mask(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_getMask_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+	fn get_weights(&self) -> Result<core::Mat> {
+		unsafe { sys::cv_ccm_ColorCorrectionModel_getWeights_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	}
+	
+}
+
+pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst {
 	fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void;
 
 	/// set ColorSpace
@@ -614,30 +642,6 @@ pub trait ColorCorrectionModelTrait {
 		unsafe { sys::cv_ccm_ColorCorrectionModel_run(self.as_raw_mut_ColorCorrectionModel()) }.into_result()
 	}
 	
-	fn get_ccm(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_getCCM_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
-	fn get_loss(&self) -> Result<f64> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_getLoss_const(self.as_raw_ColorCorrectionModel()) }.into_result()
-	}
-	
-	fn get_src_rgbl(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_get_src_rgbl_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
-	fn get_dst_rgbl(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_get_dst_rgbl_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
-	fn get_mask(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_getMask_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
-	fn get_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ccm_ColorCorrectionModel_getWeights_const(self.as_raw_ColorCorrectionModel()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
-	}
-	
 	/// Infer using fitting ccm.
 	/// ## Parameters
 	/// * img: the input image.
@@ -669,15 +673,13 @@ impl Drop for ColorCorrectionModel {
 	}
 }
 
-impl ColorCorrectionModel {
-	#[inline] pub fn as_raw_ColorCorrectionModel(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for ColorCorrectionModel {}
 
-impl crate::mcc::ColorCorrectionModelTrait for ColorCorrectionModel {
+impl crate::mcc::ColorCorrectionModelTraitConst for ColorCorrectionModel {
 	#[inline] fn as_raw_ColorCorrectionModel(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::mcc::ColorCorrectionModelTrait for ColorCorrectionModel {
 	#[inline] fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -734,15 +736,19 @@ impl ColorCorrectionModel {
 ///    This class contains the information about the detected checkers,i.e, their
 ///    type, the corners of the chart, the color profile, the cost, centers chart,
 ///    etc.
-pub trait MCC_CChecker {
+pub trait MCC_CCheckerConst {
 	fn as_raw_MCC_CChecker(&self) -> *const c_void;
+
+}
+
+pub trait MCC_CChecker: crate::mcc::MCC_CCheckerConst {
 	fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void;
 
 	fn set_target(&mut self, _target: crate::mcc::MCC_TYPECHART) -> Result<()> {
 		unsafe { sys::cv_mcc_CChecker_setTarget_TYPECHART(self.as_raw_mut_MCC_CChecker(), _target) }.into_result()
 	}
 	
-	fn set_box(&mut self, mut _box: core::Vector::<core::Point2f>) -> Result<()> {
+	fn set_box(&mut self, mut _box: core::Vector<core::Point2f>) -> Result<()> {
 		unsafe { sys::cv_mcc_CChecker_setBox_vector_Point2f_(self.as_raw_mut_MCC_CChecker(), _box.as_raw_mut_VectorOfPoint2f()) }.into_result()
 	}
 	
@@ -766,7 +772,7 @@ pub trait MCC_CChecker {
 		unsafe { sys::cv_mcc_CChecker_getTarget(self.as_raw_mut_MCC_CChecker()) }.into_result()
 	}
 	
-	fn get_box(&mut self) -> Result<core::Vector::<core::Point2f>> {
+	fn get_box(&mut self) -> Result<core::Vector<core::Point2f>> {
 		unsafe { sys::cv_mcc_CChecker_getBox(self.as_raw_mut_MCC_CChecker()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } )
 	}
 	
@@ -791,14 +797,18 @@ pub trait MCC_CChecker {
 impl dyn MCC_CChecker + '_ {
 	/// \brief Create a new CChecker object.
 	/// \return A pointer to the implementation of the CChecker
-	pub fn create() -> Result<core::Ptr::<dyn crate::mcc::MCC_CChecker>> {
+	pub fn create() -> Result<core::Ptr<dyn crate::mcc::MCC_CChecker>> {
 		unsafe { sys::cv_mcc_CChecker_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::mcc::MCC_CChecker>::opencv_from_extern(r) } )
 	}
 	
 }
 /// A class to find the positions of the ColorCharts in the image.
-pub trait MCC_CCheckerDetector: core::AlgorithmTrait {
+pub trait MCC_CCheckerDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void;
+
+}
+
+pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerDetectorConst {
 	fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void;
 
 	/// \brief Set the net which will be used to find the approximate
@@ -838,7 +848,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait {
 	/// * nc: 1
 	/// * use_net: false
 	/// * params: DetectorParameters::create()
-	fn process_with_roi(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector::<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr::<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+	fn process_with_roi(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 		input_array_arg!(image);
 		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vector_Rect_R_const_int_bool_const_Ptr_DetectorParameters_R(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters()) }.into_result()
 	}
@@ -867,7 +877,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait {
 	/// * nc: 1
 	/// * use_net: false
 	/// * params: DetectorParameters::create()
-	fn process(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr::<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+	fn process(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 		input_array_arg!(image);
 		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_Ptr_DetectorParameters_R(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters()) }.into_result()
 	}
@@ -876,21 +886,21 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait {
 	///        detected with the highest confidence.
 	/// \return checker A single colorchecker, if atleast one colorchecker
 	///                was detected, 'nullptr' otherwise.
-	fn get_best_color_checker(&mut self) -> Result<core::Ptr::<dyn crate::mcc::MCC_CChecker>> {
+	fn get_best_color_checker(&mut self) -> Result<core::Ptr<dyn crate::mcc::MCC_CChecker>> {
 		unsafe { sys::cv_mcc_CCheckerDetector_getBestColorChecker(self.as_raw_mut_MCC_CCheckerDetector()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::mcc::MCC_CChecker>::opencv_from_extern(r) } )
 	}
 	
 	/// \brief Get the list of all detected colorcheckers
 	/// \return checkers vector of colorcheckers
-	fn get_list_color_checker(&mut self) -> Result<core::Vector::<core::Ptr::<dyn crate::mcc::MCC_CChecker>>> {
-		unsafe { sys::cv_mcc_CCheckerDetector_getListColorChecker(self.as_raw_mut_MCC_CCheckerDetector()) }.into_result().map(|r| unsafe { core::Vector::<core::Ptr::<dyn crate::mcc::MCC_CChecker>>::opencv_from_extern(r) } )
+	fn get_list_color_checker(&mut self) -> Result<core::Vector<core::Ptr<dyn crate::mcc::MCC_CChecker>>> {
+		unsafe { sys::cv_mcc_CCheckerDetector_getListColorChecker(self.as_raw_mut_MCC_CCheckerDetector()) }.into_result().map(|r| unsafe { core::Vector::<core::Ptr<dyn crate::mcc::MCC_CChecker>>::opencv_from_extern(r) } )
 	}
 	
 }
 
 impl dyn MCC_CCheckerDetector + '_ {
 	/// \brief Returns the implementation of the CCheckerDetector.
-	pub fn create() -> Result<core::Ptr::<dyn crate::mcc::MCC_CCheckerDetector>> {
+	pub fn create() -> Result<core::Ptr<dyn crate::mcc::MCC_CCheckerDetector>> {
 		unsafe { sys::cv_mcc_CCheckerDetector_create() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(r) } )
 	}
 	
@@ -908,8 +918,12 @@ impl dyn MCC_CCheckerDetector + '_ {
 /// The reason for this type of design is that in some videos we can assume that
 /// the checker is always in the same position, even if the image changes, so
 /// the drawing will always take place at the same position.
-pub trait MCC_CCheckerDraw {
+pub trait MCC_CCheckerDrawConst {
 	fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
+
+}
+
+pub trait MCC_CCheckerDraw: crate::mcc::MCC_CCheckerDrawConst {
 	fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
 
 	/// \brief Draws the checker to the given image.
@@ -934,7 +948,7 @@ impl dyn MCC_CCheckerDraw + '_ {
 	/// ## C++ default parameters
 	/// * color: CV_RGB(0,250,0)
 	/// * thickness: 2
-	pub fn create(mut p_checker: core::Ptr::<dyn crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr::<dyn crate::mcc::MCC_CCheckerDraw>> {
+	pub fn create(mut p_checker: core::Ptr<dyn crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<dyn crate::mcc::MCC_CCheckerDraw>> {
 		unsafe { sys::cv_mcc_CCheckerDraw_create_Ptr_CChecker__Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(r) } )
 	}
 	
@@ -986,148 +1000,152 @@ impl dyn MCC_CCheckerDraw + '_ {
 ///                      default(1000)
 /// - unsigned minGroupSize : minimum number of a squared of a chart that must be
 ///                           detected. default(4)
-pub trait MCC_DetectorParametersTrait {
+pub trait MCC_DetectorParametersTraitConst {
 	fn as_raw_MCC_DetectorParameters(&self) -> *const c_void;
-	fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void;
 
 	fn adaptive_thresh_win_size_min(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMin_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: adaptive_thresh_win_size_min")
-	}
-	
-	fn set_adaptive_thresh_win_size_min(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMin_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_min")
 	}
 	
 	fn adaptive_thresh_win_size_max(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMax_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: adaptive_thresh_win_size_max")
 	}
 	
-	fn set_adaptive_thresh_win_size_max(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMax_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_max")
-	}
-	
 	fn adaptive_thresh_win_size_step(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeStep_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: adaptive_thresh_win_size_step")
-	}
-	
-	fn set_adaptive_thresh_win_size_step(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeStep_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_step")
 	}
 	
 	fn adaptive_thresh_constant(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshConstant_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: adaptive_thresh_constant")
 	}
 	
-	fn set_adaptive_thresh_constant(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshConstant_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_constant")
-	}
-	
 	fn min_contours_area_rate(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinContoursAreaRate_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_contours_area_rate")
-	}
-	
-	fn set_min_contours_area_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursAreaRate_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contours_area_rate")
 	}
 	
 	fn min_contours_area(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinContoursArea_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_contours_area")
 	}
 	
-	fn set_min_contours_area(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursArea_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contours_area")
-	}
-	
 	fn confidence_threshold(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropConfidenceThreshold_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: confidence_threshold")
-	}
-	
-	fn set_confidence_threshold(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropConfidenceThreshold_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_confidence_threshold")
 	}
 	
 	fn min_contour_solidity(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourSolidity_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_contour_solidity")
 	}
 	
-	fn set_min_contour_solidity(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourSolidity_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_solidity")
-	}
-	
 	fn find_candidates_approx_poly_dp_eps_multiplier(&self) -> f64 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropFindCandidatesApproxPolyDPEpsMultiplier_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: find_candidates_approx_poly_dp_eps_multiplier")
-	}
-	
-	fn set_find_candidates_approx_poly_dp_eps_multiplier(&mut self, val: f64) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropFindCandidatesApproxPolyDPEpsMultiplier_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_find_candidates_approx_poly_dp_eps_multiplier")
 	}
 	
 	fn border_width(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropBorderWidth_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: border_width")
 	}
 	
-	fn set_border_width(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropBorderWidth_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_border_width")
-	}
-	
 	fn b0factor(&self) -> f32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropB0factor_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: b0factor")
-	}
-	
-	fn set_b0factor(&mut self, val: f32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropB0factor_float(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_b0factor")
 	}
 	
 	fn max_error(&self) -> f32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMaxError_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: max_error")
 	}
 	
-	fn set_max_error(&mut self, val: f32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMaxError_float(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_error")
-	}
-	
 	fn min_contour_points_allowed(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourPointsAllowed_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_contour_points_allowed")
-	}
-	
-	fn set_min_contour_points_allowed(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourPointsAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_points_allowed")
 	}
 	
 	fn min_contour_length_allowed(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourLengthAllowed_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_contour_length_allowed")
 	}
 	
-	fn set_min_contour_length_allowed(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourLengthAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_length_allowed")
-	}
-	
 	fn min_inter_contour_distance(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinInterContourDistance_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_inter_contour_distance")
-	}
-	
-	fn set_min_inter_contour_distance(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterContourDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_inter_contour_distance")
 	}
 	
 	fn min_inter_checker_distance(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinInterCheckerDistance_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_inter_checker_distance")
 	}
 	
-	fn set_min_inter_checker_distance(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterCheckerDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_inter_checker_distance")
-	}
-	
 	fn min_image_size(&self) -> i32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinImageSize_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_image_size")
 	}
 	
-	fn set_min_image_size(&mut self, val: i32) -> () {
-		unsafe { sys::cv_mcc_DetectorParameters_setPropMinImageSize_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_image_size")
-	}
-	
 	fn min_group_size(&self) -> u32 {
 		unsafe { sys::cv_mcc_DetectorParameters_getPropMinGroupSize_const(self.as_raw_MCC_DetectorParameters()) }.into_result().expect("Infallible function failed: min_group_size")
+	}
+	
+}
+
+pub trait MCC_DetectorParametersTrait: crate::mcc::MCC_DetectorParametersTraitConst {
+	fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void;
+
+	fn set_adaptive_thresh_win_size_min(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMin_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_min")
+	}
+	
+	fn set_adaptive_thresh_win_size_max(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMax_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_max")
+	}
+	
+	fn set_adaptive_thresh_win_size_step(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeStep_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_step")
+	}
+	
+	fn set_adaptive_thresh_constant(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshConstant_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_constant")
+	}
+	
+	fn set_min_contours_area_rate(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursAreaRate_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contours_area_rate")
+	}
+	
+	fn set_min_contours_area(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursArea_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contours_area")
+	}
+	
+	fn set_confidence_threshold(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropConfidenceThreshold_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_confidence_threshold")
+	}
+	
+	fn set_min_contour_solidity(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourSolidity_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_solidity")
+	}
+	
+	fn set_find_candidates_approx_poly_dp_eps_multiplier(&mut self, val: f64) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropFindCandidatesApproxPolyDPEpsMultiplier_double(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_find_candidates_approx_poly_dp_eps_multiplier")
+	}
+	
+	fn set_border_width(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropBorderWidth_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_border_width")
+	}
+	
+	fn set_b0factor(&mut self, val: f32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropB0factor_float(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_b0factor")
+	}
+	
+	fn set_max_error(&mut self, val: f32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMaxError_float(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_error")
+	}
+	
+	fn set_min_contour_points_allowed(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourPointsAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_points_allowed")
+	}
+	
+	fn set_min_contour_length_allowed(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourLengthAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_contour_length_allowed")
+	}
+	
+	fn set_min_inter_contour_distance(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterContourDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_inter_contour_distance")
+	}
+	
+	fn set_min_inter_checker_distance(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterCheckerDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_inter_checker_distance")
+	}
+	
+	fn set_min_image_size(&mut self, val: i32) -> () {
+		unsafe { sys::cv_mcc_DetectorParameters_setPropMinImageSize_int(self.as_raw_mut_MCC_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_image_size")
 	}
 	
 	fn set_min_group_size(&mut self, val: u32) -> () {
@@ -1196,15 +1214,13 @@ impl Drop for MCC_DetectorParameters {
 	}
 }
 
-impl MCC_DetectorParameters {
-	#[inline] pub fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
-	#[inline] pub fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
 unsafe impl Send for MCC_DetectorParameters {}
 
-impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
+impl crate::mcc::MCC_DetectorParametersTraitConst for MCC_DetectorParameters {
 	#[inline] fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
 	#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
@@ -1213,7 +1229,7 @@ impl MCC_DetectorParameters {
 		unsafe { sys::cv_mcc_DetectorParameters_DetectorParameters() }.into_result().map(|r| unsafe { crate::mcc::MCC_DetectorParameters::opencv_from_extern(r) } )
 	}
 	
-	pub fn create() -> Result<core::Ptr::<crate::mcc::MCC_DetectorParameters>> {
+	pub fn create() -> Result<core::Ptr<crate::mcc::MCC_DetectorParameters>> {
 		unsafe { sys::cv_mcc_DetectorParameters_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::mcc::MCC_DetectorParameters>::opencv_from_extern(r) } )
 	}
 	

@@ -35,7 +35,7 @@
 //! You should still use ogre-meshviewer to verify that the geometry is converted correctly.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::WindowScene };
+	pub use { super::WindowSceneConst, super::WindowScene };
 }
 
 pub const ENTITY_AABB_WORLD: i32 = 2;
@@ -205,7 +205,7 @@ pub fn create_triangle_mesh(name: &str, vertices: &dyn core::ToInputArray, norma
 /// 
 /// ## C++ default parameters
 /// * flags: SCENE_INTERACTIVE|SCENE_AA
-pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::Ptr::<dyn crate::ovis::WindowScene>> {
+pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::ovis::WindowScene>> {
 	extern_container_arg!(title);
 	unsafe { sys::cv_ovis_createWindow_const_StringR_const_SizeR_int(title.opencv_as_extern(), &size, flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ovis::WindowScene>::opencv_from_extern(r) } )
 }
@@ -279,8 +279,12 @@ pub fn wait_key(delay: i32) -> Result<i32> {
 }
 
 /// A 3D viewport and the associated scene
-pub trait WindowScene {
+pub trait WindowSceneConst {
 	fn as_raw_WindowScene(&self) -> *const c_void;
+
+}
+
+pub trait WindowScene: crate::ovis::WindowSceneConst {
 	fn as_raw_mut_WindowScene(&mut self) -> *mut c_void;
 
 	/// set window background to custom image
@@ -308,7 +312,7 @@ pub trait WindowScene {
 	/// addResourceLocation
 	/// ## Parameters
 	/// * names: compositor names that will be applied in order of appearance
-	fn set_compositors(&mut self, names: &core::Vector::<String>) -> Result<()> {
+	fn set_compositors(&mut self, names: &core::Vector<String>) -> Result<()> {
 		unsafe { sys::cv_ovis_WindowScene_setCompositors_const_vector_String_R(self.as_raw_mut_WindowScene(), names.as_raw_VectorOfString()) }.into_result()
 	}
 	
@@ -482,7 +486,7 @@ pub trait WindowScene {
 	/// ## Parameters
 	/// * name: entity name
 	/// * out: the animation names
-	fn get_entity_animations(&mut self, name: &str, out: &mut core::Vector::<String>) -> Result<()> {
+	fn get_entity_animations(&mut self, name: &str, out: &mut core::Vector<String>) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_ovis_WindowScene_getEntityAnimations_const_StringR_vector_String_R(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), out.as_raw_mut_VectorOfString()) }.into_result()
 	}
