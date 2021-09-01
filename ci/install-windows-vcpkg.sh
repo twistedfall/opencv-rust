@@ -13,7 +13,7 @@ fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git checkout .
-git checkout 025e564979cc01d0fbc5c920aa8a36635efb01bb
+git checkout 5bc27e8a5073ba139e29432a1b0d8ced50794a41
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows.cmake"
