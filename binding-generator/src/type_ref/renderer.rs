@@ -155,6 +155,14 @@ impl Constness {
 		}
 	}
 
+	pub fn rust_null_ptr_full(self) -> &'static str {
+		if self.is_const() {
+			"::core::ptr::null()"
+		} else {
+			"::core::ptr::null_mut()"
+		}
+	}
+
 	pub fn cpp_qual(self) -> &'static str {
 		if self.is_const() {
 			"const "
@@ -310,6 +318,14 @@ impl RustRenderer {
 	pub fn new(name_style: NameStyle, lifetime: Lifetime) -> Self {
 		Self { name_style, lifetime }
 	}
+
+	fn wrap_nullable<'a>(&self, type_ref: &TypeRef, typ: Cow<'a, str>) -> Cow<'a, str> {
+		if type_ref.is_nullable() {
+			format!("Option{fish}<{typ}>", fish=self.name_style.rust_turbo_fish_qual(), typ=typ).into()
+		} else {
+			typ
+		}
+	}
 }
 
 impl TypeRefRenderer<'_> for RustRenderer {
@@ -330,11 +346,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 			}
 			Kind::Array(elem, size) => {
 				let typ = type_ref.format_as_array(&elem.render(self.recurse()), size);
-				if type_ref.is_nullable() {
-					format!("Option{fish}<{typ}>", fish=self.name_style.rust_turbo_fish_qual(), typ=typ)
-				} else {
-					typ
-				}.into()
+				self.wrap_nullable(&type_ref, typ.into())
 			}
 			Kind::StdVector(vec) => {
 				vec.rust_name(self.name_style).into_owned().into()
@@ -352,12 +364,13 @@ impl TypeRefRenderer<'_> for RustRenderer {
 						cnst=type_ref.constness().rust_qual(true),
 					).into()
 				} else {
-					format!(
+					let typ = format!(
 						"&{lt: <}{cnst}{typ}",
 						cnst=type_ref.constness().rust_qual(false),
 						lt=self.lifetime,
 						typ=inner.render(self.recurse())
-					).into()
+					);
+					self.wrap_nullable(&type_ref, typ.into())
 				}
 			}
 			Kind::SmartPtr(ptr) => {

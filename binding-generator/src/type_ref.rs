@@ -678,7 +678,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_nullable(&self) -> bool {
-		matches!(self.type_hint, TypeRefTypeHint::NullableSlice)
+		matches!(self.type_hint, TypeRefTypeHint::NullableSlice | TypeRefTypeHint::Nullable)
 	}
 
 	pub fn as_class(&self) -> Option<Class<'tu, 'ge>> {
@@ -1190,12 +1190,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				format!("{name}.as_mut_ptr()", name=name)
 			};
 			return if self.is_nullable() {
-				let null_ptr_name = if constness.with(self.constness()).is_const() {
-					"null"
-				} else {
-					"null_mut"
-				};
-				format!("{name}.map_or(::core::ptr::{null_ptr_name}(), |{name}| {arr})", name=name, null_ptr_name=null_ptr_name, arr=arr)
+				format!(
+					"{name}.map_or({null_ptr}, |{name}| {arr})",
+					name=name,
+					null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
+					arr=arr
+				)
 			} else {
 				arr
 			}
@@ -1213,6 +1213,20 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					cnst=self.clang_constness().rust_qual(true),
 					const_inner=inner.clang_constness().rust_qual(true)
 				);
+			}
+		}
+		if self.as_reference().is_some() || self.as_pointer().is_some() {
+			if self.is_nullable() {
+				let arg = if constness.with(self.constness()).is_const() {
+					format!("{name} as *_", name=name)
+				} else {
+					format!("{name} as *mut _", name=name)
+				};	return format!(
+					"{name}.map_or({null_ptr}, |{name}| {arg})",
+					name=name,
+					null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
+					arg=arg,
+				)
 			}
 		}
 		name.to_string()

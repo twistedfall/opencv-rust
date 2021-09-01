@@ -875,6 +875,7 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 
 #[derive(Clone, Copy, Debug)]
 pub enum ArgumentOverride {
+	Nullable,
 	Slice,
 	NullableSlice,
 	LenForSlice(&'static str, usize),
@@ -942,6 +943,9 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverrid
 	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
 		"from_to" => ArgumentOverride::Slice,
 		"npairs" => ArgumentOverride::LenForSlice("from_to", 2),
+	},
+	FuncId::new("cv::createTrackbar", ["trackbarname", "winname", "value", "count", "onChange", "userdata"]) => hashmap! {
+		"value" => ArgumentOverride::Nullable,
 	},
 });
 

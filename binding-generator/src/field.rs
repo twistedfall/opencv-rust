@@ -71,6 +71,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		let type_hint = match self.type_hint {
+			FieldTypeHint::ArgOverride(ArgumentOverride::Nullable) => TypeRefTypeHint::Nullable,
 			FieldTypeHint::ArgOverride(ArgumentOverride::Slice) => TypeRefTypeHint::Slice,
 			FieldTypeHint::ArgOverride(ArgumentOverride::NullableSlice) => TypeRefTypeHint::NullableSlice,
 			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ),
