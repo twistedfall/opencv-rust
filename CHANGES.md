@@ -1,3 +1,7 @@
+* 0.55.0
+  * add `Mat::data_bytes[_mut]()` methods to access byte data inside `Mat` as slice, `Mat::data()` now returns
+    raw pointer instead of reference
+
 * 0.54.0
   * highgui::create_trackbar now takes `Option<&mut i32>` for `value` to fix the deprecation warning (fixes [#261](https://github.com/twistedfall/opencv-rust/issues/261))
   * Class traits are now split into const and mut variants. So what previously was `MatTrait` is now
