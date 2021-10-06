@@ -130,7 +130,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		"doc_comment" => doc_comment.as_str(),
 		"debug" => &debug,
 		"attributes" => &attributes,
-		"visibility" => &visibility,
+		"visibility" => visibility,
 		"unsafety_decl" => if is_safe { "" } else { "unsafe " },
 		"name" => name,
 		"generic_decl" => "",

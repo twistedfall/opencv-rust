@@ -455,7 +455,7 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 					if comment.contains("@defgroup") {
 						defgroup_found = true;
 					}
-					comment.push_str(&line);
+					comment.push_str(line);
 					if line.trim_end().ends_with("*/") {
 						if defgroup_found {
 							return false;

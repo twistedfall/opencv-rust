@@ -83,7 +83,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 	let start;
 	let clang = clang::Clang::new().expect("Cannot initialize clang");
 	println!("=== Clang: {}", clang::get_version());
-	let gen = binding_generator::Generator::new(&opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
+	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
 	let additional_include_dirs = Arc::new(additional_include_dirs.iter().cloned()
 		.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string").to_string())
 		.collect::<Vec<_>>()
@@ -134,11 +134,11 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 					let bindings_writer = binding_generator::writer::RustNativeBindingWriter::new(
 						&*SRC_CPP_DIR,
 						&*OUT_DIR,
-						&module,
+						module,
 						&opencv_version,
 						false,
 					);
-					gen.process_opencv_module(&module, bindings_writer);
+					gen.process_opencv_module(module, bindings_writer);
 					eprintln!("=== Generated: {}", module);
 					drop(token); // needed to move the token to the thread
 				}

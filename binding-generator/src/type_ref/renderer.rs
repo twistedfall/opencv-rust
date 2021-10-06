@@ -346,7 +346,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 			}
 			Kind::Array(elem, size) => {
 				let typ = type_ref.format_as_array(&elem.render(self.recurse()), size);
-				self.wrap_nullable(&type_ref, typ.into())
+				self.wrap_nullable(type_ref, typ.into())
 			}
 			Kind::StdVector(vec) => {
 				vec.rust_name(self.name_style).into_owned().into()
@@ -370,7 +370,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 						lt=self.lifetime,
 						typ=inner.render(self.recurse())
 					);
-					self.wrap_nullable(&type_ref, typ.into())
+					self.wrap_nullable(type_ref, typ.into())
 				}
 			}
 			Kind::SmartPtr(ptr) => {

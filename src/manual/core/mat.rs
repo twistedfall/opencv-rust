@@ -120,12 +120,12 @@ data_type!(core::Rect2d, core::CV_64F, 4);
 
 #[inline(always)]
 unsafe fn convert_ptr<T>(r: &u8) -> &T {
-	&*(r as *const _ as *const T)
+	&*(r as *const u8 as *const T)
 }
 
 #[inline(always)]
 unsafe fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
-	&mut *(r as *mut _ as *mut T)
+	&mut *(r as *mut u8 as *mut T)
 }
 
 fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
@@ -515,7 +515,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total()?;
-		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut _ as *mut _, total))
+		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut u8 as *mut T, total))
 	}
 }
 

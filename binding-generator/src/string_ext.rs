@@ -77,7 +77,7 @@ impl StringExt for String {
 				out
 			}
 
-			let rep = compile_captures(&to);
+			let rep = compile_captures(to);
 			self.replacen_in_place_regex_cb(from, limit, |s, caps| {
 				let cap_len = rep.iter().fold(0, |acc, x| {
 					acc + match x {
@@ -138,7 +138,7 @@ impl StringExt for String {
 			if start_idx == end_idx {
 				return false;
 			}
-			if let Some(repl) = replacer(&self, &caps) {
+			if let Some(repl) = replacer(self, &caps) {
 				self.replace_range(start_idx..end_idx, &repl);
 				idx = start_idx + repl.len();
 			} else {
@@ -375,7 +375,7 @@ impl StrExt for str {
 		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\{\{\s*([^{}]+?)\s*}}"#).expect("Can't compile regex"));
 
 		// trim leading newline
-		let tpl = self.strip_prefix("\n").unwrap_or(self);
+		let tpl = self.strip_prefix('\n').unwrap_or(self);
 
 		// find minimum common indent
 		let mut common_indent_len: Option<usize> = None;
