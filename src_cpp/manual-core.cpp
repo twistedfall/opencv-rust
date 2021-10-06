@@ -37,10 +37,6 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 
-	bool cv_manual_Mat_is_allocated(const cv::Mat* instance) {
-		return instance->data != NULL;
-	}
-
 	Result_void cv_manual_Mat_set(cv::Mat* instance, cv::Scalar s) {
 		try {
 			*instance = s;
@@ -48,10 +44,8 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 
-	Result<const unsigned char*> cv_manual_Mat_data(const cv::Mat* instance) {
-		try {
-			return Ok<const unsigned char*>(instance->data);
-		} OCVRS_CATCH(Result<const unsigned char*>)
+	const unsigned char* cv_manual_Mat_data(const cv::Mat* instance) {
+		return instance->data;
 	}
 
 	Result<cv::Size> cv_manual_UMat_size(const cv::UMat* instance) {

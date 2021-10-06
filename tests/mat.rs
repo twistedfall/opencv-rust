@@ -21,7 +21,7 @@ fn mat_default() -> Result<()> {
 	assert_eq!(Size::new(0, 0), mat.size()?);
 	assert_eq!(0, mat.dims());
 	assert!(!mat.is_allocated());
-	assert_matches!(mat.data(), Err(Error { code: core::StsNullPtr, ..}));
+	assert!(mat.data().is_null());
 	Ok(())
 }
 
@@ -30,12 +30,14 @@ fn mat_create() -> Result<()> {
 	let mut mat = Mat::default();
 	unsafe { mat.create_rows_cols(10, 10, u16::typ())? };
 	assert!(mat.is_allocated());
+	assert!(!mat.data().is_null());
 	mat.set(Scalar::from(7.))?;
 	assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
 	assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
 	assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);
 	mat.release()?;
 	assert!(!mat.is_allocated());
+	assert!(mat.data().is_null());
 	assert_eq!(Size::new(0, 0), mat.size()?);
 	Ok(())
 }
@@ -540,6 +542,32 @@ fn mat_mul() -> Result<()> {
 		let res = core::div_mat_f64(&mat, 2.)?.to_mat()?;
 		assert_eq!(res.typ()?, u8::typ());
 		assert_eq!(res.data_typed::<u8>()?, &[0, 1, 2, 2, 2, 3]);
+	}
+	Ok(())
+}
+
+#[test]
+fn mat_data() -> Result<()> {
+	{
+		let mat = Mat::from_slice(&[8, 13, 21, 39u8])?;
+		assert_eq!(&[8, 13, 21, 39], mat.data_bytes()?);
+		let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 1))?;
+		assert_eq!(&[13, 21], roi.data_bytes()?);
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[[6, 7], [16, 17u8]])?;
+		assert_eq!(&[6, 7, 16, 17], mat.data_bytes()?);
+		let roi = Mat::roi(&mat, Rect::new(0, 0, 1, 2))?;
+		assert_matches!(roi.data_bytes(), Err(Error { code: core::StsUnmatchedSizes, .. }));
+	}
+
+	{
+		let mut mat = Mat::from_slice(&[Vec2b::from([5, 8]), Vec2b::from([13, 21])])?;
+		assert_eq!(&[5, 8, 13, 21], mat.data_bytes()?);
+		let bytes = mat.data_bytes_mut()?;
+		bytes[1] = 90;
+		assert_eq!(&[5, 90, 13, 21], mat.data_bytes()?);
 	}
 	Ok(())
 }

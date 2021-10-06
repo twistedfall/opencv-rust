@@ -381,15 +381,26 @@ pub trait MatTraitConstManual: MatTraitConst {
 	}
 
 	fn is_allocated(&self) -> bool {
-		extern "C" { fn cv_manual_Mat_is_allocated(instance: *const c_void) -> bool; }
-		unsafe { cv_manual_Mat_is_allocated(self.as_raw_Mat()) }
+		!self.data().is_null()
 	}
 
-	fn data(&self) -> Result<&u8> {
-		extern "C" { fn cv_manual_Mat_data(instance: *const c_void) -> sys::Result<*const u8>; }
+	/// Raw pointer to the underlying data array, can be NULL
+	fn data(&self) -> *const u8 {
+		extern "C" { fn cv_manual_Mat_data(instance: *const c_void) -> *const u8; }
 		unsafe { cv_manual_Mat_data(self.as_raw_Mat()) }
-			.into_result()
-			.and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+	}
+
+	/// Returns underlying data array as byte slice, Mat must be continuous.
+	fn data_bytes(&self) -> Result<&[u8]> {
+		match_is_continuous(self)
+			.and_then(|_| {
+				let data = self.data();
+				if data.is_null() {
+					Err(Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
+				} else {
+					Ok(unsafe { slice::from_raw_parts(data, self.total()? * self.elem_size()?) })
+				}
+			})
 	}
 
 	fn data_typed<T: DataType>(&self) -> Result<&[T]> {
@@ -401,8 +412,12 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// # Safety
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
-		let total = self.total()?;
-		self.data().map(|x| slice::from_raw_parts(x as *const u8 as *const T, total))
+		let data = self.data();
+		if data.is_null() {
+			Err(Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
+		} else {
+			Ok(slice::from_raw_parts(data as *const T, self.total()?))
+		}
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
@@ -503,6 +518,14 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		extern "C" { fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar) -> sys::Result_void; }
 		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s) }
 			.into_result()
+	}
+
+	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
+	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
+		match_is_continuous(self)
+			.and_then(|_| {
+				Ok(unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total()? * self.elem_size()?) })
+			})
 	}
 
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
