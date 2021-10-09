@@ -25,13 +25,8 @@ impl<T> MatExprResult<T> {
 	}
 }
 
-// impl<'a> ToUnderlyingArg<&'a Mat> for Mat {
-// 	fn to_underlying_arg(&'a self) -> &'a Mat {
-// 		self
-// 	}
-// }
-
-pub trait ToUnderlyingArg<'a, T: 'a> {
+// only for internal usage
+trait ToUnderlyingArg<'a, T: 'a> {
 	fn to_underlying_arg(&'a self) -> T;
 }
 impl<'a> ToUnderlyingArg<'a, &'a Mat> for Mat {
@@ -54,30 +49,6 @@ impl<'a> ToUnderlyingArg<'a, f64> for f64 {
 		self.clone()
 	}
 }
-
-// trait ToUnderlyingArg<'a, T: 'a + ?Sized> {
-// 	fn to_underlying_arg(&self) -> T;
-// }
-// impl<'a> ToUnderlyingArg<'a, &'a Mat> for Mat {
-// 	fn to_underlying_arg(&'a self) -> &'a Mat {
-// 		self
-// 	}
-// }
-// impl<'a> ToUnderlyingArg<'a, &'a MatExpr> for MatExpr {
-// 	fn to_underlying_arg(&self) -> &'a MatExpr {
-// 		self
-// 	}
-// }
-// impl ToUnderlyingArg<'static, Scalar> for Scalar {
-// 	fn to_underlying_arg(&self) -> Scalar {
-// 		self
-// 	}
-// }
-// impl ToUnderlyingArg<'_, f64> for f64 {
-// 	fn to_underlying_arg(&self) -> f64 {
-// 		self
-// 	}
-// }
 
 macro_rules! impl_ops_core {
 	($func_name:ident, $op_type:ident, $lhs_type:ty, $rhs_type:ty, $op_func:ident) => {
@@ -193,6 +164,6 @@ impl_ops!(div_matexpr_f64, Div, MatExpr, f64, div);
 impl_ops!(div_f64_mat, Div, f64, Mat, div);
 impl_ops!(div_f64_matexpr, Div, f64, MatExpr, div);
 
-// TODO
+// not implemented yet, but can use `0 - mat`
 // fn sub_mat(Mat);
 // fn sub_matexpr(MatExpr);
