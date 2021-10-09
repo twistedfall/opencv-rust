@@ -147,48 +147,51 @@ macro_rules! impl_ops_core {
 macro_rules! impl_ops {
 	($func_name:ident, $op_type:ident, $lhs_type:ty, $rhs_type:ty, $op_func:ident) => {
 		impl_ops_core!($func_name, $op_type, $lhs_type, $rhs_type, $op_func);
+		impl_ops_core!($func_name, $op_type, $lhs_type, &$rhs_type, $op_func);
+		impl_ops_core!($func_name, $op_type, &$lhs_type, $rhs_type, $op_func);
+		impl_ops_core!($func_name, $op_type, &$lhs_type, &$rhs_type, $op_func);
 	};
 }
 
-// impl_ops_core!(add_mat_mat, Add, Mat, Mat, add, &lhs, &rhs);
-// impl_ops_core!(add_mat_matexpr, Add, Mat, MatExpr, add, &lhs, &rhs);
-// impl_ops_core!(add_matexpr_mat, Add, MatExpr, Mat, add, &lhs, &rhs);
-// impl_ops_core!(add_matexpr_matexpr, Add, MatExpr, MatExpr, add, &lhs, &rhs);
-//
-// impl_ops_core!(add_mat_scalar, Add, Mat, Scalar, add, &Mat, Scalar);
-// impl_ops_core!(add_matexpr_scalar, Add, MatExpr, Scalar, add, &MatExpr, Scalar);
-// impl_ops_core!(add_scalar_mat, Add, Scalar, Mat, add, Scalar, &Mat);
-// impl_ops_core!(add_scalar_matexpr, Add, Scalar, MatExpr, add, Scalar, &MatExpr);
+impl_ops!(add_mat_mat, Add, Mat, Mat, add);
+impl_ops!(add_mat_matexpr, Add, Mat, MatExpr, add);
+impl_ops!(add_matexpr_mat, Add, MatExpr, Mat, add);
+impl_ops!(add_matexpr_matexpr, Add, MatExpr, MatExpr, add);
 
-impl_ops_core!(sub_mat_mat, Sub, &Mat, &Mat, sub);
-impl_ops_core!(sub_mat_matexpr, Sub, &Mat, &MatExpr, sub);
-impl_ops_core!(sub_matexpr_mat, Sub, &MatExpr, &Mat, sub);
-impl_ops_core!(sub_matexpr_matexpr, Sub, &MatExpr, &MatExpr, sub);
+impl_ops!(add_mat_scalar, Add, Mat, Scalar, add);
+impl_ops!(add_matexpr_scalar, Add, MatExpr, Scalar, add);
+impl_ops!(add_scalar_mat, Add, Scalar, Mat, add);
+impl_ops!(add_scalar_matexpr, Add, Scalar, MatExpr, add);
 
-// impl_ops_core!(sub_mat_scalar, Sub, Mat, Scalar, sub, &Mat, Scalar);
-// impl_ops_core!(sub_matexpr_scalar, Sub, MatExpr, Scalar, sub, &MatExpr, Scalar);
-// impl_ops_core!(sub_scalar_mat, Sub, Scalar, Mat, sub, Scalar, &Mat);
-// impl_ops_core!(sub_scalar_matexpr, Sub, Scalar, MatExpr, sub, Scalar, &MatExpr);
-//
-// impl_ops_core!(mul_mat_mat, Mul, Mat, Mat, mul, &Mat, &Mat);
-// impl_ops_core!(mul_mat_matexpr, Mul, Mat, MatExpr, mul, &Mat, &MatExpr);
-// impl_ops_core!(mul_matexpr_mat, Mul, MatExpr, Mat, mul, &MatExpr, &Mat);
-// impl_ops_core!(mul_matexpr_matexpr, Mul, MatExpr, MatExpr, mul, &MatExpr, &MatExpr);
-//
-// impl_ops_core!(mul_mat_f64, Mul, Mat, f64, mul, &Mat, f64);
-// impl_ops_core!(mul_matexpr_f64, Mul, MatExpr, f64, mul, &MatExpr, f64);
-// impl_ops_core!(mul_f64_mat, Mul, f64, Mat, mul, f64, &Mat);
-// impl_ops_core!(mul_f64_matexpr, Mul, f64, MatExpr, mul, f64, &MatExpr);
-//
-// impl_ops_core!(div_mat_mat, Div, Mat, Mat, div, &Mat, &Mat);
-// impl_ops_core!(div_mat_matexpr, Div, Mat, MatExpr, div, &Mat, &MatExpr);
-// impl_ops_core!(div_matexpr_mat, Div, MatExpr, Mat, div, &MatExpr, &Mat);
-// impl_ops_core!(div_matexpr_matexpr, Div, MatExpr, MatExpr, div, &MatExpr, &MatExpr);
-//
-// impl_ops_core!(div_mat_f64, Div, Mat, f64, div, &Mat, f64);
-// impl_ops_core!(div_matexpr_f64, Div, MatExpr, f64, div, &MatExpr, f64);
-// impl_ops_core!(div_f64_mat, Div, f64, Mat, div, f64, &Mat);
-// impl_ops_core!(div_f64_matexpr, Div, f64, MatExpr, div, f64, &MatExpr);
+impl_ops!(sub_mat_mat, Sub, Mat, Mat, sub);
+impl_ops!(sub_mat_matexpr, Sub, Mat, MatExpr, sub);
+impl_ops!(sub_matexpr_mat, Sub, MatExpr, Mat, sub);
+impl_ops!(sub_matexpr_matexpr, Sub, MatExpr, MatExpr, sub);
+
+impl_ops!(sub_mat_scalar, Sub, Mat, Scalar, sub);
+impl_ops!(sub_matexpr_scalar, Sub, MatExpr, Scalar, sub);
+impl_ops!(sub_scalar_mat, Sub, Scalar, Mat, sub);
+impl_ops!(sub_scalar_matexpr, Sub, Scalar, MatExpr, sub);
+
+impl_ops!(mul_mat_mat, Mul, Mat, Mat, mul);
+impl_ops!(mul_mat_matexpr, Mul, Mat, MatExpr, mul);
+impl_ops!(mul_matexpr_mat, Mul, MatExpr, Mat, mul);
+impl_ops!(mul_matexpr_matexpr, Mul, MatExpr, MatExpr, mul);
+
+impl_ops!(mul_mat_f64, Mul, Mat, f64, mul);
+impl_ops!(mul_matexpr_f64, Mul, MatExpr, f64, mul);
+impl_ops!(mul_f64_mat, Mul, f64, Mat, mul);
+impl_ops!(mul_f64_matexpr, Mul, f64, MatExpr, mul);
+
+impl_ops!(div_mat_mat, Div, Mat, Mat, div);
+impl_ops!(div_mat_matexpr, Div, Mat, MatExpr, div);
+impl_ops!(div_matexpr_mat, Div, MatExpr, Mat, div);
+impl_ops!(div_matexpr_matexpr, Div, MatExpr, MatExpr, div);
+
+impl_ops!(div_mat_f64, Div, Mat, f64, div);
+impl_ops!(div_matexpr_f64, Div, MatExpr, f64, div);
+impl_ops!(div_f64_mat, Div, f64, Mat, div);
+impl_ops!(div_f64_matexpr, Div, f64, MatExpr, div);
 
 // TODO
 // fn sub_mat(Mat);
