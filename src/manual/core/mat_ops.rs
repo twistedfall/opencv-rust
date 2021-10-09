@@ -33,7 +33,7 @@ macro_rules! impl_ops {
 
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
-				$func_name(&lhs, &rhs).into()
+				$func_name($lhs_usage, $rhs_usage).into()
 			}
 		}
 
@@ -44,7 +44,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
 				match lhs {
-					MatExprResult::Ok(lhs) => $func_name(&lhs, &rhs).into(),
+					MatExprResult::Ok(lhs) => $func_name($lhs_usage, $rhs_usage).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -57,7 +57,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
                 let lhs = self;
 				match rhs {
-					MatExprResult::Ok(rhs) => $func_name(&lhs, &rhs).into(),
+					MatExprResult::Ok(rhs) => $func_name($lhs_usage, $rhs_usage).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -70,7 +70,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
                 let lhs = self;
 				match (lhs, rhs) {
-					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => $func_name(&lhs, &rhs).into(),
+					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => $func_name($lhs_usage, $rhs_usage).into(),
 					(MatExprResult::Err(e), MatExprResult::Ok(_)) => MatExprResult::Err(e),
 					(MatExprResult::Ok(_), MatExprResult::Err(e)) => MatExprResult::Err(e),
 					(MatExprResult::Err(lhs_e), MatExprResult::Err(rhs_e)) => {
@@ -87,6 +87,10 @@ macro_rules! impl_ops {
 		}
 	};
 }
+
+fn lhs() {}
+
+fn rhs() {}
 
 impl_ops!(add_mat_mat, Add, Mat, Mat, add, &lhs, &rhs);
 impl_ops!(add_mat_matexpr, Add, Mat, MatExpr, add, &lhs, &rhs);
