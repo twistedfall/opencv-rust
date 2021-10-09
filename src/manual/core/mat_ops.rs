@@ -26,14 +26,14 @@ impl<T> MatExprResult<T> {
 }
 
 macro_rules! impl_ops {
-	($func_name:ident, $op_type: ident, $lhs_type:ident, $rhs_type: ident, $op_func: ident, $lhs_usage:expr, $rhs_usage:expr) => {
+	($func_name:ident, $op_type:ident, $lhs_type:ty, $rhs_type:ty, $op_func:ident) => {
 		// Lhs op Rhs
 		impl $op_type<$rhs_type> for $lhs_type {
 			type Output = MatExprResult<MatExpr>;
 
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
-				$func_name($lhs_usage, $rhs_usage).into()
+				$func_name(lhs, rhs).into()
 			}
 		}
 
@@ -44,7 +44,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
 				match lhs {
-					MatExprResult::Ok(lhs) => $func_name($lhs_usage, $rhs_usage).into(),
+					MatExprResult::Ok(lhs) => $func_name(lhs, rhs).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -57,7 +57,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
                 let lhs = self;
 				match rhs {
-					MatExprResult::Ok(rhs) => $func_name($lhs_usage, $rhs_usage).into(),
+					MatExprResult::Ok(rhs) => $func_name(lhs, rhs).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -70,7 +70,7 @@ macro_rules! impl_ops {
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
                 let lhs = self;
 				match (lhs, rhs) {
-					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => $func_name($lhs_usage, $rhs_usage).into(),
+					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => $func_name(lhs, rhs).into(),
 					(MatExprResult::Err(e), MatExprResult::Ok(_)) => MatExprResult::Err(e),
 					(MatExprResult::Ok(_), MatExprResult::Err(e)) => MatExprResult::Err(e),
 					(MatExprResult::Err(lhs_e), MatExprResult::Err(rhs_e)) => {
@@ -88,25 +88,21 @@ macro_rules! impl_ops {
 	};
 }
 
-fn lhs() {}
-
-fn rhs() {}
-
-impl_ops!(add_mat_mat, Add, Mat, Mat, add, &lhs, &rhs);
-impl_ops!(add_mat_matexpr, Add, Mat, MatExpr, add, &lhs, &rhs);
-impl_ops!(add_matexpr_mat, Add, MatExpr, Mat, add, &lhs, &rhs);
-impl_ops!(add_matexpr_matexpr, Add, MatExpr, MatExpr, add, &lhs, &rhs);
-
+// impl_ops!(add_mat_mat, Add, Mat, Mat, add, &lhs, &rhs);
+// impl_ops!(add_mat_matexpr, Add, Mat, MatExpr, add, &lhs, &rhs);
+// impl_ops!(add_matexpr_mat, Add, MatExpr, Mat, add, &lhs, &rhs);
+// impl_ops!(add_matexpr_matexpr, Add, MatExpr, MatExpr, add, &lhs, &rhs);
+//
 // impl_ops!(add_mat_scalar, Add, Mat, Scalar, add, &Mat, Scalar);
 // impl_ops!(add_matexpr_scalar, Add, MatExpr, Scalar, add, &MatExpr, Scalar);
 // impl_ops!(add_scalar_mat, Add, Scalar, Mat, add, Scalar, &Mat);
 // impl_ops!(add_scalar_matexpr, Add, Scalar, MatExpr, add, Scalar, &MatExpr);
-//
-// impl_ops!(sub_mat_mat, Sub, Mat, Mat, sub, &Mat, &Mat);
-// impl_ops!(sub_mat_matexpr, Sub, Mat, MatExpr, sub, &Mat, &MatExpr);
-// impl_ops!(sub_matexpr_mat, Sub, MatExpr, Mat, sub, &MatExpr, &Mat);
-// impl_ops!(sub_matexpr_matexpr, Sub, MatExpr, MatExpr, sub, &MatExpr, &MatExpr);
-//
+
+impl_ops!(sub_mat_mat, Sub, &Mat, &Mat, sub);
+impl_ops!(sub_mat_matexpr, Sub, &Mat, &MatExpr, sub);
+impl_ops!(sub_matexpr_mat, Sub, &MatExpr, &Mat, sub);
+impl_ops!(sub_matexpr_matexpr, Sub, &MatExpr, &MatExpr, sub);
+
 // impl_ops!(sub_mat_scalar, Sub, Mat, Scalar, sub, &Mat, Scalar);
 // impl_ops!(sub_matexpr_scalar, Sub, MatExpr, Scalar, sub, &MatExpr, Scalar);
 // impl_ops!(sub_scalar_mat, Sub, Scalar, Mat, sub, Scalar, &Mat);
