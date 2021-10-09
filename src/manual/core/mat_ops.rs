@@ -25,45 +25,6 @@ impl<T> MatExprResult<T> {
 	}
 }
 
-// impl<T> From<MatExprResult<T>> for Result<T, crate::Error> {
-// 	fn from(r: MatExprResult<T>) -> Self {
-// 		match r {
-// 			MatExprResult::Ok(val) => std::result::Result::Ok(val),
-// 			MatExprResult::Err(e) => std::result::Result::Err(e),
-// 		}
-// 	}
-// }
-
-// impl<LInner: Sub<RInner, Output = MatExprResult<O>>, RInner, O> Sub<MatExprResult<RInner>> for LInner {
-// 	type Output = MatExprResult<O>;
-//
-// 	fn sub(self, rhs: MatExprResult<RInner>) -> Self::Output {
-// 		match rhs {
-// 			MatExprResult::Ok(rhs) => self - rhs,
-// 			MatExprResult::Err(err) => MatExprResult::Err(err),
-// 		}
-// 	}
-// }
-//
-// impl<LInner: Sub<RInner, Output = MatExprResult<O>>, RInner, O> Sub<RInner> for MatExprResult<LInner> {
-// 	type Output = MatExprResult<O>;
-//
-// 	fn sub(self, rhs: MatExprResult<RInner>) -> Self::Output {
-// 		match self {
-// 			MatExprResult::Ok(lhs) => lhs - rhs,
-// 			MatExprResult::Err(err) => MatExprResult::Err(err),
-// 		}
-// 	}
-// }
-//
-// impl Sub<MatExpr> for Scalar {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: MatExpr) -> Self::Output {
-// 		sub_scalar_matexpr(self, &rhs)
-// 	}
-// }
-
 macro_rules! impl_ops {
 	($func_name:ident, $op_type: ident, $lhs_type:ident, $rhs_type: ident) => {
 		// Lhs op Rhs
@@ -123,61 +84,46 @@ macro_rules! impl_ops {
 	};
 }
 
+impl_ops!(add_mat_mat, Add, Mat, Mat);
+impl_ops!(add_mat_matexpr, Add, Mat, MatExpr);
+impl_ops!(add_matexpr_mat, Add, MatExpr, Mat);
+impl_ops!(add_matexpr_matexpr, Add, MatExpr, MatExpr);
+
+impl_ops!(add_mat_scalar, Add, Mat, Scalar);
+impl_ops!(add_matexpr_scalar, Add, MatExpr, Scalar);
+impl_ops!(add_scalar_mat, Add, Scalar, Mat);
+impl_ops!(add_scalar_matexpr, Add, Scalar, MatExpr);
+
 impl_ops!(sub_mat_mat, Sub, Mat, Mat);
+impl_ops!(sub_mat_matexpr, Sub, Mat, MatExpr);
+impl_ops!(sub_matexpr_mat, Sub, MatExpr, Mat);
 impl_ops!(sub_matexpr_matexpr, Sub, MatExpr, MatExpr);
 
-// impl Sub<Mat> for Mat {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: Mat) -> Self::Output {
-// 		sub_mat_mat(&self, &rhs).into()
-// 	}
-// }
-//
-// impl Sub<Mat> for MatExpr {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: Mat) -> Self::Output {
-// 		sub_matexpr_mat(&self, &rhs).into()
-// 	}
-// }
-//
-// impl Sub<Mat> for MatExprResult<MatExpr> {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: Mat) -> Self::Output {
-// 		todo!()
-// 	}
-// }
-//
-// impl Sub<MatExprResult<Mat>> for MatExpr {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: MatExprResult<Mat>) -> Self::Output {
-// 		todo!()
-// 	}
-// }
-//
-// impl Sub<MatExprResult<MatExpr>> for MatExprResult<MatExpr> {
-// 	type Output = MatExprResult<MatExpr>;
-//
-// 	fn sub(self, rhs: MatExprResult<MatExpr>) -> Self::Output {
-// 		todo!()
-// 	}
-// }
+impl_ops!(sub_mat_scalar, Sub, Mat, Scalar);
+impl_ops!(sub_matexpr_scalar, Sub, MatExpr, Scalar);
+impl_ops!(sub_scalar_mat, Sub, Scalar, Mat);
+impl_ops!(sub_scalar_matexpr, Sub, Scalar, MatExpr);
 
-// impl Mul<MatExpr> for f64 {
-// 	type Output = Result<MatExpr>;
-//
-// 	fn mul(self, rhs: MatExpr) -> Self::Output {
-// 		mul_f64_matexpr(self, &rhs)
-// 	}
-// }
-//
-// impl Div<f64> for Mat {
-// 	type Output = Result<MatExpr>;
-//
-// 	fn div(self, rhs: f64) -> Self::Output {
-// 		div_mat_f64(&self, rhs)
-// 	}
-// }
+impl_ops!(mul_mat_mat, Mul, Mat, Mat);
+impl_ops!(mul_mat_matexpr, Mul, Mat, MatExpr);
+impl_ops!(mul_matexpr_mat, Mul, MatExpr, Mat);
+impl_ops!(mul_matexpr_matexpr, Mul, MatExpr, MatExpr);
+
+impl_ops!(mul_mat_f64, Mul, Mat, f64);
+impl_ops!(mul_matexpr_f64, Mul, MatExpr, f64);
+impl_ops!(mul_f64_mat, Mul, f64, Mat);
+impl_ops!(mul_f64_matexpr, Mul, f64, MatExpr);
+
+impl_ops!(div_mat_mat, Div, Mat, Mat);
+impl_ops!(div_mat_matexpr, Div, Mat, MatExpr);
+impl_ops!(div_matexpr_mat, Div, MatExpr, Mat);
+impl_ops!(div_matexpr_matexpr, Div, MatExpr, MatExpr);
+
+impl_ops!(div_mat_f64, Div, Mat, f64);
+impl_ops!(div_matexpr_f64, Div, MatExpr, f64);
+impl_ops!(div_f64_mat, Div, f64, Mat);
+impl_ops!(div_f64_matexpr, Div, f64, MatExpr);
+
+// TODO
+// fn sub_mat(Mat);
+// fn sub_matexpr(MatExpr);
