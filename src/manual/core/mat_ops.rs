@@ -25,6 +25,12 @@ impl<T> MatExprResult<T> {
 	}
 }
 
+/// elementwise multiplication
+pub trait ElemMul<Rhs = Self> {
+	type Output;
+	fn elem_mul(self, rhs: Rhs) -> Self::Output;
+}
+
 // only for internal usage
 trait ToUnderlyingArg<'a, T: 'a> {
 	fn to_underlying_arg(&'a self) -> T;
@@ -163,6 +169,24 @@ impl_ops!(div_mat_f64, Div, Mat, f64, div);
 impl_ops!(div_matexpr_f64, Div, MatExpr, f64, div);
 impl_ops!(div_f64_mat, Div, f64, Mat, div);
 impl_ops!(div_f64_matexpr, Div, f64, MatExpr, div);
+
+fn elemmul_mat_mat(a: &Mat, b: &Mat) -> Result<MatExpr> {
+	MatTraitConst::mul(a, b, 1.0)
+}
+fn elemmul_mat_matexpr(a: &Mat, b: &MatExpr) -> Result<MatExpr> {
+	MatTraitConst::mul(a, b, 1.0)
+}
+fn elemmul_matexpr_mat(a: &MatExpr, b: &Mat) -> Result<MatExpr> {
+	MatExprTraitConst::mul(a, b, 1.0)
+}
+fn elemmul_matexpr_matexpr(a: &MatExpr, b: &MatExpr) -> Result<MatExpr> {
+	MatExprTraitConst::mul_matexpr(a, b, 1.0)
+}
+
+impl_ops!(elemmul_mat_mat, ElemMul, Mat, Mat, elem_mul);
+impl_ops!(elemmul_mat_matexpr, ElemMul, Mat, MatExpr, elem_mul);
+impl_ops!(elemmul_matexpr_mat, ElemMul, MatExpr, Mat, elem_mul);
+impl_ops!(elemmul_matexpr_matexpr, ElemMul, MatExpr, MatExpr, elem_mul);
 
 // not implemented yet, but can use `0 - mat`
 // fn sub_mat(Mat);
