@@ -12,7 +12,7 @@ fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git checkout .
-git checkout 409c1c4a05f853e3204b5914e693221576525cd6
+git checkout "$VCPKG_TREE_COMMIT"
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-linux.cmake

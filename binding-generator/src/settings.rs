@@ -37,8 +37,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double" => "fisheye_+",
 	"cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR" => "fisheye_+",
 	"cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR" => "fisheye_+",
-	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR" => "+_camera",
-	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR" => "+_camera_with_points",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR" => "+_estimated",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR" => "+_triangulated",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR" => "+_2_cameras",
 
 	// ### core ###
 	"cv_Algorithm_write_const_const_Ptr_FileStorage_R_const_StringR" => "+_with_name",
@@ -350,6 +351,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_dnn_Layer_finalize_const_vector_Mat_R_vector_Mat_R" => "+_mat_to",
 	"cv_dnn_Layer_forward_vector_MatX_R_vector_Mat_R_vector_Mat_R" => "+_mat",
 	"cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int" => "+_f64",
+	"cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
+	"cv_dnn_Net_addLayer_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
 	"cv_dnn_Net_connect_String_String" => "+_first_second",
 	"cv_dnn_Net_forward_const_StringR" => "+_single",
 	"cv_dnn_Net_forward_const__OutputArrayR_const_StringR" => "+_layer",

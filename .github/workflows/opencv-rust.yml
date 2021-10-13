@@ -22,13 +22,13 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.15
-          - opencv: 4.5.3
+          - opencv: 3.4.16
+          - opencv: 4.5.4
         exclude:
           - os:
               family: osx
             version:
-              opencv: 3.4.15
+              opencv: 3.4.16
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
@@ -84,6 +84,7 @@ jobs:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
+      VCPKG_TREE_COMMIT: 28af86cc15b53c09de6c0457e0ac737795e497e2
     steps:
       - uses: actions/checkout@v2
 
@@ -133,10 +134,10 @@ jobs:
             opencv: 3.2.0
             brew: "excluded"
           - branch: 3.4
-            opencv: 3.4.14
+            opencv: 3.4.15
             brew: "@3"
           - branch: 4
-            opencv: 4.5.2
+            opencv: 4.5.3
             brew: "@4"
         exclude:
           - os:
