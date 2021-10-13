@@ -422,12 +422,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
 		let args = self.clang_arguments();
 
-		let empty_hashmap = HashMap::new();
-		let spec = if let Some(spec) = self.as_specialized() {
-			spec
-		} else {
-			&empty_hashmap
-		};
+		let empty_spec_hashmap = HashMap::new();
+		let spec = self.as_specialized().unwrap_or_else(|| &empty_spec_hashmap);
+
 		let is_field_setter = self.as_field_setter().is_some();
 		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 

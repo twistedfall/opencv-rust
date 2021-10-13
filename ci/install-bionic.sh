@@ -3,9 +3,78 @@
 set -vex
 
 sudo apt-get update
+
+sudo apt-get install -y clang
+# workaround to make clang_sys crate detect installed libclang
+sudo ln -s libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
+
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
 	sudo apt-get -y install libopencv-dev=3.2.0*
 else
+	# runtime deps
+	sudo apt-get -y install \
+		libatlas3-base \
+		libavcodec57 \
+		libavformat57 \
+		libavresample3 \
+		libceres1 \
+		libdc1394-22 \
+		libfreetype6 \
+		libgdal20 \
+		libgflags2.2 \
+		libgoogle-glog0v5 \
+		libgphoto2-6 \
+		libgstreamer-plugins-base1.0-0 \
+		libharfbuzz0b \
+		libhdf5-100 \
+		libjpeg8 \
+		liblapacke \
+		liblept5 \
+		libopenexr22 \
+		libpng16-16 \
+		libswscale4 \
+		libtbb2 \
+		libtesseract4 \
+		libvtk7.1 \
+		libwebp6 \
+		libqt5core5a \
+		libqt5gui5 \
+		libqt5opengl5 \
+		libqt5test5 \
+		libqt5widgets5
+
+	# build deps
+	sudo apt-get -y install \
+		build-essential \
+		cmake \
+		libatlas-base-dev \
+		libavcodec-dev \
+		libavformat-dev \
+		libavresample-dev \
+		libceres-dev \
+		libdc1394-22-dev \
+		libeigen3-dev \
+		libfreetype6-dev \
+		libgdal-dev \
+		libgflags-dev \
+		libgoogle-glog-dev \
+		libgphoto2-dev \
+		libgstreamer-plugins-base1.0-dev \
+		libharfbuzz-dev \
+		libhdf5-dev \
+		libjpeg-dev \
+		liblapacke-dev \
+		libleptonica-dev \
+		libopenexr-dev \
+		libpng-dev \
+		libswscale-dev \
+		libtbb-dev \
+		libtesseract-dev \
+		libtiff-dev \
+		libvtk7-dev \
+		libwebp-dev \
+		qtbase5-dev
+
 	BUILD_FLAGS="
 		-D BUILD_CUDA_STUBS=OFF
 		-D BUILD_DOCS=OFF
@@ -104,70 +173,6 @@ else
 		-D OPENCV_ENABLE_MEMALIGN=OFF
 	"
 
-	# runtime deps
-	sudo apt-get -y install \
-		libatlas3-base \
-		libavcodec57 \
-		libavformat57 \
-		libavresample3 \
-		libceres1 \
-		libdc1394-22 \
-		libfreetype6 \
-		libgdal20 \
-		libgflags2.2 \
-		libgoogle-glog0v5 \
-		libgphoto2-6 \
-		libgstreamer-plugins-base1.0-0 \
-		libharfbuzz0b \
-		libhdf5-100 \
-		libjpeg8 \
-		liblapacke \
-		liblept5 \
-		libopenexr22 \
-		libpng16-16 \
-		libswscale4 \
-		libtbb2 \
-		libtesseract4 \
-		libvtk7.1 \
-		libwebp6 \
-		libqt5core5a \
-		libqt5gui5 \
-		libqt5opengl5 \
-		libqt5test5 \
-		libqt5widgets5
-
-	# build deps
-	sudo apt-get -y install \
-		build-essential \
-		cmake \
-		libatlas-base-dev \
-		libavcodec-dev \
-		libavformat-dev \
-		libavresample-dev \
-		libceres-dev \
-		libdc1394-22-dev \
-		libeigen3-dev \
-		libfreetype6-dev \
-		libgdal-dev \
-		libgflags-dev \
-		libgoogle-glog-dev \
-		libgphoto2-dev \
-		libgstreamer-plugins-base1.0-dev \
-		libharfbuzz-dev \
-		libhdf5-dev \
-		libjpeg-dev \
-		liblapacke-dev \
-		libleptonica-dev \
-		libopenexr-dev \
-		libpng-dev \
-		libswscale-dev \
-		libtbb-dev \
-		libtesseract-dev \
-		libtiff-dev \
-		libvtk7-dev \
-		libwebp-dev \
-		qtbase5-dev
-
 	base_dir="$HOME/build/opencv/"
 	mkdir -p "$base_dir"
 
@@ -186,8 +191,3 @@ else
 	sudo make -j"$(nproc)" install
 	popd > /dev/null
 fi
-
-sudo apt-get install -y clang
-# workaround to make clang_sys crate detect installed libclang
-sudo ln -s libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
-

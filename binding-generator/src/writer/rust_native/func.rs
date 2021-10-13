@@ -67,9 +67,9 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		}
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
 			let slice_call = if len_div > 1 {
-				format!("({slice_arg}.len() / {len_div}) as _", slice_arg = slice_arg, len_div = len_div)
+				format!("({slice_arg}.len() / {len_div}) as _", slice_arg=slice_arg, len_div=len_div)
 			} else {
-				format!("{slice_arg}.len() as _", slice_arg = slice_arg)
+				format!("{slice_arg}.len() as _", slice_arg=slice_arg)
 			};
 			call_args.push(slice_call);
 		} else {

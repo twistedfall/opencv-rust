@@ -413,6 +413,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### imgcodecs ###
 	"cv_imdecode_const__InputArrayR_int_MatX" => "+_to",
+	"cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int" => "+_range",
 
 	// ### imgproc ###
 	"cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool" => "+_derivative",
@@ -489,16 +490,22 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_text_BaseOCR_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
 	"cv_text_ERStat_getPropPixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
 	"cv_text_ERStat_setPropPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+	"cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int" => "+_from_file",
 	"cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
 	"cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
+	"cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int" => "+_from_file",
 	"cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
 	"cv_text_OCRHMMDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
 	"cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
-	"cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRTesseract_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
+	"cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
+	"cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_" => "+_with_sizes",
+	"cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float" => "+_from_file",
+	"cv_text_createERFilterNM2_const_StringR_float" => "+_from_file",
+	"cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float" => "+_from_file",
 
 	// ### videoio ###
 	"cv_VideoCapture_VideoCapture_const_StringR" => "from_file_default", // 3.2
@@ -881,7 +888,6 @@ pub enum ArgumentOverride {
 	LenForSlice(&'static str, usize),
 }
 
-/// (cpp_fullname, argument count)
 pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverride>>> = Lazy::new(|| hashmap! {
 	FuncId::new("cv::Mat::at", ["idx"]) => hashmap! {
 		"idx" => ArgumentOverride::Slice
