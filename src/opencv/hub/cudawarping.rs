@@ -15,12 +15,14 @@ pub mod prelude {
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_affine_maps_2(mut m: core::Mat, inverse: bool, dsize: core::Size, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	unsafe { sys::cv_cuda_buildWarpAffineMaps_Mat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_Mat(), inverse, dsize.opencv_as_extern(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_affine_maps_1(mut m: core::UMat, inverse: bool, dsize: core::Size, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	unsafe { sys::cv_cuda_buildWarpAffineMaps_UMat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_UMat(), inverse, dsize.opencv_as_extern(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
 }
@@ -39,6 +41,7 @@ pub fn build_warp_affine_maps_1(mut m: core::UMat, inverse: bool, dsize: core::S
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_affine_maps(m: &dyn core::ToInputArray, inverse: bool, dsize: core::Size, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(m);
 	output_array_arg!(xmap);
@@ -48,12 +51,14 @@ pub fn build_warp_affine_maps(m: &dyn core::ToInputArray, inverse: bool, dsize: 
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_perspective_maps_2(mut m: core::Mat, inverse: bool, dsize: core::Size, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_Mat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_Mat(), inverse, dsize.opencv_as_extern(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_perspective_maps_1(mut m: core::UMat, inverse: bool, dsize: core::Size, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_UMat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_UMat(), inverse, dsize.opencv_as_extern(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
 }
@@ -72,6 +77,7 @@ pub fn build_warp_perspective_maps_1(mut m: core::UMat, inverse: bool, dsize: co
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn build_warp_perspective_maps(m: &dyn core::ToInputArray, inverse: bool, dsize: core::Size, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(m);
 	output_array_arg!(xmap);
@@ -91,6 +97,7 @@ pub fn build_warp_perspective_maps(m: &dyn core::ToInputArray, inverse: bool, ds
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -107,6 +114,7 @@ pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -139,6 +147,7 @@ pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, s
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, xmap: &dyn core::ToInputArray, ymap: &dyn core::ToInputArray, interpolation: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -171,6 +180,7 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, xm
 /// * fy: 0
 /// * interpolation: INTER_LINEAR
 /// * stream: Stream::Null()
+#[inline]
 pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, fx: f64, fy: f64, interpolation: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -198,6 +208,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * y_shift: 0
 /// * interpolation: INTER_LINEAR
 /// * stream: Stream::Null()
+#[inline]
 pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, angle: f64, x_shift: f64, y_shift: f64, interpolation: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -209,6 +220,7 @@ pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_affine_2(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mut m: core::Mat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -220,6 +232,7 @@ pub fn warp_affine_2(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_affine_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mut m: core::UMat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -248,6 +261,7 @@ pub fn warp_affine_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -260,6 +274,7 @@ pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_perspective_2(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mut m: core::Mat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -271,6 +286,7 @@ pub fn warp_perspective_2(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOu
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_perspective_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mut m: core::UMat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -299,6 +315,7 @@ pub fn warp_perspective_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOu
 /// * border_mode: BORDER_CONSTANT
 /// * border_value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);

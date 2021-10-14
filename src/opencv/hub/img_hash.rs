@@ -25,8 +25,8 @@
 //! 
 //! You can study more about image hashing from following paper and websites:
 //! 
-//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_zauner2010implementation)
-//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_lookslikeit)
+//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_zauner2010implementation)
+//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lookslikeit)
 //! 
 //! ### Code Example
 //! 
@@ -34,12 +34,12 @@
 //! 
 //! ### Performance under different attacks
 //! 
-//! ![Performance chart](https://docs.opencv.org/4.5.3/attack_performance.JPG)
+//! ![Performance chart](https://docs.opencv.org/4.5.4/attack_performance.JPG)
 //! 
 //! ### Speed comparison with PHash library (100 images from ukbench)
 //! 
-//! ![Hash Computation chart](https://docs.opencv.org/4.5.3/hash_computation_chart.JPG)
-//! ![Hash comparison chart](https://docs.opencv.org/4.5.3/hash_comparison_chart.JPG)
+//! ![Hash Computation chart](https://docs.opencv.org/4.5.4/hash_computation_chart.JPG)
+//! ![Hash comparison chart](https://docs.opencv.org/4.5.4/hash_comparison_chart.JPG)
 //! 
 //! As you can see, hash computation speed of img_hash module outperform [PHash library](http://www.phash.org/) a lot.
 //! 
@@ -90,6 +90,7 @@ opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
 /// ## Parameters
 /// * inputArr: input image want to compute hash value, type should be CV_8UC4, CV_8UC3 or CV_8UC1.
 /// * outputArr: Hash value of input, it will contain 16 hex decimal number, return type is CV_8U
+#[inline]
 pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -104,6 +105,7 @@ pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn cor
 /// 
 /// ## C++ default parameters
 /// * mode: BLOCK_MEAN_HASH_MODE_0
+#[inline]
 pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, mode: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -117,6 +119,7 @@ pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn 
 /// * inputArr: input image want to compute hash value,
 /// type should be CV_8UC4, CV_8UC3 or CV_8UC1.
 /// * outputArr: 42 hash values with type CV_64F(double)
+#[inline]
 pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -135,6 +138,7 @@ pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dy
 /// ## C++ default parameters
 /// * alpha: 2.0f
 /// * scale: 1.0f
+#[inline]
 pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, alpha: f32, scale: f32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -146,6 +150,7 @@ pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut d
 /// * inputArr: input image want to compute hash value,
 ///  type should be CV_8UC4, CV_8UC3, CV_8UC1.
 /// * outputArr: Hash value of input, it will contain 8 uchar value
+#[inline]
 pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -163,6 +168,7 @@ pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToO
 /// ## C++ default parameters
 /// * sigma: 1
 /// * num_of_angle_line: 180
+#[inline]
 pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, sigma: f64, num_of_angle_line: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
@@ -172,7 +178,7 @@ pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut
 /// Computes average hash value of the input image
 /// 
 /// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-/// refer to [lookslikeit](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// refer to [lookslikeit](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub trait AverageHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_AverageHash(&self) -> *const c_void;
 
@@ -186,7 +192,7 @@ pub trait AverageHashTrait: crate::img_hash::AverageHashTraitConst + crate::img_
 /// Computes average hash value of the input image
 /// 
 /// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-/// refer to [lookslikeit](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// refer to [lookslikeit](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub struct AverageHash {
 	ptr: *mut c_void
 }
@@ -227,6 +233,7 @@ impl crate::img_hash::AverageHashTrait for AverageHash {
 }
 
 impl AverageHash {
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::AverageHash>> {
 		unsafe { sys::cv_img_hash_AverageHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(r) } )
 	}
@@ -239,10 +246,11 @@ boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_AverageHash_to_
 
 /// Image hash based on block mean.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub trait BlockMeanHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_BlockMeanHash(&self) -> *const c_void;
 
+	#[inline]
 	fn get_mean(&self) -> Result<core::Vector<f64>> {
 		unsafe { sys::cv_img_hash_BlockMeanHash_getMean_const(self.as_raw_BlockMeanHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
 	}
@@ -255,6 +263,7 @@ pub trait BlockMeanHashTrait: crate::img_hash::BlockMeanHashTraitConst + crate::
 	/// Create BlockMeanHash object
 	/// ## Parameters
 	/// * mode: the mode
+	#[inline]
 	fn set_mode(&mut self, mode: i32) -> Result<()> {
 		unsafe { sys::cv_img_hash_BlockMeanHash_setMode_int(self.as_raw_mut_BlockMeanHash(), mode) }.into_result()
 	}
@@ -263,7 +272,7 @@ pub trait BlockMeanHashTrait: crate::img_hash::BlockMeanHashTraitConst + crate::
 
 /// Image hash based on block mean.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub struct BlockMeanHash {
 	ptr: *mut c_void
 }
@@ -306,6 +315,7 @@ impl crate::img_hash::BlockMeanHashTrait for BlockMeanHash {
 impl BlockMeanHash {
 	/// ## C++ default parameters
 	/// * mode: BLOCK_MEAN_HASH_MODE_0
+	#[inline]
 	pub fn create(mode: i32) -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
 		unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(r) } )
 	}
@@ -318,7 +328,7 @@ boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_BlockMeanHash
 
 /// Image hash based on color moments.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub trait ColorMomentHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_ColorMomentHash(&self) -> *const c_void;
 
@@ -331,7 +341,7 @@ pub trait ColorMomentHashTrait: crate::img_hash::ColorMomentHashTraitConst + cra
 
 /// Image hash based on color moments.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub struct ColorMomentHash {
 	ptr: *mut c_void
 }
@@ -372,6 +382,7 @@ impl crate::img_hash::ColorMomentHashTrait for ColorMomentHash {
 }
 
 impl ColorMomentHash {
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::ColorMomentHash>> {
 		unsafe { sys::cv_img_hash_ColorMomentHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(r) } )
 	}
@@ -393,6 +404,7 @@ pub trait ImgHashBaseTraitConst: core::AlgorithmTraitConst {
 	/// ## Returns
 	/// value indicate similarity between inOne and inTwo, the meaning
 	/// of the value vary from algorithms to algorithms
+	#[inline]
 	fn compare(&self, hash_one: &dyn core::ToInputArray, hash_two: &dyn core::ToInputArray) -> Result<f64> {
 		input_array_arg!(hash_one);
 		input_array_arg!(hash_two);
@@ -408,6 +420,7 @@ pub trait ImgHashBaseTrait: core::AlgorithmTrait + crate::img_hash::ImgHashBaseT
 	/// ## Parameters
 	/// * inputArr: input image want to compute hash value
 	/// * outputArr: hash of the image
+	#[inline]
 	fn compute(&mut self, input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(input_arr);
 		output_array_arg!(output_arr);
@@ -455,16 +468,18 @@ boxed_cast_base! { ImgHashBase, core::Algorithm, cv_ImgHashBase_to_Algorithm }
 
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub trait MarrHildrethHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_MarrHildrethHash(&self) -> *const c_void;
 
 	/// self explain
+	#[inline]
 	fn get_alpha(&self) -> Result<f32> {
 		unsafe { sys::cv_img_hash_MarrHildrethHash_getAlpha_const(self.as_raw_MarrHildrethHash()) }.into_result()
 	}
 	
 	/// self explain
+	#[inline]
 	fn get_scale(&self) -> Result<f32> {
 		unsafe { sys::cv_img_hash_MarrHildrethHash_getScale_const(self.as_raw_MarrHildrethHash()) }.into_result()
 	}
@@ -478,6 +493,7 @@ pub trait MarrHildrethHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_
 	/// ## Parameters
 	/// * alpha: int scale factor for marr wavelet (default=2).
 	/// * scale: int level of scale factor (default = 1)
+	#[inline]
 	fn set_kernel_param(&mut self, alpha: f32, scale: f32) -> Result<()> {
 		unsafe { sys::cv_img_hash_MarrHildrethHash_setKernelParam_float_float(self.as_raw_mut_MarrHildrethHash(), alpha, scale) }.into_result()
 	}
@@ -486,7 +502,7 @@ pub trait MarrHildrethHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_
 
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub struct MarrHildrethHash {
 	ptr: *mut c_void
 }
@@ -534,6 +550,7 @@ impl MarrHildrethHash {
 	/// ## C++ default parameters
 	/// * alpha: 2.0f
 	/// * scale: 1.0f
+	#[inline]
 	pub fn create(alpha: f32, scale: f32) -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
 		unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(r) } )
 	}
@@ -548,7 +565,7 @@ boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_MarrHildre
 /// 
 /// Slower than average_hash, but tolerant of minor modifications
 /// 
-/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub trait PHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_PHash(&self) -> *const c_void;
 
@@ -563,7 +580,7 @@ pub trait PHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_hash::PHash
 /// 
 /// Slower than average_hash, but tolerant of minor modifications
 /// 
-/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub struct PHash {
 	ptr: *mut c_void
 }
@@ -604,6 +621,7 @@ impl crate::img_hash::PHashTrait for PHash {
 }
 
 impl PHash {
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::PHash>> {
 		unsafe { sys::cv_img_hash_PHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(r) } )
 	}
@@ -616,14 +634,16 @@ boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_PHash_to_ImgHashBase 
 
 /// Image hash based on Radon transform.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub trait RadialVarianceHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	fn as_raw_RadialVarianceHash(&self) -> *const c_void;
 
+	#[inline]
 	fn get_num_of_angle_line(&self) -> Result<i32> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getNumOfAngleLine_const(self.as_raw_RadialVarianceHash()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_sigma(&self) -> Result<f64> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getSigma_const(self.as_raw_RadialVarianceHash()) }.into_result()
 	}
@@ -633,26 +653,32 @@ pub trait RadialVarianceHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_hash::RadialVarianceHashTraitConst {
 	fn as_raw_mut_RadialVarianceHash(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_num_of_angle_line(&mut self, value: i32) -> Result<()> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_setNumOfAngleLine_int(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()
 	}
 	
+	#[inline]
 	fn set_sigma(&mut self, value: f64) -> Result<()> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_setSigma_double(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()
 	}
 	
+	#[inline]
 	fn get_features(&mut self) -> Result<core::Vector<f64>> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getFeatures(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_hash(&mut self) -> Result<core::Mat> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getHash(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_pix_per_line(&mut self, input: &core::Mat) -> Result<core::Mat> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatR(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_projection(&mut self) -> Result<core::Mat> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_getProjection(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
@@ -661,7 +687,7 @@ pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait + crate::im
 
 /// Image hash based on Radon transform.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub struct RadialVarianceHash {
 	ptr: *mut c_void
 }
@@ -705,6 +731,7 @@ impl RadialVarianceHash {
 	/// ## C++ default parameters
 	/// * sigma: 1
 	/// * num_of_angle_line: 180
+	#[inline]
 	pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
 		unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(r) } )
 	}

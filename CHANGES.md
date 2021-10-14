@@ -1,14 +1,20 @@
+* 0.56.0
+  * Mark most exported functions as `#[inline]` to facilitate inter-crate inlining. Those function calls are just wrappers around
+    the corresponding FFI function.
+  * Adjust the code to support OpenCV 4.5.4 better.
+  * Allow passing `None` to `minMaxLoc` and `minMaxIdx` functions.
+
 * 0.55.0
   * add `Mat::data_bytes[_mut]()` methods to access byte data inside `Mat` as slice, `Mat::data()` now returns
-    raw pointer instead of reference
+    raw pointer instead of reference.
 
 * 0.54.0
-  * highgui::create_trackbar now takes `Option<&mut i32>` for `value` to fix the deprecation warning (fixes [#261](https://github.com/twistedfall/opencv-rust/issues/261))
+  * highgui::create_trackbar now takes `Option<&mut i32>` for `value` to fix the deprecation warning (fixes [#261](https://github.com/twistedfall/opencv-rust/issues/261)).
   * Class traits are now split into const and mut variants. So what previously was `MatTrait` is now
     `MatTraitConst` with only const methods and `MatTrait` with only mut methods.
 
 * 0.53.2
-  * Fix building with cmake versions below 3.15
+  * Fix building with cmake versions below 3.15.
 
 * 0.53.1
   * Add support for casting classes to their bases. You can now call `.into()` on the descendant class to cast

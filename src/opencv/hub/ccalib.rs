@@ -52,6 +52,7 @@ pub const XYZRGB: i32 = 1;
 /// 
 /// ## C++ default parameters
 /// * idx: noArray()
+#[inline]
 pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, size: core::Size, k: &mut dyn core::ToInputOutputArray, xi: &mut dyn core::ToInputOutputArray, d: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut dyn core::ToOutputArray) -> Result<f64> {
 	input_array_arg!(object_points);
 	input_array_arg!(image_points);
@@ -81,6 +82,7 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * map2: The second output map.
 /// * flags: Flags indicates the rectification type,  RECTIFY_PERSPECTIVE, RECTIFY_CYLINDRICAL, RECTIFY_LONGLATI and RECTIFY_STEREOGRAPHIC
 /// are supported.
+#[inline]
 pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(k);
 	input_array_arg!(d);
@@ -116,6 +118,7 @@ pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToIn
 /// 
 /// ## C++ default parameters
 /// * jacobian: noArray()
+#[inline]
 pub fn project_points_1(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, affine: core::Affine3d, k: &dyn core::ToInputArray, xi: f64, d: &dyn core::ToInputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(object_points);
 	output_array_arg!(image_points);
@@ -147,6 +150,7 @@ pub fn project_points_1(object_points: &dyn core::ToInputArray, image_points: &m
 /// 
 /// ## C++ default parameters
 /// * jacobian: noArray()
+#[inline]
 pub fn project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, xi: f64, d: &dyn core::ToInputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(object_points);
 	output_array_arg!(image_points);
@@ -188,6 +192,7 @@ pub fn project_points(object_points: &dyn core::ToInputArray, image_points: &mut
 /// 
 /// ## C++ default parameters
 /// * idx: noArray()
+#[inline]
 pub fn stereo_calibrate(object_points: &mut dyn core::ToInputOutputArray, image_points1: &mut dyn core::ToInputOutputArray, image_points2: &mut dyn core::ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut dyn core::ToInputOutputArray, xi1: &mut dyn core::ToInputOutputArray, d1: &mut dyn core::ToInputOutputArray, k2: &mut dyn core::ToInputOutputArray, xi2: &mut dyn core::ToInputOutputArray, d2: &mut dyn core::ToInputOutputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, rvecs_l: &mut dyn core::ToOutputArray, tvecs_l: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut dyn core::ToOutputArray) -> Result<f64> {
 	input_output_array_arg!(object_points);
 	input_output_array_arg!(image_points1);
@@ -235,6 +240,7 @@ pub fn stereo_calibrate(object_points: &mut dyn core::ToInputOutputArray, image_
 /// * knew: cv::noArray()
 /// * point_cloud: cv::noArray()
 /// * point_type: XYZRGB
+#[inline]
 pub fn stereo_reconstruct(image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, d1: &dyn core::ToInputArray, xi1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, d2: &dyn core::ToInputArray, xi2: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut dyn core::ToOutputArray, image1_rec: &mut dyn core::ToOutputArray, image2_rec: &mut dyn core::ToOutputArray, new_size: core::Size, knew: &dyn core::ToInputArray, point_cloud: &mut dyn core::ToOutputArray, point_type: i32) -> Result<()> {
 	input_array_arg!(image1);
 	input_array_arg!(image2);
@@ -261,6 +267,7 @@ pub fn stereo_reconstruct(image1: &dyn core::ToInputArray, image2: &dyn core::To
 /// * T: Translation between the first and second camera
 /// * R1: Output 3x3 rotation matrix for the first camera
 /// * R2: Output 3x3 rotation matrix for the second camera
+#[inline]
 pub fn stereo_rectify(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(r);
 	input_array_arg!(t);
@@ -286,6 +293,7 @@ pub fn stereo_rectify(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1
 /// * knew: cv::noArray()
 /// * new_size: Size()
 /// * r: Mat::eye(3,3,CV_64F)
+#[inline]
 pub fn undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, flags: i32, knew: &dyn core::ToInputArray, new_size: core::Size, r: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(distorted);
 	output_array_arg!(undistorted);
@@ -309,6 +317,7 @@ pub fn undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn
 /// 1-channel or 1x1 3-channel
 /// * undistorted: array of normalized object points, vector of Vec2f/Vec2d or 1xN/Nx1 2-channel Mat with the same
 /// depth of distorted points.
+#[inline]
 pub fn undistort_points(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(distorted);
 	output_array_arg!(undistorted);
@@ -329,6 +338,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 
 	/// ## C++ default parameters
 	/// * output: noArray()
+	#[inline]
 	fn create(&mut self, pattern: &dyn core::ToInputArray, board_size: core::Size2f, output: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(pattern);
 		output_array_arg!(output);
@@ -342,6 +352,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * out: noArray()
 	/// * h: noArray()
 	/// * pattern_corners: noArray()
+	#[inline]
 	fn find_pattern(&mut self, image: &dyn core::ToInputArray, matched_features: &mut dyn core::ToOutputArray, pattern_points: &mut dyn core::ToOutputArray, ratio: f64, proj_error: f64, refine_position: bool, out: &mut dyn core::ToOutputArray, h: &mut dyn core::ToOutputArray, pattern_corners: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(matched_features);
@@ -352,38 +363,47 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 		unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const_double_const_double_const_bool_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ratio, proj_error, refine_position, out.as_raw__OutputArray(), h.as_raw__OutputArray(), pattern_corners.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn is_initialized(&mut self) -> Result<bool> {
 		unsafe { sys::cv_ccalib_CustomPattern_isInitialized(self.as_raw_mut_CustomPattern()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_pattern_points(&mut self, original_points: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 		unsafe { sys::cv_ccalib_CustomPattern_getPatternPoints_vector_KeyPoint_R(self.as_raw_mut_CustomPattern(), original_points.as_raw_mut_VectorOfKeyPoint()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_pixel_size(&mut self) -> Result<f64> {
 		unsafe { sys::cv_ccalib_CustomPattern_getPixelSize(self.as_raw_mut_CustomPattern()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 		unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_Ptr_Feature2D_(self.as_raw_mut_CustomPattern(), feature_detector.as_raw_mut_PtrOfFeature2D()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_Ptr_Feature2D_(self.as_raw_mut_CustomPattern(), extractor.as_raw_mut_PtrOfFeature2D()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<bool> {
 		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_Ptr_DescriptorMatcher_(self.as_raw_mut_CustomPattern(), matcher.as_raw_mut_PtrOfDescriptorMatcher()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_feature_detector(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 		unsafe { sys::cv_ccalib_CustomPattern_getFeatureDetector(self.as_raw_mut_CustomPattern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_descriptor_extractor(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 		unsafe { sys::cv_ccalib_CustomPattern_getDescriptorExtractor(self.as_raw_mut_CustomPattern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_descriptor_matcher(&mut self) -> Result<core::Ptr<dyn crate::features2d::DescriptorMatcher>> {
 		unsafe { sys::cv_ccalib_CustomPattern_getDescriptorMatcher(self.as_raw_mut_CustomPattern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(r) } )
 	}
@@ -391,6 +411,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[inline]
 	fn calibrate(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
@@ -404,6 +425,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
 	/// * flags: SOLVEPNP_ITERATIVE
+	#[inline]
 	fn find_rt(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
@@ -417,6 +439,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
 	/// * flags: SOLVEPNP_ITERATIVE
+	#[inline]
 	fn find_rt_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
 		input_array_arg!(image);
 		input_array_arg!(camera_matrix);
@@ -433,6 +456,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * min_inliers_count: 100
 	/// * inliers: noArray()
 	/// * flags: SOLVEPNP_ITERATIVE
+	#[inline]
 	fn find_rt_ransac(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
@@ -451,6 +475,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * min_inliers_count: 100
 	/// * inliers: noArray()
 	/// * flags: SOLVEPNP_ITERATIVE
+	#[inline]
 	fn find_rt_ransac_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
 		input_array_arg!(image);
 		input_array_arg!(camera_matrix);
@@ -464,6 +489,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// ## C++ default parameters
 	/// * axis_length: 3
 	/// * axis_width: 2
+	#[inline]
 	fn draw_orientation(&mut self, image: &mut dyn core::ToInputOutputArray, tvec: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, axis_length: f64, axis_width: i32) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(tvec);
@@ -507,6 +533,7 @@ impl crate::ccalib::CustomPatternTrait for CustomPattern {
 }
 
 impl CustomPattern {
+	#[inline]
 	pub fn default() -> Result<crate::ccalib::CustomPattern> {
 		unsafe { sys::cv_ccalib_CustomPattern_CustomPattern() }.into_result().map(|r| unsafe { crate::ccalib::CustomPattern::opencv_from_extern(r) } )
 	}
@@ -535,22 +562,27 @@ pub trait MultiCameraCalibrationTraitConst {
 pub trait MultiCameraCalibrationTrait: crate::ccalib::MultiCameraCalibrationTraitConst {
 	fn as_raw_mut_MultiCameraCalibration(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn load_images(&mut self) -> Result<()> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_loadImages(self.as_raw_mut_MultiCameraCalibration()) }.into_result()
 	}
 	
+	#[inline]
 	fn initialize(&mut self) -> Result<()> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_initialize(self.as_raw_mut_MultiCameraCalibration()) }.into_result()
 	}
 	
+	#[inline]
 	fn optimize_extrinsics(&mut self) -> Result<f64> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_optimizeExtrinsics(self.as_raw_mut_MultiCameraCalibration()) }.into_result()
 	}
 	
+	#[inline]
 	fn run(&mut self) -> Result<f64> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_run(self.as_raw_mut_MultiCameraCalibration()) }.into_result()
 	}
 	
+	#[inline]
 	fn write_parameters(&mut self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_writeParameters_const_stringR(self.as_raw_mut_MultiCameraCalibration(), filename.opencv_as_extern()) }.into_result()
@@ -603,6 +635,7 @@ impl MultiCameraCalibration {
 	/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
 	/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
 	/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+	#[inline]
 	pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
 		extern_container_arg!(file_name);
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.opencv_as_extern(), detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher()) }.into_result().map(|r| unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(r) } )
@@ -613,18 +646,22 @@ impl MultiCameraCalibration {
 pub trait MultiCameraCalibration_edgeTraitConst {
 	fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void;
 
+	#[inline]
 	fn camera_vertex(&self) -> i32 {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropCameraVertex_const(self.as_raw_MultiCameraCalibration_edge()) }.into_result().expect("Infallible function failed: camera_vertex")
 	}
 	
+	#[inline]
 	fn photo_vertex(&self) -> i32 {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropPhotoVertex_const(self.as_raw_MultiCameraCalibration_edge()) }.into_result().expect("Infallible function failed: photo_vertex")
 	}
 	
+	#[inline]
 	fn photo_index(&self) -> i32 {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropPhotoIndex_const(self.as_raw_MultiCameraCalibration_edge()) }.into_result().expect("Infallible function failed: photo_index")
 	}
 	
+	#[inline]
 	fn transform(&self) -> core::Mat {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropTransform_const(self.as_raw_MultiCameraCalibration_edge()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: transform")
 	}
@@ -634,19 +671,23 @@ pub trait MultiCameraCalibration_edgeTraitConst {
 pub trait MultiCameraCalibration_edgeTrait: crate::ccalib::MultiCameraCalibration_edgeTraitConst {
 	fn as_raw_mut_MultiCameraCalibration_edge(&mut self) -> *mut c_void;
 
-	fn set_camera_vertex(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_camera_vertex(&mut self, val: i32) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropCameraVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) }.into_result().expect("Infallible function failed: set_camera_vertex")
 	}
 	
-	fn set_photo_vertex(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_photo_vertex(&mut self, val: i32) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropPhotoVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) }.into_result().expect("Infallible function failed: set_photo_vertex")
 	}
 	
-	fn set_photo_index(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_photo_index(&mut self, val: i32) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropPhotoIndex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) }.into_result().expect("Infallible function failed: set_photo_index")
 	}
 	
-	fn set_transform(&mut self, mut val: core::Mat) -> () {
+	#[inline]
+	fn set_transform(&mut self, mut val: core::Mat) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropTransform_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_transform")
 	}
 	
@@ -676,6 +717,7 @@ impl crate::ccalib::MultiCameraCalibration_edgeTrait for MultiCameraCalibration_
 }
 
 impl MultiCameraCalibration_edge {
+	#[inline]
 	pub fn new(cv: i32, pv: i32, pi: i32, mut trans: core::Mat) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { crate::ccalib::MultiCameraCalibration_edge::opencv_from_extern(r) } )
 	}
@@ -685,10 +727,12 @@ impl MultiCameraCalibration_edge {
 pub trait MultiCameraCalibration_vertexTraitConst {
 	fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void;
 
+	#[inline]
 	fn pose(&self) -> core::Mat {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_getPropPose_const(self.as_raw_MultiCameraCalibration_vertex()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: pose")
 	}
 	
+	#[inline]
 	fn timestamp(&self) -> i32 {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_getPropTimestamp_const(self.as_raw_MultiCameraCalibration_vertex()) }.into_result().expect("Infallible function failed: timestamp")
 	}
@@ -698,11 +742,13 @@ pub trait MultiCameraCalibration_vertexTraitConst {
 pub trait MultiCameraCalibration_vertexTrait: crate::ccalib::MultiCameraCalibration_vertexTraitConst {
 	fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
 
-	fn set_pose(&mut self, mut val: core::Mat) -> () {
+	#[inline]
+	fn set_pose(&mut self, mut val: core::Mat) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_setPropPose_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_pose")
 	}
 	
-	fn set_timestamp(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_timestamp(&mut self, val: i32) {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_setPropTimestamp_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) }.into_result().expect("Infallible function failed: set_timestamp")
 	}
 	
@@ -732,10 +778,12 @@ impl crate::ccalib::MultiCameraCalibration_vertexTrait for MultiCameraCalibratio
 }
 
 impl MultiCameraCalibration_vertex {
+	#[inline]
 	pub fn new(mut po: core::Mat, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_mut_Mat(), ts) }.into_result().map(|r| unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 		unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex() }.into_result().map(|r| unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(r) } )
 	}
@@ -759,26 +807,32 @@ pub trait RandomPatternCornerFinderTraitConst {
 pub trait RandomPatternCornerFinderTrait: crate::ccalib::RandomPatternCornerFinderTraitConst {
 	fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn load_pattern(&mut self, pattern_image: &core::Mat) -> Result<()> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat()) }.into_result()
 	}
 	
+	#[inline]
 	fn load_pattern_1(&mut self, pattern_image: &core::Mat, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &core::Mat) -> Result<()> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR_const_vector_KeyPoint_R_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), pattern_key_points.as_raw_VectorOfKeyPoint(), pattern_descriptors.as_raw_Mat()) }.into_result()
 	}
 	
+	#[inline]
 	fn compute_object_image_points(&mut self, mut input_images: core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vector_Mat_(self.as_raw_mut_RandomPatternCornerFinder(), input_images.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
+	#[inline]
 	fn compute_object_image_points_for_single(&mut self, mut input_image: core::Mat) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(self.as_raw_mut_RandomPatternCornerFinder(), input_image.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_object_points(&mut self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getObjectPoints(self.as_raw_mut_RandomPatternCornerFinder()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	fn get_image_points(&mut self) -> Result<core::Vector<core::Mat>> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getImagePoints(self.as_raw_mut_RandomPatternCornerFinder()) }.into_result().map(|r| unsafe { core::Vector::<core::Mat>::opencv_from_extern(r) } )
 	}
@@ -826,6 +880,7 @@ impl RandomPatternCornerFinder {
 	/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
 	/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
 	/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+	#[inline]
 	pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher()) }.into_result().map(|r| unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(r) } )
 	}
@@ -840,10 +895,12 @@ pub trait RandomPatternGeneratorTraitConst {
 pub trait RandomPatternGeneratorTrait: crate::ccalib::RandomPatternGeneratorTraitConst {
 	fn as_raw_mut_RandomPatternGenerator(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn generate_pattern(&mut self) -> Result<()> {
 		unsafe { sys::cv_randpattern_RandomPatternGenerator_generatePattern(self.as_raw_mut_RandomPatternGenerator()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_pattern(&mut self) -> Result<core::Mat> {
 		unsafe { sys::cv_randpattern_RandomPatternGenerator_getPattern(self.as_raw_mut_RandomPatternGenerator()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
@@ -874,6 +931,7 @@ impl crate::ccalib::RandomPatternGeneratorTrait for RandomPatternGenerator {
 }
 
 impl RandomPatternGenerator {
+	#[inline]
 	pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
 		unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height) }.into_result().map(|r| unsafe { crate::ccalib::RandomPatternGenerator::opencv_from_extern(r) } )
 	}

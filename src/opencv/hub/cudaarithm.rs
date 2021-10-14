@@ -25,6 +25,7 @@ pub mod prelude {
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn abs_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -42,6 +43,7 @@ pub fn abs_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> R
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -60,6 +62,7 @@ pub fn abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -92,6 +95,7 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// ## C++ default parameters
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, beta: f64, gamma: f64, dst: &mut dyn core::ToOutputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -117,6 +121,7 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 /// * mask: noArray()
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -138,6 +143,7 @@ pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -158,6 +164,7 @@ pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -178,6 +185,7 @@ pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -199,6 +207,7 @@ pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -210,6 +219,7 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn calc_abs_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -220,6 +230,7 @@ pub fn calc_abs_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// ## C++ default parameters
 /// * norm_type: NORM_L2
 /// * stream: Stream::Null()
+#[inline]
 pub fn calc_norm_diff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, norm_type: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -230,6 +241,7 @@ pub fn calc_norm_diff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArr
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn calc_norm(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, norm_type: i32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -240,6 +252,7 @@ pub fn calc_norm(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn calc_sqr_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -250,6 +263,7 @@ pub fn calc_sqr_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn calc_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -272,6 +286,7 @@ pub fn calc_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 /// ## C++ default parameters
 /// * angle_in_degrees: false
 /// * stream: Stream::Null()
+#[inline]
 pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(x);
 	input_array_arg!(y);
@@ -299,6 +314,7 @@ pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, mag
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, cmpop: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -325,6 +341,7 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// ## C++ default parameters
 /// * value: Scalar()
 /// * stream: Stream::Null()
+#[inline]
 pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -339,6 +356,7 @@ pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
 /// ## See also
 /// countNonZero
+#[inline]
 pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 	input_array_arg!(src);
 	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray()) }.into_result()
@@ -357,6 +375,7 @@ pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -372,6 +391,7 @@ pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// 
 /// ## C++ default parameters
 /// * user_block_size: Size()
+#[inline]
 pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaarithm::Convolution>> {
 	unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(r) } )
 }
@@ -389,6 +409,7 @@ pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn c
 /// *   **DFT_COMPLEX_INPUT** Specifies that inputs will be complex with 2 channels.
 /// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 /// real-complex transform, so the destination matrix must be real.
+#[inline]
 pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::cudaarithm::DFT>> {
 	unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(r) } )
 }
@@ -397,6 +418,7 @@ pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crat
 /// 
 /// ## Parameters
 /// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
+#[inline]
 pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::cudaarithm::LookUpTable>> {
 	input_array_arg!(lut);
 	unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::LookUpTable>::opencv_from_extern(r) } )
@@ -441,6 +463,7 @@ pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dy
 /// ## C++ default parameters
 /// * flags: 0
 /// * stream: Stream::Null()
+#[inline]
 pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -466,6 +489,7 @@ pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dft_
 /// * scale: 1
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn divide(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -484,6 +508,7 @@ pub fn divide(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst:
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -493,6 +518,7 @@ pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn find_min_max_loc(src: &dyn core::ToInputArray, min_max_vals: &mut dyn core::ToOutputArray, loc: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(min_max_vals);
@@ -504,6 +530,7 @@ pub fn find_min_max_loc(src: &dyn core::ToInputArray, min_max_vals: &mut dyn cor
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn find_min_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -527,6 +554,7 @@ pub fn find_min_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -563,6 +591,7 @@ pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fli
 /// ## C++ default parameters
 /// * flags: 0
 /// * stream: Stream::Null()
+#[inline]
 pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha: f64, src3: &dyn core::ToInputArray, beta: f64, dst: &mut dyn core::ToOutputArray, flags: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -597,6 +626,7 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -614,6 +644,7 @@ pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(sum);
@@ -631,6 +662,7 @@ pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray,
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -648,6 +680,7 @@ pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -656,6 +689,7 @@ pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn lshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -680,6 +714,7 @@ pub fn lshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn c
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn magnitude_sqr_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(x);
 	input_array_arg!(y);
@@ -696,6 +731,7 @@ pub fn magnitude_sqr_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, m
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn magnitude_sqr(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(xy);
 	output_array_arg!(magnitude);
@@ -722,6 +758,7 @@ pub fn magnitude_sqr(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOu
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn magnitude_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(x);
 	input_array_arg!(y);
@@ -740,6 +777,7 @@ pub fn magnitude_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magni
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn magnitude(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(xy);
 	output_array_arg!(magnitude);
@@ -758,6 +796,7 @@ pub fn magnitude(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutput
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -773,6 +812,7 @@ pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 /// * stddev: Standard deviation value.
 /// ## See also
 /// meanStdDev
+#[inline]
 pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
 	input_array_arg!(mtx);
 	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev) }.into_result()
@@ -791,6 +831,7 @@ pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stdde
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(mtx);
 	output_array_arg!(dst);
@@ -809,6 +850,7 @@ pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
 	unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
@@ -828,6 +870,7 @@ pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, s
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
 	unsafe { sys::cv_cuda_merge_const_vector_GpuMat_R_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
@@ -849,6 +892,7 @@ pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArr
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -869,6 +913,7 @@ pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mu
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn min_max(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -887,6 +932,7 @@ pub fn min_max(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f6
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -913,6 +959,7 @@ pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 /// ## C++ default parameters
 /// * conj_b: false
 /// * stream: Stream::Null()
+#[inline]
 pub fn mul_and_scale_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -938,6 +985,7 @@ pub fn mul_and_scale_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::T
 /// ## C++ default parameters
 /// * conj_b: false
 /// * stream: Stream::Null()
+#[inline]
 pub fn mul_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -962,6 +1010,7 @@ pub fn mul_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArra
 /// * scale: 1
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -980,6 +1029,7 @@ pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// 
 /// ## C++ default parameters
 /// * norm_type: NORM_L2
+#[inline]
 pub fn norm_1(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -997,6 +1047,7 @@ pub fn norm_1(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(mask);
@@ -1023,6 +1074,7 @@ pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToIn
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
+#[inline]
 pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1044,6 +1096,7 @@ pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// ## C++ default parameters
 /// * angle_in_degrees: false
 /// * stream: Stream::Null()
+#[inline]
 pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(x);
 	input_array_arg!(y);
@@ -1064,6 +1117,7 @@ pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut
 /// ## C++ default parameters
 /// * angle_in_degrees: false
 /// * stream: Stream::Null()
+#[inline]
 pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInputArray, x: &mut dyn core::ToOutputArray, y: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(magnitude);
 	input_array_arg!(angle);
@@ -1088,6 +1142,7 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1105,6 +1160,7 @@ pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutpu
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rect: core::Rect, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(sqr);
@@ -1142,6 +1198,7 @@ pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, 
 /// ## C++ default parameters
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(mtx);
 	output_array_arg!(vec);
@@ -1158,6 +1215,7 @@ pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, d
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1166,6 +1224,7 @@ pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1183,6 +1242,7 @@ pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn c
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
@@ -1201,6 +1261,7 @@ pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut 
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	unsafe { sys::cv_cuda_split_const__InputArrayR_vector_GpuMat_R_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream()) }.into_result()
@@ -1216,6 +1277,7 @@ pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn sqr_integral(src: &dyn core::ToInputArray, sqsum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(sqsum);
@@ -1230,6 +1292,7 @@ pub fn sqr_integral(src: &dyn core::ToInputArray, sqsum: &mut dyn core::ToOutput
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn sqr_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -1245,6 +1308,7 @@ pub fn sqr_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> R
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn sqr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1262,6 +1326,7 @@ pub fn sqr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1286,6 +1351,7 @@ pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, str
 /// * mask: noArray()
 /// * dtype: -1
 /// * stream: Stream::Null()
+#[inline]
 pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
@@ -1304,6 +1370,7 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -1325,6 +1392,7 @@ pub fn sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resul
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut core::Stream) -> Result<f64> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -1342,6 +1410,7 @@ pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
+#[inline]
 pub fn transpose(src1: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	output_array_arg!(dst);
@@ -1371,6 +1440,7 @@ pub trait Convolution: core::AlgorithmTrait + crate::cudaarithm::ConvolutionCons
 	/// ## C++ default parameters
 	/// * ccorr: false
 	/// * stream: Stream::Null()
+	#[inline]
 	fn convolve(&mut self, image: &dyn core::ToInputArray, templ: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, ccorr: bool, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(templ);
@@ -1398,6 +1468,7 @@ pub trait DFT: core::AlgorithmTrait + crate::cudaarithm::DFTConst {
 	/// 
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
+	#[inline]
 	fn compute(&mut self, image: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(result);
@@ -1425,6 +1496,7 @@ pub trait LookUpTable: core::AlgorithmTrait + crate::cudaarithm::LookUpTableCons
 	/// 
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
+	#[inline]
 	fn transform(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);

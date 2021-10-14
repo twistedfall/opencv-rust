@@ -45,7 +45,7 @@ pub mod prelude {
 
 /// Use Navier-Stokes based method
 pub const INPAINT_NS: i32 = 0;
-/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Telea04)
+/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Telea04)
 pub const INPAINT_TELEA: i32 = 1;
 pub const LDR_SIZE: i32 = 256;
 /// The classic method, color-based selection and alpha masking might be time consuming and often leaves an undesirable
@@ -76,6 +76,7 @@ pub const RECURS_FILTER: i32 = 1;
 /// * red_mul: 1.0f
 /// * green_mul: 1.0f
 /// * blue_mul: 1.0f
+#[inline]
 pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -96,6 +97,7 @@ pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray,
 /// * max_bits: 6
 /// * exclude_range: 4
 /// * cut: true
+#[inline]
 pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<core::Ptr<dyn crate::photo::AlignMTB>> {
 	unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::AlignMTB>::opencv_from_extern(r) } )
 }
@@ -113,6 +115,7 @@ pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<
 /// * samples: 70
 /// * lambda: 10.0f
 /// * random: false
+#[inline]
 pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Result<core::Ptr<dyn crate::photo::CalibrateDebevec>> {
 	unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::CalibrateDebevec>::opencv_from_extern(r) } )
 }
@@ -126,11 +129,13 @@ pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Resu
 /// ## C++ default parameters
 /// * max_iter: 30
 /// * threshold: 0.01f
+#[inline]
 pub fn create_calibrate_robertson(max_iter: i32, threshold: f32) -> Result<core::Ptr<dyn crate::photo::CalibrateRobertson>> {
 	unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::CalibrateRobertson>::opencv_from_extern(r) } )
 }
 
 /// Creates MergeDebevec object
+#[inline]
 pub fn create_merge_debevec() -> Result<core::Ptr<dyn crate::photo::MergeDebevec>> {
 	unsafe { sys::cv_createMergeDebevec() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeDebevec>::opencv_from_extern(r) } )
 }
@@ -146,11 +151,13 @@ pub fn create_merge_debevec() -> Result<core::Ptr<dyn crate::photo::MergeDebevec
 /// * contrast_weight: 1.0f
 /// * saturation_weight: 1.0f
 /// * exposure_weight: 0.0f
+#[inline]
 pub fn create_merge_mertens(contrast_weight: f32, saturation_weight: f32, exposure_weight: f32) -> Result<core::Ptr<dyn crate::photo::MergeMertens>> {
 	unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeMertens>::opencv_from_extern(r) } )
 }
 
 /// Creates MergeRobertson object
+#[inline]
 pub fn create_merge_robertson() -> Result<core::Ptr<dyn crate::photo::MergeRobertson>> {
 	unsafe { sys::cv_createMergeRobertson() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::MergeRobertson>::opencv_from_extern(r) } )
 }
@@ -168,6 +175,7 @@ pub fn create_merge_robertson() -> Result<core::Ptr<dyn crate::photo::MergeRober
 /// * gamma: 1.0f
 /// * saturation: 1.0f
 /// * bias: 0.85f
+#[inline]
 pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<core::Ptr<dyn crate::photo::TonemapDrago>> {
 	unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapDrago>::opencv_from_extern(r) } )
 }
@@ -184,6 +192,7 @@ pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<co
 /// * gamma: 1.0f
 /// * scale: 0.7f
 /// * saturation: 1.0f
+#[inline]
 pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result<core::Ptr<dyn crate::photo::TonemapMantiuk>> {
 	unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapMantiuk>::opencv_from_extern(r) } )
 }
@@ -203,6 +212,7 @@ pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result
 /// * intensity: 0.0f
 /// * light_adapt: 1.0f
 /// * color_adapt: 0.0f
+#[inline]
 pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, color_adapt: f32) -> Result<core::Ptr<dyn crate::photo::TonemapReinhard>> {
 	unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::TonemapReinhard>::opencv_from_extern(r) } )
 }
@@ -216,6 +226,7 @@ pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, col
 /// 
 /// ## C++ default parameters
 /// * gamma: 1.0f
+#[inline]
 pub fn create_tonemap(gamma: f32) -> Result<core::Ptr<dyn crate::photo::Tonemap>> {
 	unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::photo::Tonemap>::opencv_from_extern(r) } )
 }
@@ -245,6 +256,7 @@ pub fn create_tonemap(gamma: f32) -> Result<core::Ptr<dyn crate::photo::Tonemap>
 /// * search_window: 21
 /// * block_size: 7
 /// * stream: Stream::Null()
+#[inline]
 pub fn fast_nl_means_denoising_colored_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -276,6 +288,7 @@ pub fn fast_nl_means_denoising_colored_cuda(src: &dyn core::ToInputArray, dst: &
 /// * search_window: 21
 /// * block_size: 7
 /// * stream: Stream::Null()
+#[inline]
 pub fn fast_nl_means_denoising_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -301,6 +314,7 @@ pub fn fast_nl_means_denoising_cuda(src: &dyn core::ToInputArray, dst: &mut dyn 
 /// * block_size: 7
 /// * border_mode: BORDER_DEFAULT
 /// * stream: Stream::Null()
+#[inline]
 pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -309,7 +323,7 @@ pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 /// black-and-white photograph rendering, and in many single channel image processing applications
-/// [CL12](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_CL12) .
+/// [CL12](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_CL12) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -317,6 +331,7 @@ pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 /// * color_boost: Output 8-bit 3-channel image.
 /// 
 /// This function is to be applied on color images.
+#[inline]
 pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputArray, color_boost: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(grayscale);
@@ -330,12 +345,12 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 /// exactly what is implemented.
 /// 
 /// It should be noted, that this implementation was taken from the July 2013 blog entry
-/// [MA13](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+/// [MA13](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 /// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 /// of July 2013 and finally it was slightly adapted by later authors.
 /// 
 /// Although the thorough discussion and justification of the algorithm involved may be found in
-/// [ChambolleEtAl](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MA13) . To begin
+/// [ChambolleEtAl](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MA13) . To begin
 /// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 /// pixels (it may be seen as set
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -365,6 +380,7 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 /// ## C++ default parameters
 /// * lambda: 1.0
 /// * niters: 30
+#[inline]
 pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut core::Mat, lambda: f64, niters: i32) -> Result<()> {
 	unsafe { sys::cv_denoise_TVL1_const_vector_Mat_R_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters) }.into_result()
 }
@@ -380,6 +396,7 @@ pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut core::M
 /// ## C++ default parameters
 /// * sigma_s: 10
 /// * sigma_r: 0.15f
+#[inline]
 pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -387,7 +404,7 @@ pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 }
 
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-/// filters are used in many different applications [EM11](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_EM11) .
+/// filters are used in many different applications [EM11](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_EM11) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -400,6 +417,7 @@ pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// * flags: 1
 /// * sigma_s: 60
 /// * sigma_r: 0.4f
+#[inline]
 pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -435,6 +453,7 @@ pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::
 /// * h_color: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
+#[inline]
 pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
@@ -465,6 +484,7 @@ pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, 
 /// * h_color: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
+#[inline]
 pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -501,6 +521,7 @@ pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut d
 /// * template_window_size: 7
 /// * search_window_size: 21
 /// * norm_type: NORM_L2
+#[inline]
 pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
@@ -535,6 +556,7 @@ pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst:
 /// * h: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
+#[inline]
 pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
@@ -570,6 +592,7 @@ pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mu
 /// * template_window_size: 7
 /// * search_window_size: 21
 /// * norm_type: NORM_L2
+#[inline]
 pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -601,6 +624,7 @@ pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn c
 /// * h: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
+#[inline]
 pub fn fast_nl_means_denoising(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -622,6 +646,7 @@ pub fn fast_nl_means_denoising(src: &dyn core::ToInputArray, dst: &mut dyn core:
 /// ## C++ default parameters
 /// * alpha: 0.2f
 /// * beta: 0.4f
+#[inline]
 pub fn illumination_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -650,6 +675,7 @@ pub fn illumination_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInpu
 ///        opencv_source_code/samples/cpp/inpaint.cpp
 ///    *   (Python) An example using the inpainting technique can be found at
 ///        opencv_source_code/samples/python/inpaint.py
+#[inline]
 pub fn inpaint(src: &dyn core::ToInputArray, inpaint_mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(inpaint_mask);
@@ -674,6 +700,7 @@ pub fn inpaint(src: &dyn core::ToInputArray, inpaint_mask: &dyn core::ToInputArr
 /// * sigma_s: 60
 /// * sigma_r: 0.07f
 /// * shade_factor: 0.02f
+#[inline]
 pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutputArray, dst2: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst1);
@@ -688,7 +715,7 @@ pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutput
 /// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 /// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 /// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-/// content [PM03](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_PM03) .
+/// content [PM03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_PM03) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -697,6 +724,7 @@ pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutput
 /// * p: Point in dst image where object is placed.
 /// * blend: Output image with the same size and type as dst.
 /// * flags: Cloning method that could be cv::NORMAL_CLONE, cv::MIXED_CLONE or cv::MONOCHROME_TRANSFER
+#[inline]
 pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, p: core::Point, blend: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
@@ -718,6 +746,7 @@ pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray
 /// ## C++ default parameters
 /// * sigma_s: 60
 /// * sigma_r: 0.45f
+#[inline]
 pub fn stylization(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
@@ -745,6 +774,7 @@ pub fn stylization(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * low_threshold: 30
 /// * high_threshold: 45
 /// * kernel_size: 3
+#[inline]
 pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
@@ -769,6 +799,7 @@ pub trait AlignExposures: core::AlgorithmTrait + crate::photo::AlignExposuresCon
 	/// * times: vector of exposure time values for each image
 	/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 	/// have the same number of channels as images.
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(times);
@@ -785,18 +816,21 @@ pub trait AlignExposures: core::AlgorithmTrait + crate::photo::AlignExposuresCon
 /// 
 /// In this implementation new image regions are filled with zeros.
 /// 
-/// For more information see [GW03](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_GW03) .
+/// For more information see [GW03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTBConst: crate::photo::AlignExposuresConst {
 	fn as_raw_AlignMTB(&self) -> *const c_void;
 
+	#[inline]
 	fn get_max_bits(&self) -> Result<i32> {
 		unsafe { sys::cv_AlignMTB_getMaxBits_const(self.as_raw_AlignMTB()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_exclude_range(&self) -> Result<i32> {
 		unsafe { sys::cv_AlignMTB_getExcludeRange_const(self.as_raw_AlignMTB()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_cut(&self) -> Result<bool> {
 		unsafe { sys::cv_AlignMTB_getCut_const(self.as_raw_AlignMTB()) }.into_result()
 	}
@@ -806,6 +840,7 @@ pub trait AlignMTBConst: crate::photo::AlignExposuresConst {
 pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(times);
@@ -818,6 +853,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	/// ## Parameters
 	/// * src: vector of input images
 	/// * dst: vector of aligned images
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
 		input_array_arg!(src);
 		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vector_Mat_R(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat()) }.into_result()
@@ -829,6 +865,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	/// ## Parameters
 	/// * img0: first image
 	/// * img1: second image
+	#[inline]
 	fn calculate_shift(&mut self, img0: &dyn core::ToInputArray, img1: &dyn core::ToInputArray) -> Result<core::Point> {
 		input_array_arg!(img0);
 		input_array_arg!(img1);
@@ -841,6 +878,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	/// * src: input image
 	/// * dst: result image
 	/// * shift: shift value
+	#[inline]
 	fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -853,6 +891,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	/// * img: input image
 	/// * tb: median threshold bitmap
 	/// * eb: exclude bitmap
+	#[inline]
 	fn compute_bitmaps(&mut self, img: &dyn core::ToInputArray, tb: &mut dyn core::ToOutputArray, eb: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(img);
 		output_array_arg!(tb);
@@ -860,14 +899,17 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 		unsafe { sys::cv_AlignMTB_computeBitmaps_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_max_bits(&mut self, max_bits: i32) -> Result<()> {
 		unsafe { sys::cv_AlignMTB_setMaxBits_int(self.as_raw_mut_AlignMTB(), max_bits) }.into_result()
 	}
 	
+	#[inline]
 	fn set_exclude_range(&mut self, exclude_range: i32) -> Result<()> {
 		unsafe { sys::cv_AlignMTB_setExcludeRange_int(self.as_raw_mut_AlignMTB(), exclude_range) }.into_result()
 	}
 	
+	#[inline]
 	fn set_cut(&mut self, value: bool) -> Result<()> {
 		unsafe { sys::cv_AlignMTB_setCut_bool(self.as_raw_mut_AlignMTB(), value) }.into_result()
 	}
@@ -889,6 +931,7 @@ pub trait CalibrateCRF: core::AlgorithmTrait + crate::photo::CalibrateCRFConst {
 	/// * src: vector of input images
 	/// * dst: 256x1 matrix with inverse camera response function
 	/// * times: vector of exposure time values for each image
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -902,18 +945,21 @@ pub trait CalibrateCRF: core::AlgorithmTrait + crate::photo::CalibrateCRFConst {
 /// function as linear system. Objective function is constructed using pixel values on the same position
 /// in all images, extra term is added to make the result smoother.
 /// 
-/// For more information see [DM97](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_DM97) .
+/// For more information see [DM97](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait CalibrateDebevecConst: crate::photo::CalibrateCRFConst {
 	fn as_raw_CalibrateDebevec(&self) -> *const c_void;
 
+	#[inline]
 	fn get_lambda(&self) -> Result<f32> {
 		unsafe { sys::cv_CalibrateDebevec_getLambda_const(self.as_raw_CalibrateDebevec()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_samples(&self) -> Result<i32> {
 		unsafe { sys::cv_CalibrateDebevec_getSamples_const(self.as_raw_CalibrateDebevec()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_random(&self) -> Result<bool> {
 		unsafe { sys::cv_CalibrateDebevec_getRandom_const(self.as_raw_CalibrateDebevec()) }.into_result()
 	}
@@ -923,14 +969,17 @@ pub trait CalibrateDebevecConst: crate::photo::CalibrateCRFConst {
 pub trait CalibrateDebevec: crate::photo::CalibrateCRF + crate::photo::CalibrateDebevecConst {
 	fn as_raw_mut_CalibrateDebevec(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_lambda(&mut self, lambda: f32) -> Result<()> {
 		unsafe { sys::cv_CalibrateDebevec_setLambda_float(self.as_raw_mut_CalibrateDebevec(), lambda) }.into_result()
 	}
 	
+	#[inline]
 	fn set_samples(&mut self, samples: i32) -> Result<()> {
 		unsafe { sys::cv_CalibrateDebevec_setSamples_int(self.as_raw_mut_CalibrateDebevec(), samples) }.into_result()
 	}
 	
+	#[inline]
 	fn set_random(&mut self, random: bool) -> Result<()> {
 		unsafe { sys::cv_CalibrateDebevec_setRandom_bool(self.as_raw_mut_CalibrateDebevec(), random) }.into_result()
 	}
@@ -940,18 +989,21 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF + crate::photo::Calibrate
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
 /// 
-/// For more information see [RB99](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_RB99) .
+/// For more information see [RB99](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait CalibrateRobertsonConst: crate::photo::CalibrateCRFConst {
 	fn as_raw_CalibrateRobertson(&self) -> *const c_void;
 
+	#[inline]
 	fn get_max_iter(&self) -> Result<i32> {
 		unsafe { sys::cv_CalibrateRobertson_getMaxIter_const(self.as_raw_CalibrateRobertson()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_threshold(&self) -> Result<f32> {
 		unsafe { sys::cv_CalibrateRobertson_getThreshold_const(self.as_raw_CalibrateRobertson()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_radiance(&self) -> Result<core::Mat> {
 		unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
 	}
@@ -961,10 +1013,12 @@ pub trait CalibrateRobertsonConst: crate::photo::CalibrateCRFConst {
 pub trait CalibrateRobertson: crate::photo::CalibrateCRF + crate::photo::CalibrateRobertsonConst {
 	fn as_raw_mut_CalibrateRobertson(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_max_iter(&mut self, max_iter: i32) -> Result<()> {
 		unsafe { sys::cv_CalibrateRobertson_setMaxIter_int(self.as_raw_mut_CalibrateRobertson(), max_iter) }.into_result()
 	}
 	
+	#[inline]
 	fn set_threshold(&mut self, threshold: f32) -> Result<()> {
 		unsafe { sys::cv_CalibrateRobertson_setThreshold_float(self.as_raw_mut_CalibrateRobertson(), threshold) }.into_result()
 	}
@@ -974,7 +1028,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF + crate::photo::Calibra
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see [DM97](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_DM97) .
+/// For more information see [DM97](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevecConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeDebevec(&self) -> *const c_void;
 
@@ -983,6 +1037,7 @@ pub trait MergeDebevecConst: crate::photo::MergeExposuresConst {
 pub trait MergeDebevec: crate::photo::MergeDebevecConst + crate::photo::MergeExposures {
 	fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -991,6 +1046,7 @@ pub trait MergeDebevec: crate::photo::MergeDebevecConst + crate::photo::MergeExp
 		unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -1017,6 +1073,7 @@ pub trait MergeExposures: core::AlgorithmTrait + crate::photo::MergeExposuresCon
 	/// * times: vector of exposure time values for each image
 	/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 	/// have the same number of channels as images.
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -1036,18 +1093,21 @@ pub trait MergeExposures: core::AlgorithmTrait + crate::photo::MergeExposuresCon
 /// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 /// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 /// 
-/// For more information see [MK07](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MK07) .
+/// For more information see [MK07](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertensConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeMertens(&self) -> *const c_void;
 
+	#[inline]
 	fn get_contrast_weight(&self) -> Result<f32> {
 		unsafe { sys::cv_MergeMertens_getContrastWeight_const(self.as_raw_MergeMertens()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_saturation_weight(&self) -> Result<f32> {
 		unsafe { sys::cv_MergeMertens_getSaturationWeight_const(self.as_raw_MergeMertens()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_exposure_weight(&self) -> Result<f32> {
 		unsafe { sys::cv_MergeMertens_getExposureWeight_const(self.as_raw_MergeMertens()) }.into_result()
 	}
@@ -1057,6 +1117,7 @@ pub trait MergeMertensConst: crate::photo::MergeExposuresConst {
 pub trait MergeMertens: crate::photo::MergeExposures + crate::photo::MergeMertensConst {
 	fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -1070,20 +1131,24 @@ pub trait MergeMertens: crate::photo::MergeExposures + crate::photo::MergeMerten
 	/// ## Parameters
 	/// * src: vector of input images
 	/// * dst: result image
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_contrast_weight(&mut self, contrast_weiht: f32) -> Result<()> {
 		unsafe { sys::cv_MergeMertens_setContrastWeight_float(self.as_raw_mut_MergeMertens(), contrast_weiht) }.into_result()
 	}
 	
+	#[inline]
 	fn set_saturation_weight(&mut self, saturation_weight: f32) -> Result<()> {
 		unsafe { sys::cv_MergeMertens_setSaturationWeight_float(self.as_raw_mut_MergeMertens(), saturation_weight) }.into_result()
 	}
 	
+	#[inline]
 	fn set_exposure_weight(&mut self, exposure_weight: f32) -> Result<()> {
 		unsafe { sys::cv_MergeMertens_setExposureWeight_float(self.as_raw_mut_MergeMertens(), exposure_weight) }.into_result()
 	}
@@ -1093,7 +1158,7 @@ pub trait MergeMertens: crate::photo::MergeExposures + crate::photo::MergeMerten
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see [RB99](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_RB99) .
+/// For more information see [RB99](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertsonConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeRobertson(&self) -> *const c_void;
 
@@ -1102,6 +1167,7 @@ pub trait MergeRobertsonConst: crate::photo::MergeExposuresConst {
 pub trait MergeRobertson: crate::photo::MergeExposures + crate::photo::MergeRobertsonConst {
 	fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -1110,6 +1176,7 @@ pub trait MergeRobertson: crate::photo::MergeExposures + crate::photo::MergeRobe
 		unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
@@ -1123,6 +1190,7 @@ pub trait MergeRobertson: crate::photo::MergeExposures + crate::photo::MergeRobe
 pub trait TonemapConst: core::AlgorithmTraitConst {
 	fn as_raw_Tonemap(&self) -> *const c_void;
 
+	#[inline]
 	fn get_gamma(&self) -> Result<f32> {
 		unsafe { sys::cv_Tonemap_getGamma_const(self.as_raw_Tonemap()) }.into_result()
 	}
@@ -1137,12 +1205,14 @@ pub trait Tonemap: core::AlgorithmTrait + crate::photo::TonemapConst {
 	/// ## Parameters
 	/// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
 	/// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
+	#[inline]
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		unsafe { sys::cv_Tonemap_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_gamma(&mut self, gamma: f32) -> Result<()> {
 		unsafe { sys::cv_Tonemap_setGamma_float(self.as_raw_mut_Tonemap(), gamma) }.into_result()
 	}
@@ -1155,16 +1225,18 @@ pub trait Tonemap: core::AlgorithmTrait + crate::photo::TonemapConst {
 /// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 /// bias parameter.
 /// 
-/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_FL02) .
+/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_FL02) .
 /// 
-/// For more information see [DM03](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_DM03) .
+/// For more information see [DM03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_DM03) .
 pub trait TonemapDragoConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapDrago(&self) -> *const c_void;
 
+	#[inline]
 	fn get_saturation(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapDrago_getSaturation_const(self.as_raw_TonemapDrago()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_bias(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapDrago_getBias_const(self.as_raw_TonemapDrago()) }.into_result()
 	}
@@ -1174,10 +1246,12 @@ pub trait TonemapDragoConst: crate::photo::TonemapConst {
 pub trait TonemapDrago: crate::photo::Tonemap + crate::photo::TonemapDragoConst {
 	fn as_raw_mut_TonemapDrago(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_saturation(&mut self, saturation: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapDrago_setSaturation_float(self.as_raw_mut_TonemapDrago(), saturation) }.into_result()
 	}
 	
+	#[inline]
 	fn set_bias(&mut self, bias: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapDrago_setBias_float(self.as_raw_mut_TonemapDrago(), bias) }.into_result()
 	}
@@ -1188,14 +1262,16 @@ pub trait TonemapDrago: crate::photo::Tonemap + crate::photo::TonemapDragoConst 
 /// transforms contrast values to HVS response and scales the response. After this the image is
 /// reconstructed from new contrast values.
 /// 
-/// For more information see [MM06](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MM06) .
+/// For more information see [MM06](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MM06) .
 pub trait TonemapMantiukConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapMantiuk(&self) -> *const c_void;
 
+	#[inline]
 	fn get_scale(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapMantiuk_getScale_const(self.as_raw_TonemapMantiuk()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_saturation(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapMantiuk_getSaturation_const(self.as_raw_TonemapMantiuk()) }.into_result()
 	}
@@ -1205,10 +1281,12 @@ pub trait TonemapMantiukConst: crate::photo::TonemapConst {
 pub trait TonemapMantiuk: crate::photo::Tonemap + crate::photo::TonemapMantiukConst {
 	fn as_raw_mut_TonemapMantiuk(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_scale(&mut self, scale: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapMantiuk_setScale_float(self.as_raw_mut_TonemapMantiuk(), scale) }.into_result()
 	}
 	
+	#[inline]
 	fn set_saturation(&mut self, saturation: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapMantiuk_setSaturation_float(self.as_raw_mut_TonemapMantiuk(), saturation) }.into_result()
 	}
@@ -1220,18 +1298,21 @@ pub trait TonemapMantiuk: crate::photo::Tonemap + crate::photo::TonemapMantiukCo
 /// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 /// color adaptation.
 /// 
-/// For more information see [RD05](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_RD05) .
+/// For more information see [RD05](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_RD05) .
 pub trait TonemapReinhardConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapReinhard(&self) -> *const c_void;
 
+	#[inline]
 	fn get_intensity(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapReinhard_getIntensity_const(self.as_raw_TonemapReinhard()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_light_adaptation(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapReinhard_getLightAdaptation_const(self.as_raw_TonemapReinhard()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_color_adaptation(&self) -> Result<f32> {
 		unsafe { sys::cv_TonemapReinhard_getColorAdaptation_const(self.as_raw_TonemapReinhard()) }.into_result()
 	}
@@ -1241,14 +1322,17 @@ pub trait TonemapReinhardConst: crate::photo::TonemapConst {
 pub trait TonemapReinhard: crate::photo::Tonemap + crate::photo::TonemapReinhardConst {
 	fn as_raw_mut_TonemapReinhard(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn set_intensity(&mut self, intensity: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapReinhard_setIntensity_float(self.as_raw_mut_TonemapReinhard(), intensity) }.into_result()
 	}
 	
+	#[inline]
 	fn set_light_adaptation(&mut self, light_adapt: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapReinhard_setLightAdaptation_float(self.as_raw_mut_TonemapReinhard(), light_adapt) }.into_result()
 	}
 	
+	#[inline]
 	fn set_color_adaptation(&mut self, color_adapt: f32) -> Result<()> {
 		unsafe { sys::cv_TonemapReinhard_setColorAdaptation_float(self.as_raw_mut_TonemapReinhard(), color_adapt) }.into_result()
 	}
