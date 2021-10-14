@@ -99,6 +99,11 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	} else {
 		format!("Result<{}>", return_type.rust_return_func_decl(FishStyle::No, is_static_func)).into()
 	};
+	let return_type_func_decl = if return_type_func_decl == "()" {
+		Cow::Borrowed("")
+	} else {
+		format!(" -> {}", return_type_func_decl).into()
+	};
 	let mut prefix = String::new();
 	let mut suffix = if is_infallible {
 		format!(".expect(\"Infallible function failed: {name}\")", name = name)
