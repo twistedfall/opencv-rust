@@ -43,13 +43,13 @@ pub trait DataType: Copy + private::Sealed {
 macro_rules! data_type {
 	($rust_type: ty, $mat_depth: expr, $channels: expr) => {
 		impl $crate::core::DataType for $rust_type {
-			#[inline(always)]
+			#[inline]
 			fn depth() -> i32 { $mat_depth }
 
-			#[inline(always)]
+			#[inline]
 			fn channels() -> i32 { $channels }
 
-			#[inline(always)]
+			#[inline]
 			fn typ() -> i32 { $crate::core::CV_MAKETYPE($mat_depth, $channels) }
 		}
 
@@ -128,6 +128,7 @@ unsafe fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
 	&mut *(r as *mut u8 as *mut T)
 }
 
+#[inline]
 fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	let out_type = T::typ();
 	if mat_type == out_type {
@@ -141,6 +142,7 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	}
 }
 
+#[inline]
 fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
 	let mat_dims = mat.dims() as usize;
 	if mat_dims == dims {
@@ -163,6 +165,7 @@ fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()>
 	}
 }
 
+#[inline]
 fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 	let size = mat.total()?;
 	if 0 <= idx && (idx as usize) < size {
@@ -172,6 +175,7 @@ fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 	}
 }
 
+#[inline]
 fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 	if mat.is_continuous()? {
 		Ok(())
@@ -239,7 +243,7 @@ impl Mat {
 pub(crate) mod mat_forward {
 	use super::*;
 
-	#[inline(always)]
+	#[inline]
 	pub fn at<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<&T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_dims(mat, 2))
@@ -247,7 +251,7 @@ pub(crate) mod mat_forward {
 			.and_then(|_| unsafe { mat.at_unchecked(i0) })
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_dims(mat, 2))
@@ -255,52 +259,52 @@ pub(crate) mod mat_forward {
 		unsafe { mat.at_unchecked_mut(i0) }
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_2d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), row: i32, col: i32) -> Result<&T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, &[row, col]))
 			.and_then(|_| unsafe { mat.at_2d_unchecked(row, col) })
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_2d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), row: i32, col: i32) -> Result<&mut T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, &[row, col]))?;
 		unsafe { mat.at_2d_unchecked_mut(row, col) }
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_pt<T: DataType>(mat: &(impl MatTraitConst + ?Sized), pt: Point) -> Result<&T> {
 		at_2d(mat, pt.y, pt.x)
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_pt_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), pt: Point) -> Result<&mut T> {
 		at_2d_mut(mat, pt.y, pt.x)
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_3d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, &[i0, i1, i2]))
 			.and_then(|_| unsafe { mat.at_3d_unchecked(i0, i1, i2) })
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_3d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, &[i0, i1, i2]))?;
 		unsafe { mat.at_3d_unchecked_mut(i0, i1, i2) }
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_nd<'s, T: core::DataType>(mat: &'s (impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<&'s T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, idx))
 			.and_then(|_| unsafe { mat.at_nd_unchecked(idx) })
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_nd_mut<'s, T: core::DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
 		match_format::<T>(mat.typ()?)
 			.and_then(|_| match_indices(mat, idx))?;
@@ -313,6 +317,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	///
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
+	#[inline]
 	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> Result<&T> {
 		let mat_size = self.size()?;
 		let (i, j) = if self.is_continuous()? || mat_size.width == 1 {
@@ -330,6 +335,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Like `Mat::at_2d()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
 		self.ptr_2d(row, col)
 			.map(|ptr| convert_ptr(ptr))
@@ -338,6 +344,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Like `Mat::at_pt()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that point is within Mat bounds
+	#[inline]
 	unsafe fn at_pt_unchecked<T: DataType>(&self, pt: Point) -> Result<&T> {
 		self.at_2d_unchecked(pt.y, pt.x)
 	}
@@ -345,6 +352,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Like `Mat::at_3d()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
 		self.ptr_3d(i0, i1, i2)
 			.map(|ptr| convert_ptr(ptr))
@@ -353,12 +361,14 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Like `Mat::at_nd()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
 		self.ptr_nd(idx)
 			.map(|ptr| convert_ptr(ptr))
 	}
 
 	/// Return a complete read-only row
+	#[inline]
 	fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		match_format::<T>(self.typ()?)
 			.and_then(|_| match_indices(self, &[row, 0]))
@@ -368,29 +378,34 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Like `Mat::at_row()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
+	#[inline]
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		let width = self.size()?.width as usize;
 		self.ptr(row)
 			.map(|x| slice::from_raw_parts(convert_ptr(x), width))
 	}
 
+	#[inline]
 	fn size(&self) -> Result<core::Size> {
 		extern "C" { fn cv_manual_Mat_size(instance: *const c_void) -> sys::Result<core::Size>; }
 		unsafe { cv_manual_Mat_size(self.as_raw_Mat()) }
 			.into_result()
 	}
 
+	#[inline]
 	fn is_allocated(&self) -> bool {
 		!self.data().is_null()
 	}
 
 	/// Raw pointer to the underlying data array, can be NULL
+	#[inline]
 	fn data(&self) -> *const u8 {
 		extern "C" { fn cv_manual_Mat_data(instance: *const c_void) -> *const u8; }
 		unsafe { cv_manual_Mat_data(self.as_raw_Mat()) }
 	}
 
 	/// Returns underlying data array as byte slice, Mat must be continuous.
+	#[inline]
 	fn data_bytes(&self) -> Result<&[u8]> {
 		match_is_continuous(self)
 			.and_then(|_| {
@@ -403,6 +418,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			})
 	}
 
+	#[inline]
 	fn data_typed<T: DataType>(&self) -> Result<&[T]> {
 		match_format::<T>(self.typ()?)
 			.and_then(|_| match_is_continuous(self))
@@ -411,6 +427,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 
 	/// # Safety
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
+	#[inline]
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let data = self.data();
 		if data.is_null() {
@@ -457,6 +474,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
+	#[inline]
 	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
 		let (i, j) = idx_to_row_col(self, i0)?;
 		self.ptr_2d_mut(i, j)
@@ -466,6 +484,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_2d_unchecked_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
 		self.ptr_2d_mut(row, col)
 			.map(|ptr| convert_ptr_mut(ptr))
@@ -474,6 +493,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_pt_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that point is within Mat bounds
+	#[inline]
 	unsafe fn at_pt_unchecked_mut<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
 		self.at_2d_unchecked_mut(pt.y, pt.x)
 	}
@@ -481,6 +501,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_3d_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_3d_unchecked_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		self.ptr_3d_mut(i0, i1, i2)
 			.map(|ptr| convert_ptr_mut(ptr))
@@ -489,12 +510,14 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_nd_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
+	#[inline]
 	unsafe fn at_nd_unchecked_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
 		self.ptr_nd_mut(idx)
 			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	/// Return a complete writeable row
+	#[inline]
 	fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		match_format::<T>(self.typ()?)
 			.and_then(|_| match_indices(self, &[row, 0]))?;
@@ -504,6 +527,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Like `Mat::at_row_mut()` but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
+	#[inline]
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		let width = self.size()?.width as usize;
 		self.ptr_mut(row)
@@ -514,6 +538,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	///
 	/// ## Parameters
 	/// * s: Assigned scalar converted to the actual array type.
+	#[inline]
 	fn set(&mut self, s: Scalar) -> Result<()> {
 		extern "C" { fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar) -> sys::Result_void; }
 		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s) }
@@ -521,6 +546,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	}
 
 	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
+	#[inline]
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
 		match_is_continuous(self)
 			.and_then(|_| {
@@ -528,6 +554,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 			})
 	}
 
+	#[inline]
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		match_format::<T>(self.typ()?)
 			.and_then(|_| match_is_continuous(self))?;
@@ -536,6 +563,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 
 	/// # Safety
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
+	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total()?;
 		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut u8 as *mut T, total))
@@ -682,6 +710,7 @@ impl<T: MatSizeTraitConst> MatSizeTraitConstManual for T {}
 impl Deref for MatSize {
 	type Target = [i32];
 
+	#[inline]
 	fn deref(&self) -> &Self::Target {
 		let ptr = self.to_ri32() as *const i32;
 		unsafe { slice::from_raw_parts(ptr, self.dims() as usize) }
@@ -697,6 +726,7 @@ impl fmt::Debug for MatSize {
 impl Deref for MatStep {
 	type Target = [size_t];
 
+	#[inline]
 	fn deref(&self) -> &Self::Target {
 		extern "C" { fn cv_manual_MatStep_deref(instance: *const c_void) -> *const size_t; }
 		let ptr = unsafe { cv_manual_MatStep_deref(self.as_raw_MatStep()) };
@@ -723,6 +753,7 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 		unsafe { cv_manual_MatConstIterator_has_elements(self.as_raw_MatConstIterator()) }
 	}
 
+	#[inline]
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;
 		if self.has_elements() {

@@ -24,17 +24,17 @@ macro_rules! ptr_extern {
 		}
 
 		impl $crate::manual::core::PtrExtern for $crate::manual::core::Ptr<$type> {
-			#[inline(always)]
+			#[inline]
 			unsafe fn extern_delete(&mut self) {
 				$extern_delete(self.as_raw_mut())
 			}
 
-			#[inline(always)]
+			#[inline]
 			unsafe fn extern_inner_as_ptr(&self) -> *const std::ffi::c_void {
 				$extern_inner_as_ptr(self.as_raw())
 			}
 
-			#[inline(always)]
+			#[inline]
 			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut std::ffi::c_void {
 				$extern_inner_as_ptr_mut(self.as_raw_mut())
 			}
@@ -48,7 +48,7 @@ macro_rules! ptr_extern_ctor {
 		extern "C" { fn $extern_new(val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut) -> *mut std::ffi::c_void; }
 
 		impl $crate::manual::core::PtrExternCtor<$type> for $crate::manual::core::Ptr<$type> {
-			#[inline(always)]
+			#[inline]
 			unsafe fn extern_new(val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut) -> *mut std::ffi::c_void {
 				$extern_new(val)
 			}

@@ -27,7 +27,7 @@ pub struct Mat_<T> {
 impl<T: DataType> TryFrom<Mat> for Mat_<T> {
 	type Error = Error;
 
-	#[inline(always)]
+	#[inline]
 	fn try_from(mat: Mat) -> Result<Self, Self::Error> {
 		match_format::<T>(mat.typ()?)
 			.map(|_| Self { inner: mat, _type: PhantomData })
@@ -64,25 +64,27 @@ impl<T: DataType> Mat_<T> {
 		self.as_raw_mut_Mat()
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at(&self, i0: i32) -> Result<&T> {
 		match_dims(self, 2)
 			.and_then(|_| match_total(self, i0))
 			.and_then(|_| unsafe { self.at_unchecked(i0) })
 	}
 
-	#[inline(always)]
+	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
 		match_dims(self, 2)
 			.and_then(|_| match_total(self, i0))?;
 		unsafe { self.at_unchecked_mut(i0) }
 	}
 
+	#[inline]
 	pub fn data_typed(&self) -> Result<&[T]> {
 		match_is_continuous(self)
 			.and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
+	#[inline]
 	pub fn data_typed_mut(&mut self) -> Result<&mut [T]> {
 		match_is_continuous(self)?;
 		unsafe { self.data_typed_unchecked_mut() }
@@ -122,6 +124,7 @@ impl<T> Boxed for Mat_<T> {
 }
 
 impl<T> ToInputArray for Mat_<T> {
+	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		self.inner.input_array()
 	}
