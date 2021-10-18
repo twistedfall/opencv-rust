@@ -52,7 +52,7 @@ impl<'a> ToUnderlyingArg<'a, Scalar> for Scalar {
 }
 impl<'a> ToUnderlyingArg<'a, f64> for f64 {
 	fn to_underlying_arg(&'a self) -> f64 {
-		self
+		*self
 	}
 }
 
