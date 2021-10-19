@@ -2,6 +2,7 @@ use std::ffi::c_void;
 
 use crate::{
 	core::{_InputArray, ToInputArray},
+	input_array_ref_forward,
 	opencv_type_simple_generic,
 	Result,
 	sys,
@@ -112,9 +113,4 @@ impl ToInputArray for Scalar_<f64> {
 	}
 }
 
-impl ToInputArray for &Scalar_<f64> {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		(*self).input_array()
-	}
-}
+input_array_ref_forward! { Scalar_<f64> }

@@ -10,13 +10,6 @@ impl core::ToInputArray for {{rust_localalias}} {
 	}
 }
 
-impl core::ToInputArray for &{{rust_localalias}} {
-	#[inline]
-	fn input_array(&self) -> Result<core::_InputArray> {
-		(*self).input_array()
-	}
-}
-
 impl core::ToOutputArray for {{rust_localalias}} {
 	#[inline]
 	fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -24,13 +17,6 @@ impl core::ToOutputArray for {{rust_localalias}} {
 		unsafe { cv_{{rust_localalias}}_output_array(self.as_raw_mut_{{rust_localalias}}()) }
 			.into_result()
 			.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-	}
-}
-
-impl core::ToOutputArray for &mut {{rust_localalias}} {
-	#[inline]
-	fn output_array(&mut self) -> Result<core::_OutputArray> {
-		(*self).output_array()
 	}
 }
 
@@ -44,9 +30,4 @@ impl core::ToInputOutputArray for {{rust_localalias}} {
 	}
 }
 
-impl core::ToInputOutputArray for &mut {{rust_localalias}} {
-	#[inline]
-	fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-		(*self).input_output_array()
-	}
-}
+input_output_array_ref_forward! { {{rust_localalias}} }

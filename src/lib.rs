@@ -53,6 +53,7 @@ pub(crate) mod mod_prelude {
 		ptr_extern_ctor,
 		vector_copy_non_bool,
 		vector_extern,
+		input_output_array_ref_forward,
 		vector_non_copy_or_bool,
 	};
 }

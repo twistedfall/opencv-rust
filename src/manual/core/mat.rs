@@ -9,22 +9,9 @@ use std::{
 pub use mat_::*;
 
 use crate::{
-	core::{
-		self,
-		_InputArray,
-		_InputOutputArray,
-		_OutputArray,
-		MatExpr,
-		MatSize,
-		MatStep,
-		Point,
-		Scalar,
-		ToInputArray,
-		ToInputOutputArray,
-		ToOutputArray,
-		UMat,
-	},
+	core::{self, MatExpr, MatSize, MatStep, Point, Scalar, UMat},
 	Error,
+	input_output_array,
 	platform_types::size_t,
 	prelude::*,
 	Result,
@@ -574,47 +561,7 @@ impl<T: MatTraitConst + ?Sized> MatTraitConstManual for T {}
 
 impl<T: MatTrait + ?Sized> MatTraitManual for T {}
 
-impl ToInputArray for Mat {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		_InputArray::from_mat(self)
-	}
-}
-
-impl ToInputArray for &Mat {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		(*self).input_array()
-	}
-}
-
-impl ToOutputArray for Mat {
-	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
-		_OutputArray::from_mat_mut(self)
-	}
-}
-
-impl ToOutputArray for &mut Mat {
-	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
-		(*self).output_array()
-	}
-}
-
-impl ToInputOutputArray for Mat {
-	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		_InputOutputArray::from_mat_mut(self)
-	}
-}
-
-impl ToInputOutputArray for &mut Mat {
-	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		(*self).input_output_array()
-	}
-}
+input_output_array! { Mat, from_mat, from_mat_mut }
 
 impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -653,47 +600,7 @@ pub trait UMatTraitConstManual: UMatTraitConst {
 
 impl<T: UMatTraitConst> UMatTraitConstManual for T {}
 
-impl ToInputArray for UMat {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		_InputArray::from_umat(self)
-	}
-}
-
-impl ToInputArray for &UMat {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		(*self).input_array()
-	}
-}
-
-impl ToOutputArray for UMat {
-	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
-		_OutputArray::from_umat_mut(self)
-	}
-}
-
-impl ToOutputArray for &mut UMat {
-	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
-		(*self).output_array()
-	}
-}
-
-impl ToInputOutputArray for UMat {
-	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		_InputOutputArray::from_umat_mut(self)
-	}
-}
-
-impl ToInputOutputArray for &mut UMat {
-	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		(*self).input_output_array()
-	}
-}
+input_output_array!{ UMat, from_umat, from_umat_mut }
 
 #[cfg(ocvrs_opencv_branch_32)]
 pub trait MatSizeTraitConstManual: MatSizeTraitConst {
@@ -766,19 +673,7 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 
 impl<T: MatConstIteratorTrait> MatConstIteratorTraitManual for T {}
 
-impl ToInputArray for MatExpr {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		_InputArray::from_matexpr(self)
-	}
-}
-
-impl ToInputArray for &MatExpr {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		(*self).input_array()
-	}
-}
+input_output_array! { MatExpr, from_matexpr }
 
 mod private {
 	pub trait Sealed {}
