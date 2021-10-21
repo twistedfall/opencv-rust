@@ -434,7 +434,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(arg_override) = arg_overrides.and_then(|o| o.get(a.rust_leafname(FishStyle::No).as_ref())) {
+				let arg_override = arg_overrides
+					.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
+				if let Some(arg_override) = arg_override {
 					return Field::new_ext(a, FieldTypeHint::ArgOverride(*arg_override), self.gen_env);
 				}
 

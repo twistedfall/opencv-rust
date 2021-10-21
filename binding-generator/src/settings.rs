@@ -950,11 +950,29 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverrid
 		"dims" => ArgumentOverride::LenForSlice("size", 1),
 	},
 	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
-		"from_to" => ArgumentOverride::Slice,
+		"fromTo" => ArgumentOverride::Slice,
 		"npairs" => ArgumentOverride::LenForSlice("from_to", 2),
 	},
 	FuncId::new("cv::createTrackbar", ["trackbarname", "winname", "value", "count", "onChange", "userdata"]) => hashmap! {
 		"value" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxLoc", ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minLoc" => ArgumentOverride::Nullable,
+		"maxLoc" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxLoc", ["a", "minVal", "maxVal", "minIdx", "maxIdx"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minIdx" => ArgumentOverride::Nullable,
+		"maxIdx" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxIdx", ["src", "minVal", "maxVal", "minIdx", "maxIdx", "mask"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minIdx" => ArgumentOverride::Nullable,
+		"maxIdx" => ArgumentOverride::Nullable,
 	},
 });
 
