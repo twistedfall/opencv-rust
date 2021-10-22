@@ -26,8 +26,8 @@
 //! ---------------------------------
 //! 
 //! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 //! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 //! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB%5F1%2C%20B%5F2%2C%20%2E%2E%2E%2C%20B%5Fm%5C%7D), whose length equals the one of line.
 //! 
@@ -111,6 +111,7 @@ pub type uint8 = u8;
 /// ## C++ default parameters
 /// * color: Scalar::all(-1)
 /// * flags: DrawLinesMatchesFlags::DEFAULT
+#[inline]
 pub fn draw_keylines(image: &core::Mat, keylines: &core::Vector<crate::line_descriptor::KeyLine>, out_image: &mut core::Mat, color: core::Scalar, flags: i32) -> Result<()> {
 	unsafe { sys::cv_line_descriptor_drawKeylines_const_MatR_const_vector_KeyLine_R_MatR_const_ScalarR_int(image.as_raw_Mat(), keylines.as_raw_VectorOfKeyLine(), out_image.as_raw_mut_Mat(), &color, flags) }.into_result()
 }
@@ -138,6 +139,7 @@ pub fn draw_keylines(image: &core::Mat, keylines: &core::Vector<crate::line_desc
 /// * single_line_color: Scalar::all(-1)
 /// * matches_mask: std::vector<char>()
 /// * flags: DrawLinesMatchesFlags::DEFAULT
+#[inline]
 pub fn draw_line_matches(img1: &core::Mat, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &core::Mat, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut core::Mat, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: i32) -> Result<()> {
 	unsafe { sys::cv_line_descriptor_drawLineMatches_const_MatR_const_vector_KeyLine_R_const_MatR_const_vector_KeyLine_R_const_vector_DMatch_R_MatR_const_ScalarR_const_ScalarR_const_vector_char_R_int(img1.as_raw_Mat(), keylines1.as_raw_VectorOfKeyLine(), img2.as_raw_Mat(), keylines2.as_raw_VectorOfKeyLine(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_mut_Mat(), &match_color, &single_line_color, matches_mask.as_raw_VectorOfi8(), flags) }.into_result()
 }
@@ -155,6 +157,7 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## Parameters
 	/// * fs: output FileStorage file
+	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_write_const_FileStorageR(self.as_raw_BinaryDescriptor(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
@@ -175,6 +178,7 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * masks: std::vector<Mat>()
+	#[inline]
 	fn detect(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>, masks: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_const_vector_Mat_R(self.as_raw_BinaryDescriptor(), images.as_raw_VectorOfMat(), keylines.as_raw_mut_VectorOfVectorOfKeyLine(), masks.as_raw_VectorOfMat()) }.into_result()
 	}
@@ -189,6 +193,7 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * return_float_descr: false
+	#[inline]
 	fn compute(&self, image: &core::Mat, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut core::Mat, return_float_descr: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_compute_const_const_MatR_vector_KeyLine_R_MatR_bool(self.as_raw_BinaryDescriptor(), image.as_raw_Mat(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw_mut_Mat(), return_float_descr) }.into_result()
 	}
@@ -211,21 +216,25 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * return_float_descr: false
+	#[inline]
 	fn compute_1(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>, descriptors: &mut core::Vector<core::Mat>, return_float_descr: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_compute_const_const_vector_Mat_R_vector_vector_KeyLine__R_vector_Mat_R_bool(self.as_raw_BinaryDescriptor(), images.as_raw_VectorOfMat(), keylines.as_raw_mut_VectorOfVectorOfKeyLine(), descriptors.as_raw_mut_VectorOfMat(), return_float_descr) }.into_result()
 	}
 	
 	/// Return descriptor size
+	#[inline]
 	fn descriptor_size(&self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_descriptorSize_const(self.as_raw_BinaryDescriptor()) }.into_result()
 	}
 	
 	/// Return data type
+	#[inline]
 	fn descriptor_type(&self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_descriptorType_const(self.as_raw_BinaryDescriptor()) }.into_result()
 	}
 	
 	/// returns norm mode
+	#[inline]
 	fn default_norm(&self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_defaultNorm_const(self.as_raw_BinaryDescriptor()) }.into_result()
 	}
@@ -236,6 +245,7 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	fn as_raw_mut_BinaryDescriptor(&mut self) -> *mut c_void;
 
 	/// Get current number of octaves
+	#[inline]
 	fn get_num_of_octaves(&mut self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_getNumOfOctaves(self.as_raw_mut_BinaryDescriptor()) }.into_result()
 	}
@@ -243,11 +253,13 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	/// Set number of octaves
 	/// ## Parameters
 	/// * octaves: number of octaves
+	#[inline]
 	fn set_num_of_octaves(&mut self, octaves: i32) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_setNumOfOctaves_int(self.as_raw_mut_BinaryDescriptor(), octaves) }.into_result()
 	}
 	
 	/// Get current width of bands
+	#[inline]
 	fn get_width_of_band(&mut self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_getWidthOfBand(self.as_raw_mut_BinaryDescriptor()) }.into_result()
 	}
@@ -255,11 +267,13 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	/// Set width of bands
 	/// ## Parameters
 	/// * width: width of bands
+	#[inline]
 	fn set_width_of_band(&mut self, width: i32) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_setWidthOfBand_int(self.as_raw_mut_BinaryDescriptor(), width) }.into_result()
 	}
 	
 	/// Get current reduction ratio (used in Gaussian pyramids)
+	#[inline]
 	fn get_reduction_ratio(&mut self) -> Result<i32> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_getReductionRatio(self.as_raw_mut_BinaryDescriptor()) }.into_result()
 	}
@@ -267,6 +281,7 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	/// Set reduction ratio (used in Gaussian pyramids)
 	/// ## Parameters
 	/// * rRatio: reduction ratio
+	#[inline]
 	fn set_reduction_ratio(&mut self, r_ratio: i32) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_setReductionRatio_int(self.as_raw_mut_BinaryDescriptor(), r_ratio) }.into_result()
 	}
@@ -275,6 +290,7 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	/// 
 	/// ## Parameters
 	/// * fn: source FileNode file
+	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_read_const_FileNodeR(self.as_raw_mut_BinaryDescriptor(), fn_.as_raw_FileNode()) }.into_result()
 	}
@@ -288,6 +304,7 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 	/// 
 	/// ## C++ default parameters
 	/// * mask: Mat()
+	#[inline]
 	fn detect_1(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, mask: &core::Mat) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_detect_const_MatR_vector_KeyLine_R_const_MatR(self.as_raw_mut_BinaryDescriptor(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), mask.as_raw_Mat()) }.into_result()
 	}
@@ -342,16 +359,19 @@ impl BinaryDescriptor {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: BinaryDescriptor::Params()
+	#[inline]
 	pub fn new(parameters: &crate::line_descriptor::BinaryDescriptor_Params) -> Result<crate::line_descriptor::BinaryDescriptor> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsR(parameters.as_raw_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor::opencv_from_extern(r) } )
 	}
 	
 	/// Create a BinaryDescriptor object with default parameters (or with the ones provided)
 	/// and return a smart pointer to it
+	#[inline]
 	pub fn create_binary_descriptor() -> Result<core::Ptr<crate::line_descriptor::BinaryDescriptor>> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create_binary_descriptor_1(mut parameters: crate::line_descriptor::BinaryDescriptor_Params) -> Result<core::Ptr<crate::line_descriptor::BinaryDescriptor>> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptor>::opencv_from_extern(r) } )
 	}
@@ -365,25 +385,30 @@ pub trait BinaryDescriptor_ParamsTraitConst {
 	fn as_raw_BinaryDescriptor_Params(&self) -> *const c_void;
 
 	/// the number of image octaves (default = 1)
+	#[inline]
 	fn num_of_octave_(&self) -> i32 {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropNumOfOctave__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: num_of_octave_")
 	}
 	
 	/// the width of band; (default: 7)
+	#[inline]
 	fn width_of_band_(&self) -> i32 {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropWidthOfBand__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: width_of_band_")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
+	#[inline]
 	fn reduction_ratio(&self) -> i32 {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropReductionRatio_const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: reduction_ratio")
 	}
 	
+	#[inline]
 	fn ksize_(&self) -> i32 {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropKsize__const(self.as_raw_BinaryDescriptor_Params()) }.into_result().expect("Infallible function failed: ksize_")
 	}
 	
 	/// store parameters to a FileStorage object (struct function)
+	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_write_const_FileStorageR(self.as_raw_BinaryDescriptor_Params(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
@@ -394,25 +419,30 @@ pub trait BinaryDescriptor_ParamsTrait: crate::line_descriptor::BinaryDescriptor
 	fn as_raw_mut_BinaryDescriptor_Params(&mut self) -> *mut c_void;
 
 	/// the number of image octaves (default = 1)
-	fn set_num_of_octave_(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_num_of_octave_(&mut self, val: i32) {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_num_of_octave_")
 	}
 	
 	/// the width of band; (default: 7)
-	fn set_width_of_band_(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_width_of_band_(&mut self, val: i32) {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_width_of_band_")
 	}
 	
 	/// image's reduction ratio in construction of Gaussian pyramids
-	fn set_reduction_ratio(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_reduction_ratio(&mut self, val: i32) {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_reduction_ratio")
 	}
 	
-	fn set_ksize_(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_ksize_(&mut self, val: i32) {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) }.into_result().expect("Infallible function failed: set_ksize_")
 	}
 	
 	/// read parameters from a FileNode object and store them (struct function)
+	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_read_const_FileNodeR(self.as_raw_mut_BinaryDescriptor_Params(), fn_.as_raw_FileNode()) }.into_result()
 	}
@@ -444,6 +474,7 @@ impl crate::line_descriptor::BinaryDescriptor_ParamsTrait for BinaryDescriptor_P
 }
 
 impl BinaryDescriptor_Params {
+	#[inline]
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptor_Params::opencv_from_extern(r) } )
 	}
@@ -464,7 +495,7 @@ impl BinaryDescriptor_Params {
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -501,6 +532,7 @@ pub trait BinaryDescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * mask: Mat()
+	#[inline]
 	fn match_(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>, mask: &core::Mat) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_const_MatR_const_MatR_vector_DMatch_R_const_MatR(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw_Mat()) }.into_result()
 	}
@@ -520,6 +552,7 @@ pub trait BinaryDescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 	/// ## C++ default parameters
 	/// * mask: Mat()
 	/// * compact_result: false
+	#[inline]
 	fn knn_match(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &core::Mat, compact_result: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_const_MatR_const_MatR_vector_vector_DMatch__R_int_const_MatR_bool(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw_Mat(), compact_result) }.into_result()
 	}
@@ -539,6 +572,7 @@ pub trait BinaryDescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 	/// ## C++ default parameters
 	/// * mask: Mat()
 	/// * compact_result: false
+	#[inline]
 	fn radius_match(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &core::Mat, compact_result: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_const_MatR_const_MatR_vector_vector_DMatch__R_float_const_MatR_bool(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw_Mat(), compact_result) }.into_result()
 	}
@@ -567,6 +601,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 	/// 
 	/// ## C++ default parameters
 	/// * masks: std::vector<Mat>()
+	#[inline]
 	fn match_query(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_MatR_vector_DMatch_R_const_vector_Mat_R(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw_VectorOfMat()) }.into_result()
 	}
@@ -597,6 +632,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 	/// ## C++ default parameters
 	/// * masks: std::vector<Mat>()
 	/// * compact_result: false
+	#[inline]
 	fn knn_match_query(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_MatR_vector_vector_DMatch__R_int_const_vector_Mat_R_bool(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
 	}
@@ -627,6 +663,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 	/// ## C++ default parameters
 	/// * masks: std::vector<Mat>()
 	/// * compact_result: false
+	#[inline]
 	fn radius_match_1(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_MatR_vector_vector_DMatch__R_float_const_vector_Mat_R_bool(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
 	}
@@ -639,6 +676,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 	/// 
 	/// Note: Each matrix *i* in **descriptors** should contain descriptors relative to lines extracted from
 	/// *i*-th image.
+	#[inline]
 	fn add(&mut self, descriptors: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_add_const_vector_Mat_R(self.as_raw_mut_BinaryDescriptorMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
 	}
@@ -648,11 +686,13 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 	/// 
 	/// Note: Every time this function is invoked, current dataset is deleted and locally stored descriptors
 	/// are inserted into dataset. The locally stored copy of just inserted descriptors is then removed.
+	#[inline]
 	fn train(&mut self) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_train(self.as_raw_mut_BinaryDescriptorMatcher()) }.into_result()
 	}
 	
 	/// Clear dataset and internal data
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_clear(self.as_raw_mut_BinaryDescriptorMatcher()) }.into_result()
 	}
@@ -673,7 +713,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -729,6 +769,7 @@ impl crate::line_descriptor::BinaryDescriptorMatcherTrait for BinaryDescriptorMa
 
 impl BinaryDescriptorMatcher {
 	/// Create a BinaryDescriptorMatcher object and return a smart pointer to it.
+	#[inline]
 	pub fn create_binary_descriptor_matcher() -> Result<core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::BinaryDescriptorMatcher>::opencv_from_extern(r) } )
 	}
@@ -736,6 +777,7 @@ impl BinaryDescriptorMatcher {
 	/// Constructor.
 	/// 
 	/// The BinaryDescriptorMatcher constructed is able to store and manage 256-bits long entries.
+	#[inline]
 	pub fn default() -> Result<crate::line_descriptor::BinaryDescriptorMatcher> {
 		unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|r| unsafe { crate::line_descriptor::BinaryDescriptorMatcher::opencv_from_extern(r) } )
 	}
@@ -814,26 +856,31 @@ opencv_type_simple! { crate::line_descriptor::KeyLine }
 
 impl KeyLine {
 	/// Returns the start point of the line in the original image
+	#[inline]
 	pub fn get_start_point(self) -> Result<core::Point2f> {
 		unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the original image
+	#[inline]
 	pub fn get_end_point(self) -> Result<core::Point2f> {
 		unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the start point of the line in the octave it was extracted from
+	#[inline]
 	pub fn get_start_point_in_octave(self) -> Result<core::Point2f> {
 		unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// Returns the end point of the line in the octave it was extracted from
+	#[inline]
 	pub fn get_end_point_in_octave(self) -> Result<core::Point2f> {
 		unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(self.opencv_as_extern()) }.into_result()
 	}
 	
 	/// constructor
+	#[inline]
 	pub fn default() -> Result<crate::line_descriptor::KeyLine> {
 		unsafe { sys::cv_line_descriptor_KeyLine_KeyLine() }.into_result()
 	}
@@ -862,6 +909,7 @@ pub trait LSDDetectorTraitConst: core::AlgorithmTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * masks: std::vector<Mat>()
+	#[inline]
 	fn detect_multiple(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>, scale: i32, num_octaves: i32, masks: &core::Vector<core::Mat>) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_int_int_const_vector_Mat_R(self.as_raw_LSDDetector(), images.as_raw_VectorOfMat(), keylines.as_raw_mut_VectorOfVectorOfKeyLine(), scale, num_octaves, masks.as_raw_VectorOfMat()) }.into_result()
 	}
@@ -882,6 +930,7 @@ pub trait LSDDetectorTrait: core::AlgorithmTrait + crate::line_descriptor::LSDDe
 	/// 
 	/// ## C++ default parameters
 	/// * mask: Mat()
+	#[inline]
 	fn detect(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32, mask: &core::Mat) -> Result<()> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_detect_const_MatR_vector_KeyLine_R_int_int_const_MatR(self.as_raw_mut_LSDDetector(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), scale, num_octaves, mask.as_raw_Mat()) }.into_result()
 	}
@@ -920,19 +969,23 @@ impl crate::line_descriptor::LSDDetectorTrait for LSDDetector {
 }
 
 impl LSDDetector {
+	#[inline]
 	pub fn default() -> Result<crate::line_descriptor::LSDDetector> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn new(_params: crate::line_descriptor::LSDParam) -> Result<crate::line_descriptor::LSDDetector> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(_params.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(r) } )
 	}
 	
 	/// Creates ad LSDDetector object, using smart pointers.
+	#[inline]
 	pub fn create_lsd_detector() -> Result<core::Ptr<crate::line_descriptor::LSDDetector>> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector() }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create_lsd_detector_with_params(params: crate::line_descriptor::LSDParam) -> Result<core::Ptr<crate::line_descriptor::LSDDetector>> {
 		unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(params.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(r) } )
 	}
@@ -944,7 +997,7 @@ boxed_cast_base! { LSDDetector, core::Algorithm, cv_LSDDetector_to_Algorithm }
 /// Lines extraction methodology
 /// ----------------------------
 /// 
-/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_EDL) . The
+/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_EDL) . The
 /// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 /// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 /// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.
@@ -971,6 +1024,7 @@ pub struct LSDParam {
 opencv_type_simple! { crate::line_descriptor::LSDParam }
 
 impl LSDParam {
+	#[inline]
 	pub fn default() -> Result<crate::line_descriptor::LSDParam> {
 		unsafe { sys::cv_line_descriptor_LSDParam_LSDParam() }.into_result()
 	}

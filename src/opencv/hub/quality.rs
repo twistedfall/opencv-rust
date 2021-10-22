@@ -15,10 +15,10 @@ pub mod prelude {
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub trait QualityBRISQUETraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualityBRISQUE(&self) -> *const c_void;
@@ -33,6 +33,7 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate:
 	/// * img: Image for which to compute quality
 	/// ## Returns
 	/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
+	#[inline]
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
 		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray()) }.into_result()
@@ -43,10 +44,10 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate:
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub struct QualityBRISQUE {
 	ptr: *mut c_void
@@ -92,6 +93,7 @@ impl QualityBRISQUE {
 	/// ## Parameters
 	/// * model_file_path: cv::String which contains a path to the BRISQUE model data, eg. /path/to/brisque_model_live.yml
 	/// * range_file_path: cv::String which contains a path to the BRISQUE range data, eg. /path/to/brisque_range_live.yml
+	#[inline]
 	pub fn create(model_file_path: &str, range_file_path: &str) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
@@ -102,6 +104,7 @@ impl QualityBRISQUE {
 	/// ## Parameters
 	/// * model: cv::Ptr<cv::ml::SVM> which contains a loaded BRISQUE model
 	/// * range: cv::Mat which contains BRISQUE range data
+	#[inline]
 	pub fn create_1(model: &core::Ptr<dyn crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 		unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_R_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(r) } )
 	}
@@ -113,6 +116,7 @@ impl QualityBRISQUE {
 	/// * range_file_path: cv::String which contains a path to the BRISQUE range data, eg. /path/to/brisque_range_live.yml
 	/// ## Returns
 	/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
+	#[inline]
 	pub fn compute(img: &dyn core::ToInputArray, model_file_path: &str, range_file_path: &str) -> Result<core::Scalar> {
 		input_array_arg!(img);
 		extern_container_arg!(model_file_path);
@@ -124,6 +128,7 @@ impl QualityBRISQUE {
 	/// ## Parameters
 	/// * img: image (BGR(A) or grayscale) for which to compute features
 	/// * features: output row vector of features to cv::Mat or cv::UMat
+	#[inline]
 	pub fn compute_features(img: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(img);
 		output_array_arg!(features);
@@ -139,12 +144,14 @@ pub trait QualityBaseConst: core::AlgorithmTraitConst {
 	fn as_raw_QualityBase(&self) -> *const c_void;
 
 	/// Returns output quality map that was generated during computation, if supported by the algorithm
+	#[inline]
 	fn get_quality_map(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::empty()
+	#[inline]
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_quality_QualityBase_empty_const(self.as_raw_QualityBase()) }.into_result()
 	}
@@ -157,12 +164,14 @@ pub trait QualityBase: core::AlgorithmTrait + crate::quality::QualityBaseConst {
 	/// Compute quality score per channel with the per-channel score in each element of the resulting cv::Scalar.  See specific algorithm for interpreting result scores
 	/// ## Parameters
 	/// * img: comparison image, or image to evalute for no-reference quality algorithms
+	#[inline]
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
 		unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_quality_QualityBase_clear(self.as_raw_mut_QualityBase()) }.into_result()
 	}
@@ -175,6 +184,7 @@ pub trait QualityGMSDTraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualityGMSD(&self) -> *const c_void;
 
 	/// Implements Algorithm::empty()
+	#[inline]
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_quality_QualityGMSD_empty_const(self.as_raw_QualityGMSD()) }.into_result()
 	}
@@ -189,12 +199,14 @@ pub trait QualityGMSDTrait: crate::quality::QualityBase + crate::quality::Qualit
 	/// * cmp: comparison image
 	/// ## Returns
 	/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
+	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
 		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_quality_QualityGMSD_clear(self.as_raw_mut_QualityGMSD()) }.into_result()
 	}
@@ -246,6 +258,7 @@ impl QualityGMSD {
 	/// Create an object which calculates image quality
 	/// ## Parameters
 	/// * ref: reference image
+	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
 		input_array_arg!(ref_);
 		unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityGMSD>::opencv_from_extern(r) } )
@@ -258,6 +271,7 @@ impl QualityGMSD {
 	/// * qualityMap: output quality map, or cv::noArray()
 	/// ## Returns
 	/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
+	#[inline]
 	pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
@@ -274,6 +288,7 @@ pub trait QualityMSETraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualityMSE(&self) -> *const c_void;
 
 	/// Implements Algorithm::empty()
+	#[inline]
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_quality_QualityMSE_empty_const(self.as_raw_QualityMSE()) }.into_result()
 	}
@@ -288,12 +303,14 @@ pub trait QualityMSETrait: crate::quality::QualityBase + crate::quality::Quality
 	/// * cmpImgs: Comparison image(s)
 	/// ## Returns
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to potentially max float (worst)
+	#[inline]
 	fn compute(&mut self, cmp_imgs: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp_imgs);
 		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_quality_QualityMSE_clear(self.as_raw_mut_QualityMSE()) }.into_result()
 	}
@@ -344,6 +361,7 @@ impl QualityMSE {
 	/// Create an object which calculates quality
 	/// ## Parameters
 	/// * ref: input image to use as the reference for comparison
+	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
 		input_array_arg!(ref_);
 		unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityMSE>::opencv_from_extern(r) } )
@@ -356,6 +374,7 @@ impl QualityMSE {
 	/// * qualityMap: output quality map, or cv::noArray()
 	/// ## Returns
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to max float (worst)
+	#[inline]
 	pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
@@ -372,11 +391,13 @@ pub trait QualityPSNRTraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualityPSNR(&self) -> *const c_void;
 
 	/// Implements Algorithm::empty()
+	#[inline]
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_quality_QualityPSNR_empty_const(self.as_raw_QualityPSNR()) }.into_result()
 	}
 	
 	/// return the maximum pixel value used for PSNR computation
+	#[inline]
 	fn get_max_pixel_value(&self) -> Result<f64> {
 		unsafe { sys::cv_quality_QualityPSNR_getMaxPixelValue_const(self.as_raw_QualityPSNR()) }.into_result()
 	}
@@ -391,12 +412,14 @@ pub trait QualityPSNRTrait: crate::quality::QualityBase + crate::quality::Qualit
 	/// * cmp: Comparison image
 	/// ## Returns
 	/// Per-channel PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
+	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
 		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_quality_QualityPSNR_clear(self.as_raw_mut_QualityPSNR()) }.into_result()
 	}
@@ -404,6 +427,7 @@ pub trait QualityPSNRTrait: crate::quality::QualityBase + crate::quality::Qualit
 	/// sets the maximum pixel value used for PSNR computation
 	/// ## Parameters
 	/// * val: Maximum pixel value
+	#[inline]
 	fn set_max_pixel_value(&mut self, val: f64) -> Result<()> {
 		unsafe { sys::cv_quality_QualityPSNR_setMaxPixelValue_double(self.as_raw_mut_QualityPSNR(), val) }.into_result()
 	}
@@ -459,6 +483,7 @@ impl QualityPSNR {
 	/// 
 	/// ## C++ default parameters
 	/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
+	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
 		input_array_arg!(ref_);
 		unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualityPSNR>::opencv_from_extern(r) } )
@@ -475,6 +500,7 @@ impl QualityPSNR {
 	/// 
 	/// ## C++ default parameters
 	/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
+	#[inline]
 	pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray, max_pixel_value: f64) -> Result<core::Scalar> {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
@@ -491,6 +517,7 @@ pub trait QualitySSIMTraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualitySSIM(&self) -> *const c_void;
 
 	/// Implements Algorithm::empty()
+	#[inline]
 	fn empty(&self) -> Result<bool> {
 		unsafe { sys::cv_quality_QualitySSIM_empty_const(self.as_raw_QualitySSIM()) }.into_result()
 	}
@@ -505,12 +532,14 @@ pub trait QualitySSIMTrait: crate::quality::QualityBase + crate::quality::Qualit
 	/// * cmp: Comparison image
 	/// ## Returns
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
+	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
 		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Implements Algorithm::clear()
+	#[inline]
 	fn clear(&mut self) -> Result<()> {
 		unsafe { sys::cv_quality_QualitySSIM_clear(self.as_raw_mut_QualitySSIM()) }.into_result()
 	}
@@ -561,6 +590,7 @@ impl QualitySSIM {
 	/// Create an object which calculates quality
 	/// ## Parameters
 	/// * ref: input image to use as the reference image for comparison
+	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
 		input_array_arg!(ref_);
 		unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<crate::quality::QualitySSIM>::opencv_from_extern(r) } )
@@ -573,6 +603,7 @@ impl QualitySSIM {
 	/// * qualityMap: output quality map, or cv::noArray()
 	/// ## Returns
 	/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
+	#[inline]
 	pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);

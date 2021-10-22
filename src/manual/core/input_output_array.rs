@@ -2,6 +2,7 @@ use std::os::raw::c_void;
 
 use crate::{
 	core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait},
+	input_output_array,
 	Result,
 	sys,
 	traits::Boxed,
@@ -17,19 +18,7 @@ pub trait ToInputArray {
 	fn input_array(&self) -> Result<_InputArray>;
 }
 
-impl ToInputArray for f64 {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		_InputArray::from_f64(self)
-	}
-}
-
-impl ToInputArray for &f64 {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		(*self).input_array()
-	}
-}
+input_output_array! { f64, from_f64 }
 
 /// Trait to serve as a replacement for `OutputArray` in C++ OpenCV
 ///
@@ -75,5 +64,78 @@ impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray()) }
 			.into_result()
 			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
+	}
+}
+
+#[macro_export]
+macro_rules! input_output_array {
+	($type: ty, $const_cons: ident) => {
+		impl $crate::manual::core::ToInputArray for $type {
+			#[inline]
+			fn input_array(&self) -> $crate::Result<$crate::core::_InputArray> {
+				$crate::core::_InputArray::$const_cons(self)
+			}
+		}
+
+		$crate::input_array_ref_forward! { $type }
+	};
+
+	($type: ty, $const_cons: ident, $mut_cons: ident) => {
+		$crate::input_output_array! { $type, $const_cons }
+
+		impl $crate::manual::core::ToOutputArray for $type {
+			#[inline]
+			fn output_array(&mut self) -> $crate::Result<$crate::core::_OutputArray> {
+				$crate::core::_OutputArray::$mut_cons(self)
+			}
+		}
+
+		impl $crate::manual::core::ToInputOutputArray for $type {
+			#[inline]
+			fn input_output_array(&mut self) -> $crate::Result<$crate::core::_InputOutputArray> {
+				$crate::core::_InputOutputArray::$mut_cons(self)
+			}
+		}
+
+		$crate::output_array_ref_forward! { $type }
+	};
+}
+
+#[macro_export]
+macro_rules! input_array_ref_forward {
+	($type: ty) => {
+		impl $crate::manual::core::ToInputArray for &$type {
+			#[inline]
+			fn input_array(&self) -> $crate::Result<$crate::core::_InputArray> {
+				(*self).input_array()
+			}
+		}
+	};
+}
+
+#[macro_export]
+macro_rules! output_array_ref_forward {
+	($type: ty) => {
+		impl $crate::manual::core::ToOutputArray for &mut $type {
+			#[inline]
+			fn output_array(&mut self) -> $crate::Result<$crate::core::_OutputArray> {
+				(*self).output_array()
+			}
+		}
+
+		impl $crate::manual::core::ToInputOutputArray for &mut $type {
+			#[inline]
+			fn input_output_array(&mut self) -> $crate::Result<$crate::core::_InputOutputArray> {
+				(*self).input_output_array()
+			}
+		}
+	};
+}
+
+#[macro_export]
+macro_rules! input_output_array_ref_forward {
+	($type: ty) => {
+		$crate::input_array_ref_forward! { $type }
+		$crate::output_array_ref_forward! { $type }
 	}
 }

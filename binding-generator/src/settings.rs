@@ -37,8 +37,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double" => "fisheye_+",
 	"cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR" => "fisheye_+",
 	"cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR" => "fisheye_+",
-	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR" => "+_camera",
-	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR" => "+_camera_with_points",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR" => "+_estimated",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR" => "+_triangulated",
+	"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR" => "+_2_cameras",
 
 	// ### core ###
 	"cv_Algorithm_write_const_const_Ptr_FileStorage_R_const_StringR" => "+_with_name",
@@ -350,6 +351,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_dnn_Layer_finalize_const_vector_Mat_R_vector_Mat_R" => "+_mat_to",
 	"cv_dnn_Layer_forward_vector_MatX_R_vector_Mat_R_vector_Mat_R" => "+_mat",
 	"cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int" => "+_f64",
+	"cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
+	"cv_dnn_Net_addLayer_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
 	"cv_dnn_Net_connect_String_String" => "+_first_second",
 	"cv_dnn_Net_forward_const_StringR" => "+_single",
 	"cv_dnn_Net_forward_const__OutputArrayR_const_StringR" => "+_layer",
@@ -413,6 +416,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 
 	// ### imgcodecs ###
 	"cv_imdecode_const__InputArrayR_int_MatX" => "+_to",
+	"cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int" => "+_range",
 
 	// ### imgproc ###
 	"cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool" => "+_derivative",
@@ -489,16 +493,22 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_text_BaseOCR_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
 	"cv_text_ERStat_getPropPixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
 	"cv_text_ERStat_setPropPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+	"cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int" => "+_from_file",
 	"cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
 	"cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
+	"cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int" => "+_from_file",
 	"cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
 	"cv_text_OCRHMMDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
 	"cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
-	"cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRTesseract_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
+	"cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
 	"cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
+	"cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_" => "+_with_sizes",
+	"cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float" => "+_from_file",
+	"cv_text_createERFilterNM2_const_StringR_float" => "+_from_file",
+	"cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float" => "+_from_file",
 
 	// ### videoio ###
 	"cv_VideoCapture_VideoCapture_const_StringR" => "from_file_default", // 3.2
@@ -881,7 +891,6 @@ pub enum ArgumentOverride {
 	LenForSlice(&'static str, usize),
 }
 
-/// (cpp_fullname, argument count)
 pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverride>>> = Lazy::new(|| hashmap! {
 	FuncId::new("cv::Mat::at", ["idx"]) => hashmap! {
 		"idx" => ArgumentOverride::Slice
@@ -941,11 +950,29 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverrid
 		"dims" => ArgumentOverride::LenForSlice("size", 1),
 	},
 	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
-		"from_to" => ArgumentOverride::Slice,
+		"fromTo" => ArgumentOverride::Slice,
 		"npairs" => ArgumentOverride::LenForSlice("from_to", 2),
 	},
 	FuncId::new("cv::createTrackbar", ["trackbarname", "winname", "value", "count", "onChange", "userdata"]) => hashmap! {
 		"value" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxLoc", ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minLoc" => ArgumentOverride::Nullable,
+		"maxLoc" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxLoc", ["a", "minVal", "maxVal", "minIdx", "maxIdx"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minIdx" => ArgumentOverride::Nullable,
+		"maxIdx" => ArgumentOverride::Nullable,
+	},
+	FuncId::new("cv::minMaxIdx", ["src", "minVal", "maxVal", "minIdx", "maxIdx", "mask"]) => hashmap! {
+		"minVal" => ArgumentOverride::Nullable,
+		"maxVal" => ArgumentOverride::Nullable,
+		"minIdx" => ArgumentOverride::Nullable,
+		"maxIdx" => ArgumentOverride::Nullable,
 	},
 });
 

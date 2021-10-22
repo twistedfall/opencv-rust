@@ -27,6 +27,7 @@ pub mod prelude {
 /// Create FreeType2 Instance
 /// 
 /// The function createFreeType2 create instance to draw UTF-8 strings.
+#[inline]
 pub fn create_free_type2() -> Result<core::Ptr<dyn crate::freetype::FreeType2>> {
 	unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(r) } )
 }
@@ -46,6 +47,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// ## Parameters
 	/// * fontFileName: FontFile Name
 	/// * id: face_index to select a font faces in a single file.
+	#[inline]
 	fn load_font_data(&mut self, font_file_name: &str, id: i32) -> Result<()> {
 		extern_container_arg!(mut font_file_name);
 		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), id) }.into_result()
@@ -59,6 +61,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// 
 	/// ## Parameters
 	/// * num: number of split points from bezier-curve to line
+	#[inline]
 	fn set_split_number(&mut self, num: i32) -> Result<()> {
 		unsafe { sys::cv_freetype_FreeType2_setSplitNumber_int(self.as_raw_mut_FreeType2(), num) }.into_result()
 	}
@@ -76,6 +79,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// * thickness: Thickness of the lines used to draw a text when negative, the glyph is filled. Otherwise, the glyph is drawn with this thickness.
 	/// * line_type: Line type. See the line for details.
 	/// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
+	#[inline]
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		extern_container_arg!(text);
@@ -139,6 +143,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// The size of a box that contains the specified text.
 	/// ## See also
 	/// cv::putText
+	#[inline]
 	fn get_text_size(&mut self, text: &str, font_height: i32, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
 		extern_container_arg!(text);
 		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_as_extern(), font_height, thickness, base_line) }.into_result()

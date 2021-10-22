@@ -545,7 +545,7 @@ impl Generator {
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
-			.parse().expect("Cannot parse");
+			.parse().expect(&format!("Cannot parse module: {}", module));
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
 		entity_processor(root_tu);
 	}

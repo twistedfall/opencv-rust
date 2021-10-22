@@ -42,6 +42,7 @@ pub trait BarcodeDetectorTraitConst {
 	/// * points: Output vector of vector of vertices of the minimum-area rotated rectangle containing the codes.
 	/// For N detected barcodes, the dimensions of this array should be [N][4].
 	/// Order of four points in vector< Point2f> is bottomLeft, topLeft, topRight, bottomRight.
+	#[inline]
 	fn detect(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(img);
 		output_array_arg!(points);
@@ -57,6 +58,7 @@ pub trait BarcodeDetectorTraitConst {
 	/// Order of four points in vector<Point2f> is bottomLeft, topLeft, topRight, bottomRight.
 	/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
 	/// * decoded_type: vector of BarcodeType, specifies the type of these barcodes
+	#[inline]
 	fn decode(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>) -> Result<bool> {
 		input_array_arg!(img);
 		input_array_arg!(points);
@@ -73,6 +75,7 @@ pub trait BarcodeDetectorTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * points: noArray()
+	#[inline]
 	fn detect_and_decode(&self, img: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>, points: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(img);
 		output_array_arg!(points);
@@ -118,6 +121,7 @@ impl BarcodeDetector {
 	/// ## C++ default parameters
 	/// * prototxt_path: ""
 	/// * model_path: ""
+	#[inline]
 	pub fn new(prototxt_path: &str, model_path: &str) -> Result<crate::barcode::BarcodeDetector> {
 		extern_container_arg!(prototxt_path);
 		extern_container_arg!(model_path);

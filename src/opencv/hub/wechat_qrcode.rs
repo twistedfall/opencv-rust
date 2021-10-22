@@ -38,6 +38,7 @@ pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	/// 
 	/// ## C++ default parameters
 	/// * points: noArray()
+	#[inline]
 	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector<String>> {
 		input_array_arg!(img);
 		output_array_arg!(points);
@@ -90,6 +91,7 @@ impl WeChatQRCode {
 	/// * detector_caffe_model_path: ""
 	/// * super_resolution_prototxt_path: ""
 	/// * super_resolution_caffe_model_path: ""
+	#[inline]
 	pub fn new(detector_prototxt_path: &str, detector_caffe_model_path: &str, super_resolution_prototxt_path: &str, super_resolution_caffe_model_path: &str) -> Result<crate::wechat_qrcode::WeChatQRCode> {
 		extern_container_arg!(detector_prototxt_path);
 		extern_container_arg!(detector_caffe_model_path);

@@ -400,39 +400,72 @@ fn mat_from_data() -> Result<()> {
 	let mut bytes = PIXEL.to_vec();
 	assert_eq!(90, bytes.len());
 
-	let src = unsafe {
-		Mat::new_rows_cols_with_data(
-			1,
-			PIXEL.len() as _,
-			u8::typ(),
-			bytes.as_mut_ptr() as *mut c_void,
-			core::Mat_AUTO_STEP,
-		)?
-	};
-	assert_eq!(Size::new(PIXEL.len() as _, 1), src.size()?);
-	assert_eq!(PIXEL.len(), src.total()?);
-	let row = src.at_row::<u8>(0)?;
-	assert_eq!(0x89, row[0]);
-	assert_eq!(0x50, row[1]);
-	assert_eq!(0x1A, row[6]);
-	assert_eq!(0x0D, row[11]);
-	assert_eq!(0x82, row[89]);
+	{
+		let src = unsafe {
+			Mat::new_rows_cols_with_data(
+				1,
+				PIXEL.len() as _,
+				u8::typ(),
+				bytes.as_mut_ptr() as *mut c_void,
+				core::Mat_AUTO_STEP,
+			)?
+		};
+		assert_eq!(Size::new(PIXEL.len() as _, 1), src.size()?);
+		assert_eq!(PIXEL.len(), src.total()?);
+		let row = src.at_row::<u8>(0)?;
+		assert_eq!(0x89, row[0]);
+		assert_eq!(0x50, row[1]);
+		assert_eq!(0x1A, row[6]);
+		assert_eq!(0x0D, row[11]);
+		assert_eq!(0x82, row[89]);
+	}
 
-	let src = unsafe {
-		Mat::new_nd_with_data(
-			&[3, 5, 6],
-			u8::typ(),
-			bytes.as_mut_ptr() as *mut c_void,
-			None,
-		)?
-	};
-	assert_eq!(Size::new(5_, 3), src.size()?);
-	assert_eq!(PIXEL.len(), src.total()?);
-	assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
-	assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
-	assert_eq!(0x1A, *src.at_3d::<u8>(0, 1, 0)?);
-	assert_eq!(0x0D, *src.at_3d::<u8>(0, 1, 5)?);
-	assert_eq!(0x82, *src.at_3d::<u8>(2, 4, 5)?);
+	{
+		let src = unsafe {
+			Mat::new_nd_with_data(
+				&[3, 5, 6],
+				u8::typ(),
+				bytes.as_mut_ptr() as *mut c_void,
+				None,
+			)?
+		};
+		assert_eq!(Size::new(5_, 3), src.size()?);
+		assert_eq!(PIXEL.len(), src.total()?);
+		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
+		assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
+		assert_eq!(0x1A, *src.at_3d::<u8>(0, 1, 0)?);
+		assert_eq!(0x0D, *src.at_3d::<u8>(0, 1, 5)?);
+		assert_eq!(0x82, *src.at_3d::<u8>(2, 4, 5)?);
+	}
+
+	{
+		let mut bytes = bytes.clone();
+		let mut mat = unsafe {
+			Mat::new_rows_cols_with_data(
+				1,
+				bytes.len() as i32,
+				u8::typ(),
+				bytes.as_mut_ptr() as *mut c_void,
+				core::Mat_AUTO_STEP,
+			)?
+		};
+		assert_eq!(mat.data(), bytes.as_ptr());
+		bytes[0] = 0xFF;
+		assert_eq!(0xFF, *mat.at::<u8>(0)?);
+		mat.resize_with_default(100, Scalar::all(0.))?;
+		assert_ne!(mat.data(), bytes.as_ptr());
+		bytes[0] = 0xAA;
+		let row = mat.at_row::<u8>(0)?;
+		assert_eq!(0xFF, row[0]);
+		assert_eq!(0x50, row[1]);
+		assert_eq!(0x1A, row[6]);
+		assert_eq!(0x0D, row[11]);
+		assert_eq!(0x82, row[89]);
+		let row = mat.at_row::<u8>(1)?;
+		assert_eq!(0, row[1]);
+		assert_eq!(0, row[6]);
+		assert_eq!(0, row[89]);
+	}
 	Ok(())
 }
 

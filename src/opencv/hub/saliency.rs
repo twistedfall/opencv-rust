@@ -33,7 +33,7 @@
 //! to cover all objects in an image. Being able to perceive objects before identifying them is closely
 //! related to bottom up visual attention (saliency).
 //! 
-//! ![Saliency diagram](https://docs.opencv.org/4.5.3/saliency.png)
+//! ![Saliency diagram](https://docs.opencv.org/4.5.4/saliency.png)
 //! 
 //! To see how API works, try tracker demo:
 //! <https://github.com/fpuja/opencv_contrib/blob/saliencyModuleDevelop/modules/saliency/samples/computeSaliency.cpp>
@@ -63,14 +63,16 @@ pub trait MotionSaliency: crate::saliency::MotionSaliencyConst + crate::saliency
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSaliencyConst {
 	fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void;
 
+	#[inline]
 	fn get_image_width(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageWidth_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_image_height(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageHeight_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()
 	}
@@ -80,6 +82,7 @@ pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSalienc
 pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + crate::saliency::MotionSaliencyBinWangApr2014TraitConst {
 	fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
@@ -91,20 +94,24 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + c
 	/// ## Parameters
 	/// * W: width of input image
 	/// * H: height of input image
+	#[inline]
 	fn set_imagesize(&mut self, w: i32, h: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImagesize_int_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), w, h) }.into_result()
 	}
 	
 	/// This function allows the correct initialization of all data structures that will be used by the
 	/// algorithm.
+	#[inline]
 	fn init(&mut self) -> Result<bool> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_init(self.as_raw_mut_MotionSaliencyBinWangApr2014()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_image_width(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageWidth_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()
 	}
 	
+	#[inline]
 	fn set_image_height(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageHeight_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()
 	}
@@ -118,7 +125,7 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + c
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub struct MotionSaliencyBinWangApr2014 {
 	ptr: *mut c_void
 }
@@ -167,10 +174,12 @@ impl crate::saliency::MotionSaliencyBinWangApr2014Trait for MotionSaliencyBinWan
 }
 
 impl MotionSaliencyBinWangApr2014 {
+	#[inline]
 	pub fn default() -> Result<crate::saliency::MotionSaliencyBinWangApr2014> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014() }.into_result().map(|r| unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>> {
 		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(r) } )
 	}
@@ -190,22 +199,26 @@ pub trait Objectness: crate::saliency::ObjectnessConst + crate::saliency::Salien
 
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BING)
 pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessConst {
 	fn as_raw_ObjectnessBING(&self) -> *const c_void;
 
+	#[inline]
 	fn write(&self) -> Result<()> {
 		unsafe { sys::cv_saliency_ObjectnessBING_write_const(self.as_raw_ObjectnessBING()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_base(&self) -> Result<f64> {
 		unsafe { sys::cv_saliency_ObjectnessBING_getBase_const(self.as_raw_ObjectnessBING()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_nss(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_ObjectnessBING_getNSS_const(self.as_raw_ObjectnessBING()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_w(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_ObjectnessBING_getW_const(self.as_raw_ObjectnessBING()) }.into_result()
 	}
@@ -215,12 +228,14 @@ pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessConst {
 pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::ObjectnessBINGTraitConst {
 	fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
 		unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn read(&mut self) -> Result<()> {
 		unsafe { sys::cv_saliency_ObjectnessBING_read(self.as_raw_mut_ObjectnessBING()) }.into_result()
 	}
@@ -230,6 +245,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	/// in the same order as the *vector\<Vec4i\> objectnessBoundingBox* returned by the algorithm (in
 	/// computeSaliencyImpl function). The bigger value these scores are, it is more likely to be an
 	/// object window.
+	#[inline]
 	fn getobjectness_values(&mut self) -> Result<core::Vector<f32>> {
 		unsafe { sys::cv_saliency_ObjectnessBING_getobjectnessValues(self.as_raw_mut_ObjectnessBING()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
 	}
@@ -238,6 +254,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	/// the trained model.
 	/// ## Parameters
 	/// * trainingPath: trained model path
+	#[inline]
 	fn set_training_path(&mut self, training_path: &str) -> Result<()> {
 		extern_container_arg!(training_path);
 		unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_as_extern()) }.into_result()
@@ -250,26 +267,30 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	/// each row).
 	/// ## Parameters
 	/// * resultsDir: results' folder path
+	#[inline]
 	fn set_bb_res_dir(&mut self, results_dir: &str) -> Result<()> {
 		extern_container_arg!(results_dir);
 		unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_as_extern()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_base(&mut self, val: f64) -> Result<()> {
 		unsafe { sys::cv_saliency_ObjectnessBING_setBase_double(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
 	}
 	
+	#[inline]
 	fn set_nss(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_ObjectnessBING_setNSS_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
 	}
 	
+	#[inline]
 	fn set_w(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_ObjectnessBING_setW_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
 	}
 	
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BING)
 pub struct ObjectnessBING {
 	ptr: *mut c_void
 }
@@ -318,10 +339,12 @@ impl crate::saliency::ObjectnessBINGTrait for ObjectnessBING {
 }
 
 impl ObjectnessBING {
+	#[inline]
 	pub fn default() -> Result<crate::saliency::ObjectnessBING> {
 		unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING() }.into_result().map(|r| unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::ObjectnessBING>> {
 		unsafe { sys::cv_saliency_ObjectnessBING_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(r) } )
 	}
@@ -343,6 +366,7 @@ pub trait Saliency: core::AlgorithmTrait + crate::saliency::SaliencyConst {
 	/// \param image        The image.
 	/// \param saliencyMap      The computed saliency map.
 	/// \return true if the saliency map is computed, false otherwise
+	#[inline]
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
@@ -375,6 +399,7 @@ pub trait StaticSaliency: crate::saliency::Saliency + crate::saliency::StaticSal
 	/// ## Parameters
 	/// * _saliencyMap: the saliency map obtained through one of the specialized algorithms
 	/// * _binaryMap: the binary map
+	#[inline]
 	fn compute_binary_map(&mut self, _saliency_map: &dyn core::ToInputArray, _binary_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(_saliency_map);
 		output_array_arg!(_binary_map);
@@ -383,7 +408,7 @@ pub trait StaticSaliency: crate::saliency::Saliency + crate::saliency::StaticSal
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -395,6 +420,7 @@ pub trait StaticSaliencyFineGrainedTraitConst: crate::saliency::StaticSaliencyCo
 pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency + crate::saliency::StaticSaliencyFineGrainedTraitConst {
 	fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
@@ -403,7 +429,7 @@ pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency + crat
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -455,10 +481,12 @@ impl crate::saliency::StaticSaliencyFineGrainedTrait for StaticSaliencyFineGrain
 }
 
 impl StaticSaliencyFineGrained {
+	#[inline]
 	pub fn default() -> Result<crate::saliency::StaticSaliencyFineGrained> {
 		unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained() }.into_result().map(|r| unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencyFineGrained>> {
 		unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(r) } )
 	}
@@ -467,7 +495,7 @@ impl StaticSaliencyFineGrained {
 
 boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_StaticSaliencyFineGrained_to_Algorithm }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_SR)
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -476,14 +504,17 @@ boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_StaticSaliency
 pub trait StaticSaliencySpectralResidualTraitConst: crate::saliency::StaticSaliencyConst {
 	fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void;
 
+	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(self.as_raw_StaticSaliencySpectralResidual(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_image_width(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageWidth_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()
 	}
 	
+	#[inline]
 	fn get_image_height(&self) -> Result<i32> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageHeight_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()
 	}
@@ -493,27 +524,31 @@ pub trait StaticSaliencySpectralResidualTraitConst: crate::saliency::StaticSalie
 pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliency + crate::saliency::StaticSaliencySpectralResidualTraitConst {
 	fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void;
 
+	#[inline]
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencySpectralResidual(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
 	}
 	
+	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(self.as_raw_mut_StaticSaliencySpectralResidual(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
+	#[inline]
 	fn set_image_width(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageWidth_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()
 	}
 	
+	#[inline]
 	fn set_image_height(&mut self, val: i32) -> Result<()> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()
 	}
 	
 }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_SR)
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -567,10 +602,12 @@ impl crate::saliency::StaticSaliencySpectralResidualTrait for StaticSaliencySpec
 }
 
 impl StaticSaliencySpectralResidual {
+	#[inline]
 	pub fn default() -> Result<crate::saliency::StaticSaliencySpectralResidual> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual() }.into_result().map(|r| unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(r) } )
 	}
 	
+	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencySpectralResidual>> {
 		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(r) } )
 	}

@@ -119,6 +119,7 @@ opencv_type_enum! { crate::ovis::SceneSettings }
 /// Ogre Media Directory.
 /// ## Parameters
 /// * path: folder or Zip archive.
+#[inline]
 pub fn add_resource_location(path: &str) -> Result<()> {
 	extern_container_arg!(path);
 	unsafe { sys::cv_ovis_addResourceLocation_const_StringR(path.opencv_as_extern()) }.into_result()
@@ -134,6 +135,7 @@ pub fn add_resource_location(path: &str) -> Result<()> {
 /// 
 /// ## C++ default parameters
 /// * segments: Size(1,1)
+#[inline]
 pub fn create_grid_mesh(name: &str, size: core::Size2f, segments: core::Size) -> Result<()> {
 	extern_container_arg!(name);
 	unsafe { sys::cv_ovis_createGridMesh_const_StringR_const_Size2fR_const_SizeR(name.opencv_as_extern(), &size, &segments) }.into_result()
@@ -149,6 +151,7 @@ pub fn create_grid_mesh(name: &str, size: core::Size2f, segments: core::Size) ->
 /// 
 /// ## C++ default parameters
 /// * image: noArray()
+#[inline]
 pub fn create_plane_mesh(name: &str, size: core::Size2f, image: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(image);
@@ -165,6 +168,7 @@ pub fn create_plane_mesh(name: &str, size: core::Size2f, image: &dyn core::ToInp
 /// 
 /// ## C++ default parameters
 /// * colors: noArray()
+#[inline]
 pub fn create_point_cloud_mesh(name: &str, vertices: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(vertices);
@@ -184,6 +188,7 @@ pub fn create_point_cloud_mesh(name: &str, vertices: &dyn core::ToInputArray, co
 /// ## C++ default parameters
 /// * normals: noArray()
 /// * indices: noArray()
+#[inline]
 pub fn create_triangle_mesh(name: &str, vertices: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, indices: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(vertices);
@@ -205,6 +210,7 @@ pub fn create_triangle_mesh(name: &str, vertices: &dyn core::ToInputArray, norma
 /// 
 /// ## C++ default parameters
 /// * flags: SCENE_INTERACTIVE|SCENE_AA
+#[inline]
 pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::ovis::WindowScene>> {
 	extern_container_arg!(title);
 	unsafe { sys::cv_ovis_createWindow_const_StringR_const_SizeR_int(title.opencv_as_extern(), &size, flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::ovis::WindowScene>::opencv_from_extern(r) } )
@@ -215,6 +221,7 @@ pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::
 /// * name: material name
 /// * prop: property name
 /// * value: the value
+#[inline]
 pub fn set_material_property_2(name: &str, prop: &str, value: core::Scalar) -> Result<()> {
 	extern_container_arg!(name);
 	extern_container_arg!(prop);
@@ -226,6 +233,7 @@ pub fn set_material_property_2(name: &str, prop: &str, value: core::Scalar) -> R
 /// * name: material name
 /// * prop: @ref MaterialProperty
 /// * value: the value
+#[inline]
 pub fn set_material_property(name: &str, prop: i32, value: core::Scalar) -> Result<()> {
 	extern_container_arg!(name);
 	unsafe { sys::cv_ovis_setMaterialProperty_const_StringR_int_const_ScalarR(name.opencv_as_extern(), prop, &value) }.into_result()
@@ -238,6 +246,7 @@ pub fn set_material_property(name: &str, prop: i32, value: core::Scalar) -> Resu
 /// * value: the value
 /// 
 /// ## Overloaded parameters
+#[inline]
 pub fn set_material_property_1(name: &str, prop: i32, value: &str) -> Result<()> {
 	extern_container_arg!(name);
 	extern_container_arg!(value);
@@ -249,6 +258,7 @@ pub fn set_material_property_1(name: &str, prop: i32, value: &str) -> Result<()>
 /// * name: material name
 /// * prop: @ref MaterialProperty
 /// * value: the texture data
+#[inline]
 pub fn set_material_texture(name: &str, prop: i32, value: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(value);
@@ -258,6 +268,7 @@ pub fn set_material_texture(name: &str, prop: i32, value: &dyn core::ToInputArra
 /// 
 /// **Deprecated**: use setMaterialProperty
 #[deprecated = "use setMaterialProperty"]
+#[inline]
 pub fn update_texture(name: &str, image: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(name);
 	input_array_arg!(image);
@@ -274,6 +285,7 @@ pub fn update_texture(name: &str, image: &dyn core::ToInputArray) -> Result<()> 
 /// 
 /// ## C++ default parameters
 /// * delay: 0
+#[inline]
 pub fn wait_key(delay: i32) -> Result<i32> {
 	unsafe { sys::cv_ovis_waitKey_int(delay) }.into_result()
 }
@@ -290,6 +302,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// set window background to custom image
 	/// ## Parameters
 	/// * image: 
+	#[inline]
 	fn set_background(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
 		unsafe { sys::cv_ovis_WindowScene_setBackground_const__InputArrayR(self.as_raw_mut_WindowScene(), image.as_raw__InputArray()) }.into_result()
@@ -300,6 +313,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * image: 
 	/// 
 	/// ## Overloaded parameters
+	#[inline]
 	fn set_background_color(&mut self, color: core::Scalar) -> Result<()> {
 		unsafe { sys::cv_ovis_WindowScene_setBackground_const_ScalarR(self.as_raw_mut_WindowScene(), &color) }.into_result()
 	}
@@ -312,6 +326,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// addResourceLocation
 	/// ## Parameters
 	/// * names: compositor names that will be applied in order of appearance
+	#[inline]
 	fn set_compositors(&mut self, names: &core::Vector<String>) -> Result<()> {
 		unsafe { sys::cv_ovis_WindowScene_setCompositors_const_vector_String_R(self.as_raw_mut_WindowScene(), names.as_raw_VectorOfString()) }.into_result()
 	}
@@ -331,6 +346,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// ## C++ default parameters
 	/// * tvec: noArray()
 	/// * rot: noArray()
+	#[inline]
 	fn create_entity(&mut self, name: &str, meshname: &str, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(meshname);
@@ -342,6 +358,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// remove an entity from the scene
 	/// ## Parameters
 	/// * name: entity name
+	#[inline]
 	fn remove_entity(&mut self, name: &str) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_ovis_WindowScene_removeEntity_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern()) }.into_result()
@@ -352,6 +369,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * name: entity name
 	/// * prop: @ref EntityProperty
 	/// * value: the value
+	#[inline]
 	fn set_entity_property(&mut self, name: &str, prop: i32, value: core::Scalar) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_ScalarR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, &value) }.into_result()
@@ -367,6 +385,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * sub_entity_idx: -1
+	#[inline]
 	fn set_entity_property_1(&mut self, name: &str, prop: i32, value: &str, sub_entity_idx: i32) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(value);
@@ -378,6 +397,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * name: entity name
 	/// * prop: @ref EntityProperty
 	/// * value: the value
+	#[inline]
 	fn get_entity_property(&mut self, name: &str, prop: i32, value: &mut dyn core::ToOutputArray) -> Result<()> {
 		extern_container_arg!(name);
 		output_array_arg!(value);
@@ -402,6 +422,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * tvec: noArray()
 	/// * rot: noArray()
 	/// * color: Scalar::all(1)
+	#[inline]
 	fn create_camera_entity(&mut self, name: &str, k: &dyn core::ToInputArray, imsize: core::Size, z_far: f32, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray, color: core::Scalar) -> Result<core::Rect2d> {
 		extern_container_arg!(name);
 		input_array_arg!(k);
@@ -423,6 +444,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * rot: noArray()
 	/// * diffuse_color: Scalar::all(1)
 	/// * specular_color: Scalar::all(1)
+	#[inline]
 	fn create_light_entity(&mut self, name: &str, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray, diffuse_color: core::Scalar, specular_color: core::Scalar) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(tvec);
@@ -439,6 +461,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// ## C++ default parameters
 	/// * tvec: noArray()
 	/// * rot: noArray()
+	#[inline]
 	fn update_entity_pose(&mut self, name: &str, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(tvec);
@@ -457,6 +480,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * tvec: noArray()
 	/// * rot: noArray()
 	/// * invert: false
+	#[inline]
 	fn set_entity_pose(&mut self, name: &str, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray, invert: bool) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(tvec);
@@ -475,6 +499,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * r: noArray()
 	/// * tvec: noArray()
 	/// * invert: false
+	#[inline]
 	fn get_entity_pose(&mut self, name: &str, r: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, invert: bool) -> Result<()> {
 		extern_container_arg!(name);
 		output_array_arg!(r);
@@ -486,6 +511,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// ## Parameters
 	/// * name: entity name
 	/// * out: the animation names
+	#[inline]
 	fn get_entity_animations(&mut self, name: &str, out: &mut core::Vector<String>) -> Result<()> {
 		extern_container_arg!(name);
 		unsafe { sys::cv_ovis_WindowScene_getEntityAnimations_const_StringR_vector_String_R(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), out.as_raw_mut_VectorOfString()) }.into_result()
@@ -501,6 +527,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * loop_: true
+	#[inline]
 	fn play_entity_animation(&mut self, name: &str, animname: &str, loop_: bool) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(animname);
@@ -511,6 +538,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// ## Parameters
 	/// * name: enitity name
 	/// * animname: animation name
+	#[inline]
 	fn stop_entity_animation(&mut self, name: &str, animname: &str) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(animname);
@@ -518,6 +546,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	}
 	
 	/// read back the image generated by the last call to @ref waitKey
+	#[inline]
 	fn get_screenshot(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
 		unsafe { sys::cv_ovis_WindowScene_getScreenshot_const__OutputArrayR(self.as_raw_mut_WindowScene(), frame.as_raw__OutputArray()) }.into_result()
@@ -532,6 +561,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * mrt_index: 0
+	#[inline]
 	fn get_compositor_texture(&mut self, compname: &str, texname: &str, out: &mut dyn core::ToOutputArray, mrt_index: i32) -> Result<()> {
 		extern_container_arg!(compname);
 		extern_container_arg!(texname);
@@ -542,6 +572,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// get the depth for the current frame.
 	/// 
 	/// return the per pixel distance to the camera in world units
+	#[inline]
 	fn get_depth(&mut self, depth: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(depth);
 		unsafe { sys::cv_ovis_WindowScene_getDepth_const__OutputArrayR(self.as_raw_mut_WindowScene(), depth.as_raw__OutputArray()) }.into_result()
@@ -556,6 +587,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * up: noArray()
+	#[inline]
 	fn fix_camera_yaw_axis(&mut self, use_fixed: bool, up: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(up);
 		unsafe { sys::cv_ovis_WindowScene_fixCameraYawAxis_bool_const__InputArrayR(self.as_raw_mut_WindowScene(), use_fixed, up.as_raw__InputArray()) }.into_result()
@@ -571,6 +603,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * tvec: noArray()
 	/// * rot: noArray()
 	/// * invert: false
+	#[inline]
 	fn set_camera_pose(&mut self, tvec: &dyn core::ToInputArray, rot: &dyn core::ToInputArray, invert: bool) -> Result<()> {
 		input_array_arg!(tvec);
 		input_array_arg!(rot);
@@ -584,6 +617,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * offset: noArray()
+	#[inline]
 	fn set_camera_look_at(&mut self, target: &str, offset: &dyn core::ToInputArray) -> Result<()> {
 		extern_container_arg!(target);
 		input_array_arg!(offset);
@@ -599,6 +633,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// ## C++ default parameters
 	/// * offset: noArray()
+	#[inline]
 	fn set_entity_look_at(&mut self, origin: &str, target: &str, offset: &dyn core::ToInputArray) -> Result<()> {
 		extern_container_arg!(origin);
 		extern_container_arg!(target);
@@ -616,6 +651,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * r: noArray()
 	/// * tvec: noArray()
 	/// * invert: false
+	#[inline]
 	fn get_camera_pose(&mut self, r: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, invert: bool) -> Result<()> {
 		output_array_arg!(r);
 		output_array_arg!(tvec);
@@ -634,12 +670,14 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// ## C++ default parameters
 	/// * z_near: -1
 	/// * z_far: -1
+	#[inline]
 	fn set_camera_intrinsics(&mut self, k: &dyn core::ToInputArray, imsize: core::Size, z_near: f32, z_far: f32) -> Result<()> {
 		input_array_arg!(k);
 		unsafe { sys::cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR_float_float(self.as_raw_mut_WindowScene(), k.as_raw__InputArray(), &imsize, z_near, z_far) }.into_result()
 	}
 	
 	/// render this window, but do not swap buffers. Automatically called by @ref ovis::waitKey
+	#[inline]
 	fn update(&mut self) -> Result<()> {
 		unsafe { sys::cv_ovis_WindowScene_update(self.as_raw_mut_WindowScene()) }.into_result()
 	}

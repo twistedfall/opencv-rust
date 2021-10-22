@@ -422,12 +422,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
 		let args = self.clang_arguments();
 
-		let empty_hashmap = HashMap::new();
-		let spec = if let Some(spec) = self.as_specialized() {
-			spec
-		} else {
-			&empty_hashmap
-		};
+		let empty_spec_hashmap = HashMap::new();
+		let spec = self.as_specialized().unwrap_or_else(|| &empty_spec_hashmap);
+
 		let is_field_setter = self.as_field_setter().is_some();
 		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 
@@ -437,7 +434,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
 				}
 
-				if let Some(arg_override) = arg_overrides.and_then(|o| o.get(a.rust_leafname(FishStyle::No).as_ref())) {
+				let arg_override = arg_overrides
+					.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
+				if let Some(arg_override) = arg_override {
 					return Field::new_ext(a, FieldTypeHint::ArgOverride(*arg_override), self.gen_env);
 				}
 

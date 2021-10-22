@@ -13,7 +13,7 @@ fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git checkout .
-git checkout 409c1c4a05f853e3204b5914e693221576525cd6
+git checkout "$VCPKG_TREE_COMMIT"
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows.cmake"
@@ -21,7 +21,7 @@ echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows-static
 echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x86-windows.cmake"
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
-choco install -y llvm --version 12.0.1
+choco install -y llvm --version 13.0.0
 "$VCPKG_ROOT/vcpkg" upgrade --no-dry-run
 "$VCPKG_ROOT/vcpkg" install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
 popd

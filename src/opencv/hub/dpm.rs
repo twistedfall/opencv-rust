@@ -13,7 +13,7 @@
 //! ---------------------------------------------------------------
 //! 
 //! The object detector described below has been initially proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010a](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
+//! [Felzenszwalb2010a](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 //! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
 //! window approach, where a filter is applied at all positions and scales of an image. The first
 //! innovation is enriching the Dalal-Triggs model using a star-structured part-based model defined by a
@@ -29,7 +29,7 @@
 //! location.
 //! 
 //! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010b](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
+//! [Felzenszwalb2010b](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 //! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
 //! model's parts. For a model with (n+1) parts, including the root, a sequence of (n+1) models is
 //! obtained. The i-th model in this sequence is defined by the first i parts from the original model.
@@ -47,17 +47,20 @@ pub mod prelude {
 pub trait DPMDetectorConst {
 	fn as_raw_DPMDetector(&self) -> *const c_void;
 
+	#[inline]
 	fn is_empty(&self) -> Result<bool> {
 		unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector()) }.into_result()
 	}
 	
 	/// Return the class (model) names that were passed in constructor or method load or extracted from
 	/// models filenames in those methods.
+	#[inline]
 	fn get_class_names(&self) -> Result<core::Vector<String>> {
 		unsafe { sys::cv_dpm_DPMDetector_getClassNames_const(self.as_raw_DPMDetector()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
 	}
 	
 	/// Return a count of loaded models (classes).
+	#[inline]
 	fn get_class_count(&self) -> Result<size_t> {
 		unsafe { sys::cv_dpm_DPMDetector_getClassCount_const(self.as_raw_DPMDetector()) }.into_result()
 	}
@@ -72,6 +75,7 @@ pub trait DPMDetector: crate::dpm::DPMDetectorConst {
 	/// ## Parameters
 	/// * image: An image.
 	/// * objects: The detections: rectangulars, scores and class IDs.
+	#[inline]
 	fn detect(&mut self, image: &mut core::Mat, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
 		unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection()) }.into_result()
 	}
@@ -89,6 +93,7 @@ impl dyn DPMDetector + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * class_names: std::vector<std::string>()
+	#[inline]
 	pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<dyn crate::dpm::DPMDetector>> {
 		unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::dpm::DPMDetector>::opencv_from_extern(r) } )
 	}
@@ -97,14 +102,17 @@ impl dyn DPMDetector + '_ {
 pub trait DPMDetector_ObjectDetectionTraitConst {
 	fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void;
 
+	#[inline]
 	fn rect(&self) -> core::Rect {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropRect_const(self.as_raw_DPMDetector_ObjectDetection()) }.into_result().expect("Infallible function failed: rect")
 	}
 	
+	#[inline]
 	fn score(&self) -> f32 {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropScore_const(self.as_raw_DPMDetector_ObjectDetection()) }.into_result().expect("Infallible function failed: score")
 	}
 	
+	#[inline]
 	fn class_id(&self) -> i32 {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropClassID_const(self.as_raw_DPMDetector_ObjectDetection()) }.into_result().expect("Infallible function failed: class_id")
 	}
@@ -114,15 +122,18 @@ pub trait DPMDetector_ObjectDetectionTraitConst {
 pub trait DPMDetector_ObjectDetectionTrait: crate::dpm::DPMDetector_ObjectDetectionTraitConst {
 	fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void;
 
-	fn set_rect(&mut self, val: core::Rect) -> () {
+	#[inline]
+	fn set_rect(&mut self, val: core::Rect) {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_rect")
 	}
 	
-	fn set_score(&mut self, val: f32) -> () {
+	#[inline]
+	fn set_score(&mut self, val: f32) {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropScore_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) }.into_result().expect("Infallible function failed: set_score")
 	}
 	
-	fn set_class_id(&mut self, val: i32) -> () {
+	#[inline]
+	fn set_class_id(&mut self, val: i32) {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropClassID_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) }.into_result().expect("Infallible function failed: set_class_id")
 	}
 	
@@ -152,12 +163,14 @@ impl crate::dpm::DPMDetector_ObjectDetectionTrait for DPMDetector_ObjectDetectio
 }
 
 impl DPMDetector_ObjectDetection {
+	#[inline]
 	pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result().map(|r| unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(r) } )
 	}
 	
 	/// ## C++ default parameters
 	/// * class_id: -1
+	#[inline]
 	pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id) }.into_result().map(|r| unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(r) } )
 	}

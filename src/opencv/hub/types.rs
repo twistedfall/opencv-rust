@@ -950,13 +950,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -964,13 +957,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint_output_array(self.as_raw_mut_VectorOfPoint()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -984,12 +970,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint }
 	
 	pub type VectorOfPoint2d = core::Vector<core::Point2d>;
 	
@@ -1024,13 +1005,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint2d {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint2d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1038,13 +1012,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint2d_output_array(self.as_raw_mut_VectorOfPoint2d()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint2d {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1058,12 +1025,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint2d {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint2d }
 	
 	pub type VectorOfPoint2f = core::Vector<core::Point2f>;
 	
@@ -1098,13 +1060,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint2f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint2f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1112,13 +1067,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint2f_output_array(self.as_raw_mut_VectorOfPoint2f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint2f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1132,12 +1080,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint2f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint2f }
 	
 	pub type VectorOfPoint3d = core::Vector<core::Point3d>;
 	
@@ -1172,13 +1115,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint3d {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1186,13 +1122,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3d_output_array(self.as_raw_mut_VectorOfPoint3d()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint3d {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1206,12 +1135,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint3d {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint3d }
 	
 	pub type VectorOfPoint3f = core::Vector<core::Point3f>;
 	
@@ -1246,13 +1170,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint3f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1260,13 +1177,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3f_output_array(self.as_raw_mut_VectorOfPoint3f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint3f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1280,12 +1190,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint3f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint3f }
 	
 	pub type VectorOfPoint3i = core::Vector<core::Point3i>;
 	
@@ -1320,13 +1225,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfPoint3i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfPoint3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1334,13 +1232,6 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3i_output_array(self.as_raw_mut_VectorOfPoint3i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfPoint3i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1354,12 +1245,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfPoint3i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfPoint3i }
 	
 	pub type VectorOfRange = core::Vector<core::Range>;
 	
@@ -1414,13 +1300,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfRect {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfRect {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1428,13 +1307,6 @@ mod core_types {
 			unsafe { cv_VectorOfRect_output_array(self.as_raw_mut_VectorOfRect()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfRect {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1448,12 +1320,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfRect {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfRect }
 	
 	pub type VectorOfRect2d = core::Vector<core::Rect2d>;
 	
@@ -1488,13 +1355,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfRect2d {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfRect2d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1502,13 +1362,6 @@ mod core_types {
 			unsafe { cv_VectorOfRect2d_output_array(self.as_raw_mut_VectorOfRect2d()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfRect2d {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1522,12 +1375,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfRect2d {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfRect2d }
 	
 	pub type VectorOfRotatedRect = core::Vector<core::RotatedRect>;
 	
@@ -1582,13 +1430,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfScalar {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfScalar {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1596,13 +1437,6 @@ mod core_types {
 			unsafe { cv_VectorOfScalar_output_array(self.as_raw_mut_VectorOfScalar()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfScalar {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1616,12 +1450,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfScalar {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfScalar }
 	
 	pub type VectorOfSize = core::Vector<core::Size>;
 	
@@ -1656,13 +1485,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfSize {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfSize {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1670,13 +1492,6 @@ mod core_types {
 			unsafe { cv_VectorOfSize_output_array(self.as_raw_mut_VectorOfSize()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfSize {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1690,12 +1505,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfSize {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfSize }
 	
 	pub type VectorOfString = core::Vector<String>;
 	
@@ -1770,13 +1580,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec2i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec2i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1784,13 +1587,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec2i_output_array(self.as_raw_mut_VectorOfVec2i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec2i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1804,12 +1600,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec2i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec2i }
 	
 	pub type VectorOfVec3d = core::Vector<core::Vec3d>;
 	
@@ -1844,13 +1635,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec3d {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1858,13 +1642,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec3d_output_array(self.as_raw_mut_VectorOfVec3d()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec3d {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1878,12 +1655,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec3d {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec3d }
 	
 	pub type VectorOfVec3f = core::Vector<core::Vec3f>;
 	
@@ -1918,13 +1690,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec3f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1932,13 +1697,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec3f_output_array(self.as_raw_mut_VectorOfVec3f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec3f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -1952,12 +1710,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec3f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec3f }
 	
 	pub type VectorOfVec3i = core::Vector<core::Vec3i>;
 	
@@ -1992,13 +1745,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec3i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2006,13 +1752,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec3i_output_array(self.as_raw_mut_VectorOfVec3i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec3i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2026,12 +1765,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec3i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec3i }
 	
 	pub type VectorOfVec4f = core::Vector<core::Vec4f>;
 	
@@ -2066,13 +1800,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec4f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec4f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2080,13 +1807,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec4f_output_array(self.as_raw_mut_VectorOfVec4f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec4f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2100,12 +1820,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec4f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec4f }
 	
 	pub type VectorOfVec4i = core::Vector<core::Vec4i>;
 	
@@ -2140,13 +1855,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec4i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec4i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2154,13 +1862,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec4i_output_array(self.as_raw_mut_VectorOfVec4i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec4i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2174,12 +1875,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec4i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec4i }
 	
 	pub type VectorOfVec6f = core::Vector<core::Vec6f>;
 	
@@ -2214,13 +1910,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVec6f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVec6f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2228,13 +1917,6 @@ mod core_types {
 			unsafe { cv_VectorOfVec6f_output_array(self.as_raw_mut_VectorOfVec6f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVec6f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2248,12 +1930,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVec6f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVec6f }
 	
 	pub type VectorOfVectorOfDMatch = core::Vector<core::Vector<core::DMatch>>;
 	
@@ -2345,13 +2022,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfPoint {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfPoint {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2359,13 +2029,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint_output_array(self.as_raw_mut_VectorOfVectorOfPoint()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfPoint {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2379,12 +2042,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfPoint }
 	
 	pub type VectorOfVectorOfPoint2f = core::Vector<core::Vector<core::Point2f>>;
 	
@@ -2416,13 +2074,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfPoint2f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfPoint2f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2430,13 +2081,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint2f_output_array(self.as_raw_mut_VectorOfVectorOfPoint2f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfPoint2f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2450,12 +2094,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint2f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfPoint2f }
 	
 	pub type VectorOfVectorOfPoint3d = core::Vector<core::Vector<core::Point3d>>;
 	
@@ -2487,13 +2126,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfPoint3d {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfPoint3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2501,13 +2133,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3d_output_array(self.as_raw_mut_VectorOfVectorOfPoint3d()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfPoint3d {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2521,12 +2146,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint3d {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfPoint3d }
 	
 	pub type VectorOfVectorOfPoint3f = core::Vector<core::Vector<core::Point3f>>;
 	
@@ -2558,13 +2178,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfPoint3f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfPoint3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2572,13 +2185,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3f_output_array(self.as_raw_mut_VectorOfVectorOfPoint3f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfPoint3f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2592,12 +2198,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint3f {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfPoint3f }
 	
 	pub type VectorOfVectorOfPoint3i = core::Vector<core::Vector<core::Point3i>>;
 	
@@ -2629,13 +2230,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfPoint3i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfPoint3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2643,13 +2237,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3i_output_array(self.as_raw_mut_VectorOfVectorOfPoint3i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfPoint3i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2663,12 +2250,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint3i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfPoint3i }
 	
 	pub type VectorOfVectorOfRange = core::Vector<core::Vector<core::Range>>;
 	
@@ -2720,13 +2302,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfVec2i {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfVec2i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2734,13 +2309,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfVec2i_output_array(self.as_raw_mut_VectorOfVectorOfVec2i()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfVec2i {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2754,12 +2322,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfVec2i {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfVec2i }
 	
 	pub type VectorOfVectorOfVec3f = core::Vector<core::Vector<core::Vec3f>>;
 	
@@ -2791,13 +2354,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfVec3f {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfVec3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2805,13 +2361,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfVec3f_output_array(self.as_raw_mut_VectorOfVectorOfVec3f()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfVec3f {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2825,12 +2374,59 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfVec3f {
+	input_output_array_ref_forward! { VectorOfVectorOfVec3f }
+	
+	pub type VectorOfVectorOff32 = core::Vector<core::Vector<f32>>;
+	
+	impl VectorOfVectorOff32 {
+		pub fn as_raw_VectorOfVectorOff32(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOff32(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<f32>, *const c_void, *mut c_void,
+		cv_VectorOfVectorOff32_new, cv_VectorOfVectorOff32_delete,
+		cv_VectorOfVectorOff32_len, cv_VectorOfVectorOff32_is_empty,
+		cv_VectorOfVectorOff32_capacity, cv_VectorOfVectorOff32_shrink_to_fit,
+		cv_VectorOfVectorOff32_reserve, cv_VectorOfVectorOff32_remove,
+		cv_VectorOfVectorOff32_swap, cv_VectorOfVectorOff32_clear,
+		cv_VectorOfVectorOff32_get, cv_VectorOfVectorOff32_set,
+		cv_VectorOfVectorOff32_push, cv_VectorOfVectorOff32_insert,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<f32> }
+	
+	unsafe impl Send for core::Vector<core::Vector<f32>> {}
+	
+	impl core::ToInputArray for VectorOfVectorOff32 {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
+		fn input_array(&self) -> Result<core::_InputArray> {
+			extern "C" { fn cv_VectorOfVectorOff32_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVectorOff32_input_array(self.as_raw_VectorOfVectorOff32()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
+	
+	impl core::ToOutputArray for VectorOfVectorOff32 {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			extern "C" { fn cv_VectorOfVectorOff32_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVectorOff32_output_array(self.as_raw_mut_VectorOfVectorOff32()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToInputOutputArray for VectorOfVectorOff32 {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			extern "C" { fn cv_VectorOfVectorOff32_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVectorOff32_input_output_array(self.as_raw_mut_VectorOfVectorOff32()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
+		}
+	}
+	
+	input_output_array_ref_forward! { VectorOfVectorOff32 }
 	
 	pub type VectorOfVectorOff64 = core::Vector<core::Vector<f64>>;
 	
@@ -2862,13 +2458,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOff64 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOff64 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2876,13 +2465,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOff64_output_array(self.as_raw_mut_VectorOfVectorOff64()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOff64 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2896,12 +2478,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOff64 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOff64 }
 	
 	pub type VectorOfVectorOfi32 = core::Vector<core::Vector<i32>>;
 	
@@ -2933,13 +2510,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfi32 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfi32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2947,13 +2517,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfi32_output_array(self.as_raw_mut_VectorOfVectorOfi32()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfi32 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -2967,12 +2530,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfi32 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfi32 }
 	
 	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
 	
@@ -3004,13 +2562,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfi8 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfi8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3018,13 +2569,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfi8_output_array(self.as_raw_mut_VectorOfVectorOfi8()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfi8 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3038,12 +2582,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfi8 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfi8 }
 	
 	pub type VectorOfVectorOfu8 = core::Vector<core::Vector<u8>>;
 	
@@ -3075,13 +2614,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfVectorOfu8 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfVectorOfu8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3089,13 +2621,6 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfu8_output_array(self.as_raw_mut_VectorOfVectorOfu8()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfVectorOfu8 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3109,12 +2634,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfVectorOfu8 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfVectorOfu8 }
 	
 	pub type VectorOfbool = core::Vector<bool>;
 	
@@ -3169,13 +2689,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOff32 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOff32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3183,13 +2696,6 @@ mod core_types {
 			unsafe { cv_VectorOff32_output_array(self.as_raw_mut_VectorOff32()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOff32 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3203,12 +2709,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOff32 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOff32 }
 	
 	pub type VectorOff64 = core::Vector<f64>;
 	
@@ -3243,13 +2744,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOff64 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOff64 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3257,13 +2751,6 @@ mod core_types {
 			unsafe { cv_VectorOff64_output_array(self.as_raw_mut_VectorOff64()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOff64 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3277,12 +2764,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOff64 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOff64 }
 	
 	pub type VectorOfi32 = core::Vector<i32>;
 	
@@ -3317,13 +2799,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfi32 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfi32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3331,13 +2806,6 @@ mod core_types {
 			unsafe { cv_VectorOfi32_output_array(self.as_raw_mut_VectorOfi32()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfi32 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3351,12 +2819,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfi32 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfi32 }
 	
 	pub type VectorOfi8 = core::Vector<i8>;
 	
@@ -3391,13 +2854,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfi8 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfi8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3405,13 +2861,6 @@ mod core_types {
 			unsafe { cv_VectorOfi8_output_array(self.as_raw_mut_VectorOfi8()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfi8 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3425,12 +2874,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfi8 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfi8 }
 	
 	pub type VectorOfsize_t = core::Vector<size_t>;
 	
@@ -3488,13 +2932,6 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputArray for &VectorOfu8 {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			(*self).input_array()
-		}
-	}
-	
 	impl core::ToOutputArray for VectorOfu8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3502,13 +2939,6 @@ mod core_types {
 			unsafe { cv_VectorOfu8_output_array(self.as_raw_mut_VectorOfu8()) }
 				.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
-		}
-	}
-	
-	impl core::ToOutputArray for &mut VectorOfu8 {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			(*self).output_array()
 		}
 	}
 	
@@ -3522,12 +2952,7 @@ mod core_types {
 		}
 	}
 	
-	impl core::ToInputOutputArray for &mut VectorOfu8 {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			(*self).input_output_array()
-		}
-	}
+	input_output_array_ref_forward! { VectorOfu8 }
 	
 }
 #[cfg(ocvrs_has_module_core)]
@@ -4698,22 +4123,24 @@ pub use cudastereo_types::*;
 mod dnn_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
-	pub type PtrOfAbsLayer = core::Ptr<dyn crate::dnn::AbsLayer>;
+	pub type PtrOfAbsLayer = core::Ptr<crate::dnn::AbsLayer>;
 	
-	ptr_extern! { dyn crate::dnn::AbsLayer,
+	ptr_extern! { crate::dnn::AbsLayer,
 		cv_PtrOfAbsLayer_delete, cv_PtrOfAbsLayer_get_inner_ptr, cv_PtrOfAbsLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::AbsLayer, cv_PtrOfAbsLayer_new }
 	
 	impl PtrOfAbsLayer {
 		#[inline] pub fn as_raw_PtrOfAbsLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfAbsLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::AbsLayerConst for PtrOfAbsLayer {
+	impl crate::dnn::AbsLayerTraitConst for PtrOfAbsLayer {
 		#[inline] fn as_raw_AbsLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::AbsLayer for PtrOfAbsLayer {
+	impl crate::dnn::AbsLayerTrait for PtrOfAbsLayer {
 		#[inline] fn as_raw_mut_AbsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4725,11 +4152,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfAbsLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAbsLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfAbsLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfAbsLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4778,22 +4205,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfActivationLayer = core::Ptr<dyn crate::dnn::ActivationLayer>;
+	pub type PtrOfActivationLayer = core::Ptr<crate::dnn::ActivationLayer>;
 	
-	ptr_extern! { dyn crate::dnn::ActivationLayer,
+	ptr_extern! { crate::dnn::ActivationLayer,
 		cv_PtrOfActivationLayer_delete, cv_PtrOfActivationLayer_get_inner_ptr, cv_PtrOfActivationLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ActivationLayer, cv_PtrOfActivationLayer_new }
 	
 	impl PtrOfActivationLayer {
 		#[inline] pub fn as_raw_PtrOfActivationLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfActivationLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfActivationLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfActivationLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4813,22 +4242,69 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfBNLLLayer = core::Ptr<dyn crate::dnn::BNLLLayer>;
+	pub type PtrOfActivationLayerInt8 = core::Ptr<crate::dnn::ActivationLayerInt8>;
 	
-	ptr_extern! { dyn crate::dnn::BNLLLayer,
+	ptr_extern! { crate::dnn::ActivationLayerInt8,
+		cv_PtrOfActivationLayerInt8_delete, cv_PtrOfActivationLayerInt8_get_inner_ptr, cv_PtrOfActivationLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ActivationLayerInt8, cv_PtrOfActivationLayerInt8_new }
+	
+	impl PtrOfActivationLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfActivationLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfActivationLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerInt8TraitConst for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_ActivationLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerInt8Trait for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_mut_ActivationLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfBNLLLayer = core::Ptr<crate::dnn::BNLLLayer>;
+	
+	ptr_extern! { crate::dnn::BNLLLayer,
 		cv_PtrOfBNLLLayer_delete, cv_PtrOfBNLLLayer_get_inner_ptr, cv_PtrOfBNLLLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::BNLLLayer, cv_PtrOfBNLLLayer_new }
 	
 	impl PtrOfBNLLLayer {
 		#[inline] pub fn as_raw_PtrOfBNLLLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBNLLLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::BNLLLayerConst for PtrOfBNLLLayer {
+	impl crate::dnn::BNLLLayerTraitConst for PtrOfBNLLLayer {
 		#[inline] fn as_raw_BNLLLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::BNLLLayer for PtrOfBNLLLayer {
+	impl crate::dnn::BNLLLayerTrait for PtrOfBNLLLayer {
 		#[inline] fn as_raw_mut_BNLLLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4840,11 +4316,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfBNLLLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfBNLLLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfBNLLLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfBNLLLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4933,22 +4409,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfBatchNormLayer = core::Ptr<dyn crate::dnn::BatchNormLayer>;
+	pub type PtrOfBatchNormLayer = core::Ptr<crate::dnn::BatchNormLayer>;
 	
-	ptr_extern! { dyn crate::dnn::BatchNormLayer,
+	ptr_extern! { crate::dnn::BatchNormLayer,
 		cv_PtrOfBatchNormLayer_delete, cv_PtrOfBatchNormLayer_get_inner_ptr, cv_PtrOfBatchNormLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::BatchNormLayer, cv_PtrOfBatchNormLayer_new }
 	
 	impl PtrOfBatchNormLayer {
 		#[inline] pub fn as_raw_PtrOfBatchNormLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfBatchNormLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::BatchNormLayerConst for PtrOfBatchNormLayer {
+	impl crate::dnn::BatchNormLayerTraitConst for PtrOfBatchNormLayer {
 		#[inline] fn as_raw_BatchNormLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::BatchNormLayer for PtrOfBatchNormLayer {
+	impl crate::dnn::BatchNormLayerTrait for PtrOfBatchNormLayer {
 		#[inline] fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4960,11 +4438,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfBatchNormLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfBatchNormLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfBatchNormLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfBatchNormLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4973,6 +4451,59 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfBatchNormLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfBatchNormLayerInt8 = core::Ptr<crate::dnn::BatchNormLayerInt8>;
+	
+	ptr_extern! { crate::dnn::BatchNormLayerInt8,
+		cv_PtrOfBatchNormLayerInt8_delete, cv_PtrOfBatchNormLayerInt8_get_inner_ptr, cv_PtrOfBatchNormLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::BatchNormLayerInt8, cv_PtrOfBatchNormLayerInt8_new }
+	
+	impl PtrOfBatchNormLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfBatchNormLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBatchNormLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::BatchNormLayerInt8TraitConst for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_BatchNormLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::BatchNormLayerInt8Trait for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_mut_BatchNormLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::BatchNormLayerTraitConst for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_BatchNormLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::BatchNormLayerTrait for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfBatchNormLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfBatchNormLayerInt8 {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5050,6 +4581,43 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfCumSumLayer = core::Ptr<crate::dnn::CumSumLayer>;
+	
+	ptr_extern! { crate::dnn::CumSumLayer,
+		cv_PtrOfCumSumLayer_delete, cv_PtrOfCumSumLayer_get_inner_ptr, cv_PtrOfCumSumLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::CumSumLayer, cv_PtrOfCumSumLayer_new }
+	
+	impl PtrOfCumSumLayer {
+		#[inline] pub fn as_raw_PtrOfCumSumLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCumSumLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::CumSumLayerTraitConst for PtrOfCumSumLayer {
+		#[inline] fn as_raw_CumSumLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::CumSumLayerTrait for PtrOfCumSumLayer {
+		#[inline] fn as_raw_mut_CumSumLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfCumSumLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCumSumLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfCumSumLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfCumSumLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfDataAugmentationLayer = core::Ptr<crate::dnn::DataAugmentationLayer>;
 	
 	ptr_extern! { crate::dnn::DataAugmentationLayer,
@@ -5084,6 +4652,43 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfDataAugmentationLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfDequantizeLayer = core::Ptr<crate::dnn::DequantizeLayer>;
+	
+	ptr_extern! { crate::dnn::DequantizeLayer,
+		cv_PtrOfDequantizeLayer_delete, cv_PtrOfDequantizeLayer_get_inner_ptr, cv_PtrOfDequantizeLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::DequantizeLayer, cv_PtrOfDequantizeLayer_new }
+	
+	impl PtrOfDequantizeLayer {
+		#[inline] pub fn as_raw_PtrOfDequantizeLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDequantizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::DequantizeLayerTraitConst for PtrOfDequantizeLayer {
+		#[inline] fn as_raw_DequantizeLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::DequantizeLayerTrait for PtrOfDequantizeLayer {
+		#[inline] fn as_raw_mut_DequantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfDequantizeLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfDequantizeLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfDequantizeLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfDequantizeLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5124,22 +4729,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfELULayer = core::Ptr<dyn crate::dnn::ELULayer>;
+	pub type PtrOfELULayer = core::Ptr<crate::dnn::ELULayer>;
 	
-	ptr_extern! { dyn crate::dnn::ELULayer,
+	ptr_extern! { crate::dnn::ELULayer,
 		cv_PtrOfELULayer_delete, cv_PtrOfELULayer_get_inner_ptr, cv_PtrOfELULayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ELULayer, cv_PtrOfELULayer_new }
 	
 	impl PtrOfELULayer {
 		#[inline] pub fn as_raw_PtrOfELULayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfELULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::ELULayerConst for PtrOfELULayer {
+	impl crate::dnn::ELULayerTraitConst for PtrOfELULayer {
 		#[inline] fn as_raw_ELULayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ELULayer for PtrOfELULayer {
+	impl crate::dnn::ELULayerTrait for PtrOfELULayer {
 		#[inline] fn as_raw_mut_ELULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5151,11 +4758,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfELULayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfELULayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfELULayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfELULayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5204,22 +4811,61 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfExpLayer = core::Ptr<dyn crate::dnn::ExpLayer>;
+	pub type PtrOfEltwiseLayerInt8 = core::Ptr<crate::dnn::EltwiseLayerInt8>;
 	
-	ptr_extern! { dyn crate::dnn::ExpLayer,
+	ptr_extern! { crate::dnn::EltwiseLayerInt8,
+		cv_PtrOfEltwiseLayerInt8_delete, cv_PtrOfEltwiseLayerInt8_get_inner_ptr, cv_PtrOfEltwiseLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::EltwiseLayerInt8, cv_PtrOfEltwiseLayerInt8_new }
+	
+	impl PtrOfEltwiseLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfEltwiseLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEltwiseLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::EltwiseLayerInt8TraitConst for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_EltwiseLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::EltwiseLayerInt8Trait for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_mut_EltwiseLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfEltwiseLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfExpLayer = core::Ptr<crate::dnn::ExpLayer>;
+	
+	ptr_extern! { crate::dnn::ExpLayer,
 		cv_PtrOfExpLayer_delete, cv_PtrOfExpLayer_get_inner_ptr, cv_PtrOfExpLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ExpLayer, cv_PtrOfExpLayer_new }
 	
 	impl PtrOfExpLayer {
 		#[inline] pub fn as_raw_PtrOfExpLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfExpLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::ExpLayerConst for PtrOfExpLayer {
+	impl crate::dnn::ExpLayerTraitConst for PtrOfExpLayer {
 		#[inline] fn as_raw_ExpLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ExpLayer for PtrOfExpLayer {
+	impl crate::dnn::ExpLayerTrait for PtrOfExpLayer {
 		#[inline] fn as_raw_mut_ExpLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5231,11 +4877,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfExpLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfExpLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfExpLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfExpLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5321,6 +4967,43 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfGRULayer = core::Ptr<crate::dnn::GRULayer>;
+	
+	ptr_extern! { crate::dnn::GRULayer,
+		cv_PtrOfGRULayer_delete, cv_PtrOfGRULayer_get_inner_ptr, cv_PtrOfGRULayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::GRULayer, cv_PtrOfGRULayer_new }
+	
+	impl PtrOfGRULayer {
+		#[inline] pub fn as_raw_PtrOfGRULayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGRULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::GRULayerTraitConst for PtrOfGRULayer {
+		#[inline] fn as_raw_GRULayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::GRULayerTrait for PtrOfGRULayer {
+		#[inline] fn as_raw_mut_GRULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfGRULayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfGRULayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfGRULayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfGRULayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfInnerProductLayer = core::Ptr<crate::dnn::InnerProductLayer>;
 	
 	ptr_extern! { crate::dnn::InnerProductLayer,
@@ -5355,6 +5038,51 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfInnerProductLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfInnerProductLayerInt8 = core::Ptr<crate::dnn::InnerProductLayerInt8>;
+	
+	ptr_extern! { crate::dnn::InnerProductLayerInt8,
+		cv_PtrOfInnerProductLayerInt8_delete, cv_PtrOfInnerProductLayerInt8_get_inner_ptr, cv_PtrOfInnerProductLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::InnerProductLayerInt8, cv_PtrOfInnerProductLayerInt8_new }
+	
+	impl PtrOfInnerProductLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfInnerProductLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfInnerProductLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::InnerProductLayerInt8TraitConst for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_InnerProductLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::InnerProductLayerInt8Trait for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_mut_InnerProductLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::InnerProductLayerTraitConst for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::InnerProductLayerTrait for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfInnerProductLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfInnerProductLayerInt8 {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5533,22 +5261,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfMishLayer = core::Ptr<dyn crate::dnn::MishLayer>;
+	pub type PtrOfMishLayer = core::Ptr<crate::dnn::MishLayer>;
 	
-	ptr_extern! { dyn crate::dnn::MishLayer,
+	ptr_extern! { crate::dnn::MishLayer,
 		cv_PtrOfMishLayer_delete, cv_PtrOfMishLayer_get_inner_ptr, cv_PtrOfMishLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::MishLayer, cv_PtrOfMishLayer_new }
 	
 	impl PtrOfMishLayer {
 		#[inline] pub fn as_raw_PtrOfMishLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfMishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::MishLayerConst for PtrOfMishLayer {
+	impl crate::dnn::MishLayerTraitConst for PtrOfMishLayer {
 		#[inline] fn as_raw_MishLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::MishLayer for PtrOfMishLayer {
+	impl crate::dnn::MishLayerTrait for PtrOfMishLayer {
 		#[inline] fn as_raw_mut_MishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5560,11 +5290,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfMishLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfMishLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfMishLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfMishLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5724,22 +5454,69 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfPowerLayer = core::Ptr<dyn crate::dnn::PowerLayer>;
+	pub type PtrOfPoolingLayerInt8 = core::Ptr<crate::dnn::PoolingLayerInt8>;
 	
-	ptr_extern! { dyn crate::dnn::PowerLayer,
+	ptr_extern! { crate::dnn::PoolingLayerInt8,
+		cv_PtrOfPoolingLayerInt8_delete, cv_PtrOfPoolingLayerInt8_get_inner_ptr, cv_PtrOfPoolingLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::PoolingLayerInt8, cv_PtrOfPoolingLayerInt8_new }
+	
+	impl PtrOfPoolingLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfPoolingLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfPoolingLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::PoolingLayerInt8TraitConst for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_PoolingLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::PoolingLayerInt8Trait for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_mut_PoolingLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::PoolingLayerTraitConst for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_PoolingLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::PoolingLayerTrait for PtrOfPoolingLayerInt8 {
+		#[inline] fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfPowerLayer = core::Ptr<crate::dnn::PowerLayer>;
+	
+	ptr_extern! { crate::dnn::PowerLayer,
 		cv_PtrOfPowerLayer_delete, cv_PtrOfPowerLayer_get_inner_ptr, cv_PtrOfPowerLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::PowerLayer, cv_PtrOfPowerLayer_new }
 	
 	impl PtrOfPowerLayer {
 		#[inline] pub fn as_raw_PtrOfPowerLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfPowerLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::PowerLayerConst for PtrOfPowerLayer {
+	impl crate::dnn::PowerLayerTraitConst for PtrOfPowerLayer {
 		#[inline] fn as_raw_PowerLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::PowerLayer for PtrOfPowerLayer {
+	impl crate::dnn::PowerLayerTrait for PtrOfPowerLayer {
 		#[inline] fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5751,11 +5528,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfPowerLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfPowerLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfPowerLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfPowerLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5841,6 +5618,43 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfQuantizeLayer = core::Ptr<crate::dnn::QuantizeLayer>;
+	
+	ptr_extern! { crate::dnn::QuantizeLayer,
+		cv_PtrOfQuantizeLayer_delete, cv_PtrOfQuantizeLayer_get_inner_ptr, cv_PtrOfQuantizeLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::QuantizeLayer, cv_PtrOfQuantizeLayer_new }
+	
+	impl PtrOfQuantizeLayer {
+		#[inline] pub fn as_raw_PtrOfQuantizeLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQuantizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::QuantizeLayerTraitConst for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_QuantizeLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::QuantizeLayerTrait for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_mut_QuantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfQuantizeLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfRNNLayer = core::Ptr<dyn crate::dnn::RNNLayer>;
 	
 	ptr_extern! { dyn crate::dnn::RNNLayer,
@@ -5876,22 +5690,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfReLU6Layer = core::Ptr<dyn crate::dnn::ReLU6Layer>;
+	pub type PtrOfReLU6Layer = core::Ptr<crate::dnn::ReLU6Layer>;
 	
-	ptr_extern! { dyn crate::dnn::ReLU6Layer,
+	ptr_extern! { crate::dnn::ReLU6Layer,
 		cv_PtrOfReLU6Layer_delete, cv_PtrOfReLU6Layer_get_inner_ptr, cv_PtrOfReLU6Layer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ReLU6Layer, cv_PtrOfReLU6Layer_new }
 	
 	impl PtrOfReLU6Layer {
 		#[inline] pub fn as_raw_PtrOfReLU6Layer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfReLU6Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::ReLU6LayerConst for PtrOfReLU6Layer {
+	impl crate::dnn::ReLU6LayerTraitConst for PtrOfReLU6Layer {
 		#[inline] fn as_raw_ReLU6Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ReLU6Layer for PtrOfReLU6Layer {
+	impl crate::dnn::ReLU6LayerTrait for PtrOfReLU6Layer {
 		#[inline] fn as_raw_mut_ReLU6Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5903,11 +5719,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfReLU6Layer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfReLU6Layer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfReLU6Layer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfReLU6Layer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5919,22 +5735,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfReLULayer = core::Ptr<dyn crate::dnn::ReLULayer>;
+	pub type PtrOfReLULayer = core::Ptr<crate::dnn::ReLULayer>;
 	
-	ptr_extern! { dyn crate::dnn::ReLULayer,
+	ptr_extern! { crate::dnn::ReLULayer,
 		cv_PtrOfReLULayer_delete, cv_PtrOfReLULayer_get_inner_ptr, cv_PtrOfReLULayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::ReLULayer, cv_PtrOfReLULayer_new }
 	
 	impl PtrOfReLULayer {
 		#[inline] pub fn as_raw_PtrOfReLULayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfReLULayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::ReLULayerConst for PtrOfReLULayer {
+	impl crate::dnn::ReLULayerTraitConst for PtrOfReLULayer {
 		#[inline] fn as_raw_ReLULayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ReLULayer for PtrOfReLULayer {
+	impl crate::dnn::ReLULayerTrait for PtrOfReLULayer {
 		#[inline] fn as_raw_mut_ReLULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5946,11 +5764,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfReLULayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfReLULayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfReLULayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfReLULayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6033,6 +5851,43 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfReorgLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfRequantizeLayer = core::Ptr<crate::dnn::RequantizeLayer>;
+	
+	ptr_extern! { crate::dnn::RequantizeLayer,
+		cv_PtrOfRequantizeLayer_delete, cv_PtrOfRequantizeLayer_get_inner_ptr, cv_PtrOfRequantizeLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::RequantizeLayer, cv_PtrOfRequantizeLayer_new }
+	
+	impl PtrOfRequantizeLayer {
+		#[inline] pub fn as_raw_PtrOfRequantizeLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRequantizeLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::RequantizeLayerTraitConst for PtrOfRequantizeLayer {
+		#[inline] fn as_raw_RequantizeLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::RequantizeLayerTrait for PtrOfRequantizeLayer {
+		#[inline] fn as_raw_mut_RequantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfRequantizeLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfRequantizeLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfRequantizeLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfRequantizeLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6147,22 +6002,69 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfSigmoidLayer = core::Ptr<dyn crate::dnn::SigmoidLayer>;
+	pub type PtrOfScaleLayerInt8 = core::Ptr<crate::dnn::ScaleLayerInt8>;
 	
-	ptr_extern! { dyn crate::dnn::SigmoidLayer,
+	ptr_extern! { crate::dnn::ScaleLayerInt8,
+		cv_PtrOfScaleLayerInt8_delete, cv_PtrOfScaleLayerInt8_get_inner_ptr, cv_PtrOfScaleLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ScaleLayerInt8, cv_PtrOfScaleLayerInt8_new }
+	
+	impl PtrOfScaleLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfScaleLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfScaleLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ScaleLayerInt8TraitConst for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_ScaleLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ScaleLayerInt8Trait for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_mut_ScaleLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ScaleLayerTraitConst for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_ScaleLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ScaleLayerTrait for PtrOfScaleLayerInt8 {
+		#[inline] fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSigmoidLayer = core::Ptr<crate::dnn::SigmoidLayer>;
+	
+	ptr_extern! { crate::dnn::SigmoidLayer,
 		cv_PtrOfSigmoidLayer_delete, cv_PtrOfSigmoidLayer_get_inner_ptr, cv_PtrOfSigmoidLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::SigmoidLayer, cv_PtrOfSigmoidLayer_new }
 	
 	impl PtrOfSigmoidLayer {
 		#[inline] pub fn as_raw_PtrOfSigmoidLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSigmoidLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::SigmoidLayerConst for PtrOfSigmoidLayer {
+	impl crate::dnn::SigmoidLayerTraitConst for PtrOfSigmoidLayer {
 		#[inline] fn as_raw_SigmoidLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::SigmoidLayer for PtrOfSigmoidLayer {
+	impl crate::dnn::SigmoidLayerTrait for PtrOfSigmoidLayer {
 		#[inline] fn as_raw_mut_SigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6174,11 +6076,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfSigmoidLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSigmoidLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfSigmoidLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfSigmoidLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6264,6 +6166,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfSoftmaxLayerInt8 = core::Ptr<crate::dnn::SoftmaxLayerInt8>;
+	
+	ptr_extern! { crate::dnn::SoftmaxLayerInt8,
+		cv_PtrOfSoftmaxLayerInt8_delete, cv_PtrOfSoftmaxLayerInt8_get_inner_ptr, cv_PtrOfSoftmaxLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SoftmaxLayerInt8, cv_PtrOfSoftmaxLayerInt8_new }
+	
+	impl PtrOfSoftmaxLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfSoftmaxLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSoftmaxLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SoftmaxLayerInt8TraitConst for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_SoftmaxLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SoftmaxLayerInt8Trait for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_mut_SoftmaxLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::SoftmaxLayerTraitConst for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_SoftmaxLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SoftmaxLayerTrait for PtrOfSoftmaxLayerInt8 {
+		#[inline] fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfSplitLayer = core::Ptr<crate::dnn::SplitLayer>;
 	
 	ptr_extern! { crate::dnn::SplitLayer,
@@ -6301,22 +6248,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfSwishLayer = core::Ptr<dyn crate::dnn::SwishLayer>;
+	pub type PtrOfSwishLayer = core::Ptr<crate::dnn::SwishLayer>;
 	
-	ptr_extern! { dyn crate::dnn::SwishLayer,
+	ptr_extern! { crate::dnn::SwishLayer,
 		cv_PtrOfSwishLayer_delete, cv_PtrOfSwishLayer_get_inner_ptr, cv_PtrOfSwishLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::SwishLayer, cv_PtrOfSwishLayer_new }
 	
 	impl PtrOfSwishLayer {
 		#[inline] pub fn as_raw_PtrOfSwishLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfSwishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::SwishLayerConst for PtrOfSwishLayer {
+	impl crate::dnn::SwishLayerTraitConst for PtrOfSwishLayer {
 		#[inline] fn as_raw_SwishLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::SwishLayer for PtrOfSwishLayer {
+	impl crate::dnn::SwishLayerTrait for PtrOfSwishLayer {
 		#[inline] fn as_raw_mut_SwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6328,11 +6277,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfSwishLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSwishLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfSwishLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfSwishLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6344,22 +6293,24 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	pub type PtrOfTanHLayer = core::Ptr<dyn crate::dnn::TanHLayer>;
+	pub type PtrOfTanHLayer = core::Ptr<crate::dnn::TanHLayer>;
 	
-	ptr_extern! { dyn crate::dnn::TanHLayer,
+	ptr_extern! { crate::dnn::TanHLayer,
 		cv_PtrOfTanHLayer_delete, cv_PtrOfTanHLayer_get_inner_ptr, cv_PtrOfTanHLayer_get_inner_ptr_mut
 	}
+	
+	ptr_extern_ctor! { crate::dnn::TanHLayer, cv_PtrOfTanHLayer_new }
 	
 	impl PtrOfTanHLayer {
 		#[inline] pub fn as_raw_PtrOfTanHLayer(&self) -> *const c_void { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOfTanHLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::dnn::TanHLayerConst for PtrOfTanHLayer {
+	impl crate::dnn::TanHLayerTraitConst for PtrOfTanHLayer {
 		#[inline] fn as_raw_TanHLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::TanHLayer for PtrOfTanHLayer {
+	impl crate::dnn::TanHLayerTrait for PtrOfTanHLayer {
 		#[inline] fn as_raw_mut_TanHLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6371,11 +6322,11 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	impl crate::dnn::ActivationLayerConst for PtrOfTanHLayer {
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfTanHLayer {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfTanHLayer {
+	impl crate::dnn::ActivationLayerTrait for PtrOfTanHLayer {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -8913,6 +8864,44 @@ mod objdetect_types {
 	
 	impl crate::objdetect::DetectionBasedTracker_IDetector for PtrOfDetectionBasedTracker_IDetector {
 		#[inline] fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfFaceDetectorYN = core::Ptr<dyn crate::objdetect::FaceDetectorYN>;
+	
+	ptr_extern! { dyn crate::objdetect::FaceDetectorYN,
+		cv_PtrOfFaceDetectorYN_delete, cv_PtrOfFaceDetectorYN_get_inner_ptr, cv_PtrOfFaceDetectorYN_get_inner_ptr_mut
+	}
+	
+	impl PtrOfFaceDetectorYN {
+		#[inline] pub fn as_raw_PtrOfFaceDetectorYN(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFaceDetectorYN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::FaceDetectorYNConst for PtrOfFaceDetectorYN {
+		#[inline] fn as_raw_FaceDetectorYN(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::objdetect::FaceDetectorYN for PtrOfFaceDetectorYN {
+		#[inline] fn as_raw_mut_FaceDetectorYN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfFaceRecognizerSF = core::Ptr<dyn crate::objdetect::FaceRecognizerSF>;
+	
+	ptr_extern! { dyn crate::objdetect::FaceRecognizerSF,
+		cv_PtrOfFaceRecognizerSF_delete, cv_PtrOfFaceRecognizerSF_get_inner_ptr, cv_PtrOfFaceRecognizerSF_get_inner_ptr_mut
+	}
+	
+	impl PtrOfFaceRecognizerSF {
+		#[inline] pub fn as_raw_PtrOfFaceRecognizerSF(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFaceRecognizerSF(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::FaceRecognizerSFConst for PtrOfFaceRecognizerSF {
+		#[inline] fn as_raw_FaceRecognizerSF(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::objdetect::FaceRecognizerSF for PtrOfFaceRecognizerSF {
+		#[inline] fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDetectionBasedTracker_ExtObject = core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>;

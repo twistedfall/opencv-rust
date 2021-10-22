@@ -43,6 +43,7 @@ pub const SINUS: i32 = 2;
 /// * output: Output array.
 /// 
 /// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~10 times faster than `ft::FT02D_process` method.
+#[inline]
 pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	output_array_arg!(output);
@@ -56,6 +57,7 @@ pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &
 /// * output: Output array.
 /// 
 /// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~9 times faster then `ft::FT02D_process` method and more accurate than `ft::FT02D_FL_process` method.
+#[inline]
 pub fn ft02_d_fl_process_float(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	output_array_arg!(output);
@@ -73,6 +75,7 @@ pub fn ft02_d_fl_process_float(matrix: &dyn core::ToInputArray, radius: i32, out
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn ft02_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, components: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -90,6 +93,7 @@ pub fn ft02_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// * height: Height of the output array.
 /// 
 /// Computation of inverse F-transform.
+#[inline]
 pub fn ft02_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, width: i32, height: i32) -> Result<()> {
 	input_array_arg!(components);
 	input_array_arg!(kernel);
@@ -107,6 +111,7 @@ pub fn ft02_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 /// * firstStop: If **true** function returns -1 when first problem appears. In case of `false` the process is completed and summation of all problems returned.
 /// 
 /// This function computes iteration of F-transfrom and inverse F-transfotm and handle image and mask change. The function is used in `ft::inpaint` function.
+#[inline]
 pub fn ft02_d_iteration(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, mask_output: &mut dyn core::ToOutputArray, first_stop: bool) -> Result<i32> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -127,6 +132,7 @@ pub fn ft02_d_iteration(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToIn
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn ft02_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -142,6 +148,7 @@ pub fn ft02_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 /// * components: Output 32-bit float array for the components.
 /// 
 /// The function computes linear components using predefined kernel.
+#[inline]
 pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, components: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -156,6 +163,7 @@ pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// * chn: Number of channels.
 /// 
 /// The function creates helper horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
+#[inline]
 pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(matrix);
 	unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
@@ -168,6 +176,7 @@ pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn cor
 /// * chn: Number of channels.
 /// 
 /// The function creates helper vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
+#[inline]
 pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(matrix);
 	unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn) }.into_result()
@@ -182,6 +191,7 @@ pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut dyn core:
 /// * height: Height of the output array.
 /// 
 /// Computation of inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
+#[inline]
 pub fn ft12_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, width: i32, height: i32) -> Result<()> {
 	input_array_arg!(components);
 	input_array_arg!(kernel);
@@ -203,6 +213,7 @@ pub fn ft12_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, c00: &mut dyn core::ToOutputArray, c10: &mut dyn core::ToOutputArray, c01: &mut dyn core::ToOutputArray, components: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -225,10 +236,11 @@ pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// 
 /// 
 /// Note:
-///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Vlas:FT).
+///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Vlas:FT).
 /// 
 /// ## C++ default parameters
 /// * mask: noArray()
+#[inline]
 pub fn ft12_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(matrix);
 	input_array_arg!(kernel);
@@ -245,6 +257,7 @@ pub fn ft12_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 /// * chn: Number of kernel channels.
 /// 
 /// The function creates kernel usable for latter fuzzy image processing.
+#[inline]
 pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	input_array_arg!(a);
 	input_array_arg!(b);
@@ -261,6 +274,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 /// * chn: Number of kernel channels.
 /// 
 /// The function creates kernel from predefined functions.
+#[inline]
 pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
 	output_array_arg!(kernel);
 	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_const_int(function, radius, kernel.as_raw__OutputArray(), chn) }.into_result()
@@ -273,6 +287,7 @@ pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutput
 /// * output: Output 32-bit image.
 /// 
 /// Filtering of the input image by means of F-transform.
+#[inline]
 pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(image);
 	input_array_arg!(kernel);
@@ -297,7 +312,8 @@ pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, o
 /// 
 /// 
 /// Note:
-///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.5.3/d0/de3/citelist.html#CITEREF_Perf:rec).
+///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Perf:rec).
+#[inline]
 pub fn inpaint(image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
 	input_array_arg!(image);
 	input_array_arg!(mask);
