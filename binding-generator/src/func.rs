@@ -40,6 +40,7 @@ pub enum OperatorKind {
 	Mul,
 	Div,
 	Deref,
+	Equals,
 }
 
 impl OperatorKind {
@@ -63,6 +64,9 @@ impl OperatorKind {
 			}
 			"/" => {
 				OperatorKind::Div
+			}
+			"==" => {
+				OperatorKind::Equals
 			}
 			_ => {
 				OperatorKind::Unsupported
@@ -689,6 +693,9 @@ impl Element for Func<'_, '_> {
 						} else {
 							"try_deref_mut".into()
 						}
+					}
+					OperatorKind::Equals => {
+						"equals".into()
 					}
 				}
 			} else {

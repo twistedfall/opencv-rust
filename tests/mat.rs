@@ -604,3 +604,15 @@ fn mat_data() -> Result<()> {
 	}
 	Ok(())
 }
+
+#[test]
+fn mat_equals() -> Result<()> {
+	let mat1 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(0.))?;
+	let mat2 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(0.))?;
+	let mat3 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(1.))?;
+	let res = core::equals(&mat1, &mat2)?.to_mat()?;
+	assert!(res.data_typed::<u8>()?.iter().all(|&e| e != 0));
+	let res = core::equals(&mat1, &mat3)?.to_mat()?;
+	assert!(res.data_typed::<u8>()?.iter().all(|&e| e == 0));
+	Ok(())
+}
