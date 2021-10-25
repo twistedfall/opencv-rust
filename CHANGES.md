@@ -1,3 +1,7 @@
+* 0.56.1
+  * Structs that have infallible default constructors (e.g. `Mat`) now implement `Default` trait.
+  * Make sure to generate `std::vector<cv::Vec[23][fd]>` bindings for `imgproc::HoughLines` function.
+
 * 0.56.0
   * Mark most exported functions as `#[inline]` to facilitate inter-crate inlining. Those function calls are just wrappers around
     the corresponding FFI function.

@@ -1547,6 +1547,116 @@ mod core_types {
 	
 	unsafe impl Send for core::Vector<core::UMat> {}
 	
+	pub type VectorOfVec2d = core::Vector<core::Vec2d>;
+	
+	impl VectorOfVec2d {
+		pub fn as_raw_VectorOfVec2d(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVec2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vec2d, *const c_void, *mut c_void,
+		cv_VectorOfVec2d_new, cv_VectorOfVec2d_delete,
+		cv_VectorOfVec2d_len, cv_VectorOfVec2d_is_empty,
+		cv_VectorOfVec2d_capacity, cv_VectorOfVec2d_shrink_to_fit,
+		cv_VectorOfVec2d_reserve, cv_VectorOfVec2d_remove,
+		cv_VectorOfVec2d_swap, cv_VectorOfVec2d_clear,
+		cv_VectorOfVec2d_get, cv_VectorOfVec2d_set,
+		cv_VectorOfVec2d_push, cv_VectorOfVec2d_insert,
+	}
+	vector_copy_non_bool! { core::Vec2d, *const c_void, *mut c_void,
+		cv_VectorOfVec2d_data, cv_VectorOfVec2d_data_mut,
+		cv_VectorOfVec2d_clone,
+	}
+	
+	unsafe impl Send for core::Vector<core::Vec2d> {}
+	
+	impl core::ToInputArray for VectorOfVec2d {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			extern "C" { fn cv_VectorOfVec2d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2d_input_array(self.as_raw_VectorOfVec2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
+		}
+	}
+	
+	impl core::ToOutputArray for VectorOfVec2d {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			extern "C" { fn cv_VectorOfVec2d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2d_output_array(self.as_raw_mut_VectorOfVec2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToInputOutputArray for VectorOfVec2d {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			extern "C" { fn cv_VectorOfVec2d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2d_input_output_array(self.as_raw_mut_VectorOfVec2d()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
+		}
+	}
+	
+	input_output_array_ref_forward! { VectorOfVec2d }
+	
+	pub type VectorOfVec2f = core::Vector<core::Vec2f>;
+	
+	impl VectorOfVec2f {
+		pub fn as_raw_VectorOfVec2f(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVec2f(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vec2f, *const c_void, *mut c_void,
+		cv_VectorOfVec2f_new, cv_VectorOfVec2f_delete,
+		cv_VectorOfVec2f_len, cv_VectorOfVec2f_is_empty,
+		cv_VectorOfVec2f_capacity, cv_VectorOfVec2f_shrink_to_fit,
+		cv_VectorOfVec2f_reserve, cv_VectorOfVec2f_remove,
+		cv_VectorOfVec2f_swap, cv_VectorOfVec2f_clear,
+		cv_VectorOfVec2f_get, cv_VectorOfVec2f_set,
+		cv_VectorOfVec2f_push, cv_VectorOfVec2f_insert,
+	}
+	vector_copy_non_bool! { core::Vec2f, *const c_void, *mut c_void,
+		cv_VectorOfVec2f_data, cv_VectorOfVec2f_data_mut,
+		cv_VectorOfVec2f_clone,
+	}
+	
+	unsafe impl Send for core::Vector<core::Vec2f> {}
+	
+	impl core::ToInputArray for VectorOfVec2f {
+		#[inline]
+		fn input_array(&self) -> Result<core::_InputArray> {
+			extern "C" { fn cv_VectorOfVec2f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2f_input_array(self.as_raw_VectorOfVec2f()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
+		}
+	}
+	
+	impl core::ToOutputArray for VectorOfVec2f {
+		#[inline]
+		fn output_array(&mut self) -> Result<core::_OutputArray> {
+			extern "C" { fn cv_VectorOfVec2f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2f_output_array(self.as_raw_mut_VectorOfVec2f()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
+		}
+	}
+	
+	impl core::ToInputOutputArray for VectorOfVec2f {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+			extern "C" { fn cv_VectorOfVec2f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+			unsafe { cv_VectorOfVec2f_input_output_array(self.as_raw_mut_VectorOfVec2f()) }
+				.into_result()
+				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
+		}
+	}
+	
+	input_output_array_ref_forward! { VectorOfVec2f }
+	
 	pub type VectorOfVec2i = core::Vector<core::Vec2i>;
 	
 	impl VectorOfVec2i {
