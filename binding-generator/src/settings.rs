@@ -1102,7 +1102,13 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 	},
 	"imgproc" => ModuleTweak {
 		generate_types: vec![
+			// for findContours()
 			"std::vector<cv::Vec4i>",
+			// for HoughLines()
+			"std::vector<cv::Vec2f>",
+			"std::vector<cv::Vec2d>",
+			"std::vector<cv::Vec3f>",
+			"std::vector<cv::Vec3d>",
 		],
 		..Default::default()
 	},
