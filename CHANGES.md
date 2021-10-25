@@ -1,3 +1,10 @@
+* 0.57.0
+  * Add support for mathematical operations on `Mat` (kudos to fzyzcjy).
+  * `VecNT` (e.g. `Vec3b`) are now rewritten using const generics which makes them more flexible. That raises the minimum Rust
+    version requirement to 1.51. Also be mindful of the name clash between `opencv::core::Vec` and `std::vec::Vec`.
+  * Added mathematical operations on `Vec` that are available in the OpenCV library.
+  * Added support for generating bindings for the `==` operator.
+
 * 0.56.1
   * Structs that have infallible default constructors (e.g. `Mat`) now implement `Default` trait.
   * Make sure to generate `std::vector<cv::Vec[23][fd]>` bindings for `imgproc::HoughLines` function.

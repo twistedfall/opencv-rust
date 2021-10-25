@@ -15,7 +15,7 @@ generation) are installed in your system.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.56"
+opencv = "0.57"
 ```
 
 Import prelude
@@ -313,6 +313,7 @@ list with the corresponding function name:
 * `-` → `sub()`
 * `*` → `mul()`
 * `/` → `div()`
+* `==` → `equals()`
 * `*` (deref) → `deref()` or `deref_mut()`
 
 ### Infallible functions

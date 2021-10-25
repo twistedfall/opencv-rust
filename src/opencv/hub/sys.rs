@@ -706,6 +706,10 @@ mod core_sys {
 		pub fn cv_operatorD_const_MatR_double(a: *const c_void, s: f64) -> Result<*mut c_void>;
 		pub fn cv_operatorD_double_const_MatExprR(s: f64, e: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_operatorD_double_const_MatR(s: f64, a: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR(it1: *const c_void, it2: *const c_void) -> Result<bool>;
+		pub fn cv_operatorEQ_const_MatR_const_MatR(a: *const c_void, b: *const c_void) -> Result<*mut c_void>;
+		pub fn cv_operatorEQ_const_MatR_double(a: *const c_void, s: f64) -> Result<*mut c_void>;
+		pub fn cv_operatorEQ_double_const_MatR(s: f64, a: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_operatorS_const_MatExprR(e: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_operatorS_const_MatExprR_const_MatExprR(e1: *const c_void, e2: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_operatorS_const_MatExprR_const_MatR(e: *const c_void, m: *const c_void) -> Result<*mut c_void>;
@@ -1176,6 +1180,7 @@ mod core_sys {
 		pub fn cv_MatSize_operator___const_int(instance: *const c_void, i: i32) -> Result<i32>;
 		pub fn cv_MatSize_operator___int(instance: *mut c_void, i: i32) -> Result<i32>;
 		pub fn cv_MatSize_operator_const_intX_const(instance: *const c_void) -> Result<*const i32>;
+		pub fn cv_MatSize_operatorEQ_const_const_MatSizeR(instance: *const c_void, sz: *const c_void) -> Result<bool>;
 		pub fn cv_MatStep_getPropP(instance: *mut c_void) -> Result<*mut size_t>;
 		pub fn cv_MatStep_setPropP_size_tX(instance: *mut c_void, val: *mut size_t) -> Result_void;
 		pub fn cv_MatStep_getPropBuf(instance: *mut c_void) -> Result<*mut [size_t; 2]>;
@@ -1242,6 +1247,7 @@ mod core_sys {
 		pub fn cv_RNG_uniform_double_double(instance: *mut c_void, a: f64, b: f64) -> Result<f64>;
 		pub fn cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(instance: *mut c_void, mat: *const c_void, dist_type: i32, a: *const c_void, b: *const c_void, saturate_range: bool) -> Result_void;
 		pub fn cv_RNG_gaussian_double(instance: *mut c_void, sigma: f64) -> Result<f64>;
+		pub fn cv_RNG_operatorEQ_const_const_RNGR(instance: *const c_void, other: *const c_void) -> Result<bool>;
 		pub fn cv_RNG_MT19937_RNG_MT19937() -> Result<*mut c_void>;
 		pub fn cv_RNG_MT19937_RNG_MT19937_unsigned_int(s: u32) -> Result<*mut c_void>;
 		pub fn cv_RNG_MT19937_seed_unsigned_int(instance: *mut c_void, s: u32) -> Result_void;
@@ -5017,9 +5023,9 @@ mod optflow_sys {
 		pub fn cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index: size_t, sz: *const core::Size, x: *mut i32, y: *mut i32) -> Result_void;
 		pub fn cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(_use_opencl: bool) -> Result<crate::optflow::GPCMatchingParams>;
 		pub fn cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(params: *const crate::optflow::GPCMatchingParams) -> Result<crate::optflow::GPCMatchingParams>;
-		pub fn cv_optflow_GPCPatchDescriptor_getPropFeature_const(instance: *const c_void) -> Result<core::Vec18<f64>>;
-		pub fn cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(instance: *mut c_void, val: *const core::Vec18<f64>) -> Result_void;
-		pub fn cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(instance: *const c_void, coef: *const core::Vec18<f64>) -> Result<f64>;
+		pub fn cv_optflow_GPCPatchDescriptor_getPropFeature_const(instance: *const c_void) -> Result<core::Vec<f64, 18>>;
+		pub fn cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(instance: *mut c_void, val: *const core::Vec<f64, 18>) -> Result_void;
+		pub fn cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(instance: *const c_void, coef: *const core::Vec<f64, 18>) -> Result<f64>;
 		pub fn cv_optflow_GPCPatchDescriptor_markAsSeparated(instance: *mut c_void) -> Result_void;
 		pub fn cv_optflow_GPCPatchDescriptor_isSeparated_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_optflow_GPCPatchSample_getPropRef_const(instance: *const c_void) -> Result<*mut c_void>;
@@ -5028,7 +5034,7 @@ mod optflow_sys {
 		pub fn cv_optflow_GPCPatchSample_setPropPos_GPCPatchDescriptor(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_optflow_GPCPatchSample_getPropNeg_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_optflow_GPCPatchSample_setPropNeg_GPCPatchDescriptor(instance: *mut c_void, val: *mut c_void) -> Result_void;
-		pub fn cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_Vec_double__18_R_double(instance: *const c_void, refdir: *mut bool, posdir: *mut bool, negdir: *mut bool, coef: *const core::Vec18<f64>, rhs: f64) -> Result_void;
+		pub fn cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_Vec_double__18_R_double(instance: *const c_void, refdir: *mut bool, posdir: *mut bool, negdir: *mut bool, coef: *const core::Vec<f64, 18>, rhs: f64) -> Result_void;
 		pub fn cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(_max_tree_depth: u32, _min_number_of_samples: i32, _descriptor_type: crate::optflow::GPCDescType, _print_progress: bool) -> Result<crate::optflow::GPCTrainingParams>;
 		pub fn cv_optflow_GPCTrainingParams_check_const(instance: *const crate::optflow::GPCTrainingParams) -> Result<bool>;
 		pub fn cv_optflow_GPCTrainingSamples_create_const_vector_String_R_const_vector_String_R_const_vector_String_R_int(images_from: *const c_void, images_to: *const c_void, gt: *const c_void, descriptor_type: i32) -> Result<*mut c_void>;
@@ -5040,7 +5046,9 @@ mod optflow_sys {
 		pub fn cv_optflow_GPCTree_read_const_FileNodeR(instance: *mut c_void, fn_: *const c_void) -> Result_void;
 		pub fn cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(instance: *const c_void, descr: *const c_void) -> Result<u32>;
 		pub fn cv_optflow_GPCTree_create() -> Result<*mut c_void>;
+		pub fn cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(instance: *const c_void, t: *const c_void) -> Result<bool>;
 		pub fn cv_optflow_GPCTree_getDescriptorType_const(instance: *const c_void) -> Result<i32>;
+		pub fn cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(instance: *const crate::optflow::GPCTree_Node, n: *const crate::optflow::GPCTree_Node) -> Result<bool>;
 		pub fn cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(_prior: *const c_void, _basis_size: *const core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<*mut c_void>;
 		pub fn cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(instance: *mut c_void, i0: *const c_void, i1: *const c_void, flow: *const c_void) -> Result_void;
 		pub fn cv_optflow_OpticalFlowPCAFlow_collectGarbage(instance: *mut c_void) -> Result_void;
@@ -5684,6 +5692,7 @@ mod rgbd_sys {
 		pub fn cv_linemod_Match_setPropTemplate_id_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_linemod_Match_Match() -> Result<*mut c_void>;
 		pub fn cv_linemod_Match_Match_int_int_float_const_StringR_int(x: i32, y: i32, similarity: f32, class_id: *const c_char, template_id: i32) -> Result<*mut c_void>;
+		pub fn cv_linemod_Match_operatorEQ_const_const_MatchR(instance: *const c_void, rhs: *const c_void) -> Result<bool>;
 		pub fn cv_linemod_Modality_process_const_const_MatR_const_MatR(instance: *const c_void, src: *const c_void, mask: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_linemod_Modality_name_const(instance: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_linemod_Modality_read_const_FileNodeR(instance: *mut c_void, fn_: *const c_void) -> Result_void;
