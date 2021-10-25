@@ -336,6 +336,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			|| settings::FORCE_NOEXCEPT.contains(&(self.cpp_fullname().as_ref(), self.clang_arguments().len()))
 	}
 
+	pub fn is_default_constructor(&self) -> bool {
+		self.entity.is_default_constructor() && !self.has_arguments()
+	}
+
 	pub fn is_clone(&self) -> bool {
 		if self.rust_leafname(FishStyle::No) == "clone" {
 			if let Some(c) = self.as_instance_method() {
@@ -721,6 +725,7 @@ impl fmt::Debug for Func<'_, '_> {
 		self.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("is_const", &self.constness())
+			.field("is_infallible", &self.is_infallible())
 			.field("type_hint", &self.type_hint)
 			.field("kind", &self.kind())
 			.field("return_type", &self.return_type())
