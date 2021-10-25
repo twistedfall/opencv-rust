@@ -1,5 +1,6 @@
 pub use affine3::*;
 pub use CV_MAKETYPE as CV_MAKE_TYPE;
+pub use data_type::*;
 pub use gpumat::*;
 pub use input_output_array::*;
 pub use mat::*;
@@ -31,6 +32,7 @@ macro_rules! valid_types {
 }
 
 mod affine3;
+mod data_type;
 mod gpumat;
 mod input_output_array;
 mod mat;
@@ -44,15 +46,3 @@ mod size;
 mod sized;
 mod vec;
 mod vector;
-
-#[inline]
-pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {
-	#![allow(non_snake_case)]
-	flags & crate::core::Mat_DEPTH_MASK
-}
-
-#[inline]
-pub const fn CV_MAKETYPE(depth: i32, cn: i32) -> i32 {
-	#![allow(non_snake_case)]
-	CV_MAT_DEPTH(depth) + ((cn - 1) << crate::core::CV_CN_SHIFT)
-}

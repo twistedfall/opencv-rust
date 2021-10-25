@@ -419,7 +419,9 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 			underlying_type.as_function().is_some()
 				|| !underlying_type.is_excluded()
 				|| if let Some(templ) = underlying_type.as_template() {
-				settings::IMPLEMENTED_GENERICS.contains(templ.cpp_fullname().as_ref())
+				let cpp_fullname = templ.cpp_fullname();
+				settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
+					|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
 			} else {
 				false
 			}

@@ -1,12 +1,14 @@
-use std::ffi::c_void;
+use std::{
+	ffi::c_void,
+	ops::{Deref, DerefMut},
+};
 
 use crate::{
 	core::{_InputArray, ToInputArray},
 	input_array_ref_forward,
-	opencv_type_simple_generic,
 	Result,
 	sys,
-	traits::Boxed,
+	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
 pub use self::{scalar_inner::ValidScalarType, vec_inner::ValidVecType};
@@ -20,54 +22,91 @@ mod scalar_inner {
 	valid_types!(ValidScalarType: i32, f64);
 }
 
-macro_rules! vec_impl {
-	($type: ident, $count: expr, $type_trait: ident) => {
-		/// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
-		#[repr(C)]
-		#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
-		pub struct $type<T: $type_trait>(pub [T; $count]);
+/// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+pub struct Vec<T, const N: usize> (pub [T; N]);
 
-		impl<T: $type_trait> $type<T> {
-			#[inline]
-			pub fn all(v0: T) -> Self {
-				Self::from([v0; $count])
-			}
-		}
-
-		impl<T: $type_trait> From<[T; $count]> for $type<T> {
-			#[inline]
-			fn from(s: [T; $count]) -> Self {
-				Self(s)
-			}
-		}
-
-		impl<T: $type_trait> std::ops::Deref for $type<T> {
-			type Target = [T; $count];
-
-			#[inline]
-			fn deref(&self) -> &Self::Target {
-				&self.0
-			}
-		}
-
-		impl<T: $type_trait> std::ops::DerefMut for $type<T> {
-			#[inline]
-			fn deref_mut(&mut self) -> &mut Self::Target {
-				&mut self.0
-			}
-		}
-
-		opencv_type_simple_generic! { $type<$type_trait> }
-	};
+impl<T, const N: usize> Default for Vec<T, N>
+	where
+		[T; N]: Default
+{
+	#[inline]
+	fn default() -> Self {
+		Self(Default::default())
+	}
 }
 
-vec_impl!(Vec2, 2, ValidVecType);
-vec_impl!(Vec3, 3, ValidVecType);
-vec_impl!(Vec4, 4, ValidVecType);
-vec_impl!(Vec6, 6, ValidVecType);
-vec_impl!(Vec8, 8, ValidVecType);
-vec_impl!(Vec18, 18, ValidVecType);
-vec_impl!(Scalar_, 4, ValidScalarType);
+impl<T: Copy, const N: usize> Vec<T, N> {
+	#[inline]
+	pub fn all(v0: T) -> Self {
+		Self::from([v0; N])
+	}
+}
+
+impl<T, const N: usize> From<[T; N]> for Vec<T, N> {
+	#[inline]
+	fn from(s: [T; N]) -> Self {
+		Self(s)
+	}
+}
+
+impl<T, const N: usize> Deref for Vec<T, N> {
+	type Target = [T; N];
+
+	#[inline]
+	fn deref(&self) -> &Self::Target {
+		&self.0
+	}
+}
+
+impl<T, const N: usize> DerefMut for Vec<T, N> {
+	#[inline]
+	fn deref_mut(&mut self) -> &mut Self::Target {
+		&mut self.0
+	}
+}
+
+impl<T: ValidVecType, const N: usize> OpenCVType<'_> for Vec<T, N> {
+	type Arg = Self;
+	type ExternReceive = Self;
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self { self }
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self) -> Self { s }
+}
+
+impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for Vec<T, N> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self { self }
+}
+
+impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for Vec<T, N> {
+	type ExternSend = *const Self;
+	type ExternSendMut = *mut Self;
+
+	#[inline]
+	fn opencv_as_extern(&self) -> Self::ExternSend { self }
+
+	#[inline]
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
+
+	#[inline]
+	fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
+}
+
+pub type Scalar_<T> = Vec<T, 4>;
 
 impl<T: ValidScalarType> Scalar_<T> {
 	#[inline]

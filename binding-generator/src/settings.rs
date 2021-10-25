@@ -874,6 +874,7 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| btreeset! {
 	"cv::Rect", "cv::Rect2i", "cv::Rect2f", "cv::Rect2d",
 });
 
+/// cpp_fullname
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Affine3",
 	"cv::Mat_",
@@ -883,6 +884,10 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Rect_",
 	"cv::Scalar_",
 	"cv::Size_",
+});
+
+/// cpp_fullname
+pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Vec",
 });
 

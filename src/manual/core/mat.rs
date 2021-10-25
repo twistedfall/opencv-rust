@@ -20,91 +20,6 @@ use crate::{
 
 mod mat_;
 
-/// This sealed trait is implemented for types that are valid to use as Mat elements
-pub trait DataType: Copy + private::Sealed {
-	fn depth() -> i32;
-	fn channels() -> i32;
-	fn typ() -> i32;
-}
-
-macro_rules! data_type {
-	($rust_type: ty, $mat_depth: expr, $channels: expr) => {
-		impl $crate::core::DataType for $rust_type {
-			#[inline]
-			fn depth() -> i32 { $mat_depth }
-
-			#[inline]
-			fn channels() -> i32 { $channels }
-
-			#[inline]
-			fn typ() -> i32 { $crate::core::CV_MAKETYPE($mat_depth, $channels) }
-		}
-
-		impl private::Sealed for $rust_type {}
-	};
-}
-
-// int
-data_type!(u8, core::CV_8U, 1);
-data_type!(i8, core::CV_8S, 1);
-data_type!(u16, core::CV_16U, 1);
-data_type!(i16, core::CV_16S, 1);
-data_type!(i32, core::CV_32S, 1);
-
-// float
-data_type!(f32, core::CV_32F, 1);
-data_type!(f64, core::CV_64F, 1);
-
-// vec int
-data_type!(core::Vec2b, core::CV_8U, 2);
-data_type!(core::Vec3b, core::CV_8U, 3);
-data_type!(core::Vec4b, core::CV_8U, 4);
-data_type!(core::Vec2<i8>, core::CV_8S, 2);
-data_type!(core::Vec3<i8>, core::CV_8S, 3);
-data_type!(core::Vec4<i8>, core::CV_8S, 4);
-data_type!(core::Vec2<u16>, core::CV_16U, 2);
-data_type!(core::Vec3<u16>, core::CV_16U, 3);
-data_type!(core::Vec4<u16>, core::CV_16U, 4);
-data_type!(core::Vec2s, core::CV_16S, 2);
-data_type!(core::Vec3s, core::CV_16S, 3);
-data_type!(core::Vec4s, core::CV_16S, 4);
-data_type!(core::Vec2i, core::CV_32S, 2);
-data_type!(core::Vec3i, core::CV_32S, 3);
-data_type!(core::Vec4i, core::CV_32S, 4);
-data_type!(core::Vec8i, core::CV_32S, 8);
-
-// vec float
-data_type!(core::Vec2f, core::CV_32F, 2);
-data_type!(core::Vec3f, core::CV_32F, 3);
-data_type!(core::Vec4f, core::CV_32F, 4);
-data_type!(core::Vec2d, core::CV_64F, 2);
-data_type!(core::Vec3d, core::CV_64F, 3);
-data_type!(core::Vec4d, core::CV_64F, 4);
-
-// scalar
-data_type!(core::Scalar, core::CV_64F, 4);
-
-// point
-data_type!(core::Point2i, core::CV_32S, 2);
-data_type!(core::Point2f, core::CV_32F, 2);
-data_type!(core::Point2d, core::CV_64F, 2);
-
-// point3
-data_type!(core::Point3i, core::CV_32S, 2);
-data_type!(core::Point3f, core::CV_32F, 2);
-data_type!(core::Point3d, core::CV_64F, 2);
-
-// size
-data_type!(core::Size2i, core::CV_32S, 2);
-data_type!(core::Size2f, core::CV_32F, 2);
-data_type!(core::Size2d, core::CV_64F, 2);
-
-// rect
-data_type!(core::Rect2i, core::CV_32S, 4);
-data_type!(core::Rect2f, core::CV_32F, 4);
-data_type!(core::Rect2d, core::CV_64F, 4);
-
-
 #[inline(always)]
 unsafe fn convert_ptr<T>(r: &u8) -> &T {
 	&*(r as *const u8 as *const T)
@@ -674,7 +589,3 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 impl<T: MatConstIteratorTrait> MatConstIteratorTraitManual for T {}
 
 input_output_array! { MatExpr, from_matexpr }
-
-mod private {
-	pub trait Sealed {}
-}

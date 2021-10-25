@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, ToPrimitive};
 
 use crate::{
-	core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec2},
+	core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec},
 	opencv_type_simple_generic,
 };
 
@@ -24,7 +24,7 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn from_vec2(vec: Vec2<T>) -> Self where T: ValidVecType {
+	pub fn from_vec2(vec: Vec<T, 2>) -> Self where T: ValidVecType {
 		Self::new(vec[0], vec[1])
 	}
 
@@ -74,8 +74,8 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn to_vec2(&self) -> Vec2<T> where T: ValidVecType {
-		Vec2::from([self.x, self.y])
+	pub fn to_vec2(&self) -> Vec<T, 2> where T: ValidVecType {
+		Vec::<_, 2>::from([self.x, self.y])
 	}
 }
 
