@@ -464,12 +464,19 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
-					format!(
-						"{typ}(*{name})[{size}]",
-						typ=inner.render(self.recurse()),
-						name=self.name,
-						size=size,
-					)
+					if self.name.is_empty() {
+						format!(
+							"{typ}**",
+							typ=inner.render(self.recurse()),
+						)
+					} else {
+						format!(
+							"{typ}(*{name})[{size}]",
+							typ=inner.render(self.recurse()),
+							name=self.name,
+							size=size,
+						)
+					}
 				} else {
 					format!(
 						"{typ}*{name}",

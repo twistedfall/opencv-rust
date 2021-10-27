@@ -25,10 +25,8 @@ macro_rules! string_arg_output_send {
 }
 
 macro_rules! string_arg_output_receive {
-	($result: ident, $name_via: ident => $name: ident) => {
-		if $result.is_ok() {
-			*$name = unsafe { $crate::templ::receive_string($name_via as *mut String) };
-		}
+	($name_via: ident => $name: ident) => {
+		*$name = unsafe { $crate::templ::receive_string($name_via as *mut String) };
 	};
 }
 

@@ -332,8 +332,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_vconcat_const_MatX_size_t_const__OutputArrayR" => "-", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
 
 	// ### cudaimgproc ###
-	"cv_cuda_histEven_const__InputArrayR_GpuMat_X__4__int_X__4__int_X__4__int_X__4__StreamR" => "-", // slice of boxed objects
-	"cv_cuda_histRange_const__InputArrayR_GpuMat_X__4__const_GpuMat_X__4__StreamR" => "-", // slice of boxed objects
+	"cv_cuda_histEven_const__InputArrayR_GpuMatXX_intXX_intXX_intXX_StreamR" => "-", // slice of boxed objects
+	"cv_cuda_histRange_const__InputArrayR_GpuMatXX_const_GpuMatXX_StreamR" => "-", // slice of boxed objects
 
 	// ### dnn ###
 	"cv_dnn_DictValue_DictValue_bool" => "from_bool",
