@@ -42,7 +42,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	#[inline]
 	fn read_model(&mut self, path: &str) -> Result<()> {
 		extern_container_arg!(path);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR(self.as_raw_mut_DnnSuperResImpl(), path.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR(self.as_raw_mut_DnnSuperResImpl(), path.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Read the model from the given path
@@ -53,7 +54,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	fn read_model_1(&mut self, weights: &str, definition: &str) -> Result<()> {
 		extern_container_arg!(weights);
 		extern_container_arg!(definition);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR_const_StringR(self.as_raw_mut_DnnSuperResImpl(), weights.opencv_as_extern(), definition.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR_const_StringR(self.as_raw_mut_DnnSuperResImpl(), weights.opencv_as_extern(), definition.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Set desired model
@@ -67,19 +69,22 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	#[inline]
 	fn set_model(&mut self, algo: &str, scale: i32) -> Result<()> {
 		extern_container_arg!(algo);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_StringR_int(self.as_raw_mut_DnnSuperResImpl(), algo.opencv_as_extern(), scale) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_StringR_int(self.as_raw_mut_DnnSuperResImpl(), algo.opencv_as_extern(), scale) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Set computation backend
 	#[inline]
 	fn set_preferable_backend(&mut self, backend_id: i32) -> Result<()> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableBackend_int(self.as_raw_mut_DnnSuperResImpl(), backend_id) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableBackend_int(self.as_raw_mut_DnnSuperResImpl(), backend_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Set computation target
 	#[inline]
 	fn set_preferable_target(&mut self, target_id: i32) -> Result<()> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableTarget_int(self.as_raw_mut_DnnSuperResImpl(), target_id) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableTarget_int(self.as_raw_mut_DnnSuperResImpl(), target_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Upsample via neural network
@@ -90,7 +95,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	fn upsample(&mut self, img: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(img);
 		output_array_arg!(result);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Upsample via neural network of multiple outputs
@@ -102,7 +108,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	#[inline]
 	fn upsample_multioutput(&mut self, img: &dyn core::ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
 		input_array_arg!(img);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vector_Mat_R_const_vector_int_R_const_vector_String_R(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString()) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vector_Mat_R_const_vector_int_R_const_vector_String_R(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the scale factor of the model:
@@ -110,7 +117,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	/// Current scale factor.
 	#[inline]
 	fn get_scale(&mut self) -> Result<i32> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getScale(self.as_raw_mut_DnnSuperResImpl()) }.into_result()
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getScale(self.as_raw_mut_DnnSuperResImpl()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the scale factor of the model:
@@ -118,7 +126,9 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	/// Current algorithm.
 	#[inline]
 	fn get_algorithm(&mut self) -> Result<String> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getAlgorithm(self.as_raw_mut_DnnSuperResImpl()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getAlgorithm(self.as_raw_mut_DnnSuperResImpl()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -157,12 +167,16 @@ impl DnnSuperResImpl {
 	/// Empty constructor for python
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::dnn_superres::DnnSuperResImpl>> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() }.into_result().map(|r| unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() }.into_result()?;
+		let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Constructor which immediately sets the desired model
@@ -176,7 +190,9 @@ impl DnnSuperResImpl {
 	#[inline]
 	pub fn new(algo: &str, scale: i32) -> Result<crate::dnn_superres::DnnSuperResImpl> {
 		extern_container_arg!(algo);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(algo.opencv_as_extern(), scale) }.into_result().map(|r| unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(algo.opencv_as_extern(), scale) }.into_result()?;
+		let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

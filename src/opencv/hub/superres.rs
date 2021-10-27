@@ -21,54 +21,74 @@ pub mod prelude {
 /// * device_id: 0
 #[inline]
 pub fn create_frame_source_camera(device_id: i32) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
-	unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_frame_source_empty() -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
-	unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_BroxOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Brox_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_Brox_CUDA() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_DualTVL1() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_DualTVL1() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_dual_tvl1_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_farneback() -> Result<core::Ptr<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Farneback() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_Farneback() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_farneback_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_PyrLKOpticalFlow>> {
-	unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Create Bilateral TV-L1 Super Resolution.
@@ -91,12 +111,16 @@ pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr<dyn crate::superres::Su
 /// *   **Ptr\<DenseOpticalFlowExt\> opticalFlow** Dense optical flow algorithm.
 #[inline]
 pub fn create_super_resolution_btvl1() -> Result<core::Ptr<dyn crate::superres::Superres_SuperResolution>> {
-	unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_SuperResolution>> {
-	unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
@@ -107,7 +131,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setAlpha
 	#[inline]
 	fn get_alpha(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getAlpha_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getAlpha_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gradient constancy importance
@@ -115,7 +140,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setGamma
 	#[inline]
 	fn get_gamma(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getGamma_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getGamma_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Pyramid scale factor
@@ -123,7 +149,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setScaleFactor
 	#[inline]
 	fn get_scale_factor(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getScaleFactor_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getScaleFactor_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of lagged non-linearity iterations (inner loop)
@@ -131,7 +158,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setInnerIterations
 	#[inline]
 	fn get_inner_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getInnerIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getInnerIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of warping iterations (number of pyramid levels)
@@ -139,7 +167,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setOuterIterations
 	#[inline]
 	fn get_outer_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getOuterIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getOuterIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of linear system solver iterations
@@ -147,7 +176,8 @@ pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalF
 	/// setSolverIterations
 	#[inline]
 	fn get_solver_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_getSolverIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_getSolverIterations_const(self.as_raw_Superres_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -160,7 +190,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setAlpha getAlpha
 	#[inline]
 	fn set_alpha(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setAlpha_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setAlpha_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gradient constancy importance
@@ -168,7 +199,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setGamma getGamma
 	#[inline]
 	fn set_gamma(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setGamma_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setGamma_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Pyramid scale factor
@@ -176,7 +208,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setScaleFactor getScaleFactor
 	#[inline]
 	fn set_scale_factor(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setScaleFactor_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setScaleFactor_double(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of lagged non-linearity iterations (inner loop)
@@ -184,7 +217,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setInnerIterations getInnerIterations
 	#[inline]
 	fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of warping iterations (number of pyramid levels)
@@ -192,7 +226,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setOuterIterations getOuterIterations
 	#[inline]
 	fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of linear system solver iterations
@@ -200,7 +235,8 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	/// setSolverIterations getSolverIterations
 	#[inline]
 	fn set_solver_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_Superres_BroxOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -221,12 +257,14 @@ pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait + crate::superres::
 		input_array_arg!(frame1);
 		output_array_arg!(flow1);
 		output_array_arg!(flow2);
-		unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn collect_garbage(&mut self) -> Result<()> {
-		unsafe { sys::cv_superres_DenseOpticalFlowExt_collectGarbage(self.as_raw_mut_Superres_DenseOpticalFlowExt()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DenseOpticalFlowExt_collectGarbage(self.as_raw_mut_Superres_DenseOpticalFlowExt()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -238,56 +276,64 @@ pub trait Superres_DualTVL1OpticalFlowConst: crate::superres::Superres_DenseOpti
 	/// setTau
 	#[inline]
 	fn get_tau(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTau_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTau_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setLambda
 	#[inline]
 	fn get_lambda(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getLambda_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getLambda_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setTheta
 	#[inline]
 	fn get_theta(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTheta_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTheta_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setScalesNumber
 	#[inline]
 	fn get_scales_number(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setWarpingsNumber
 	#[inline]
 	fn get_warpings_number(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setEpsilon
 	#[inline]
 	fn get_epsilon(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations
 	#[inline]
 	fn get_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getIterations_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getIterations_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setUseInitialFlow
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_Superres_DualTVL1OpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -299,56 +345,64 @@ pub trait Superres_DualTVL1OpticalFlow: crate::superres::Superres_DenseOpticalFl
 	/// setTau getTau
 	#[inline]
 	fn set_tau(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setLambda getLambda
 	#[inline]
 	fn set_lambda(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setTheta getTheta
 	#[inline]
 	fn set_theta(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setScalesNumber getScalesNumber
 	#[inline]
 	fn set_scales_number(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setWarpingsNumber getWarpingsNumber
 	#[inline]
 	fn set_warpings_number(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setEpsilon getEpsilon
 	#[inline]
 	fn set_epsilon(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations getIterations
 	#[inline]
 	fn set_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setIterations_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setIterations_int(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setUseInitialFlow getUseInitialFlow
 	#[inline]
 	fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_superres_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_Superres_DualTVL1OpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -360,49 +414,56 @@ pub trait Superres_FarnebackOpticalFlowConst: crate::superres::Superres_DenseOpt
 	/// setPyrScale
 	#[inline]
 	fn get_pyr_scale(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setLevelsNumber
 	#[inline]
 	fn get_levels_number(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getLevelsNumber_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getLevelsNumber_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setWindowSize
 	#[inline]
 	fn get_window_size(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getWindowSize_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getWindowSize_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations
 	#[inline]
 	fn get_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getIterations_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getIterations_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setPolyN
 	#[inline]
 	fn get_poly_n(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolyN_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolyN_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setPolySigma
 	#[inline]
 	fn get_poly_sigma(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setFlags
 	#[inline]
 	fn get_flags(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_getFlags_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_getFlags_const(self.as_raw_Superres_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -414,49 +475,56 @@ pub trait Superres_FarnebackOpticalFlow: crate::superres::Superres_DenseOpticalF
 	/// setPyrScale getPyrScale
 	#[inline]
 	fn set_pyr_scale(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setLevelsNumber getLevelsNumber
 	#[inline]
 	fn set_levels_number(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setLevelsNumber_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setLevelsNumber_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setWindowSize getWindowSize
 	#[inline]
 	fn set_window_size(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setWindowSize_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setWindowSize_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations getIterations
 	#[inline]
 	fn set_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setIterations_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setIterations_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setPolyN getPolyN
 	#[inline]
 	fn set_poly_n(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setPolySigma getPolySigma
 	#[inline]
 	fn set_poly_sigma(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setFlags getFlags
 	#[inline]
 	fn set_flags(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_Superres_FarnebackOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -472,12 +540,14 @@ pub trait Superres_FrameSource: crate::superres::Superres_FrameSourceConst {
 	#[inline]
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
-		unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn reset(&mut self) -> Result<()> {
-		unsafe { sys::cv_superres_FrameSource_reset(self.as_raw_mut_Superres_FrameSource()) }.into_result()
+		let ret = unsafe { sys::cv_superres_FrameSource_reset(self.as_raw_mut_Superres_FrameSource()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -489,21 +559,24 @@ pub trait Superres_PyrLKOpticalFlowConst: crate::superres::Superres_DenseOptical
 	/// setWindowSize
 	#[inline]
 	fn get_window_size(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_getWindowSize_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_getWindowSize_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setMaxLevel
 	#[inline]
 	fn get_max_level(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_getMaxLevel_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_getMaxLevel_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations
 	#[inline]
 	fn get_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_getIterations_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_getIterations_const(self.as_raw_Superres_PyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -515,21 +588,24 @@ pub trait Superres_PyrLKOpticalFlow: crate::superres::Superres_DenseOpticalFlowE
 	/// setWindowSize getWindowSize
 	#[inline]
 	fn set_window_size(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_setWindowSize_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_setWindowSize_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setMaxLevel getMaxLevel
 	#[inline]
 	fn set_max_level(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## See also
 	/// setIterations getIterations
 	#[inline]
 	fn set_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_PyrLKOpticalFlow_setIterations_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_PyrLKOpticalFlow_setIterations_int(self.as_raw_mut_Superres_PyrLKOpticalFlow(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -546,7 +622,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setScale
 	#[inline]
 	fn get_scale(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_SuperResolution_getScale_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getScale_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Iterations count
@@ -554,7 +631,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setIterations
 	#[inline]
 	fn get_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_SuperResolution_getIterations_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getIterations_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Asymptotic value of steepest descent method
@@ -562,7 +640,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setTau
 	#[inline]
 	fn get_tau(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_SuperResolution_getTau_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getTau_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weight parameter to balance data term and smoothness term
@@ -570,7 +649,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setLambda
 	#[inline]
 	fn get_lambda(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_SuperResolution_getLambda_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getLambda_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Parameter of spacial distribution in Bilateral-TV
@@ -578,7 +658,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setAlpha
 	#[inline]
 	fn get_alpha(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_SuperResolution_getAlpha_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getAlpha_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Kernel size of Bilateral-TV filter
@@ -586,7 +667,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setKernelSize
 	#[inline]
 	fn get_kernel_size(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_SuperResolution_getKernelSize_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getKernelSize_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gaussian blur kernel size
@@ -594,7 +676,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setBlurKernelSize
 	#[inline]
 	fn get_blur_kernel_size(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_SuperResolution_getBlurKernelSize_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getBlurKernelSize_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gaussian blur sigma
@@ -602,7 +685,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setBlurSigma
 	#[inline]
 	fn get_blur_sigma(&self) -> Result<f64> {
-		unsafe { sys::cv_superres_SuperResolution_getBlurSigma_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getBlurSigma_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Radius of the temporal search area
@@ -610,7 +694,8 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setTemporalAreaRadius
 	#[inline]
 	fn get_temporal_area_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_superres_SuperResolution_getTemporalAreaRadius_const(self.as_raw_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_getTemporalAreaRadius_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Dense optical flow algorithm
@@ -618,7 +703,9 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	/// setOpticalFlow
 	#[inline]
 	fn get_optical_flow(&self) -> Result<core::Ptr<dyn crate::superres::Superres_DenseOpticalFlowExt>> {
-		unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_Superres_SuperResolution()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_Superres_SuperResolution()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -632,7 +719,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// * frameSource: Input frame source
 	#[inline]
 	fn set_input(&mut self, frame_source: &core::Ptr<dyn crate::superres::Superres_FrameSource>) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_R(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_R(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Process next frame from input and return output result.
@@ -642,18 +730,21 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	#[inline]
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(frame);
-		unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn reset(&mut self) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_reset(self.as_raw_mut_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_reset(self.as_raw_mut_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Clear all inner buffers.
 	#[inline]
 	fn collect_garbage(&mut self) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_collectGarbage(self.as_raw_mut_Superres_SuperResolution()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_collectGarbage(self.as_raw_mut_Superres_SuperResolution()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Scale factor
@@ -661,7 +752,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setScale getScale
 	#[inline]
 	fn set_scale(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setScale_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setScale_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Iterations count
@@ -669,7 +761,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setIterations getIterations
 	#[inline]
 	fn set_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setIterations_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setIterations_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Asymptotic value of steepest descent method
@@ -677,7 +770,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setTau getTau
 	#[inline]
 	fn set_tau(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setTau_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setTau_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weight parameter to balance data term and smoothness term
@@ -685,7 +779,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setLambda getLambda
 	#[inline]
 	fn set_lambda(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setLambda_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setLambda_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Parameter of spacial distribution in Bilateral-TV
@@ -693,7 +788,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setAlpha getAlpha
 	#[inline]
 	fn set_alpha(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setAlpha_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setAlpha_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Kernel size of Bilateral-TV filter
@@ -701,7 +797,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setKernelSize getKernelSize
 	#[inline]
 	fn set_kernel_size(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setKernelSize_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setKernelSize_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gaussian blur kernel size
@@ -709,7 +806,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setBlurKernelSize getBlurKernelSize
 	#[inline]
 	fn set_blur_kernel_size(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setBlurKernelSize_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setBlurKernelSize_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Gaussian blur sigma
@@ -717,7 +815,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setBlurSigma getBlurSigma
 	#[inline]
 	fn set_blur_sigma(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setBlurSigma_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setBlurSigma_double(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Radius of the temporal search area
@@ -725,7 +824,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setTemporalAreaRadius getTemporalAreaRadius
 	#[inline]
 	fn set_temporal_area_radius(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setTemporalAreaRadius_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setTemporalAreaRadius_int(self.as_raw_mut_Superres_SuperResolution(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Dense optical flow algorithm
@@ -733,7 +833,8 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// setOpticalFlow getOpticalFlow
 	#[inline]
 	fn set_optical_flow(&mut self, val: &core::Ptr<dyn crate::superres::Superres_DenseOpticalFlowExt>) -> Result<()> {
-		unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt()) }.into_result()
+		let ret = unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

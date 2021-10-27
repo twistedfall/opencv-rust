@@ -94,7 +94,8 @@ opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
 pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_averageHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_averageHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes block mean hash of the input image
@@ -109,7 +110,8 @@ pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn cor
 pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, mode: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), mode) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), mode) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes color moment hash of the input, the algorithm
@@ -123,7 +125,8 @@ pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn 
 pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes average hash value of the input image
@@ -142,7 +145,8 @@ pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dy
 pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, alpha: f32, scale: f32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR_float_float(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), alpha, scale) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR_float_float(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), alpha, scale) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes pHash value of the input image
@@ -154,7 +158,8 @@ pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut d
 pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_pHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_pHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes radial variance hash of the input image
@@ -172,7 +177,8 @@ pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToO
 pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, sigma: f64, num_of_angle_line: i32) -> Result<()> {
 	input_array_arg!(input_arr);
 	output_array_arg!(output_arr);
-	unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR_double_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), sigma, num_of_angle_line) }.into_result()
+	let ret = unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR_double_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), sigma, num_of_angle_line) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes average hash value of the input image
@@ -235,7 +241,9 @@ impl crate::img_hash::AverageHashTrait for AverageHash {
 impl AverageHash {
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::AverageHash>> {
-		unsafe { sys::cv_img_hash_AverageHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_AverageHash_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -252,7 +260,9 @@ pub trait BlockMeanHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 
 	#[inline]
 	fn get_mean(&self) -> Result<core::Vector<f64>> {
-		unsafe { sys::cv_img_hash_BlockMeanHash_getMean_const(self.as_raw_BlockMeanHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_BlockMeanHash_getMean_const(self.as_raw_BlockMeanHash()) }.into_result()?;
+		let ret = unsafe { core::Vector::<f64>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -265,7 +275,8 @@ pub trait BlockMeanHashTrait: crate::img_hash::BlockMeanHashTraitConst + crate::
 	/// * mode: the mode
 	#[inline]
 	fn set_mode(&mut self, mode: i32) -> Result<()> {
-		unsafe { sys::cv_img_hash_BlockMeanHash_setMode_int(self.as_raw_mut_BlockMeanHash(), mode) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_BlockMeanHash_setMode_int(self.as_raw_mut_BlockMeanHash(), mode) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -317,7 +328,9 @@ impl BlockMeanHash {
 	/// * mode: BLOCK_MEAN_HASH_MODE_0
 	#[inline]
 	pub fn create(mode: i32) -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
-		unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -384,7 +397,9 @@ impl crate::img_hash::ColorMomentHashTrait for ColorMomentHash {
 impl ColorMomentHash {
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::ColorMomentHash>> {
-		unsafe { sys::cv_img_hash_ColorMomentHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_ColorMomentHash_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -408,7 +423,8 @@ pub trait ImgHashBaseTraitConst: core::AlgorithmTraitConst {
 	fn compare(&self, hash_one: &dyn core::ToInputArray, hash_two: &dyn core::ToInputArray) -> Result<f64> {
 		input_array_arg!(hash_one);
 		input_array_arg!(hash_two);
-		unsafe { sys::cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(self.as_raw_ImgHashBase(), hash_one.as_raw__InputArray(), hash_two.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(self.as_raw_ImgHashBase(), hash_one.as_raw__InputArray(), hash_two.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -424,7 +440,8 @@ pub trait ImgHashBaseTrait: core::AlgorithmTrait + crate::img_hash::ImgHashBaseT
 	fn compute(&mut self, input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(input_arr);
 		output_array_arg!(output_arr);
-		unsafe { sys::cv_img_hash_ImgHashBase_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ImgHashBase(), input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_ImgHashBase_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ImgHashBase(), input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -475,13 +492,15 @@ pub trait MarrHildrethHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 	/// self explain
 	#[inline]
 	fn get_alpha(&self) -> Result<f32> {
-		unsafe { sys::cv_img_hash_MarrHildrethHash_getAlpha_const(self.as_raw_MarrHildrethHash()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_MarrHildrethHash_getAlpha_const(self.as_raw_MarrHildrethHash()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// self explain
 	#[inline]
 	fn get_scale(&self) -> Result<f32> {
-		unsafe { sys::cv_img_hash_MarrHildrethHash_getScale_const(self.as_raw_MarrHildrethHash()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_MarrHildrethHash_getScale_const(self.as_raw_MarrHildrethHash()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -495,7 +514,8 @@ pub trait MarrHildrethHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_
 	/// * scale: int level of scale factor (default = 1)
 	#[inline]
 	fn set_kernel_param(&mut self, alpha: f32, scale: f32) -> Result<()> {
-		unsafe { sys::cv_img_hash_MarrHildrethHash_setKernelParam_float_float(self.as_raw_mut_MarrHildrethHash(), alpha, scale) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_MarrHildrethHash_setKernelParam_float_float(self.as_raw_mut_MarrHildrethHash(), alpha, scale) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -552,7 +572,9 @@ impl MarrHildrethHash {
 	/// * scale: 1.0f
 	#[inline]
 	pub fn create(alpha: f32, scale: f32) -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
-		unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -623,7 +645,9 @@ impl crate::img_hash::PHashTrait for PHash {
 impl PHash {
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::img_hash::PHash>> {
-		unsafe { sys::cv_img_hash_PHash_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_PHash_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -640,12 +664,14 @@ pub trait RadialVarianceHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 
 	#[inline]
 	fn get_num_of_angle_line(&self) -> Result<i32> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getNumOfAngleLine_const(self.as_raw_RadialVarianceHash()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getNumOfAngleLine_const(self.as_raw_RadialVarianceHash()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_sigma(&self) -> Result<f64> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getSigma_const(self.as_raw_RadialVarianceHash()) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getSigma_const(self.as_raw_RadialVarianceHash()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -655,32 +681,42 @@ pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait + crate::im
 
 	#[inline]
 	fn set_num_of_angle_line(&mut self, value: i32) -> Result<()> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_setNumOfAngleLine_int(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_setNumOfAngleLine_int(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_sigma(&mut self, value: f64) -> Result<()> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_setSigma_double(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_setSigma_double(self.as_raw_mut_RadialVarianceHash(), value) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_features(&mut self) -> Result<core::Vector<f64>> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getFeatures(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Vector::<f64>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getFeatures(self.as_raw_mut_RadialVarianceHash()) }.into_result()?;
+		let ret = unsafe { core::Vector::<f64>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_hash(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getHash(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getHash(self.as_raw_mut_RadialVarianceHash()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_pix_per_line(&mut self, input: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatR(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getPixPerLine_const_MatR(self.as_raw_mut_RadialVarianceHash(), input.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_projection(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_getProjection(self.as_raw_mut_RadialVarianceHash()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_getProjection(self.as_raw_mut_RadialVarianceHash()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -733,7 +769,9 @@ impl RadialVarianceHash {
 	/// * num_of_angle_line: 180
 	#[inline]
 	pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
-		unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line) }.into_result().map(|r| unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

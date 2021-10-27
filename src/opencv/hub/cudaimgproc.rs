@@ -139,7 +139,8 @@ pub fn alpha_comp(img1: &dyn core::ToInputArray, img2: &dyn core::ToInputArray, 
 	input_array_arg!(img1);
 	input_array_arg!(img2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_alphaComp_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(img1.as_raw__InputArray(), img2.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha_op, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_alphaComp_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(img1.as_raw__InputArray(), img2.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha_op, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs bilateral filtering of passed image
@@ -164,7 +165,8 @@ pub fn alpha_comp(img1: &dyn core::ToInputArray, img2: &dyn core::ToInputArray, 
 pub fn bilateral_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, kernel_size: i32, sigma_color: f32, sigma_spatial: f32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_float_float_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel_size, sigma_color, sigma_spatial, border_mode, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_float_float_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel_size, sigma_color, sigma_spatial, border_mode, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs linear blending of two images.
@@ -188,7 +190,8 @@ pub fn blend_linear(img1: &dyn core::ToInputArray, img2: &dyn core::ToInputArray
 	input_array_arg!(weights1);
 	input_array_arg!(weights2);
 	output_array_arg!(result);
-	unsafe { sys::cv_cuda_blendLinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(img1.as_raw__InputArray(), img2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_blendLinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(img1.as_raw__InputArray(), img2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates histogram for one channel 8-bit image confined in given mask.
@@ -206,7 +209,8 @@ pub fn calc_hist_1(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, 
 	input_array_arg!(src);
 	input_array_arg!(mask);
 	output_array_arg!(hist);
-	unsafe { sys::cv_cuda_calcHist_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcHist_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates histogram for one channel 8-bit image.
@@ -222,7 +226,8 @@ pub fn calc_hist_1(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, 
 pub fn calc_hist(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(hist);
-	unsafe { sys::cv_cuda_calcHist_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcHist_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::CLAHE .
@@ -237,7 +242,9 @@ pub fn calc_hist(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArra
 /// * tile_grid_size: Size(8,8)
 #[inline]
 pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CLAHE>> {
-	unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::CannyEdgeDetector .
@@ -256,19 +263,25 @@ pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core:
 /// * l2gradient: false
 #[inline]
 pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_size: i32, l2gradient: bool) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>> {
-	unsafe { sys::cv_cuda_createCannyEdgeDetector_double_double_int_bool(low_thresh, high_thresh, apperture_size, l2gradient) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createCannyEdgeDetector_double_double_int_bool(low_thresh, high_thresh, apperture_size, l2gradient) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ballard1981) .
 #[inline]
 pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
-	unsafe { sys::cv_cuda_createGeneralizedHoughBallard() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createGeneralizedHoughBallard() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Guil1999) .
 #[inline]
 pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
-	unsafe { sys::cv_cuda_createGeneralizedHoughGuil() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createGeneralizedHoughGuil() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::CornersDetector .
@@ -299,7 +312,9 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::G
 /// * harris_k: 0.04
 #[inline]
 pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornersDetector>> {
-	unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for Harris cornerness criteria.
@@ -318,7 +333,9 @@ pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, q
 /// * border_type: BORDER_REFLECT101
 #[inline]
 pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
-	unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::HoughCirclesDetector .
@@ -342,7 +359,9 @@ pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, 
 /// * max_circles: 4096
 #[inline]
 pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i32, votes_threshold: i32, min_radius: i32, max_radius: i32, max_circles: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>> {
-	unsafe { sys::cv_cuda_createHoughCirclesDetector_float_float_int_int_int_int_int(dp, min_dist, canny_threshold, votes_threshold, min_radius, max_radius, max_circles) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createHoughCirclesDetector_float_float_int_int_int_int_int(dp, min_dist, canny_threshold, votes_threshold, min_radius, max_radius, max_circles) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::HoughLinesDetector .
@@ -360,7 +379,9 @@ pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i3
 /// * max_lines: 4096
 #[inline]
 pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort: bool, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>> {
-	unsafe { sys::cv_cuda_createHoughLinesDetector_float_float_int_bool_int(rho, theta, threshold, do_sort, max_lines) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createHoughLinesDetector_float_float_int_bool_int(rho, theta, threshold, do_sort, max_lines) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::HoughSegmentDetector .
@@ -376,7 +397,9 @@ pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort
 /// * max_lines: 4096
 #[inline]
 pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
-	unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
@@ -395,7 +418,9 @@ pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32,
 /// * border_type: BORDER_REFLECT101
 #[inline]
 pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
-	unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::TemplateMatching .
@@ -429,7 +454,9 @@ pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, b
 /// * user_block_size: Size()
 #[inline]
 pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_TemplateMatching>> {
-	unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Converts an image from one color space to another.
@@ -454,7 +481,8 @@ pub fn create_template_matching(src_type: i32, method: i32, user_block_size: cor
 pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dcn: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_cvtColor_const__InputArrayR_const__OutputArrayR_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dcn, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_cvtColor_const__InputArrayR_const__OutputArrayR_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dcn, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts an image from Bayer pattern to RGB or grayscale.
@@ -490,7 +518,8 @@ pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dcn: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_demosaicing_const__InputArrayR_const__OutputArrayR_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dcn, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_demosaicing_const__InputArrayR_const__OutputArrayR_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dcn, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Equalizes the histogram of a grayscale image.
@@ -508,7 +537,8 @@ pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 pub fn equalize_hist(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_equalizeHist_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_equalizeHist_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes levels with even distribution.
@@ -525,7 +555,8 @@ pub fn equalize_hist(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 #[inline]
 pub fn even_levels(levels: &mut dyn core::ToOutputArray, n_levels: i32, lower_level: i32, upper_level: i32, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(levels);
-	unsafe { sys::cv_cuda_evenLevels_const__OutputArrayR_int_int_int_StreamR(levels.as_raw__OutputArray(), n_levels, lower_level, upper_level, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_evenLevels_const__OutputArrayR_int_int_int_StreamR(levels.as_raw__OutputArray(), n_levels, lower_level, upper_level, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Routines for correcting image color gamma.
@@ -543,7 +574,8 @@ pub fn even_levels(levels: &mut dyn core::ToOutputArray, n_levels: i32, lower_le
 pub fn gamma_correction(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, forward: bool, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_gammaCorrection_const__InputArrayR_const__OutputArrayR_bool_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), forward, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_gammaCorrection_const__InputArrayR_const__OutputArrayR_bool_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), forward, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates a histogram with evenly distributed bins.
@@ -563,7 +595,8 @@ pub fn gamma_correction(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 pub fn hist_even(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArray, hist_size: i32, lower_level: i32, upper_level: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(hist);
-	unsafe { sys::cv_cuda_histEven_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size, lower_level, upper_level, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_histEven_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size, lower_level, upper_level, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates a histogram with bins determined by the levels array.
@@ -582,7 +615,8 @@ pub fn hist_range(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(hist);
 	input_array_arg!(levels);
-	unsafe { sys::cv_cuda_histRange_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), levels.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_histRange_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), hist.as_raw__OutputArray(), levels.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs mean-shift filtering for each point of the source image.
@@ -606,7 +640,8 @@ pub fn hist_range(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArr
 pub fn mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a mean-shift procedure and stores information about processed points (their colors and
@@ -633,7 +668,8 @@ pub fn mean_shift_proc(src: &dyn core::ToInputArray, dstr: &mut dyn core::ToOutp
 	input_array_arg!(src);
 	output_array_arg!(dstr);
 	output_array_arg!(dstsp);
-	unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a mean-shift segmentation of the source image and eliminates small segments.
@@ -654,7 +690,8 @@ pub fn mean_shift_proc(src: &dyn core::ToInputArray, dstr: &mut dyn core::ToOutp
 pub fn mean_shift_segmentation(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: i32, sr: i32, minsize: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, criteria.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Exchanges the color channels of an image in-place.
@@ -673,7 +710,8 @@ pub fn mean_shift_segmentation(src: &dyn core::ToInputArray, dst: &mut dyn core:
 #[inline]
 pub fn swap_channels(image: &mut dyn core::ToInputOutputArray, dst_order: &[i32; 4], stream: &mut core::Stream) -> Result<()> {
 	input_output_array_arg!(image);
-	unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_int_X__4__StreamR(image.as_raw__InputOutputArray(), dst_order, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX_StreamR(image.as_raw__InputOutputArray(), dst_order, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Base class for Contrast Limited Adaptive Histogram Equalization. :
@@ -695,7 +733,8 @@ pub trait CUDA_CLAHE: crate::cudaimgproc::CUDA_CLAHEConst + crate::imgproc::CLAH
 	fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_CLAHE_apply_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CLAHE_apply_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -706,22 +745,26 @@ pub trait CUDA_CannyEdgeDetectorConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_low_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getLowThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_getLowThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_high_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getHighThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_getHighThreshold_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_apperture_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getAppertureSize_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_getAppertureSize_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_l2_gradient(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_getL2Gradient_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_getL2Gradient_const(self.as_raw_CUDA_CannyEdgeDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -742,7 +785,8 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUD
 	fn detect(&mut self, image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(edges);
-		unsafe { sys::cv_cuda_CannyEdgeDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CannyEdgeDetector(), image.as_raw__InputArray(), edges.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CannyEdgeDetector(), image.as_raw__InputArray(), edges.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
@@ -766,27 +810,32 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUD
 		input_array_arg!(dx);
 		input_array_arg!(dy);
 		output_array_arg!(edges);
-		unsafe { sys::cv_cuda_CannyEdgeDetector_detect_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CannyEdgeDetector(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_detect_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CannyEdgeDetector(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_low_threshold(&mut self, low_thresh: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_setLowThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), low_thresh) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_setLowThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), low_thresh) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_high_threshold(&mut self, high_thresh: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_setHighThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), high_thresh) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_setHighThreshold_double(self.as_raw_mut_CUDA_CannyEdgeDetector(), high_thresh) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_apperture_size(&mut self, apperture_size: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_setAppertureSize_int(self.as_raw_mut_CUDA_CannyEdgeDetector(), apperture_size) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_setAppertureSize_int(self.as_raw_mut_CUDA_CannyEdgeDetector(), apperture_size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_l2_gradient(&mut self, l2gradient: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_CannyEdgeDetector_setL2Gradient_bool(self.as_raw_mut_CUDA_CannyEdgeDetector(), l2gradient) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CannyEdgeDetector_setL2Gradient_bool(self.as_raw_mut_CUDA_CannyEdgeDetector(), l2gradient) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -814,7 +863,8 @@ pub trait CUDA_CornernessCriteria: core::AlgorithmTrait + crate::cudaimgproc::CU
 	fn compute(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -846,7 +896,8 @@ pub trait CUDA_CornersDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		input_array_arg!(mask);
-		unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -857,37 +908,44 @@ pub trait CUDA_HoughCirclesDetectorConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_dp(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getDp_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getDp_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_dist(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinDist_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getMinDist_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_canny_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getCannyThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getCannyThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_votes_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getVotesThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getVotesThreshold_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMinRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getMinRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxRadius_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_circles(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxCircles_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_getMaxCircles_const(self.as_raw_CUDA_HoughCirclesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -911,42 +969,50 @@ pub trait CUDA_HoughCirclesDetector: core::AlgorithmTrait + crate::cudaimgproc::
 	fn detect(&mut self, src: &dyn core::ToInputArray, circles: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(circles);
-		unsafe { sys::cv_cuda_HoughCirclesDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughCirclesDetector(), src.as_raw__InputArray(), circles.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughCirclesDetector(), src.as_raw__InputArray(), circles.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_dp(&mut self, dp: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setDp_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), dp) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setDp_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), dp) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_min_dist(&mut self, min_dist: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setMinDist_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_dist) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setMinDist_float(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_dist) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_canny_threshold(&mut self, canny_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setCannyThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), canny_threshold) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setCannyThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), canny_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setVotesThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), votes_threshold) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setVotesThreshold_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), votes_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_min_radius(&mut self, min_radius: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setMinRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_radius) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setMinRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), min_radius) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_radius(&mut self, max_radius: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_radius) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxRadius_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_radius) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_circles(&mut self, max_circles: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxCircles_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_circles) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughCirclesDetector_setMaxCircles_int(self.as_raw_mut_CUDA_HoughCirclesDetector(), max_circles) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -957,27 +1023,32 @@ pub trait CUDA_HoughLinesDetectorConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_rho(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getRho_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_getRho_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_theta(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getTheta_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_getTheta_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_threshold(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getThreshold_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_getThreshold_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_do_sort(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getDoSort_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_getDoSort_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_lines(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_getMaxLines_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_getMaxLines_const(self.as_raw_CUDA_HoughLinesDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1003,7 +1074,8 @@ pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait + crate::cudaimgproc::CU
 	fn detect(&mut self, src: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(lines);
-		unsafe { sys::cv_cuda_HoughLinesDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughLinesDetector(), src.as_raw__InputArray(), lines.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughLinesDetector(), src.as_raw__InputArray(), lines.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Downloads results from cuda::HoughLinesDetector::detect to host memory.
@@ -1022,32 +1094,38 @@ pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait + crate::cudaimgproc::CU
 		input_array_arg!(d_lines);
 		output_array_arg!(h_lines);
 		output_array_arg!(h_votes);
-		unsafe { sys::cv_cuda_HoughLinesDetector_downloadResults_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughLinesDetector(), d_lines.as_raw__InputArray(), h_lines.as_raw__OutputArray(), h_votes.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_downloadResults_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughLinesDetector(), d_lines.as_raw__InputArray(), h_lines.as_raw__OutputArray(), h_votes.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_rho(&mut self, rho: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_setRho_float(self.as_raw_mut_CUDA_HoughLinesDetector(), rho) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_setRho_float(self.as_raw_mut_CUDA_HoughLinesDetector(), rho) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_theta(&mut self, theta: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_setTheta_float(self.as_raw_mut_CUDA_HoughLinesDetector(), theta) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_setTheta_float(self.as_raw_mut_CUDA_HoughLinesDetector(), theta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_threshold(&mut self, threshold: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_setThreshold_int(self.as_raw_mut_CUDA_HoughLinesDetector(), threshold) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_setThreshold_int(self.as_raw_mut_CUDA_HoughLinesDetector(), threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_do_sort(&mut self, do_sort: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_setDoSort_bool(self.as_raw_mut_CUDA_HoughLinesDetector(), do_sort) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_setDoSort_bool(self.as_raw_mut_CUDA_HoughLinesDetector(), do_sort) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughLinesDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughLinesDetector(), max_lines) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughLinesDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughLinesDetector(), max_lines) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1058,27 +1136,32 @@ pub trait CUDA_HoughSegmentDetectorConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_rho(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getRho_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_getRho_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_theta(&self) -> Result<f32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getTheta_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_getTheta_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_line_length(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMinLineLength_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_getMinLineLength_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_line_gap(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLineGap_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLineGap_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_lines(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLines_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLines_const(self.as_raw_CUDA_HoughSegmentDetector()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1103,32 +1186,38 @@ pub trait CUDA_HoughSegmentDetector: core::AlgorithmTrait + crate::cudaimgproc::
 	fn detect(&mut self, src: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(lines);
-		unsafe { sys::cv_cuda_HoughSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughSegmentDetector(), src.as_raw__InputArray(), lines.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HoughSegmentDetector(), src.as_raw__InputArray(), lines.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_rho(&mut self, rho: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_setRho_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), rho) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_setRho_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), rho) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_theta(&mut self, theta: f32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_setTheta_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), theta) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_setTheta_float(self.as_raw_mut_CUDA_HoughSegmentDetector(), theta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_min_line_length(&mut self, min_line_length: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_setMinLineLength_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), min_line_length) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_setMinLineLength_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), min_line_length) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_line_gap(&mut self, max_line_gap: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLineGap_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_line_gap) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLineGap_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_line_gap) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_lines) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HoughSegmentDetector_setMaxLines_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), max_lines) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1158,7 +1247,8 @@ pub trait CUDA_TemplateMatching: core::AlgorithmTrait + crate::cudaimgproc::CUDA
 		input_array_arg!(image);
 		input_array_arg!(templ);
 		output_array_arg!(result);
-		unsafe { sys::cv_cuda_TemplateMatching_match_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_TemplateMatching(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TemplateMatching_match_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_TemplateMatching(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

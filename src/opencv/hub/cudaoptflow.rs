@@ -85,35 +85,41 @@ pub trait CUDA_BroxOpticalFlowConst: crate::cudaoptflow::CUDA_DenseOpticalFlowCo
 
 	#[inline]
 	fn get_flow_smoothness(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getFlowSmoothness_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getFlowSmoothness_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gradient_constancy_importance(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getGradientConstancyImportance_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getGradientConstancyImportance_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_pyramid_scale_factor(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getPyramidScaleFactor_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getPyramidScaleFactor_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of lagged non-linearity iterations (inner loop)
 	#[inline]
 	fn get_inner_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getInnerIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getInnerIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of warping iterations (number of pyramid levels)
 	#[inline]
 	fn get_outer_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getOuterIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getOuterIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of linear system solver iterations
 	#[inline]
 	fn get_solver_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_getSolverIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_getSolverIterations_const(self.as_raw_CUDA_BroxOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -123,32 +129,38 @@ pub trait CUDA_BroxOpticalFlow: crate::cudaoptflow::CUDA_BroxOpticalFlowConst + 
 
 	#[inline]
 	fn set_flow_smoothness(&mut self, alpha: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setFlowSmoothness_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), alpha) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setFlowSmoothness_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), alpha) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_gradient_constancy_importance(&mut self, gamma: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setGradientConstancyImportance_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), gamma) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setGradientConstancyImportance_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), gamma) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_pyramid_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setPyramidScaleFactor_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), scale_factor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setPyramidScaleFactor_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), scale_factor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_inner_iterations(&mut self, inner_iterations: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), inner_iterations) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), inner_iterations) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_outer_iterations(&mut self, outer_iterations: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), outer_iterations) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), outer_iterations) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_solver_iterations(&mut self, solver_iterations: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), solver_iterations) }.into_result()
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), solver_iterations) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -163,7 +175,9 @@ impl dyn CUDA_BroxOpticalFlow + '_ {
 	/// * solver_iterations: 10
 	#[inline]
 	pub fn create(alpha: f64, gamma: f64, scale_factor: f64, inner_iterations: i32, outer_iterations: i32, solver_iterations: i32) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
-		unsafe { sys::cv_cuda_BroxOpticalFlow_create_double_double_double_int_int_int(alpha, gamma, scale_factor, inner_iterations, outer_iterations, solver_iterations) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_BroxOpticalFlow_create_double_double_double_int_int_int(alpha, gamma, scale_factor, inner_iterations, outer_iterations, solver_iterations) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -191,7 +205,8 @@ pub trait CUDA_DenseOpticalFlow: core::AlgorithmTrait + crate::cudaoptflow::CUDA
 		input_array_arg!(i0);
 		input_array_arg!(i1);
 		input_output_array_arg!(flow);
-		unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -205,22 +220,26 @@ pub trait CUDA_DensePyrLKOpticalFlowConst: crate::cudaoptflow::CUDA_DenseOptical
 
 	#[inline]
 	fn get_win_size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_level(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_DensePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -230,22 +249,26 @@ pub trait CUDA_DensePyrLKOpticalFlow: crate::cudaoptflow::CUDA_DenseOpticalFlow 
 
 	#[inline]
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_level(&mut self, max_level: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), max_level) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), max_level) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iters(&mut self, iters: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), iters) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), iters) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), use_initial_flow) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), use_initial_flow) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -258,7 +281,9 @@ impl dyn CUDA_DensePyrLKOpticalFlow + '_ {
 	/// * use_initial_flow: false
 	#[inline]
 	pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
-		unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -268,42 +293,50 @@ pub trait CUDA_FarnebackOpticalFlowConst: crate::cudaoptflow::CUDA_DenseOpticalF
 
 	#[inline]
 	fn get_num_levels(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_pyr_scale(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_fast_pyramids(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFastPyramids_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFastPyramids_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_win_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getWinSize_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getWinSize_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumIters_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumIters_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_poly_n(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolyN_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolyN_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_poly_sigma(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_flags(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFlags_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFlags_const(self.as_raw_CUDA_FarnebackOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -313,42 +346,50 @@ pub trait CUDA_FarnebackOpticalFlow: crate::cudaoptflow::CUDA_DenseOpticalFlow +
 
 	#[inline]
 	fn set_num_levels(&mut self, num_levels: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumLevels_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_levels) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumLevels_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_levels) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_pyr_scale(&mut self, pyr_scale: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), pyr_scale) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), pyr_scale) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_fast_pyramids(&mut self, fast_pyramids: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFastPyramids_bool(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), fast_pyramids) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFastPyramids_bool(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), fast_pyramids) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_win_size(&mut self, win_size: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setWinSize_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), win_size) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setWinSize_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), win_size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iters(&mut self, num_iters: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_iters) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_iters) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_poly_n(&mut self, poly_n: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_n) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_n) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_poly_sigma(&mut self, poly_sigma: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_sigma) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_sigma) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_flags(&mut self, flags: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), flags) }.into_result()
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -365,7 +406,9 @@ impl dyn CUDA_FarnebackOpticalFlow + '_ {
 	/// * flags: 0
 	#[inline]
 	pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
-		unsafe { sys::cv_cuda_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -376,7 +419,8 @@ pub trait CUDA_NvidiaHWOpticalFlowConst: core::AlgorithmTraitConst {
 	/// Returns grid size of output buffer as per the hardware's capability.
 	#[inline]
 	fn get_grid_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_getGridSize_const(self.as_raw_CUDA_NvidiaHWOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_getGridSize_const(self.as_raw_CUDA_NvidiaHWOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -419,13 +463,15 @@ pub trait CUDA_NvidiaHWOpticalFlow: core::AlgorithmTrait + crate::cudaoptflow::C
 		input_output_array_arg!(flow);
 		input_array_arg!(hint);
 		output_array_arg!(cost);
-		unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), hint.as_raw__InputArray(), cost.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), hint.as_raw__InputArray(), cost.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Releases all buffers, contexts and device pointers.
 	#[inline]
 	fn collect_garbage(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_collectGarbage(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_collectGarbage(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -458,7 +504,8 @@ pub trait CUDA_NvidiaOpticalFlow_1_0: crate::cudaoptflow::CUDA_NvidiaHWOpticalFl
 	fn up_sampler(&mut self, flow: &dyn core::ToInputArray, image_size: core::Size, grid_size: i32, upsampled_flow: &mut dyn core::ToInputOutputArray) -> Result<()> {
 		input_array_arg!(flow);
 		input_output_array_arg!(upsampled_flow);
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(), flow.as_raw__InputArray(), image_size.opencv_as_extern(), grid_size, upsampled_flow.as_raw__InputOutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(), flow.as_raw__InputArray(), image_size.opencv_as_extern(), grid_size, upsampled_flow.as_raw__InputOutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -493,7 +540,9 @@ impl dyn CUDA_NvidiaOpticalFlow_1_0 + '_ {
 	/// * output_stream: Stream::Null()
 	#[inline]
 	pub fn create(image_size: core::Size, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut core::Stream, output_stream: &mut core::Stream) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_Size_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), perf_preset, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_Size_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), perf_preset, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -522,7 +571,8 @@ pub trait CUDA_NvidiaOpticalFlow_2_0: crate::cudaoptflow::CUDA_NvidiaHWOpticalFl
 	fn convert_to_float(&mut self, flow: &dyn core::ToInputArray, float_flow: &mut dyn core::ToInputOutputArray) -> Result<()> {
 		input_array_arg!(flow);
 		input_output_array_arg!(float_flow);
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(), flow.as_raw__InputArray(), float_flow.as_raw__InputOutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(), flow.as_raw__InputArray(), float_flow.as_raw__InputOutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -563,7 +613,9 @@ impl dyn CUDA_NvidiaOpticalFlow_2_0 + '_ {
 	/// * output_stream: Stream::Null()
 	#[inline]
 	pub fn create(image_size: core::Size, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL, output_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE, hint_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut core::Stream, output_stream: &mut core::Stream) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Instantiate NVIDIA Optical Flow with ROI Feature
@@ -602,7 +654,9 @@ impl dyn CUDA_NvidiaOpticalFlow_2_0 + '_ {
 	/// * output_stream: Stream::Null()
 	#[inline]
 	pub fn create_1(image_size: core::Size, mut roi_data: core::Vector<core::Rect>, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL, output_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE, hint_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut core::Stream, output_stream: &mut core::Stream) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
-		unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vector_Rect__NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), roi_data.as_raw_mut_VectorOfRect(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vector_Rect__NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), roi_data.as_raw_mut_VectorOfRect(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -618,7 +672,8 @@ pub trait CUDA_OpticalFlowDual_TVL1Const: crate::cudaoptflow::CUDA_DenseOpticalF
 	/// Time step of the numerical scheme.
 	#[inline]
 	fn get_tau(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTau_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTau_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weight parameter for the data term, attachment parameter.
@@ -627,7 +682,8 @@ pub trait CUDA_OpticalFlowDual_TVL1Const: crate::cudaoptflow::CUDA_DenseOpticalF
 	/// It depends on the range of motions of the images, so its value should be adapted to each image sequence.
 	#[inline]
 	fn get_lambda(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getLambda_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getLambda_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weight parameter for (u - v)^2, tightness parameter.
@@ -636,7 +692,8 @@ pub trait CUDA_OpticalFlowDual_TVL1Const: crate::cudaoptflow::CUDA_DenseOpticalF
 	/// The method is stable for a large range of values of this parameter.
 	#[inline]
 	fn get_gamma(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getGamma_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getGamma_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// parameter used for motion estimation. It adds a variable allowing for illumination variations
@@ -645,13 +702,15 @@ pub trait CUDA_OpticalFlowDual_TVL1Const: crate::cudaoptflow::CUDA_DenseOpticalF
 	/// Journal of Mathematical imaging and vision, may 2011 Vol 40 issue 1, pp 120-145
 	#[inline]
 	fn get_theta(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTheta_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTheta_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of scales used to create the pyramid of images.
 	#[inline]
 	fn get_num_scales(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumScales_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumScales_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of warpings per scale.
@@ -660,30 +719,35 @@ pub trait CUDA_OpticalFlowDual_TVL1Const: crate::cudaoptflow::CUDA_DenseOpticalF
 	/// It also affects the running time, so it is a compromise between speed and accuracy.
 	#[inline]
 	fn get_num_warps(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumWarps_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumWarps_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Stopping criterion threshold used in the numerical scheme, which is a trade-off between precision and running time.
 	/// A small value will yield more accurate solutions at the expense of a slower convergence.
 	#[inline]
 	fn get_epsilon(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getEpsilon_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getEpsilon_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Stopping criterion iterations number used in the numerical scheme.
 	#[inline]
 	fn get_num_iterations(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumIterations_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumIterations_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_scale_step(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getScaleStep_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getScaleStep_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getUseInitialFlow_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getUseInitialFlow_const(self.as_raw_CUDA_OpticalFlowDual_TVL1()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -693,52 +757,62 @@ pub trait CUDA_OpticalFlowDual_TVL1: crate::cudaoptflow::CUDA_DenseOpticalFlow +
 
 	#[inline]
 	fn set_tau(&mut self, tau: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTau_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), tau) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTau_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), tau) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_lambda(&mut self, lambda: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setLambda_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), lambda) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setLambda_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), lambda) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_gamma(&mut self, gamma: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setGamma_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), gamma) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setGamma_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), gamma) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_theta(&mut self, theta: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTheta_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), theta) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTheta_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), theta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_scales(&mut self, nscales: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumScales_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), nscales) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumScales_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), nscales) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_warps(&mut self, warps: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumWarps_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), warps) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumWarps_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), warps) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_epsilon(&mut self, epsilon: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setEpsilon_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), epsilon) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setEpsilon_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), epsilon) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iterations(&mut self, iterations: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumIterations_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), iterations) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumIterations_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), iterations) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_scale_step(&mut self, scale_step: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setScaleStep_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), scale_step) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setScaleStep_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), scale_step) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setUseInitialFlow_bool(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), use_initial_flow) }.into_result()
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setUseInitialFlow_bool(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), use_initial_flow) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -757,7 +831,9 @@ impl dyn CUDA_OpticalFlowDual_TVL1 + '_ {
 	/// * use_initial_flow: false
 	#[inline]
 	pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, iterations: i32, scale_step: f64, gamma: f64, use_initial_flow: bool) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
-		unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create_double_double_double_int_int_double_int_double_double_bool(tau, lambda, theta, nscales, warps, epsilon, iterations, scale_step, gamma, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create_double_double_double_int_int_double_int_double_double_bool(tau, lambda, theta, nscales, warps, epsilon, iterations, scale_step, gamma, use_initial_flow) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -793,7 +869,8 @@ pub trait CUDA_SparseOpticalFlow: core::AlgorithmTrait + crate::cudaoptflow::CUD
 		input_output_array_arg!(next_pts);
 		output_array_arg!(status);
 		output_array_arg!(err);
-		unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -814,22 +891,26 @@ pub trait CUDA_SparsePyrLKOpticalFlowConst: crate::cudaoptflow::CUDA_SparseOptic
 
 	#[inline]
 	fn get_win_size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_level(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -839,22 +920,26 @@ pub trait CUDA_SparsePyrLKOpticalFlow: crate::cudaoptflow::CUDA_SparseOpticalFlo
 
 	#[inline]
 	fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), win_size.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_level(&mut self, max_level: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), max_level) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), max_level) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iters(&mut self, iters: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), iters) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), iters) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), use_initial_flow) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), use_initial_flow) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -867,7 +952,9 @@ impl dyn CUDA_SparsePyrLKOpticalFlow + '_ {
 	/// * use_initial_flow: false
 	#[inline]
 	pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
-		unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

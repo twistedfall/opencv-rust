@@ -1693,28 +1693,28 @@ pub type Size2l = core::Size_<i64>;
 pub type SparseMat_const_iterator = core::SparseMatConstIterator;
 pub type SparseMat_iterator = core::SparseMatIterator;
 /// @name Shorter aliases for the most popular specializations of Vec<T,n>
-pub type Vec2b = core::Vec<u8, 2>;
-pub type Vec2d = core::Vec<f64, 2>;
-pub type Vec2f = core::Vec<f32, 2>;
-pub type Vec2i = core::Vec<i32, 2>;
-pub type Vec2s = core::Vec<i16, 2>;
-pub type Vec2w = core::Vec<u16, 2>;
-pub type Vec3b = core::Vec<u8, 3>;
-pub type Vec3d = core::Vec<f64, 3>;
-pub type Vec3f = core::Vec<f32, 3>;
-pub type Vec3i = core::Vec<i32, 3>;
-pub type Vec3s = core::Vec<i16, 3>;
-pub type Vec3w = core::Vec<u16, 3>;
-pub type Vec4b = core::Vec<u8, 4>;
-pub type Vec4d = core::Vec<f64, 4>;
-pub type Vec4f = core::Vec<f32, 4>;
-pub type Vec4i = core::Vec<i32, 4>;
-pub type Vec4s = core::Vec<i16, 4>;
-pub type Vec4w = core::Vec<u16, 4>;
-pub type Vec6d = core::Vec<f64, 6>;
-pub type Vec6f = core::Vec<f32, 6>;
-pub type Vec6i = core::Vec<i32, 6>;
-pub type Vec8i = core::Vec<i32, 8>;
+pub type Vec2b = core::VecN<u8, 2>;
+pub type Vec2d = core::VecN<f64, 2>;
+pub type Vec2f = core::VecN<f32, 2>;
+pub type Vec2i = core::VecN<i32, 2>;
+pub type Vec2s = core::VecN<i16, 2>;
+pub type Vec2w = core::VecN<u16, 2>;
+pub type Vec3b = core::VecN<u8, 3>;
+pub type Vec3d = core::VecN<f64, 3>;
+pub type Vec3f = core::VecN<f32, 3>;
+pub type Vec3i = core::VecN<i32, 3>;
+pub type Vec3s = core::VecN<i16, 3>;
+pub type Vec3w = core::VecN<u16, 3>;
+pub type Vec4b = core::VecN<u8, 4>;
+pub type Vec4d = core::VecN<f64, 4>;
+pub type Vec4f = core::VecN<f32, 4>;
+pub type Vec4i = core::VecN<i32, 4>;
+pub type Vec4s = core::VecN<i16, 4>;
+pub type Vec4w = core::VecN<u16, 4>;
+pub type Vec6d = core::VecN<f64, 6>;
+pub type Vec6f = core::VecN<f32, 6>;
+pub type Vec6i = core::VecN<i32, 6>;
+pub type Vec8i = core::VecN<i32, 8>;
 pub type GpuMatND_IndexArray = core::Vector<i32>;
 pub type GpuMatND_SizeArray = core::Vector<i32>;
 pub type GpuMatND_StepArray = core::Vector<size_t>;
@@ -1723,13 +1723,15 @@ pub type ProgramSource_hash_t = u64;
 /// proxy for hal::Cholesky
 #[inline]
 pub fn cholesky(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<bool> {
-	unsafe { sys::cv_Cholesky_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n) }.into_result()
+	let ret = unsafe { sys::cv_Cholesky_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n) }.into_result()?;
+	Ok(ret)
 }
 
 /// proxy for hal::Cholesky
 #[inline]
 pub fn cholesky_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<bool> {
-	unsafe { sys::cv_Cholesky_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n) }.into_result()
+	let ret = unsafe { sys::cv_Cholesky_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a look-up table transform of an array.
@@ -1752,19 +1754,22 @@ pub fn lut(src: &dyn core::ToInputArray, lut: &dyn core::ToInputArray, dst: &mut
 	input_array_arg!(src);
 	input_array_arg!(lut);
 	output_array_arg!(dst);
-	unsafe { sys::cv_LUT_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_LUT_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// proxy for hal::LU
 #[inline]
 pub fn lu(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<i32> {
-	unsafe { sys::cv_LU_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n) }.into_result()
+	let ret = unsafe { sys::cv_LU_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n) }.into_result()?;
+	Ok(ret)
 }
 
 /// proxy for hal::LU
 #[inline]
 pub fn lu_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<i32> {
-	unsafe { sys::cv_LU_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n) }.into_result()
+	let ret = unsafe { sys::cv_LU_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the Mahalanobis distance between two vectors.
@@ -1782,7 +1787,8 @@ pub fn mahalanobis(v1: &dyn core::ToInputArray, v2: &dyn core::ToInputArray, ico
 	input_array_arg!(v1);
 	input_array_arg!(v2);
 	input_array_arg!(icovar);
-	unsafe { sys::cv_Mahalanobis_const__InputArrayR_const__InputArrayR_const__InputArrayR(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_Mahalanobis_const__InputArrayR_const__InputArrayR_const__InputArrayR(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::backProject
@@ -1792,7 +1798,8 @@ pub fn pca_back_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputA
 	input_array_arg!(mean);
 	input_array_arg!(eigenvectors);
 	output_array_arg!(result);
-	unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::operator() and add eigenvalues output parameter
@@ -1802,7 +1809,8 @@ pub fn pca_compute2_variance(data: &dyn core::ToInputArray, mean: &mut dyn core:
 	input_output_array_arg!(mean);
 	output_array_arg!(eigenvectors);
 	output_array_arg!(eigenvalues);
-	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance) }.into_result()
+	let ret = unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::operator() and add eigenvalues output parameter
@@ -1815,7 +1823,8 @@ pub fn pca_compute2(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputO
 	input_output_array_arg!(mean);
 	output_array_arg!(eigenvectors);
 	output_array_arg!(eigenvalues);
-	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components) }.into_result()
+	let ret = unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::operator()
@@ -1824,7 +1833,8 @@ pub fn pca_compute_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::
 	input_array_arg!(data);
 	input_output_array_arg!(mean);
 	output_array_arg!(eigenvectors);
-	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance) }.into_result()
+	let ret = unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::operator()
@@ -1836,7 +1846,8 @@ pub fn pca_compute(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOu
 	input_array_arg!(data);
 	input_output_array_arg!(mean);
 	output_array_arg!(eigenvectors);
-	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components) }.into_result()
+	let ret = unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap PCA::project
@@ -1846,7 +1857,8 @@ pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray,
 	input_array_arg!(mean);
 	input_array_arg!(eigenvectors);
 	output_array_arg!(result);
-	unsafe { sys::cv_PCAProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_PCAProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
@@ -1872,7 +1884,8 @@ pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray,
 pub fn psnr(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, r: f64) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
-	unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR_double(src1.as_raw__InputArray(), src2.as_raw__InputArray(), r) }.into_result()
+	let ret = unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR_double(src1.as_raw__InputArray(), src2.as_raw__InputArray(), r) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap SVD::backSubst
@@ -1883,7 +1896,8 @@ pub fn sv_back_subst(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt:
 	input_array_arg!(vt);
 	input_array_arg!(rhs);
 	output_array_arg!(dst);
-	unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// wrap SVD::compute
@@ -1896,7 +1910,8 @@ pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, 
 	output_array_arg!(w);
 	output_array_arg!(u);
 	output_array_arg!(vt);
-	unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates an absolute value of each matrix element.
@@ -1919,7 +1934,9 @@ pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, 
 /// * e: matrix expression.
 #[inline]
 pub fn abs_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_abs_const_MatExprR(e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_abs_const_MatExprR(e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates an absolute value of each matrix element.
@@ -1938,7 +1955,9 @@ pub fn abs_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
 /// @ref MatrixExpressions, absdiff, convertScaleAbs
 #[inline]
 pub fn abs(m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_abs_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_abs_const_MatR(m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates the per-element absolute difference between two arrays or between an array and a scalar.
@@ -1971,7 +1990,8 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the weighted sum of two arrays.
@@ -2007,7 +2027,8 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype) }.into_result()
+	let ret = unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the per-element sum of two arrays or an array and a scalar.
@@ -2059,7 +2080,8 @@ pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()
+	let ret = unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// naive nearest neighbor finder
@@ -2080,7 +2102,8 @@ pub fn batch_distance(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArr
 	output_array_arg!(dist);
 	output_array_arg!(nidx);
 	input_array_arg!(mask);
-	unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck) }.into_result()
+	let ret = unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck) }.into_result()?;
+	Ok(ret)
 }
 
 /// computes bitwise conjunction of the two arrays (dst = src1 & src2)
@@ -2117,7 +2140,8 @@ pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 ///  Inverts every bit of an array.
@@ -2142,7 +2166,8 @@ pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the per-element bit-wise disjunction of two arrays or an
@@ -2178,7 +2203,8 @@ pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, 
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the per-element bit-wise "exclusive or" operation on two
@@ -2215,7 +2241,8 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the source location of an extrapolated pixel.
@@ -2242,7 +2269,8 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// copyMakeBorder
 #[inline]
 pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
-	unsafe { sys::cv_borderInterpolate_int_int_int(p, len, border_type) }.into_result()
+	let ret = unsafe { sys::cv_borderInterpolate_int_int_int(p, len, border_type) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the covariance matrix of a set of vectors.
@@ -2277,7 +2305,8 @@ pub fn calc_covar_matrix(samples: &dyn core::ToInputArray, covar: &mut dyn core:
 	input_array_arg!(samples);
 	output_array_arg!(covar);
 	input_output_array_arg!(mean);
-	unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype) }.into_result()
+	let ret = unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the magnitude and angle of 2D vectors.
@@ -2308,7 +2337,8 @@ pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, mag
 	input_array_arg!(y);
 	output_array_arg!(magnitude);
 	output_array_arg!(angle);
-	unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()
+	let ret = unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns true if the specified feature is supported by the host hardware.
@@ -2321,7 +2351,8 @@ pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, mag
 /// * feature: The feature of interest, one of cv::CpuFeatures
 #[inline]
 pub fn check_hardware_support(feature: i32) -> Result<bool> {
-	unsafe { sys::cv_checkHardwareSupport_int(feature) }.into_result()
+	let ret = unsafe { sys::cv_checkHardwareSupport_int(feature) }.into_result()?;
+	Ok(ret)
 }
 
 /// Checks every element of an input array for invalid values.
@@ -2348,7 +2379,8 @@ pub fn check_hardware_support(feature: i32) -> Result<bool> {
 #[inline]
 pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
 	input_array_arg!(a);
-	unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val) }.into_result()
+	let ret = unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs the per-element comparison of two arrays or an array and scalar value.
@@ -2384,7 +2416,8 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop) }.into_result()
+	let ret = unsafe { sys::cv_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop) }.into_result()?;
+	Ok(ret)
 }
 
 /// Copies the lower or the upper half of a square matrix to its another half.
@@ -2408,7 +2441,8 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 #[inline]
 pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool) -> Result<()> {
 	input_output_array_arg!(m);
-	unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper) }.into_result()
+	let ret = unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts an array to half precision floating number.
@@ -2425,7 +2459,8 @@ pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool)
 pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_convertFp16_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_convertFp16_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Scales, calculates absolute values, and converts the result to 8-bit.
@@ -2463,7 +2498,8 @@ pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()
+	let ret = unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()?;
+	Ok(ret)
 }
 
 /// Forms a border around an image.
@@ -2518,7 +2554,8 @@ pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value) }.into_result()
+	let ret = unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value) }.into_result()?;
+	Ok(ret)
 }
 
 ///  This is an overloaded member function, provided for convenience (python)
@@ -2535,7 +2572,8 @@ pub fn copy_to(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, 
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_copyTo_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_copyTo_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Counts non-zero array elements.
@@ -2549,7 +2587,8 @@ pub fn copy_to(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, 
 #[inline]
 pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 	input_array_arg!(src);
-	unsafe { sys::cv_countNonZero_const__InputArrayR(src.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_countNonZero_const__InputArrayR(src.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the cube root of an argument.
@@ -2561,7 +2600,8 @@ pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 /// * val: A function argument.
 #[inline]
 pub fn cube_root(val: f32) -> Result<f32> {
-	unsafe { sys::cv_cubeRoot_float(val) }.into_result()
+	let ret = unsafe { sys::cv_cubeRoot_float(val) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates a continuous matrix.
@@ -2578,13 +2618,15 @@ pub fn cube_root(val: f32) -> Result<f32> {
 #[inline]
 pub fn create_continuous(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(arr);
-	unsafe { sys::cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// checks whether current device supports the given feature
 #[inline]
 pub fn device_supports(feature_set: core::FeatureSet) -> Result<bool> {
-	unsafe { sys::cv_cuda_deviceSupports_FeatureSet(feature_set) }.into_result()
+	let ret = unsafe { sys::cv_cuda_deviceSupports_FeatureSet(feature_set) }.into_result()?;
+	Ok(ret)
 }
 
 /// Ensures that the size of a matrix is big enough and the matrix has a proper type.
@@ -2599,7 +2641,8 @@ pub fn device_supports(feature_set: core::FeatureSet) -> Result<bool> {
 #[inline]
 pub fn ensure_size_is_enough(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(arr);
-	unsafe { sys::cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the number of installed CUDA-enabled devices.
@@ -2609,23 +2652,27 @@ pub fn ensure_size_is_enough(rows: i32, cols: i32, typ: i32, arr: &mut dyn core:
 /// returns -1.
 #[inline]
 pub fn get_cuda_enabled_device_count() -> Result<i32> {
-	unsafe { sys::cv_cuda_getCudaEnabledDeviceCount() }.into_result()
+	let ret = unsafe { sys::cv_cuda_getCudaEnabledDeviceCount() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the current device index set by cuda::setDevice or initialized by default.
 #[inline]
 pub fn get_device() -> Result<i32> {
-	unsafe { sys::cv_cuda_getDevice() }.into_result()
+	let ret = unsafe { sys::cv_cuda_getDevice() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn print_cuda_device_info(device: i32) -> Result<()> {
-	unsafe { sys::cv_cuda_printCudaDeviceInfo_int(device) }.into_result()
+	let ret = unsafe { sys::cv_cuda_printCudaDeviceInfo_int(device) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn print_short_cuda_device_info(device: i32) -> Result<()> {
-	unsafe { sys::cv_cuda_printShortCudaDeviceInfo_int(device) }.into_result()
+	let ret = unsafe { sys::cv_cuda_printShortCudaDeviceInfo_int(device) }.into_result()?;
+	Ok(ret)
 }
 
 /// Page-locks the memory of matrix and maps it for the device(s).
@@ -2634,7 +2681,8 @@ pub fn print_short_cuda_device_info(device: i32) -> Result<()> {
 /// * m: Input matrix.
 #[inline]
 pub fn register_page_locked(m: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_cuda_registerPageLocked_MatR(m.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_registerPageLocked_MatR(m.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Explicitly destroys and cleans up all resources associated with the current device in the current
@@ -2643,18 +2691,21 @@ pub fn register_page_locked(m: &mut core::Mat) -> Result<()> {
 /// Any subsequent API call to this device will reinitialize the device.
 #[inline]
 pub fn reset_device() -> Result<()> {
-	unsafe { sys::cv_cuda_resetDevice() }.into_result()
+	let ret = unsafe { sys::cv_cuda_resetDevice() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_buffer_pool_config(device_id: i32, stack_size: size_t, stack_count: i32) -> Result<()> {
-	unsafe { sys::cv_cuda_setBufferPoolConfig_int_size_t_int(device_id, stack_size, stack_count) }.into_result()
+	let ret = unsafe { sys::cv_cuda_setBufferPoolConfig_int_size_t_int(device_id, stack_size, stack_count) }.into_result()?;
+	Ok(ret)
 }
 
 /// BufferPool management (must be called before Stream creation)
 #[inline]
 pub fn set_buffer_pool_usage(on: bool) -> Result<()> {
-	unsafe { sys::cv_cuda_setBufferPoolUsage_bool(on) }.into_result()
+	let ret = unsafe { sys::cv_cuda_setBufferPoolUsage_bool(on) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sets a device and initializes it for the current thread.
@@ -2665,7 +2716,8 @@ pub fn set_buffer_pool_usage(on: bool) -> Result<()> {
 /// If the call of this function is omitted, a default device is initialized at the fist CUDA usage.
 #[inline]
 pub fn set_device(device: i32) -> Result<()> {
-	unsafe { sys::cv_cuda_setDevice_int(device) }.into_result()
+	let ret = unsafe { sys::cv_cuda_setDevice_int(device) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sets a CUDA device and initializes it for the current thread with OpenGL interoperability.
@@ -2679,7 +2731,8 @@ pub fn set_device(device: i32) -> Result<()> {
 /// * device: 0
 #[inline]
 pub fn set_gl_device(device: i32) -> Result<()> {
-	unsafe { sys::cv_cuda_setGlDevice_int(device) }.into_result()
+	let ret = unsafe { sys::cv_cuda_setGlDevice_int(device) }.into_result()?;
+	Ok(ret)
 }
 
 /// Unmaps the memory of matrix and makes it pageable again.
@@ -2688,7 +2741,8 @@ pub fn set_gl_device(device: i32) -> Result<()> {
 /// * m: Input matrix.
 #[inline]
 pub fn unregister_page_locked(m: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_cuda_unregisterPageLocked_MatR(m.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_unregisterPageLocked_MatR(m.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a forward or inverse discrete Cosine transform of 1D or 2D array.
@@ -2740,99 +2794,119 @@ pub fn unregister_page_locked(m: &mut core::Mat) -> Result<()> {
 pub fn dct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns string of cv::Mat depth value: CV_8U -> "CV_8U" or "<invalid depth>"
 #[inline]
 pub fn depth_to_string(depth: i32) -> Result<String> {
-	unsafe { sys::cv_depthToString_int(depth) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_depthToString_int(depth) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_channels_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_channels(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_depth_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_depth(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_type_1(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatType_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatType_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_mat_type(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_MatType_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_MatType_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_9(v: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_CheckContextR(v.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_CheckContextR(v.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_Size__int__const_CheckContextR(v1.opencv_as_extern(), v2.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_Size__int__const_Size__int__const_CheckContextR(v1.opencv_as_extern(), v2.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_3(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_double_const_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_double_const_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_7(v: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_2(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_float_const_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_float_const_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_5(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_6(v: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_1(v1: size_t, v2: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
-	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn check_failed_auto_10(v1: &str, ctx: &core::Detail_CheckContext) -> Result<()> {
 	extern_container_arg!(v1);
-	unsafe { sys::cv_detail_check_failed_auto_const_stringR_const_CheckContextR(v1.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()
+	let ret = unsafe { sys::cv_detail_check_failed_auto_const_stringR_const_CheckContextR(v1.opencv_as_extern(), ctx.as_raw_Detail_CheckContext()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the determinant of a square floating-point matrix.
@@ -2852,7 +2926,8 @@ pub fn check_failed_auto_10(v1: &str, ctx: &core::Detail_CheckContext) -> Result
 #[inline]
 pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
 	input_array_arg!(mtx);
-	unsafe { sys::cv_determinant_const__InputArrayR(mtx.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_determinant_const__InputArrayR(mtx.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
@@ -2998,7 +3073,8 @@ pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
 pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()
+	let ret = unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()?;
+	Ok(ret)
 }
 
 /// Get OpenCV type from DirectX type
@@ -3008,7 +3084,8 @@ pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flag
 /// OpenCV type or -1 if there is no equivalent
 #[inline]
 pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(i_d3_dformat) }.into_result()
+	let ret = unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(i_d3_dformat) }.into_result()?;
+	Ok(ret)
 }
 
 /// Get OpenCV type from DirectX type
@@ -3018,7 +3095,8 @@ pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
 /// OpenCV type or -1 if there is no equivalent
 #[inline]
 pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
-	unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format) }.into_result()
+	let ret = unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs per-element division of two arrays or a scalar by an array.
@@ -3058,7 +3136,8 @@ pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()
+	let ret = unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs per-element division of two arrays or a scalar by an array.
@@ -3098,7 +3177,8 @@ pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype) }.into_result()
+	let ret = unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates eigenvalues and eigenvectors of a non-symmetric matrix (real eigenvalues only).
@@ -3123,7 +3203,8 @@ pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn c
 	input_array_arg!(src);
 	output_array_arg!(eigenvalues);
 	output_array_arg!(eigenvectors);
-	unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates eigenvalues and eigenvectors of a symmetric matrix.
@@ -3156,7 +3237,8 @@ pub fn eigen(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputA
 	input_array_arg!(src);
 	output_array_arg!(eigenvalues);
 	output_array_arg!(eigenvectors);
-	unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ! Signals an error and raises the exception.
@@ -3171,7 +3253,8 @@ pub fn eigen(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputA
 #[deprecated = "drop this version"]
 #[inline]
 pub fn error_1(exc: &core::Exception) -> Result<()> {
-	unsafe { sys::cv_error_const_ExceptionR(exc.as_raw_Exception()) }.into_result()
+	let ret = unsafe { sys::cv_error_const_ExceptionR(exc.as_raw_Exception()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ! Signals an error and raises the exception.
@@ -3192,7 +3275,8 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 	extern_container_arg!(_err);
 	extern_container_arg!(_func);
 	extern_container_arg!(_file);
-	unsafe { sys::cv_error_int_const_StringR_const_charX_const_charX_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line) }.into_result()
+	let ret = unsafe { sys::cv_error_int_const_StringR_const_charX_const_charX_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the exponent of every array element.
@@ -3214,7 +3298,8 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Extracts a single channel from src (coi is 0-based index)
@@ -3228,7 +3313,8 @@ pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> R
 pub fn extract_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, coi: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi) }.into_result()
+	let ret = unsafe { sys::cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the angle of a 2D vector in degrees.
@@ -3240,7 +3326,8 @@ pub fn extract_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 /// * y: y-coordinate of the vector.
 #[inline]
 pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
-	unsafe { sys::cv_fastAtan2_float_float(y, x) }.into_result()
+	let ret = unsafe { sys::cv_fastAtan2_float_float(y, x) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the list of locations of non-zero pixels
@@ -3275,7 +3362,8 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(idx);
-	unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Flips a 2D array around vertical, horizontal, or both axes.
@@ -3308,7 +3396,8 @@ pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputA
 pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code) }.into_result()
+	let ret = unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs generalized matrix multiplication.
@@ -3350,7 +3439,8 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 	input_array_arg!(src2);
 	input_array_arg!(src3);
 	output_array_arg!(dst);
-	unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns full configuration time cmake output.
@@ -3360,7 +3450,9 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 /// architecture.
 #[inline]
 pub fn get_build_information() -> Result<String> {
-	unsafe { sys::cv_getBuildInformation() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_getBuildInformation() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Returns list of CPU features enabled during compilation.
@@ -3374,7 +3466,9 @@ pub fn get_build_information() -> Result<String> {
 /// Example: `SSE SSE2 SSE3 *SSE4.1 *SSE4.2 *FP16 *AVX *AVX2 *AVX512-SKX?`
 #[inline]
 pub fn get_cpu_features_line() -> Result<String> {
-	unsafe { sys::cv_getCPUFeaturesLine() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_getCPUFeaturesLine() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Returns the number of CPU ticks.
@@ -3390,12 +3484,14 @@ pub fn get_cpu_features_line() -> Result<String> {
 /// execution time.
 #[inline]
 pub fn get_cpu_tick_count() -> Result<i64> {
-	unsafe { sys::cv_getCPUTickCount() }.into_result()
+	let ret = unsafe { sys::cv_getCPUTickCount() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_elem_size(typ: i32) -> Result<size_t> {
-	unsafe { sys::cv_getElemSize_int(typ) }.into_result()
+	let ret = unsafe { sys::cv_getElemSize_int(typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns feature name by ID
@@ -3403,12 +3499,15 @@ pub fn get_elem_size(typ: i32) -> Result<size_t> {
 /// Returns empty string if feature is not defined
 #[inline]
 pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
-	unsafe { sys::cv_getHardwareFeatureName_int(feature) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_getHardwareFeatureName_int(feature) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_log_level_1() -> Result<i32> {
-	unsafe { sys::cv_getLogLevel() }.into_result()
+	let ret = unsafe { sys::cv_getLogLevel() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the number of threads used by OpenCV for parallel regions.
@@ -3429,13 +3528,15 @@ pub fn get_log_level_1() -> Result<i32> {
 /// setNumThreads, getThreadNum
 #[inline]
 pub fn get_num_threads() -> Result<i32> {
-	unsafe { sys::cv_getNumThreads() }.into_result()
+	let ret = unsafe { sys::cv_getNumThreads() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the number of logical CPUs available for the process.
 #[inline]
 pub fn get_number_of_cpus() -> Result<i32> {
-	unsafe { sys::cv_getNumberOfCPUs() }.into_result()
+	let ret = unsafe { sys::cv_getNumberOfCPUs() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the optimal DFT size for a given vector size.
@@ -3462,7 +3563,8 @@ pub fn get_number_of_cpus() -> Result<i32> {
 /// dft , dct , idft , idct , mulSpectrums
 #[inline]
 pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
-	unsafe { sys::cv_getOptimalDFTSize_int(vecsize) }.into_result()
+	let ret = unsafe { sys::cv_getOptimalDFTSize_int(vecsize) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the index of the currently executed thread within the current parallel region. Always
@@ -3483,7 +3585,8 @@ pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
 #[deprecated = "Current implementation doesn't corresponding to this documentation."]
 #[inline]
 pub fn get_thread_num() -> Result<i32> {
-	unsafe { sys::cv_getThreadNum() }.into_result()
+	let ret = unsafe { sys::cv_getThreadNum() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the number of ticks.
@@ -3495,7 +3598,8 @@ pub fn get_thread_num() -> Result<i32> {
 /// getTickFrequency, TickMeter
 #[inline]
 pub fn get_tick_count() -> Result<i64> {
-	unsafe { sys::cv_getTickCount() }.into_result()
+	let ret = unsafe { sys::cv_getTickCount() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the number of ticks per second.
@@ -3511,25 +3615,29 @@ pub fn get_tick_count() -> Result<i64> {
 /// getTickCount, TickMeter
 #[inline]
 pub fn get_tick_frequency() -> Result<f64> {
-	unsafe { sys::cv_getTickFrequency() }.into_result()
+	let ret = unsafe { sys::cv_getTickFrequency() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns major library version
 #[inline]
 pub fn get_version_major() -> Result<i32> {
-	unsafe { sys::cv_getVersionMajor() }.into_result()
+	let ret = unsafe { sys::cv_getVersionMajor() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns minor library version
 #[inline]
 pub fn get_version_minor() -> Result<i32> {
-	unsafe { sys::cv_getVersionMinor() }.into_result()
+	let ret = unsafe { sys::cv_getVersionMinor() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns revision field of the library version
 #[inline]
 pub fn get_version_revision() -> Result<i32> {
-	unsafe { sys::cv_getVersionRevision() }.into_result()
+	let ret = unsafe { sys::cv_getVersionRevision() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns library version string
@@ -3539,7 +3647,9 @@ pub fn get_version_revision() -> Result<i32> {
 /// getMajorVersion, getMinorVersion, getRevisionVersion
 #[inline]
 pub fn get_version_string() -> Result<String> {
-	unsafe { sys::cv_getVersionString() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_getVersionString() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -3547,13 +3657,15 @@ pub fn get_version_string() -> Result<String> {
 #[inline]
 pub fn glob(pattern: &str, result: &mut core::Vector<String>, recursive: bool) -> Result<()> {
 	extern_container_arg!(mut pattern);
-	unsafe { sys::cv_glob_String_vector_String_R_bool(pattern.opencv_as_extern_mut(), result.as_raw_mut_VectorOfString(), recursive) }.into_result()
+	let ret = unsafe { sys::cv_glob_String_vector_String_R_bool(pattern.opencv_as_extern_mut(), result.as_raw_mut_VectorOfString(), recursive) }.into_result()?;
+	Ok(ret)
 }
 
 /// Check if use of OpenVX is possible
 #[inline]
 pub fn have_openvx() -> Result<bool> {
-	unsafe { sys::cv_haveOpenVX() }.into_result()
+	let ret = unsafe { sys::cv_haveOpenVX() }.into_result()?;
+	Ok(ret)
 }
 
 /// Applies horizontal concatenation to given matrices.
@@ -3606,7 +3718,8 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_hconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_hconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Applies horizontal concatenation to given matrices.
@@ -3656,7 +3769,8 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_hconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_hconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
@@ -3675,7 +3789,8 @@ pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) 
 pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
@@ -3700,7 +3815,8 @@ pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()
+	let ret = unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()?;
+	Ok(ret)
 }
 
 ///  Checks if array elements lie between the elements of two other arrays.
@@ -3728,7 +3844,8 @@ pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, u
 	input_array_arg!(lowerb);
 	input_array_arg!(upperb);
 	output_array_arg!(dst);
-	unsafe { sys::cv_inRange_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_inRange_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Inserts a single channel to dst (coi is 0-based index)
@@ -3742,32 +3859,38 @@ pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, u
 pub fn insert_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, coi: i32) -> Result<()> {
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
-	unsafe { sys::cv_insertChannel_const__InputArrayR_const__InputOutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi) }.into_result()
+	let ret = unsafe { sys::cv_insertChannel_const__InputArrayR_const__InputOutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_flags() -> Result<core::FLAGS> {
-	unsafe { sys::cv_instr_getFlags() }.into_result()
+	let ret = unsafe { sys::cv_instr_getFlags() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn reset_trace() -> Result<()> {
-	unsafe { sys::cv_instr_resetTrace() }.into_result()
+	let ret = unsafe { sys::cv_instr_resetTrace() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_flags(mode_flags: core::FLAGS) -> Result<()> {
-	unsafe { sys::cv_instr_setFlags_FLAGS(mode_flags) }.into_result()
+	let ret = unsafe { sys::cv_instr_setFlags_FLAGS(mode_flags) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_use_instrumentation(flag: bool) -> Result<()> {
-	unsafe { sys::cv_instr_setUseInstrumentation_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_instr_setUseInstrumentation_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn use_instrumentation() -> Result<bool> {
-	unsafe { sys::cv_instr_useInstrumentation() }.into_result()
+	let ret = unsafe { sys::cv_instr_useInstrumentation() }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the inverse or pseudo-inverse of a matrix.
@@ -3803,27 +3926,34 @@ pub fn use_instrumentation() -> Result<bool> {
 pub fn invert(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<f64> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_ipp_error_location() -> Result<String> {
-	unsafe { sys::cv_ipp_getIppErrorLocation() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ipp_getIppErrorLocation() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_ipp_features() -> Result<u64> {
-	unsafe { sys::cv_ipp_getIppFeatures() }.into_result()
+	let ret = unsafe { sys::cv_ipp_getIppFeatures() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_ipp_status() -> Result<i32> {
-	unsafe { sys::cv_ipp_getIppStatus() }.into_result()
+	let ret = unsafe { sys::cv_ipp_getIppStatus() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_ipp_version() -> Result<String> {
-	unsafe { sys::cv_ipp_getIppVersion() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ipp_getIppVersion() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -3834,27 +3964,32 @@ pub fn get_ipp_version() -> Result<String> {
 pub fn set_ipp_status(status: i32, funcname: &str, filename: &str, line: i32) -> Result<()> {
 	extern_container_arg!(funcname);
 	extern_container_arg!(filename);
-	unsafe { sys::cv_ipp_setIppStatus_int_const_charX_const_charX_int(status, funcname.opencv_as_extern(), filename.opencv_as_extern(), line) }.into_result()
+	let ret = unsafe { sys::cv_ipp_setIppStatus_int_const_charX_const_charX_int(status, funcname.opencv_as_extern(), filename.opencv_as_extern(), line) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_use_ipp_not_exact(flag: bool) -> Result<()> {
-	unsafe { sys::cv_ipp_setUseIPP_NotExact_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_ipp_setUseIPP_NotExact_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_use_ipp(flag: bool) -> Result<()> {
-	unsafe { sys::cv_ipp_setUseIPP_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_ipp_setUseIPP_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn use_ipp() -> Result<bool> {
-	unsafe { sys::cv_ipp_useIPP() }.into_result()
+	let ret = unsafe { sys::cv_ipp_useIPP() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn use_ipp_not_exact() -> Result<bool> {
-	unsafe { sys::cv_ipp_useIPP_NotExact() }.into_result()
+	let ret = unsafe { sys::cv_ipp_useIPP_NotExact() }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds centers of clusters and groups input samples around the clusters.
@@ -3900,7 +4035,8 @@ pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core:
 	input_array_arg!(data);
 	input_output_array_arg!(best_labels);
 	output_array_arg!(centers);
-	unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int_const__OutputArrayR(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.opencv_as_extern(), attempts, flags, centers.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int_const__OutputArrayR(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.opencv_as_extern(), attempts, flags, centers.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the natural logarithm of every array element.
@@ -3919,7 +4055,8 @@ pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core:
 pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the magnitude of 2D vectors.
@@ -3939,12 +4076,15 @@ pub fn magnitude(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitu
 	input_array_arg!(x);
 	input_array_arg!(y);
 	output_array_arg!(magnitude);
-	unsafe { sys::cv_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn max_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_max_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_max_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates per-element maximum of two arrays or an array and a scalar.
@@ -3965,12 +4105,15 @@ pub fn max_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 #[inline]
 pub fn max_mat_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_max_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_max_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn max_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_max_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_max_const_MatR_double(a.as_raw_Mat(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates per-element maximum of two arrays or an array and a scalar.
@@ -3991,7 +4134,8 @@ pub fn max_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 #[inline]
 pub fn max_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_max_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_max_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates per-element maximum of two arrays or an array and a scalar.
@@ -4011,12 +4155,15 @@ pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn max_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_max_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_max_double_const_MatR(s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates a mean and standard deviation of array elements.
@@ -4050,7 +4197,8 @@ pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputA
 	output_array_arg!(mean);
 	output_array_arg!(stddev);
 	input_array_arg!(mask);
-	unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates an average (mean) of array elements.
@@ -4072,7 +4220,8 @@ pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputA
 pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_mean_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_mean_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates one multi-channel array out of several single-channel ones.
@@ -4098,7 +4247,8 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 #[inline]
 pub fn merge_slice(mv: &core::Mat, count: size_t, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_merge_const_MatX_size_t_const__OutputArrayR(mv.as_raw_Mat(), count, dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_merge_const_MatX_size_t_const__OutputArrayR(mv.as_raw_Mat(), count, dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates one multi-channel array out of several single-channel ones.
@@ -4132,7 +4282,8 @@ pub fn merge_slice(mv: &core::Mat, count: size_t, dst: &mut dyn core::ToOutputAr
 pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(mv);
 	output_array_arg!(dst);
-	unsafe { sys::cv_merge_const__InputArrayR_const__OutputArrayR(mv.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_merge_const__InputArrayR_const__OutputArrayR(mv.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the global minimum and maximum in an array
@@ -4169,7 +4320,8 @@ pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> 
 pub fn min_max_idx(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the global minimum and maximum in an array.
@@ -4207,7 +4359,8 @@ pub fn min_max_idx(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_
 /// * max_idx: 0
 #[inline]
 pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>) -> Result<()> {
-	unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _)) }.into_result()
+	let ret = unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _)) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the global minimum and maximum in an array.
@@ -4239,12 +4392,15 @@ pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: Option<&mut f64>, max_va
 pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_loc: Option<&mut core::Point>, max_loc: Option<&mut core::Point>, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc as *mut _), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc as *mut _), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc as *mut _), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc as *mut _), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn min_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_min_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_min_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates per-element minimum of two arrays or an array and a scalar.
@@ -4265,12 +4421,15 @@ pub fn min_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 #[inline]
 pub fn min_mat_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_min_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_min_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn min_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_min_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_min_const_MatR_double(a.as_raw_Mat(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates per-element minimum of two arrays or an array and a scalar.
@@ -4291,7 +4450,8 @@ pub fn min_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 #[inline]
 pub fn min_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_min_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_min_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates per-element minimum of two arrays or an array and a scalar.
@@ -4311,12 +4471,15 @@ pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_min_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_min_double_const_MatR(s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Copies specified channels from input arrays to the specified channels of
@@ -4382,7 +4545,8 @@ pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &[i32]) -> Result<()> {
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
-	unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), (from_to.len() / 2) as _) }.into_result()
+	let ret = unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), (from_to.len() / 2) as _) }.into_result()?;
+	Ok(ret)
 }
 
 /// Copies specified channels from input arrays to the specified channels of
@@ -4447,7 +4611,8 @@ pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOut
 pub fn mix_channels_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &core::Vector<i32>) -> Result<()> {
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
-	unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vector_int_R(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfi32()) }.into_result()
+	let ret = unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vector_int_R(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfi32()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs the per-element multiplication of two Fourier spectrums.
@@ -4475,7 +4640,8 @@ pub fn mul_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: 
 	input_array_arg!(a);
 	input_array_arg!(b);
 	output_array_arg!(c);
-	unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b) }.into_result()
+	let ret = unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the product of a matrix and its transposition.
@@ -4517,7 +4683,8 @@ pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(delta);
-	unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype) }.into_result()
+	let ret = unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the per-element scaled product of two arrays.
@@ -4552,12 +4719,15 @@ pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()
+	let ret = unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn no_array() -> Result<core::_InputOutputArray> {
-	unsafe { sys::cv_noArray() }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_noArray() }.into_result()?;
+	let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates an absolute difference norm or a relative difference norm.
@@ -4578,7 +4748,8 @@ pub fn no_array() -> Result<core::_InputOutputArray> {
 /// * normType: type of the norm (see #NormTypes).
 #[inline]
 pub fn norm_sparse(src: &core::SparseMat, norm_type: i32) -> Result<f64> {
-	unsafe { sys::cv_norm_const_SparseMatR_int(src.as_raw_SparseMat(), norm_type) }.into_result()
+	let ret = unsafe { sys::cv_norm_const_SparseMatR_int(src.as_raw_SparseMat(), norm_type) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates an absolute difference norm or a relative difference norm.
@@ -4601,7 +4772,8 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	input_array_arg!(mask);
-	unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the  absolute norm of an array.
@@ -4648,7 +4820,8 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(mask);
-	unsafe { sys::cv_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Normalizes the norm or value range of an array.
@@ -4721,7 +4894,8 @@ pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToIn
 /// * normType: normalization type (see cv::NormTypes).
 #[inline]
 pub fn normalize_sparse(src: &core::SparseMat, dst: &mut core::SparseMat, alpha: f64, norm_type: i32) -> Result<()> {
-	unsafe { sys::cv_normalize_const_SparseMatR_SparseMatR_double_int(src.as_raw_SparseMat(), dst.as_raw_mut_SparseMat(), alpha, norm_type) }.into_result()
+	let ret = unsafe { sys::cv_normalize_const_SparseMatR_SparseMatR_double_int(src.as_raw_SparseMat(), dst.as_raw_mut_SparseMat(), alpha, norm_type) }.into_result()?;
+	Ok(ret)
 }
 
 /// Normalizes the norm or value range of an array.
@@ -4796,7 +4970,8 @@ pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutput
 	input_array_arg!(src);
 	input_output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR_double_double_int_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR_double_double_int_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Attaches OpenCL context to OpenCV
@@ -4813,7 +4988,8 @@ pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutput
 #[inline]
 pub fn attach_context(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<()> {
 	extern_container_arg!(platform_name);
-	unsafe { sys::cv_ocl_attachContext_const_StringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id) }.into_result()
+	let ret = unsafe { sys::cv_ocl_attachContext_const_StringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
@@ -4821,9 +4997,9 @@ pub fn build_options_add_matrix_description(build_options: &mut String, name: &s
 	string_arg_output_send!(via build_options_via);
 	extern_container_arg!(name);
 	input_array_arg!(_m);
-	let out = unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray()) }.into_result();
-	string_arg_output_receive!(out, build_options_via => build_options);
-	out
+	let ret = unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray()) }.into_result()?;
+	string_arg_output_receive!(build_options_via => build_options);
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -4847,7 +5023,8 @@ pub fn check_optimal_vector_width(vector_widths: &i32, src1: &dyn core::ToInputA
 	input_array_arg!(src7);
 	input_array_arg!(src8);
 	input_array_arg!(src9);
-	unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()
+	let ret = unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()?;
+	Ok(ret)
 }
 
 /// Convert OpenCL buffer to UMat
@@ -4865,7 +5042,8 @@ pub fn check_optimal_vector_width(vector_widths: &i32, src1: &dyn core::ToInputA
 /// * dst: destination UMat
 #[inline]
 pub fn convert_from_buffer(cl_mem_buffer: *mut c_void, step: size_t, rows: i32, cols: i32, typ: i32, dst: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatR(cl_mem_buffer, step, rows, cols, typ, dst.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatR(cl_mem_buffer, step, rows, cols, typ, dst.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Convert OpenCL image2d_t to UMat
@@ -4878,50 +5056,60 @@ pub fn convert_from_buffer(cl_mem_buffer: *mut c_void, step: size_t, rows: i32, 
 /// * dst: destination UMat
 #[inline]
 pub fn convert_from_image(cl_mem_image: *mut c_void, dst: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &mut String) -> Result<String> {
 	string_arg_output_send!(via buf_via);
-	let out = unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } );
-	string_arg_output_receive!(out, buf_via => buf);
-	out
+	let ret = unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	string_arg_output_receive!(buf_via => buf);
+	Ok(ret)
 }
 
 #[inline]
 pub fn finish() -> Result<()> {
-	unsafe { sys::cv_ocl_finish() }.into_result()
+	let ret = unsafe { sys::cv_ocl_finish() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_opencl_error_string(error_code: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_getOpenCLErrorString_int(error_code) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ocl_getOpenCLErrorString_int(error_code) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_platfoms_info(platform_info: &mut core::Vector<core::PlatformInfo>) -> Result<()> {
-	unsafe { sys::cv_ocl_getPlatfomsInfo_vector_PlatformInfo_R(platform_info.as_raw_mut_VectorOfPlatformInfo()) }.into_result()
+	let ret = unsafe { sys::cv_ocl_getPlatfomsInfo_vector_PlatformInfo_R(platform_info.as_raw_mut_VectorOfPlatformInfo()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn have_amd_blas() -> Result<bool> {
-	unsafe { sys::cv_ocl_haveAmdBlas() }.into_result()
+	let ret = unsafe { sys::cv_ocl_haveAmdBlas() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn have_amd_fft() -> Result<bool> {
-	unsafe { sys::cv_ocl_haveAmdFft() }.into_result()
+	let ret = unsafe { sys::cv_ocl_haveAmdFft() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn have_opencl() -> Result<bool> {
-	unsafe { sys::cv_ocl_haveOpenCL() }.into_result()
+	let ret = unsafe { sys::cv_ocl_haveOpenCL() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn have_svm() -> Result<bool> {
-	unsafe { sys::cv_ocl_haveSVM() }.into_result()
+	let ret = unsafe { sys::cv_ocl_haveSVM() }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -4931,12 +5119,16 @@ pub fn have_svm() -> Result<bool> {
 pub fn kernel_to_str(_kernel: &dyn core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
 	input_array_arg!(_kernel);
 	extern_container_arg!(name);
-	unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn memop_type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_memopTypeToStr_int(t) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ocl_memopTypeToStr_int(t) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -4959,7 +5151,8 @@ pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dy
 	input_array_arg!(src7);
 	input_array_arg!(src8);
 	input_array_arg!(src9);
-	unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -4983,27 +5176,34 @@ pub fn predict_optimal_vector_width(src1: &dyn core::ToInputArray, src2: &dyn co
 	input_array_arg!(src7);
 	input_array_arg!(src8);
 	input_array_arg!(src9);
-	unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()
+	let ret = unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_use_opencl(flag: bool) -> Result<()> {
-	unsafe { sys::cv_ocl_setUseOpenCL_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_ocl_setUseOpenCL_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn use_opencl() -> Result<bool> {
-	unsafe { sys::cv_ocl_useOpenCL() }.into_result()
+	let ret = unsafe { sys::cv_ocl_useOpenCL() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn vecop_type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Converts Texture2D object to OutputArray.
@@ -5013,7 +5213,8 @@ pub fn vecop_type_to_str(t: i32) -> Result<String> {
 #[inline]
 pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts InputArray to Texture2D object.
@@ -5023,7 +5224,8 @@ pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core:
 #[inline]
 pub fn convert_to_gl_texture_2d(src: &dyn core::ToInputArray, texture: &mut core::Texture2D) -> Result<()> {
 	input_array_arg!(src);
-	unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Maps Buffer object to process on CL side (convert to UMat).
@@ -5043,7 +5245,9 @@ pub fn convert_to_gl_texture_2d(src: &dyn core::ToInputArray, texture: &mut core
 /// * access_flags: ACCESS_READ|ACCESS_WRITE
 #[inline]
 pub fn map_gl_buffer(buffer: &core::Buffer, access_flags: core::AccessFlag) -> Result<core::UMat> {
-	unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(buffer.as_raw_Buffer(), access_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(buffer.as_raw_Buffer(), access_flags) }.into_result()?;
+	let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates OpenCL context from GL.
@@ -5051,7 +5255,9 @@ pub fn map_gl_buffer(buffer: &core::Buffer, access_flags: core::AccessFlag) -> R
 /// Returns reference to OpenCL Context
 #[inline]
 pub fn initialize_context_from_gl() -> Result<core::Context> {
-	unsafe { sys::cv_ogl_ocl_initializeContextFromGL() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_ogl_ocl_initializeContextFromGL() }.into_result()?;
+	let ret = unsafe { core::Context::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Render OpenGL texture or primitives.
@@ -5073,7 +5279,8 @@ pub fn initialize_context_from_gl() -> Result<core::Context> {
 #[inline]
 pub fn render_2(arr: &core::Arrays, indices: &dyn core::ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
 	input_array_arg!(indices);
-	unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, color.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, color.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Render OpenGL texture or primitives.
@@ -5093,7 +5300,8 @@ pub fn render_2(arr: &core::Arrays, indices: &dyn core::ToInputArray, mode: i32,
 /// * color: Scalar::all(255)
 #[inline]
 pub fn render_1(arr: &core::Arrays, mode: i32, color: core::Scalar) -> Result<()> {
-	unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, color.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, color.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Render OpenGL texture or primitives.
@@ -5107,7 +5315,8 @@ pub fn render_1(arr: &core::Arrays, mode: i32, color: core::Scalar) -> Result<()
 /// * tex_rect: Rect_<double>(0.0,0.0,1.0,1.0)
 #[inline]
 pub fn render(tex: &core::Texture2D, wnd_rect: core::Rect_<f64>, tex_rect: core::Rect_<f64>) -> Result<()> {
-	unsafe { sys::cv_ogl_render_const_Texture2DR_Rect__double__Rect__double_(tex.as_raw_Texture2D(), wnd_rect.opencv_as_extern(), tex_rect.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_render_const_Texture2DR_Rect__double__Rect__double_(tex.as_raw_Texture2D(), wnd_rect.opencv_as_extern(), tex_rect.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Unmaps Buffer object (releases UMat, previously mapped from Buffer).
@@ -5118,199 +5327,275 @@ pub fn render(tex: &core::Texture2D, wnd_rect: core::Rect_<f64>, tex_rect: core:
 /// * u: - source UMat, created by mapGLBuffer().
 #[inline]
 pub fn unmap_gl_buffer(u: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_ogl_unmapGLBuffer_UMatR(u.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_ogl_unmapGLBuffer_UMatR(u.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_matexpr_matexpr(e1: &core::MatExpr, e2: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_matexpr_mat(e: &core::MatExpr, m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_matexpr_scalar(e: &core::MatExpr, s: core::Scalar) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_mat_matexpr(m: &core::Mat, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// @relates cv::MatExpr
 #[inline]
 pub fn add_mat_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_mat_scalar(a: &core::Mat, s: core::Scalar) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_MatR_const_ScalarR(a.as_raw_Mat(), &s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_MatR_const_ScalarR(a.as_raw_Mat(), &s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_scalar_matexpr(s: core::Scalar, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn add_scalar_mat(s: core::Scalar, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorA_const_ScalarR_const_MatR(&s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorA_const_ScalarR_const_MatR(&s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_matexpr_matexpr(e1: &core::MatExpr, e2: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_matexpr_mat(e: &core::MatExpr, m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_matexpr_f64(e: &core::MatExpr, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatExprR_double(e.as_raw_MatExpr(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatExprR_double(e.as_raw_MatExpr(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_mat_matexpr(m: &core::Mat, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_mat_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_const_MatR_double(a.as_raw_Mat(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_f64_matexpr(s: f64, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_double_const_MatExprR(s, e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_double_const_MatExprR(s, e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn div_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorD_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorD_double_const_MatR(s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// @relates cv::FileNodeIterator
 #[inline]
 pub fn equals_filenode_iter(it1: &core::FileNodeIterator, it2: &core::FileNodeIterator) -> Result<bool> {
-	unsafe { sys::cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR(it1.as_raw_FileNodeIterator(), it2.as_raw_FileNodeIterator()) }.into_result()
+	let ret = unsafe { sys::cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR(it1.as_raw_FileNodeIterator(), it2.as_raw_FileNodeIterator()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn equals(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorEQ_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorEQ_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn equals_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorEQ_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorEQ_const_MatR_double(a.as_raw_Mat(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn equals_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorEQ_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorEQ_double_const_MatR(s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatExprR(e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatExprR(e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_matexpr_matexpr(e1: &core::MatExpr, e2: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_matexpr_mat(e: &core::MatExpr, m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_matexpr_scalar(e: &core::MatExpr, s: core::Scalar) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_mat(m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatR(m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_mat_matexpr(m: &core::Mat, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_mat_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_mat_scalar(a: &core::Mat, s: core::Scalar) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_MatR_const_ScalarR(a.as_raw_Mat(), &s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_MatR_const_ScalarR(a.as_raw_Mat(), &s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_scalar_matexpr(s: core::Scalar, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn sub_scalar_mat(s: core::Scalar, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorS_const_ScalarR_const_MatR(&s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorS_const_ScalarR_const_MatR(&s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_matexpr_matexpr(e1: &core::MatExpr, e2: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_matexpr_mat(e: &core::MatExpr, m: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_matexpr_f64(e: &core::MatExpr, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatExprR_double(e.as_raw_MatExpr(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatExprR_double(e.as_raw_MatExpr(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_mat_matexpr(m: &core::Mat, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_mat_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_const_MatR_double(a.as_raw_Mat(), s) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_f64_matexpr(s: f64, e: &core::MatExpr) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_double_const_MatExprR(s, e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_double_const_MatExprR(s, e.as_raw_MatExpr()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn mul_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
-	unsafe { sys::cv_operatorX_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_operatorX_double_const_MatR(s, a.as_raw_Mat()) }.into_result()?;
+	let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Parallel data processor
@@ -5321,7 +5606,8 @@ pub fn mul_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 /// * nstripes: -1.
 #[inline]
 pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nstripes: f64) -> Result<()> {
-	unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes) }.into_result()
+	let ret = unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes) }.into_result()?;
+	Ok(ret)
 }
 
 /// converts NaNs to the given number
@@ -5334,7 +5620,8 @@ pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nst
 #[inline]
 pub fn patch_na_ns(a: &mut dyn core::ToInputOutputArray, val: f64) -> Result<()> {
 	input_output_array_arg!(a);
-	unsafe { sys::cv_patchNaNs_const__InputOutputArrayR_double(a.as_raw__InputOutputArray(), val) }.into_result()
+	let ret = unsafe { sys::cv_patchNaNs_const__InputOutputArrayR_double(a.as_raw__InputOutputArray(), val) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs the perspective matrix transformation of vectors.
@@ -5369,7 +5656,8 @@ pub fn perspective_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_perspectiveTransform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_perspectiveTransform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the rotation angle of 2D vectors.
@@ -5396,7 +5684,8 @@ pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut
 	input_array_arg!(x);
 	input_array_arg!(y);
 	output_array_arg!(angle);
-	unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()
+	let ret = unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates x and y coordinates of 2D vectors from their magnitude and angle.
@@ -5429,7 +5718,8 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 	input_array_arg!(angle);
 	output_array_arg!(x);
 	output_array_arg!(y);
-	unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees) }.into_result()
+	let ret = unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees) }.into_result()?;
+	Ok(ret)
 }
 
 /// Raises every array element to a power.
@@ -5461,7 +5751,8 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Shuffles the array elements randomly.
@@ -5483,7 +5774,8 @@ pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutpu
 #[inline]
 pub fn rand_shuffle(dst: &mut dyn core::ToInputOutputArray, iter_factor: f64, rng: &mut core::RNG) -> Result<()> {
 	input_output_array_arg!(dst);
-	unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG()) }.into_result()
+	let ret = unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Fills the array with normally distributed random numbers.
@@ -5503,7 +5795,8 @@ pub fn randn(dst: &mut dyn core::ToInputOutputArray, mean: &dyn core::ToInputArr
 	input_output_array_arg!(dst);
 	input_array_arg!(mean);
 	input_array_arg!(stddev);
-	unsafe { sys::cv_randn_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_randn_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Generates a single uniformly-distributed random number or an array of random numbers.
@@ -5522,66 +5815,76 @@ pub fn randu(dst: &mut dyn core::ToInputOutputArray, low: &dyn core::ToInputArra
 	input_output_array_arg!(dst);
 	input_array_arg!(low);
 	input_array_arg!(high);
-	unsafe { sys::cv_randu_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_randu_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_dmatch(node: &core::FileNode, value: &mut core::DMatch, default_value: core::DMatch) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_DMatchR_const_DMatchR(node.as_raw_FileNode(), value, &default_value) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_DMatchR_const_DMatchR(node.as_raw_FileNode(), value, &default_value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_keypoint(node: &core::FileNode, value: &mut core::KeyPoint, default_value: core::KeyPoint) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_KeyPointR_const_KeyPointR(node.as_raw_FileNode(), value, &default_value) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_KeyPointR_const_KeyPointR(node.as_raw_FileNode(), value, &default_value) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
 /// * default_mat: Mat()
 #[inline]
 pub fn read_mat(node: &core::FileNode, mat: &mut core::Mat, default_mat: &core::Mat) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_MatR_const_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), default_mat.as_raw_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_MatR_const_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), default_mat.as_raw_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
 /// * default_mat: SparseMat()
 #[inline]
 pub fn read_sparsemat(node: &core::FileNode, mat: &mut core::SparseMat, default_mat: &core::SparseMat) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_SparseMatR_const_SparseMatR(node.as_raw_FileNode(), mat.as_raw_mut_SparseMat(), default_mat.as_raw_SparseMat()) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_SparseMatR_const_SparseMatR(node.as_raw_FileNode(), mat.as_raw_mut_SparseMat(), default_mat.as_raw_SparseMat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_f64(node: &core::FileNode, value: &mut f64, default_value: f64) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_doubleR_double(node.as_raw_FileNode(), value, default_value) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_doubleR_double(node.as_raw_FileNode(), value, default_value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_f32(node: &core::FileNode, value: &mut f32, default_value: f32) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_floatR_float(node.as_raw_FileNode(), value, default_value) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_floatR_float(node.as_raw_FileNode(), value, default_value) }.into_result()?;
+	Ok(ret)
 }
 
 /// @relates cv::FileNode
 #[inline]
 pub fn read_i32(node: &core::FileNode, value: &mut i32, default_value: i32) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_intR_int(node.as_raw_FileNode(), value, default_value) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_intR_int(node.as_raw_FileNode(), value, default_value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_str(node: &core::FileNode, value: &mut String, default_value: &str) -> Result<()> {
 	string_arg_output_send!(via value_via);
 	extern_container_arg!(default_value);
-	let out = unsafe { sys::cv_read_const_FileNodeR_stringR_const_stringR(node.as_raw_FileNode(), &mut value_via, default_value.opencv_as_extern()) }.into_result();
-	string_arg_output_receive!(out, value_via => value);
-	out
+	let ret = unsafe { sys::cv_read_const_FileNodeR_stringR_const_stringR(node.as_raw_FileNode(), &mut value_via, default_value.opencv_as_extern()) }.into_result()?;
+	string_arg_output_receive!(value_via => value);
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_dmatch_vec_legacy(node: &core::FileNode, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_vector_DMatch_R(node.as_raw_FileNode(), matches.as_raw_mut_VectorOfDMatch()) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_vector_DMatch_R(node.as_raw_FileNode(), matches.as_raw_mut_VectorOfDMatch()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
-	unsafe { sys::cv_read_const_FileNodeR_vector_KeyPoint_R(node.as_raw_FileNode(), keypoints.as_raw_mut_VectorOfKeyPoint()) }.into_result()
+	let ret = unsafe { sys::cv_read_const_FileNodeR_vector_KeyPoint_R(node.as_raw_FileNode(), keypoints.as_raw_mut_VectorOfKeyPoint()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Reduces a matrix to a vector.
@@ -5616,7 +5919,8 @@ pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut core::Vec
 pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype) }.into_result()
+	let ret = unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Fills the output array with repeated copies of the input array.
@@ -5643,7 +5947,9 @@ pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// horizontal axis.
 #[inline]
 pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
-	unsafe { sys::cv_repeat_const_MatR_int_int(src.as_raw_Mat(), ny, nx) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_repeat_const_MatR_int_int(src.as_raw_Mat(), ny, nx) }.into_result()?;
+	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Fills the output array with repeated copies of the input array.
@@ -5664,7 +5970,8 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Rotates a 2D array in multiples of 90 degrees.
@@ -5683,7 +5990,8 @@ pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn c
 pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rotate_code: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_rotate_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code) }.into_result()
+	let ret = unsafe { sys::cv_rotate_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code) }.into_result()?;
+	Ok(ret)
 }
 
 /// Override search data path by adding new search location
@@ -5696,7 +6004,8 @@ pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, r
 #[inline]
 pub fn add_samples_data_search_path(path: &str) -> Result<()> {
 	extern_container_arg!(path);
-	unsafe { sys::cv_samples_addSamplesDataSearchPath_const_StringR(path.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_samples_addSamplesDataSearchPath_const_StringR(path.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Append samples search data sub directory
@@ -5709,7 +6018,8 @@ pub fn add_samples_data_search_path(path: &str) -> Result<()> {
 #[inline]
 pub fn add_samples_data_search_sub_directory(subdir: &str) -> Result<()> {
 	extern_container_arg!(subdir);
-	unsafe { sys::cv_samples_addSamplesDataSearchSubDirectory_const_StringR(subdir.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_samples_addSamplesDataSearchSubDirectory_const_StringR(subdir.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -5717,7 +6027,9 @@ pub fn add_samples_data_search_sub_directory(subdir: &str) -> Result<()> {
 #[inline]
 pub fn find_file_or_keep(relative_path: &str, silent_mode: bool) -> Result<String> {
 	extern_container_arg!(relative_path);
-	unsafe { sys::cv_samples_findFileOrKeep_const_StringR_bool(relative_path.opencv_as_extern(), silent_mode) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_samples_findFileOrKeep_const_StringR_bool(relative_path.opencv_as_extern(), silent_mode) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Try to find requested data file
@@ -5751,7 +6063,9 @@ pub fn find_file_or_keep(relative_path: &str, silent_mode: bool) -> Result<Strin
 #[inline]
 pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Result<String> {
 	extern_container_arg!(relative_path);
-	unsafe { sys::cv_samples_findFile_const_StringR_bool_bool(relative_path.opencv_as_extern(), required, silent_mode) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_samples_findFile_const_StringR_bool_bool(relative_path.opencv_as_extern(), required, silent_mode) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Calculates the sum of a scaled array and another array.
@@ -5779,7 +6093,8 @@ pub fn scale_add(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToI
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sets/resets the break-on-error mode.
@@ -5790,7 +6105,8 @@ pub fn scale_add(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToI
 /// \return the previous state
 #[inline]
 pub fn set_break_on_error(flag: bool) -> Result<bool> {
-	unsafe { sys::cv_setBreakOnError_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_setBreakOnError_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 /// Initializes a scaled identity matrix.
@@ -5816,13 +6132,15 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 #[inline]
 pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
 	input_output_array_arg!(mtx);
-	unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s) }.into_result()
+	let ret = unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s) }.into_result()?;
+	Ok(ret)
 }
 
 /// @cond IGNORED
 #[inline]
 pub fn set_log_level_1(level: i32) -> Result<i32> {
-	unsafe { sys::cv_setLogLevel_int(level) }.into_result()
+	let ret = unsafe { sys::cv_setLogLevel_int(level) }.into_result()?;
+	Ok(ret)
 }
 
 /// OpenCV will try to set the number of threads for the next parallel region.
@@ -5846,7 +6164,8 @@ pub fn set_log_level_1(level: i32) -> Result<i32> {
 /// getNumThreads, getThreadNum
 #[inline]
 pub fn set_num_threads(nthreads: i32) -> Result<()> {
-	unsafe { sys::cv_setNumThreads_int(nthreads) }.into_result()
+	let ret = unsafe { sys::cv_setNumThreads_int(nthreads) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sets state of default random number generator.
@@ -5858,13 +6177,15 @@ pub fn set_num_threads(nthreads: i32) -> Result<()> {
 /// RNG, randu, randn
 #[inline]
 pub fn set_rng_seed(seed: i32) -> Result<()> {
-	unsafe { sys::cv_setRNGSeed_int(seed) }.into_result()
+	let ret = unsafe { sys::cv_setRNGSeed_int(seed) }.into_result()?;
+	Ok(ret)
 }
 
 /// Enable/disable use of OpenVX
 #[inline]
 pub fn set_use_openvx(flag: bool) -> Result<()> {
-	unsafe { sys::cv_setUseOpenVX_bool(flag) }.into_result()
+	let ret = unsafe { sys::cv_setUseOpenVX_bool(flag) }.into_result()?;
+	Ok(ret)
 }
 
 /// Enables or disables the optimized code.
@@ -5882,7 +6203,8 @@ pub fn set_use_openvx(flag: bool) -> Result<()> {
 /// or not (onoff=false).
 #[inline]
 pub fn set_use_optimized(onoff: bool) -> Result<()> {
-	unsafe { sys::cv_setUseOptimized_bool(onoff) }.into_result()
+	let ret = unsafe { sys::cv_setUseOptimized_bool(onoff) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the real roots of a cubic equation.
@@ -5903,7 +6225,8 @@ pub fn set_use_optimized(onoff: bool) -> Result<()> {
 pub fn solve_cubic(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray) -> Result<i32> {
 	input_array_arg!(coeffs);
 	output_array_arg!(roots);
-	unsafe { sys::cv_solveCubic_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_solveCubic_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Solve given (non-integer) linear programming problem using the Simplex Algorithm (Simplex Method).
@@ -5940,7 +6263,8 @@ pub fn solve_lp(func: &dyn core::ToInputArray, constr: &dyn core::ToInputArray, 
 	input_array_arg!(func);
 	input_array_arg!(constr);
 	output_array_arg!(z);
-	unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds the real or complex roots of a polynomial equation.
@@ -5958,7 +6282,8 @@ pub fn solve_lp(func: &dyn core::ToInputArray, constr: &dyn core::ToInputArray, 
 pub fn solve_poly(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray, max_iters: i32) -> Result<f64> {
 	input_array_arg!(coeffs);
 	output_array_arg!(roots);
-	unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters) }.into_result()
+	let ret = unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters) }.into_result()?;
+	Ok(ret)
 }
 
 /// Solves one or more linear systems or least-squares problems.
@@ -5993,7 +6318,8 @@ pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: 
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sorts each row or each column of a matrix.
@@ -6020,7 +6346,8 @@ pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: 
 pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_sortIdx_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_sortIdx_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Sorts each row or each column of a matrix.
@@ -6041,7 +6368,8 @@ pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_sort_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
+	let ret = unsafe { sys::cv_sort_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()?;
+	Ok(ret)
 }
 
 /// Divides a multi-channel array into several single-channel arrays.
@@ -6062,7 +6390,8 @@ pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// merge, mixChannels, cvtColor
 #[inline]
 pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_split_const_MatR_MatX(src.as_raw_Mat(), mvbegin.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_split_const_MatR_MatX(src.as_raw_Mat(), mvbegin.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Divides a multi-channel array into several single-channel arrays.
@@ -6090,7 +6419,8 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(m);
 	output_array_arg!(mv);
-	unsafe { sys::cv_split_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), mv.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_split_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), mv.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates a square root of array elements.
@@ -6106,7 +6436,8 @@ pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Re
 pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the per-element difference between two arrays or array and a scalar.
@@ -6159,7 +6490,8 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()
+	let ret = unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()?;
+	Ok(ret)
 }
 
 /// Calculates the sum of array elements.
@@ -6173,13 +6505,15 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 #[inline]
 pub fn sum_elems(src: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
-	unsafe { sys::cv_sum_const__InputArrayR(src.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_sum_const__InputArrayR(src.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Swaps two matrices
 #[inline]
 pub fn swap(a: &mut core::Mat, b: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_swap_MatR_MatR(a.as_raw_mut_Mat(), b.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_swap_MatR_MatR(a.as_raw_mut_Mat(), b.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Swaps two matrices
@@ -6187,7 +6521,8 @@ pub fn swap(a: &mut core::Mat, b: &mut core::Mat) -> Result<()> {
 /// ## Overloaded parameters
 #[inline]
 pub fn swap_umat(a: &mut core::UMat, b: &mut core::UMat) -> Result<()> {
-	unsafe { sys::cv_swap_UMatR_UMatR(a.as_raw_mut_UMat(), b.as_raw_mut_UMat()) }.into_result()
+	let ret = unsafe { sys::cv_swap_UMatR_UMatR(a.as_raw_mut_UMat(), b.as_raw_mut_UMat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -6195,7 +6530,9 @@ pub fn swap_umat(a: &mut core::UMat, b: &mut core::UMat) -> Result<()> {
 #[inline]
 pub fn tempfile(suffix: &str) -> Result<String> {
 	extern_container_arg!(suffix);
-	unsafe { sys::cv_tempfile_const_charX(suffix.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_tempfile_const_charX(suffix.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Returns the default random number generator.
@@ -6209,7 +6546,9 @@ pub fn tempfile(suffix: &str) -> Result<String> {
 /// RNG, randu, randn
 #[inline]
 pub fn the_rng() -> Result<core::RNG> {
-	unsafe { sys::cv_theRNG() }.into_result().map(|r| unsafe { core::RNG::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_theRNG() }.into_result()?;
+	let ret = unsafe { core::RNG::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Returns the trace of a matrix.
@@ -6222,7 +6561,8 @@ pub fn the_rng() -> Result<core::RNG> {
 #[inline]
 pub fn trace(mtx: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(mtx);
-	unsafe { sys::cv_trace_const__InputArrayR(mtx.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_trace_const__InputArrayR(mtx.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs the matrix transformation of every array element.
@@ -6255,7 +6595,8 @@ pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(m);
-	unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Transposes a matrix.
@@ -6272,19 +6613,23 @@ pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn transpose(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_transpose_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_transpose_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or "<invalid type>"
 #[inline]
 pub fn type_to_string(typ: i32) -> Result<String> {
-	unsafe { sys::cv_typeToString_int(typ) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_typeToString_int(typ) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Check if use of OpenVX is enabled
 #[inline]
 pub fn use_openvx() -> Result<bool> {
-	unsafe { sys::cv_useOpenVX() }.into_result()
+	let ret = unsafe { sys::cv_useOpenVX() }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the status of optimized code usage.
@@ -6292,146 +6637,193 @@ pub fn use_openvx() -> Result<bool> {
 /// The function returns true if the optimized code is enabled. Otherwise, it returns false.
 #[inline]
 pub fn use_optimized() -> Result<bool> {
-	unsafe { sys::cv_useOptimized() }.into_result()
+	let ret = unsafe { sys::cv_useOptimized() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_bool(argument: bool) -> Result<String> {
-	unsafe { sys::cv_utils_dumpBool_bool(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpBool_bool(argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_c_string(argument: &str) -> Result<String> {
 	extern_container_arg!(argument);
-	unsafe { sys::cv_utils_dumpCString_const_charX(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpCString_const_charX(argument.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_double(argument: f64) -> Result<String> {
-	unsafe { sys::cv_utils_dumpDouble_double(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpDouble_double(argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_float(argument: f32) -> Result<String> {
-	unsafe { sys::cv_utils_dumpFloat_float(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpFloat_float(argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<String> {
 	input_array_arg!(argument);
-	unsafe { sys::cv_utils_dumpInputArrayOfArrays_const__InputArrayR(argument.as_raw__InputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpInputArrayOfArrays_const__InputArrayR(argument.as_raw__InputArray()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_input_array(argument: &dyn core::ToInputArray) -> Result<String> {
 	input_array_arg!(argument);
-	unsafe { sys::cv_utils_dumpInputArray_const__InputArrayR(argument.as_raw__InputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpInputArray_const__InputArrayR(argument.as_raw__InputArray()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
 	input_output_array_arg!(argument);
-	unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument.as_raw__InputOutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument.as_raw__InputOutputArray()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
 	input_output_array_arg!(argument);
-	unsafe { sys::cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument.as_raw__InputOutputArray()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument.as_raw__InputOutputArray()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_int(argument: i32) -> Result<String> {
-	unsafe { sys::cv_utils_dumpInt_int(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpInt_int(argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_range(argument: &core::Range) -> Result<String> {
-	unsafe { sys::cv_utils_dumpRange_const_RangeR(argument.as_raw_Range()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpRange_const_RangeR(argument.as_raw_Range()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_rect(argument: core::Rect) -> Result<String> {
-	unsafe { sys::cv_utils_dumpRect_const_RectR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpRect_const_RectR(&argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_rotated_rect(argument: &core::RotatedRect) -> Result<String> {
-	unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(argument.as_raw_RotatedRect()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(argument.as_raw_RotatedRect()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_size_t(argument: size_t) -> Result<String> {
-	unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_string(argument: &str) -> Result<String> {
 	extern_container_arg!(argument);
-	unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
-	unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_vector_of_double(vec: &core::Vector<f64>) -> Result<String> {
-	unsafe { sys::cv_utils_dumpVectorOfDouble_const_vector_double_R(vec.as_raw_VectorOff64()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpVectorOfDouble_const_vector_double_R(vec.as_raw_VectorOff64()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_vector_of_int(vec: &core::Vector<i32>) -> Result<String> {
-	unsafe { sys::cv_utils_dumpVectorOfInt_const_vector_int_R(vec.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpVectorOfInt_const_vector_int_R(vec.as_raw_VectorOfi32()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn dump_vector_of_rect(vec: &core::Vector<core::Rect>) -> Result<String> {
-	unsafe { sys::cv_utils_dumpVectorOfRect_const_vector_Rect_R(vec.as_raw_VectorOfRect()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_dumpVectorOfRect_const_vector_Rect_R(vec.as_raw_VectorOfRect()) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_cache_directory_for_downloads() -> Result<String> {
-	unsafe { sys::cv_utils_fs_getCacheDirectoryForDownloads() }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_fs_getCacheDirectoryForDownloads() }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn generate_vector_of_int(len: size_t, vec: &mut core::Vector<i32>) -> Result<()> {
-	unsafe { sys::cv_utils_generateVectorOfInt_size_t_vector_int_R(len, vec.as_raw_mut_VectorOfi32()) }.into_result()
+	let ret = unsafe { sys::cv_utils_generateVectorOfInt_size_t_vector_int_R(len, vec.as_raw_mut_VectorOfi32()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn generate_vector_of_mat(len: size_t, rows: i32, cols: i32, dtype: i32, vec: &mut core::Vector<core::Mat>) -> Result<()> {
-	unsafe { sys::cv_utils_generateVectorOfMat_size_t_int_int_int_vector_Mat_R(len, rows, cols, dtype, vec.as_raw_mut_VectorOfMat()) }.into_result()
+	let ret = unsafe { sys::cv_utils_generateVectorOfMat_size_t_int_int_int_vector_Mat_R(len, rows, cols, dtype, vec.as_raw_mut_VectorOfMat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn generate_vector_of_rect(len: size_t, vec: &mut core::Vector<core::Rect>) -> Result<()> {
-	unsafe { sys::cv_utils_generateVectorOfRect_size_t_vector_Rect_R(len, vec.as_raw_mut_VectorOfRect()) }.into_result()
+	let ret = unsafe { sys::cv_utils_generateVectorOfRect_size_t_vector_Rect_R(len, vec.as_raw_mut_VectorOfRect()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_thread_id() -> Result<i32> {
-	unsafe { sys::cv_utils_getThreadID() }.into_result()
+	let ret = unsafe { sys::cv_utils_getThreadID() }.into_result()?;
+	Ok(ret)
 }
 
 /// Get global logging level
 #[inline]
 pub fn get_log_level() -> Result<core::LogLevel> {
-	unsafe { sys::cv_utils_logging_getLogLevel() }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_getLogLevel() }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn get_log_tag_level(tag: &str) -> Result<core::LogLevel> {
 	extern_container_arg!(tag);
-	unsafe { sys::cv_utils_logging_getLogTagLevel_const_charX(tag.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_getLogTagLevel_const_charX(tag.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Get global log tag
 #[inline]
 pub fn get_global_log_tag() -> Result<core::LogTag> {
-	unsafe { sys::cv_utils_logging_internal_getGlobalLogTag() }.into_result().map(|r| unsafe { core::LogTag::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_logging_internal_getGlobalLogTag() }.into_result()?;
+	let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Write log message
@@ -6441,19 +6833,22 @@ pub fn write_log_message_ex(log_level: core::LogLevel, tag: &str, file: &str, li
 	extern_container_arg!(file);
 	extern_container_arg!(func);
 	extern_container_arg!(message);
-	unsafe { sys::cv_utils_logging_internal_writeLogMessageEx_LogLevel_const_charX_const_charX_int_const_charX_const_charX(log_level, tag.opencv_as_extern(), file.opencv_as_extern(), line, func.opencv_as_extern(), message.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_internal_writeLogMessageEx_LogLevel_const_charX_const_charX_int_const_charX_const_charX(log_level, tag.opencv_as_extern(), file.opencv_as_extern(), line, func.opencv_as_extern(), message.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Write log message
 #[inline]
 pub fn write_log_message(log_level: core::LogLevel, message: &str) -> Result<()> {
 	extern_container_arg!(message);
-	unsafe { sys::cv_utils_logging_internal_writeLogMessage_LogLevel_const_charX(log_level, message.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_internal_writeLogMessage_LogLevel_const_charX(log_level, message.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn register_log_tag(plogtag: &mut core::LogTag) -> Result<()> {
-	unsafe { sys::cv_utils_logging_registerLogTag_LogTagX(plogtag.as_raw_mut_LogTag()) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_registerLogTag_LogTagX(plogtag.as_raw_mut_LogTag()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Set global logging level
@@ -6461,46 +6856,58 @@ pub fn register_log_tag(plogtag: &mut core::LogTag) -> Result<()> {
 /// previous logging level
 #[inline]
 pub fn set_log_level(log_level: core::LogLevel) -> Result<core::LogLevel> {
-	unsafe { sys::cv_utils_logging_setLogLevel_LogLevel(log_level) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_setLogLevel_LogLevel(log_level) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn set_log_tag_level(tag: &str, level: core::LogLevel) -> Result<()> {
 	extern_container_arg!(tag);
-	unsafe { sys::cv_utils_logging_setLogTagLevel_const_charX_LogLevel(tag.opencv_as_extern(), level) }.into_result()
+	let ret = unsafe { sys::cv_utils_logging_setLogTagLevel_const_charX_LogLevel(tag.opencv_as_extern(), level) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::AsyncArray> {
 	input_array_arg!(argument);
-	unsafe { sys::cv_utils_testAsyncArray_const__InputArrayR(argument.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_testAsyncArray_const__InputArrayR(argument.as_raw__InputArray()) }.into_result()?;
+	let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn test_async_exception() -> Result<core::AsyncArray> {
-	unsafe { sys::cv_utils_testAsyncException() }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_testAsyncException() }.into_result()?;
+	let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn test_overload_resolution_1(rect: core::Rect) -> Result<String> {
-	unsafe { sys::cv_utils_testOverloadResolution_const_RectR(&rect) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_testOverloadResolution_const_RectR(&rect) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// ## C++ default parameters
 /// * point: Point(42,24)
 #[inline]
 pub fn test_overload_resolution(value: i32, point: core::Point) -> Result<String> {
-	unsafe { sys::cv_utils_testOverloadResolution_int_const_PointR(value, &point) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_testOverloadResolution_int_const_PointR(value, &point) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 #[inline]
 pub fn test_overwrite_native_method(argument: i32) -> Result<i32> {
-	unsafe { sys::cv_utils_testOverwriteNativeMethod_int(argument) }.into_result()
+	let ret = unsafe { sys::cv_utils_testOverwriteNativeMethod_int(argument) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn test_raise_general_exception() -> Result<()> {
-	unsafe { sys::cv_utils_testRaiseGeneralException() }.into_result()
+	let ret = unsafe { sys::cv_utils_testRaiseGeneralException() }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -6508,7 +6915,9 @@ pub fn test_raise_general_exception() -> Result<()> {
 /// * from: 3
 #[inline]
 pub fn test_reserved_keyword_conversion(positional_argument: i32, lambda: i32, from: i32) -> Result<String> {
-	unsafe { sys::cv_utils_testReservedKeywordConversion_int_int_int(positional_argument, lambda, from) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_utils_testReservedKeywordConversion_int_int_int(positional_argument, lambda, from) }.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Converts VASurfaceID object to OutputArray.
@@ -6520,7 +6929,8 @@ pub fn test_reserved_keyword_conversion(positional_argument: i32, lambda: i32, f
 #[inline]
 pub fn convert_from_va_surface(display: core::va_display, surface: core::va_surface_id, size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, size.opencv_as_extern(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, size.opencv_as_extern(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts InputArray to VASurfaceID object.
@@ -6532,7 +6942,8 @@ pub fn convert_from_va_surface(display: core::va_display, surface: core::va_surf
 #[inline]
 pub fn convert_to_va_surface(display: core::va_display, src: &dyn core::ToInputArray, surface: core::va_surface_id, size: core::Size) -> Result<()> {
 	input_array_arg!(src);
-	unsafe { sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, size.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, size.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates OpenCL context from VA.
@@ -6546,7 +6957,9 @@ pub fn convert_to_va_surface(display: core::va_display, src: &dyn core::ToInputA
 /// * try_interop: true
 #[inline]
 pub fn initialize_context_from_va(display: core::va_display, try_interop: bool) -> Result<core::Context> {
-	unsafe { sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display, try_interop) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display, try_interop) }.into_result()?;
+	let ret = unsafe { core::Context::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Applies vertical concatenation to given matrices.
@@ -6601,7 +7014,8 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Applies vertical concatenation to given matrices.
@@ -6649,78 +7063,91 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 pub fn vconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_vconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+	let ret = unsafe { sys::cv_vconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_scalar_str(fs: &mut core::FileStorage, value: &str) -> Result<()> {
 	extern_container_arg!(value);
-	unsafe { sys::cv_writeScalar_FileStorageR_const_StringR(fs.as_raw_mut_FileStorage(), value.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_writeScalar_FileStorageR_const_StringR(fs.as_raw_mut_FileStorage(), value.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_scalar_f64(fs: &mut core::FileStorage, value: f64) -> Result<()> {
-	unsafe { sys::cv_writeScalar_FileStorageR_double(fs.as_raw_mut_FileStorage(), value) }.into_result()
+	let ret = unsafe { sys::cv_writeScalar_FileStorageR_double(fs.as_raw_mut_FileStorage(), value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_scalar_f32(fs: &mut core::FileStorage, value: f32) -> Result<()> {
-	unsafe { sys::cv_writeScalar_FileStorageR_float(fs.as_raw_mut_FileStorage(), value) }.into_result()
+	let ret = unsafe { sys::cv_writeScalar_FileStorageR_float(fs.as_raw_mut_FileStorage(), value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_scalar_i32(fs: &mut core::FileStorage, value: i32) -> Result<()> {
-	unsafe { sys::cv_writeScalar_FileStorageR_int(fs.as_raw_mut_FileStorage(), value) }.into_result()
+	let ret = unsafe { sys::cv_writeScalar_FileStorageR_int(fs.as_raw_mut_FileStorage(), value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_mat(fs: &mut core::FileStorage, name: &str, value: &core::Mat) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_MatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_MatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_sparsemat(fs: &mut core::FileStorage, name: &str, value: &core::SparseMat) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_SparseMatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_SparseMat()) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_SparseMatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_SparseMat()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_str(fs: &mut core::FileStorage, name: &str, value: &str) -> Result<()> {
 	extern_container_arg!(name);
 	extern_container_arg!(value);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_StringR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.opencv_as_extern()) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_StringR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.opencv_as_extern()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_dmatch_vec(fs: &mut core::FileStorage, name: &str, value: &core::Vector<core::DMatch>) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_vector_DMatch_R(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfDMatch()) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_vector_DMatch_R(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfDMatch()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_keypoint_vec(fs: &mut core::FileStorage, name: &str, value: &core::Vector<core::KeyPoint>) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_const_vector_KeyPoint_R(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfKeyPoint()) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_vector_KeyPoint_R(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfKeyPoint()) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_f64(fs: &mut core::FileStorage, name: &str, value: f64) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_double(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_double(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()?;
+	Ok(ret)
 }
 
 #[inline]
 pub fn write_f32(fs: &mut core::FileStorage, name: &str, value: f32) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_float(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_float(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()?;
+	Ok(ret)
 }
 
 /// @relates cv::FileStorage
 #[inline]
 pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<()> {
 	extern_container_arg!(name);
-	unsafe { sys::cv_write_FileStorageR_const_StringR_int(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()
+	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_int(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value) }.into_result()?;
+	Ok(ret)
 }
 
 /// This is a base class for all more or less complex algorithms in OpenCV
@@ -6739,7 +7166,8 @@ pub trait AlgorithmTraitConst {
 	/// Stores algorithm parameters in a file storage
 	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_Algorithm_write_const_FileStorageR(self.as_raw_Algorithm(), fs.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_write_const_FileStorageR(self.as_raw_Algorithm(), fs.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// simplified API for language bindings
@@ -6752,13 +7180,15 @@ pub trait AlgorithmTraitConst {
 	#[inline]
 	fn write_with_name(&self, fs: &core::Ptr<core::FileStorage>, name: &str) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_Algorithm_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_write_const_const_Ptr_FileStorage_R_const_StringR(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns true if the Algorithm is empty (e.g. in the very beginning or after unsuccessful read
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_Algorithm_empty_const(self.as_raw_Algorithm()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_empty_const(self.as_raw_Algorithm()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Saves the algorithm to a file.
@@ -6766,14 +7196,17 @@ pub trait AlgorithmTraitConst {
 	#[inline]
 	fn save(&self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_Algorithm_save_const_const_StringR(self.as_raw_Algorithm(), filename.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_save_const_const_StringR(self.as_raw_Algorithm(), filename.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the algorithm string identifier.
 	/// This string is used as top level xml/yml node tag when the object is saved to a file or string.
 	#[inline]
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -6784,13 +7217,15 @@ pub trait AlgorithmTrait: core::AlgorithmTraitConst {
 	/// Clears the algorithm state
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		unsafe { sys::cv_Algorithm_clear(self.as_raw_mut_Algorithm()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_clear(self.as_raw_mut_Algorithm()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Reads algorithm parameters from a file storage
 	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_Algorithm_read_const_FileNodeR(self.as_raw_mut_Algorithm(), fn_.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_Algorithm_read_const_FileNodeR(self.as_raw_mut_Algorithm(), fn_.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -6831,7 +7266,9 @@ impl core::AlgorithmTrait for Algorithm {
 impl Algorithm {
 	#[inline]
 	pub fn default() -> Result<core::Algorithm> {
-		unsafe { sys::cv_Algorithm_Algorithm() }.into_result().map(|r| unsafe { core::Algorithm::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Algorithm_Algorithm() }.into_result()?;
+		let ret = unsafe { core::Algorithm::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -6859,7 +7296,8 @@ pub trait AsyncArrayTraitConst {
 	#[inline]
 	fn get(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR(self.as_raw_AsyncArray(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR(self.as_raw_AsyncArray(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Retrieving the result with timeout
@@ -6875,28 +7313,33 @@ pub trait AsyncArrayTraitConst {
 	#[inline]
 	fn get_with_timeout(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: i64) -> Result<bool> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_int64_t(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()
+		let ret = unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_int64_t(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_with_timeout_f64(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: f64) -> Result<bool> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()
+		let ret = unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn wait_for(&self, timeout_ns: i64) -> Result<bool> {
-		unsafe { sys::cv_AsyncArray_wait_for_const_int64_t(self.as_raw_AsyncArray(), timeout_ns) }.into_result()
+		let ret = unsafe { sys::cv_AsyncArray_wait_for_const_int64_t(self.as_raw_AsyncArray(), timeout_ns) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn wait_for_f64(&self, timeout_ns: f64) -> Result<bool> {
-		unsafe { sys::cv_AsyncArray_wait_for_const_double(self.as_raw_AsyncArray(), timeout_ns) }.into_result()
+		let ret = unsafe { sys::cv_AsyncArray_wait_for_const_double(self.as_raw_AsyncArray(), timeout_ns) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn valid(&self) -> bool {
-		unsafe { sys::cv_AsyncArray_valid_const(self.as_raw_AsyncArray()) }.into_result().expect("Infallible function failed: valid")
+		let ret = unsafe { sys::cv_AsyncArray_valid_const(self.as_raw_AsyncArray()) };
+		ret
 	}
 	
 }
@@ -6906,7 +7349,8 @@ pub trait AsyncArrayTrait: core::AsyncArrayTraitConst {
 
 	#[inline]
 	fn release(&mut self) {
-		unsafe { sys::cv_AsyncArray_release(self.as_raw_mut_AsyncArray()) }.into_result().expect("Infallible function failed: release")
+		let ret = unsafe { sys::cv_AsyncArray_release(self.as_raw_mut_AsyncArray()) };
+		ret
 	}
 	
 }
@@ -6943,17 +7387,23 @@ impl core::AsyncArrayTrait for AsyncArray {
 impl AsyncArray {
 	#[inline]
 	pub fn default() -> core::AsyncArray {
-		unsafe { sys::cv_AsyncArray_AsyncArray() }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_AsyncArray_AsyncArray() };
+		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy(o: &core::AsyncArray) -> core::AsyncArray {
-		unsafe { sys::cv_AsyncArray_AsyncArray_const_AsyncArrayR(o.as_raw_AsyncArray()) }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+		let ret = unsafe { sys::cv_AsyncArray_AsyncArray_const_AsyncArrayR(o.as_raw_AsyncArray()) };
+		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy_mut(o: &mut core::AsyncArray) -> Result<core::AsyncArray> {
-		unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArrayR(o.as_raw_mut_AsyncArray()) }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArrayR(o.as_raw_mut_AsyncArray()) }.into_result()?;
+		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -6972,7 +7422,8 @@ pub trait AsyncPromiseTraitConst {
 
 	#[inline]
 	fn _get_impl(&self) -> *mut c_void {
-		unsafe { sys::cv_AsyncPromise__getImpl_const(self.as_raw_AsyncPromise()) }.into_result().expect("Infallible function failed: _get_impl")
+		let ret = unsafe { sys::cv_AsyncPromise__getImpl_const(self.as_raw_AsyncPromise()) };
+		ret
 	}
 	
 }
@@ -6982,7 +7433,8 @@ pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 
 	#[inline]
 	fn release(&mut self) {
-		unsafe { sys::cv_AsyncPromise_release(self.as_raw_mut_AsyncPromise()) }.into_result().expect("Infallible function failed: release")
+		let ret = unsafe { sys::cv_AsyncPromise_release(self.as_raw_mut_AsyncPromise()) };
+		ret
 	}
 	
 	/// Returns associated AsyncArray
@@ -6990,7 +7442,9 @@ pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 	/// Note: Can be called once
 	#[inline]
 	fn get_array_result(&mut self) -> Result<core::AsyncArray> {
-		unsafe { sys::cv_AsyncPromise_getArrayResult(self.as_raw_mut_AsyncPromise()) }.into_result().map(|r| unsafe { core::AsyncArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_AsyncPromise_getArrayResult(self.as_raw_mut_AsyncPromise()) }.into_result()?;
+		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Stores asynchronous result.
@@ -6999,7 +7453,8 @@ pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 	#[inline]
 	fn set_value(&mut self, value: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(value);
-		unsafe { sys::cv_AsyncPromise_setValue_const__InputArrayR(self.as_raw_mut_AsyncPromise(), value.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_AsyncPromise_setValue_const__InputArrayR(self.as_raw_mut_AsyncPromise(), value.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Stores exception.
@@ -7007,7 +7462,8 @@ pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 	/// * exception: exception to be raised in AsyncArray
 	#[inline]
 	fn set_exception(&mut self, exception: &core::Exception) -> Result<()> {
-		unsafe { sys::cv_AsyncPromise_setException_const_ExceptionR(self.as_raw_mut_AsyncPromise(), exception.as_raw_Exception()) }.into_result()
+		let ret = unsafe { sys::cv_AsyncPromise_setException_const_ExceptionR(self.as_raw_mut_AsyncPromise(), exception.as_raw_Exception()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7039,17 +7495,23 @@ impl core::AsyncPromiseTrait for AsyncPromise {
 impl AsyncPromise {
 	#[inline]
 	pub fn default() -> core::AsyncPromise {
-		unsafe { sys::cv_AsyncPromise_AsyncPromise() }.into_result().map(|r| unsafe { core::AsyncPromise::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise() };
+		let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy(o: &core::AsyncPromise) -> core::AsyncPromise {
-		unsafe { sys::cv_AsyncPromise_AsyncPromise_const_AsyncPromiseR(o.as_raw_AsyncPromise()) }.into_result().map(|r| unsafe { core::AsyncPromise::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+		let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise_const_AsyncPromiseR(o.as_raw_AsyncPromise()) };
+		let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy_mut(o: &mut core::AsyncPromise) -> Result<core::AsyncPromise> {
-		unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseR(o.as_raw_mut_AsyncPromise()) }.into_result().map(|r| unsafe { core::AsyncPromise::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseR(o.as_raw_mut_AsyncPromise()) }.into_result()?;
+		let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7156,7 +7618,9 @@ pub trait CommandLineParserTraitConst {
 	/// this method will return `./bin`.
 	#[inline]
 	fn get_path_to_application(&self) -> Result<String> {
-		unsafe { sys::cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Check if field was provided in the command line
@@ -7166,7 +7630,8 @@ pub trait CommandLineParserTraitConst {
 	#[inline]
 	fn has(&self, name: &str) -> Result<bool> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_CommandLineParser_has_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_CommandLineParser_has_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Check for parsing errors
@@ -7175,7 +7640,8 @@ pub trait CommandLineParserTraitConst {
 	/// etc.). Call @ref printErrors to print error messages list.
 	#[inline]
 	fn check(&self) -> Result<bool> {
-		unsafe { sys::cv_CommandLineParser_check_const(self.as_raw_CommandLineParser()) }.into_result()
+		let ret = unsafe { sys::cv_CommandLineParser_check_const(self.as_raw_CommandLineParser()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Print help message
@@ -7185,7 +7651,8 @@ pub trait CommandLineParserTraitConst {
 	/// about
 	#[inline]
 	fn print_message(&self) -> Result<()> {
-		unsafe { sys::cv_CommandLineParser_printMessage_const(self.as_raw_CommandLineParser()) }.into_result()
+		let ret = unsafe { sys::cv_CommandLineParser_printMessage_const(self.as_raw_CommandLineParser()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Print list of errors occurred
@@ -7193,7 +7660,8 @@ pub trait CommandLineParserTraitConst {
 	/// check
 	#[inline]
 	fn print_errors(&self) -> Result<()> {
-		unsafe { sys::cv_CommandLineParser_printErrors_const(self.as_raw_CommandLineParser()) }.into_result()
+		let ret = unsafe { sys::cv_CommandLineParser_printErrors_const(self.as_raw_CommandLineParser()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7207,7 +7675,8 @@ pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 	#[inline]
 	fn about(&mut self, message: &str) -> Result<()> {
 		extern_container_arg!(message);
-		unsafe { sys::cv_CommandLineParser_about_const_StringR(self.as_raw_mut_CommandLineParser(), message.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_CommandLineParser_about_const_StringR(self.as_raw_mut_CommandLineParser(), message.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7327,13 +7796,17 @@ impl CommandLineParser {
 	pub fn new(argc: i32, argv: &[&str], keys: &str) -> Result<core::CommandLineParser> {
 		string_array_arg!(argv);
 		extern_container_arg!(keys);
-		unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argc, argv.as_ptr(), keys.opencv_as_extern()) }.into_result().map(|r| unsafe { core::CommandLineParser::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argc, argv.as_ptr(), keys.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Copy constructor
 	#[inline]
 	pub fn copy(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
-		unsafe { sys::cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser.as_raw_CommandLineParser()) }.into_result().map(|r| unsafe { core::CommandLineParser::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser.as_raw_CommandLineParser()) }.into_result()?;
+		let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7403,7 +7876,9 @@ impl dyn ConjGradSolver + '_ {
 	/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 	#[inline]
 	pub fn create(f: &core::Ptr<dyn core::MinProblemSolver_Function>, termcrit: core::TermCriteria) -> Result<core::Ptr<dyn core::ConjGradSolver>> {
-		unsafe { sys::cv_ConjGradSolver_create_const_Ptr_Function_R_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), termcrit.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::ConjGradSolver>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ConjGradSolver_create_const_Ptr_Function_R_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), termcrit.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::ConjGradSolver>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7429,17 +7904,20 @@ impl DMatch {
 	/// ////////////////////////////// DMatch ////////////////////////////////
 	#[inline]
 	pub fn default() -> Result<core::DMatch> {
-		unsafe { sys::cv_DMatch_DMatch() }.into_result()
+		let ret = unsafe { sys::cv_DMatch_DMatch() }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(_query_idx: i32, _train_idx: i32, _distance: f32) -> Result<core::DMatch> {
-		unsafe { sys::cv_DMatch_DMatch_int_int_float(_query_idx, _train_idx, _distance) }.into_result()
+		let ret = unsafe { sys::cv_DMatch_DMatch_int_int_float(_query_idx, _train_idx, _distance) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_index(_query_idx: i32, _train_idx: i32, _img_idx: i32, _distance: f32) -> Result<core::DMatch> {
-		unsafe { sys::cv_DMatch_DMatch_int_int_int_float(_query_idx, _train_idx, _img_idx, _distance) }.into_result()
+		let ret = unsafe { sys::cv_DMatch_DMatch_int_int_int_float(_query_idx, _train_idx, _img_idx, _distance) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7489,7 +7967,8 @@ pub trait DownhillSolverConst: core::MinProblemSolverConst {
 	#[inline]
 	fn get_init_step(&self, step: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(step);
-		unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7514,7 +7993,8 @@ pub trait DownhillSolver: core::DownhillSolverConst + core::MinProblemSolver {
 	#[inline]
 	fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(step);
-		unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7544,7 +8024,9 @@ impl dyn DownhillSolver + '_ {
 	#[inline]
 	pub fn create(f: &core::Ptr<dyn core::MinProblemSolver_Function>, init_step: &dyn core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<dyn core::DownhillSolver>> {
 		input_array_arg!(init_step);
-		unsafe { sys::cv_DownhillSolver_create_const_Ptr_Function_R_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::DownhillSolver>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_DownhillSolver_create_const_Ptr_Function_R_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::DownhillSolver>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7561,44 +8043,56 @@ pub trait ExceptionTraitConst {
 	/// the formatted error message
 	#[inline]
 	fn msg(&self) -> String {
-		unsafe { sys::cv_Exception_getPropMsg_const(self.as_raw_Exception()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: msg")
+		let ret = unsafe { sys::cv_Exception_getPropMsg_const(self.as_raw_Exception()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// error code see also: CVStatus
 	#[inline]
 	fn code(&self) -> i32 {
-		unsafe { sys::cv_Exception_getPropCode_const(self.as_raw_Exception()) }.into_result().expect("Infallible function failed: code")
+		let ret = unsafe { sys::cv_Exception_getPropCode_const(self.as_raw_Exception()) };
+		ret
 	}
 	
 	/// error description
 	#[inline]
 	fn err(&self) -> String {
-		unsafe { sys::cv_Exception_getPropErr_const(self.as_raw_Exception()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: err")
+		let ret = unsafe { sys::cv_Exception_getPropErr_const(self.as_raw_Exception()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// function name. Available only when the compiler supports getting it
 	#[inline]
 	fn func(&self) -> String {
-		unsafe { sys::cv_Exception_getPropFunc_const(self.as_raw_Exception()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: func")
+		let ret = unsafe { sys::cv_Exception_getPropFunc_const(self.as_raw_Exception()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// source file name where the error has occurred
 	#[inline]
 	fn file(&self) -> String {
-		unsafe { sys::cv_Exception_getPropFile_const(self.as_raw_Exception()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: file")
+		let ret = unsafe { sys::cv_Exception_getPropFile_const(self.as_raw_Exception()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// line number in the source file where the error has occurred
 	#[inline]
 	fn line(&self) -> i32 {
-		unsafe { sys::cv_Exception_getPropLine_const(self.as_raw_Exception()) }.into_result().expect("Infallible function failed: line")
+		let ret = unsafe { sys::cv_Exception_getPropLine_const(self.as_raw_Exception()) };
+		ret
 	}
 	
 	/// !
 	/// \return the error description and the context as a text string.
 	#[inline]
 	fn what(&self) -> Result<String> {
-		unsafe { sys::cv_Exception_what_const(self.as_raw_Exception()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Exception_what_const(self.as_raw_Exception()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7610,45 +8104,52 @@ pub trait ExceptionTrait: core::ExceptionTraitConst {
 	#[inline]
 	fn set_msg(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_Exception_setPropMsg_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_msg")
+		let ret = unsafe { sys::cv_Exception_setPropMsg_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	/// error code see also: CVStatus
 	#[inline]
 	fn set_code(&mut self, val: i32) {
-		unsafe { sys::cv_Exception_setPropCode_int(self.as_raw_mut_Exception(), val) }.into_result().expect("Infallible function failed: set_code")
+		let ret = unsafe { sys::cv_Exception_setPropCode_int(self.as_raw_mut_Exception(), val) };
+		ret
 	}
 	
 	/// error description
 	#[inline]
 	fn set_err(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_Exception_setPropErr_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_err")
+		let ret = unsafe { sys::cv_Exception_setPropErr_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	/// function name. Available only when the compiler supports getting it
 	#[inline]
 	fn set_func(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_Exception_setPropFunc_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_func")
+		let ret = unsafe { sys::cv_Exception_setPropFunc_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	/// source file name where the error has occurred
 	#[inline]
 	fn set_file(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_Exception_setPropFile_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_file")
+		let ret = unsafe { sys::cv_Exception_setPropFile_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	/// line number in the source file where the error has occurred
 	#[inline]
 	fn set_line(&mut self, val: i32) {
-		unsafe { sys::cv_Exception_setPropLine_int(self.as_raw_mut_Exception(), val) }.into_result().expect("Infallible function failed: set_line")
+		let ret = unsafe { sys::cv_Exception_setPropLine_int(self.as_raw_mut_Exception(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn format_message(&mut self) -> Result<()> {
-		unsafe { sys::cv_Exception_formatMessage(self.as_raw_mut_Exception()) }.into_result()
+		let ret = unsafe { sys::cv_Exception_formatMessage(self.as_raw_mut_Exception()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7688,7 +8189,9 @@ impl Exception {
 	/// Default constructor
 	#[inline]
 	pub fn default() -> Result<core::Exception> {
-		unsafe { sys::cv_Exception_Exception() }.into_result().map(|r| unsafe { core::Exception::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Exception_Exception() }.into_result()?;
+		let ret = unsafe { core::Exception::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// !
@@ -7699,7 +8202,9 @@ impl Exception {
 		extern_container_arg!(_err);
 		extern_container_arg!(_func);
 		extern_container_arg!(_file);
-		unsafe { sys::cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line) }.into_result().map(|r| unsafe { core::Exception::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line) }.into_result()?;
+		let ret = unsafe { core::Exception::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7720,12 +8225,14 @@ pub trait FileNodeTraitConst {
 
 	#[inline]
 	fn block_idx(&self) -> size_t {
-		unsafe { sys::cv_FileNode_getPropBlockIdx_const(self.as_raw_FileNode()) }.into_result().expect("Infallible function failed: block_idx")
+		let ret = unsafe { sys::cv_FileNode_getPropBlockIdx_const(self.as_raw_FileNode()) };
+		ret
 	}
 	
 	#[inline]
 	fn ofs(&self) -> size_t {
-		unsafe { sys::cv_FileNode_getPropOfs_const(self.as_raw_FileNode()) }.into_result().expect("Infallible function failed: ofs")
+		let ret = unsafe { sys::cv_FileNode_getPropOfs_const(self.as_raw_FileNode()) };
+		ret
 	}
 	
 	/// Returns element of a mapping node or a sequence node.
@@ -7736,7 +8243,9 @@ pub trait FileNodeTraitConst {
 	#[inline]
 	fn get(&self, nodename: &str) -> Result<core::FileNode> {
 		extern_container_arg!(nodename);
-		unsafe { sys::cv_FileNode_operator___const_const_StringR(self.as_raw_FileNode(), nodename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_operator___const_const_StringR(self.as_raw_FileNode(), nodename.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns element of a mapping node or a sequence node.
@@ -7751,7 +8260,9 @@ pub trait FileNodeTraitConst {
 	#[inline]
 	fn get_node(&self, nodename: &str) -> Result<core::FileNode> {
 		extern_container_arg!(nodename);
-		unsafe { sys::cv_FileNode_operator___const_const_charX(self.as_raw_FileNode(), nodename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_operator___const_const_charX(self.as_raw_FileNode(), nodename.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns element of a mapping node or a sequence node.
@@ -7765,7 +8276,9 @@ pub trait FileNodeTraitConst {
 	/// * i: Index of an element in the sequence node.
 	#[inline]
 	fn at(&self, i: i32) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileNode_operator___const_int(self.as_raw_FileNode(), i) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_operator___const_int(self.as_raw_FileNode(), i) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns keys of a mapping node.
@@ -7773,7 +8286,9 @@ pub trait FileNodeTraitConst {
 	/// Keys of a mapping node.
 	#[inline]
 	fn keys(&self) -> Result<core::Vector<String>> {
-		unsafe { sys::cv_FileNode_keys_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_keys_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns type of the node.
@@ -7781,114 +8296,138 @@ pub trait FileNodeTraitConst {
 	/// Type of the node. See FileNode::Type
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_FileNode_type_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_type_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is empty
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_empty_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_empty_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is a "none" object
 	#[inline]
 	fn is_none(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isNone_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isNone_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is a sequence
 	#[inline]
 	fn is_seq(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isSeq_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isSeq_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is a mapping
 	#[inline]
 	fn is_map(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isMap_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isMap_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is an integer
 	#[inline]
 	fn is_int(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isInt_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isInt_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is a floating-point number
 	#[inline]
 	fn is_real(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isReal_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isReal_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node is a text string
 	#[inline]
 	fn is_string(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isString_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isString_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the node has a name
 	#[inline]
 	fn is_named(&self) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isNamed_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isNamed_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the node name or an empty string if the node is nameless
 	#[inline]
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns the number of elements in the node, if it is a sequence or mapping, or 1 otherwise.
 	#[inline]
 	fn size(&self) -> Result<size_t> {
-		unsafe { sys::cv_FileNode_size_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_size_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns raw size of the FileNode in bytes
 	#[inline]
 	fn raw_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_FileNode_rawSize_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_rawSize_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the node content as an integer. If the node stores floating-point number, it is rounded.
 	#[inline]
 	fn to_i32(&self) -> Result<i32> {
-		unsafe { sys::cv_FileNode_operator_int_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_operator_int_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the node content as float
 	#[inline]
 	fn to_f32(&self) -> Result<f32> {
-		unsafe { sys::cv_FileNode_operator_float_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_operator_float_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the node content as double
 	#[inline]
 	fn to_f64(&self) -> Result<f64> {
-		unsafe { sys::cv_FileNode_operator_double_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_operator_double_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the node content as text string
 	#[inline]
 	fn to_string(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_operator_std_string_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_operator_std_string_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn ptr(&self) -> Result<&u8> {
-		unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns iterator pointing to the first node element
 	#[inline]
 	fn begin(&self) -> Result<core::FileNodeIterator> {
-		unsafe { sys::cv_FileNode_begin_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_begin_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns iterator pointing to the element following the last node element
 	#[inline]
 	fn end(&self) -> Result<core::FileNodeIterator> {
-		unsafe { sys::cv_FileNode_end_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_end_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Reads node elements to the buffer with the specified format.
@@ -7902,25 +8441,31 @@ pub trait FileNodeTraitConst {
 	#[inline]
 	fn read_raw(&self, fmt: &str, vec: *mut c_void, len: size_t) -> Result<()> {
 		extern_container_arg!(fmt);
-		unsafe { sys::cv_FileNode_readRaw_const_const_StringR_voidX_size_t(self.as_raw_FileNode(), fmt.opencv_as_extern(), vec, len) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_readRaw_const_const_StringR_voidX_size_t(self.as_raw_FileNode(), fmt.opencv_as_extern(), vec, len) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified reading API to use with bindings.
 	#[inline]
 	fn real(&self) -> Result<f64> {
-		unsafe { sys::cv_FileNode_real_const(self.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_real_const(self.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified reading API to use with bindings.
 	#[inline]
 	fn string(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Simplified reading API to use with bindings.
 	#[inline]
 	fn mat(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_FileNode_mat_const(self.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_mat_const(self.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -7930,17 +8475,21 @@ pub trait FileNodeTrait: core::FileNodeTraitConst {
 
 	#[inline]
 	fn set_block_idx(&mut self, val: size_t) {
-		unsafe { sys::cv_FileNode_setPropBlockIdx_size_t(self.as_raw_mut_FileNode(), val) }.into_result().expect("Infallible function failed: set_block_idx")
+		let ret = unsafe { sys::cv_FileNode_setPropBlockIdx_size_t(self.as_raw_mut_FileNode(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_ofs(&mut self, val: size_t) {
-		unsafe { sys::cv_FileNode_setPropOfs_size_t(self.as_raw_mut_FileNode(), val) }.into_result().expect("Infallible function failed: set_ofs")
+		let ret = unsafe { sys::cv_FileNode_setPropOfs_size_t(self.as_raw_mut_FileNode(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn ptr_1(&mut self) -> Result<&mut u8> {
-		unsafe { sys::cv_FileNode_ptr(self.as_raw_mut_FileNode()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_FileNode_ptr(self.as_raw_mut_FileNode()) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Internal method used when reading FileStorage.
@@ -7950,7 +8499,8 @@ pub trait FileNodeTrait: core::FileNodeTraitConst {
 	/// * len: -1
 	#[inline]
 	fn set_value(&mut self, typ: i32, value: *const c_void, len: i32) -> Result<()> {
-		unsafe { sys::cv_FileNode_setValue_int_const_voidX_int(self.as_raw_mut_FileNode(), typ, value, len) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_setValue_int_const_voidX_int(self.as_raw_mut_FileNode(), typ, value, len) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -7996,7 +8546,9 @@ impl FileNode {
 	/// from the another file node.
 	#[inline]
 	pub fn default() -> Result<core::FileNode> {
-		unsafe { sys::cv_FileNode_FileNode() }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_FileNode() }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -8014,7 +8566,9 @@ impl FileNode {
 	///      @deprecated
 	#[inline]
 	pub fn new(fs: &core::FileStorage, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -8028,32 +8582,39 @@ impl FileNode {
 	/// * node: File node to be used as initialization for the created file node.
 	#[inline]
 	pub fn copy(node: &core::FileNode) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileNode_FileNode_const_FileNodeR(node.as_raw_FileNode()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNode_FileNode_const_FileNodeR(node.as_raw_FileNode()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn is_map(flags: i32) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isMap_int(flags) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isMap_int(flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn is_seq(flags: i32) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isSeq_int(flags) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isSeq_int(flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn is_collection(flags: i32) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isCollection_int(flags) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isCollection_int(flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn is_empty_collection(flags: i32) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isEmptyCollection_int(flags) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isEmptyCollection_int(flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn is_flow(flags: i32) -> Result<bool> {
-		unsafe { sys::cv_FileNode_isFlow_int(flags) }.into_result()
+		let ret = unsafe { sys::cv_FileNode_isFlow_int(flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8068,18 +8629,22 @@ pub trait FileNodeIteratorTraitConst {
 	/// returns the currently observed element
 	#[inline]
 	fn try_deref(&self) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileNodeIterator_operatorX_const(self.as_raw_FileNodeIterator()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNodeIterator_operatorX_const(self.as_raw_FileNodeIterator()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns the number of remaining (not read yet) elements
 	#[inline]
 	fn remaining(&self) -> Result<size_t> {
-		unsafe { sys::cv_FileNodeIterator_remaining_const(self.as_raw_FileNodeIterator()) }.into_result()
+		let ret = unsafe { sys::cv_FileNodeIterator_remaining_const(self.as_raw_FileNodeIterator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn equal_to(&self, it: &core::FileNodeIterator) -> Result<bool> {
-		unsafe { sys::cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorR(self.as_raw_FileNodeIterator(), it.as_raw_FileNodeIterator()) }.into_result()
+		let ret = unsafe { sys::cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorR(self.as_raw_FileNodeIterator(), it.as_raw_FileNodeIterator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8101,7 +8666,9 @@ pub trait FileNodeIteratorTrait: core::FileNodeIteratorTraitConst {
 	#[inline]
 	fn read_raw(&mut self, fmt: &str, vec: *mut c_void, len: size_t) -> Result<core::FileNodeIterator> {
 		extern_container_arg!(fmt);
-		unsafe { sys::cv_FileNodeIterator_readRaw_const_StringR_voidX_size_t(self.as_raw_mut_FileNodeIterator(), fmt.opencv_as_extern(), vec, len) }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNodeIterator_readRaw_const_StringR_voidX_size_t(self.as_raw_mut_FileNodeIterator(), fmt.opencv_as_extern(), vec, len) }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8140,7 +8707,9 @@ impl FileNodeIterator {
 	/// or construct it from another iterator.
 	#[inline]
 	pub fn default() -> Result<core::FileNodeIterator> {
-		unsafe { sys::cv_FileNodeIterator_FileNodeIterator() }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNodeIterator_FileNodeIterator() }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -8159,7 +8728,9 @@ impl FileNodeIterator {
 	///            * node.end() => FileNodeIterator(node, true)
 	#[inline]
 	pub fn new(node: &core::FileNode, seek_end: bool) -> Result<core::FileNodeIterator> {
-		unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node.as_raw_FileNode(), seek_end) }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node.as_raw_FileNode(), seek_end) }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -8173,7 +8744,9 @@ impl FileNodeIterator {
 	/// * it: Iterator to be used as initialization for the created iterator.
 	#[inline]
 	pub fn copy(it: &core::FileNodeIterator) -> Result<core::FileNodeIterator> {
-		unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it.as_raw_FileNodeIterator()) }.into_result().map(|r| unsafe { core::FileNodeIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it.as_raw_FileNodeIterator()) }.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8185,12 +8758,15 @@ pub trait FileStorageTraitConst {
 
 	#[inline]
 	fn state(&self) -> i32 {
-		unsafe { sys::cv_FileStorage_getPropState_const(self.as_raw_FileStorage()) }.into_result().expect("Infallible function failed: state")
+		let ret = unsafe { sys::cv_FileStorage_getPropState_const(self.as_raw_FileStorage()) };
+		ret
 	}
 	
 	#[inline]
 	fn elname(&self) -> String {
-		unsafe { sys::cv_FileStorage_getPropElname_const(self.as_raw_FileStorage()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: elname")
+		let ret = unsafe { sys::cv_FileStorage_getPropElname_const(self.as_raw_FileStorage()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Checks whether the file is opened.
@@ -8200,7 +8776,8 @@ pub trait FileStorageTraitConst {
 	/// good practice to call this method after you tried to open a file.
 	#[inline]
 	fn is_opened(&self) -> Result<bool> {
-		unsafe { sys::cv_FileStorage_isOpened_const(self.as_raw_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_isOpened_const(self.as_raw_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the first element of the top-level mapping.
@@ -8208,7 +8785,9 @@ pub trait FileStorageTraitConst {
 	/// The first element of the top-level mapping.
 	#[inline]
 	fn get_first_top_level_node(&self) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileStorage_getFirstTopLevelNode_const(self.as_raw_FileStorage()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_getFirstTopLevelNode_const(self.as_raw_FileStorage()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the top-level mapping
@@ -8222,7 +8801,9 @@ pub trait FileStorageTraitConst {
 	/// * streamidx: 0
 	#[inline]
 	fn root(&self, streamidx: i32) -> Result<core::FileNode> {
-		unsafe { sys::cv_FileStorage_root_const_int(self.as_raw_FileStorage(), streamidx) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_root_const_int(self.as_raw_FileStorage(), streamidx) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the specified element of the top-level mapping.
@@ -8233,7 +8814,9 @@ pub trait FileStorageTraitConst {
 	#[inline]
 	fn get(&self, nodename: &str) -> Result<core::FileNode> {
 		extern_container_arg!(nodename);
-		unsafe { sys::cv_FileStorage_operator___const_const_StringR(self.as_raw_FileStorage(), nodename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_operator___const_const_StringR(self.as_raw_FileStorage(), nodename.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the specified element of the top-level mapping.
@@ -8246,7 +8829,9 @@ pub trait FileStorageTraitConst {
 	#[inline]
 	fn get_node(&self, nodename: &str) -> Result<core::FileNode> {
 		extern_container_arg!(nodename);
-		unsafe { sys::cv_FileStorage_operator___const_const_charX(self.as_raw_FileStorage(), nodename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::FileNode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_operator___const_const_charX(self.as_raw_FileStorage(), nodename.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the current format.
@@ -8254,7 +8839,8 @@ pub trait FileStorageTraitConst {
 	/// The current format, see FileStorage::Mode
 	#[inline]
 	fn get_format(&self) -> Result<i32> {
-		unsafe { sys::cv_FileStorage_getFormat_const(self.as_raw_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_getFormat_const(self.as_raw_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8264,13 +8850,15 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 
 	#[inline]
 	fn set_state(&mut self, val: i32) {
-		unsafe { sys::cv_FileStorage_setPropState_int(self.as_raw_mut_FileStorage(), val) }.into_result().expect("Infallible function failed: set_state")
+		let ret = unsafe { sys::cv_FileStorage_setPropState_int(self.as_raw_mut_FileStorage(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_elname(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_FileStorage_setPropElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_elname")
+		let ret = unsafe { sys::cv_FileStorage_setPropElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	/// Opens a file.
@@ -8295,7 +8883,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	fn open(&mut self, filename: &str, flags: i32, encoding: &str) -> Result<bool> {
 		extern_container_arg!(filename);
 		extern_container_arg!(encoding);
-		unsafe { sys::cv_FileStorage_open_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, encoding.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_open_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, encoding.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Closes the file and releases all the memory buffers.
@@ -8303,7 +8892,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	/// Call this method after all I/O operations with the storage are finished.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_FileStorage_release(self.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_release(self.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Closes the file and releases all the memory buffers.
@@ -8312,7 +8902,9 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	/// opened for writing data and FileStorage::WRITE was specified
 	#[inline]
 	fn release_and_get_string(&mut self) -> Result<String> {
-		unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_mut_FileStorage()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_mut_FileStorage()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Simplified writing API to use with bindings.
@@ -8322,7 +8914,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_i32(&mut self, name: &str, val: i32) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_FileStorage_write_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_write_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified writing API to use with bindings.
@@ -8334,7 +8927,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_f64(&mut self, name: &str, val: f64) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_FileStorage_write_const_StringR_double(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_write_const_StringR_double(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified writing API to use with bindings.
@@ -8347,7 +8941,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	fn write_str(&mut self, name: &str, val: &str) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(val);
-		unsafe { sys::cv_FileStorage_write_const_StringR_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_write_const_StringR_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified writing API to use with bindings.
@@ -8359,7 +8954,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_mat(&mut self, name: &str, val: &core::Mat) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_FileStorage_write_const_StringR_const_MatR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_write_const_StringR_const_MatR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Simplified writing API to use with bindings.
@@ -8371,7 +8967,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_str_vec(&mut self, name: &str, val: &core::Vector<String>) -> Result<()> {
 		extern_container_arg!(name);
-		unsafe { sys::cv_FileStorage_write_const_StringR_const_vector_String_R(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_VectorOfString()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_write_const_StringR_const_vector_String_R(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_VectorOfString()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Writes multiple numbers.
@@ -8385,7 +8982,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_raw(&mut self, fmt: &str, vec: *const c_void, len: size_t) -> Result<()> {
 		extern_container_arg!(fmt);
-		unsafe { sys::cv_FileStorage_writeRaw_const_StringR_const_voidX_size_t(self.as_raw_mut_FileStorage(), fmt.opencv_as_extern(), vec, len) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_writeRaw_const_StringR_const_voidX_size_t(self.as_raw_mut_FileStorage(), fmt.opencv_as_extern(), vec, len) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Writes a comment.
@@ -8402,7 +9000,8 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	#[inline]
 	fn write_comment(&mut self, comment: &str, append: bool) -> Result<()> {
 		extern_container_arg!(comment);
-		unsafe { sys::cv_FileStorage_writeComment_const_StringR_bool(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), append) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_writeComment_const_StringR_bool(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), append) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Starts to write a nested structure (sequence or a mapping).
@@ -8418,13 +9017,15 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	fn start_write_struct(&mut self, name: &str, flags: i32, type_name: &str) -> Result<()> {
 		extern_container_arg!(name);
 		extern_container_arg!(type_name);
-		unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Finishes writing nested structure (should pair startWriteStruct())
 	#[inline]
 	fn end_write_struct(&mut self) -> Result<()> {
-		unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8461,7 +9062,9 @@ impl FileStorage {
 	/// call FileStorage::open.
 	#[inline]
 	pub fn default() -> Result<core::FileStorage> {
-		unsafe { sys::cv_FileStorage_FileStorage() }.into_result().map(|r| unsafe { core::FileStorage::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_FileStorage() }.into_result()?;
+		let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -8479,7 +9082,9 @@ impl FileStorage {
 	pub fn new(filename: &str, flags: i32, encoding: &str) -> Result<core::FileStorage> {
 		extern_container_arg!(filename);
 		extern_container_arg!(encoding);
-		unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern()) }.into_result().map(|r| unsafe { core::FileStorage::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the normalized object name for the specified name of a file.
@@ -8490,7 +9095,9 @@ impl FileStorage {
 	#[inline]
 	pub fn get_default_object_name(filename: &str) -> Result<String> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringR(filename.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8506,12 +9113,15 @@ pub trait Formatted: core::FormattedConst {
 
 	#[inline]
 	fn next(&mut self) -> Result<String> {
-		unsafe { sys::cv_Formatted_next(self.as_raw_mut_Formatted()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Formatted_next(self.as_raw_mut_Formatted()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn reset(&mut self) -> Result<()> {
-		unsafe { sys::cv_Formatted_reset(self.as_raw_mut_Formatted()) }.into_result()
+		let ret = unsafe { sys::cv_Formatted_reset(self.as_raw_mut_Formatted()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8522,7 +9132,9 @@ pub trait FormatterConst {
 
 	#[inline]
 	fn format(&self, mtx: &core::Mat) -> Result<core::Ptr<dyn core::Formatted>> {
-		unsafe { sys::cv_Formatter_format_const_const_MatR(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::Formatted>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Formatter_format_const_const_MatR(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::Formatted>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8534,28 +9146,32 @@ pub trait Formatter: core::FormatterConst {
 	/// * p: 4
 	#[inline]
 	fn set16f_precision(&mut self, p: i32) -> Result<()> {
-		unsafe { sys::cv_Formatter_set16fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()
+		let ret = unsafe { sys::cv_Formatter_set16fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * p: 8
 	#[inline]
 	fn set32f_precision(&mut self, p: i32) -> Result<()> {
-		unsafe { sys::cv_Formatter_set32fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()
+		let ret = unsafe { sys::cv_Formatter_set32fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * p: 16
 	#[inline]
 	fn set64f_precision(&mut self, p: i32) -> Result<()> {
-		unsafe { sys::cv_Formatter_set64fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()
+		let ret = unsafe { sys::cv_Formatter_set64fPrecision_int(self.as_raw_mut_Formatter(), p) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * ml: true
 	#[inline]
 	fn set_multiline(&mut self, ml: bool) -> Result<()> {
-		unsafe { sys::cv_Formatter_setMultiline_bool(self.as_raw_mut_Formatter(), ml) }.into_result()
+		let ret = unsafe { sys::cv_Formatter_setMultiline_bool(self.as_raw_mut_Formatter(), ml) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8565,7 +9181,9 @@ impl dyn Formatter + '_ {
 	/// * fmt: FMT_DEFAULT
 	#[inline]
 	pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<dyn core::Formatter>> {
-		unsafe { sys::cv_Formatter_get_FormatType(fmt) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::Formatter>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Formatter_get_FormatType(fmt) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::Formatter>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8640,13 +9258,15 @@ opencv_type_simple! { core::KeyPoint }
 impl KeyPoint {
 	#[inline]
 	pub fn hash(self) -> Result<size_t> {
-		unsafe { sys::cv_KeyPoint_hash_const(self.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_hash_const(self.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::KeyPoint> {
-		unsafe { sys::cv_KeyPoint_KeyPoint() }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_KeyPoint() }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -8664,7 +9284,8 @@ impl KeyPoint {
 	/// * class_id: -1
 	#[inline]
 	pub fn new_point(pt: core::Point2f, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
-		unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(pt.opencv_as_extern(), size, angle, response, octave, class_id) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(pt.opencv_as_extern(), size, angle, response, octave, class_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -8683,7 +9304,8 @@ impl KeyPoint {
 	/// * class_id: -1
 	#[inline]
 	pub fn new_coords(x: f32, y: f32, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
-		unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This method converts vector of keypoints to vector of points or the reverse, where each keypoint is
@@ -8699,7 +9321,8 @@ impl KeyPoint {
 	/// * keypoint_indexes: std::vector<int>()
 	#[inline]
 	pub fn convert(keypoints: &core::Vector<core::KeyPoint>, points2f: &mut core::Vector<core::Point2f>, keypoint_indexes: &core::Vector<i32>) -> Result<()> {
-		unsafe { sys::cv_KeyPoint_convert_const_vector_KeyPoint_R_vector_Point2f_R_const_vector_int_R(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_mut_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfi32()) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_convert_const_vector_KeyPoint_R_vector_Point2f_R_const_vector_int_R(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_mut_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfi32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This method converts vector of keypoints to vector of points or the reverse, where each keypoint is
@@ -8727,7 +9350,8 @@ impl KeyPoint {
 	/// * class_id: -1
 	#[inline]
 	pub fn convert_to(points2f: &core::Vector<core::Point2f>, keypoints: &mut core::Vector<core::KeyPoint>, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
-		unsafe { sys::cv_KeyPoint_convert_const_vector_Point2f_R_vector_KeyPoint_R_float_float_int_int(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), size, response, octave, class_id) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_convert_const_vector_Point2f_R_vector_KeyPoint_R_float_float_int_int(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), size, response, octave, class_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This method computes overlap for pair of keypoints. Overlap is the ratio between area of keypoint
@@ -8738,7 +9362,8 @@ impl KeyPoint {
 	/// * kp2: Second keypoint
 	#[inline]
 	pub fn overlap(kp1: core::KeyPoint, kp2: core::KeyPoint) -> Result<f32> {
-		unsafe { sys::cv_KeyPoint_overlap_const_KeyPointR_const_KeyPointR(&kp1, &kp2) }.into_result()
+		let ret = unsafe { sys::cv_KeyPoint_overlap_const_KeyPointR_const_KeyPointR(&kp1, &kp2) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -8752,25 +9377,31 @@ pub trait LDATraitConst {
 	#[inline]
 	fn save(&self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_LDA_save_const_const_StringR(self.as_raw_LDA(), filename.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_LDA_save_const_const_StringR(self.as_raw_LDA(), filename.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Serializes this object to a given cv::FileStorage.
 	#[inline]
 	fn save_1(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_LDA_save_const_FileStorageR(self.as_raw_LDA(), fs.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_LDA_save_const_FileStorageR(self.as_raw_LDA(), fs.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the eigenvectors of this LDA.
 	#[inline]
 	fn eigenvectors(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_LDA_eigenvectors_const(self.as_raw_LDA()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_eigenvectors_const(self.as_raw_LDA()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns the eigenvalues of this LDA.
 	#[inline]
 	fn eigenvalues(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8782,13 +9413,15 @@ pub trait LDATrait: core::LDATraitConst {
 	#[inline]
 	fn load(&mut self, filename: &str) -> Result<()> {
 		extern_container_arg!(filename);
-		unsafe { sys::cv_LDA_load_const_StringR(self.as_raw_mut_LDA(), filename.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_LDA_load_const_StringR(self.as_raw_mut_LDA(), filename.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Deserializes this object from a given cv::FileStorage.
 	#[inline]
 	fn load_1(&mut self, node: &core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_LDA_load_const_FileStorageR(self.as_raw_mut_LDA(), node.as_raw_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_LDA_load_const_FileStorageR(self.as_raw_mut_LDA(), node.as_raw_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Compute the discriminants for data in src (row aligned) and labels.
@@ -8796,7 +9429,8 @@ pub trait LDATrait: core::LDATraitConst {
 	fn compute(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_LDA_compute_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_LDA_compute_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Projects samples into the LDA subspace.
@@ -8804,7 +9438,9 @@ pub trait LDATrait: core::LDATraitConst {
 	#[inline]
 	fn project(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(src);
-		unsafe { sys::cv_LDA_project_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_project_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Reconstructs projections from the LDA subspace.
@@ -8812,7 +9448,9 @@ pub trait LDATrait: core::LDATraitConst {
 	#[inline]
 	fn reconstruct(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(src);
-		unsafe { sys::cv_LDA_reconstruct_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_reconstruct_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -8850,7 +9488,9 @@ impl LDA {
 	/// * num_components: 0
 	#[inline]
 	pub fn new(num_components: i32) -> Result<core::LDA> {
-		unsafe { sys::cv_LDA_LDA_int(num_components) }.into_result().map(|r| unsafe { core::LDA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_LDA_int(num_components) }.into_result()?;
+		let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Initializes and performs a Discriminant Analysis with Fisher's
@@ -8864,7 +9504,9 @@ impl LDA {
 	pub fn new_with_data(src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray, num_components: i32) -> Result<core::LDA> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components) }.into_result().map(|r| unsafe { core::LDA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components) }.into_result()?;
+		let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
@@ -8872,7 +9514,9 @@ impl LDA {
 		input_array_arg!(w);
 		input_array_arg!(mean);
 		input_array_arg!(src);
-		unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
@@ -8880,7 +9524,9 @@ impl LDA {
 		input_array_arg!(w);
 		input_array_arg!(mean);
 		input_array_arg!(src);
-		unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -9098,51 +9744,65 @@ pub trait MatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_Mat_getPropFlags_const(self.as_raw_Mat()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_Mat_getPropFlags_const(self.as_raw_Mat()) };
+		ret
 	}
 	
 	/// the matrix dimensionality, >= 2
 	#[inline]
 	fn dims(&self) -> i32 {
-		unsafe { sys::cv_Mat_getPropDims_const(self.as_raw_Mat()) }.into_result().expect("Infallible function failed: dims")
+		let ret = unsafe { sys::cv_Mat_getPropDims_const(self.as_raw_Mat()) };
+		ret
 	}
 	
 	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 	#[inline]
 	fn rows(&self) -> i32 {
-		unsafe { sys::cv_Mat_getPropRows_const(self.as_raw_Mat()) }.into_result().expect("Infallible function failed: rows")
+		let ret = unsafe { sys::cv_Mat_getPropRows_const(self.as_raw_Mat()) };
+		ret
 	}
 	
 	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 	#[inline]
 	fn cols(&self) -> i32 {
-		unsafe { sys::cv_Mat_getPropCols_const(self.as_raw_Mat()) }.into_result().expect("Infallible function failed: cols")
+		let ret = unsafe { sys::cv_Mat_getPropCols_const(self.as_raw_Mat()) };
+		ret
 	}
 	
 	/// helper fields used in locateROI and adjustROI
 	#[inline]
 	fn datastart(&self) -> &u8 {
-		unsafe { sys::cv_Mat_getPropDatastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: datastart")
+		let ret = unsafe { sys::cv_Mat_getPropDatastart_const(self.as_raw_Mat()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: datastart");
+		ret
 	}
 	
 	#[inline]
 	fn dataend(&self) -> &u8 {
-		unsafe { sys::cv_Mat_getPropDataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: dataend")
+		let ret = unsafe { sys::cv_Mat_getPropDataend_const(self.as_raw_Mat()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: dataend");
+		ret
 	}
 	
 	#[inline]
 	fn datalimit(&self) -> &u8 {
-		unsafe { sys::cv_Mat_getPropDatalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: datalimit")
+		let ret = unsafe { sys::cv_Mat_getPropDatalimit_const(self.as_raw_Mat()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: datalimit");
+		ret
 	}
 	
 	#[inline]
 	fn mat_size(&self) -> core::MatSize {
-		unsafe { sys::cv_Mat_getPropSize_const(self.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: mat_size")
+		let ret = unsafe { sys::cv_Mat_getPropSize_const(self.as_raw_Mat()) };
+		let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn mat_step(&self) -> core::MatStep {
-		unsafe { sys::cv_Mat_getPropStep_const(self.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: mat_step")
+		let ret = unsafe { sys::cv_Mat_getPropStep_const(self.as_raw_Mat()) };
+		let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// retrieve UMat from Mat
@@ -9151,7 +9811,9 @@ pub trait MatTraitConst {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	fn get_umat(&self, access_flags: core::AccessFlag, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(self.as_raw_Mat(), access_flags, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(self.as_raw_Mat(), access_flags, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified matrix row.
@@ -9193,7 +9855,9 @@ pub trait MatTraitConst {
 	/// * y: A 0-based row index.
 	#[inline]
 	fn row(&self, y: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_row_const_int(self.as_raw_Mat(), y) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_row_const_int(self.as_raw_Mat(), y) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified matrix column.
@@ -9205,7 +9869,9 @@ pub trait MatTraitConst {
 	/// * x: A 0-based column index.
 	#[inline]
 	fn col(&self, x: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_col_const_int(self.as_raw_Mat(), x) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_col_const_int(self.as_raw_Mat(), x) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified row span.
@@ -9217,7 +9883,9 @@ pub trait MatTraitConst {
 	/// * endrow: An exclusive 0-based ending index of the row span.
 	#[inline]
 	fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified row span.
@@ -9233,7 +9901,9 @@ pub trait MatTraitConst {
 	/// * r: Range structure containing both the start and the end indices.
 	#[inline]
 	fn row_range(&self, r: &core::Range) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_rowRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_rowRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified column span.
@@ -9245,7 +9915,9 @@ pub trait MatTraitConst {
 	/// * endcol: An exclusive 0-based ending index of the column span.
 	#[inline]
 	fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a matrix header for the specified column span.
@@ -9261,7 +9933,9 @@ pub trait MatTraitConst {
 	/// * r: Range structure containing both the start and the end indices.
 	#[inline]
 	fn col_range(&self, r: &core::Range) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_colRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_colRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Extracts a diagonal from a matrix
@@ -9305,7 +9979,9 @@ pub trait MatTraitConst {
 	/// * d: 0
 	#[inline]
 	fn diag(&self, d: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_diag_const_int(self.as_raw_Mat(), d) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_diag_const_int(self.as_raw_Mat(), d) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a full copy of the array and the underlying data.
@@ -9314,7 +9990,9 @@ pub trait MatTraitConst {
 	/// array copy is a continuous array occupying total()*elemSize() bytes.
 	#[inline]
 	fn try_clone(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Copies the matrix to another one.
@@ -9336,7 +10014,8 @@ pub trait MatTraitConst {
 	#[inline]
 	fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(m);
-		unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Copies the matrix to another one.
@@ -9366,7 +10045,8 @@ pub trait MatTraitConst {
 	fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		output_array_arg!(m);
 		input_array_arg!(mask);
-		unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Converts an array to another data type with optional scaling.
@@ -9389,7 +10069,8 @@ pub trait MatTraitConst {
 	#[inline]
 	fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 		output_array_arg!(m);
-		unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()
+		let ret = unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Provides a functional form of convertTo.
@@ -9403,7 +10084,8 @@ pub trait MatTraitConst {
 	/// * typ: -1
 	#[inline]
 	fn assign_to(&self, m: &mut core::Mat, typ: i32) -> Result<()> {
-		unsafe { sys::cv_Mat_assignTo_const_MatR_int(self.as_raw_Mat(), m.as_raw_mut_Mat(), typ) }.into_result()
+		let ret = unsafe { sys::cv_Mat_assignTo_const_MatR_int(self.as_raw_Mat(), m.as_raw_mut_Mat(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
@@ -9436,7 +10118,9 @@ pub trait MatTraitConst {
 	/// * rows: 0
 	#[inline]
 	fn reshape(&self, cn: i32, rows: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
@@ -9468,7 +10152,9 @@ pub trait MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_reshape_const_int_int_const_intX(self.as_raw_Mat(), cn, newsz.len() as _, newsz.as_ptr()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_reshape_const_int_int_const_intX(self.as_raw_Mat(), cn, newsz.len() as _, newsz.as_ptr()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
@@ -9500,7 +10186,9 @@ pub trait MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn reshape_nd_vec(&self, cn: i32, newshape: &core::Vector<i32>) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_reshape_const_int_const_vector_int_R(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_reshape_const_int_const_vector_int_R(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfi32()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Transposes a matrix.
@@ -9515,7 +10203,9 @@ pub trait MatTraitConst {
 	/// 
 	#[inline]
 	fn t(&self) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_t_const(self.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_t_const(self.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Inverses a matrix.
@@ -9530,7 +10220,9 @@ pub trait MatTraitConst {
 	/// * method: DECOMP_LU
 	#[inline]
 	fn inv(&self, method: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_inv_const_int(self.as_raw_Mat(), method) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_inv_const_int(self.as_raw_Mat(), method) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Performs an element-wise multiplication or division of the two matrices.
@@ -9552,7 +10244,9 @@ pub trait MatTraitConst {
 	#[inline]
 	fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::MatExpr> {
 		input_array_arg!(m);
-		unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Computes a cross-product of two 3-element vectors.
@@ -9565,7 +10259,9 @@ pub trait MatTraitConst {
 	#[inline]
 	fn cross(&self, m: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(m);
-		unsafe { sys::cv_Mat_cross_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_cross_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Computes a dot-product of two vectors.
@@ -9579,7 +10275,8 @@ pub trait MatTraitConst {
 	#[inline]
 	fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
 		input_array_arg!(m);
-		unsafe { sys::cv_Mat_dot_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_dot_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Locates the matrix header within a parent matrix.
@@ -9595,7 +10292,8 @@ pub trait MatTraitConst {
 	/// * ofs: Output parameter that contains an offset of *this* inside the whole matrix.
 	#[inline]
 	fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
-		unsafe { sys::cv_Mat_locateROI_const_SizeR_PointR(self.as_raw_Mat(), whole_size, ofs) }.into_result()
+		let ret = unsafe { sys::cv_Mat_locateROI_const_SizeR_PointR(self.as_raw_Mat(), whole_size, ofs) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Reports whether the matrix is continuous or not.
@@ -9675,13 +10373,15 @@ pub trait MatTraitConst {
 	/// Mat::create does not always allocate a new matrix.
 	#[inline]
 	fn is_continuous(&self) -> Result<bool> {
-		unsafe { sys::cv_Mat_isContinuous_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_isContinuous_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the matrix is a submatrix of another matrix
 	#[inline]
 	fn is_submatrix(&self) -> Result<bool> {
-		unsafe { sys::cv_Mat_isSubmatrix_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_isSubmatrix_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the matrix element size in bytes.
@@ -9690,7 +10390,8 @@ pub trait MatTraitConst {
 	/// the method returns 3\*sizeof(short) or 6.
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_Mat_elemSize_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_elemSize_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the size of each matrix element channel in bytes.
@@ -9699,7 +10400,8 @@ pub trait MatTraitConst {
 	/// channels. For example, if the matrix type is CV_16SC3 , the method returns sizeof(short) or 2.
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_Mat_elemSize1_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_elemSize1_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the type of a matrix element.
@@ -9708,7 +10410,8 @@ pub trait MatTraitConst {
 	/// system, like CV_16SC3 or 16-bit signed 3-channel array, and so on.
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_Mat_type_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_type_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the depth of a matrix element.
@@ -9725,7 +10428,8 @@ pub trait MatTraitConst {
 	/// *   CV_64F - 64-bit floating-point numbers ( -DBL_MAX..DBL_MAX, INF, NAN )
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_Mat_depth_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_depth_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the number of matrix channels.
@@ -9733,7 +10437,8 @@ pub trait MatTraitConst {
 	/// The method returns the number of matrix channels.
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_Mat_channels_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_channels_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns a normalized step.
@@ -9745,7 +10450,8 @@ pub trait MatTraitConst {
 	/// * i: 0
 	#[inline]
 	fn step1(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_Mat_step1_const_int(self.as_raw_Mat(), i) }.into_result()
+		let ret = unsafe { sys::cv_Mat_step1_const_int(self.as_raw_Mat(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns true if the array has no elements.
@@ -9754,7 +10460,8 @@ pub trait MatTraitConst {
 	/// resize() methods `M.total() == 0` does not imply that `M.data == NULL`.
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_Mat_empty_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_empty_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the total number of array elements.
@@ -9763,7 +10470,8 @@ pub trait MatTraitConst {
 	/// image).
 	#[inline]
 	fn total(&self) -> Result<size_t> {
-		unsafe { sys::cv_Mat_total_const(self.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_total_const(self.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the total number of array elements.
@@ -9774,7 +10482,8 @@ pub trait MatTraitConst {
 	/// * end_dim: INT_MAX
 	#[inline]
 	fn total_slice(&self, start_dim: i32, end_dim: i32) -> Result<size_t> {
-		unsafe { sys::cv_Mat_total_const_int_int(self.as_raw_Mat(), start_dim, end_dim) }.into_result()
+		let ret = unsafe { sys::cv_Mat_total_const_int_int(self.as_raw_Mat(), start_dim, end_dim) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -9804,7 +10513,8 @@ pub trait MatTraitConst {
 	/// * require_continuous: true
 	#[inline]
 	fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
-		unsafe { sys::cv_Mat_checkVector_const_int_int_bool(self.as_raw_Mat(), elem_channels, depth, require_continuous) }.into_result()
+		let ret = unsafe { sys::cv_Mat_checkVector_const_int_int_bool(self.as_raw_Mat(), elem_channels, depth, require_continuous) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -9820,7 +10530,9 @@ pub trait MatTraitConst {
 	/// * i0: 0
 	#[inline]
 	unsafe fn ptr(&self, i0: i32) -> Result<&u8> {
-		{ sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result()?;
+		let ret = { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -9836,7 +10548,9 @@ pub trait MatTraitConst {
 	/// * col: Index along the dimension 1
 	#[inline]
 	unsafe fn ptr_2d(&self, row: i32, col: i32) -> Result<&u8> {
-		{ sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result()?;
+		let ret = { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -9849,7 +10563,9 @@ pub trait MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	unsafe fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&u8> {
-		{ sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result()?;
+		let ret = { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -9862,7 +10578,9 @@ pub trait MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	unsafe fn ptr_nd(&self, idx: &[i32]) -> Result<&u8> {
-		{ sys::cv_Mat_ptr_const_const_intX(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_const_const_intX(self.as_raw_Mat(), idx.as_ptr()) }.into_result()?;
+		let ret = { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a reference to the specified array element.
@@ -10069,49 +10787,59 @@ pub trait MatTrait: core::MatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_Mat_setPropFlags_int(self.as_raw_mut_Mat(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_Mat_setPropFlags_int(self.as_raw_mut_Mat(), val) };
+		ret
 	}
 	
 	/// the matrix dimensionality, >= 2
 	#[inline]
 	fn set_dims(&mut self, val: i32) {
-		unsafe { sys::cv_Mat_setPropDims_int(self.as_raw_mut_Mat(), val) }.into_result().expect("Infallible function failed: set_dims")
+		let ret = unsafe { sys::cv_Mat_setPropDims_int(self.as_raw_mut_Mat(), val) };
+		ret
 	}
 	
 	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 	#[inline]
 	fn set_rows(&mut self, val: i32) {
-		unsafe { sys::cv_Mat_setPropRows_int(self.as_raw_mut_Mat(), val) }.into_result().expect("Infallible function failed: set_rows")
+		let ret = unsafe { sys::cv_Mat_setPropRows_int(self.as_raw_mut_Mat(), val) };
+		ret
 	}
 	
 	/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 	#[inline]
 	fn set_cols(&mut self, val: i32) {
-		unsafe { sys::cv_Mat_setPropCols_int(self.as_raw_mut_Mat(), val) }.into_result().expect("Infallible function failed: set_cols")
+		let ret = unsafe { sys::cv_Mat_setPropCols_int(self.as_raw_mut_Mat(), val) };
+		ret
 	}
 	
 	/// pointer to the data
 	#[inline]
 	fn data_mut(&mut self) -> &mut u8 {
-		unsafe { sys::cv_Mat_getPropData(self.as_raw_mut_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data_mut")
+		let ret = unsafe { sys::cv_Mat_getPropData(self.as_raw_mut_Mat()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: data_mut");
+		ret
 	}
 	
 	/// pointer to the data
 	#[inline]
 	unsafe fn set_data(&mut self, val: &mut u8) {
-		{ sys::cv_Mat_setPropData_unsigned_charX(self.as_raw_mut_Mat(), val) }.into_result().expect("Infallible function failed: set_data")
+		let ret = { sys::cv_Mat_setPropData_unsigned_charX(self.as_raw_mut_Mat(), val) };
+		ret
 	}
 	
 	/// interaction with UMat
 	#[inline]
 	fn u(&mut self) -> core::UMatData {
-		unsafe { sys::cv_Mat_getPropU(self.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::UMatData::opencv_from_extern(r) } ).expect("Infallible function failed: u")
+		let ret = unsafe { sys::cv_Mat_getPropU(self.as_raw_mut_Mat()) };
+		let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// interaction with UMat
 	#[inline]
 	fn set_u(&mut self, val: &mut core::UMatData) {
-		unsafe { sys::cv_Mat_setPropU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: set_u")
+		let ret = unsafe { sys::cv_Mat_setPropU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_mut_UMatData()) };
+		ret
 	}
 	
 	/// Sets all or some of the array elements to the specified value.
@@ -10128,7 +10856,9 @@ pub trait MatTrait: core::MatTraitConst {
 	fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(value);
 		input_array_arg!(mask);
-		unsafe { sys::cv_Mat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Allocates new array data if needed.
@@ -10168,7 +10898,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * type: New matrix type.
 	#[inline]
 	unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
-		{ sys::cv_Mat_create_int_int_int(self.as_raw_mut_Mat(), rows, cols, typ) }.into_result()
+		let ret = { sys::cv_Mat_create_int_int_int(self.as_raw_mut_Mat(), rows, cols, typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Allocates new array data if needed.
@@ -10213,7 +10944,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * type: New matrix type.
 	#[inline]
 	unsafe fn create_size(&mut self, size: core::Size, typ: i32) -> Result<()> {
-		{ sys::cv_Mat_create_Size_int(self.as_raw_mut_Mat(), size.opencv_as_extern(), typ) }.into_result()
+		let ret = { sys::cv_Mat_create_Size_int(self.as_raw_mut_Mat(), size.opencv_as_extern(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Allocates new array data if needed.
@@ -10259,7 +10991,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * type: New matrix type.
 	#[inline]
 	unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
-		{ sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len() as _, sizes.as_ptr(), typ) }.into_result()
+		let ret = { sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len() as _, sizes.as_ptr(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Allocates new array data if needed.
@@ -10304,7 +11037,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * type: New matrix type.
 	#[inline]
 	unsafe fn create_nd_vec(&mut self, sizes: &core::Vector<i32>, typ: i32) -> Result<()> {
-		{ sys::cv_Mat_create_const_vector_int_R_int(self.as_raw_mut_Mat(), sizes.as_raw_VectorOfi32(), typ) }.into_result()
+		let ret = { sys::cv_Mat_create_const_vector_int_R_int(self.as_raw_mut_Mat(), sizes.as_raw_VectorOfi32(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Increments the reference counter.
@@ -10317,7 +11051,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// asynchronously in different threads.
 	#[inline]
 	fn addref(&mut self) -> Result<()> {
-		unsafe { sys::cv_Mat_addref(self.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_addref(self.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Decrements the reference counter and deallocates the matrix if needed.
@@ -10334,13 +11069,15 @@ pub trait MatTrait: core::MatTraitConst {
 	/// different threads.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_Mat_release(self.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_release(self.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// internal use function, consider to use 'release' method instead; deallocates the matrix data
 	#[inline]
 	fn deallocate(&mut self) -> Result<()> {
-		unsafe { sys::cv_Mat_deallocate(self.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_deallocate(self.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Reserves space for the certain number of rows.
@@ -10352,7 +11089,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * sz: Number of rows.
 	#[inline]
 	fn reserve(&mut self, sz: size_t) -> Result<()> {
-		unsafe { sys::cv_Mat_reserve_size_t(self.as_raw_mut_Mat(), sz) }.into_result()
+		let ret = unsafe { sys::cv_Mat_reserve_size_t(self.as_raw_mut_Mat(), sz) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Reserves space for the certain number of bytes.
@@ -10363,7 +11101,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * sz: Number of bytes.
 	#[inline]
 	fn reserve_buffer(&mut self, sz: size_t) -> Result<()> {
-		unsafe { sys::cv_Mat_reserveBuffer_size_t(self.as_raw_mut_Mat(), sz) }.into_result()
+		let ret = unsafe { sys::cv_Mat_reserveBuffer_size_t(self.as_raw_mut_Mat(), sz) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Changes the number of matrix rows.
@@ -10375,7 +11114,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * sz: New number of rows.
 	#[inline]
 	fn resize(&mut self, sz: size_t) -> Result<()> {
-		unsafe { sys::cv_Mat_resize_size_t(self.as_raw_mut_Mat(), sz) }.into_result()
+		let ret = unsafe { sys::cv_Mat_resize_size_t(self.as_raw_mut_Mat(), sz) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Changes the number of matrix rows.
@@ -10392,7 +11132,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * s: Value assigned to the newly added elements.
 	#[inline]
 	fn resize_with_default(&mut self, sz: size_t, s: core::Scalar) -> Result<()> {
-		unsafe { sys::cv_Mat_resize_size_t_const_ScalarR(self.as_raw_mut_Mat(), sz, &s) }.into_result()
+		let ret = unsafe { sys::cv_Mat_resize_size_t_const_ScalarR(self.as_raw_mut_Mat(), sz, &s) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Adds elements to the bottom of the matrix.
@@ -10408,7 +11149,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * m: Added line(s).
 	#[inline]
 	fn push_back(&mut self, m: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_Mat_push_back_const_MatR(self.as_raw_mut_Mat(), m.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_push_back_const_MatR(self.as_raw_mut_Mat(), m.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Removes elements from the bottom of the matrix.
@@ -10422,7 +11164,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * nelems: 1
 	#[inline]
 	fn pop_back(&mut self, nelems: size_t) -> Result<()> {
-		unsafe { sys::cv_Mat_pop_back_size_t(self.as_raw_mut_Mat(), nelems) }.into_result()
+		let ret = unsafe { sys::cv_Mat_pop_back_size_t(self.as_raw_mut_Mat(), nelems) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Adjusts a submatrix size and position within the parent matrix.
@@ -10456,7 +11199,9 @@ pub trait MatTrait: core::MatTraitConst {
 	/// copyMakeBorder
 	#[inline]
 	fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_adjustROI_int_int_int_int(self.as_raw_mut_Mat(), dtop, dbottom, dleft, dright) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_adjustROI_int_int_int_int(self.as_raw_mut_Mat(), dtop, dbottom, dleft, dright) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -10470,7 +11215,9 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * i0: 0
 	#[inline]
 	unsafe fn ptr_mut(&mut self, i0: i32) -> Result<&mut u8> {
-		{ sys::cv_Mat_ptr_int(self.as_raw_mut_Mat(), i0) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_int(self.as_raw_mut_Mat(), i0) }.into_result()?;
+		let ret = { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -10486,7 +11233,9 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * col: Index along the dimension 1
 	#[inline]
 	unsafe fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut u8> {
-		{ sys::cv_Mat_ptr_int_int(self.as_raw_mut_Mat(), row, col) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_int_int(self.as_raw_mut_Mat(), row, col) }.into_result()?;
+		let ret = { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -10499,7 +11248,9 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	unsafe fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut u8> {
-		{ sys::cv_Mat_ptr_int_int_int(self.as_raw_mut_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_int_int_int(self.as_raw_mut_Mat(), i0, i1, i2) }.into_result()?;
+		let ret = { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a pointer to the specified matrix row.
@@ -10512,7 +11263,9 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	unsafe fn ptr_nd_mut(&mut self, idx: &[i32]) -> Result<&mut u8> {
-		{ sys::cv_Mat_ptr_const_intX(self.as_raw_mut_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = { sys::cv_Mat_ptr_const_intX(self.as_raw_mut_Mat(), idx.as_ptr()) }.into_result()?;
+		let ret = { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Returns a reference to the specified array element.
@@ -10706,7 +11459,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// internal use method: updates the continuity flag
 	#[inline]
 	fn update_continuity_flag(&mut self) -> Result<()> {
-		unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -10944,7 +11698,9 @@ impl Mat {
 	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	#[inline]
 	pub fn default() -> core::Mat {
-		unsafe { sys::cv_Mat_Mat() }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_Mat_Mat() };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// download data from GpuMat
@@ -10958,7 +11714,9 @@ impl Mat {
 	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 	#[inline]
 	pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_int_int_int(rows, cols, typ) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -10972,7 +11730,9 @@ impl Mat {
 	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 	#[inline]
 	pub unsafe fn new_size(size: core::Size, typ: i32) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -10989,7 +11749,9 @@ impl Mat {
 	///    Mat::operator=(const Scalar& value) .
 	#[inline]
 	pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_int_int_const_ScalarR(rows, cols, typ, &s) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_int_int_int_const_ScalarR(rows, cols, typ, &s) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11006,7 +11768,9 @@ impl Mat {
 	///    Mat::operator=(const Scalar& value) .
 	#[inline]
 	pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_Size_int_const_ScalarR(size.opencv_as_extern(), typ, &s) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_Size_int_const_ScalarR(size.opencv_as_extern(), typ, &s) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11020,7 +11784,9 @@ impl Mat {
 	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 	#[inline]
 	pub unsafe fn new_nd(ndims: i32, sizes: &i32, typ: i32) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_int_const_intX_int(ndims, sizes, typ) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_int_const_intX_int(ndims, sizes, typ) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11033,7 +11799,9 @@ impl Mat {
 	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 	#[inline]
 	pub unsafe fn new_nd_vec(sizes: &core::Vector<i32>, typ: i32) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_const_vector_int_R_int(sizes.as_raw_VectorOfi32(), typ) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_const_vector_int_R_int(sizes.as_raw_VectorOfi32(), typ) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11050,7 +11818,9 @@ impl Mat {
 	///    Mat::operator=(const Scalar& value) .
 	#[inline]
 	pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len() as _, sizes.as_ptr(), typ, &s) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len() as _, sizes.as_ptr(), typ, &s) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11066,7 +11836,9 @@ impl Mat {
 	///    Mat::operator=(const Scalar& value) .
 	#[inline]
 	pub fn new_nd_vec_with_default(sizes: &core::Vector<i32>, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_vector_int_R_int_const_ScalarR(sizes.as_raw_VectorOfi32(), typ, &s) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_vector_int_R_int_const_ScalarR(sizes.as_raw_VectorOfi32(), typ, &s) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11081,7 +11853,9 @@ impl Mat {
 	///    have an independent copy of the sub-array, use Mat::clone() .
 	#[inline]
 	pub fn copy(m: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11106,7 +11880,9 @@ impl Mat {
 	/// * step: AUTO_STEP
 	#[inline]
 	pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11131,7 +11907,9 @@ impl Mat {
 	/// * step: AUTO_STEP
 	#[inline]
 	pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11155,7 +11933,9 @@ impl Mat {
 	/// * steps: 0
 	#[inline]
 	pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11178,7 +11958,9 @@ impl Mat {
 	/// * steps: 0
 	#[inline]
 	pub unsafe fn new_nd_vec_with_data(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
-		{ sys::cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result().map(|r| { core::Mat::opencv_from_extern(r) } )
+		let ret = { sys::cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr())) }.into_result()?;
+		let ret = { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11199,7 +11981,9 @@ impl Mat {
 	/// * col_range: Range::all()
 	#[inline]
 	pub fn rowscols(m: &core::Mat, row_range: &core::Range, col_range: &core::Range) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11215,7 +11999,9 @@ impl Mat {
 	/// * roi: Region of interest.
 	#[inline]
 	pub fn roi(m: &core::Mat, roi: core::Rect) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_MatR_const_RectR(m.as_raw_Mat(), &roi) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_MatR_const_RectR(m.as_raw_Mat(), &roi) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
@@ -11231,13 +12017,17 @@ impl Mat {
 	/// * ranges: Array of selected ranges of m along each dimensionality.
 	#[inline]
 	pub fn ranges(m: &core::Mat, ranges: &core::Vector<core::Range>) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_MatR_const_vector_Range_R(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_MatR_const_vector_Range_R(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// download data from GpuMat
 	#[inline]
 	pub fn from_gpumat(m: &core::GpuMat) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates a diagonal matrix
@@ -11247,7 +12037,9 @@ impl Mat {
 	/// * d: One-dimensional matrix that represents the main diagonal.
 	#[inline]
 	pub fn diag_mat(d: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns a zero array of the specified size and type.
@@ -11267,7 +12059,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns a zero array of the specified size and type.
@@ -11292,7 +12086,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns a zero array of the specified size and type.
@@ -11318,7 +12114,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns an array of all 1's of the specified size and type.
@@ -11341,7 +12139,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns an array of all 1's of the specified size and type.
@@ -11369,7 +12169,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn ones_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns an array of all 1's of the specified size and type.
@@ -11398,7 +12200,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns an identity matrix of the specified size and type.
@@ -11419,7 +12223,9 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Returns an identity matrix of the specified size and type.
@@ -11445,12 +12251,16 @@ impl Mat {
 	/// * type: Created matrix type.
 	#[inline]
 	pub fn eye_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_Mat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(m: &mut core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_MatR(m.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Mat_Mat_MatR(m.as_raw_mut_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -11477,56 +12287,72 @@ pub trait MatConstIteratorTraitConst {
 
 	#[inline]
 	fn m(&self) -> core::Mat {
-		unsafe { sys::cv_MatConstIterator_getPropM_const(self.as_raw_MatConstIterator()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: m")
+		let ret = unsafe { sys::cv_MatConstIterator_getPropM_const(self.as_raw_MatConstIterator()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn elem_size(&self) -> size_t {
-		unsafe { sys::cv_MatConstIterator_getPropElemSize_const(self.as_raw_MatConstIterator()) }.into_result().expect("Infallible function failed: elem_size")
+		let ret = unsafe { sys::cv_MatConstIterator_getPropElemSize_const(self.as_raw_MatConstIterator()) };
+		ret
 	}
 	
 	#[inline]
 	fn ptr(&self) -> &u8 {
-		unsafe { sys::cv_MatConstIterator_getPropPtr_const(self.as_raw_MatConstIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ptr")
+		let ret = unsafe { sys::cv_MatConstIterator_getPropPtr_const(self.as_raw_MatConstIterator()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: ptr");
+		ret
 	}
 	
 	#[inline]
 	fn slice_start(&self) -> &u8 {
-		unsafe { sys::cv_MatConstIterator_getPropSliceStart_const(self.as_raw_MatConstIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: slice_start")
+		let ret = unsafe { sys::cv_MatConstIterator_getPropSliceStart_const(self.as_raw_MatConstIterator()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: slice_start");
+		ret
 	}
 	
 	#[inline]
 	fn slice_end(&self) -> &u8 {
-		unsafe { sys::cv_MatConstIterator_getPropSliceEnd_const(self.as_raw_MatConstIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: slice_end")
+		let ret = unsafe { sys::cv_MatConstIterator_getPropSliceEnd_const(self.as_raw_MatConstIterator()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: slice_end");
+		ret
 	}
 	
 	/// returns the current matrix element
 	#[inline]
 	fn try_deref(&self) -> Result<&u8> {
-		unsafe { sys::cv_MatConstIterator_operatorX_const(self.as_raw_MatConstIterator()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_MatConstIterator_operatorX_const(self.as_raw_MatConstIterator()) }.into_result()?;
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns the i-th matrix element, relative to the current
 	#[inline]
 	fn get(&self, i: ptrdiff_t) -> Result<&u8> {
-		unsafe { sys::cv_MatConstIterator_operator___const_ptrdiff_t(self.as_raw_MatConstIterator(), i) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_MatConstIterator_operator___const_ptrdiff_t(self.as_raw_MatConstIterator(), i) }.into_result()?;
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns the current iterator position
 	#[inline]
 	fn pos(&self) -> Result<core::Point> {
-		unsafe { sys::cv_MatConstIterator_pos_const(self.as_raw_MatConstIterator()) }.into_result()
+		let ret = unsafe { sys::cv_MatConstIterator_pos_const(self.as_raw_MatConstIterator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the current iterator position
 	#[inline]
 	fn pos_to(&self, _idx: &mut i32) -> Result<()> {
-		unsafe { sys::cv_MatConstIterator_pos_const_intX(self.as_raw_MatConstIterator(), _idx) }.into_result()
+		let ret = unsafe { sys::cv_MatConstIterator_pos_const_intX(self.as_raw_MatConstIterator(), _idx) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn lpos(&self) -> Result<ptrdiff_t> {
-		unsafe { sys::cv_MatConstIterator_lpos_const(self.as_raw_MatConstIterator()) }.into_result()
+		let ret = unsafe { sys::cv_MatConstIterator_lpos_const(self.as_raw_MatConstIterator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -11536,21 +12362,24 @@ pub trait MatConstIteratorTrait: core::MatConstIteratorTraitConst {
 
 	#[inline]
 	fn set_elem_size(&mut self, val: size_t) {
-		unsafe { sys::cv_MatConstIterator_setPropElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) }.into_result().expect("Infallible function failed: set_elem_size")
+		let ret = unsafe { sys::cv_MatConstIterator_setPropElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
+		ret
 	}
 	
 	/// ## C++ default parameters
 	/// * relative: false
 	#[inline]
 	fn seek(&mut self, ofs: ptrdiff_t, relative: bool) -> Result<()> {
-		unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t_bool(self.as_raw_mut_MatConstIterator(), ofs, relative) }.into_result()
+		let ret = unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t_bool(self.as_raw_mut_MatConstIterator(), ofs, relative) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * relative: false
 	#[inline]
 	fn seek_idx(&mut self, _idx: &i32, relative: bool) -> Result<()> {
-		unsafe { sys::cv_MatConstIterator_seek_const_intX_bool(self.as_raw_mut_MatConstIterator(), _idx, relative) }.into_result()
+		let ret = unsafe { sys::cv_MatConstIterator_seek_const_intX_bool(self.as_raw_mut_MatConstIterator(), _idx, relative) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -11583,13 +12412,17 @@ impl MatConstIterator {
 	/// default constructor
 	#[inline]
 	pub fn default() -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator() }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatConstIterator_MatConstIterator() }.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructor that sets the iterator to the beginning of the matrix
 	#[inline]
 	pub fn over(_m: &core::Mat) -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX(_m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX(_m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructor that sets the iterator to the specified element of the matrix
@@ -11598,19 +12431,25 @@ impl MatConstIterator {
 	/// * _col: 0
 	#[inline]
 	pub fn with_rows_cols(_m: &core::Mat, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col) }.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructor that sets the iterator to the specified element of the matrix
 	#[inline]
 	pub fn with_start(_m: &core::Mat, _pt: core::Point) -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), _pt.opencv_as_extern()) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), _pt.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copy constructor
 	#[inline]
 	pub fn copy(it: &core::MatConstIterator) -> Result<core::MatConstIterator> {
-		unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator()) }.into_result().map(|r| unsafe { core::MatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator()) }.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -11667,105 +12506,136 @@ pub trait MatExprTraitConst {
 
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_MatExpr_getPropFlags_const(self.as_raw_MatExpr()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_MatExpr_getPropFlags_const(self.as_raw_MatExpr()) };
+		ret
 	}
 	
 	#[inline]
 	fn a(&self) -> core::Mat {
-		unsafe { sys::cv_MatExpr_getPropA_const(self.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: a")
+		let ret = unsafe { sys::cv_MatExpr_getPropA_const(self.as_raw_MatExpr()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn b(&self) -> core::Mat {
-		unsafe { sys::cv_MatExpr_getPropB_const(self.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: b")
+		let ret = unsafe { sys::cv_MatExpr_getPropB_const(self.as_raw_MatExpr()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn c(&self) -> core::Mat {
-		unsafe { sys::cv_MatExpr_getPropC_const(self.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: c")
+		let ret = unsafe { sys::cv_MatExpr_getPropC_const(self.as_raw_MatExpr()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn alpha(&self) -> f64 {
-		unsafe { sys::cv_MatExpr_getPropAlpha_const(self.as_raw_MatExpr()) }.into_result().expect("Infallible function failed: alpha")
+		let ret = unsafe { sys::cv_MatExpr_getPropAlpha_const(self.as_raw_MatExpr()) };
+		ret
 	}
 	
 	#[inline]
 	fn beta(&self) -> f64 {
-		unsafe { sys::cv_MatExpr_getPropBeta_const(self.as_raw_MatExpr()) }.into_result().expect("Infallible function failed: beta")
+		let ret = unsafe { sys::cv_MatExpr_getPropBeta_const(self.as_raw_MatExpr()) };
+		ret
 	}
 	
 	#[inline]
 	fn s(&self) -> core::Scalar {
-		unsafe { sys::cv_MatExpr_getPropS_const(self.as_raw_MatExpr()) }.into_result().expect("Infallible function failed: s")
+		let ret = unsafe { sys::cv_MatExpr_getPropS_const(self.as_raw_MatExpr()) };
+		ret
 	}
 	
 	#[inline]
 	fn to_mat(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_MatExpr_operator_cv_Mat_const(self.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_operator_cv_Mat_const(self.as_raw_MatExpr()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_MatExpr_size_const(self.as_raw_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatExpr_size_const(self.as_raw_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_MatExpr_type_const(self.as_raw_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatExpr_type_const(self.as_raw_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn row(&self, y: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_row_const_int(self.as_raw_MatExpr(), y) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_row_const_int(self.as_raw_MatExpr(), y) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn col(&self, x: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_col_const_int(self.as_raw_MatExpr(), x) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_col_const_int(self.as_raw_MatExpr(), x) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * d: 0
 	#[inline]
 	fn diag(&self, d: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_diag_const_int(self.as_raw_MatExpr(), d) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_diag_const_int(self.as_raw_MatExpr(), d) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn t(&self) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_t_const(self.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_t_const(self.as_raw_MatExpr()) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * method: DECOMP_LU
 	#[inline]
 	fn inv(&self, method: i32) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_inv_const_int(self.as_raw_MatExpr(), method) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_inv_const_int(self.as_raw_MatExpr(), method) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * scale: 1
 	#[inline]
 	fn mul_matexpr(&self, e: &core::MatExpr, scale: f64) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_mul_const_const_MatExprR_double(self.as_raw_MatExpr(), e.as_raw_MatExpr(), scale) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_mul_const_const_MatExprR_double(self.as_raw_MatExpr(), e.as_raw_MatExpr(), scale) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * scale: 1
 	#[inline]
 	fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_mul_const_const_MatR_double(self.as_raw_MatExpr(), m.as_raw_Mat(), scale) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_mul_const_const_MatR_double(self.as_raw_MatExpr(), m.as_raw_Mat(), scale) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_MatExpr_cross_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_cross_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn dot(&self, m: &core::Mat) -> Result<f64> {
-		unsafe { sys::cv_MatExpr_dot_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatExpr_dot_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -11775,42 +12645,50 @@ pub trait MatExprTrait: core::MatExprTraitConst {
 
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_MatExpr_setPropFlags_int(self.as_raw_mut_MatExpr(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_MatExpr_setPropFlags_int(self.as_raw_mut_MatExpr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_a(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_MatExpr_setPropA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_a")
+		let ret = unsafe { sys::cv_MatExpr_setPropA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_b(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_MatExpr_setPropB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_b")
+		let ret = unsafe { sys::cv_MatExpr_setPropB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_c(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_MatExpr_setPropC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_c")
+		let ret = unsafe { sys::cv_MatExpr_setPropC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_alpha(&mut self, val: f64) {
-		unsafe { sys::cv_MatExpr_setPropAlpha_double(self.as_raw_mut_MatExpr(), val) }.into_result().expect("Infallible function failed: set_alpha")
+		let ret = unsafe { sys::cv_MatExpr_setPropAlpha_double(self.as_raw_mut_MatExpr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_beta(&mut self, val: f64) {
-		unsafe { sys::cv_MatExpr_setPropBeta_double(self.as_raw_mut_MatExpr(), val) }.into_result().expect("Infallible function failed: set_beta")
+		let ret = unsafe { sys::cv_MatExpr_setPropBeta_double(self.as_raw_mut_MatExpr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_s(&mut self, val: core::Scalar) {
-		unsafe { sys::cv_MatExpr_setPropS_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_s")
+		let ret = unsafe { sys::cv_MatExpr_setPropS_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) };
+		ret
 	}
 	
 	#[inline]
 	fn swap(&mut self, b: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatExpr_swap_MatExprR(self.as_raw_mut_MatExpr(), b.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatExpr_swap_MatExprR(self.as_raw_mut_MatExpr(), b.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -11888,12 +12766,16 @@ impl core::MatExprTrait for MatExpr {
 impl MatExpr {
 	#[inline]
 	pub fn default() -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_MatExpr() }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_MatExpr() }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat(m: &core::Mat) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_MatExpr_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_MatExpr_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -11905,7 +12787,9 @@ impl MatExpr {
 	/// * _s: Scalar()
 	#[inline]
 	pub fn new(_op: &dyn core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
-		unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s) }.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -11916,133 +12800,158 @@ pub trait MatOpConst {
 
 	#[inline]
 	fn element_wise(&self, expr: &core::MatExpr) -> Result<bool> {
-		unsafe { sys::cv_MatOp_elementWise_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_elementWise_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * typ: -1
 	#[inline]
 	fn assign(&self, expr: &core::MatExpr, m: &mut core::Mat, typ: i32) -> Result<()> {
-		unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR_int(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), typ) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR_int(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn roi(&self, expr: &core::MatExpr, row_range: &core::Range, col_range: &core::Range, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_roi_const_const_MatExprR_const_RangeR_const_RangeR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_roi_const_const_MatExprR_const_RangeR_const_RangeR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn diag(&self, expr: &core::MatExpr, d: i32, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_diag_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), d, res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_diag_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), d, res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_add(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignAdd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignAdd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_subtract(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignSubtract_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignSubtract_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_multiply(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignMultiply_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignMultiply_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_divide(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignDivide_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignDivide_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_and(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignAnd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignAnd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_or(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignOr_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignOr_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn aug_assign_xor(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_MatOp_augAssignXor_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_augAssignXor_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn add(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn add_scalar(&self, expr1: &core::MatExpr, s: core::Scalar, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_ScalarR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), &s, res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_ScalarR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), &s, res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn subtract(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_subtract_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_subtract_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn subtract_scalar(&self, s: core::Scalar, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_subtract_const_const_ScalarR_const_MatExprR_MatExprR(self.as_raw_MatOp(), &s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_subtract_const_const_ScalarR_const_MatExprR_MatExprR(self.as_raw_MatOp(), &s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * scale: 1
 	#[inline]
 	fn multiply(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr, scale: f64) -> Result<()> {
-		unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn multiply_f64(&self, expr1: &core::MatExpr, s: f64, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_double_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), s, res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_double_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), s, res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * scale: 1
 	#[inline]
 	fn divide(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr, scale: f64) -> Result<()> {
-		unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn divide_f64(&self, s: f64, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_divide_const_double_const_MatExprR_MatExprR(self.as_raw_MatOp(), s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_divide_const_double_const_MatExprR_MatExprR(self.as_raw_MatOp(), s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn abs(&self, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_abs_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_abs_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn transpose(&self, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_transpose_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_transpose_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn matmul(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_matmul_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_matmul_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn invert(&self, expr: &core::MatExpr, method: i32, res: &mut core::MatExpr) -> Result<()> {
-		unsafe { sys::cv_MatOp_invert_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), method, res.as_raw_mut_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_invert_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), method, res.as_raw_mut_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn size(&self, expr: &core::MatExpr) -> Result<core::Size> {
-		unsafe { sys::cv_MatOp_size_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_size_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self, expr: &core::MatExpr) -> Result<i32> {
-		unsafe { sys::cv_MatOp_type_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+		let ret = unsafe { sys::cv_MatOp_type_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12057,22 +12966,27 @@ pub trait MatSizeTraitConst {
 
 	#[inline]
 	fn dims(&self) -> i32 {
-		unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result().expect("Infallible function failed: dims")
+		let ret = unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) };
+		ret
 	}
 	
 	#[inline]
 	fn get(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv_MatSize_operator___const_int(self.as_raw_MatSize(), i) }.into_result()
+		let ret = unsafe { sys::cv_MatSize_operator___const_int(self.as_raw_MatSize(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_ri32(&self) -> &i32 {
-		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: to_ri32")
+		let ret = unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: to_ri32");
+		ret
 	}
 	
 	#[inline]
 	fn equals(&self, sz: &core::MatSize) -> bool {
-		unsafe { sys::cv_MatSize_operatorEQ_const_const_MatSizeR(self.as_raw_MatSize(), sz.as_raw_MatSize()) }.into_result().expect("Infallible function failed: equals")
+		let ret = unsafe { sys::cv_MatSize_operatorEQ_const_const_MatSizeR(self.as_raw_MatSize(), sz.as_raw_MatSize()) };
+		ret
 	}
 	
 }
@@ -12082,17 +12996,21 @@ pub trait MatSizeTrait: core::MatSizeTraitConst {
 
 	#[inline]
 	fn p(&mut self) -> &mut i32 {
-		unsafe { sys::cv_MatSize_getPropP(self.as_raw_mut_MatSize()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: p")
+		let ret = unsafe { sys::cv_MatSize_getPropP(self.as_raw_mut_MatSize()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: p");
+		ret
 	}
 	
 	#[inline]
 	fn set_p(&mut self, val: &mut i32) {
-		unsafe { sys::cv_MatSize_setPropP_intX(self.as_raw_mut_MatSize(), val) }.into_result().expect("Infallible function failed: set_p")
+		let ret = unsafe { sys::cv_MatSize_setPropP_intX(self.as_raw_mut_MatSize(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn get_mut(&mut self, i: i32) -> Result<i32> {
-		unsafe { sys::cv_MatSize_operator___int(self.as_raw_mut_MatSize(), i) }.into_result()
+		let ret = unsafe { sys::cv_MatSize_operator___int(self.as_raw_mut_MatSize(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12124,7 +13042,9 @@ impl MatSize {
 	/// ////////////////////////// MatSize ////////////////////////////
 	#[inline]
 	pub fn new(_p: &mut i32) -> core::MatSize {
-		unsafe { sys::cv_MatSize_MatSize_intX(_p) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: new")
+		let ret = unsafe { sys::cv_MatSize_MatSize_intX(_p) };
+		let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -12134,12 +13054,14 @@ pub trait MatStepTraitConst {
 
 	#[inline]
 	fn get(&self, i: i32) -> size_t {
-		unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) }.into_result().expect("Infallible function failed: get")
+		let ret = unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) };
+		ret
 	}
 	
 	#[inline]
 	fn to_size_t(&self) -> Result<size_t> {
-		unsafe { sys::cv_MatStep_operator_size_t_const(self.as_raw_MatStep()) }.into_result()
+		let ret = unsafe { sys::cv_MatStep_operator_size_t_const(self.as_raw_MatStep()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12149,22 +13071,28 @@ pub trait MatStepTrait: core::MatStepTraitConst {
 
 	#[inline]
 	fn p(&mut self) -> &mut size_t {
-		unsafe { sys::cv_MatStep_getPropP(self.as_raw_mut_MatStep()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: p")
+		let ret = unsafe { sys::cv_MatStep_getPropP(self.as_raw_mut_MatStep()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: p");
+		ret
 	}
 	
 	#[inline]
 	fn set_p(&mut self, val: &mut size_t) {
-		unsafe { sys::cv_MatStep_setPropP_size_tX(self.as_raw_mut_MatStep(), val) }.into_result().expect("Infallible function failed: set_p")
+		let ret = unsafe { sys::cv_MatStep_setPropP_size_tX(self.as_raw_mut_MatStep(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn buf(&mut self) -> &mut [size_t; 2] {
-		unsafe { sys::cv_MatStep_getPropBuf(self.as_raw_mut_MatStep()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: buf")
+		let ret = unsafe { sys::cv_MatStep_getPropBuf(self.as_raw_mut_MatStep()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: buf");
+		ret
 	}
 	
 	#[inline]
 	fn get_mut(&mut self, i: i32) -> size_t {
-		unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) }.into_result().expect("Infallible function failed: get_mut")
+		let ret = unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) };
+		ret
 	}
 	
 }
@@ -12196,12 +13124,16 @@ impl MatStep {
 	/// ////////////////////////// MatStep ////////////////////////////
 	#[inline]
 	pub fn default() -> core::MatStep {
-		unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_MatStep_MatStep() };
+		let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn new(s: size_t) -> core::MatStep {
-		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: new")
+		let ret = unsafe { sys::cv_MatStep_MatStep_size_t(s) };
+		let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -12252,12 +13184,16 @@ impl core::Matx_AddOpTrait for Matx_AddOp {
 impl Matx_AddOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_AddOp> {
-		unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|r| unsafe { core::Matx_AddOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result()?;
+		let ret = unsafe { core::Matx_AddOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_AddOp) -> Result<core::Matx_AddOp> {
-		unsafe { sys::cv_Matx_AddOp_Matx_AddOp_const_Matx_AddOpR(unnamed.as_raw_Matx_AddOp()) }.into_result().map(|r| unsafe { core::Matx_AddOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_AddOp_Matx_AddOp_const_Matx_AddOpR(unnamed.as_raw_Matx_AddOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_AddOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12298,12 +13234,16 @@ impl core::Matx_DivOpTrait for Matx_DivOp {
 impl Matx_DivOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_DivOp> {
-		unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|r| unsafe { core::Matx_DivOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result()?;
+		let ret = unsafe { core::Matx_DivOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_DivOp) -> Result<core::Matx_DivOp> {
-		unsafe { sys::cv_Matx_DivOp_Matx_DivOp_const_Matx_DivOpR(unnamed.as_raw_Matx_DivOp()) }.into_result().map(|r| unsafe { core::Matx_DivOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_DivOp_Matx_DivOp_const_Matx_DivOpR(unnamed.as_raw_Matx_DivOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_DivOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12344,12 +13284,16 @@ impl core::Matx_MatMulOpTrait for Matx_MatMulOp {
 impl Matx_MatMulOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_MatMulOp> {
-		unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|r| unsafe { core::Matx_MatMulOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result()?;
+		let ret = unsafe { core::Matx_MatMulOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_MatMulOp) -> Result<core::Matx_MatMulOp> {
-		unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp_const_Matx_MatMulOpR(unnamed.as_raw_Matx_MatMulOp()) }.into_result().map(|r| unsafe { core::Matx_MatMulOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp_const_Matx_MatMulOpR(unnamed.as_raw_Matx_MatMulOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_MatMulOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12390,12 +13334,16 @@ impl core::Matx_MulOpTrait for Matx_MulOp {
 impl Matx_MulOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_MulOp> {
-		unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|r| unsafe { core::Matx_MulOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result()?;
+		let ret = unsafe { core::Matx_MulOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_MulOp) -> Result<core::Matx_MulOp> {
-		unsafe { sys::cv_Matx_MulOp_Matx_MulOp_const_Matx_MulOpR(unnamed.as_raw_Matx_MulOp()) }.into_result().map(|r| unsafe { core::Matx_MulOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_MulOp_Matx_MulOp_const_Matx_MulOpR(unnamed.as_raw_Matx_MulOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_MulOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12436,12 +13384,16 @@ impl core::Matx_ScaleOpTrait for Matx_ScaleOp {
 impl Matx_ScaleOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_ScaleOp> {
-		unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|r| unsafe { core::Matx_ScaleOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result()?;
+		let ret = unsafe { core::Matx_ScaleOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_ScaleOp) -> Result<core::Matx_ScaleOp> {
-		unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp_const_Matx_ScaleOpR(unnamed.as_raw_Matx_ScaleOp()) }.into_result().map(|r| unsafe { core::Matx_ScaleOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp_const_Matx_ScaleOpR(unnamed.as_raw_Matx_ScaleOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_ScaleOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12482,12 +13434,16 @@ impl core::Matx_SubOpTrait for Matx_SubOp {
 impl Matx_SubOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_SubOp> {
-		unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|r| unsafe { core::Matx_SubOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result()?;
+		let ret = unsafe { core::Matx_SubOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_SubOp) -> Result<core::Matx_SubOp> {
-		unsafe { sys::cv_Matx_SubOp_Matx_SubOp_const_Matx_SubOpR(unnamed.as_raw_Matx_SubOp()) }.into_result().map(|r| unsafe { core::Matx_SubOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_SubOp_Matx_SubOp_const_Matx_SubOpR(unnamed.as_raw_Matx_SubOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_SubOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12528,12 +13484,16 @@ impl core::Matx_TOpTrait for Matx_TOp {
 impl Matx_TOp {
 	#[inline]
 	pub fn default() -> Result<core::Matx_TOp> {
-		unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result().map(|r| unsafe { core::Matx_TOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result()?;
+		let ret = unsafe { core::Matx_TOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::Matx_TOp) -> Result<core::Matx_TOp> {
-		unsafe { sys::cv_Matx_TOp_Matx_TOp_const_Matx_TOpR(unnamed.as_raw_Matx_TOp()) }.into_result().map(|r| unsafe { core::Matx_TOp::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Matx_TOp_Matx_TOp_const_Matx_TOpR(unnamed.as_raw_Matx_TOp()) }.into_result()?;
+		let ret = unsafe { core::Matx_TOp::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -12552,7 +13512,9 @@ pub trait MinProblemSolverConst: core::AlgorithmTraitConst {
 	/// function that is being optimized. It can be empty, if no function was given so far.
 	#[inline]
 	fn get_function(&self) -> Result<core::Ptr<dyn core::MinProblemSolver_Function>> {
-		unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver()) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::MinProblemSolver_Function>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::MinProblemSolver_Function>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Getter for the previously set terminal criteria for this algorithm.
@@ -12561,7 +13523,8 @@ pub trait MinProblemSolverConst: core::AlgorithmTraitConst {
 	/// Deep copy of the terminal criteria used at the moment.
 	#[inline]
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver()) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12577,7 +13540,8 @@ pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	/// * f: The new function to optimize.
 	#[inline]
 	fn set_function(&mut self, f: &core::Ptr<dyn core::MinProblemSolver_Function>) -> Result<()> {
-		unsafe { sys::cv_MinProblemSolver_setFunction_const_Ptr_Function_R(self.as_raw_mut_MinProblemSolver(), f.as_raw_PtrOfMinProblemSolver_Function()) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_setFunction_const_Ptr_Function_R(self.as_raw_mut_MinProblemSolver(), f.as_raw_PtrOfMinProblemSolver_Function()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Set terminal criteria for solver.
@@ -12593,7 +13557,8 @@ pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	/// * termcrit: Terminal criteria to be used, represented as cv::TermCriteria structure.
 	#[inline]
 	fn set_term_criteria(&mut self, termcrit: core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_MinProblemSolver_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_MinProblemSolver(), &termcrit) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_MinProblemSolver(), &termcrit) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// actually runs the algorithm and performs the minimization.
@@ -12612,7 +13577,8 @@ pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	#[inline]
 	fn minimize(&mut self, x: &mut dyn core::ToInputOutputArray) -> Result<f64> {
 		input_output_array_arg!(x);
-		unsafe { sys::cv_MinProblemSolver_minimize_const__InputOutputArrayR(self.as_raw_mut_MinProblemSolver(), x.as_raw__InputOutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_minimize_const__InputOutputArrayR(self.as_raw_mut_MinProblemSolver(), x.as_raw__InputOutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12623,17 +13589,20 @@ pub trait MinProblemSolver_FunctionConst {
 
 	#[inline]
 	fn get_dims(&self) -> Result<i32> {
-		unsafe { sys::cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gradient_eps(&self) -> Result<f64> {
-		unsafe { sys::cv_MinProblemSolver_Function_getGradientEps_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_Function_getGradientEps_const(self.as_raw_MinProblemSolver_Function()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn calc(&self, x: &f64) -> Result<f64> {
-		unsafe { sys::cv_MinProblemSolver_Function_calc_const_const_doubleX(self.as_raw_MinProblemSolver_Function(), x) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_Function_calc_const_const_doubleX(self.as_raw_MinProblemSolver_Function(), x) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12643,7 +13612,8 @@ pub trait MinProblemSolver_Function: core::MinProblemSolver_FunctionConst {
 
 	#[inline]
 	fn get_gradient(&mut self, x: &f64, grad: &mut f64) -> Result<()> {
-		unsafe { sys::cv_MinProblemSolver_Function_getGradient_const_doubleX_doubleX(self.as_raw_mut_MinProblemSolver_Function(), x, grad) }.into_result()
+		let ret = unsafe { sys::cv_MinProblemSolver_Function_getGradient_const_doubleX_doubleX(self.as_raw_mut_MinProblemSolver_Function(), x, grad) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12740,13 +13710,15 @@ impl Moments {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::Moments> {
-		unsafe { sys::cv_Moments_Moments() }.into_result()
+		let ret = unsafe { sys::cv_Moments_Moments() }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// the full constructor
 	#[inline]
 	pub fn new(m00: f64, m10: f64, m01: f64, m20: f64, m11: f64, m02: f64, m30: f64, m21: f64, m12: f64, m03: f64) -> Result<core::Moments> {
-		unsafe { sys::cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03) }.into_result()
+		let ret = unsafe { sys::cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12822,19 +13794,25 @@ pub trait PCATraitConst {
 	/// eigenvectors of the covariation matrix
 	#[inline]
 	fn eigenvectors(&self) -> core::Mat {
-		unsafe { sys::cv_PCA_getPropEigenvectors_const(self.as_raw_PCA()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: eigenvectors")
+		let ret = unsafe { sys::cv_PCA_getPropEigenvectors_const(self.as_raw_PCA()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// eigenvalues of the covariation matrix
 	#[inline]
 	fn eigenvalues(&self) -> core::Mat {
-		unsafe { sys::cv_PCA_getPropEigenvalues_const(self.as_raw_PCA()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: eigenvalues")
+		let ret = unsafe { sys::cv_PCA_getPropEigenvalues_const(self.as_raw_PCA()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// mean value subtracted before the projection and added after the back projection
 	#[inline]
 	fn mean(&self) -> core::Mat {
-		unsafe { sys::cv_PCA_getPropMean_const(self.as_raw_PCA()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: mean")
+		let ret = unsafe { sys::cv_PCA_getPropMean_const(self.as_raw_PCA()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Projects vector(s) to the principal component subspace.
@@ -12854,7 +13832,9 @@ pub trait PCATraitConst {
 	#[inline]
 	fn project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(vec);
-		unsafe { sys::cv_PCA_project_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_PCA_project_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Projects vector(s) to the principal component subspace.
@@ -12888,7 +13868,8 @@ pub trait PCATraitConst {
 	fn project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(vec);
 		output_array_arg!(result);
-		unsafe { sys::cv_PCA_project_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_PCA_project_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Reconstructs vectors from their PC projections.
@@ -12907,7 +13888,9 @@ pub trait PCATraitConst {
 	#[inline]
 	fn back_project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(vec);
-		unsafe { sys::cv_PCA_backProject_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_PCA_backProject_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Reconstructs vectors from their PC projections.
@@ -12935,7 +13918,8 @@ pub trait PCATraitConst {
 	fn back_project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(vec);
 		output_array_arg!(result);
-		unsafe { sys::cv_PCA_backProject_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_PCA_backProject_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// write PCA objects
@@ -12943,7 +13927,8 @@ pub trait PCATraitConst {
 	/// Writes @ref eigenvalues @ref eigenvectors and @ref mean to specified FileStorage
 	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_PCA_write_const_FileStorageR(self.as_raw_PCA(), fs.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_PCA_write_const_FileStorageR(self.as_raw_PCA(), fs.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -12954,19 +13939,22 @@ pub trait PCATrait: core::PCATraitConst {
 	/// eigenvectors of the covariation matrix
 	#[inline]
 	fn set_eigenvectors(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_PCA_setPropEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_eigenvectors")
+		let ret = unsafe { sys::cv_PCA_setPropEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	/// eigenvalues of the covariation matrix
 	#[inline]
 	fn set_eigenvalues(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_PCA_setPropEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_eigenvalues")
+		let ret = unsafe { sys::cv_PCA_setPropEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	/// mean value subtracted before the projection and added after the back projection
 	#[inline]
 	fn set_mean(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_PCA_setPropMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_mean")
+		let ret = unsafe { sys::cv_PCA_setPropMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	/// load PCA objects
@@ -12974,7 +13962,8 @@ pub trait PCATrait: core::PCATraitConst {
 	/// Loads @ref eigenvalues @ref eigenvectors and @ref mean from specified FileNode
 	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_PCA_read_const_FileNodeR(self.as_raw_mut_PCA(), fn_.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_PCA_read_const_FileNodeR(self.as_raw_mut_PCA(), fn_.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13074,7 +14063,9 @@ impl PCA {
 	/// constructors initialize the structure and call PCA::operator()().
 	#[inline]
 	pub fn default() -> Result<core::PCA> {
-		unsafe { sys::cv_PCA_PCA() }.into_result().map(|r| unsafe { core::PCA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_PCA_PCA() }.into_result()?;
+		let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// default constructor
@@ -13099,7 +14090,9 @@ impl PCA {
 	pub fn new(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
 		input_array_arg!(data);
 		input_array_arg!(mean);
-		unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components) }.into_result().map(|r| unsafe { core::PCA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components) }.into_result()?;
+		let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// default constructor
@@ -13122,7 +14115,9 @@ impl PCA {
 	pub fn new_with_variance(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
 		input_array_arg!(data);
 		input_array_arg!(mean);
-		unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance) }.into_result().map(|r| unsafe { core::PCA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance) }.into_result()?;
+		let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -13156,12 +14151,14 @@ pub trait RNGTraitConst {
 
 	#[inline]
 	fn state(&self) -> u64 {
-		unsafe { sys::cv_RNG_getPropState_const(self.as_raw_RNG()) }.into_result().expect("Infallible function failed: state")
+		let ret = unsafe { sys::cv_RNG_getPropState_const(self.as_raw_RNG()) };
+		ret
 	}
 	
 	#[inline]
 	fn equals(&self, other: &core::RNG) -> Result<bool> {
-		unsafe { sys::cv_RNG_operatorEQ_const_const_RNGR(self.as_raw_RNG(), other.as_raw_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operatorEQ_const_const_RNGR(self.as_raw_RNG(), other.as_raw_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13171,14 +14168,16 @@ pub trait RNGTrait: core::RNGTraitConst {
 
 	#[inline]
 	fn set_state(&mut self, val: u64) {
-		unsafe { sys::cv_RNG_setPropState_uint64_t(self.as_raw_mut_RNG(), val) }.into_result().expect("Infallible function failed: set_state")
+		let ret = unsafe { sys::cv_RNG_setPropState_uint64_t(self.as_raw_mut_RNG(), val) };
+		ret
 	}
 	
 	/// The method updates the state using the MWC algorithm and returns the
 	/// next 32-bit random number.
 	#[inline]
 	fn next(&mut self) -> Result<u32> {
-		unsafe { sys::cv_RNG_next(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_next(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Each of the methods updates the state using the MWC algorithm and
@@ -13188,42 +14187,50 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// from [0,1) range.
 	#[inline]
 	fn to_u8(&mut self) -> Result<u8> {
-		unsafe { sys::cv_RNG_operator_unsigned_char(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_unsigned_char(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_i8(&mut self) -> Result<i8> {
-		unsafe { sys::cv_RNG_operator_signed_char(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_signed_char(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_u16(&mut self) -> Result<u16> {
-		unsafe { sys::cv_RNG_operator_unsigned_short(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_unsigned_short(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_i16(&mut self) -> Result<i16> {
-		unsafe { sys::cv_RNG_operator_short(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_short(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_u32(&mut self) -> Result<u32> {
-		unsafe { sys::cv_RNG_operator_unsigned_int(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_unsigned_int(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_i32(&mut self) -> Result<i32> {
-		unsafe { sys::cv_RNG_operator_int(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_int(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_f32(&mut self) -> Result<f32> {
-		unsafe { sys::cv_RNG_operator_float(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_float(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_f64(&mut self) -> Result<f64> {
-		unsafe { sys::cv_RNG_operator_double(self.as_raw_mut_RNG()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_operator_double(self.as_raw_mut_RNG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed integer random number from [a,b) range
@@ -13265,7 +14272,8 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// * b: upper non-inclusive boundary of the returned random number.
 	#[inline]
 	fn uniform(&mut self, a: i32, b: i32) -> Result<i32> {
-		unsafe { sys::cv_RNG_uniform_int_int(self.as_raw_mut_RNG(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_uniform_int_int(self.as_raw_mut_RNG(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed integer random number from [a,b) range
@@ -13309,7 +14317,8 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn uniform_1(&mut self, a: f32, b: f32) -> Result<f32> {
-		unsafe { sys::cv_RNG_uniform_float_float(self.as_raw_mut_RNG(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_uniform_float_float(self.as_raw_mut_RNG(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed integer random number from [a,b) range
@@ -13353,7 +14362,8 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn uniform_2(&mut self, a: f64, b: f64) -> Result<f64> {
-		unsafe { sys::cv_RNG_uniform_double_double(self.as_raw_mut_RNG(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_uniform_double_double(self.as_raw_mut_RNG(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Fills arrays with random numbers.
@@ -13398,7 +14408,8 @@ pub trait RNGTrait: core::RNGTraitConst {
 		input_output_array_arg!(mat);
 		input_array_arg!(a);
 		input_array_arg!(b);
-		unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), saturate_range) }.into_result()
+		let ret = unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), saturate_range) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the next random number sampled from the Gaussian distribution
@@ -13411,7 +14422,8 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// deviation is the specified sigma .
 	#[inline]
 	fn gaussian(&mut self, sigma: f64) -> Result<f64> {
-		unsafe { sys::cv_RNG_gaussian_double(self.as_raw_mut_RNG(), sigma) }.into_result()
+		let ret = unsafe { sys::cv_RNG_gaussian_double(self.as_raw_mut_RNG(), sigma) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13460,7 +14472,9 @@ impl RNG {
 	/// singular random number sequence, consisting of all zeros.
 	#[inline]
 	pub fn default() -> Result<core::RNG> {
-		unsafe { sys::cv_RNG_RNG() }.into_result().map(|r| unsafe { core::RNG::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RNG_RNG() }.into_result()?;
+		let ret = unsafe { core::RNG::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructor
@@ -13477,7 +14491,9 @@ impl RNG {
 	/// * state: 64-bit value used to initialize the RNG.
 	#[inline]
 	pub fn new(state: u64) -> Result<core::RNG> {
-		unsafe { sys::cv_RNG_RNG_uint64_t(state) }.into_result().map(|r| unsafe { core::RNG::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RNG_RNG_uint64_t(state) }.into_result()?;
+		let ret = unsafe { core::RNG::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -13496,50 +14512,59 @@ pub trait RNG_MT19937Trait: core::RNG_MT19937TraitConst {
 
 	#[inline]
 	fn seed(&mut self, s: u32) -> Result<()> {
-		unsafe { sys::cv_RNG_MT19937_seed_unsigned_int(self.as_raw_mut_RNG_MT19937(), s) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_seed_unsigned_int(self.as_raw_mut_RNG_MT19937(), s) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn next(&mut self) -> Result<u32> {
-		unsafe { sys::cv_RNG_MT19937_next(self.as_raw_mut_RNG_MT19937()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_next(self.as_raw_mut_RNG_MT19937()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_i32(&mut self) -> Result<i32> {
-		unsafe { sys::cv_RNG_MT19937_operator_int(self.as_raw_mut_RNG_MT19937()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_operator_int(self.as_raw_mut_RNG_MT19937()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_u32(&mut self) -> Result<u32> {
-		unsafe { sys::cv_RNG_MT19937_operator_unsigned_int(self.as_raw_mut_RNG_MT19937()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_operator_unsigned_int(self.as_raw_mut_RNG_MT19937()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_f32(&mut self) -> Result<f32> {
-		unsafe { sys::cv_RNG_MT19937_operator_float(self.as_raw_mut_RNG_MT19937()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_operator_float(self.as_raw_mut_RNG_MT19937()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn to_f64(&mut self) -> Result<f64> {
-		unsafe { sys::cv_RNG_MT19937_operator_double(self.as_raw_mut_RNG_MT19937()) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_operator_double(self.as_raw_mut_RNG_MT19937()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed integer random number from [a,b) range
 	#[inline]
 	fn uniform(&mut self, a: i32, b: i32) -> Result<i32> {
-		unsafe { sys::cv_RNG_MT19937_uniform_int_int(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_uniform_int_int(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed floating-point random number from [a,b) range
 	#[inline]
 	fn uniform_1(&mut self, a: f32, b: f32) -> Result<f32> {
-		unsafe { sys::cv_RNG_MT19937_uniform_float_float(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_uniform_float_float(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns uniformly distributed double-precision floating-point random number from [a,b) range
 	#[inline]
 	fn uniform_2(&mut self, a: f64, b: f64) -> Result<f64> {
-		unsafe { sys::cv_RNG_MT19937_uniform_double_double(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()
+		let ret = unsafe { sys::cv_RNG_MT19937_uniform_double_double(self.as_raw_mut_RNG_MT19937(), a, b) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13574,12 +14599,16 @@ impl core::RNG_MT19937Trait for RNG_MT19937 {
 impl RNG_MT19937 {
 	#[inline]
 	pub fn default() -> Result<core::RNG_MT19937> {
-		unsafe { sys::cv_RNG_MT19937_RNG_MT19937() }.into_result().map(|r| unsafe { core::RNG_MT19937::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RNG_MT19937_RNG_MT19937() }.into_result()?;
+		let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(s: u32) -> Result<core::RNG_MT19937> {
-		unsafe { sys::cv_RNG_MT19937_RNG_MT19937_unsigned_int(s) }.into_result().map(|r| unsafe { core::RNG_MT19937::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RNG_MT19937_RNG_MT19937_unsigned_int(s) }.into_result()?;
+		let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -13612,22 +14641,26 @@ pub trait RangeTraitConst {
 
 	#[inline]
 	fn start(&self) -> i32 {
-		unsafe { sys::cv_Range_getPropStart_const(self.as_raw_Range()) }.into_result().expect("Infallible function failed: start")
+		let ret = unsafe { sys::cv_Range_getPropStart_const(self.as_raw_Range()) };
+		ret
 	}
 	
 	#[inline]
 	fn end(&self) -> i32 {
-		unsafe { sys::cv_Range_getPropEnd_const(self.as_raw_Range()) }.into_result().expect("Infallible function failed: end")
+		let ret = unsafe { sys::cv_Range_getPropEnd_const(self.as_raw_Range()) };
+		ret
 	}
 	
 	#[inline]
 	fn size(&self) -> Result<i32> {
-		unsafe { sys::cv_Range_size_const(self.as_raw_Range()) }.into_result()
+		let ret = unsafe { sys::cv_Range_size_const(self.as_raw_Range()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_Range_empty_const(self.as_raw_Range()) }.into_result()
+		let ret = unsafe { sys::cv_Range_empty_const(self.as_raw_Range()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13637,12 +14670,14 @@ pub trait RangeTrait: core::RangeTraitConst {
 
 	#[inline]
 	fn set_start(&mut self, val: i32) {
-		unsafe { sys::cv_Range_setPropStart_int(self.as_raw_mut_Range(), val) }.into_result().expect("Infallible function failed: set_start")
+		let ret = unsafe { sys::cv_Range_setPropStart_int(self.as_raw_mut_Range(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_end(&mut self, val: i32) {
-		unsafe { sys::cv_Range_setPropEnd_int(self.as_raw_mut_Range(), val) }.into_result().expect("Infallible function failed: set_end")
+		let ret = unsafe { sys::cv_Range_setPropEnd_int(self.as_raw_mut_Range(), val) };
+		ret
 	}
 	
 }
@@ -13697,17 +14732,23 @@ impl Range {
 	/// ////////////////////////////// Range /////////////////////////////////
 	#[inline]
 	pub fn default() -> Result<core::Range> {
-		unsafe { sys::cv_Range_Range() }.into_result().map(|r| unsafe { core::Range::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Range_Range() }.into_result()?;
+		let ret = unsafe { core::Range::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
-		unsafe { sys::cv_Range_Range_int_int(_start, _end) }.into_result().map(|r| unsafe { core::Range::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Range_Range_int_int(_start, _end) }.into_result()?;
+		let ret = unsafe { core::Range::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn all() -> Result<core::Range> {
-		unsafe { sys::cv_Range_all() }.into_result().map(|r| unsafe { core::Range::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_Range_all() }.into_result()?;
+		let ret = unsafe { core::Range::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -13728,19 +14769,22 @@ pub trait RotatedRectTraitConst {
 	/// returns the rectangle mass center
 	#[inline]
 	fn center(&self) -> core::Point2f {
-		unsafe { sys::cv_RotatedRect_getPropCenter_const(self.as_raw_RotatedRect()) }.into_result().expect("Infallible function failed: center")
+		let ret = unsafe { sys::cv_RotatedRect_getPropCenter_const(self.as_raw_RotatedRect()) };
+		ret
 	}
 	
 	/// returns width and height of the rectangle
 	#[inline]
 	fn size(&self) -> core::Size2f {
-		unsafe { sys::cv_RotatedRect_getPropSize_const(self.as_raw_RotatedRect()) }.into_result().expect("Infallible function failed: size")
+		let ret = unsafe { sys::cv_RotatedRect_getPropSize_const(self.as_raw_RotatedRect()) };
+		ret
 	}
 	
 	/// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
 	#[inline]
 	fn angle(&self) -> f32 {
-		unsafe { sys::cv_RotatedRect_getPropAngle_const(self.as_raw_RotatedRect()) }.into_result().expect("Infallible function failed: angle")
+		let ret = unsafe { sys::cv_RotatedRect_getPropAngle_const(self.as_raw_RotatedRect()) };
+		ret
 	}
 	
 	/// returns 4 vertices of the rectangle
@@ -13748,19 +14792,22 @@ pub trait RotatedRectTraitConst {
 	/// * pts: The points array for storing rectangle vertices. The order is bottomLeft, topLeft, topRight, bottomRight.
 	#[inline]
 	fn points(&self, pts: &mut [core::Point2f]) -> Result<()> {
-		unsafe { sys::cv_RotatedRect_points_const_Point2fX(self.as_raw_RotatedRect(), pts.as_mut_ptr()) }.into_result()
+		let ret = unsafe { sys::cv_RotatedRect_points_const_Point2fX(self.as_raw_RotatedRect(), pts.as_mut_ptr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the minimal up-right integer rectangle containing the rotated rectangle
 	#[inline]
 	fn bounding_rect(&self) -> Result<core::Rect> {
-		unsafe { sys::cv_RotatedRect_boundingRect_const(self.as_raw_RotatedRect()) }.into_result()
+		let ret = unsafe { sys::cv_RotatedRect_boundingRect_const(self.as_raw_RotatedRect()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the minimal (exact) floating point rectangle containing the rotated rectangle, not intended for use with images
 	#[inline]
 	fn bounding_rect2f(&self) -> Result<core::Rect_<f32>> {
-		unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect()) }.into_result()
+		let ret = unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13771,19 +14818,22 @@ pub trait RotatedRectTrait: core::RotatedRectTraitConst {
 	/// returns the rectangle mass center
 	#[inline]
 	fn set_center(&mut self, val: core::Point2f) {
-		unsafe { sys::cv_RotatedRect_setPropCenter_Point2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_center")
+		let ret = unsafe { sys::cv_RotatedRect_setPropCenter_Point2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) };
+		ret
 	}
 	
 	/// returns width and height of the rectangle
 	#[inline]
 	fn set_size(&mut self, val: core::Size2f) {
-		unsafe { sys::cv_RotatedRect_setPropSize_Size2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_size")
+		let ret = unsafe { sys::cv_RotatedRect_setPropSize_Size2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) };
+		ret
 	}
 	
 	/// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
 	#[inline]
 	fn set_angle(&mut self, val: f32) {
-		unsafe { sys::cv_RotatedRect_setPropAngle_float(self.as_raw_mut_RotatedRect(), val) }.into_result().expect("Infallible function failed: set_angle")
+		let ret = unsafe { sys::cv_RotatedRect_setPropAngle_float(self.as_raw_mut_RotatedRect(), val) };
+		ret
 	}
 	
 }
@@ -13825,7 +14875,9 @@ impl RotatedRect {
 	/// default constructor
 	#[inline]
 	pub fn default() -> Result<core::RotatedRect> {
-		unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result()?;
+		let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// full constructor
@@ -13836,14 +14888,18 @@ impl RotatedRect {
 	/// the rectangle becomes an up-right rectangle.
 	#[inline]
 	pub fn new(center: core::Point2f, size: core::Size2f, angle: f32) -> Result<core::RotatedRect> {
-		unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Size2fR_float(&center, &size, angle) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Size2fR_float(&center, &size, angle) }.into_result()?;
+		let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Any 3 end points of the RotatedRect. They must be given in order (either clockwise or
 	/// anticlockwise).
 	#[inline]
 	pub fn for_points(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> Result<core::RotatedRect> {
-		unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Point2fR_const_Point2fR(&point1, &point2, &point3) }.into_result().map(|r| unsafe { core::RotatedRect::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Point2fR_const_Point2fR(&point1, &point2, &point3) }.into_result()?;
+		let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -13866,17 +14922,23 @@ pub trait SVDTraitConst {
 
 	#[inline]
 	fn u(&self) -> core::Mat {
-		unsafe { sys::cv_SVD_getPropU_const(self.as_raw_SVD()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: u")
+		let ret = unsafe { sys::cv_SVD_getPropU_const(self.as_raw_SVD()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn w(&self) -> core::Mat {
-		unsafe { sys::cv_SVD_getPropW_const(self.as_raw_SVD()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: w")
+		let ret = unsafe { sys::cv_SVD_getPropW_const(self.as_raw_SVD()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn vt(&self) -> core::Mat {
-		unsafe { sys::cv_SVD_getPropVt_const(self.as_raw_SVD()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } ).expect("Infallible function failed: vt")
+		let ret = unsafe { sys::cv_SVD_getPropVt_const(self.as_raw_SVD()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// performs a singular value back substitution.
@@ -13906,7 +14968,8 @@ pub trait SVDTraitConst {
 	fn back_subst(&self, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(rhs);
 		output_array_arg!(dst);
-		unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -13916,17 +14979,20 @@ pub trait SVDTrait: core::SVDTraitConst {
 
 	#[inline]
 	fn set_u(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_SVD_setPropU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_u")
+		let ret = unsafe { sys::cv_SVD_setPropU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_w(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_SVD_setPropW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_w")
+		let ret = unsafe { sys::cv_SVD_setPropW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_vt(&mut self, mut val: core::Mat) {
-		unsafe { sys::cv_SVD_setPropVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_vt")
+		let ret = unsafe { sys::cv_SVD_setPropVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		ret
 	}
 	
 }
@@ -13973,7 +15039,9 @@ impl SVD {
 	/// initializes an empty SVD structure
 	#[inline]
 	pub fn default() -> Result<core::SVD> {
-		unsafe { sys::cv_SVD_SVD() }.into_result().map(|r| unsafe { core::SVD::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SVD_SVD() }.into_result()?;
+		let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the default constructor
@@ -13992,7 +15060,9 @@ impl SVD {
 	#[inline]
 	pub fn new(src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
 		input_array_arg!(src);
-		unsafe { sys::cv_SVD_SVD_const__InputArrayR_int(src.as_raw__InputArray(), flags) }.into_result().map(|r| unsafe { core::SVD::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SVD_SVD_const__InputArrayR_int(src.as_raw__InputArray(), flags) }.into_result()?;
+		let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// decomposes matrix and stores the results to user-provided matrices
@@ -14022,7 +15092,8 @@ impl SVD {
 		output_array_arg!(w);
 		output_array_arg!(u);
 		output_array_arg!(vt);
-		unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags) }.into_result()
+		let ret = unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// @todo document
@@ -14041,7 +15112,8 @@ impl SVD {
 	pub fn compute(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(w);
-		unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags) }.into_result()
+		let ret = unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// performs back substitution
@@ -14052,7 +15124,8 @@ impl SVD {
 		input_array_arg!(vt);
 		input_array_arg!(rhs);
 		output_array_arg!(dst);
-		unsafe { sys::cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// solves an under-determined singular linear system
@@ -14069,7 +15142,8 @@ impl SVD {
 	pub fn solve_z(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_SVD_solveZ_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_SVD_solveZ_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -14160,25 +15234,30 @@ pub trait SparseMatTraitConst {
 
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_SparseMat_getPropFlags_const(self.as_raw_SparseMat()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_SparseMat_getPropFlags_const(self.as_raw_SparseMat()) };
+		ret
 	}
 	
 	/// creates full copy of the matrix
 	#[inline]
 	fn try_clone(&self) -> Result<core::SparseMat> {
-		unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copies all the data to the destination matrix. All the previous content of m is erased
 	#[inline]
 	fn copy_to(&self, m: &mut core::SparseMat) -> Result<()> {
-		unsafe { sys::cv_SparseMat_copyTo_const_SparseMatR(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_copyTo_const_SparseMatR(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts sparse matrix to dense matrix.
 	#[inline]
 	fn copy_to_mat(&self, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_SparseMat_copyTo_const_MatR(self.as_raw_SparseMat(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_copyTo_const_MatR(self.as_raw_SparseMat(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// multiplies all the matrix elements by the specified scale factor alpha and converts the results to the specified data type
@@ -14187,7 +15266,8 @@ pub trait SparseMatTraitConst {
 	/// * alpha: 1
 	#[inline]
 	fn convert_to(&self, m: &mut core::SparseMat, rtype: i32, alpha: f64) -> Result<()> {
-		unsafe { sys::cv_SparseMat_convertTo_const_SparseMatR_int_double(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), rtype, alpha) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_convertTo_const_SparseMatR_int_double(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), rtype, alpha) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts sparse matrix to dense n-dim matrix with optional type conversion and scaling.
@@ -14206,109 +15286,131 @@ pub trait SparseMatTraitConst {
 	/// * beta: 0
 	#[inline]
 	fn convert_to_1(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-		unsafe { sys::cv_SparseMat_convertTo_const_MatR_int_double_double(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), rtype, alpha, beta) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_convertTo_const_MatR_int_double_double(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), rtype, alpha, beta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * typ: -1
 	#[inline]
 	fn assign_to(&self, m: &mut core::SparseMat, typ: i32) -> Result<()> {
-		unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), typ) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the size of each element in bytes (not including the overhead - the space occupied by SparseMat::Node elements)
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_elemSize_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_elemSize_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns elemSize()/channels()
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_elemSize1_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_elemSize1_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns type of sparse matrix elements
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_SparseMat_type_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_type_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the depth of sparse matrix elements
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_SparseMat_depth_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_depth_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the number of channels
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_SparseMat_channels_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_channels_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the array of sizes, or NULL if the matrix is not allocated
 	#[inline]
 	fn size(&self) -> Result<&i32> {
-		unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns the size of i-th matrix dimension (or 0)
 	#[inline]
 	fn size_1(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv_SparseMat_size_const_int(self.as_raw_SparseMat(), i) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_size_const_int(self.as_raw_SparseMat(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the matrix dimensionality
 	#[inline]
 	fn dims(&self) -> Result<i32> {
-		unsafe { sys::cv_SparseMat_dims_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_dims_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the number of non-zero elements (=the number of hash table nodes)
 	#[inline]
 	fn nzcount(&self) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_nzcount_const(self.as_raw_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_nzcount_const(self.as_raw_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// computes the element hash value (1D case)
 	#[inline]
 	fn hash(&self, i0: i32) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_hash_const_int(self.as_raw_SparseMat(), i0) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_hash_const_int(self.as_raw_SparseMat(), i0) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// computes the element hash value (2D case)
 	#[inline]
 	fn hash_1(&self, i0: i32, i1: i32) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_hash_const_int_int(self.as_raw_SparseMat(), i0, i1) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_hash_const_int_int(self.as_raw_SparseMat(), i0, i1) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// computes the element hash value (3D case)
 	#[inline]
 	fn hash_2(&self, i0: i32, i1: i32, i2: i32) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_hash_const_int_int_int(self.as_raw_SparseMat(), i0, i1, i2) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_hash_const_int_int_int(self.as_raw_SparseMat(), i0, i1, i2) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// computes the element hash value (nD case)
 	#[inline]
 	fn hash_3(&self, idx: &i32) -> Result<size_t> {
-		unsafe { sys::cv_SparseMat_hash_const_const_intX(self.as_raw_SparseMat(), idx) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_hash_const_const_intX(self.as_raw_SparseMat(), idx) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the read-only sparse matrix iterator at the matrix beginning
 	#[inline]
 	fn begin(&self) -> Result<core::SparseMatConstIterator> {
-		unsafe { sys::cv_SparseMat_begin_const(self.as_raw_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_begin_const(self.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns the read-only sparse matrix iterator at the matrix end
 	#[inline]
 	fn end(&self) -> Result<core::SparseMatConstIterator> {
-		unsafe { sys::cv_SparseMat_end_const(self.as_raw_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_end_const(self.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn node(&self, nidx: size_t) -> Result<core::SparseMat_Node> {
-		unsafe { sys::cv_SparseMat_node_const_size_t(self.as_raw_SparseMat(), nidx) }.into_result().map(|r| unsafe { core::SparseMat_Node::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_node_const_size_t(self.as_raw_SparseMat(), nidx) }.into_result()?;
+		let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -14318,17 +15420,21 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_SparseMat_setPropFlags_int(self.as_raw_mut_SparseMat(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_SparseMat_setPropFlags_int(self.as_raw_mut_SparseMat(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn hdr(&mut self) -> core::SparseMat_Hdr {
-		unsafe { sys::cv_SparseMat_getPropHdr(self.as_raw_mut_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMat_Hdr::opencv_from_extern(r) } ).expect("Infallible function failed: hdr")
+		let ret = unsafe { sys::cv_SparseMat_getPropHdr(self.as_raw_mut_SparseMat()) };
+		let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn set_hdr(&mut self, val: &mut core::SparseMat_Hdr) {
-		unsafe { sys::cv_SparseMat_setPropHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_mut_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: set_hdr")
+		let ret = unsafe { sys::cv_SparseMat_setPropHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_mut_SparseMat_Hdr()) };
+		ret
 	}
 	
 	/// reallocates sparse matrix.
@@ -14338,24 +15444,28 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	///    the old matrix is released (using release()) and the new one is allocated.
 	#[inline]
 	fn create(&mut self, dims: i32, _sizes: &i32, _type: i32) -> Result<()> {
-		unsafe { sys::cv_SparseMat_create_int_const_intX_int(self.as_raw_mut_SparseMat(), dims, _sizes, _type) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_create_int_const_intX_int(self.as_raw_mut_SparseMat(), dims, _sizes, _type) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// sets all the sparse matrix elements to 0, which means clearing the hash table.
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		unsafe { sys::cv_SparseMat_clear(self.as_raw_mut_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_clear(self.as_raw_mut_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// manually increments the reference counter to the header.
 	#[inline]
 	fn addref(&mut self) -> Result<()> {
-		unsafe { sys::cv_SparseMat_addref(self.as_raw_mut_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_addref(self.as_raw_mut_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_SparseMat_release(self.as_raw_mut_SparseMat()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_release(self.as_raw_mut_SparseMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// specialized variants for 1D, 2D, 3D cases and the generic_type one for n-D case.
@@ -14373,7 +15483,9 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn ptr(&mut self, i0: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-		unsafe { sys::cv_SparseMat_ptr_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_ptr_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, create_missing, hashval) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns pointer to the specified element (2D case)
@@ -14382,7 +15494,9 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-		unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns pointer to the specified element (3D case)
@@ -14391,7 +15505,9 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-		unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, hashval) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns pointer to the specified element (nD case)
@@ -14400,7 +15516,9 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-		unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// erases the specified element (2D case)
@@ -14409,7 +15527,8 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn erase(&mut self, i0: i32, i1: i32, hashval: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_SparseMat_erase_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, hashval) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_erase_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, hashval) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// erases the specified element (3D case)
@@ -14418,7 +15537,8 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn erase_1(&mut self, i0: i32, i1: i32, i2: i32, hashval: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_SparseMat_erase_int_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, hashval) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_erase_int_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, hashval) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// erases the specified element (nD case)
@@ -14427,7 +15547,8 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// * hashval: 0
 	#[inline]
 	fn erase_2(&mut self, idx: &i32, hashval: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// return the sparse matrix iterator pointing to the first sparse matrix element
@@ -14435,7 +15556,9 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// returns the sparse matrix iterator at the matrix beginning
 	#[inline]
 	fn begin_mut(&mut self) -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMat_begin(self.as_raw_mut_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_begin(self.as_raw_mut_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// return the sparse matrix iterator pointing to the element following the last sparse matrix element
@@ -14443,28 +15566,36 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 	/// returns the sparse matrix iterator at the matrix end
 	#[inline]
 	fn end_mut(&mut self) -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMat_end(self.as_raw_mut_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_end(self.as_raw_mut_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// /////////// some internal-use methods ///////////////
 	#[inline]
 	fn node_1(&mut self, nidx: size_t) -> Result<core::SparseMat_Node> {
-		unsafe { sys::cv_SparseMat_node_size_t(self.as_raw_mut_SparseMat(), nidx) }.into_result().map(|r| unsafe { core::SparseMat_Node::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_node_size_t(self.as_raw_mut_SparseMat(), nidx) }.into_result()?;
+		let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn new_node(&mut self, idx: &i32, hashval: size_t) -> Result<&mut u8> {
-		unsafe { sys::cv_SparseMat_newNode_const_intX_size_t(self.as_raw_mut_SparseMat(), idx, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_SparseMat_newNode_const_intX_size_t(self.as_raw_mut_SparseMat(), idx, hashval) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn remove_node(&mut self, hidx: size_t, nidx: size_t, previdx: size_t) -> Result<()> {
-		unsafe { sys::cv_SparseMat_removeNode_size_t_size_t_size_t(self.as_raw_mut_SparseMat(), hidx, nidx, previdx) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_removeNode_size_t_size_t_size_t(self.as_raw_mut_SparseMat(), hidx, nidx, previdx) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn resize_hash_tab(&mut self, newsize: size_t) -> Result<()> {
-		unsafe { sys::cv_SparseMat_resizeHashTab_size_t(self.as_raw_mut_SparseMat(), newsize) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_resizeHashTab_size_t(self.as_raw_mut_SparseMat(), newsize) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -14577,7 +15708,9 @@ impl SparseMat {
 	/// Various SparseMat constructors.
 	#[inline]
 	pub fn default() -> Result<core::SparseMat> {
-		unsafe { sys::cv_SparseMat_SparseMat() }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_SparseMat() }.into_result()?;
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Various SparseMat constructors.
@@ -14590,7 +15723,9 @@ impl SparseMat {
 	/// * _type: Sparse matrix data type.
 	#[inline]
 	pub fn new(dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat> {
-		unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(dims, _sizes, _type) }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(dims, _sizes, _type) }.into_result()?;
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Various SparseMat constructors.
@@ -14602,7 +15737,9 @@ impl SparseMat {
 	///    to sparse representation.
 	#[inline]
 	pub fn copy(m: &core::SparseMat) -> Result<core::SparseMat> {
-		unsafe { sys::cv_SparseMat_SparseMat_const_SparseMatR(m.as_raw_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_SparseMat_const_SparseMatR(m.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Various SparseMat constructors.
@@ -14614,7 +15751,9 @@ impl SparseMat {
 	///    to sparse representation.
 	#[inline]
 	pub fn from_mat(m: &core::Mat) -> Result<core::SparseMat> {
-		unsafe { sys::cv_SparseMat_SparseMat_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_SparseMat_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -14633,42 +15772,52 @@ pub trait SparseMat_HdrTraitConst {
 
 	#[inline]
 	fn refcount(&self) -> i32 {
-		unsafe { sys::cv_SparseMat_Hdr_getPropRefcount_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: refcount")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropRefcount_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn dims(&self) -> i32 {
-		unsafe { sys::cv_SparseMat_Hdr_getPropDims_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: dims")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropDims_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn value_offset(&self) -> i32 {
-		unsafe { sys::cv_SparseMat_Hdr_getPropValueOffset_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: value_offset")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropValueOffset_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn node_size(&self) -> size_t {
-		unsafe { sys::cv_SparseMat_Hdr_getPropNodeSize_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: node_size")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropNodeSize_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn node_count(&self) -> size_t {
-		unsafe { sys::cv_SparseMat_Hdr_getPropNodeCount_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: node_count")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropNodeCount_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn free_list(&self) -> size_t {
-		unsafe { sys::cv_SparseMat_Hdr_getPropFreeList_const(self.as_raw_SparseMat_Hdr()) }.into_result().expect("Infallible function failed: free_list")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropFreeList_const(self.as_raw_SparseMat_Hdr()) };
+		ret
 	}
 	
 	#[inline]
 	fn pool(&self) -> core::Vector<u8> {
-		unsafe { sys::cv_SparseMat_Hdr_getPropPool_const(self.as_raw_SparseMat_Hdr()) }.into_result().map(|r| unsafe { core::Vector::<u8>::opencv_from_extern(r) } ).expect("Infallible function failed: pool")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropPool_const(self.as_raw_SparseMat_Hdr()) };
+		let ret = unsafe { core::Vector::<u8>::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn hashtab(&self) -> core::Vector<size_t> {
-		unsafe { sys::cv_SparseMat_Hdr_getPropHashtab_const(self.as_raw_SparseMat_Hdr()) }.into_result().map(|r| unsafe { core::Vector::<size_t>::opencv_from_extern(r) } ).expect("Infallible function failed: hashtab")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropHashtab_const(self.as_raw_SparseMat_Hdr()) };
+		let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -14678,52 +15827,63 @@ pub trait SparseMat_HdrTrait: core::SparseMat_HdrTraitConst {
 
 	#[inline]
 	fn set_refcount(&mut self, val: i32) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_refcount")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_dims(&mut self, val: i32) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropDims_int(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_dims")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropDims_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_value_offset(&mut self, val: i32) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_value_offset")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_node_size(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_node_size")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_node_count(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_node_count")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_free_list(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) }.into_result().expect("Infallible function failed: set_free_list")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_pool(&mut self, mut val: core::Vector<u8>) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropPool_vector_unsigned_char_(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) }.into_result().expect("Infallible function failed: set_pool")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropPool_vector_unsigned_char_(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_hashtab(&mut self, mut val: core::Vector<size_t>) {
-		unsafe { sys::cv_SparseMat_Hdr_setPropHashtab_vector_size_t_(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) }.into_result().expect("Infallible function failed: set_hashtab")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_setPropHashtab_vector_size_t_(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) };
+		ret
 	}
 	
 	#[inline]
 	fn size(&mut self) -> &mut [i32; 32] {
-		unsafe { sys::cv_SparseMat_Hdr_getPropSize(self.as_raw_mut_SparseMat_Hdr()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: size")
+		let ret = unsafe { sys::cv_SparseMat_Hdr_getPropSize(self.as_raw_mut_SparseMat_Hdr()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: size");
+		ret
 	}
 	
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		unsafe { sys::cv_SparseMat_Hdr_clear(self.as_raw_mut_SparseMat_Hdr()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMat_Hdr_clear(self.as_raw_mut_SparseMat_Hdr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -14755,7 +15915,9 @@ impl core::SparseMat_HdrTrait for SparseMat_Hdr {
 impl SparseMat_Hdr {
 	#[inline]
 	pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat_Hdr> {
-		unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len() as _, _sizes.as_ptr(), _type) }.into_result().map(|r| unsafe { core::SparseMat_Hdr::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len() as _, _sizes.as_ptr(), _type) }.into_result()?;
+		let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -14767,13 +15929,15 @@ pub trait SparseMat_NodeTraitConst {
 	/// hash value
 	#[inline]
 	fn hashval(&self) -> size_t {
-		unsafe { sys::cv_SparseMat_Node_getPropHashval_const(self.as_raw_SparseMat_Node()) }.into_result().expect("Infallible function failed: hashval")
+		let ret = unsafe { sys::cv_SparseMat_Node_getPropHashval_const(self.as_raw_SparseMat_Node()) };
+		ret
 	}
 	
 	/// index of the next node in the same hash table entry
 	#[inline]
 	fn next(&self) -> size_t {
-		unsafe { sys::cv_SparseMat_Node_getPropNext_const(self.as_raw_SparseMat_Node()) }.into_result().expect("Infallible function failed: next")
+		let ret = unsafe { sys::cv_SparseMat_Node_getPropNext_const(self.as_raw_SparseMat_Node()) };
+		ret
 	}
 	
 }
@@ -14784,19 +15948,23 @@ pub trait SparseMat_NodeTrait: core::SparseMat_NodeTraitConst {
 	/// hash value
 	#[inline]
 	fn set_hashval(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMat_Node_setPropHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) }.into_result().expect("Infallible function failed: set_hashval")
+		let ret = unsafe { sys::cv_SparseMat_Node_setPropHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+		ret
 	}
 	
 	/// index of the next node in the same hash table entry
 	#[inline]
 	fn set_next(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMat_Node_setPropNext_size_t(self.as_raw_mut_SparseMat_Node(), val) }.into_result().expect("Infallible function failed: set_next")
+		let ret = unsafe { sys::cv_SparseMat_Node_setPropNext_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+		ret
 	}
 	
 	/// index of the matrix element
 	#[inline]
 	fn idx(&mut self) -> &mut [i32; 32] {
-		unsafe { sys::cv_SparseMat_Node_getPropIdx(self.as_raw_mut_SparseMat_Node()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: idx")
+		let ret = unsafe { sys::cv_SparseMat_Node_getPropIdx(self.as_raw_mut_SparseMat_Node()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: idx");
+		ret
 	}
 	
 }
@@ -14844,18 +16012,23 @@ pub trait SparseMatConstIteratorTraitConst {
 
 	#[inline]
 	fn m(&self) -> core::SparseMat {
-		unsafe { sys::cv_SparseMatConstIterator_getPropM_const(self.as_raw_SparseMatConstIterator()) }.into_result().map(|r| unsafe { core::SparseMat::opencv_from_extern(r) } ).expect("Infallible function failed: m")
+		let ret = unsafe { sys::cv_SparseMatConstIterator_getPropM_const(self.as_raw_SparseMatConstIterator()) };
+		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn hashidx(&self) -> size_t {
-		unsafe { sys::cv_SparseMatConstIterator_getPropHashidx_const(self.as_raw_SparseMatConstIterator()) }.into_result().expect("Infallible function failed: hashidx")
+		let ret = unsafe { sys::cv_SparseMatConstIterator_getPropHashidx_const(self.as_raw_SparseMatConstIterator()) };
+		ret
 	}
 	
 	/// returns the current node of the sparse matrix. it.node->idx is the current element index
 	#[inline]
 	fn node(&self) -> Result<core::SparseMat_Node> {
-		unsafe { sys::cv_SparseMatConstIterator_node_const(self.as_raw_SparseMatConstIterator()) }.into_result().map(|r| unsafe { core::SparseMat_Node::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatConstIterator_node_const(self.as_raw_SparseMatConstIterator()) }.into_result()?;
+		let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -14865,23 +16038,28 @@ pub trait SparseMatConstIteratorTrait: core::SparseMatConstIteratorTraitConst {
 
 	#[inline]
 	fn set_hashidx(&mut self, val: size_t) {
-		unsafe { sys::cv_SparseMatConstIterator_setPropHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) }.into_result().expect("Infallible function failed: set_hashidx")
+		let ret = unsafe { sys::cv_SparseMatConstIterator_setPropHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn ptr(&mut self) -> &mut u8 {
-		unsafe { sys::cv_SparseMatConstIterator_getPropPtr(self.as_raw_mut_SparseMatConstIterator()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: ptr")
+		let ret = unsafe { sys::cv_SparseMatConstIterator_getPropPtr(self.as_raw_mut_SparseMatConstIterator()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: ptr");
+		ret
 	}
 	
 	#[inline]
 	fn set_ptr(&mut self, val: &mut u8) {
-		unsafe { sys::cv_SparseMatConstIterator_setPropPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) }.into_result().expect("Infallible function failed: set_ptr")
+		let ret = unsafe { sys::cv_SparseMatConstIterator_setPropPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
+		ret
 	}
 	
 	/// moves iterator to the element after the last element
 	#[inline]
 	fn seek_end(&mut self) -> Result<()> {
-		unsafe { sys::cv_SparseMatConstIterator_seekEnd(self.as_raw_mut_SparseMatConstIterator()) }.into_result()
+		let ret = unsafe { sys::cv_SparseMatConstIterator_seekEnd(self.as_raw_mut_SparseMatConstIterator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -14924,19 +16102,25 @@ impl SparseMatConstIterator {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::SparseMatConstIterator> {
-		unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator() }.into_result().map(|r| unsafe { core::SparseMatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator() }.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the full constructor setting the iterator to the first sparse matrix element
 	#[inline]
 	pub fn new(_m: &core::SparseMat) -> Result<core::SparseMatConstIterator> {
-		unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m.as_raw_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m.as_raw_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the copy constructor
 	#[inline]
 	pub fn copy(it: &core::SparseMatConstIterator) -> Result<core::SparseMatConstIterator> {
-		unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it.as_raw_SparseMatConstIterator()) }.into_result().map(|r| unsafe { core::SparseMatConstIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it.as_raw_SparseMatConstIterator()) }.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -14951,7 +16135,9 @@ pub trait SparseMatIteratorTraitConst: core::SparseMatConstIteratorTraitConst {
 	/// returns pointer to the current sparse matrix node. it.node->idx is the index of the current element (do not modify it!)
 	#[inline]
 	fn node(&self) -> Result<core::SparseMat_Node> {
-		unsafe { sys::cv_SparseMatIterator_node_const(self.as_raw_SparseMatIterator()) }.into_result().map(|r| unsafe { core::SparseMat_Node::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatIterator_node_const(self.as_raw_SparseMatIterator()) }.into_result()?;
+		let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -15000,19 +16186,25 @@ impl SparseMatIterator {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMatIterator_SparseMatIterator() }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatIterator_SparseMatIterator() }.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the full constructor setting the iterator to the first sparse matrix element
 	#[inline]
 	pub fn new(_m: &mut core::SparseMat) -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat()) }.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the copy constructor
 	#[inline]
 	pub fn copy(it: &core::SparseMatIterator) -> Result<core::SparseMatIterator> {
-		unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator()) }.into_result().map(|r| unsafe { core::SparseMatIterator::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator()) }.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -15034,7 +16226,8 @@ pub trait TLSDataContainer: core::TLSDataContainerConst {
 
 	#[inline]
 	fn cleanup(&mut self) -> Result<()> {
-		unsafe { sys::cv_TLSDataContainer_cleanup(self.as_raw_mut_TLSDataContainer()) }.into_result()
+		let ret = unsafe { sys::cv_TLSDataContainer_cleanup(self.as_raw_mut_TLSDataContainer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15059,13 +16252,15 @@ opencv_type_simple! { core::TermCriteria }
 impl TermCriteria {
 	#[inline]
 	pub fn is_valid(self) -> Result<bool> {
-		unsafe { sys::cv_TermCriteria_isValid_const(self.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_TermCriteria_isValid_const(self.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// default constructor
 	#[inline]
 	pub fn default() -> Result<core::TermCriteria> {
-		unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result()
+		let ret = unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -15074,7 +16269,8 @@ impl TermCriteria {
 	/// * epsilon: The desired accuracy or change in parameters at which the iterative algorithm stops.
 	#[inline]
 	pub fn new(typ: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(typ, max_count, epsilon) }.into_result()
+		let ret = unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(typ, max_count, epsilon) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15095,49 +16291,57 @@ pub trait TickMeterTraitConst {
 	/// returns counted ticks.
 	#[inline]
 	fn get_time_ticks(&self) -> Result<i64> {
-		unsafe { sys::cv_TickMeter_getTimeTicks_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getTimeTicks_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns passed time in microseconds.
 	#[inline]
 	fn get_time_micro(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getTimeMicro_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getTimeMicro_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns passed time in milliseconds.
 	#[inline]
 	fn get_time_milli(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getTimeMilli_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getTimeMilli_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns passed time in seconds.
 	#[inline]
 	fn get_time_sec(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getTimeSec_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getTimeSec_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns internal counter value.
 	#[inline]
 	fn get_counter(&self) -> Result<i64> {
-		unsafe { sys::cv_TickMeter_getCounter_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getCounter_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns average FPS (frames per second) value.
 	#[inline]
 	fn get_fps(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getFPS_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getFPS_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns average time in seconds
 	#[inline]
 	fn get_avg_time_sec(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getAvgTimeSec_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getAvgTimeSec_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns average time in milliseconds
 	#[inline]
 	fn get_avg_time_milli(&self) -> Result<f64> {
-		unsafe { sys::cv_TickMeter_getAvgTimeMilli_const(self.as_raw_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_getAvgTimeMilli_const(self.as_raw_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15148,19 +16352,22 @@ pub trait TickMeterTrait: core::TickMeterTraitConst {
 	/// starts counting ticks.
 	#[inline]
 	fn start(&mut self) -> Result<()> {
-		unsafe { sys::cv_TickMeter_start(self.as_raw_mut_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_start(self.as_raw_mut_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// stops counting ticks.
 	#[inline]
 	fn stop(&mut self) -> Result<()> {
-		unsafe { sys::cv_TickMeter_stop(self.as_raw_mut_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_stop(self.as_raw_mut_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// resets internal values.
 	#[inline]
 	fn reset(&mut self) -> Result<()> {
-		unsafe { sys::cv_TickMeter_reset(self.as_raw_mut_TickMeter()) }.into_result()
+		let ret = unsafe { sys::cv_TickMeter_reset(self.as_raw_mut_TickMeter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15202,7 +16409,9 @@ impl TickMeter {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::TickMeter> {
-		unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|r| unsafe { core::TickMeter::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_TickMeter_TickMeter() }.into_result()?;
+		let ret = unsafe { core::TickMeter::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -15218,88 +16427,112 @@ pub trait UMatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_UMat_getPropFlags_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_UMat_getPropFlags_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// the matrix dimensionality, >= 2
 	#[inline]
 	fn dims(&self) -> i32 {
-		unsafe { sys::cv_UMat_getPropDims_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: dims")
+		let ret = unsafe { sys::cv_UMat_getPropDims_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 	#[inline]
 	fn rows(&self) -> i32 {
-		unsafe { sys::cv_UMat_getPropRows_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: rows")
+		let ret = unsafe { sys::cv_UMat_getPropRows_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 	#[inline]
 	fn cols(&self) -> i32 {
-		unsafe { sys::cv_UMat_getPropCols_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: cols")
+		let ret = unsafe { sys::cv_UMat_getPropCols_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 	#[inline]
 	fn usage_flags(&self) -> core::UMatUsageFlags {
-		unsafe { sys::cv_UMat_getPropUsageFlags_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: usage_flags")
+		let ret = unsafe { sys::cv_UMat_getPropUsageFlags_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// offset of the submatrix (or 0)
 	#[inline]
 	fn offset(&self) -> size_t {
-		unsafe { sys::cv_UMat_getPropOffset_const(self.as_raw_UMat()) }.into_result().expect("Infallible function failed: offset")
+		let ret = unsafe { sys::cv_UMat_getPropOffset_const(self.as_raw_UMat()) };
+		ret
 	}
 	
 	/// dimensional size of the matrix; accessible in various formats
 	#[inline]
 	fn mat_size(&self) -> core::MatSize {
-		unsafe { sys::cv_UMat_getPropSize_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::MatSize::opencv_from_extern(r) } ).expect("Infallible function failed: mat_size")
+		let ret = unsafe { sys::cv_UMat_getPropSize_const(self.as_raw_UMat()) };
+		let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// number of bytes each matrix element/row/plane/dimension occupies
 	#[inline]
 	fn mat_step(&self) -> core::MatStep {
-		unsafe { sys::cv_UMat_getPropStep_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: mat_step")
+		let ret = unsafe { sys::cv_UMat_getPropStep_const(self.as_raw_UMat()) };
+		let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn get_mat(&self, flags: core::AccessFlag) -> Result<core::Mat> {
-		unsafe { sys::cv_UMat_getMat_const_AccessFlag(self.as_raw_UMat(), flags) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_getMat_const_AccessFlag(self.as_raw_UMat(), flags) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns a new matrix header for the specified row
 	#[inline]
 	fn row(&self, y: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_row_const_int(self.as_raw_UMat(), y) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_row_const_int(self.as_raw_UMat(), y) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns a new matrix header for the specified column
 	#[inline]
 	fn col(&self, x: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_col_const_int(self.as_raw_UMat(), x) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_col_const_int(self.as_raw_UMat(), x) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ... for the specified row span
 	#[inline]
 	fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_rowRange_const_int_int(self.as_raw_UMat(), startrow, endrow) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_rowRange_const_int_int(self.as_raw_UMat(), startrow, endrow) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn row_range(&self, r: &core::Range) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_rowRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_rowRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ... for the specified column span
 	#[inline]
 	fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_colRange_const_int_int(self.as_raw_UMat(), startcol, endcol) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_colRange_const_int_int(self.as_raw_UMat(), startcol, endcol) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn col_range(&self, r: &core::Range) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_colRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_colRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ... for the specified diagonal
@@ -15311,20 +16544,25 @@ pub trait UMatTraitConst {
 	/// * d: 0
 	#[inline]
 	fn diag(&self, d: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_diag_const_int(self.as_raw_UMat(), d) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_diag_const_int(self.as_raw_UMat(), d) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns deep copy of the matrix, i.e. the data is copied
 	#[inline]
 	fn try_clone(&self) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_clone_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_clone_const(self.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copies the matrix content to "m".
 	#[inline]
 	fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(m);
-		unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// copies those matrix elements to "m" that are marked with non-zero mask elements.
@@ -15332,7 +16570,8 @@ pub trait UMatTraitConst {
 	fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		output_array_arg!(m);
 		input_array_arg!(mask);
-		unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts matrix to another datatype with optional scaling. See cvConvertScale.
@@ -15343,14 +16582,16 @@ pub trait UMatTraitConst {
 	#[inline]
 	fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 		output_array_arg!(m);
-		unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()
+		let ret = unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * typ: -1
 	#[inline]
 	fn assign_to(&self, m: &mut core::UMat, typ: i32) -> Result<()> {
-		unsafe { sys::cv_UMat_assignTo_const_UMatR_int(self.as_raw_UMat(), m.as_raw_mut_UMat(), typ) }.into_result()
+		let ret = unsafe { sys::cv_UMat_assignTo_const_UMatR_int(self.as_raw_UMat(), m.as_raw_mut_UMat(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// creates alternative matrix header for the same data, with different
@@ -15359,18 +16600,24 @@ pub trait UMatTraitConst {
 	/// * rows: 0
 	#[inline]
 	fn reshape(&self, cn: i32, rows: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_reshape_const_int_int(self.as_raw_UMat(), cn, rows) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_reshape_const_int_int(self.as_raw_UMat(), cn, rows) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn reshape_1(&self, cn: i32, newndims: i32, newsz: &i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_reshape_const_int_int_const_intX(self.as_raw_UMat(), cn, newndims, newsz) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_reshape_const_int_int_const_intX(self.as_raw_UMat(), cn, newndims, newsz) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// matrix transposition by means of matrix expressions
 	#[inline]
 	fn t(&self) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_t_const(self.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_t_const(self.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// matrix inversion by means of matrix expressions
@@ -15379,7 +16626,9 @@ pub trait UMatTraitConst {
 	/// * method: DECOMP_LU
 	#[inline]
 	fn inv(&self, method: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_inv_const_int(self.as_raw_UMat(), method) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_inv_const_int(self.as_raw_UMat(), method) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// per-element matrix multiplication by means of matrix expressions
@@ -15389,62 +16638,73 @@ pub trait UMatTraitConst {
 	#[inline]
 	fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::UMat> {
 		input_array_arg!(m);
-		unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// computes dot-product
 	#[inline]
 	fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
 		input_array_arg!(m);
-		unsafe { sys::cv_UMat_dot_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_dot_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// locates matrix header within a parent matrix. See below
 	#[inline]
 	fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
-		unsafe { sys::cv_UMat_locateROI_const_SizeR_PointR(self.as_raw_UMat(), whole_size, ofs) }.into_result()
+		let ret = unsafe { sys::cv_UMat_locateROI_const_SizeR_PointR(self.as_raw_UMat(), whole_size, ofs) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true iff the matrix data is continuous
 	#[inline]
 	fn is_continuous(&self) -> Result<bool> {
-		unsafe { sys::cv_UMat_isContinuous_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_isContinuous_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the matrix is a submatrix of another matrix
 	#[inline]
 	fn is_submatrix(&self) -> Result<bool> {
-		unsafe { sys::cv_UMat_isSubmatrix_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_isSubmatrix_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element size in bytes,
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_UMat_elemSize_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_elemSize_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the size of element channel in bytes.
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_UMat_elemSize1_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_elemSize1_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type, similar to CV_MAT_TYPE(cvmat->type)
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_UMat_type_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_type_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type, similar to CV_MAT_DEPTH(cvmat->type)
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_UMat_depth_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_depth_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type, similar to CV_MAT_CN(cvmat->type)
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_UMat_channels_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_channels_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns step/elemSize1()
@@ -15453,19 +16713,22 @@ pub trait UMatTraitConst {
 	/// * i: 0
 	#[inline]
 	fn step1(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv_UMat_step1_const_int(self.as_raw_UMat(), i) }.into_result()
+		let ret = unsafe { sys::cv_UMat_step1_const_int(self.as_raw_UMat(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if matrix data is NULL
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_UMat_empty_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_empty_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the total number of matrix elements
 	#[inline]
 	fn total(&self) -> Result<size_t> {
-		unsafe { sys::cv_UMat_total_const(self.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_total_const(self.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns N if the matrix is 1-channel (N x ptdim) or ptdim-channel (1 x N) or (N x 1); negative number otherwise
@@ -15475,7 +16738,8 @@ pub trait UMatTraitConst {
 	/// * require_continuous: true
 	#[inline]
 	fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
-		unsafe { sys::cv_UMat_checkVector_const_int_int_bool(self.as_raw_UMat(), elem_channels, depth, require_continuous) }.into_result()
+		let ret = unsafe { sys::cv_UMat_checkVector_const_int_int_bool(self.as_raw_UMat(), elem_channels, depth, require_continuous) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ! Returns the OpenCL buffer handle on which UMat operates on.
@@ -15483,12 +16747,14 @@ pub trait UMatTraitConst {
 	/// returned to the OpenCV buffer pool.
 	#[inline]
 	fn handle(&self, access_flags: core::AccessFlag) -> Result<*mut c_void> {
-		unsafe { sys::cv_UMat_handle_const_AccessFlag(self.as_raw_UMat(), access_flags) }.into_result()
+		let ret = unsafe { sys::cv_UMat_handle_const_AccessFlag(self.as_raw_UMat(), access_flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn ndoffset(&self, ofs: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_UMat_ndoffset_const_size_tX(self.as_raw_UMat(), ofs) }.into_result()
+		let ret = unsafe { sys::cv_UMat_ndoffset_const_size_tX(self.as_raw_UMat(), ofs) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15503,49 +16769,58 @@ pub trait UMatTrait: core::UMatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_UMat_setPropFlags_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_UMat_setPropFlags_int(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// the matrix dimensionality, >= 2
 	#[inline]
 	fn set_dims(&mut self, val: i32) {
-		unsafe { sys::cv_UMat_setPropDims_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_dims")
+		let ret = unsafe { sys::cv_UMat_setPropDims_int(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 	#[inline]
 	fn set_rows(&mut self, val: i32) {
-		unsafe { sys::cv_UMat_setPropRows_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_rows")
+		let ret = unsafe { sys::cv_UMat_setPropRows_int(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 	#[inline]
 	fn set_cols(&mut self, val: i32) {
-		unsafe { sys::cv_UMat_setPropCols_int(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_cols")
+		let ret = unsafe { sys::cv_UMat_setPropCols_int(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 	#[inline]
 	fn set_usage_flags(&mut self, val: core::UMatUsageFlags) {
-		unsafe { sys::cv_UMat_setPropUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_usage_flags")
+		let ret = unsafe { sys::cv_UMat_setPropUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// black-box container of UMat data
 	#[inline]
 	fn u(&mut self) -> core::UMatData {
-		unsafe { sys::cv_UMat_getPropU(self.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMatData::opencv_from_extern(r) } ).expect("Infallible function failed: u")
+		let ret = unsafe { sys::cv_UMat_getPropU(self.as_raw_mut_UMat()) };
+		let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// black-box container of UMat data
 	#[inline]
 	fn set_u(&mut self, val: &mut core::UMatData) {
-		unsafe { sys::cv_UMat_setPropU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: set_u")
+		let ret = unsafe { sys::cv_UMat_setPropU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) };
+		ret
 	}
 	
 	/// offset of the submatrix (or 0)
 	#[inline]
 	fn set_offset(&mut self, val: size_t) {
-		unsafe { sys::cv_UMat_setPropOffset_size_t(self.as_raw_mut_UMat(), val) }.into_result().expect("Infallible function failed: set_offset")
+		let ret = unsafe { sys::cv_UMat_setPropOffset_size_t(self.as_raw_mut_UMat(), val) };
+		ret
 	}
 	
 	/// sets some of the matrix elements to s, according to the mask
@@ -15556,7 +16831,9 @@ pub trait UMatTrait: core::UMatTraitConst {
 	fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::UMat> {
 		input_array_arg!(value);
 		input_array_arg!(mask);
-		unsafe { sys::cv_UMat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// allocates new matrix data unless the matrix already has specified size and type.
@@ -15565,58 +16842,68 @@ pub trait UMatTrait: core::UMatTraitConst {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-		{ sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_mut_UMat(), rows, cols, typ, usage_flags) }.into_result()
+		let ret = { sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_mut_UMat(), rows, cols, typ, usage_flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	unsafe fn create_size(&mut self, size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-		{ sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_mut_UMat(), size.opencv_as_extern(), typ, usage_flags) }.into_result()
+		let ret = { sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_mut_UMat(), size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-		{ sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len() as _, sizes.as_ptr(), typ, usage_flags) }.into_result()
+		let ret = { sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len() as _, sizes.as_ptr(), typ, usage_flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	unsafe fn create_nd_vec(&mut self, sizes: &core::Vector<i32>, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-		{ sys::cv_UMat_create_const_vector_int_R_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, usage_flags) }.into_result()
+		let ret = { sys::cv_UMat_create_const_vector_int_R_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, usage_flags) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// increases the reference counter; use with care to avoid memleaks
 	#[inline]
 	fn addref(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMat_addref(self.as_raw_mut_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_addref(self.as_raw_mut_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// decreases reference counter;
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMat_release(self.as_raw_mut_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_release(self.as_raw_mut_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// deallocates the matrix data
 	#[inline]
 	fn deallocate(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMat_deallocate(self.as_raw_mut_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_deallocate(self.as_raw_mut_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// moves/resizes the current matrix ROI inside the parent matrix.
 	#[inline]
 	fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_adjustROI_int_int_int_int(self.as_raw_mut_UMat(), dtop, dbottom, dleft, dright) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_adjustROI_int_int_int_int(self.as_raw_mut_UMat(), dtop, dbottom, dleft, dright) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// internal use method: updates the continuity flag
 	#[inline]
 	fn update_continuity_flag(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMat_updateContinuityFlag(self.as_raw_mut_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_UMat_updateContinuityFlag(self.as_raw_mut_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15652,7 +16939,9 @@ impl UMat {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub fn new(usage_flags: core::UMatUsageFlags) -> core::UMat {
-		unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: new")
+		let ret = unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) };
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// constructs 2D matrix of the specified size and type
@@ -15661,14 +16950,18 @@ impl UMat {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		{ sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| { core::UMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
+		let ret = { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub unsafe fn new_size(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		{ sys::cv_UMat_UMat_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| { core::UMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_UMat_UMat_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
+		let ret = { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructs 2D matrix and fills it with the specified value _s.
@@ -15677,14 +16970,18 @@ impl UMat {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR_UMatUsageFlags(rows, cols, typ, &s, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR_UMatUsageFlags(rows, cols, typ, &s, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(size.opencv_as_extern(), typ, &s, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(size.opencv_as_extern(), typ, &s, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructs n-dimensional matrix
@@ -15693,20 +16990,26 @@ impl UMat {
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub unsafe fn new_nd(sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, usage_flags) }.into_result().map(|r| { core::UMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, usage_flags) }.into_result()?;
+		let ret = { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * usage_flags: USAGE_DEFAULT
 	#[inline]
 	pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, &s, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, &s, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copy constructor
 	#[inline]
 	pub fn copy(m: &core::UMat) -> core::UMat {
-		unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+		let ret = unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat()) };
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// creates a matrix header for a part of the bigger matrix
@@ -15715,114 +17018,158 @@ impl UMat {
 	/// * col_range: Range::all()
 	#[inline]
 	pub fn rowscols(m: &core::UMat, row_range: &core::Range, col_range: &core::Range) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn roi(m: &core::UMat, roi: core::Rect) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_const_UMatR_const_RectR(m.as_raw_UMat(), &roi) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_const_UMatR_const_RectR(m.as_raw_UMat(), &roi) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ranges(m: &core::UMat, ranges: &core::Vector<core::Range>) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_UMat_const_UMatR_const_vector_Range_R(m.as_raw_UMat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_UMat_const_UMatR_const_vector_Range_R(m.as_raw_UMat(), ranges.as_raw_VectorOfRange()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructs a square diagonal matrix which main diagonal is vector "d"
 	#[inline]
 	pub fn diag(d: &core::UMat, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn diag_1(d: &core::UMat) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Matlab-style matrix initialization
 	#[inline]
 	pub fn zeros(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn zeros_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn zeros_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn zeros_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn zeros_4(size: core::Size, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn zeros_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_zeros_int_const_intX_int(ndims, sz, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_zeros_int_const_intX_int(ndims, sz, typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones_4(size: core::Size, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ones_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_ones_int_const_intX_int(ndims, sz, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_ones_int_const_intX_int(ndims, sz, typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn eye(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn eye_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn eye_2(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn eye_3(size: core::Size, typ: i32) -> Result<core::UMat> {
-		unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(m: &mut core::UMat) -> core::UMat {
-		unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_UMat_UMat_UMatR(m.as_raw_mut_UMat()) };
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -15840,62 +17187,74 @@ pub trait UMatDataTraitConst {
 
 	#[inline]
 	fn urefcount(&self) -> i32 {
-		unsafe { sys::cv_UMatData_getPropUrefcount_const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: urefcount")
+		let ret = unsafe { sys::cv_UMatData_getPropUrefcount_const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn refcount(&self) -> i32 {
-		unsafe { sys::cv_UMatData_getPropRefcount_const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: refcount")
+		let ret = unsafe { sys::cv_UMatData_getPropRefcount_const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn size(&self) -> size_t {
-		unsafe { sys::cv_UMatData_getPropSize_const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: size")
+		let ret = unsafe { sys::cv_UMatData_getPropSize_const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn flags(&self) -> core::UMatData_MemoryFlag {
-		unsafe { sys::cv_UMatData_getPropFlags_const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_UMatData_getPropFlags_const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn allocator_flags_(&self) -> i32 {
-		unsafe { sys::cv_UMatData_getPropAllocatorFlags__const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: allocator_flags_")
+		let ret = unsafe { sys::cv_UMatData_getPropAllocatorFlags__const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn mapcount(&self) -> i32 {
-		unsafe { sys::cv_UMatData_getPropMapcount_const(self.as_raw_UMatData()) }.into_result().expect("Infallible function failed: mapcount")
+		let ret = unsafe { sys::cv_UMatData_getPropMapcount_const(self.as_raw_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn host_copy_obsolete(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_hostCopyObsolete_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_hostCopyObsolete_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device_copy_obsolete(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_deviceCopyObsolete_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_deviceCopyObsolete_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device_mem_mapped(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_deviceMemMapped_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_deviceMemMapped_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn copy_on_map(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_copyOnMap_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_copyOnMap_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn temp_umat(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_tempUMat_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_tempUMat_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn temp_copied_umat(&self) -> Result<bool> {
-		unsafe { sys::cv_UMatData_tempCopiedUMat_const(self.as_raw_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_tempCopiedUMat_const(self.as_raw_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -15905,107 +17264,131 @@ pub trait UMatDataTrait: core::UMatDataTraitConst {
 
 	#[inline]
 	fn set_urefcount(&mut self, val: i32) {
-		unsafe { sys::cv_UMatData_setPropUrefcount_int(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_urefcount")
+		let ret = unsafe { sys::cv_UMatData_setPropUrefcount_int(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_refcount(&mut self, val: i32) {
-		unsafe { sys::cv_UMatData_setPropRefcount_int(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_refcount")
+		let ret = unsafe { sys::cv_UMatData_setPropRefcount_int(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn data(&mut self) -> &mut u8 {
-		unsafe { sys::cv_UMatData_getPropData(self.as_raw_mut_UMatData()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data")
+		let ret = unsafe { sys::cv_UMatData_getPropData(self.as_raw_mut_UMatData()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: data");
+		ret
 	}
 	
 	#[inline]
 	unsafe fn set_data(&mut self, val: &mut u8) {
-		{ sys::cv_UMatData_setPropData_unsigned_charX(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_data")
+		let ret = { sys::cv_UMatData_setPropData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn origdata(&mut self) -> &mut u8 {
-		unsafe { sys::cv_UMatData_getPropOrigdata(self.as_raw_mut_UMatData()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: origdata")
+		let ret = unsafe { sys::cv_UMatData_getPropOrigdata(self.as_raw_mut_UMatData()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: origdata");
+		ret
 	}
 	
 	#[inline]
 	fn set_origdata(&mut self, val: &mut u8) {
-		unsafe { sys::cv_UMatData_setPropOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_origdata")
+		let ret = unsafe { sys::cv_UMatData_setPropOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_size(&mut self, val: size_t) {
-		unsafe { sys::cv_UMatData_setPropSize_size_t(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_size")
+		let ret = unsafe { sys::cv_UMatData_setPropSize_size_t(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_flags(&mut self, val: core::UMatData_MemoryFlag) {
-		unsafe { sys::cv_UMatData_setPropFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_UMatData_setPropFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn handle(&mut self) -> *mut c_void {
-		unsafe { sys::cv_UMatData_getPropHandle(self.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: handle")
+		let ret = unsafe { sys::cv_UMatData_getPropHandle(self.as_raw_mut_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_handle(&mut self, val: *mut c_void) {
-		unsafe { sys::cv_UMatData_setPropHandle_voidX(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_handle")
+		let ret = unsafe { sys::cv_UMatData_setPropHandle_voidX(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn userdata(&mut self) -> *mut c_void {
-		unsafe { sys::cv_UMatData_getPropUserdata(self.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: userdata")
+		let ret = unsafe { sys::cv_UMatData_getPropUserdata(self.as_raw_mut_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_userdata(&mut self, val: *mut c_void) {
-		unsafe { sys::cv_UMatData_setPropUserdata_voidX(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_userdata")
+		let ret = unsafe { sys::cv_UMatData_setPropUserdata_voidX(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_allocator_flags_(&mut self, val: i32) {
-		unsafe { sys::cv_UMatData_setPropAllocatorFlags__int(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_allocator_flags_")
+		let ret = unsafe { sys::cv_UMatData_setPropAllocatorFlags__int(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_mapcount(&mut self, val: i32) {
-		unsafe { sys::cv_UMatData_setPropMapcount_int(self.as_raw_mut_UMatData(), val) }.into_result().expect("Infallible function failed: set_mapcount")
+		let ret = unsafe { sys::cv_UMatData_setPropMapcount_int(self.as_raw_mut_UMatData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn original_umat_data(&mut self) -> core::UMatData {
-		unsafe { sys::cv_UMatData_getPropOriginalUMatData(self.as_raw_mut_UMatData()) }.into_result().map(|r| unsafe { core::UMatData::opencv_from_extern(r) } ).expect("Infallible function failed: original_umat_data")
+		let ret = unsafe { sys::cv_UMatData_getPropOriginalUMatData(self.as_raw_mut_UMatData()) };
+		let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn set_original_umat_data(&mut self, val: &mut core::UMatData) {
-		unsafe { sys::cv_UMatData_setPropOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_mut_UMatData()) }.into_result().expect("Infallible function failed: set_original_umat_data")
+		let ret = unsafe { sys::cv_UMatData_setPropOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_mut_UMatData()) };
+		ret
 	}
 	
 	#[inline]
 	fn lock(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMatData_lock(self.as_raw_mut_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_lock(self.as_raw_mut_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn unlock(&mut self) -> Result<()> {
-		unsafe { sys::cv_UMatData_unlock(self.as_raw_mut_UMatData()) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_unlock(self.as_raw_mut_UMatData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn mark_host_copy_obsolete(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_UMatData_markHostCopyObsolete_bool(self.as_raw_mut_UMatData(), flag) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_markHostCopyObsolete_bool(self.as_raw_mut_UMatData(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn mark_device_copy_obsolete(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_UMatData_markDeviceCopyObsolete_bool(self.as_raw_mut_UMatData(), flag) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_markDeviceCopyObsolete_bool(self.as_raw_mut_UMatData(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn mark_device_mem_mapped(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_UMatData_markDeviceMemMapped_bool(self.as_raw_mut_UMatData(), flag) }.into_result()
+		let ret = unsafe { sys::cv_UMatData_markDeviceMemMapped_bool(self.as_raw_mut_UMatData(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -16129,221 +17512,263 @@ pub trait _InputArrayTraitConst {
 	/// * idx: -1
 	#[inline]
 	fn get_mat(&self, idx: i32) -> Result<core::Mat> {
-		unsafe { sys::cv__InputArray_getMat_const_int(self.as_raw__InputArray(), idx) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray_getMat_const_int(self.as_raw__InputArray(), idx) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * idx: -1
 	#[inline]
 	fn get_mat_(&self, idx: i32) -> Result<core::Mat> {
-		unsafe { sys::cv__InputArray_getMat__const_int(self.as_raw__InputArray(), idx) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray_getMat__const_int(self.as_raw__InputArray(), idx) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * idx: -1
 	#[inline]
 	fn get_umat(&self, idx: i32) -> Result<core::UMat> {
-		unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_mat_vector(&self, mv: &mut core::Vector<core::Mat>) -> Result<()> {
-		unsafe { sys::cv__InputArray_getMatVector_const_vector_Mat_R(self.as_raw__InputArray(), mv.as_raw_mut_VectorOfMat()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getMatVector_const_vector_Mat_R(self.as_raw__InputArray(), mv.as_raw_mut_VectorOfMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_umat_vector(&self, umv: &mut core::Vector<core::UMat>) -> Result<()> {
-		unsafe { sys::cv__InputArray_getUMatVector_const_vector_UMat_R(self.as_raw__InputArray(), umv.as_raw_mut_VectorOfUMat()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getUMatVector_const_vector_UMat_R(self.as_raw__InputArray(), umv.as_raw_mut_VectorOfUMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gpu_mat_vector(&self, gpumv: &mut core::Vector<core::GpuMat>) -> Result<()> {
-		unsafe { sys::cv__InputArray_getGpuMatVector_const_vector_GpuMat_R(self.as_raw__InputArray(), gpumv.as_raw_mut_VectorOfGpuMat()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getGpuMatVector_const_vector_GpuMat_R(self.as_raw__InputArray(), gpumv.as_raw_mut_VectorOfGpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gpu_mat(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv__InputArray_getGpuMat_const(self.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray_getGpuMat_const(self.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_o_gl_buffer(&self) -> Result<core::Buffer> {
-		unsafe { sys::cv__InputArray_getOGlBuffer_const(self.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray_getOGlBuffer_const(self.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_flags(&self) -> Result<i32> {
-		unsafe { sys::cv__InputArray_getFlags_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getFlags_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_obj(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_sz(&self) -> Result<core::Size> {
-		unsafe { sys::cv__InputArray_getSz_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_getSz_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn kind(&self) -> Result<core::_InputArray_KindFlag> {
-		unsafe { sys::cv__InputArray_kind_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_kind_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn dims(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_dims_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_dims_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn cols(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_cols_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_cols_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn rows(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_rows_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_rows_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn size(&self, i: i32) -> Result<core::Size> {
-		unsafe { sys::cv__InputArray_size_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_size_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn sizend(&self, sz: &mut i32, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_sizend_const_intX_int(self.as_raw__InputArray(), sz, i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_sizend_const_intX_int(self.as_raw__InputArray(), sz, i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn same_size(&self, arr: &dyn core::ToInputArray) -> Result<bool> {
 		input_array_arg!(arr);
-		unsafe { sys::cv__InputArray_sameSize_const_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_sameSize_const_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn total(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv__InputArray_total_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_total_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn typ(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_type_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_type_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn depth(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_depth_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_depth_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn channels(&self, i: i32) -> Result<i32> {
-		unsafe { sys::cv__InputArray_channels_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_channels_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn is_continuous(&self, i: i32) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isContinuous_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isContinuous_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn is_submatrix(&self, i: i32) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isSubmatrix_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isSubmatrix_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_empty_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_empty_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(arr);
-		unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn copy_to_masked(&self, arr: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		output_array_arg!(arr);
 		input_array_arg!(mask);
-		unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn offset(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv__InputArray_offset_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_offset_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn step(&self, i: i32) -> Result<size_t> {
-		unsafe { sys::cv__InputArray_step_const_int(self.as_raw__InputArray(), i) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_step_const_int(self.as_raw__InputArray(), i) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_mat(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isMat_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isMat_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_umat(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isUMat_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isUMat_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_mat_vector(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isMatVector_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isMatVector_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_umat_vector(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isUMatVector_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isUMatVector_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_matx(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isMatx_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isMatx_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_vector(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isVector_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isVector_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_gpu_mat(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isGpuMat_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isGpuMat_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_gpu_mat_vector(&self) -> Result<bool> {
-		unsafe { sys::cv__InputArray_isGpuMatVector_const(self.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__InputArray_isGpuMatVector_const(self.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -16465,67 +17890,93 @@ impl core::_InputArrayTrait for _InputArray {
 impl _InputArray {
 	#[inline]
 	pub fn default() -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray() }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray() }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_int_voidX(_flags, _obj) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_int_voidX(_flags, _obj) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat(m: &core::Mat) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_matexpr(expr: &core::MatExpr) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_MatExprR(expr.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_MatExprR(expr.as_raw_MatExpr()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_bool_vec(vec: &core::Vector<bool>) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_vector_bool_R(vec.as_raw_VectorOfbool()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_vector_bool_R(vec.as_raw_VectorOfbool()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_f64(val: &f64) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_doubleR(val) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_doubleR(val) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat(d_mat: &core::GpuMat) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat_vec(d_mat_array: &core::Vector<core::GpuMat>) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_vector_GpuMat_R(d_mat_array.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_vector_GpuMat_R(d_mat_array.as_raw_VectorOfGpuMat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_1(buf: &core::Buffer) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat(um: &core::UMat) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_UMatR(um.as_raw_UMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_UMatR(um.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_vec(umv: &core::Vector<core::UMat>) -> Result<core::_InputArray> {
-		unsafe { sys::cv__InputArray__InputArray_const_vector_UMat_R(umv.as_raw_VectorOfUMat()) }.into_result().map(|r| unsafe { core::_InputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputArray__InputArray_const_vector_UMat_R(umv.as_raw_VectorOfUMat()) }.into_result()?;
+		let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -16583,87 +18034,121 @@ impl _InputOutputArray {
 	/// ////////////////////////////////////////////////////////////////////////////////////////
 	#[inline]
 	pub fn default() -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray() }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray() }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_int_voidX(_flags, _obj) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_int_voidX(_flags, _obj) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_mut(m: &mut core::Mat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_MatR(m.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_MatR(m.as_raw_mut_Mat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_vector_Mat_R(vec.as_raw_mut_VectorOfMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_vector_Mat_R(vec.as_raw_mut_VectorOfMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat_mut(d_mat: &mut core::GpuMat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_1(buf: &mut core::Buffer) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_hostmem_mut(cuda_mem: &mut core::HostMem) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_mut(m: &mut core::UMat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_UMatR(m.as_raw_mut_UMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_vector_UMat_R(vec.as_raw_mut_VectorOfUMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_vector_UMat_R(vec.as_raw_mut_VectorOfUMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat(m: &core::Mat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat(d_mat: &core::GpuMat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat_vec(d_mat: &core::Vector<core::GpuMat>) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R(d_mat.as_raw_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R(d_mat.as_raw_VectorOfGpuMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_2(buf: &core::Buffer) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat(m: &core::UMat) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_UMatR(m.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<core::_InputOutputArray> {
-		unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_UMat_R(vec.as_raw_VectorOfUMat()) }.into_result().map(|r| unsafe { core::_InputOutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vector_UMat_R(vec.as_raw_VectorOfUMat()) }.into_result()?;
+		let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -16702,51 +18187,66 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 
 	#[inline]
 	fn fixed_size(&self) -> Result<bool> {
-		unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn fixed_type(&self) -> Result<bool> {
-		unsafe { sys::cv__OutputArray_fixedType_const(self.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_fixedType_const(self.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn needed(&self) -> Result<bool> {
-		unsafe { sys::cv__OutputArray_needed_const(self.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_needed_const(self.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn get_mat_ref(&self, i: i32) -> Result<core::Mat> {
-		unsafe { sys::cv__OutputArray_getMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * i: -1
 	#[inline]
 	fn get_umat_ref(&self, i: i32) -> Result<core::UMat> {
-		unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gpu_mat_ref(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv__OutputArray_getGpuMatRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getGpuMatRef_const(self.as_raw__OutputArray()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_gpu_mat_vec_ref(&self) -> Result<core::Vector<core::GpuMat>> {
-		unsafe { sys::cv__OutputArray_getGpuMatVecRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Vector::<core::GpuMat>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getGpuMatVecRef_const(self.as_raw__OutputArray()) }.into_result()?;
+		let ret = unsafe { core::Vector::<core::GpuMat>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_o_gl_buffer_ref(&self) -> Result<core::Buffer> {
-		unsafe { sys::cv__OutputArray_getOGlBufferRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getOGlBufferRef_const(self.as_raw__OutputArray()) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_host_mem_ref(&self) -> Result<core::HostMem> {
-		unsafe { sys::cv__OutputArray_getHostMemRef_const(self.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray_getHostMemRef_const(self.as_raw__OutputArray()) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -16755,7 +18255,8 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
 	#[inline]
 	fn create_size(&self, sz: core::Size, typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
-		unsafe { sys::cv__OutputArray_create_const_Size_int_int_bool_DepthMask(self.as_raw__OutputArray(), sz.opencv_as_extern(), typ, i, allow_transposed, fixed_depth_mask) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_create_const_Size_int_int_bool_DepthMask(self.as_raw__OutputArray(), sz.opencv_as_extern(), typ, i, allow_transposed, fixed_depth_mask) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -16764,7 +18265,8 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
 	#[inline]
 	fn create(&self, rows: i32, cols: i32, typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
-		unsafe { sys::cv__OutputArray_create_const_int_int_int_int_bool_DepthMask(self.as_raw__OutputArray(), rows, cols, typ, i, allow_transposed, fixed_depth_mask) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_create_const_int_int_int_int_bool_DepthMask(self.as_raw__OutputArray(), rows, cols, typ, i, allow_transposed, fixed_depth_mask) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -16773,23 +18275,27 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
 	#[inline]
 	fn create_nd(&self, size: &[i32], typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
-		unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	unsafe fn create_same_size(&self, arr: &dyn core::ToInputArray, mtype: i32) -> Result<()> {
 		input_array_arg!(arr);
-		{ sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype) }.into_result()
+		let ret = { sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release(&self) -> Result<()> {
-		unsafe { sys::cv__OutputArray_release_const(self.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_release_const(self.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn clear(&self) -> Result<()> {
-		unsafe { sys::cv__OutputArray_clear_const(self.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_clear_const(self.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -16798,37 +18304,44 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	fn set_to(&self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(value);
 		input_array_arg!(mask);
-		unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn assign(&self, u: &core::UMat) -> Result<()> {
-		unsafe { sys::cv__OutputArray_assign_const_const_UMatR(self.as_raw__OutputArray(), u.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_assign_const_const_UMatR(self.as_raw__OutputArray(), u.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn assign_1(&self, m: &core::Mat) -> Result<()> {
-		unsafe { sys::cv__OutputArray_assign_const_const_MatR(self.as_raw__OutputArray(), m.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_assign_const_const_MatR(self.as_raw__OutputArray(), m.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn assign_2(&self, v: &core::Vector<core::UMat>) -> Result<()> {
-		unsafe { sys::cv__OutputArray_assign_const_const_vector_UMat_R(self.as_raw__OutputArray(), v.as_raw_VectorOfUMat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_assign_const_const_vector_UMat_R(self.as_raw__OutputArray(), v.as_raw_VectorOfUMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn assign_3(&self, v: &core::Vector<core::Mat>) -> Result<()> {
-		unsafe { sys::cv__OutputArray_assign_const_const_vector_Mat_R(self.as_raw__OutputArray(), v.as_raw_VectorOfMat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_assign_const_const_vector_Mat_R(self.as_raw__OutputArray(), v.as_raw_VectorOfMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn move_(&self, u: &mut core::UMat) -> Result<()> {
-		unsafe { sys::cv__OutputArray_move_const_UMatR(self.as_raw__OutputArray(), u.as_raw_mut_UMat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_move_const_UMatR(self.as_raw__OutputArray(), u.as_raw_mut_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn move__1(&self, m: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv__OutputArray_move_const_MatR(self.as_raw__OutputArray(), m.as_raw_mut_Mat()) }.into_result()
+		let ret = unsafe { sys::cv__OutputArray_move_const_MatR(self.as_raw__OutputArray(), m.as_raw_mut_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -16898,87 +18411,121 @@ impl _OutputArray {
 	/// /////////////////////////////////////////////////////////////////////////////////////
 	#[inline]
 	pub fn default() -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray() }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray() }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_mut(m: &mut core::Mat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_MatR(m.as_raw_mut_Mat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_MatR(m.as_raw_mut_Mat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_vector_Mat_R(vec.as_raw_mut_VectorOfMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_vector_Mat_R(vec.as_raw_mut_VectorOfMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat_mut(d_mat: &mut core::GpuMat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat_vec_mut(d_mat: &mut core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_vector_GpuMat_R(d_mat.as_raw_mut_VectorOfGpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_vector_GpuMat_R(d_mat.as_raw_mut_VectorOfGpuMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_1(buf: &mut core::Buffer) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_hostmem_mut(cuda_mem: &mut core::HostMem) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_mut(m: &mut core::UMat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_UMatR(m.as_raw_mut_UMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_UMatR(m.as_raw_mut_UMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_vector_UMat_R(vec.as_raw_mut_VectorOfUMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_vector_UMat_R(vec.as_raw_mut_VectorOfUMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat(m: &core::Mat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_vector_Mat_R(vec.as_raw_VectorOfMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_gpumat(d_mat: &core::GpuMat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_2(buf: &core::Buffer) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_hostmem(cuda_mem: &core::HostMem) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_HostMemR(cuda_mem.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat(m: &core::UMat) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_UMatR(m.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<core::_OutputArray> {
-		unsafe { sys::cv__OutputArray__OutputArray_const_vector_UMat_R(vec.as_raw_VectorOfUMat()) }.into_result().map(|r| unsafe { core::_OutputArray::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv__OutputArray__OutputArray_const_vector_UMat_R(vec.as_raw_VectorOfUMat()) }.into_result()?;
+		let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17114,7 +18661,9 @@ pub trait BufferPoolTraitConst {
 	/// Returns the allocator associated with the stream.
 	#[inline]
 	fn get_allocator(&self) -> Result<core::Ptr<dyn core::GpuMat_Allocator>> {
-		unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool()) }.into_result().map(|r| unsafe { core::Ptr::<dyn core::GpuMat_Allocator>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17125,13 +18674,17 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 	/// Allocates a new GpuMat of given size and type.
 	#[inline]
 	fn get_buffer(&mut self, rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_BufferPool_getBuffer_int_int_int(self.as_raw_mut_BufferPool(), rows, cols, typ) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_BufferPool_getBuffer_int_int_int(self.as_raw_mut_BufferPool(), rows, cols, typ) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Allocates a new GpuMat of given size and type.
 	#[inline]
 	fn get_buffer_1(&mut self, size: core::Size, typ: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_BufferPool_getBuffer_Size_int(self.as_raw_mut_BufferPool(), size.opencv_as_extern(), typ) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_BufferPool_getBuffer_Size_int(self.as_raw_mut_BufferPool(), size.opencv_as_extern(), typ) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17286,7 +18839,9 @@ impl BufferPool {
 	/// Gets the BufferPool for the given stream.
 	#[inline]
 	pub fn new(stream: &mut core::Stream) -> Result<core::BufferPool> {
-		unsafe { sys::cv_cuda_BufferPool_BufferPool_StreamR(stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::BufferPool::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_BufferPool_BufferPool_StreamR(stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::BufferPool::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17298,335 +18853,392 @@ pub trait DeviceInfoTraitConst {
 	/// Returns system index of the CUDA device starting with 0.
 	#[inline]
 	fn device_id(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_deviceID_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_deviceID_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ASCII string identifying device
 	#[inline]
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_cuda_DeviceInfo_name_const(self.as_raw_DeviceInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_name_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// global memory available on device in bytes
 	#[inline]
 	fn total_global_mem(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_totalGlobalMem_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_totalGlobalMem_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// shared memory available per block in bytes
 	#[inline]
 	fn shared_mem_per_block(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_sharedMemPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_sharedMemPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// 32-bit registers available per block
 	#[inline]
 	fn regs_per_block(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_regsPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_regsPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// warp size in threads
 	#[inline]
 	fn warp_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_warpSize_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_warpSize_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum pitch in bytes allowed by memory copies
 	#[inline]
 	fn mem_pitch(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_memPitch_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_memPitch_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum number of threads per block
 	#[inline]
 	fn max_threads_per_block(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerBlock_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum size of each dimension of a block
 	#[inline]
 	fn max_threads_dim(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxThreadsDim_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxThreadsDim_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum size of each dimension of a grid
 	#[inline]
 	fn max_grid_size(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxGridSize_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxGridSize_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// clock frequency in kilohertz
 	#[inline]
 	fn clock_rate(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_clockRate_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_clockRate_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// constant memory available on device in bytes
 	#[inline]
 	fn total_const_mem(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_totalConstMem_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_totalConstMem_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// major compute capability
 	#[inline]
 	fn major_version(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_majorVersion_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_majorVersion_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// minor compute capability
 	#[inline]
 	fn minor_version(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_minorVersion_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_minorVersion_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// alignment requirement for textures
 	#[inline]
 	fn texture_alignment(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_textureAlignment_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_textureAlignment_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// pitch alignment requirement for texture references bound to pitched memory
 	#[inline]
 	fn texture_pitch_alignment(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_texturePitchAlignment_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_texturePitchAlignment_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of multiprocessors on device
 	#[inline]
 	fn multi_processor_count(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_multiProcessorCount_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_multiProcessorCount_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// specified whether there is a run time limit on kernels
 	#[inline]
 	fn kernel_exec_timeout_enabled(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_kernelExecTimeoutEnabled_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_kernelExecTimeoutEnabled_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// device is integrated as opposed to discrete
 	#[inline]
 	fn integrated(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_integrated_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_integrated_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// device can map host memory with cudaHostAlloc/cudaHostGetDevicePointer
 	#[inline]
 	fn can_map_host_memory(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_canMapHostMemory_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_canMapHostMemory_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// compute mode
 	#[inline]
 	fn compute_mode(&self) -> Result<core::DeviceInfo_ComputeMode> {
-		unsafe { sys::cv_cuda_DeviceInfo_computeMode_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_computeMode_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 1D texture size
 	#[inline]
 	fn max_texture1_d(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture1D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture1D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 1D mipmapped texture size
 	#[inline]
 	fn max_texture1_d_mipmap(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DMipmap_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DMipmap_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum size for 1D textures bound to linear memory
 	#[inline]
 	fn max_texture1_d_linear(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLinear_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLinear_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D texture dimensions
 	#[inline]
 	fn max_texture_2d(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture2D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture2D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D mipmapped texture dimensions
 	#[inline]
 	fn max_texture2_d_mipmap(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DMipmap_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DMipmap_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum dimensions (width, height, pitch) for 2D textures bound to pitched memory
 	#[inline]
 	fn max_texture2_d_linear(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLinear_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLinear_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D texture dimensions if texture gather operations have to be performed
 	#[inline]
 	fn max_texture2_d_gather(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DGather_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DGather_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 3D texture dimensions
 	#[inline]
 	fn max_texture_3d(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture3D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture3D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum Cubemap texture dimensions
 	#[inline]
 	fn max_texture_cubemap(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemap_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemap_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 1D layered texture dimensions
 	#[inline]
 	fn max_texture1_d_layered(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D layered texture dimensions
 	#[inline]
 	fn max_texture2_d_layered(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum Cubemap layered texture dimensions
 	#[inline]
 	fn max_texture_cubemap_layered(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemapLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemapLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 1D surface size
 	#[inline]
 	fn max_surface1_d(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurface1D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurface1D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D surface dimensions
 	#[inline]
 	fn max_surface_2d(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurface2D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurface2D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 3D surface dimensions
 	#[inline]
 	fn max_surface_3d(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurface3D_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurface3D_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 1D layered surface dimensions
 	#[inline]
 	fn max_surface1_d_layered(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurface1DLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurface1DLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum 2D layered surface dimensions
 	#[inline]
 	fn max_surface2_d_layered(&self) -> Result<core::Vec3i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurface2DLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurface2DLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum Cubemap surface dimensions
 	#[inline]
 	fn max_surface_cubemap(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemap_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemap_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum Cubemap layered surface dimensions
 	#[inline]
 	fn max_surface_cubemap_layered(&self) -> Result<core::Vec2i> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemapLayered_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemapLayered_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// alignment requirements for surfaces
 	#[inline]
 	fn surface_alignment(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_surfaceAlignment_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_surfaceAlignment_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// device can possibly execute multiple kernels concurrently
 	#[inline]
 	fn concurrent_kernels(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_concurrentKernels_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_concurrentKernels_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// device has ECC support enabled
 	#[inline]
 	fn ecc_enabled(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_ECCEnabled_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_ECCEnabled_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// PCI bus ID of the device
 	#[inline]
 	fn pci_bus_id(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_pciBusID_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_pciBusID_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// PCI device ID of the device
 	#[inline]
 	fn pci_device_id(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_pciDeviceID_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_pciDeviceID_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// PCI domain ID of the device
 	#[inline]
 	fn pci_domain_id(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_pciDomainID_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_pciDomainID_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// true if device is a Tesla device using TCC driver, false otherwise
 	#[inline]
 	fn tcc_driver(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_tccDriver_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_tccDriver_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of asynchronous engines
 	#[inline]
 	fn async_engine_count(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_asyncEngineCount_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_asyncEngineCount_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// device shares a unified address space with the host
 	#[inline]
 	fn unified_addressing(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_unifiedAddressing_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_unifiedAddressing_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// peak memory clock frequency in kilohertz
 	#[inline]
 	fn memory_clock_rate(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_memoryClockRate_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_memoryClockRate_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// global memory bus width in bits
 	#[inline]
 	fn memory_bus_width(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_memoryBusWidth_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_memoryBusWidth_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// size of L2 cache in bytes
 	#[inline]
 	fn l2_cache_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_l2CacheSize_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_l2CacheSize_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// maximum resident threads per multiprocessor
 	#[inline]
 	fn max_threads_per_multi_processor(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerMultiProcessor_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerMultiProcessor_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// gets free and total device memory
 	#[inline]
 	fn query_memory(&self, total_memory: &mut size_t, free_memory: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_cuda_DeviceInfo_queryMemory_const_size_tR_size_tR(self.as_raw_DeviceInfo(), total_memory, free_memory) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_queryMemory_const_size_tR_size_tR(self.as_raw_DeviceInfo(), total_memory, free_memory) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn free_memory(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_freeMemory_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_freeMemory_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn total_memory(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_DeviceInfo_totalMemory_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_totalMemory_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Provides information on CUDA feature support.
@@ -17637,7 +19249,8 @@ pub trait DeviceInfoTraitConst {
 	/// This function returns true if the device has the specified CUDA feature. Otherwise, it returns false
 	#[inline]
 	fn supports(&self, feature_set: core::FeatureSet) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_supports_const_FeatureSet(self.as_raw_DeviceInfo(), feature_set) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_supports_const_FeatureSet(self.as_raw_DeviceInfo(), feature_set) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Checks the CUDA module and device compatibility.
@@ -17646,7 +19259,8 @@ pub trait DeviceInfoTraitConst {
 	/// returns false .
 	#[inline]
 	fn is_compatible(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_DeviceInfo_isCompatible_const(self.as_raw_DeviceInfo()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_isCompatible_const(self.as_raw_DeviceInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -17684,7 +19298,9 @@ impl DeviceInfo {
 	/// creates DeviceInfo object for the current GPU
 	#[inline]
 	pub fn default() -> Result<core::DeviceInfo> {
-		unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo() }.into_result().map(|r| unsafe { core::DeviceInfo::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo() }.into_result()?;
+		let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -17696,7 +19312,9 @@ impl DeviceInfo {
 	/// constructs an object for the current device.
 	#[inline]
 	pub fn new(device_id: i32) -> Result<core::DeviceInfo> {
-		unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo_int(device_id) }.into_result().map(|r| unsafe { core::DeviceInfo::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo_int(device_id) }.into_result()?;
+		let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17707,7 +19325,8 @@ pub trait EventTraitConst {
 	/// queries an event's status
 	#[inline]
 	fn query_if_complete(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_Event_queryIfComplete_const(self.as_raw_Event()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Event_queryIfComplete_const(self.as_raw_Event()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -17721,13 +19340,15 @@ pub trait EventTrait: core::EventTraitConst {
 	/// * stream: Stream::Null()
 	#[inline]
 	fn record(&mut self, stream: &mut core::Stream) -> Result<()> {
-		unsafe { sys::cv_cuda_Event_record_StreamR(self.as_raw_mut_Event(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Event_record_StreamR(self.as_raw_mut_Event(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// waits for an event to complete
 	#[inline]
 	fn wait_for_completion(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_Event_waitForCompletion(self.as_raw_mut_Event()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Event_waitForCompletion(self.as_raw_mut_Event()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -17760,13 +19381,16 @@ impl Event {
 	/// * flags: Event::CreateFlags::DEFAULT
 	#[inline]
 	pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
-		unsafe { sys::cv_cuda_Event_Event_CreateFlags(flags) }.into_result().map(|r| unsafe { core::Event::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_Event_Event_CreateFlags(flags) }.into_result()?;
+		let ret = unsafe { core::Event::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// computes the elapsed time between events
 	#[inline]
 	pub fn elapsed_time(start: &core::Event, end: &core::Event) -> Result<f32> {
-		unsafe { sys::cv_cuda_Event_elapsedTime_const_EventR_const_EventR(start.as_raw_Event(), end.as_raw_Event()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Event_elapsedTime_const_EventR_const_EventR(start.as_raw_Event(), end.as_raw_Event()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -17776,7 +19400,8 @@ pub trait GpuDataTraitConst {
 
 	#[inline]
 	fn size(&self) -> size_t {
-		unsafe { sys::cv_cuda_GpuData_getPropSize_const(self.as_raw_GpuData()) }.into_result().expect("Infallible function failed: size")
+		let ret = unsafe { sys::cv_cuda_GpuData_getPropSize_const(self.as_raw_GpuData()) };
+		ret
 	}
 	
 }
@@ -17786,17 +19411,21 @@ pub trait GpuDataTrait: core::GpuDataTraitConst {
 
 	#[inline]
 	fn data(&mut self) -> &mut u8 {
-		unsafe { sys::cv_cuda_GpuData_getPropData(self.as_raw_mut_GpuData()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data")
+		let ret = unsafe { sys::cv_cuda_GpuData_getPropData(self.as_raw_mut_GpuData()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: data");
+		ret
 	}
 	
 	#[inline]
 	fn set_data(&mut self, val: &mut u8) {
-		unsafe { sys::cv_cuda_GpuData_setPropData_unsigned_charX(self.as_raw_mut_GpuData(), val) }.into_result().expect("Infallible function failed: set_data")
+		let ret = unsafe { sys::cv_cuda_GpuData_setPropData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_size(&mut self, val: size_t) {
-		unsafe { sys::cv_cuda_GpuData_setPropSize_size_t(self.as_raw_mut_GpuData(), val) }.into_result().expect("Infallible function failed: set_size")
+		let ret = unsafe { sys::cv_cuda_GpuData_setPropSize_size_t(self.as_raw_mut_GpuData(), val) };
+		ret
 	}
 	
 }
@@ -17827,7 +19456,9 @@ impl core::GpuDataTrait for GpuData {
 impl GpuData {
 	#[inline]
 	pub fn new(_size: size_t) -> Result<core::GpuData> {
-		unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size) }.into_result().map(|r| unsafe { core::GpuData::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size) }.into_result()?;
+		let ret = unsafe { core::GpuData::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -17874,30 +19505,36 @@ pub trait GpuMatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_cuda_GpuMat_getPropFlags_const(self.as_raw_GpuMat()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropFlags_const(self.as_raw_GpuMat()) };
+		ret
 	}
 	
 	/// the number of rows and columns
 	#[inline]
 	fn rows(&self) -> i32 {
-		unsafe { sys::cv_cuda_GpuMat_getPropRows_const(self.as_raw_GpuMat()) }.into_result().expect("Infallible function failed: rows")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropRows_const(self.as_raw_GpuMat()) };
+		ret
 	}
 	
 	/// the number of rows and columns
 	#[inline]
 	fn cols(&self) -> i32 {
-		unsafe { sys::cv_cuda_GpuMat_getPropCols_const(self.as_raw_GpuMat()) }.into_result().expect("Infallible function failed: cols")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropCols_const(self.as_raw_GpuMat()) };
+		ret
 	}
 	
 	/// a distance between successive rows in bytes; includes the gap if any
 	#[inline]
 	fn step(&self) -> size_t {
-		unsafe { sys::cv_cuda_GpuMat_getPropStep_const(self.as_raw_GpuMat()) }.into_result().expect("Infallible function failed: step")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropStep_const(self.as_raw_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn dataend(&self) -> &u8 {
-		unsafe { sys::cv_cuda_GpuMat_getPropDataend_const(self.as_raw_GpuMat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: dataend")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropDataend_const(self.as_raw_GpuMat()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: dataend");
+		ret
 	}
 	
 	/// Performs data download from GpuMat (Blocking call)
@@ -17907,7 +19544,8 @@ pub trait GpuMatTraitConst {
 	#[inline]
 	fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Performs data download from GpuMat (Non-Blocking call)
@@ -17920,27 +19558,32 @@ pub trait GpuMatTraitConst {
 	#[inline]
 	fn download_async(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns deep copy of the GpuMat, i.e. the data is copied
 	#[inline]
 	fn try_clone(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_clone_const(self.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_clone_const(self.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copies the GpuMat content to device memory (Blocking call)
 	#[inline]
 	fn copy_to(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// copies the GpuMat content to device memory (Non-Blocking call)
 	#[inline]
 	fn copy_to_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
@@ -17948,7 +19591,8 @@ pub trait GpuMatTraitConst {
 	fn copy_to_2(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		output_array_arg!(dst);
 		input_array_arg!(mask);
-		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call)
@@ -17956,21 +19600,24 @@ pub trait GpuMatTraitConst {
 	fn copy_to_3(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
 		input_array_arg!(mask);
-		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts GpuMat to another datatype (Blocking call)
 	#[inline]
 	fn convert_to(&self, dst: &mut dyn core::ToOutputArray, rtype: i32) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts GpuMat to another datatype (Non-Blocking call)
 	#[inline]
 	fn convert_to_1(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts GpuMat to another datatype with scaling (Blocking call)
@@ -17980,69 +19627,87 @@ pub trait GpuMatTraitConst {
 	#[inline]
 	fn convert_to_2(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 	#[inline]
 	fn convert_to_3(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 	#[inline]
 	fn convert_to_4(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * typ: -1
 	#[inline]
 	fn assign_to(&self, m: &mut core::GpuMat, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_assignTo_const_GpuMatR_int(self.as_raw_GpuMat(), m.as_raw_mut_GpuMat(), typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_assignTo_const_GpuMatR_int(self.as_raw_GpuMat(), m.as_raw_mut_GpuMat(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * y: 0
 	#[inline]
 	fn ptr(&self, y: i32) -> Result<&u8> {
-		unsafe { sys::cv_cuda_GpuMat_ptr_const_int(self.as_raw_GpuMat(), y) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_cuda_GpuMat_ptr_const_int(self.as_raw_GpuMat(), y) }.into_result()?;
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns a new GpuMat header for the specified row
 	#[inline]
 	fn row(&self, y: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_row_const_int(self.as_raw_GpuMat(), y) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_row_const_int(self.as_raw_GpuMat(), y) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns a new GpuMat header for the specified column
 	#[inline]
 	fn col(&self, x: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_col_const_int(self.as_raw_GpuMat(), x) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_col_const_int(self.as_raw_GpuMat(), x) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ... for the specified row span
 	#[inline]
 	fn row_range(&self, startrow: i32, endrow: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_rowRange_const_int_int(self.as_raw_GpuMat(), startrow, endrow) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_rowRange_const_int_int(self.as_raw_GpuMat(), startrow, endrow) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn row_range_1(&self, mut r: core::Range) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_rowRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_rowRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ... for the specified column span
 	#[inline]
 	fn col_range(&self, startcol: i32, endcol: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_colRange_const_int_int(self.as_raw_GpuMat(), startcol, endcol) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_colRange_const_int_int(self.as_raw_GpuMat(), startcol, endcol) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn col_range_1(&self, mut r: core::Range) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_colRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_colRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates alternative GpuMat header for the same data, with different
@@ -18052,73 +19717,86 @@ pub trait GpuMatTraitConst {
 	/// * rows: 0
 	#[inline]
 	fn reshape(&self, cn: i32, rows: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_reshape_const_int_int(self.as_raw_GpuMat(), cn, rows) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_reshape_const_int_int(self.as_raw_GpuMat(), cn, rows) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// locates GpuMat header within a parent GpuMat
 	#[inline]
 	fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_locateROI_const_SizeR_PointR(self.as_raw_GpuMat(), whole_size, ofs) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_locateROI_const_SizeR_PointR(self.as_raw_GpuMat(), whole_size, ofs) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true iff the GpuMat data is continuous
 	/// (i.e. when there are no gaps between successive rows)
 	#[inline]
 	fn is_continuous(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMat_isContinuous_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_isContinuous_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element size in bytes
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMat_elemSize_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_elemSize_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the size of element channel in bytes
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMat_elemSize1_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_elemSize1_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_GpuMat_type_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_type_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_GpuMat_depth_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_depth_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns number of channels
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_GpuMat_channels_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_channels_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns step/elemSize1()
 	#[inline]
 	fn step1(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMat_step1_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_step1_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns GpuMat size : width == number of columns, height == number of rows
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_cuda_GpuMat_size_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_size_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if GpuMat data is NULL
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMat_empty_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_empty_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn cuda_ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_cuda_GpuMat_cudaPtr_const(self.as_raw_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_cudaPtr_const(self.as_raw_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18133,98 +19811,118 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// - number of channels
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_GpuMat_setPropFlags_int(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropFlags_int(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// the number of rows and columns
 	#[inline]
 	fn set_rows(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_GpuMat_setPropRows_int(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_rows")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropRows_int(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// the number of rows and columns
 	#[inline]
 	fn set_cols(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_GpuMat_setPropCols_int(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_cols")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropCols_int(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// a distance between successive rows in bytes; includes the gap if any
 	#[inline]
 	fn set_step(&mut self, val: size_t) {
-		unsafe { sys::cv_cuda_GpuMat_setPropStep_size_t(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_step")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropStep_size_t(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// pointer to the data
 	#[inline]
 	fn data(&mut self) -> &mut u8 {
-		unsafe { sys::cv_cuda_GpuMat_getPropData(self.as_raw_mut_GpuMat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropData(self.as_raw_mut_GpuMat()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: data");
+		ret
 	}
 	
 	/// pointer to the data
 	#[inline]
 	fn set_data(&mut self, val: &mut u8) {
-		unsafe { sys::cv_cuda_GpuMat_setPropData_unsigned_charX(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_data")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// pointer to the reference counter;
 	/// when GpuMat points to user-allocated data, the pointer is NULL
 	#[inline]
 	fn refcount(&mut self) -> &mut i32 {
-		unsafe { sys::cv_cuda_GpuMat_getPropRefcount(self.as_raw_mut_GpuMat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: refcount")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropRefcount(self.as_raw_mut_GpuMat()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: refcount");
+		ret
 	}
 	
 	/// pointer to the reference counter;
 	/// when GpuMat points to user-allocated data, the pointer is NULL
 	#[inline]
 	fn set_refcount(&mut self, val: &mut i32) {
-		unsafe { sys::cv_cuda_GpuMat_setPropRefcount_intX(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_refcount")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropRefcount_intX(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// helper fields used in locateROI and adjustROI
 	#[inline]
 	fn datastart(&mut self) -> &mut u8 {
-		unsafe { sys::cv_cuda_GpuMat_getPropDatastart(self.as_raw_mut_GpuMat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: datastart")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropDatastart(self.as_raw_mut_GpuMat()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: datastart");
+		ret
 	}
 	
 	/// helper fields used in locateROI and adjustROI
 	#[inline]
 	fn set_datastart(&mut self, val: &mut u8) {
-		unsafe { sys::cv_cuda_GpuMat_setPropDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) }.into_result().expect("Infallible function failed: set_datastart")
+		let ret = unsafe { sys::cv_cuda_GpuMat_setPropDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+		ret
 	}
 	
 	/// allocator
 	#[inline]
 	fn allocator(&mut self) -> types::AbstractRefMut<dyn core::GpuMat_Allocator> {
-		unsafe { sys::cv_cuda_GpuMat_getPropAllocator(self.as_raw_mut_GpuMat()) }.into_result().map(|r| unsafe { types::AbstractRefMut::<dyn core::GpuMat_Allocator>::opencv_from_extern(r) } ).expect("Infallible function failed: allocator")
+		let ret = unsafe { sys::cv_cuda_GpuMat_getPropAllocator(self.as_raw_mut_GpuMat()) };
+		let ret = unsafe { types::AbstractRefMut::<dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// allocator
 	#[inline]
 	unsafe fn set_allocator(&mut self, val: &mut dyn core::GpuMat_Allocator) {
-		{ sys::cv_cuda_GpuMat_setPropAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) }.into_result().expect("Infallible function failed: set_allocator")
+		let ret = { sys::cv_cuda_GpuMat_setPropAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
+		ret
 	}
 	
 	/// allocates new GpuMat data unless the GpuMat already has specified size and type
 	#[inline]
 	fn create(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_create_int_int_int(self.as_raw_mut_GpuMat(), rows, cols, typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_create_int_int_int(self.as_raw_mut_GpuMat(), rows, cols, typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn create_1(&mut self, size: core::Size, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_create_Size_int(self.as_raw_mut_GpuMat(), size.opencv_as_extern(), typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_create_Size_int(self.as_raw_mut_GpuMat(), size.opencv_as_extern(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// decreases reference counter, deallocate the data when reference counter reaches 0
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_release(self.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_release(self.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// swaps with other smart pointer
 	#[inline]
 	fn swap(&mut self, mat: &mut core::GpuMat) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_swap_GpuMatR(self.as_raw_mut_GpuMat(), mat.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_swap_GpuMatR(self.as_raw_mut_GpuMat(), mat.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Performs data upload to GpuMat (Blocking call)
@@ -18234,7 +19932,8 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	#[inline]
 	fn upload(&mut self, arr: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Performs data upload to GpuMat (Non-Blocking call)
@@ -18247,33 +19946,42 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	#[inline]
 	fn upload_async(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// sets some of the GpuMat elements to s (Blocking call)
 	#[inline]
 	fn set_to(&mut self, s: core::Scalar) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar(self.as_raw_mut_GpuMat(), s.opencv_as_extern()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_setTo_Scalar(self.as_raw_mut_GpuMat(), s.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// sets some of the GpuMat elements to s (Non-Blocking call)
 	#[inline]
 	fn set_to_1(&mut self, s: core::Scalar, stream: &mut core::Stream) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// sets some of the GpuMat elements to s, according to the mask (Blocking call)
 	#[inline]
 	fn set_to_2(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray) -> Result<core::GpuMat> {
 		input_array_arg!(mask);
-		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// sets some of the GpuMat elements to s, according to the mask (Non-Blocking call)
 	#[inline]
 	fn set_to_3(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<core::GpuMat> {
 		input_array_arg!(mask);
-		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns pointer to y-th row
@@ -18282,19 +19990,24 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// * y: 0
 	#[inline]
 	fn ptr_1(&mut self, y: i32) -> Result<&mut u8> {
-		unsafe { sys::cv_cuda_GpuMat_ptr_int(self.as_raw_mut_GpuMat(), y) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_cuda_GpuMat_ptr_int(self.as_raw_mut_GpuMat(), y) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// moves/resizes the current GpuMat ROI inside the parent GpuMat
 	#[inline]
 	fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_adjustROI_int_int_int_int(self.as_raw_mut_GpuMat(), dtop, dbottom, dleft, dright) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_adjustROI_int_int_int_int(self.as_raw_mut_GpuMat(), dtop, dbottom, dleft, dright) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// internal use method: updates the continuity flag
 	#[inline]
 	fn update_continuity_flag(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_updateContinuityFlag(self.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_updateContinuityFlag(self.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18358,12 +20071,15 @@ impl GpuMat {
 	/// default allocator
 	#[inline]
 	pub fn default_allocator() -> Result<types::AbstractRefMut<'static, dyn core::GpuMat_Allocator>> {
-		unsafe { sys::cv_cuda_GpuMat_defaultAllocator() }.into_result().map(|r| unsafe { types::AbstractRefMut::<'static, dyn core::GpuMat_Allocator>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_defaultAllocator() }.into_result()?;
+		let ret = unsafe { types::AbstractRefMut::<'static, dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub unsafe fn set_default_allocator(allocator: &mut dyn core::GpuMat_Allocator) -> Result<()> {
-		{ sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()
+		let ret = { sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// default constructor
@@ -18372,7 +20088,9 @@ impl GpuMat {
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn new(allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructs GpuMat of the specified size and type
@@ -18381,14 +20099,18 @@ impl GpuMat {
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(size.opencv_as_extern(), typ, allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(size.opencv_as_extern(), typ, allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructs GpuMat and fills it with the specified value _s
@@ -18397,20 +20119,26 @@ impl GpuMat {
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(size.opencv_as_extern(), typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(size.opencv_as_extern(), typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// copy constructor
 	#[inline]
 	pub fn copy(m: &core::GpuMat) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR(m.as_raw_GpuMat()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR(m.as_raw_GpuMat()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// constructor for GpuMat headers pointing to user-allocated data
@@ -18419,25 +20147,33 @@ impl GpuMat {
 	/// * step: Mat::AUTO_STEP
 	#[inline]
 	pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * step: Mat::AUTO_STEP
 	#[inline]
 	pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
-		{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates a GpuMat header for a part of the bigger matrix
 	#[inline]
 	pub fn rowscols(m: &core::GpuMat, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range(m.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range(m.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn roi(m: &core::GpuMat, roi: core::Rect) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m.as_raw_GpuMat(), roi.opencv_as_extern()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m.as_raw_GpuMat(), roi.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// builds GpuMat from host memory (Blocking call)
@@ -18447,7 +20183,9 @@ impl GpuMat {
 	#[inline]
 	pub unsafe fn from_hostmem(arr: &dyn core::ToInputArray, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
 		input_array_arg!(arr);
-		{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result().map(|r| { core::GpuMat::opencv_from_extern(r) } )
+		let ret = { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator()) }.into_result()?;
+		let ret = { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -18470,12 +20208,14 @@ pub trait GpuMat_Allocator: core::GpuMat_AllocatorConst {
 
 	#[inline]
 	fn allocate(&mut self, mat: &mut core::GpuMat, rows: i32, cols: i32, elem_size: size_t) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMat_Allocator_allocate_GpuMatX_int_int_size_t(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat(), rows, cols, elem_size) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_Allocator_allocate_GpuMatX_int_int_size_t(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat(), rows, cols, elem_size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn free(&mut self, mat: &mut core::GpuMat) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMat_Allocator_free_GpuMatX(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMat_Allocator_free_GpuMatX(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18490,26 +20230,32 @@ pub trait GpuMatNDTraitConst {
 	/// - number of channels
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_cuda_GpuMatND_getPropFlags_const(self.as_raw_GpuMatND()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_getPropFlags_const(self.as_raw_GpuMatND()) };
+		ret
 	}
 	
 	/// matrix dimensionality
 	#[inline]
 	fn dims(&self) -> i32 {
-		unsafe { sys::cv_cuda_GpuMatND_getPropDims_const(self.as_raw_GpuMatND()) }.into_result().expect("Infallible function failed: dims")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_getPropDims_const(self.as_raw_GpuMatND()) };
+		ret
 	}
 	
 	/// shape of this array
 	#[inline]
 	fn size(&self) -> core::Vector<i32> {
-		unsafe { sys::cv_cuda_GpuMatND_getPropSize_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } ).expect("Infallible function failed: size")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_getPropSize_const(self.as_raw_GpuMatND()) };
+		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// ! step values
 	/// Their semantics is identical to the semantics of step for Mat.
 	#[inline]
 	fn step(&self) -> core::Vector<size_t> {
-		unsafe { sys::cv_cuda_GpuMatND_getPropStep_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::Vector::<size_t>::opencv_from_extern(r) } ).expect("Infallible function failed: step")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_getPropStep_const(self.as_raw_GpuMatND()) };
+		let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Creates a full copy of the array and the underlying data.
@@ -18518,7 +20264,9 @@ pub trait GpuMatNDTraitConst {
 	/// occupying total()\*elemSize() bytes.
 	#[inline]
 	fn try_clone(&self) -> Result<core::GpuMatND> {
-		unsafe { sys::cv_cuda_GpuMatND_clone_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_clone_const(self.as_raw_GpuMatND()) }.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a full copy of the array and the underlying data.
@@ -18531,7 +20279,9 @@ pub trait GpuMatNDTraitConst {
 	///    This overload is non-blocking, so it may return even if the copy operation is not finished.
 	#[inline]
 	fn clone_1(&self, stream: &mut core::Stream) -> Result<core::GpuMatND> {
-		unsafe { sys::cv_cuda_GpuMatND_clone_const_StreamR(self.as_raw_GpuMatND(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_clone_const_StreamR(self.as_raw_GpuMatND(), stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a GpuMat header for a 2D plane part of an n-dim matrix.
@@ -18542,7 +20292,9 @@ pub trait GpuMatNDTraitConst {
 	/// Note: This function does not increment this GpuMatND's reference counter.
 	#[inline]
 	fn create_gpu_mat_header(&self, mut idx: core::GpuMatND_IndexArray, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates a GpuMat header for a 2D plane part of an n-dim matrix.
@@ -18562,7 +20314,9 @@ pub trait GpuMatNDTraitConst {
 	/// Note: This function does not increment this GpuMatND's reference counter.
 	#[inline]
 	fn create_gpu_mat_header_1(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const(self.as_raw_GpuMatND()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Extracts a 2D plane part of an n-dim matrix if this GpuMatND is effectively 2D.
@@ -18571,80 +20325,95 @@ pub trait GpuMatNDTraitConst {
 	/// Note: This operator does not increment this GpuMatND's reference counter;
 	#[inline]
 	fn to_gpu_mat(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(self.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(self.as_raw_GpuMatND()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn download_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true iff the GpuMatND data is continuous
 	/// (i.e. when there are no gaps between successive rows)
 	#[inline]
 	fn is_continuous(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMatND_isContinuous_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_isContinuous_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if the matrix is a sub-matrix of another matrix
 	#[inline]
 	fn is_submatrix(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMatND_isSubmatrix_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_isSubmatrix_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element size in bytes
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMatND_elemSize_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_elemSize_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the size of element channel in bytes
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMatND_elemSize1_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_elemSize1_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if data is null
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMatND_empty_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_empty_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns true if not empty and points to external(user-allocated) gpu memory
 	#[inline]
 	fn external(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_GpuMatND_external_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_external_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns pointer to the first byte of the GPU memory
 	#[inline]
 	fn get_device_ptr(&self) -> Result<&mut u8> {
-		unsafe { sys::cv_cuda_GpuMatND_getDevicePtr_const(self.as_raw_GpuMatND()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_cuda_GpuMatND_getDevicePtr_const(self.as_raw_GpuMatND()) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// returns the total number of array elements
 	#[inline]
 	fn total(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMatND_total_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_total_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the size of underlying memory in bytes
 	#[inline]
 	fn total_mem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_GpuMatND_totalMemSize_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_totalMemSize_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns element type
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_GpuMatND_type_const(self.as_raw_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_type_const(self.as_raw_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18659,26 +20428,30 @@ pub trait GpuMatNDTrait: core::GpuMatNDTraitConst {
 	/// - number of channels
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_GpuMatND_setPropFlags_int(self.as_raw_mut_GpuMatND(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_setPropFlags_int(self.as_raw_mut_GpuMatND(), val) };
+		ret
 	}
 	
 	/// matrix dimensionality
 	#[inline]
 	fn set_dims(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_GpuMatND_setPropDims_int(self.as_raw_mut_GpuMatND(), val) }.into_result().expect("Infallible function failed: set_dims")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_setPropDims_int(self.as_raw_mut_GpuMatND(), val) };
+		ret
 	}
 	
 	/// shape of this array
 	#[inline]
 	fn set_size(&mut self, mut val: core::GpuMatND_SizeArray) {
-		unsafe { sys::cv_cuda_GpuMatND_setPropSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_size")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_setPropSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) };
+		ret
 	}
 	
 	/// ! step values
 	/// Their semantics is identical to the semantics of step for Mat.
 	#[inline]
 	fn set_step(&mut self, mut val: core::GpuMatND_StepArray) {
-		unsafe { sys::cv_cuda_GpuMatND_setPropStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) }.into_result().expect("Infallible function failed: set_step")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_setPropStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) };
+		ret
 	}
 	
 	/// Allocates GPU memory.
@@ -18689,29 +20462,34 @@ pub trait GpuMatNDTrait: core::GpuMatNDTraitConst {
 	/// this method is always continuous and is not a sub-region of another GpuMatND.
 	#[inline]
 	fn create(&mut self, mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMatND_create_SizeArray_int(self.as_raw_mut_GpuMatND(), size.as_raw_mut_VectorOfi32(), typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_create_SizeArray_int(self.as_raw_mut_GpuMatND(), size.as_raw_mut_VectorOfi32(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_GpuMatND_release(self.as_raw_mut_GpuMatND()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_release(self.as_raw_mut_GpuMatND()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn swap(&mut self, m: &mut core::GpuMatND) {
-		unsafe { sys::cv_cuda_GpuMatND_swap_GpuMatNDR(self.as_raw_mut_GpuMatND(), m.as_raw_mut_GpuMatND()) }.into_result().expect("Infallible function failed: swap")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_swap_GpuMatNDR(self.as_raw_mut_GpuMatND(), m.as_raw_mut_GpuMatND()) };
+		ret
 	}
 	
 	#[inline]
 	fn upload(&mut self, src: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn upload_1(&mut self, src: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18743,7 +20521,9 @@ impl GpuMatND {
 	/// default constructor
 	#[inline]
 	pub fn default() -> Result<core::GpuMatND> {
-		unsafe { sys::cv_cuda_GpuMatND_GpuMatND() }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND() }.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// default constructor
@@ -18756,7 +20536,9 @@ impl GpuMatND {
 	///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 	#[inline]
 	pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
-		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ) }.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// default constructor
@@ -18779,17 +20561,23 @@ impl GpuMatND {
 	/// * step: StepArray()
 	#[inline]
 	pub fn new_1(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void, mut step: core::GpuMatND_StepArray) -> Result<core::GpuMatND> {
-		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t()) }.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::GpuMatND) -> core::GpuMatND {
-		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) };
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy_mut(unnamed: &mut core::GpuMatND) -> core::GpuMatND {
-		unsafe { sys::cv_cuda_GpuMatND_GpuMatND_GpuMatNDR(unnamed.as_raw_mut_GpuMatND()) }.into_result().map(|r| unsafe { core::GpuMatND::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_GpuMatNDR(unnamed.as_raw_mut_GpuMatND()) };
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -18822,38 +20610,47 @@ pub trait HostMemTraitConst {
 
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_cuda_HostMem_getPropFlags_const(self.as_raw_HostMem()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropFlags_const(self.as_raw_HostMem()) };
+		ret
 	}
 	
 	#[inline]
 	fn rows(&self) -> i32 {
-		unsafe { sys::cv_cuda_HostMem_getPropRows_const(self.as_raw_HostMem()) }.into_result().expect("Infallible function failed: rows")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropRows_const(self.as_raw_HostMem()) };
+		ret
 	}
 	
 	#[inline]
 	fn cols(&self) -> i32 {
-		unsafe { sys::cv_cuda_HostMem_getPropCols_const(self.as_raw_HostMem()) }.into_result().expect("Infallible function failed: cols")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropCols_const(self.as_raw_HostMem()) };
+		ret
 	}
 	
 	#[inline]
 	fn step(&self) -> size_t {
-		unsafe { sys::cv_cuda_HostMem_getPropStep_const(self.as_raw_HostMem()) }.into_result().expect("Infallible function failed: step")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropStep_const(self.as_raw_HostMem()) };
+		ret
 	}
 	
 	#[inline]
 	fn dataend(&self) -> &u8 {
-		unsafe { sys::cv_cuda_HostMem_getPropDataend_const(self.as_raw_HostMem()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: dataend")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropDataend_const(self.as_raw_HostMem()) };
+		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: dataend");
+		ret
 	}
 	
 	#[inline]
 	fn alloc_type(&self) -> core::HostMem_AllocType {
-		unsafe { sys::cv_cuda_HostMem_getPropAlloc_type_const(self.as_raw_HostMem()) }.into_result().expect("Infallible function failed: alloc_type")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropAlloc_type_const(self.as_raw_HostMem()) };
+		ret
 	}
 	
 	/// returns deep copy of the matrix, i.e. the data is copied
 	#[inline]
 	fn try_clone(&self) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_clone_const(self.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_clone_const(self.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates alternative HostMem header for the same data, with different
@@ -18863,13 +20660,17 @@ pub trait HostMemTraitConst {
 	/// * rows: 0
 	#[inline]
 	fn reshape(&self, cn: i32, rows: i32) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_reshape_const_int_int(self.as_raw_HostMem(), cn, rows) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_reshape_const_int_int(self.as_raw_HostMem(), cn, rows) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// returns matrix header with disabled reference counting for HostMem data.
 	#[inline]
 	fn create_mat_header(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_cuda_HostMem_createMatHeader_const(self.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_createMatHeader_const(self.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Maps CPU memory to GPU address space and creates the cuda::GpuMat header without reference counting
@@ -18880,52 +20681,63 @@ pub trait HostMemTraitConst {
 	/// eliminates an extra copy.
 	#[inline]
 	fn create_gpu_mat_header(&self) -> Result<core::GpuMat> {
-		unsafe { sys::cv_cuda_HostMem_createGpuMatHeader_const(self.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_createGpuMatHeader_const(self.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_continuous(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_HostMem_isContinuous_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_isContinuous_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn elem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_HostMem_elemSize_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_elemSize_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn elem_size1(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_HostMem_elemSize1_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_elemSize1_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HostMem_type_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_type_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HostMem_depth_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_depth_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_HostMem_channels_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_channels_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn step1(&self) -> Result<size_t> {
-		unsafe { sys::cv_cuda_HostMem_step1_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_step1_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_cuda_HostMem_size_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_size_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_HostMem_empty_const(self.as_raw_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_empty_const(self.as_raw_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -18935,80 +20747,98 @@ pub trait HostMemTrait: core::HostMemTraitConst {
 
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_HostMem_setPropFlags_int(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropFlags_int(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_rows(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_HostMem_setPropRows_int(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_rows")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropRows_int(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_cols(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_HostMem_setPropCols_int(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_cols")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropCols_int(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_step(&mut self, val: size_t) {
-		unsafe { sys::cv_cuda_HostMem_setPropStep_size_t(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_step")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropStep_size_t(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn data(&mut self) -> &mut u8 {
-		unsafe { sys::cv_cuda_HostMem_getPropData(self.as_raw_mut_HostMem()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: data")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropData(self.as_raw_mut_HostMem()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: data");
+		ret
 	}
 	
 	#[inline]
 	fn set_data(&mut self, val: &mut u8) {
-		unsafe { sys::cv_cuda_HostMem_setPropData_unsigned_charX(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_data")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn refcount(&mut self) -> &mut i32 {
-		unsafe { sys::cv_cuda_HostMem_getPropRefcount(self.as_raw_mut_HostMem()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: refcount")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropRefcount(self.as_raw_mut_HostMem()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: refcount");
+		ret
 	}
 	
 	#[inline]
 	fn set_refcount(&mut self, val: &mut i32) {
-		unsafe { sys::cv_cuda_HostMem_setPropRefcount_intX(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_refcount")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropRefcount_intX(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn datastart(&mut self) -> &mut u8 {
-		unsafe { sys::cv_cuda_HostMem_getPropDatastart(self.as_raw_mut_HostMem()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: datastart")
+		let ret = unsafe { sys::cv_cuda_HostMem_getPropDatastart(self.as_raw_mut_HostMem()) };
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: datastart");
+		ret
 	}
 	
 	#[inline]
 	fn set_datastart(&mut self, val: &mut u8) {
-		unsafe { sys::cv_cuda_HostMem_setPropDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_datastart")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_alloc_type(&mut self, val: core::HostMem_AllocType) {
-		unsafe { sys::cv_cuda_HostMem_setPropAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) }.into_result().expect("Infallible function failed: set_alloc_type")
+		let ret = unsafe { sys::cv_cuda_HostMem_setPropAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
+		ret
 	}
 	
 	/// swaps with other smart pointer
 	#[inline]
 	fn swap(&mut self, b: &mut core::HostMem) -> Result<()> {
-		unsafe { sys::cv_cuda_HostMem_swap_HostMemR(self.as_raw_mut_HostMem(), b.as_raw_mut_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_swap_HostMemR(self.as_raw_mut_HostMem(), b.as_raw_mut_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// allocates new matrix data unless the matrix already has specified size and type.
 	#[inline]
 	fn create(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HostMem_create_int_int_int(self.as_raw_mut_HostMem(), rows, cols, typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_create_int_int_int(self.as_raw_mut_HostMem(), rows, cols, typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn create_1(&mut self, size: core::Size, typ: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_HostMem_create_Size_int(self.as_raw_mut_HostMem(), size.opencv_as_extern(), typ) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_create_Size_int(self.as_raw_mut_HostMem(), size.opencv_as_extern(), typ) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// decrements reference counter and released memory if needed.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_HostMem_release(self.as_raw_mut_HostMem()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_HostMem_release(self.as_raw_mut_HostMem()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19056,26 +20886,34 @@ impl HostMem {
 	/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 	#[inline]
 	pub fn new(alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_HostMem_AllocType(alloc_type) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_HostMem_AllocType(alloc_type) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(m: &core::HostMem) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_HostMem_const_HostMemR(m.as_raw_HostMem()) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_HostMem_const_HostMemR(m.as_raw_HostMem()) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 	#[inline]
 	pub fn new_1(rows: i32, cols: i32, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int_AllocType(rows, cols, typ, alloc_type) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int_AllocType(rows, cols, typ, alloc_type) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 	#[inline]
 	pub fn new_2(size: core::Size, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-		unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(size.opencv_as_extern(), typ, alloc_type) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(size.opencv_as_extern(), typ, alloc_type) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates from host memory with coping data
@@ -19085,7 +20923,9 @@ impl HostMem {
 	#[inline]
 	pub fn new_3(arr: &dyn core::ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type) }.into_result().map(|r| unsafe { core::HostMem::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type) }.into_result()?;
+		let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -19134,13 +20974,15 @@ pub trait StreamTraitConst {
 	/// Returns true if the current stream queue is finished. Otherwise, it returns false.
 	#[inline]
 	fn query_if_complete(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_Stream_queryIfComplete_const(self.as_raw_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Stream_queryIfComplete_const(self.as_raw_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// return Pointer to CUDA stream
 	#[inline]
 	fn cuda_ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_cuda_Stream_cudaPtr_const(self.as_raw_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Stream_cudaPtr_const(self.as_raw_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19151,13 +20993,15 @@ pub trait StreamTrait: core::StreamTraitConst {
 	/// Blocks the current CPU thread until all operations in the stream are complete.
 	#[inline]
 	fn wait_for_completion(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_Stream_waitForCompletion(self.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Stream_waitForCompletion(self.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Makes a compute stream wait on an event.
 	#[inline]
 	fn wait_event(&mut self, event: &core::Event) -> Result<()> {
-		unsafe { sys::cv_cuda_Stream_waitEvent_const_EventR(self.as_raw_mut_Stream(), event.as_raw_Event()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Stream_waitEvent_const_EventR(self.as_raw_mut_Stream(), event.as_raw_Event()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Adds a callback to be called on the host after all currently enqueued items in the stream have
@@ -19172,7 +21016,8 @@ pub trait StreamTrait: core::StreamTraitConst {
 	fn enqueue_host_callback(&mut self, callback: core::Stream_StreamCallback) -> Result<()> {
 		callback_arg!(callback_trampoline(status: i32, user_data: *mut c_void) -> () => user_data in callbacks => callback(status: i32) -> ());
 		userdata_arg!(user_data in callbacks => callback);
-		unsafe { sys::cv_cuda_Stream_enqueueHostCallback_StreamCallback_voidX(self.as_raw_mut_Stream(), callback_trampoline, user_data) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Stream_enqueueHostCallback_StreamCallback_voidX(self.as_raw_mut_Stream(), callback_trampoline, user_data) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19234,13 +21079,17 @@ impl Stream {
 	/// creates a new asynchronous stream
 	#[inline]
 	pub fn default() -> Result<core::Stream> {
-		unsafe { sys::cv_cuda_Stream_Stream() }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_Stream_Stream() }.into_result()?;
+		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates a new asynchronous stream with custom allocator
 	#[inline]
 	pub fn new(allocator: &core::Ptr<dyn core::GpuMat_Allocator>) -> Result<core::Stream> {
-		unsafe { sys::cv_cuda_Stream_Stream_const_Ptr_Allocator_R(allocator.as_raw_PtrOfGpuMat_Allocator()) }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_Stream_Stream_const_Ptr_Allocator_R(allocator.as_raw_PtrOfGpuMat_Allocator()) }.into_result()?;
+		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// creates a new Stream using the cudaFlags argument to determine the behaviors of the stream
@@ -19256,13 +21105,17 @@ impl Stream {
 	/// 
 	#[inline]
 	pub fn new_1(cuda_flags: size_t) -> Result<core::Stream> {
-		unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags) }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags) }.into_result()?;
+		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// return Stream object for default CUDA stream
 	#[inline]
 	pub fn null() -> Result<core::Stream> {
-		unsafe { sys::cv_cuda_Stream_Null() }.into_result().map(|r| unsafe { core::Stream::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_Stream_Null() }.into_result()?;
+		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -19317,7 +21170,8 @@ impl TargetArchs {
 	/// * feature_set: Features to be checked. See :ocvcuda::FeatureSet.
 	#[inline]
 	pub fn built_with(feature_set: core::FeatureSet) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_builtWith_FeatureSet(feature_set) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_builtWith_FeatureSet(feature_set) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// There is a set of methods to check whether the module contains intermediate (PTX) or binary CUDA
@@ -19328,37 +21182,44 @@ impl TargetArchs {
 	/// * minor: Minor compute capability version.
 	#[inline]
 	pub fn has(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_has_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_has_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_ptx(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasPtx_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasPtx_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_bin(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasBin_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasBin_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_equal_or_less_ptx(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasEqualOrLessPtx_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasEqualOrLessPtx_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_equal_or_greater(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreater_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreater_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_equal_or_greater_ptx(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterPtx_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterPtx_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn has_equal_or_greater_bin(major: i32, minor: i32) -> Result<bool> {
-		unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterBin_int_int(major, minor) }.into_result()
+		let ret = unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterBin_int_int(major, minor) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19368,37 +21229,49 @@ pub trait Detail_CheckContextTraitConst {
 
 	#[inline]
 	fn func(&self) -> String {
-		unsafe { sys::cv_detail_CheckContext_getPropFunc_const(self.as_raw_Detail_CheckContext()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: func")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropFunc_const(self.as_raw_Detail_CheckContext()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn file(&self) -> String {
-		unsafe { sys::cv_detail_CheckContext_getPropFile_const(self.as_raw_Detail_CheckContext()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: file")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropFile_const(self.as_raw_Detail_CheckContext()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn line(&self) -> i32 {
-		unsafe { sys::cv_detail_CheckContext_getPropLine_const(self.as_raw_Detail_CheckContext()) }.into_result().expect("Infallible function failed: line")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropLine_const(self.as_raw_Detail_CheckContext()) };
+		ret
 	}
 	
 	#[inline]
 	fn test_op(&self) -> core::Detail_TestOp {
-		unsafe { sys::cv_detail_CheckContext_getPropTestOp_const(self.as_raw_Detail_CheckContext()) }.into_result().expect("Infallible function failed: test_op")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropTestOp_const(self.as_raw_Detail_CheckContext()) };
+		ret
 	}
 	
 	#[inline]
 	fn message(&self) -> String {
-		unsafe { sys::cv_detail_CheckContext_getPropMessage_const(self.as_raw_Detail_CheckContext()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: message")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropMessage_const(self.as_raw_Detail_CheckContext()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn p1_str(&self) -> String {
-		unsafe { sys::cv_detail_CheckContext_getPropP1_str_const(self.as_raw_Detail_CheckContext()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: p1_str")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropP1_str_const(self.as_raw_Detail_CheckContext()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn p2_str(&self) -> String {
-		unsafe { sys::cv_detail_CheckContext_getPropP2_str_const(self.as_raw_Detail_CheckContext()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: p2_str")
+		let ret = unsafe { sys::cv_detail_CheckContext_getPropP2_str_const(self.as_raw_Detail_CheckContext()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -19408,12 +21281,14 @@ pub trait Detail_CheckContextTrait: core::Detail_CheckContextTraitConst {
 
 	#[inline]
 	fn set_line(&mut self, val: i32) {
-		unsafe { sys::cv_detail_CheckContext_setPropLine_int(self.as_raw_mut_Detail_CheckContext(), val) }.into_result().expect("Infallible function failed: set_line")
+		let ret = unsafe { sys::cv_detail_CheckContext_setPropLine_int(self.as_raw_mut_Detail_CheckContext(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_test_op(&mut self, val: core::Detail_TestOp) {
-		unsafe { sys::cv_detail_CheckContext_setPropTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) }.into_result().expect("Infallible function failed: set_test_op")
+		let ret = unsafe { sys::cv_detail_CheckContext_setPropTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
+		ret
 	}
 	
 }
@@ -19449,62 +21324,76 @@ pub trait NodeDataTraitConst {
 
 	#[inline]
 	fn m_fun_name(&self) -> String {
-		unsafe { sys::cv_instr_NodeData_getPropM_funName_const(self.as_raw_NodeData()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: m_fun_name")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_funName_const(self.as_raw_NodeData()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn m_instr_type(&self) -> core::TYPE {
-		unsafe { sys::cv_instr_NodeData_getPropM_instrType_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_instr_type")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_instrType_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_impl_type(&self) -> core::IMPL {
-		unsafe { sys::cv_instr_NodeData_getPropM_implType_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_impl_type")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_implType_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_file_name(&self) -> String {
-		unsafe { sys::cv_instr_NodeData_getPropM_fileName_const(self.as_raw_NodeData()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: m_file_name")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_fileName_const(self.as_raw_NodeData()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn m_line_num(&self) -> i32 {
-		unsafe { sys::cv_instr_NodeData_getPropM_lineNum_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_line_num")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_lineNum_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_always_expand(&self) -> bool {
-		unsafe { sys::cv_instr_NodeData_getPropM_alwaysExpand_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_always_expand")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_alwaysExpand_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_fun_error(&self) -> bool {
-		unsafe { sys::cv_instr_NodeData_getPropM_funError_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_fun_error")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_funError_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_counter(&self) -> i32 {
-		unsafe { sys::cv_instr_NodeData_getPropM_counter_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_counter")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_counter_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_ticks_total(&self) -> u64 {
-		unsafe { sys::cv_instr_NodeData_getPropM_ticksTotal_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_ticks_total")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_ticksTotal_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn m_threads(&self) -> i32 {
-		unsafe { sys::cv_instr_NodeData_getPropM_threads_const(self.as_raw_NodeData()) }.into_result().expect("Infallible function failed: m_threads")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_threads_const(self.as_raw_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn get_total_ms(&self) -> Result<f64> {
-		unsafe { sys::cv_instr_NodeData_getTotalMs_const(self.as_raw_NodeData()) }.into_result()
+		let ret = unsafe { sys::cv_instr_NodeData_getTotalMs_const(self.as_raw_NodeData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_mean_ms(&self) -> Result<f64> {
-		unsafe { sys::cv_instr_NodeData_getMeanMs_const(self.as_raw_NodeData()) }.into_result()
+		let ret = unsafe { sys::cv_instr_NodeData_getMeanMs_const(self.as_raw_NodeData()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19515,57 +21404,68 @@ pub trait NodeDataTrait: core::NodeDataTraitConst {
 	#[inline]
 	fn set_m_fun_name(&mut self, val: &str) {
 		extern_container_arg!(nofail mut val);
-		unsafe { sys::cv_instr_NodeData_setPropM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern_mut()) }.into_result().expect("Infallible function failed: set_m_fun_name")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern_mut()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_instr_type(&mut self, val: core::TYPE) {
-		unsafe { sys::cv_instr_NodeData_setPropM_instrType_TYPE(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_instr_type")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_instrType_TYPE(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_impl_type(&mut self, val: core::IMPL) {
-		unsafe { sys::cv_instr_NodeData_setPropM_implType_IMPL(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_impl_type")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_implType_IMPL(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_line_num(&mut self, val: i32) {
-		unsafe { sys::cv_instr_NodeData_setPropM_lineNum_int(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_line_num")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_lineNum_int(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn m_ret_address(&mut self) -> *mut c_void {
-		unsafe { sys::cv_instr_NodeData_getPropM_retAddress(self.as_raw_mut_NodeData()) }.into_result().expect("Infallible function failed: m_ret_address")
+		let ret = unsafe { sys::cv_instr_NodeData_getPropM_retAddress(self.as_raw_mut_NodeData()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_ret_address(&mut self, val: *mut c_void) {
-		unsafe { sys::cv_instr_NodeData_setPropM_retAddress_voidX(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_ret_address")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_always_expand(&mut self, val: bool) {
-		unsafe { sys::cv_instr_NodeData_setPropM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_always_expand")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_fun_error(&mut self, val: bool) {
-		unsafe { sys::cv_instr_NodeData_setPropM_funError_bool(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_fun_error")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_funError_bool(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_counter(&mut self, val: i32) {
-		unsafe { sys::cv_instr_NodeData_setPropM_counter_int(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_counter")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_counter_int(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_ticks_total(&mut self, val: u64) {
-		unsafe { sys::cv_instr_NodeData_setPropM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_ticks_total")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m_threads(&mut self, val: i32) {
-		unsafe { sys::cv_instr_NodeData_setPropM_threads_int(self.as_raw_mut_NodeData(), val) }.into_result().expect("Infallible function failed: set_m_threads")
+		let ret = unsafe { sys::cv_instr_NodeData_setPropM_threads_int(self.as_raw_mut_NodeData(), val) };
+		ret
 	}
 	
 }
@@ -19606,12 +21506,16 @@ impl NodeData {
 	pub fn new(fun_name: &str, file_name: &str, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL) -> Result<core::NodeData> {
 		extern_container_arg!(fun_name);
 		extern_container_arg!(file_name);
-		unsafe { sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type) }.into_result().map(|r| unsafe { core::NodeData::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type) }.into_result()?;
+		let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(ref_: &mut core::NodeData) -> Result<core::NodeData> {
-		unsafe { sys::cv_instr_NodeData_NodeData_NodeDataR(ref_.as_raw_mut_NodeData()) }.into_result().map(|r| unsafe { core::NodeData::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_instr_NodeData_NodeData_NodeDataR(ref_.as_raw_mut_NodeData()) }.into_result()?;
+		let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -19656,7 +21560,9 @@ impl WriteStructContext {
 	pub fn new(_fs: &mut core::FileStorage, name: &str, flags: i32, type_name: &str) -> Result<core::WriteStructContext> {
 		extern_container_arg!(name);
 		extern_container_arg!(type_name);
-		unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int_const_StringR(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result().map(|r| unsafe { core::WriteStructContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int_const_StringR(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::WriteStructContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -19666,19 +21572,23 @@ pub trait ContextTraitConst {
 
 	#[inline]
 	fn ndevices(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Context_ndevices_const(self.as_raw_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_ndevices_const(self.as_raw_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device(&self, idx: size_t) -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Context_device_const_size_t(self.as_raw_Context(), idx) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_device_const_size_t(self.as_raw_Context(), idx) }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## Returns
 	/// cl_context value
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Get OpenCL context property specified on context creation
@@ -19688,17 +21598,20 @@ pub trait ContextTraitConst {
 	/// Property value if property was specified on clCreateContext, or NULL if context created without the property
 	#[inline]
 	fn get_opencl_context_property(&self, property_id: i32) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Context_getOpenCLContextProperty_const_int(self.as_raw_Context(), property_id) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_getOpenCLContextProperty_const_int(self.as_raw_Context(), property_id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn use_svm(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Context_useSVM_const(self.as_raw_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_useSVM_const(self.as_raw_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Context_empty_const(self.as_raw_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_empty_const(self.as_raw_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19709,37 +21622,43 @@ pub trait ContextTrait: core::ContextTraitConst {
 	/// @deprecated
 	#[inline]
 	fn create(&mut self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Context_create(self.as_raw_mut_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_create(self.as_raw_mut_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// @deprecated
 	#[inline]
 	fn create_with_type(&mut self, dtype: i32) -> Result<bool> {
-		unsafe { sys::cv_ocl_Context_create_int(self.as_raw_mut_Context(), dtype) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_create_int(self.as_raw_mut_Context(), dtype) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_prog(&mut self, prog: &core::ProgramSource, buildopt: &str, errmsg: &mut String) -> Result<core::Program> {
 		extern_container_arg!(buildopt);
 		string_arg_output_send!(via errmsg_via);
-		let out = unsafe { sys::cv_ocl_Context_getProg_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Context(), prog.as_raw_ProgramSource(), buildopt.opencv_as_extern(), &mut errmsg_via) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } );
-		string_arg_output_receive!(out, errmsg_via => errmsg);
-		out
+		let ret = unsafe { sys::cv_ocl_Context_getProg_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Context(), prog.as_raw_ProgramSource(), buildopt.opencv_as_extern(), &mut errmsg_via) }.into_result()?;
+		let ret = unsafe { core::Program::opencv_from_extern(ret) };
+		string_arg_output_receive!(errmsg_via => errmsg);
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn unload_prog(&mut self, prog: &mut core::Program) -> Result<()> {
-		unsafe { sys::cv_ocl_Context_unloadProg_ProgramR(self.as_raw_mut_Context(), prog.as_raw_mut_Program()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_unloadProg_ProgramR(self.as_raw_mut_Context(), prog.as_raw_mut_Program()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_svm(&mut self, enabled: bool) -> Result<()> {
-		unsafe { sys::cv_ocl_Context_setUseSVM_bool(self.as_raw_mut_Context(), enabled) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_setUseSVM_bool(self.as_raw_mut_Context(), enabled) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_ocl_Context_release(self.as_raw_mut_Context()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Context_release(self.as_raw_mut_Context()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -19770,47 +21689,63 @@ impl core::ContextTrait for Context {
 impl Context {
 	#[inline]
 	pub fn default() -> core::Context {
-		unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Context_Context() };
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn new_with_type(dtype: i32) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_Context_int(dtype) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_Context_int(dtype) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(c: &core::Context) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context()) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(c: &mut core::Context) -> core::Context {
-		unsafe { sys::cv_ocl_Context_Context_ContextR(c.as_raw_mut_Context()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Context_Context_ContextR(c.as_raw_mut_Context()) };
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// ## C++ default parameters
 	/// * initialize: true
 	#[inline]
 	pub fn get_default(initialize: bool) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_getDefault_bool(initialize) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_getDefault_bool(initialize) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## Parameters
 	/// * context: OpenCL handle (cl_context). clRetainContext() is called on success
 	#[inline]
 	pub fn from_handle(context: *mut c_void) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_fromHandle_voidX(context) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_fromHandle_voidX(context) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_device(device: &core::Device) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create(configuration: &str) -> Result<core::Context> {
 		extern_container_arg!(configuration);
-		unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -19864,379 +21799,461 @@ pub trait DeviceTraitConst {
 
 	#[inline]
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn extensions(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_extension_supported(&self, extension_name: &str) -> Result<bool> {
 		extern_container_arg!(extension_name);
-		unsafe { sys::cv_ocl_Device_isExtensionSupported_const_const_StringR(self.as_raw_Device(), extension_name.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_isExtensionSupported_const_const_StringR(self.as_raw_Device(), extension_name.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn vendor_name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn opencl_c_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn opencl_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device_version_major(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_deviceVersionMajor_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_deviceVersionMajor_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device_version_minor(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_deviceVersionMinor_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_deviceVersionMinor_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn driver_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_type_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_type_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn address_bits(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_addressBits_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_addressBits_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn available(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_available_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_available_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn compiler_available(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_compilerAvailable_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_compilerAvailable_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn linker_available(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_linkerAvailable_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_linkerAvailable_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn double_fp_config(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_doubleFPConfig_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_doubleFPConfig_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn single_fp_config(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_singleFPConfig_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_singleFPConfig_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn half_fp_config(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_halfFPConfig_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_halfFPConfig_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn endian_little(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_endianLittle_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_endianLittle_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn error_correction_support(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_errorCorrectionSupport_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_errorCorrectionSupport_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn execution_capabilities(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_executionCapabilities_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_executionCapabilities_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn global_mem_cache_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_globalMemCacheSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_globalMemCacheSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn global_mem_cache_type(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_globalMemCacheType_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_globalMemCacheType_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn global_mem_cache_line_size(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_globalMemCacheLineSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_globalMemCacheLineSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn global_mem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_globalMemSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_globalMemSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn local_mem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_localMemSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_localMemSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn local_mem_type(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_localMemType_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_localMemType_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn host_unified_memory(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_hostUnifiedMemory_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_hostUnifiedMemory_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_support(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_imageSupport_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imageSupport_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_from_buffer_support(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_imageFromBufferSupport_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imageFromBufferSupport_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_pitch_alignment(&self) -> Result<u32> {
-		unsafe { sys::cv_ocl_Device_imagePitchAlignment_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imagePitchAlignment_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_base_address_alignment(&self) -> Result<u32> {
-		unsafe { sys::cv_ocl_Device_imageBaseAddressAlignment_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imageBaseAddressAlignment_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// deprecated, use isExtensionSupported() method (probably with "cl_khr_subgroups" value)
 	#[inline]
 	fn intel_subgroups_support(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_intelSubgroupsSupport_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_intelSubgroupsSupport_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image2_d_max_width(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_image2DMaxWidth_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_image2DMaxWidth_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image2_d_max_height(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_image2DMaxHeight_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_image2DMaxHeight_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image3_d_max_width(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_image3DMaxWidth_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_image3DMaxWidth_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image3_d_max_height(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_image3DMaxHeight_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_image3DMaxHeight_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image3_d_max_depth(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_image3DMaxDepth_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_image3DMaxDepth_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_max_buffer_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_imageMaxBufferSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imageMaxBufferSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn image_max_array_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_imageMaxArraySize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_imageMaxArraySize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn vendor_id(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_vendorID_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_vendorID_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_amd(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_isAMD_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_isAMD_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_intel(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_isIntel_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_isIntel_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_n_vidia(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_isNVidia_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_isNVidia_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_clock_frequency(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxClockFrequency_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxClockFrequency_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_compute_units(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxComputeUnits_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxComputeUnits_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_constant_args(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxConstantArgs_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxConstantArgs_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_constant_buffer_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_maxConstantBufferSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxConstantBufferSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_mem_alloc_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_maxMemAllocSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxMemAllocSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_parameter_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_maxParameterSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxParameterSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_read_image_args(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxReadImageArgs_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxReadImageArgs_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_write_image_args(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxWriteImageArgs_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxWriteImageArgs_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_samplers(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxSamplers_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxSamplers_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_work_group_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_maxWorkGroupSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxWorkGroupSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_work_item_dims(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_maxWorkItemDims_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxWorkItemDims_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn max_work_item_sizes(&self, unnamed: &mut size_t) -> Result<()> {
-		unsafe { sys::cv_ocl_Device_maxWorkItemSizes_const_size_tX(self.as_raw_Device(), unnamed) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_maxWorkItemSizes_const_size_tX(self.as_raw_Device(), unnamed) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn mem_base_addr_align(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_memBaseAddrAlign_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_memBaseAddrAlign_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_char(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthChar_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthChar_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_short(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthShort_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthShort_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_int(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthInt_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthInt_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_long(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthLong_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthLong_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_float(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthFloat_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthFloat_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_double(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthDouble_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthDouble_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn native_vector_width_half(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_nativeVectorWidthHalf_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_nativeVectorWidthHalf_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_char(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthChar_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthChar_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_short(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthShort_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthShort_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_int(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthInt_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthInt_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_long(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthLong_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthLong_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_float(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthFloat_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthFloat_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_double(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthDouble_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthDouble_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn preferred_vector_width_half(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_Device_preferredVectorWidthHalf_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_preferredVectorWidthHalf_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn printf_buffer_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_printfBufferSize_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_printfBufferSize_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn profiling_timer_resolution(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Device_profilingTimerResolution_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_profilingTimerResolution_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Device_empty_const(self.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_empty_const(self.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20246,7 +22263,8 @@ pub trait DeviceTrait: core::DeviceTraitConst {
 
 	#[inline]
 	fn set(&mut self, d: *mut c_void) -> Result<()> {
-		unsafe { sys::cv_ocl_Device_set_voidX(self.as_raw_mut_Device(), d) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Device_set_voidX(self.as_raw_mut_Device(), d) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20277,27 +22295,37 @@ impl core::DeviceTrait for Device {
 impl Device {
 	#[inline]
 	pub fn default() -> core::Device {
-		unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Device_Device() };
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn new(d: *mut c_void) -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_Device_voidX(d) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_Device_voidX(d) }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(d: &core::Device) -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(d: &mut core::Device) -> core::Device {
-		unsafe { sys::cv_ocl_Device_Device_DeviceR(d.as_raw_mut_Device()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Device_Device_DeviceR(d.as_raw_mut_Device()) };
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn get_default() -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_getDefault() }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_getDefault() }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -20309,7 +22337,9 @@ impl Device {
 	/// to continue using the device.
 	#[inline]
 	pub fn from_handle(d: *mut c_void) -> Result<core::Device> {
-		unsafe { sys::cv_ocl_Device_fromHandle_voidX(d) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Device_fromHandle_voidX(d) }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -20327,7 +22357,8 @@ pub trait Image2DTraitConst {
 
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20363,7 +22394,9 @@ impl core::Image2DTrait for Image2D {
 impl Image2D {
 	#[inline]
 	pub fn default() -> core::Image2D {
-		unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Image2D_Image2D() };
+		let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// ## Parameters
@@ -20377,30 +22410,38 @@ impl Image2D {
 	/// * alias: false
 	#[inline]
 	pub fn new(src: &core::UMat, norm: bool, alias: bool) -> Result<core::Image2D> {
-		unsafe { sys::cv_ocl_Image2D_Image2D_const_UMatR_bool_bool(src.as_raw_UMat(), norm, alias) }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Image2D_Image2D_const_UMatR_bool_bool(src.as_raw_UMat(), norm, alias) }.into_result()?;
+		let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(i: &core::Image2D) -> Result<core::Image2D> {
-		unsafe { sys::cv_ocl_Image2D_Image2D_const_Image2DR(i.as_raw_Image2D()) }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Image2D_Image2D_const_Image2DR(i.as_raw_Image2D()) }.into_result()?;
+		let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(unnamed: &mut core::Image2D) -> core::Image2D {
-		unsafe { sys::cv_ocl_Image2D_Image2D_Image2DR(unnamed.as_raw_mut_Image2D()) }.into_result().map(|r| unsafe { core::Image2D::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Image2D_Image2D_Image2DR(unnamed.as_raw_mut_Image2D()) };
+		let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Indicates if creating an aliased image should succeed.
 	/// Depends on the underlying platform and the dimensions of the UMat.
 	#[inline]
 	pub fn can_create_alias(u: &core::UMat) -> Result<bool> {
-		unsafe { sys::cv_ocl_Image2D_canCreateAlias_const_UMatR(u.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Image2D_canCreateAlias_const_UMatR(u.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Indicates if the image format is supported.
 	#[inline]
 	pub fn is_format_supported(depth: i32, cn: i32, norm: bool) -> Result<bool> {
-		unsafe { sys::cv_ocl_Image2D_isFormatSupported_int_int_bool(depth, cn, norm) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Image2D_isFormatSupported_int_int_bool(depth, cn, norm) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20418,32 +22459,38 @@ pub trait KernelTraitConst {
 
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Kernel_empty_const(self.as_raw_Kernel()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_empty_const(self.as_raw_Kernel()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn work_group_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Kernel_workGroupSize_const(self.as_raw_Kernel()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_workGroupSize_const(self.as_raw_Kernel()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn prefered_work_group_size_multiple(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(self.as_raw_Kernel()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(self.as_raw_Kernel()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn compile_work_group_size(&self, wsz: &mut [size_t]) -> Result<bool> {
-		unsafe { sys::cv_ocl_Kernel_compileWorkGroupSize_const_size_tX(self.as_raw_Kernel(), wsz.as_mut_ptr()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_compileWorkGroupSize_const_size_tX(self.as_raw_Kernel(), wsz.as_mut_ptr()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn local_mem_size(&self) -> Result<size_t> {
-		unsafe { sys::cv_ocl_Kernel_localMemSize_const(self.as_raw_Kernel()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_localMemSize_const(self.as_raw_Kernel()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20454,7 +22501,8 @@ pub trait KernelTrait: core::KernelTraitConst {
 	#[inline]
 	fn create(&mut self, kname: &str, prog: &core::Program) -> Result<bool> {
 		extern_container_arg!(kname);
-		unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramR(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_Program()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramR(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_Program()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20464,29 +22512,33 @@ pub trait KernelTrait: core::KernelTraitConst {
 		extern_container_arg!(kname);
 		extern_container_arg!(buildopts);
 		string_arg_output_send!(via errmsg_via);
-		let out = unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR_StringX(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via) }.into_result();
-		string_arg_output_receive!(out, errmsg_via => errmsg);
-		out
+		let ret = unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR_StringX(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via) }.into_result()?;
+		string_arg_output_receive!(errmsg_via => errmsg);
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set(&mut self, i: i32, value: *const c_void, sz: size_t) -> Result<i32> {
-		unsafe { sys::cv_ocl_Kernel_set_int_const_voidX_size_t(self.as_raw_mut_Kernel(), i, value, sz) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_set_int_const_voidX_size_t(self.as_raw_mut_Kernel(), i, value, sz) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_1(&mut self, i: i32, image_2d: &core::Image2D) -> Result<i32> {
-		unsafe { sys::cv_ocl_Kernel_set_int_const_Image2DR(self.as_raw_mut_Kernel(), i, image_2d.as_raw_Image2D()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_set_int_const_Image2DR(self.as_raw_mut_Kernel(), i, image_2d.as_raw_Image2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_umat(&mut self, i: i32, m: &core::UMat) -> Result<i32> {
-		unsafe { sys::cv_ocl_Kernel_set_int_const_UMatR(self.as_raw_mut_Kernel(), i, m.as_raw_UMat()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_set_int_const_UMatR(self.as_raw_mut_Kernel(), i, m.as_raw_UMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_kernel_arg(&mut self, i: i32, arg: &core::KernelArg) -> Result<i32> {
-		unsafe { sys::cv_ocl_Kernel_set_int_const_KernelArgR(self.as_raw_mut_Kernel(), i, arg.as_raw_KernelArg()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_set_int_const_KernelArgR(self.as_raw_mut_Kernel(), i, arg.as_raw_KernelArg()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Run the OpenCL kernel (globalsize value may be adjusted)
@@ -20508,7 +22560,8 @@ pub trait KernelTrait: core::KernelTraitConst {
 	/// * q: Queue()
 	#[inline]
 	fn run(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &core::Queue) -> Result<bool> {
-		unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Run the OpenCL kernel
@@ -20524,14 +22577,16 @@ pub trait KernelTrait: core::KernelTraitConst {
 	/// * q: Queue()
 	#[inline]
 	fn run_(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &core::Queue) -> Result<bool> {
-		unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
 	/// * q: Queue()
 	#[inline]
 	fn run_task(&mut self, sync: bool, q: &core::Queue) -> Result<bool> {
-		unsafe { sys::cv_ocl_Kernel_runTask_bool_const_QueueR(self.as_raw_mut_Kernel(), sync, q.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_runTask_bool_const_QueueR(self.as_raw_mut_Kernel(), sync, q.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Similar to synchronized run_() call with returning of kernel execution time
@@ -20544,7 +22599,8 @@ pub trait KernelTrait: core::KernelTraitConst {
 	/// * q: Queue()
 	#[inline]
 	fn run_profiling(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], q: &core::Queue) -> Result<i64> {
-		unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20575,13 +22631,17 @@ impl core::KernelTrait for Kernel {
 impl Kernel {
 	#[inline]
 	pub fn default() -> core::Kernel {
-		unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Kernel_Kernel() };
+		let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn new(kname: &str, prog: &core::Program) -> Result<core::Kernel> {
 		extern_container_arg!(kname);
-		unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramR(kname.opencv_as_extern(), prog.as_raw_Program()) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramR(kname.opencv_as_extern(), prog.as_raw_Program()) }.into_result()?;
+		let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20592,19 +22652,24 @@ impl Kernel {
 		extern_container_arg!(kname);
 		extern_container_arg!(buildopts);
 		string_arg_output_send!(via errmsg_via);
-		let out = unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } );
-		string_arg_output_receive!(out, errmsg_via => errmsg);
-		out
+		let ret = unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via) }.into_result()?;
+		let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+		string_arg_output_receive!(errmsg_via => errmsg);
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(k: &core::Kernel) -> Result<core::Kernel> {
-		unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel()) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel()) }.into_result()?;
+		let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(k: &mut core::Kernel) -> core::Kernel {
-		unsafe { sys::cv_ocl_Kernel_Kernel_KernelR(k.as_raw_mut_Kernel()) }.into_result().map(|r| unsafe { core::Kernel::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Kernel_Kernel_KernelR(k.as_raw_mut_Kernel()) };
+		let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -20622,27 +22687,32 @@ pub trait KernelArgTraitConst {
 
 	#[inline]
 	fn flags(&self) -> i32 {
-		unsafe { sys::cv_ocl_KernelArg_getPropFlags_const(self.as_raw_KernelArg()) }.into_result().expect("Infallible function failed: flags")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropFlags_const(self.as_raw_KernelArg()) };
+		ret
 	}
 	
 	#[inline]
 	fn obj(&self) -> *const c_void {
-		unsafe { sys::cv_ocl_KernelArg_getPropObj_const(self.as_raw_KernelArg()) }.into_result().expect("Infallible function failed: obj")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropObj_const(self.as_raw_KernelArg()) };
+		ret
 	}
 	
 	#[inline]
 	fn sz(&self) -> size_t {
-		unsafe { sys::cv_ocl_KernelArg_getPropSz_const(self.as_raw_KernelArg()) }.into_result().expect("Infallible function failed: sz")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropSz_const(self.as_raw_KernelArg()) };
+		ret
 	}
 	
 	#[inline]
 	fn wscale(&self) -> i32 {
-		unsafe { sys::cv_ocl_KernelArg_getPropWscale_const(self.as_raw_KernelArg()) }.into_result().expect("Infallible function failed: wscale")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropWscale_const(self.as_raw_KernelArg()) };
+		ret
 	}
 	
 	#[inline]
 	fn iwscale(&self) -> i32 {
-		unsafe { sys::cv_ocl_KernelArg_getPropIwscale_const(self.as_raw_KernelArg()) }.into_result().expect("Infallible function failed: iwscale")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropIwscale_const(self.as_raw_KernelArg()) };
+		ret
 	}
 	
 }
@@ -20652,32 +22722,39 @@ pub trait KernelArgTrait: core::KernelArgTraitConst {
 
 	#[inline]
 	fn set_flags(&mut self, val: i32) {
-		unsafe { sys::cv_ocl_KernelArg_setPropFlags_int(self.as_raw_mut_KernelArg(), val) }.into_result().expect("Infallible function failed: set_flags")
+		let ret = unsafe { sys::cv_ocl_KernelArg_setPropFlags_int(self.as_raw_mut_KernelArg(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn m(&mut self) -> core::UMat {
-		unsafe { sys::cv_ocl_KernelArg_getPropM(self.as_raw_mut_KernelArg()) }.into_result().map(|r| unsafe { core::UMat::opencv_from_extern(r) } ).expect("Infallible function failed: m")
+		let ret = unsafe { sys::cv_ocl_KernelArg_getPropM(self.as_raw_mut_KernelArg()) };
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn set_m(&mut self, val: &mut core::UMat) {
-		unsafe { sys::cv_ocl_KernelArg_setPropM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_mut_UMat()) }.into_result().expect("Infallible function failed: set_m")
+		let ret = unsafe { sys::cv_ocl_KernelArg_setPropM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_mut_UMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_sz(&mut self, val: size_t) {
-		unsafe { sys::cv_ocl_KernelArg_setPropSz_size_t(self.as_raw_mut_KernelArg(), val) }.into_result().expect("Infallible function failed: set_sz")
+		let ret = unsafe { sys::cv_ocl_KernelArg_setPropSz_size_t(self.as_raw_mut_KernelArg(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_wscale(&mut self, val: i32) {
-		unsafe { sys::cv_ocl_KernelArg_setPropWscale_int(self.as_raw_mut_KernelArg(), val) }.into_result().expect("Infallible function failed: set_wscale")
+		let ret = unsafe { sys::cv_ocl_KernelArg_setPropWscale_int(self.as_raw_mut_KernelArg(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_iwscale(&mut self, val: i32) {
-		unsafe { sys::cv_ocl_KernelArg_setPropIwscale_int(self.as_raw_mut_KernelArg(), val) }.into_result().expect("Infallible function failed: set_iwscale")
+		let ret = unsafe { sys::cv_ocl_KernelArg_setPropIwscale_int(self.as_raw_mut_KernelArg(), val) };
+		ret
 	}
 	
 }
@@ -20713,32 +22790,44 @@ impl KernelArg {
 	/// * _sz: 0
 	#[inline]
 	pub fn new(_flags: i32, _m: &mut core::UMat, wscale: i32, iwscale: i32, _obj: *const c_void, _sz: size_t) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn default() -> core::KernelArg {
-		unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_KernelArg_KernelArg() };
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn local(local_mem_size: size_t) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_Local_size_t(local_mem_size) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_Local_size_t(local_mem_size) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ptr_write_only(m: &core::UMat) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_PtrWriteOnly_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_PtrWriteOnly_const_UMatR(m.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ptr_read_only(m: &core::UMat) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_PtrReadOnly_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_PtrReadOnly_const_UMatR(m.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn ptr_read_write(m: &core::UMat) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_PtrReadWrite_const_UMatR(m.as_raw_UMat()) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_PtrReadWrite_const_UMatR(m.as_raw_UMat()) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20746,7 +22835,9 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn read_write(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_ReadWrite_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_ReadWrite_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20754,7 +22845,9 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn read_write_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20762,7 +22855,9 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn read_only(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_ReadOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_ReadOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20770,7 +22865,9 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn write_only(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20778,7 +22875,9 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn read_only_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -20786,12 +22885,16 @@ impl KernelArg {
 	/// * iwscale: 1
 	#[inline]
 	pub fn write_only_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn constant(m: &core::Mat) -> Result<core::KernelArg> {
-		unsafe { sys::cv_ocl_KernelArg_Constant_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_KernelArg_Constant_const_MatR(m.as_raw_Mat()) }.into_result()?;
+		let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -20810,25 +22913,32 @@ pub trait OpenCLExecutionContextTraitConst {
 	/// Get associated ocl::Context
 	#[inline]
 	fn get_context(&self) -> Result<core::Context> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_getContext_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Context::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_getContext_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Get the single default associated ocl::Device
 	#[inline]
 	fn get_device(&self) -> Result<core::Device> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_getDevice_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Device::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_getDevice_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		let ret = unsafe { core::Device::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Get the single ocl::Queue that is associated with the ocl::Context and
 	/// the single default ocl::Device
 	#[inline]
 	fn get_queue(&self) -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_getQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_getQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn use_opencl(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_useOpenCL_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_useOpenCL_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Bind this OpenCL execution context to current thread.
@@ -20839,7 +22949,8 @@ pub trait OpenCLExecutionContextTraitConst {
 	/// Note: clFinish is not called for queue of previous execution context
 	#[inline]
 	fn bind(&self) -> Result<()> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_bind_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_bind_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Creates new execution context with same OpenCV context and device
@@ -20848,7 +22959,9 @@ pub trait OpenCLExecutionContextTraitConst {
 	/// * q: OpenCL queue
 	#[inline]
 	fn clone_with_new_queue(&self, q: &core::Queue) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(self.as_raw_OpenCLExecutionContext(), q.as_raw_Queue()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(self.as_raw_OpenCLExecutionContext(), q.as_raw_Queue()) }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates new execution context with same OpenCV context and device
@@ -20859,12 +22972,15 @@ pub trait OpenCLExecutionContextTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn clone_with_new_queue_1(&self) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_empty_const(self.as_raw_OpenCLExecutionContext()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_empty_const(self.as_raw_OpenCLExecutionContext()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20874,12 +22990,14 @@ pub trait OpenCLExecutionContextTrait: core::OpenCLExecutionContextTraitConst {
 
 	#[inline]
 	fn set_use_opencl(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(self.as_raw_mut_OpenCLExecutionContext(), flag) }.into_result()
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(self.as_raw_mut_OpenCLExecutionContext(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_release(self.as_raw_mut_OpenCLExecutionContext()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_release(self.as_raw_mut_OpenCLExecutionContext()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -20910,17 +23028,23 @@ impl core::OpenCLExecutionContextTrait for OpenCLExecutionContext {
 impl OpenCLExecutionContext {
 	#[inline]
 	pub fn default() -> core::OpenCLExecutionContext {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() };
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: copy")
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) };
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy_mut(unnamed: &mut core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed.as_raw_mut_OpenCLExecutionContext()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextR(unnamed.as_raw_mut_OpenCLExecutionContext()) };
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Get OpenCL execution context of current thread.
@@ -20930,13 +23054,17 @@ impl OpenCLExecutionContext {
 	/// - reuse context of the main thread (threadID = 0)
 	#[inline]
 	pub fn get_current() -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent() }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Get OpenCL execution context of current thread (can be empty)
 	#[inline]
 	pub fn get_current_ref() -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef() }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef() }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates OpenCL execution context
@@ -20957,7 +23085,9 @@ impl OpenCLExecutionContext {
 	#[inline]
 	pub fn create(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<core::OpenCLExecutionContext> {
 		extern_container_arg!(platform_name);
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id) }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates OpenCL execution context
@@ -20968,7 +23098,9 @@ impl OpenCLExecutionContext {
 	/// * queue: non-empty OpenCL queue for provided context and device
 	#[inline]
 	pub fn create_1(context: &core::Context, device: &core::Device, queue: &core::Queue) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue()) }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates OpenCL execution context
@@ -20981,7 +23113,9 @@ impl OpenCLExecutionContext {
 	/// ## Overloaded parameters
 	#[inline]
 	pub fn create_2(context: &core::Context, device: &core::Device) -> Result<core::OpenCLExecutionContext> {
-		unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device()) }.into_result().map(|r| unsafe { core::OpenCLExecutionContext::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21000,12 +23134,14 @@ pub trait PlatformTraitConst {
 
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Platform_empty_const(self.as_raw_Platform()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Platform_empty_const(self.as_raw_Platform()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21042,23 +23178,31 @@ impl core::PlatformTrait for Platform {
 impl Platform {
 	#[inline]
 	pub fn default() -> core::Platform {
-		unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Platform_Platform() };
+		let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn copy(p: &core::Platform) -> Result<core::Platform> {
-		unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform()) }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform()) }.into_result()?;
+		let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(p: &mut core::Platform) -> core::Platform {
-		unsafe { sys::cv_ocl_Platform_Platform_PlatformR(p.as_raw_mut_Platform()) }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Platform_Platform_PlatformR(p.as_raw_mut_Platform()) };
+		let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// @deprecated
 	#[inline]
 	pub fn get_default() -> Result<core::Platform> {
-		unsafe { sys::cv_ocl_Platform_getDefault() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Platform_getDefault() }.into_result()?;
+		let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21076,43 +23220,54 @@ pub trait PlatformInfoTraitConst {
 
 	#[inline]
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn vendor(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// See CL_PLATFORM_VERSION
 	#[inline]
 	fn version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn version_major(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_PlatformInfo_versionMajor_const(self.as_raw_PlatformInfo()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_versionMajor_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn version_minor(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_PlatformInfo_versionMinor_const(self.as_raw_PlatformInfo()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_versionMinor_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn device_number(&self) -> Result<i32> {
-		unsafe { sys::cv_ocl_PlatformInfo_deviceNumber_const(self.as_raw_PlatformInfo()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_deviceNumber_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_device(&self, device: &mut core::Device, d: i32) -> Result<()> {
-		unsafe { sys::cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(self.as_raw_PlatformInfo(), device.as_raw_mut_Device(), d) }.into_result()
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(self.as_raw_PlatformInfo(), device.as_raw_mut_Device(), d) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_PlatformInfo_empty_const(self.as_raw_PlatformInfo()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_empty_const(self.as_raw_PlatformInfo()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21148,24 +23303,32 @@ impl core::PlatformInfoTrait for PlatformInfo {
 impl PlatformInfo {
 	#[inline]
 	pub fn default() -> core::PlatformInfo {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() };
+		let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// ## Parameters
 	/// * id: pointer cl_platform_id (cl_platform_id*)
 	#[inline]
 	pub fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id) }.into_result()?;
+		let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(i: &core::PlatformInfo) -> Result<core::PlatformInfo> {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo()) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo()) }.into_result()?;
+		let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(i: &mut core::PlatformInfo) -> core::PlatformInfo {
-		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoR(i.as_raw_mut_PlatformInfo()) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoR(i.as_raw_mut_PlatformInfo()) };
+		let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		ret
 	}
 	
 }
@@ -21183,7 +23346,8 @@ pub trait ProgramTraitConst {
 
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Query device-specific program binary.
@@ -21196,30 +23360,36 @@ pub trait ProgramTraitConst {
 	/// * binary:[out] output buffer
 	#[inline]
 	fn get_binary(&self, binary: &mut core::Vector<i8>) -> Result<()> {
-		unsafe { sys::cv_ocl_Program_getBinary_const_vector_char_R(self.as_raw_Program(), binary.as_raw_mut_VectorOfi8()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Program_getBinary_const_vector_char_R(self.as_raw_Program(), binary.as_raw_mut_VectorOfi8()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Program_empty_const(self.as_raw_Program()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Program_empty_const(self.as_raw_Program()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn write(&self, buf: &mut String) -> Result<bool> {
 		string_arg_output_send!(via buf_via);
-		let out = unsafe { sys::cv_ocl_Program_write_const_StringR(self.as_raw_Program(), &mut buf_via) }.into_result();
-		string_arg_output_receive!(out, buf_via => buf);
-		out
+		let ret = unsafe { sys::cv_ocl_Program_write_const_StringR(self.as_raw_Program(), &mut buf_via) }.into_result()?;
+		string_arg_output_receive!(buf_via => buf);
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn source(&self) -> Result<core::ProgramSource> {
-		unsafe { sys::cv_ocl_Program_source_const(self.as_raw_Program()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Program_source_const(self.as_raw_Program()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_prefix(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21231,16 +23401,17 @@ pub trait ProgramTrait: core::ProgramTraitConst {
 	fn create(&mut self, src: &core::ProgramSource, buildflags: &str, errmsg: &mut String) -> Result<bool> {
 		extern_container_arg!(buildflags);
 		string_arg_output_send!(via errmsg_via);
-		let out = unsafe { sys::cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Program(), src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via) }.into_result();
-		string_arg_output_receive!(out, errmsg_via => errmsg);
-		out
+		let ret = unsafe { sys::cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Program(), src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via) }.into_result()?;
+		string_arg_output_receive!(errmsg_via => errmsg);
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn read(&mut self, buf: &str, buildflags: &str) -> Result<bool> {
 		extern_container_arg!(buf);
 		extern_container_arg!(buildflags);
-		unsafe { sys::cv_ocl_Program_read_const_StringR_const_StringR(self.as_raw_mut_Program(), buf.opencv_as_extern(), buildflags.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Program_read_const_StringR_const_StringR(self.as_raw_mut_Program(), buf.opencv_as_extern(), buildflags.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21271,32 +23442,41 @@ impl core::ProgramTrait for Program {
 impl Program {
 	#[inline]
 	pub fn default() -> core::Program {
-		unsafe { sys::cv_ocl_Program_Program() }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Program_Program() };
+		let ret = unsafe { core::Program::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn new(src: &core::ProgramSource, buildflags: &str, errmsg: &mut String) -> Result<core::Program> {
 		extern_container_arg!(buildflags);
 		string_arg_output_send!(via errmsg_via);
-		let out = unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } );
-		string_arg_output_receive!(out, errmsg_via => errmsg);
-		out
+		let ret = unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via) }.into_result()?;
+		let ret = unsafe { core::Program::opencv_from_extern(ret) };
+		string_arg_output_receive!(errmsg_via => errmsg);
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(prog: &core::Program) -> Result<core::Program> {
-		unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program()) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program()) }.into_result()?;
+		let ret = unsafe { core::Program::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(prog: &mut core::Program) -> core::Program {
-		unsafe { sys::cv_ocl_Program_Program_ProgramR(prog.as_raw_mut_Program()) }.into_result().map(|r| unsafe { core::Program::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Program_Program_ProgramR(prog.as_raw_mut_Program()) };
+		let ret = unsafe { core::Program::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
 		extern_container_arg!(buildflags);
-		unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21314,17 +23494,21 @@ pub trait ProgramSourceTraitConst {
 
 	#[inline]
 	fn source(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource()) }.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn hash(&self) -> Result<core::ProgramSource_hash_t> {
-		unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21360,7 +23544,9 @@ impl core::ProgramSourceTrait for ProgramSource {
 impl ProgramSource {
 	#[inline]
 	pub fn default() -> core::ProgramSource {
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_ProgramSource_ProgramSource() };
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
@@ -21369,23 +23555,31 @@ impl ProgramSource {
 		extern_container_arg!(name);
 		extern_container_arg!(code_str);
 		extern_container_arg!(code_hash);
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR_const_StringR_const_StringR_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), code_str.opencv_as_extern(), code_hash.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR_const_StringR_const_StringR_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), code_str.opencv_as_extern(), code_hash.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn from_str(prog: &str) -> Result<core::ProgramSource> {
 		extern_container_arg!(prog);
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR(prog.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR(prog.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(prog: &core::ProgramSource) -> Result<core::ProgramSource> {
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceR(prog.as_raw_ProgramSource()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceR(prog.as_raw_ProgramSource()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(prog: &mut core::ProgramSource) -> core::ProgramSource {
-		unsafe { sys::cv_ocl_ProgramSource_ProgramSource_ProgramSourceR(prog.as_raw_mut_ProgramSource()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_ProgramSource_ProgramSource_ProgramSourceR(prog.as_raw_mut_ProgramSource()) };
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// Describe OpenCL program binary.
@@ -21411,7 +23605,9 @@ impl ProgramSource {
 		extern_container_arg!(module);
 		extern_container_arg!(name);
 		extern_container_arg!(build_options);
-		unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Describe OpenCL program in SPIR format.
@@ -21444,7 +23640,9 @@ impl ProgramSource {
 		extern_container_arg!(module);
 		extern_container_arg!(name);
 		extern_container_arg!(build_options);
-		unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result().map(|r| unsafe { core::ProgramSource::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21462,18 +23660,22 @@ pub trait QueueTraitConst {
 
 	#[inline]
 	fn ptr(&self) -> Result<*mut c_void> {
-		unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns OpenCL command queue with enable profiling mode support
 	#[inline]
 	fn get_profiling_queue(&self) -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_getProfilingQueue_const(self.as_raw_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Queue_getProfilingQueue_const(self.as_raw_Queue()) }.into_result()?;
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ocl_Queue_empty_const(self.as_raw_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Queue_empty_const(self.as_raw_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21486,12 +23688,14 @@ pub trait QueueTrait: core::QueueTraitConst {
 	/// * d: Device()
 	#[inline]
 	fn create(&mut self, c: &core::Context, d: &core::Device) -> Result<bool> {
-		unsafe { sys::cv_ocl_Queue_create_const_ContextR_const_DeviceR(self.as_raw_mut_Queue(), c.as_raw_Context(), d.as_raw_Device()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Queue_create_const_ContextR_const_DeviceR(self.as_raw_mut_Queue(), c.as_raw_Context(), d.as_raw_Device()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn finish(&mut self) -> Result<()> {
-		unsafe { sys::cv_ocl_Queue_finish(self.as_raw_mut_Queue()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Queue_finish(self.as_raw_mut_Queue()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21522,29 +23726,39 @@ impl core::QueueTrait for Queue {
 impl Queue {
 	#[inline]
 	pub fn default() -> core::Queue {
-		unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } ).expect("Infallible function failed: default")
+		let ret = unsafe { sys::cv_ocl_Queue_Queue() };
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// ## C++ default parameters
 	/// * d: Device()
 	#[inline]
 	pub fn new(c: &core::Context, d: &core::Device) -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device()) }.into_result()?;
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(q: &core::Queue) -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue()) }.into_result()?;
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy_mut(q: &mut core::Queue) -> core::Queue {
-		unsafe { sys::cv_ocl_Queue_Queue_QueueR(q.as_raw_mut_Queue()) }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
+		let ret = unsafe { sys::cv_ocl_Queue_Queue_QueueR(q.as_raw_mut_Queue()) };
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	pub fn get_default() -> Result<core::Queue> {
-		unsafe { sys::cv_ocl_Queue_getDefault() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Queue_getDefault() }.into_result()?;
+		let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21562,7 +23776,8 @@ pub trait TimerTraitConst {
 
 	#[inline]
 	fn duration_ns(&self) -> Result<u64> {
-		unsafe { sys::cv_ocl_Timer_durationNS_const(self.as_raw_Timer()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Timer_durationNS_const(self.as_raw_Timer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21572,12 +23787,14 @@ pub trait TimerTrait: core::TimerTraitConst {
 
 	#[inline]
 	fn start(&mut self) -> Result<()> {
-		unsafe { sys::cv_ocl_Timer_start(self.as_raw_mut_Timer()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Timer_start(self.as_raw_mut_Timer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn stop(&mut self) -> Result<()> {
-		unsafe { sys::cv_ocl_Timer_stop(self.as_raw_mut_Timer()) }.into_result()
+		let ret = unsafe { sys::cv_ocl_Timer_stop(self.as_raw_mut_Timer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21608,7 +23825,9 @@ impl core::TimerTrait for Timer {
 impl Timer {
 	#[inline]
 	pub fn new(q: &core::Queue) -> Result<core::Timer> {
-		unsafe { sys::cv_ocl_Timer_Timer_const_QueueR(q.as_raw_Queue()) }.into_result().map(|r| unsafe { core::Timer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ocl_Timer_Timer_const_QueueR(q.as_raw_Queue()) }.into_result()?;
+		let ret = unsafe { core::Timer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21622,18 +23841,21 @@ pub trait ArraysTraitConst {
 	/// Binds all vertex arrays.
 	#[inline]
 	fn bind(&self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Returns the vertex count.
 	#[inline]
 	fn size(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21647,13 +23869,15 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	#[inline]
 	fn set_vertex_array(&mut self, vertex: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(vertex);
-		unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Resets vertex coordinates.
 	#[inline]
 	fn reset_vertex_array(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets an array of vertex colors.
@@ -21662,13 +23886,15 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	#[inline]
 	fn set_color_array(&mut self, color: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(color);
-		unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Resets vertex colors.
 	#[inline]
 	fn reset_color_array(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets an array of vertex normals.
@@ -21677,13 +23903,15 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	#[inline]
 	fn set_normal_array(&mut self, normal: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(normal);
-		unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Resets vertex normals.
 	#[inline]
 	fn reset_normal_array(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets an array of vertex texture coordinates.
@@ -21692,19 +23920,22 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	#[inline]
 	fn set_tex_coord_array(&mut self, tex_coord: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(tex_coord);
-		unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Resets vertex texture coordinates.
 	#[inline]
 	fn reset_tex_coord_array(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Releases all inner buffers.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_Arrays()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_Arrays()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets auto release mode all inner buffers.
@@ -21712,7 +23943,8 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	/// * flag: Auto release mode.
 	#[inline]
 	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_Arrays(), flag) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_Arrays(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21747,7 +23979,9 @@ impl Arrays {
 	/// Default constructor
 	#[inline]
 	pub fn default() -> Result<core::Arrays> {
-		unsafe { sys::cv_ogl_Arrays_Arrays() }.into_result().map(|r| unsafe { core::Arrays::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Arrays_Arrays() }.into_result()?;
+		let ret = unsafe { core::Arrays::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -21772,7 +24006,8 @@ pub trait BufferTraitConst {
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(arr);
-		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Copies from OpenGL buffer to host/device memory or another OpenGL buffer object.
@@ -21785,7 +24020,8 @@ pub trait BufferTraitConst {
 	#[inline]
 	fn copy_to_1(&self, arr: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		output_array_arg!(arr);
-		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Creates a full copy of the buffer object and the underlying data.
@@ -21799,7 +24035,9 @@ pub trait BufferTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn clone(&self, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_Buffer(), target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_Buffer(), target, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Binds OpenGL buffer to the specified buffer binding point.
@@ -21808,58 +24046,69 @@ pub trait BufferTraitConst {
 	/// * target: Binding point. See cv::ogl::Buffer::Target .
 	#[inline]
 	fn bind(&self, target: core::Buffer_Target) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_Buffer(), target) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_Buffer(), target) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn rows(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn cols(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn depth(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn channels(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn elem_size(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn elem_size1(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// get OpenGL opject id
 	#[inline]
 	fn buf_id(&self) -> Result<u32> {
-		unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -21881,7 +24130,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn create(&mut self, arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_Buffer(), arows, acols, atype, target, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_Buffer(), arows, acols, atype, target, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Allocates memory for ogl::Buffer object.
@@ -21905,7 +24155,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn create_1(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, target, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, target, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Decrements the reference counter and destroys the buffer object if needed.
@@ -21913,7 +24164,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// The function will call setAutoRelease(true) .
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets auto release mode.
@@ -21927,7 +24179,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * flag: Auto release mode (if true, release will be called in object's destructor).
 	#[inline]
 	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_Buffer(), flag) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_Buffer(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Copies from host/device memory to OpenGL buffer.
@@ -21942,7 +24195,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	#[inline]
 	fn copy_from(&mut self, arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Copies from host/device memory to OpenGL buffer.
@@ -21959,7 +24213,8 @@ pub trait BufferTrait: core::BufferTraitConst {
 	#[inline]
 	fn copy_from_1(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Maps OpenGL buffer to host memory.
@@ -21979,24 +24234,30 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// ogl::Buffer::READ_ONLY , ogl::Buffer::WRITE_ONLY or ogl::Buffer::READ_WRITE .
 	#[inline]
 	fn map_host(&mut self, access: core::Buffer_Access) -> Result<core::Mat> {
-		unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_Buffer(), access) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_Buffer(), access) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Unmaps OpenGL buffer.
 	#[inline]
 	fn unmap_host(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// map to device memory (blocking)
 	#[inline]
 	fn map_device(&mut self) -> Result<core::GpuMat> {
-		unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_Buffer()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_Buffer()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn unmap_device(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_Buffer()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_Buffer()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Maps OpenGL buffer to CUDA device memory.
@@ -22006,13 +24267,16 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// A mapped data store must be unmapped with ogl::Buffer::unmapDevice before its buffer object is used.
 	#[inline]
 	fn map_device_1(&mut self, stream: &mut core::Stream) -> Result<core::GpuMat> {
-		unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Unmaps OpenGL buffer.
 	#[inline]
 	fn unmap_device_1(&mut self, stream: &mut core::Stream) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -22056,7 +24320,9 @@ impl Buffer {
 	/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
 	#[inline]
 	pub fn default() -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_Buffer() }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer() }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22077,7 +24343,9 @@ impl Buffer {
 	/// * auto_release: false
 	#[inline]
 	pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22097,7 +24365,9 @@ impl Buffer {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(asize.opencv_as_extern(), atype, abuf_id, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(asize.opencv_as_extern(), atype, abuf_id, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22119,7 +24389,9 @@ impl Buffer {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22140,7 +24412,9 @@ impl Buffer {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-		unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(asize.opencv_as_extern(), atype, target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(asize.opencv_as_extern(), atype, target, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22161,7 +24435,9 @@ impl Buffer {
 	#[inline]
 	pub fn new_4(arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release) }.into_result().map(|r| unsafe { core::Buffer::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release) }.into_result()?;
+		let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Unbind any buffers from the specified binding point.
@@ -22170,7 +24446,8 @@ impl Buffer {
 	/// * target: Binding point. See cv::ogl::Buffer::Target .
 	#[inline]
 	pub fn unbind(target: core::Buffer_Target) -> Result<()> {
-		unsafe { sys::cv_ogl_Buffer_unbind_Target(target) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Buffer_unbind_Target(target) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -22193,44 +24470,52 @@ pub trait Texture2DTraitConst {
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
 		output_array_arg!(arr);
-		unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Binds texture to current active texture unit for GL_TEXTURE_2D target.
 	#[inline]
 	fn bind(&self) -> Result<()> {
-		unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn rows(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn cols(&self) -> Result<i32> {
-		unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn format(&self) -> Result<core::Texture2D_Format> {
-		unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// get OpenGL opject id
 	#[inline]
 	fn tex_id(&self) -> Result<u32> {
-		unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -22250,7 +24535,8 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn create(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_Texture2D(), arows, acols, aformat, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_Texture2D(), arows, acols, aformat, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Allocates memory for ogl::Texture2D object.
@@ -22271,7 +24557,8 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn create_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), asize.opencv_as_extern(), aformat, auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), asize.opencv_as_extern(), aformat, auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Decrements the reference counter and destroys the texture object if needed.
@@ -22279,7 +24566,8 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	/// The function will call setAutoRelease(true) .
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_Texture2D()) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_Texture2D()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets auto release mode.
@@ -22294,7 +24582,8 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	/// context). This function can force ogl::Texture2D destructor to destroy OpenGL object.
 	#[inline]
 	fn set_auto_release(&mut self, flag: bool) -> Result<()> {
-		unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_Texture2D(), flag) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_Texture2D(), flag) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Copies from host/device memory to OpenGL texture.
@@ -22308,7 +24597,8 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	#[inline]
 	fn copy_from(&mut self, arr: &dyn core::ToInputArray, auto_release: bool) -> Result<()> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release) }.into_result()
+		let ret = unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -22344,7 +24634,9 @@ impl Texture2D {
 	/// host/device memory.
 	#[inline]
 	pub fn default() -> Result<core::Texture2D> {
-		unsafe { sys::cv_ogl_Texture2D_Texture2D() }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D() }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22358,7 +24650,9 @@ impl Texture2D {
 	/// * auto_release: false
 	#[inline]
 	pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
-		unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release) }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22372,7 +24666,9 @@ impl Texture2D {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
-		unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(asize.opencv_as_extern(), aformat, atex_id, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(asize.opencv_as_extern(), aformat, atex_id, auto_release) }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22392,7 +24688,9 @@ impl Texture2D {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
-		unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release) }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22411,7 +24709,9 @@ impl Texture2D {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
-		unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(asize.opencv_as_extern(), aformat, auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(asize.opencv_as_extern(), aformat, auto_release) }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// The constructors.
@@ -22430,7 +24730,9 @@ impl Texture2D {
 	#[inline]
 	pub fn new_4(arr: &dyn core::ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
 		input_array_arg!(arr);
-		unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release) }.into_result().map(|r| unsafe { core::Texture2D::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release) }.into_result()?;
+		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -22440,12 +24742,15 @@ pub trait LogTagTraitConst {
 
 	#[inline]
 	fn name(&self) -> String {
-		unsafe { sys::cv_utils_logging_LogTag_getPropName_const(self.as_raw_LogTag()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } ).expect("Infallible function failed: name")
+		let ret = unsafe { sys::cv_utils_logging_LogTag_getPropName_const(self.as_raw_LogTag()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn level(&self) -> core::LogLevel {
-		unsafe { sys::cv_utils_logging_LogTag_getPropLevel_const(self.as_raw_LogTag()) }.into_result().expect("Infallible function failed: level")
+		let ret = unsafe { sys::cv_utils_logging_LogTag_getPropLevel_const(self.as_raw_LogTag()) };
+		ret
 	}
 	
 }
@@ -22455,7 +24760,8 @@ pub trait LogTagTrait: core::LogTagTraitConst {
 
 	#[inline]
 	fn set_level(&mut self, val: core::LogLevel) {
-		unsafe { sys::cv_utils_logging_LogTag_setPropLevel_LogLevel(self.as_raw_mut_LogTag(), val) }.into_result().expect("Infallible function failed: set_level")
+		let ret = unsafe { sys::cv_utils_logging_LogTag_setPropLevel_LogLevel(self.as_raw_mut_LogTag(), val) };
+		ret
 	}
 	
 }
@@ -22487,7 +24793,9 @@ impl LogTag {
 	#[inline]
 	pub fn new(_name: &str, _level: core::LogLevel) -> Result<core::LogTag> {
 		extern_container_arg!(_name);
-		unsafe { sys::cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(_name.opencv_as_extern(), _level) }.into_result().map(|r| unsafe { core::LogTag::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(_name.opencv_as_extern(), _level) }.into_result()?;
+		let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
