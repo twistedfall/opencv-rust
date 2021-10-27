@@ -27,7 +27,8 @@ pub mod platform_types {
 	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
 }
 
-pub(crate) mod mod_prelude_types {
+/// Prelude for sys (externs) module and types
+pub(crate) mod mod_prelude_sys {
 	pub use std::os::raw::{c_char, c_void};
 
 	pub use crate::{
@@ -36,13 +37,14 @@ pub(crate) mod mod_prelude_types {
 	};
 }
 
+/// Prelude for generated modules and types
 pub(crate) mod mod_prelude {
 	pub use crate::{
 		Error,
 		Result,
 		core::{CV_MAKE_TYPE, CV_MAKETYPE},
 		hub_prelude::*,
-		mod_prelude_types::*,
+		mod_prelude_sys::*,
 		boxed_cast_base,
 		boxed_cast_descendant,
 		opencv_type_boxed,

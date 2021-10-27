@@ -178,7 +178,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 	writeln!(&mut types_rs)?;
 
 	let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
-	writeln!(&mut sys_rs, "use crate::{{mod_prelude_types::*, core}};")?;
+	writeln!(&mut sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
 	writeln!(&mut sys_rs)?;
 
 	for module in modules {

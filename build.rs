@@ -185,20 +185,24 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.include(&*SRC_CPP_DIR)
 		.include(&*OUT_DIR)
 		.include(".")
-		.flag_if_supported("-Wno-class-memaccess")
-		.flag_if_supported("-Wno-deprecated-declarations")
-		.flag_if_supported("-Wno-deprecated-copy")
-		.flag_if_supported("-Wno-unused-variable")
-		.flag_if_supported("-Wno-return-type-c-linkage")
+		// OpenCV warnings
+		.flag_if_supported("-Wno-deprecated-declarations") // declarations marked as CV_DEPRECATED
+		.flag_if_supported("-Wno-deprecated-copy") // implicitly-declared ‘constexpr cv::MatStep::MatStep(const cv::MatStep&)’ is deprecated
+		.flag_if_supported("-Wno-unused-parameter") // unused parameter ‘src’ in virtual void cv::dnn::dnn4_v20211004::ActivationLayer::forwardSlice(const float*, float*, int, size_t, int, int) const
+		.flag_if_supported("-Wno-sign-compare") // comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ in bool cv::dnn::dnn4_v20211004::isAllOnes(const MatShape&, int, int)
+		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
+		// crate warnings
+		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
+		.flag_if_supported("-Wno-ignored-qualifiers") //  type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 	;
 	opencv.include_paths.iter().for_each(|p| { out.include(p); });
 	if cfg!(target_env = "msvc") {
 		out.flag_if_supported("-std:c++latest")
+			.flag_if_supported("-EHsc")
+			.flag_if_supported("-bigobj")
 			.flag_if_supported("-wd4996")
 			.flag_if_supported("-wd5054") // deprecated between enumerations of different types
 			.flag_if_supported("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
-			.flag_if_supported("-EHsc")
-			.flag_if_supported("-bigobj")
 			.pic(false)
 		;
 	} else {

@@ -460,7 +460,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					cnst=cnst,
 					typ=cpp.to_string(),
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
@@ -469,13 +469,13 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 						typ=inner.render(self.recurse()),
 						name=self.name,
 						size=size,
-					).into()
+					)
 				} else {
 					format!(
 						"{typ}*{name}",
 						typ=inner.render(self.recurse()),
 						name=space_name,
-					).into()
+					)
 				}
 			}
 			Kind::StdVector(vec) => {
@@ -485,21 +485,21 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					vec_type=vec.cpp_name(self.name_style),
 					elem_type=vec.element_type().render(self.recurse()),
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Reference(inner) if !self.extern_types => {
 				format!(
 					"{typ}&{name}",
 					typ=inner.render(self.recurse()),
 					name=space_const_name,
-				).into()
+				)
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
 				format!(
 					"{typ}*{name}",
 					typ=inner.render(self.recurse()),
 					name=space_const_name,
-				).into()
+				)
 			}
 			Kind::SmartPtr(ptr) => {
 				format!(
@@ -508,7 +508,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					ptr_type=ptr.cpp_name(self.name_style),
 					inner_type=ptr.pointee().render(self.recurse()),
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Class(cls) => {
 				let mut out: String = cls.cpp_name(self.name_style).into_owned();
@@ -520,7 +520,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					cnst=cnst,
 					typ=out,
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Enum(enm) => {
 				format!(
@@ -528,7 +528,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					cnst=cnst,
 					typ=enm.cpp_name(self.name_style),
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Typedef(tdef) => {
 				let underlying_type = tdef.underlying_type_ref();
@@ -542,7 +542,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					cnst=cnst,
 					typ=typ,
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Generic(generic_name) => {
 				format!(
@@ -550,22 +550,23 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					cnst=cnst,
 					typ=generic_name,
 					name=space_name,
-				).into()
+				)
 			}
 			Kind::Function(func) => {
 				let mut typ = func.cpp_name(self.name_style);
 				if typ.contains("(*)") {
-					typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=self.name));
+					if !self.name.is_empty() {
+						typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=self.name));
+					}
 					typ.into_owned().into()
 				} else {
-					format!("{typ}{name}", typ=typ, name=space_name).into()
+					format!("{typ}{name}", typ=typ, name=space_name)
 				}
 			}
 			Kind::Ignored => {
-				format!("<ignored>{name}", name=space_name).into()
+				format!("<ignored>{name}", name=space_name)
 			}
-		}
-		// render_cpp(self, type_ref, name_style, name, extern_types, constness)
+		}.into()
 	}
 
 	fn recurse(&self) -> Self {
