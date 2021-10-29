@@ -4,6 +4,7 @@ use std::{
 	ffi::OsStr,
 	fs::File,
 	io::{BufRead, BufReader},
+	iter::FromIterator,
 	path::{Path, PathBuf},
 	process::Command,
 };
@@ -154,6 +155,9 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 			.map(|e| e.trim())
 			.collect::<HashSet<_>>()
 		);
+	let feature_whitelist: HashSet<String> = HashSet::from_iter(env::vars_os().filter_map(|(k, _)|
+		k.to_str().and_then(|s| s.strip_prefix("CARGO_FEATURE_").map(str::to_lowercase))
+	));
 
 	let env_blacklist = env::var("OPENCV_MODULE_BLACKLIST").ok();
 	let env_blacklist = env_blacklist.as_ref()
@@ -171,6 +175,7 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 				.filter(|m| !ignore_modules.contains(m))
 				.filter(|m| env_blacklist.as_ref().map_or(true, |bl| !bl.contains(m)))
 				.filter(|m| env_whitelist.as_ref().map_or(true, |wl| wl.contains(m)))
+				.filter(|&m| feature_whitelist.contains(m))
 				.map(str::to_string)
 		})
 		.collect();
