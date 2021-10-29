@@ -1186,12 +1186,12 @@ pub trait GPCPatchDescriptorTraitConst {
 	fn as_raw_GPCPatchDescriptor(&self) -> *const c_void;
 
 	#[inline]
-	fn feature(&self) -> core::Vec18<f64> {
+	fn feature(&self) -> core::Vec<f64, 18> {
 		unsafe { sys::cv_optflow_GPCPatchDescriptor_getPropFeature_const(self.as_raw_GPCPatchDescriptor()) }.into_result().expect("Infallible function failed: feature")
 	}
 	
 	#[inline]
-	fn dot(&self, coef: core::Vec18<f64>) -> Result<f64> {
+	fn dot(&self, coef: core::Vec<f64, 18>) -> Result<f64> {
 		unsafe { sys::cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(self.as_raw_GPCPatchDescriptor(), &coef) }.into_result()
 	}
 	
@@ -1206,7 +1206,7 @@ pub trait GPCPatchDescriptorTrait: crate::optflow::GPCPatchDescriptorTraitConst 
 	fn as_raw_mut_GPCPatchDescriptor(&mut self) -> *mut c_void;
 
 	#[inline]
-	fn set_feature(&mut self, val: core::Vec18<f64>) {
+	fn set_feature(&mut self, val: core::Vec<f64, 18>) {
 		unsafe { sys::cv_optflow_GPCPatchDescriptor_setPropFeature_Vec_double__18_(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_feature")
 	}
 	
@@ -1264,7 +1264,7 @@ pub trait GPCPatchSampleTraitConst {
 	}
 	
 	#[inline]
-	fn get_directions(&self, refdir: &mut bool, posdir: &mut bool, negdir: &mut bool, coef: core::Vec18<f64>, rhs: f64) -> Result<()> {
+	fn get_directions(&self, refdir: &mut bool, posdir: &mut bool, negdir: &mut bool, coef: core::Vec<f64, 18>, rhs: f64) -> Result<()> {
 		unsafe { sys::cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_Vec_double__18_R_double(self.as_raw_GPCPatchSample(), refdir, posdir, negdir, &coef, rhs) }.into_result()
 	}
 	
@@ -1428,6 +1428,11 @@ pub trait GPCTreeTraitConst: core::AlgorithmTraitConst {
 	}
 	
 	#[inline]
+	fn equals(&self, t: &crate::optflow::GPCTree) -> Result<bool> {
+		unsafe { sys::cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(self.as_raw_GPCTree(), t.as_raw_GPCTree()) }.into_result()
+	}
+	
+	#[inline]
 	fn get_descriptor_type(&self) -> Result<i32> {
 		unsafe { sys::cv_optflow_GPCTree_getDescriptorType_const(self.as_raw_GPCTree()) }.into_result()
 	}
@@ -1497,7 +1502,7 @@ boxed_cast_base! { GPCTree, core::Algorithm, cv_GPCTree_to_Algorithm }
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct GPCTree_Node {
 	/// Hyperplane coefficients
-	pub coef: core::Vec18<f64>,
+	pub coef: core::Vec<f64, 18>,
 	/// Bias term of the hyperplane
 	pub rhs: f64,
 	pub left: u32,
@@ -1507,6 +1512,11 @@ pub struct GPCTree_Node {
 opencv_type_simple! { crate::optflow::GPCTree_Node }
 
 impl GPCTree_Node {
+	#[inline]
+	pub fn equals(self, n: crate::optflow::GPCTree_Node) -> Result<bool> {
+		unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(self.opencv_as_extern(), &n) }.into_result()
+	}
+	
 }
 
 /// PCAFlow algorithm.

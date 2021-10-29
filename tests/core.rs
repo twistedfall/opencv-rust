@@ -1,5 +1,5 @@
 use opencv::{
-	core::{self, CV_32S, CV_64F, CV_8U, CV_MAKETYPE, Moments, Point, Point2f, RotatedRect, Scalar, Size2f, Vec3b},
+	core::{self, CV_32S, CV_64F, CV_8U, CV_MAKETYPE, Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b},
 	prelude::*,
 	Result,
 	types::VectorOfMat,

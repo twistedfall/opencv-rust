@@ -33,6 +33,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		|| include_str!("tpl/class/impl_clone.tpl.rs").compile_interpolation()
 	);
 
+	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation()
+	);
+
 	static SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 		|| include_str!("tpl/class/simple.tpl.rs").compile_interpolation()
 	);
@@ -264,6 +268,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let mut inherent_mut_methods = String::with_capacity(512 * mut_methods.len());
 		let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 		let is_trait = c.is_trait();
+
+		if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
+			if def_cons.is_infallible() {
+				impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
+					"rust_local" => rust_local.as_ref(),
+				});
+			}
+		}
 
 		inherent_const_methods.push_str(&if is_trait {
 			rust_generate_funcs(

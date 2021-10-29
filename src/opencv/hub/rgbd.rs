@@ -2761,6 +2761,11 @@ pub trait Linemod_MatchTraitConst {
 		unsafe { sys::cv_linemod_Match_getPropTemplate_id_const(self.as_raw_Linemod_Match()) }.into_result().expect("Infallible function failed: template_id")
 	}
 	
+	#[inline]
+	fn equals(&self, rhs: &crate::rgbd::Linemod_Match) -> Result<bool> {
+		unsafe { sys::cv_linemod_Match_operatorEQ_const_const_MatchR(self.as_raw_Linemod_Match(), rhs.as_raw_Linemod_Match()) }.into_result()
+	}
+	
 }
 
 pub trait Linemod_MatchTrait: crate::rgbd::Linemod_MatchTraitConst {

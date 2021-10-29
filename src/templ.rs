@@ -79,13 +79,13 @@ macro_rules! input_output_array_arg {
 
 macro_rules! string_array_arg {
 	($name: ident) => {
-		let $name = $name.iter().map(|x| x.as_ptr() as _).collect::<Vec<_>>();
+		let $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
 	};
 }
 
 macro_rules! string_array_arg_mut {
 	($name: ident) => {
-		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<Vec<_>>();
+		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
 	};
 }
 

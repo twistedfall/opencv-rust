@@ -3,7 +3,7 @@ use std::{
 	fmt::{self, Write},
 };
 
-use crate::{Element, StringExt};
+use crate::{Element, settings, StringExt};
 
 use super::{Kind, TemplateArg, TypeRef};
 
@@ -253,6 +253,8 @@ impl FishStyle {
 fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
+		let const_generics_implemented = type_ref.as_class()
+			.map_or(false, |cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_fullname().as_ref()));
 		let mut constant_suffix = String::new();
 		let generic_types = generic_types.iter()
 			.filter_map(|t| {
@@ -262,8 +264,14 @@ fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeR
 					}
 					TemplateArg::Constant(literal) => {
 						if let Some(cnst) = type_ref.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
+							if const_generics_implemented {
+								return Some(cnst.to_string().into())
+							}
 							constant_suffix += &cnst.to_string();
 						} else {
+							if const_generics_implemented {
+								return Some(literal.into())
+							}
 							constant_suffix += literal;
 						}
 						None

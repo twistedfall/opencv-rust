@@ -332,7 +332,12 @@ impl Element for Class<'_, '_> {
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self)
 			|| self.is_template()
-			|| self.is_template_specialization() && !settings::IMPLEMENTED_GENERICS.contains(self.cpp_fullname().as_ref())
+			|| self.is_template_specialization() &&
+			{
+				let cpp_fullname = self.cpp_fullname();
+				!settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
+					&& !settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
+			}
 			|| !self.is_template_specialization() && !self.is_definition()
 	}
 

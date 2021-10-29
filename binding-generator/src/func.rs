@@ -40,6 +40,7 @@ pub enum OperatorKind {
 	Mul,
 	Div,
 	Deref,
+	Equals,
 }
 
 impl OperatorKind {
@@ -63,6 +64,9 @@ impl OperatorKind {
 			}
 			"/" => {
 				OperatorKind::Div
+			}
+			"==" => {
+				OperatorKind::Equals
 			}
 			_ => {
 				OperatorKind::Unsupported
@@ -334,6 +338,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		self.as_field_accessor().is_some()
 			|| matches!(self.entity.get_exception_specification(), Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated))
 			|| settings::FORCE_NOEXCEPT.contains(&(self.cpp_fullname().as_ref(), self.clang_arguments().len()))
+	}
+
+	pub fn is_default_constructor(&self) -> bool {
+		self.entity.is_default_constructor() && !self.has_arguments()
 	}
 
 	pub fn is_clone(&self) -> bool {
@@ -686,6 +694,9 @@ impl Element for Func<'_, '_> {
 							"try_deref_mut".into()
 						}
 					}
+					OperatorKind::Equals => {
+						"equals".into()
+					}
 				}
 			} else {
 				cpp_name
@@ -721,6 +732,7 @@ impl fmt::Debug for Func<'_, '_> {
 		self.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("is_const", &self.constness())
+			.field("is_infallible", &self.is_infallible())
 			.field("type_hint", &self.type_hint)
 			.field("kind", &self.kind())
 			.field("return_type", &self.return_type())

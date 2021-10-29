@@ -1693,28 +1693,28 @@ pub type Size2l = core::Size_<i64>;
 pub type SparseMat_const_iterator = core::SparseMatConstIterator;
 pub type SparseMat_iterator = core::SparseMatIterator;
 /// @name Shorter aliases for the most popular specializations of Vec<T,n>
-pub type Vec2b = core::Vec2<u8>;
-pub type Vec2d = core::Vec2<f64>;
-pub type Vec2f = core::Vec2<f32>;
-pub type Vec2i = core::Vec2<i32>;
-pub type Vec2s = core::Vec2<i16>;
-pub type Vec2w = core::Vec2<u16>;
-pub type Vec3b = core::Vec3<u8>;
-pub type Vec3d = core::Vec3<f64>;
-pub type Vec3f = core::Vec3<f32>;
-pub type Vec3i = core::Vec3<i32>;
-pub type Vec3s = core::Vec3<i16>;
-pub type Vec3w = core::Vec3<u16>;
-pub type Vec4b = core::Vec4<u8>;
-pub type Vec4d = core::Vec4<f64>;
-pub type Vec4f = core::Vec4<f32>;
-pub type Vec4i = core::Vec4<i32>;
-pub type Vec4s = core::Vec4<i16>;
-pub type Vec4w = core::Vec4<u16>;
-pub type Vec6d = core::Vec6<f64>;
-pub type Vec6f = core::Vec6<f32>;
-pub type Vec6i = core::Vec6<i32>;
-pub type Vec8i = core::Vec8<i32>;
+pub type Vec2b = core::Vec<u8, 2>;
+pub type Vec2d = core::Vec<f64, 2>;
+pub type Vec2f = core::Vec<f32, 2>;
+pub type Vec2i = core::Vec<i32, 2>;
+pub type Vec2s = core::Vec<i16, 2>;
+pub type Vec2w = core::Vec<u16, 2>;
+pub type Vec3b = core::Vec<u8, 3>;
+pub type Vec3d = core::Vec<f64, 3>;
+pub type Vec3f = core::Vec<f32, 3>;
+pub type Vec3i = core::Vec<i32, 3>;
+pub type Vec3s = core::Vec<i16, 3>;
+pub type Vec3w = core::Vec<u16, 3>;
+pub type Vec4b = core::Vec<u8, 4>;
+pub type Vec4d = core::Vec<f64, 4>;
+pub type Vec4f = core::Vec<f32, 4>;
+pub type Vec4i = core::Vec<i32, 4>;
+pub type Vec4s = core::Vec<i16, 4>;
+pub type Vec4w = core::Vec<u16, 4>;
+pub type Vec6d = core::Vec<f64, 6>;
+pub type Vec6f = core::Vec<f32, 6>;
+pub type Vec6i = core::Vec<i32, 6>;
+pub type Vec8i = core::Vec<i32, 8>;
 pub type GpuMatND_IndexArray = core::Vector<i32>;
 pub type GpuMatND_SizeArray = core::Vector<i32>;
 pub type GpuMatND_StepArray = core::Vector<size_t>;
@@ -5202,6 +5202,27 @@ pub fn div_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 	unsafe { sys::cv_operatorD_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
 }
 
+/// @relates cv::FileNodeIterator
+#[inline]
+pub fn equals_filenode_iter(it1: &core::FileNodeIterator, it2: &core::FileNodeIterator) -> Result<bool> {
+	unsafe { sys::cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR(it1.as_raw_FileNodeIterator(), it2.as_raw_FileNodeIterator()) }.into_result()
+}
+
+#[inline]
+pub fn equals(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
+	unsafe { sys::cv_operatorEQ_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+}
+
+#[inline]
+pub fn equals_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
+	unsafe { sys::cv_operatorEQ_const_MatR_double(a.as_raw_Mat(), s) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+}
+
+#[inline]
+pub fn equals_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
+	unsafe { sys::cv_operatorEQ_double_const_MatR(s, a.as_raw_Mat()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
+}
+
 #[inline]
 pub fn sub_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
 	unsafe { sys::cv_operatorS_const_MatExprR(e.as_raw_MatExpr()) }.into_result().map(|r| unsafe { core::MatExpr::opencv_from_extern(r) } )
@@ -6937,6 +6958,14 @@ impl AsyncArray {
 	
 }
 
+impl Default for AsyncArray {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 /// Provides result of asynchronous operations
 pub trait AsyncPromiseTraitConst {
 	fn as_raw_AsyncPromise(&self) -> *const c_void;
@@ -7023,6 +7052,14 @@ impl AsyncPromise {
 		unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseR(o.as_raw_mut_AsyncPromise()) }.into_result().map(|r| unsafe { core::AsyncPromise::opencv_from_extern(r) } )
 	}
 	
+}
+
+impl Default for AsyncPromise {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 /// Designed for command line parsing
@@ -11426,6 +11463,14 @@ impl Clone for Mat {
 	}
 }
 
+impl Default for Mat {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 /// /////////////////////////////// MatConstIterator //////////////////////////////////
 pub trait MatConstIteratorTraitConst {
 	fn as_raw_MatConstIterator(&self) -> *const c_void;
@@ -12025,6 +12070,11 @@ pub trait MatSizeTraitConst {
 		unsafe { sys::cv_MatSize_operator_const_intX_const(self.as_raw_MatSize()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: to_ri32")
 	}
 	
+	#[inline]
+	fn equals(&self, sz: &core::MatSize) -> bool {
+		unsafe { sys::cv_MatSize_operatorEQ_const_const_MatSizeR(self.as_raw_MatSize(), sz.as_raw_MatSize()) }.into_result().expect("Infallible function failed: equals")
+	}
+	
 }
 
 pub trait MatSizeTrait: core::MatSizeTraitConst {
@@ -12154,6 +12204,14 @@ impl MatStep {
 		unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|r| unsafe { core::MatStep::opencv_from_extern(r) } ).expect("Infallible function failed: new")
 	}
 	
+}
+
+impl Default for MatStep {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 /// @cond IGNORED
@@ -13099,6 +13157,11 @@ pub trait RNGTraitConst {
 	#[inline]
 	fn state(&self) -> u64 {
 		unsafe { sys::cv_RNG_getPropState_const(self.as_raw_RNG()) }.into_result().expect("Infallible function failed: state")
+	}
+	
+	#[inline]
+	fn equals(&self, other: &core::RNG) -> Result<bool> {
+		unsafe { sys::cv_RNG_operatorEQ_const_const_RNGR(self.as_raw_RNG(), other.as_raw_RNG()) }.into_result()
 	}
 	
 }
@@ -19752,6 +19815,14 @@ impl Context {
 	
 }
 
+impl Default for Context {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 pub trait Context_UserContextTraitConst {
 	fn as_raw_Context_UserContext(&self) -> *const c_void;
 
@@ -20243,6 +20314,14 @@ impl Device {
 	
 }
 
+impl Default for Device {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 pub trait Image2DTraitConst {
 	fn as_raw_Image2D(&self) -> *const c_void;
 
@@ -20324,6 +20403,14 @@ impl Image2D {
 		unsafe { sys::cv_ocl_Image2D_isFormatSupported_int_int_bool(depth, cn, norm) }.into_result()
 	}
 	
+}
+
+impl Default for Image2D {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait KernelTraitConst {
@@ -20522,6 +20609,14 @@ impl Kernel {
 	
 }
 
+impl Default for Kernel {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 pub trait KernelArgTraitConst {
 	fn as_raw_KernelArg(&self) -> *const c_void;
 
@@ -20699,6 +20794,14 @@ impl KernelArg {
 		unsafe { sys::cv_ocl_KernelArg_Constant_const_MatR(m.as_raw_Mat()) }.into_result().map(|r| unsafe { core::KernelArg::opencv_from_extern(r) } )
 	}
 	
+}
+
+impl Default for KernelArg {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait OpenCLExecutionContextTraitConst {
@@ -20883,6 +20986,14 @@ impl OpenCLExecutionContext {
 	
 }
 
+impl Default for OpenCLExecutionContext {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 /// @deprecated
 pub trait PlatformTraitConst {
 	fn as_raw_Platform(&self) -> *const c_void;
@@ -20950,6 +21061,14 @@ impl Platform {
 		unsafe { sys::cv_ocl_Platform_getDefault() }.into_result().map(|r| unsafe { core::Platform::opencv_from_extern(r) } )
 	}
 	
+}
+
+impl Default for Platform {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait PlatformInfoTraitConst {
@@ -21049,6 +21168,14 @@ impl PlatformInfo {
 		unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoR(i.as_raw_mut_PlatformInfo()) }.into_result().map(|r| unsafe { core::PlatformInfo::opencv_from_extern(r) } ).expect("Infallible function failed: copy_mut")
 	}
 	
+}
+
+impl Default for PlatformInfo {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait ProgramTraitConst {
@@ -21172,6 +21299,14 @@ impl Program {
 		unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern()) }.into_result().map(|r| unsafe { String::opencv_from_extern(r) } )
 	}
 	
+}
+
+impl Default for Program {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait ProgramSourceTraitConst {
@@ -21314,6 +21449,14 @@ impl ProgramSource {
 	
 }
 
+impl Default for ProgramSource {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
+}
+
 pub trait QueueTraitConst {
 	fn as_raw_Queue(&self) -> *const c_void;
 
@@ -21404,6 +21547,14 @@ impl Queue {
 		unsafe { sys::cv_ocl_Queue_getDefault() }.into_result().map(|r| unsafe { core::Queue::opencv_from_extern(r) } )
 	}
 	
+}
+
+impl Default for Queue {
+	#[inline]
+	/// Forwards to infallible Self::default()
+	fn default() -> Self {
+		Self::default()
+	}
 }
 
 pub trait TimerTraitConst {

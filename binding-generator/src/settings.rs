@@ -255,6 +255,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_operatorD_const_MatR_double" => "+_mat_f64",
 	"cv_operatorD_double_const_MatExprR" => "+_f64_matexpr",
 	"cv_operatorD_double_const_MatR" => "+_f64_mat",
+	"cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR" => "+_filenode_iter",
+	"cv_operatorEQ_const_MatR_double" => "+_mat_f64",
+	"cv_operatorEQ_double_const_MatR" => "+_f64_mat",
 	"cv_operatorS_const_MatExprR" => "+_matexpr",
 	"cv_operatorS_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
 	"cv_operatorS_const_MatExprR_const_MatR" => "+_matexpr_mat",
@@ -871,6 +874,7 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| btreeset! {
 	"cv::Rect", "cv::Rect2i", "cv::Rect2f", "cv::Rect2d",
 });
 
+/// cpp_fullname
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Affine3",
 	"cv::Mat_",
@@ -880,6 +884,10 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Rect_",
 	"cv::Scalar_",
 	"cv::Size_",
+});
+
+/// cpp_fullname
+pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Vec",
 });
 
@@ -1102,7 +1110,13 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 	},
 	"imgproc" => ModuleTweak {
 		generate_types: vec![
+			// for findContours()
 			"std::vector<cv::Vec4i>",
+			// for HoughLines()
+			"std::vector<cv::Vec2f>",
+			"std::vector<cv::Vec2d>",
+			"std::vector<cv::Vec3f>",
+			"std::vector<cv::Vec3d>",
 		],
 		..Default::default()
 	},
