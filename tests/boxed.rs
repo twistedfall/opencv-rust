@@ -4,12 +4,10 @@ use std::{
 };
 
 use opencv::{
-	core::{Algorithm, NORM_L2, Scalar, Vec4f},
-	features2d::BFMatcher,
-	flann::IndexParams,
+	core::{Algorithm, Scalar, Vec4f},
 	prelude::*,
 	Result,
-	types::{PtrOfFeature2D, PtrOfIndexParams, VectorOfVec4f},
+	types::{PtrOfFeature2D, VectorOfVec4f},
 };
 
 #[test]
@@ -61,53 +59,39 @@ fn into_raw() -> Result<()> {
 	Ok(())
 }
 
+/// Ptr creation, conversion to base class and linking
 #[test]
-fn into_raw_ptroff32() -> Result<()> {
-	use opencv::types::PtrOff32;
+fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
+	#![cfg(ocvrs_has_module_videostab)]
+	use opencv::{
+		core::Ptr,
+		features2d::{FastFeatureDetector, Feature2D},
+		videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2, MotionModel},
+	};
+	#[cfg(ocvrs_opencv_branch_4)]
+	use opencv::features2d::FastFeatureDetector_DetectorType;
 
-	#[inline(never)]
-	fn into_raw(a: PtrOff32) -> *mut c_void {
-		a.into_raw()
-	}
+	let est = MotionEstimatorRansacL2::new(MotionModel::MM_AFFINE).unwrap();
+	let est_ptr = Ptr::new(est);
+	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into()).unwrap();
+	#[cfg(ocvrs_opencv_branch_4)]
+	let detector_ptr = <dyn FastFeatureDetector>::create(10, true, FastFeatureDetector_DetectorType::TYPE_9_16).unwrap();
+	#[cfg(not(ocvrs_opencv_branch_4))]
+	let detector_ptr = <dyn FastFeatureDetector>::create(10, true, 2).unwrap();
+	let base_detector_ptr: Ptr<Feature2D> = detector_ptr.into();
+	estimator.set_detector(base_detector_ptr).unwrap();
 
-	let a = PtrOff32::new(87.);
-	let ptr = into_raw(a);
-	let b = unsafe { PtrOff32::from_raw(ptr) };
-	assert_eq!(87., *b);
-	Ok(())
-}
-
-#[test]
-fn into_raw_ptrofboxed() -> Result<()> {
-	#[inline(never)]
-	fn into_raw(a: PtrOfIndexParams) -> *mut c_void {
-		a.into_raw()
-	}
-
-	let mut params = IndexParams::default()?;
-	params.set_int("int", 87)?;
-	params.set_double("double", 12.34)?;
-	params.set_string("string", "my string")?;
-	let a = PtrOfIndexParams::new(params);
-	assert_eq!(87, a.get_int("int", 3)?);
-	assert_eq!(3, a.get_int("int_non_existent", 3)?);
-	assert_eq!(12.34, a.get_double("double", 99.99)?);
-	assert_eq!("my string", a.get_string("string", "-")?);
-	let ptr = into_raw(a);
-	let b = unsafe { PtrOfIndexParams::from_raw(ptr) };
-	assert_eq!(87, b.get_int("int", 3)?);
-	assert_eq!(3, b.get_int("int_non_existent", 3)?);
-	assert_eq!(12.34, b.get_double("double", 99.99)?);
-	assert_eq!("my string", b.get_string("string", "-")?);
 	Ok(())
 }
 
 #[test]
 fn smart_ptr_cast_base() -> Result<()> {
+	#![cfg(ocvrs_has_module_features2d)]
 	#[cfg(ocvrs_opencv_branch_4)]
 	use opencv::features2d::{AKAZE_DescriptorType::DESCRIPTOR_MLDB, KAZE_DiffusivityType::DIFF_PM_G2};
 	#[cfg(not(ocvrs_opencv_branch_4))]
 	use opencv::features2d::{AKAZE_DESCRIPTOR_MLDB as DESCRIPTOR_MLDB, KAZE_DIFF_PM_G2 as DIFF_PM_G2};
+
 	let d = <dyn AKAZE>::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
 	assert_eq!(true, Feature2DTraitConst::empty(&d)?);
 	if !cfg!(ocvrs_opencv_branch_32) {
@@ -127,6 +111,9 @@ fn smart_ptr_cast_base() -> Result<()> {
 
 #[test]
 fn cast_base() -> Result<()> {
+	#![cfg(ocvrs_has_module_features2d)]
+	use opencv::{features2d::BFMatcher, core::NORM_L2};
+
 	let m = BFMatcher::new(NORM_L2, false)?;
 	assert_eq!(true, <dyn AlgorithmTrait>::empty(&m)?);
 	assert_eq!("my_object", &m.get_default_name()?);
