@@ -48,6 +48,18 @@ data_type!(i32, core::CV_32S, 1);
 data_type!(f32, core::CV_32F, 1);
 data_type!(f64, core::CV_64F, 1);
 
+#[cfg(feature = "rgb")]
+use rgb::*;
+use rgb::alt::*;
+data_type!(GRAY8, core::CV_8U, 1);
+data_type!(GRAYA8, core::CV_8U, 2);
+data_type!(RGB8, core::CV_8U, 3);
+data_type!(BGR8, core::CV_8U, 3);
+data_type!(RGBA8, core::CV_8U, 4);
+data_type!(ARGB8, core::CV_8U, 4);
+data_type!(BGRA8, core::CV_8U, 4);
+data_type!(ABGR8, core::CV_8U, 4);
+
 impl<T: DataType, const N: usize> DataType for Vec<T, N> {
 	#[inline]
 	fn depth() -> i32 { T::depth() }
