@@ -679,9 +679,10 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = L
 	"cv::dnn::KeypointsModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
 	"cv::dnn::Model" => ExportConfig::make_boxed as _,
 	"cv::dnn::SegmentationModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
-	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+	"cv::dnn::TextDetectionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
