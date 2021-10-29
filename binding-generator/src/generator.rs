@@ -536,33 +536,31 @@ impl Generator {
 		args
 	}
 
-	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(TranslationUnit)) {
+	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(TranslationUnit, &str)) {
 		let index = Index::new(&self.clang, true, false);
 		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
 		if !module_file.exists() {
 			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
 		}
-		let root_tu: TranslationUnit = index.parser(module_file)
+		let mut root_tu: TranslationUnit = index.parser(module_file)
 			.unsaved(&[self.make_ephemeral_header("")])
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse().expect(&format!("Cannot parse module: {}", module));
+		let mut ephem_gen = EphemeralGenerator::new(module);
+		let walker = EntityWalker::new(root_tu.get_entity());
+		walker.walk_opencv_entities(&mut ephem_gen);
+		let hdr = ephem_gen.make_generated_header();
+		root_tu = root_tu.reparse(&[self.make_ephemeral_header(&hdr)]).expect("Can't reparse file");
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
-		entity_processor(root_tu);
+		entity_processor(root_tu, &hdr);
 	}
 
 	pub fn process_opencv_module(&self, module: &str, mut visitor: impl GeneratorVisitor) {
-		self.process_module(module, true, |mut root_tu| {
-			let mut root_entity = root_tu.get_entity();
-			let walker = EntityWalker::new(root_entity);
-			let mut ephem_gen = EphemeralGenerator::new(module);
-			walker.walk_opencv_entities(&mut ephem_gen);
-			let hdr = ephem_gen.make_generated_header();
-			visitor.visit_ephemeral_header(&hdr);
-			root_tu = root_tu.reparse(&[self.make_ephemeral_header(&hdr)]).expect("Can't reparse file");
-			Self::handle_diags(&root_tu.get_diagnostics(), true);
-			root_entity = root_tu.get_entity();
+		self.process_module(module, true, |root_tu, ephemeral_header| {
+			let root_entity = root_tu.get_entity();
+			visitor.visit_ephemeral_header(&ephemeral_header);
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCvWalker::new(
 				&self.opencv_include_dir,

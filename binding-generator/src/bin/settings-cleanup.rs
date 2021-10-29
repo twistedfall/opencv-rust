@@ -106,11 +106,8 @@ fn show<S: AsRef<str>>(c: impl IntoIterator<Item=S>) {
 
 fn main() {
 	let mut args = env::args_os().skip(1);
-	let opencv_header_base_dir = PathBuf::from(args.next().expect("1st argument must be OpenCV header dir"));
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
-	let opencv_header_dirs = opencv_header_base_dir.read_dir().expect("Can't read opencv_header_base_dir")
-		.map(|p| p.expect("Bad path").path())
-		.filter(|p| p.is_dir());
+	let opencv_header_dirs = args.into_iter().map(PathBuf::from);
 	let mut func_rename_unused = settings::FUNC_RENAME.keys().copied().collect::<HashSet<_>>();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
@@ -137,7 +134,7 @@ fn main() {
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir, clang);
 		for module in modules {
 			println!("  {}", module);
-			gen.process_module(&module, false, |root_tu| {
+			gen.process_module(&module, false, |root_tu, _hdr| {
 				let root_entity = root_tu.get_entity();
 				let gen_env = GeneratorEnv::new(root_entity, &module);
 				let walker = EntityWalker::new(root_entity);
