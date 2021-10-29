@@ -18,9 +18,9 @@ git checkout "$VCPKG_TREE_COMMIT"
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-linux.cmake
 export VCPKG_DEFAULT_TRIPLET=x64-linux
 #./vcpkg install llvm  # takes very long time
-sudo apt-get install -y clang
+sudo apt-get install -y clang libharfbuzz0b
 # workaround to make clang_sys crate detect installed libclang
-sudo ln -s libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
+sudo ln -s libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
 ./vcpkg upgrade --no-dry-run
 ./vcpkg install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
 popd
