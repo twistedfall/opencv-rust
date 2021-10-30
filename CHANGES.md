@@ -1,3 +1,8 @@
+* 0.58.0
+  * Infallible functions are no longer using exception handling internally so they should be faster.
+  * `core::Vec` is renamed to `core::VecN` to avoid name conflict with std's `Vec`.
+  * The `dnn::TextDetectionModel` struct is now generated correctly for newer OpenCV's.
+
 * 0.57.0
   * Add support for mathematical operations on `Mat` (kudos to fzyzcjy).
   * `VecNT` (e.g. `Vec3b`) are now rewritten using const generics which makes them more flexible. That raises the minimum Rust

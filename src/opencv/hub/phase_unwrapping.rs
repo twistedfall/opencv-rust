@@ -52,7 +52,8 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::HistogramPhaseUnwra
 	#[inline]
 	fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(reliability_map);
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -67,7 +68,9 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// * parameters: HistogramPhaseUnwrapping::Params()
 	#[inline]
 	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -94,7 +97,8 @@ opencv_type_simple! { crate::phase_unwrapping::HistogramPhaseUnwrapping_Params }
 impl HistogramPhaseUnwrapping_Params {
 	#[inline]
 	pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result()
+		let ret = unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -122,7 +126,8 @@ pub trait PhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::Phase
 		input_array_arg!(wrapped_phase_map);
 		output_array_arg!(unwrapped_phase_map);
 		input_array_arg!(shadow_mask);
-		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

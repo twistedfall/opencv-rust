@@ -389,7 +389,12 @@ impl Element for Class<'_, '_> {
 		if self.type_ref().as_string().is_some() {
 			"String".into()
 		} else {
-			self.cpp_localname()
+			let cpp_localname = self.cpp_localname();
+			if cpp_localname == "Vec" {
+				"VecN".into()
+			} else {
+				cpp_localname
+			}
 		}
 	}
 

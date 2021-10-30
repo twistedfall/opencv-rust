@@ -48,7 +48,8 @@ pub mod prelude {
 pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
 	input_array_arg!(input);
 	output_array_arg!(output);
-	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b) }.into_result()?;
+	Ok(ret)
 }
 
 /// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_ying2017new)).
@@ -70,7 +71,8 @@ pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArra
 pub fn bimef2(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
 	input_array_arg!(input);
 	output_array_arg!(output);
-	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b) }.into_result()?;
+	Ok(ret)
 }
 
 /// Given an input bgr or grayscale image, apply autoscaling on domain [0, 255] to increase
@@ -81,7 +83,8 @@ pub fn bimef2(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArr
 /// * output: resulting image of autoscaling.
 #[inline]
 pub fn autoscaling(input: core::Mat, output: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_intensity_transform_autoscaling_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_autoscaling_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Given an input bgr or grayscale image, apply linear contrast stretching on domain [0, 255]
@@ -96,7 +99,8 @@ pub fn autoscaling(input: core::Mat, output: &mut core::Mat) -> Result<()> {
 /// * s2: y coordinate of second point (r2, s2) in the transformation function.
 #[inline]
 pub fn contrast_stretching(input: core::Mat, output: &mut core::Mat, r1: i32, s1: i32, r2: i32, s2: i32) -> Result<()> {
-	unsafe { sys::cv_intensity_transform_contrastStretching_const_Mat_MatR_const_int_const_int_const_int_const_int(input.as_raw_Mat(), output.as_raw_mut_Mat(), r1, s1, r2, s2) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_contrastStretching_const_Mat_MatR_const_int_const_int_const_int_const_int(input.as_raw_Mat(), output.as_raw_mut_Mat(), r1, s1, r2, s2) }.into_result()?;
+	Ok(ret)
 }
 
 /// Given an input bgr or grayscale image and constant gamma, apply power-law transformation,
@@ -108,7 +112,8 @@ pub fn contrast_stretching(input: core::Mat, output: &mut core::Mat, r1: i32, s1
 /// * gamma: constant in c*r^gamma where r is pixel value.
 #[inline]
 pub fn gamma_correction(input: core::Mat, output: &mut core::Mat, gamma: f32) -> Result<()> {
-	unsafe { sys::cv_intensity_transform_gammaCorrection_const_Mat_MatR_const_float(input.as_raw_Mat(), output.as_raw_mut_Mat(), gamma) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_gammaCorrection_const_Mat_MatR_const_float(input.as_raw_Mat(), output.as_raw_mut_Mat(), gamma) }.into_result()?;
+	Ok(ret)
 }
 
 /// Given an input bgr or grayscale image and constant c, apply log transformation to the image
@@ -119,5 +124,6 @@ pub fn gamma_correction(input: core::Mat, output: &mut core::Mat, gamma: f32) ->
 /// * output: resulting image of log transformations.
 #[inline]
 pub fn log_transform(input: core::Mat, output: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_intensity_transform_logTransform_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_intensity_transform_logTransform_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }

@@ -11,6 +11,7 @@ use opencv::{
 	types::VectorOfMat,
 };
 
+/// Specialization, passing Vector of boxed objects
 #[test]
 #[cfg(not(ocvrs_opencv_branch_32))]
 fn net() -> Result<()> {
@@ -47,20 +48,9 @@ fn net() -> Result<()> {
 	Ok(())
 }
 
+/// Specialization
 #[test]
-#[cfg(not(ocvrs_opencv_branch_32))]
-fn layer() -> Result<()> {
-	use opencv::dnn::CropAndResizeLayer;
-	let mut params = LayerParams::default()?;
-	params.set("width", &DictValue::from_i32(32)?)?;
-	params.set("height", &DictValue::from_i32(32)?)?;
-	let layer = CropAndResizeLayer::create(&params)?;
-	assert_eq!(0, layer.preferable_target());
-	Ok(())
-}
-
-#[test]
-fn dict() -> Result<()> {
+fn dict_value() -> Result<()> {
 	{
 		let v = DictValue::from_f64(123.456)?;
 		assert!(v.is_real()?);

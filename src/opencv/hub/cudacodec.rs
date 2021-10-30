@@ -129,7 +129,9 @@ opencv_type_enum! { crate::cudacodec::SurfaceFormat }
 /// * source: RAW video source implemented by user.
 #[inline]
 pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
-	unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R(source.as_raw_PtrOfRawVideoSource()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R(source.as_raw_PtrOfRawVideoSource()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates video reader.
@@ -141,7 +143,9 @@ pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSo
 #[inline]
 pub fn create_video_reader(filename: &str) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	extern_container_arg!(filename);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates video writer.
@@ -171,7 +175,9 @@ pub fn create_video_reader(filename: &str) -> Result<core::Ptr<dyn crate::cudaco
 /// * format: SF_BGR
 #[inline]
 pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates video writer.
@@ -202,7 +208,9 @@ pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 /// * format: SF_BGR
 #[inline]
 pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates video writer.
@@ -223,7 +231,9 @@ pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 #[inline]
 pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates video writer.
@@ -254,7 +264,9 @@ pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, fo
 #[inline]
 pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Callbacks for CUDA video encoder.
@@ -271,13 +283,16 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// Callback must allocate buffer for CUDA encoder and return pointer to it and it's size.
 	#[inline]
 	fn acquire_bit_stream(&mut self, buffer_size: &mut i32) -> Result<&mut u8> {
-		unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
+		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size) }.into_result()?;
+		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
+		Ok(ret)
 	}
 	
 	/// Callback function to signal that the encoded bitstream is ready to be written to file.
 	#[inline]
 	fn release_bit_stream(&mut self, data: &mut u8, size: i32) -> Result<()> {
-		unsafe { sys::cv_cudacodec_EncoderCallBack_releaseBitStream_unsigned_charX_int(self.as_raw_mut_EncoderCallBack(), data, size) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_releaseBitStream_unsigned_charX_int(self.as_raw_mut_EncoderCallBack(), data, size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Callback function to signal that the encoding operation on the frame has started.
@@ -287,7 +302,8 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
 	#[inline]
 	fn on_begin_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
-		unsafe { sys::cv_cudacodec_EncoderCallBack_onBeginFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_onBeginFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Callback function signals that the encoding operation on the frame has finished.
@@ -297,7 +313,8 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
 	#[inline]
 	fn on_end_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
-		unsafe { sys::cv_cudacodec_EncoderCallBack_onEndFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_onEndFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -309,115 +326,134 @@ pub trait EncoderParamsTraitConst {
 	/// NVVE_P_INTERVAL,
 	#[inline]
 	fn p_interval(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropP_Interval_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: p_interval")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropP_Interval_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_IDR_PERIOD,
 	#[inline]
 	fn idr_period(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropIDR_Period_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: idr_period")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropIDR_Period_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_DYNAMIC_GOP,
 	#[inline]
 	fn dynamic_gop(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropDynamicGOP_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: dynamic_gop")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDynamicGOP_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_RC_TYPE,
 	#[inline]
 	fn rc_type(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropRCType_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: rc_type")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropRCType_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_AVG_BITRATE,
 	#[inline]
 	fn avg_bitrate(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropAvgBitrate_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: avg_bitrate")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropAvgBitrate_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_PEAK_BITRATE,
 	#[inline]
 	fn peak_bitrate(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropPeakBitrate_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: peak_bitrate")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropPeakBitrate_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTRA,
 	#[inline]
 	fn qp_level_intra(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_Intra_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: qp_level_intra")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_Intra_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTER_P,
 	#[inline]
 	fn qp_level_inter_p(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterP_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: qp_level_inter_p")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterP_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTER_B,
 	#[inline]
 	fn qp_level_inter_b(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterB_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: qp_level_inter_b")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterB_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_DEBLOCK_MODE,
 	#[inline]
 	fn deblock_mode(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropDeblockMode_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: deblock_mode")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDeblockMode_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_PROFILE_LEVEL,
 	#[inline]
 	fn profile_level(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropProfileLevel_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: profile_level")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropProfileLevel_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_FORCE_INTRA,
 	#[inline]
 	fn force_intra(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIntra_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: force_intra")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIntra_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_FORCE_IDR,
 	#[inline]
 	fn force_idr(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIDR_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: force_idr")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIDR_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_CLEAR_STAT,
 	#[inline]
 	fn clear_stat(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropClearStat_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: clear_stat")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropClearStat_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_SET_DEINTERLACE,
 	#[inline]
 	fn di_mode(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropDIMode_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: di_mode")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDIMode_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_PRESETS,
 	#[inline]
 	fn presets(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropPresets_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: presets")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropPresets_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_DISABLE_CABAC,
 	#[inline]
 	fn disable_cabac(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableCabac_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: disable_cabac")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableCabac_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_CONFIGURE_NALU_FRAMING_TYPE
 	#[inline]
 	fn nalu_framing_type(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropNaluFramingType_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: nalu_framing_type")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropNaluFramingType_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// NVVE_DISABLE_SPS_PPS
 	#[inline]
 	fn disable_spspps(&self) -> i32 {
-		unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableSPSPPS_const(self.as_raw_EncoderParams()) }.into_result().expect("Infallible function failed: disable_spspps")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableSPSPPS_const(self.as_raw_EncoderParams()) };
+		ret
 	}
 	
 	/// Saves parameters to config file.
@@ -427,7 +463,8 @@ pub trait EncoderParamsTraitConst {
 	#[inline]
 	fn save(&self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -438,115 +475,134 @@ pub trait EncoderParamsTrait: crate::cudacodec::EncoderParamsTraitConst {
 	/// NVVE_P_INTERVAL,
 	#[inline]
 	fn set_p_interval(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropP_Interval_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_p_interval")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropP_Interval_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_IDR_PERIOD,
 	#[inline]
 	fn set_idr_period(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropIDR_Period_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_idr_period")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropIDR_Period_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_DYNAMIC_GOP,
 	#[inline]
 	fn set_dynamic_gop(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropDynamicGOP_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_dynamic_gop")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDynamicGOP_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_RC_TYPE,
 	#[inline]
 	fn set_rc_type(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropRCType_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_rc_type")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropRCType_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_AVG_BITRATE,
 	#[inline]
 	fn set_avg_bitrate(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropAvgBitrate_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_avg_bitrate")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropAvgBitrate_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_PEAK_BITRATE,
 	#[inline]
 	fn set_peak_bitrate(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropPeakBitrate_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_peak_bitrate")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropPeakBitrate_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTRA,
 	#[inline]
 	fn set_qp_level_intra(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_Intra_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_qp_level_intra")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_Intra_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTER_P,
 	#[inline]
 	fn set_qp_level_inter_p(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterP_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_qp_level_inter_p")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterP_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_QP_LEVEL_INTER_B,
 	#[inline]
 	fn set_qp_level_inter_b(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterB_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_qp_level_inter_b")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterB_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_DEBLOCK_MODE,
 	#[inline]
 	fn set_deblock_mode(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropDeblockMode_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_deblock_mode")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDeblockMode_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_PROFILE_LEVEL,
 	#[inline]
 	fn set_profile_level(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropProfileLevel_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_profile_level")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropProfileLevel_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_FORCE_INTRA,
 	#[inline]
 	fn set_force_intra(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIntra_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_force_intra")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIntra_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_FORCE_IDR,
 	#[inline]
 	fn set_force_idr(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIDR_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_force_idr")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIDR_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_CLEAR_STAT,
 	#[inline]
 	fn set_clear_stat(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropClearStat_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_clear_stat")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropClearStat_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_SET_DEINTERLACE,
 	#[inline]
 	fn set_di_mode(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropDIMode_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_di_mode")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDIMode_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_PRESETS,
 	#[inline]
 	fn set_presets(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropPresets_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_presets")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropPresets_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_DISABLE_CABAC,
 	#[inline]
 	fn set_disable_cabac(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableCabac_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_disable_cabac")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableCabac_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_CONFIGURE_NALU_FRAMING_TYPE
 	#[inline]
 	fn set_nalu_framing_type(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropNaluFramingType_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_nalu_framing_type")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropNaluFramingType_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// NVVE_DISABLE_SPS_PPS
 	#[inline]
 	fn set_disable_spspps(&mut self, val: i32) {
-		unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableSPSPPS_int(self.as_raw_mut_EncoderParams(), val) }.into_result().expect("Infallible function failed: set_disable_spspps")
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableSPSPPS_int(self.as_raw_mut_EncoderParams(), val) };
+		ret
 	}
 	
 	/// Reads parameters from config file.
@@ -556,7 +612,8 @@ pub trait EncoderParamsTrait: crate::cudacodec::EncoderParamsTraitConst {
 	#[inline]
 	fn load(&mut self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -588,7 +645,9 @@ impl crate::cudacodec::EncoderParamsTrait for EncoderParams {
 impl EncoderParams {
 	#[inline]
 	pub fn default() -> Result<crate::cudacodec::EncoderParams> {
-		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams() }.into_result().map(|r| unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams() }.into_result()?;
+		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Constructors.
@@ -600,7 +659,9 @@ impl EncoderParams {
 	#[inline]
 	pub fn new(config_file: &str) -> Result<crate::cudacodec::EncoderParams> {
 		extern_container_arg!(config_file);
-		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -635,7 +696,8 @@ pub trait RawVideoSourceConst {
 	/// Returns information about video file format.
 	#[inline]
 	fn format(&self) -> Result<crate::cudacodec::FormatInfo> {
-		unsafe { sys::cv_cudacodec_RawVideoSource_format_const(self.as_raw_RawVideoSource()) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_format_const(self.as_raw_RawVideoSource()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -650,13 +712,15 @@ pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
 	/// * size: Size in bytes of current frame.
 	#[inline]
 	fn get_next_packet(&mut self, data: &mut &mut u8, size: &mut size_t) -> Result<bool> {
-		unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_RawVideoSource(), data as *mut  _ as *mut  *mut  _, size) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_RawVideoSource(), data as *mut  _ as *mut  *mut  _, size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Updates the coded width and height inside format.
 	#[inline]
 	fn update_format(&mut self, coded_width: i32, coded_height: i32) -> Result<()> {
-		unsafe { sys::cv_cudacodec_RawVideoSource_updateFormat_const_int_const_int(self.as_raw_mut_RawVideoSource(), coded_width, coded_height) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_updateFormat_const_int_const_int(self.as_raw_mut_RawVideoSource(), coded_width, coded_height) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -673,7 +737,8 @@ pub trait VideoReaderConst {
 	/// Returns information about video file format.
 	#[inline]
 	fn format(&self) -> Result<crate::cudacodec::FormatInfo> {
-		unsafe { sys::cv_cudacodec_VideoReader_format_const(self.as_raw_VideoReader()) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_VideoReader_format_const(self.as_raw_VideoReader()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -690,7 +755,8 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	/// * stream: Stream::Null()
 	#[inline]
 	fn next_frame(&mut self, frame: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
-		unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -711,7 +777,9 @@ pub trait VideoWriterConst {
 
 	#[inline]
 	fn get_encoder_params(&self) -> Result<crate::cudacodec::EncoderParams> {
-		unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_VideoWriter()) }.into_result().map(|r| unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_VideoWriter()) }.into_result()?;
+		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -733,7 +801,8 @@ pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
 	#[inline]
 	fn write(&mut self, frame: &dyn core::ToInputArray, last_frame: bool) -> Result<()> {
 		input_array_arg!(frame);
-		unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR_bool(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), last_frame) }.into_result()
+		let ret = unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR_bool(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), last_frame) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

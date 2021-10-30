@@ -150,7 +150,8 @@ pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 #[inline]
 pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
 	input_array_arg!(image);
-	unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ) }.into_result()
+	let ret = unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bian2017gms) .
@@ -176,7 +177,8 @@ pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut core::
 /// * threshold_factor: 6.0
 #[inline]
 pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &core::Vector<core::KeyPoint>, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, matches_gms: &mut core::Vector<core::DMatch>, with_rotation: bool, with_scale: bool, threshold_factor: f64) -> Result<()> {
-	unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_DMatch_R_vector_DMatch_R_const_bool_const_bool_const_double(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), with_rotation, with_scale, threshold_factor) }.into_result()
+	let ret = unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_DMatch_R_vector_DMatch_R_const_bool_const_bool_const_double(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), with_rotation, with_scale, threshold_factor) }.into_result()?;
+	Ok(ret)
 }
 
 /// LOGOS (Local geometric support for high-outlier spatial verification) feature matching strategy described in [Lowry2018LOGOSLG](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG) .
@@ -193,7 +195,8 @@ pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &core::Vector
 ///    Image descriptors are then represented by their closest codevector (nearest BoW centroid).
 #[inline]
 pub fn match_logos(keypoints1: &core::Vector<core::KeyPoint>, keypoints2: &core::Vector<core::KeyPoint>, nn1: &core::Vector<i32>, nn2: &core::Vector<i32>, matches1to2: &mut core::Vector<core::DMatch>) -> Result<()> {
-	unsafe { sys::cv_xfeatures2d_matchLOGOS_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_int_R_const_vector_int_R_vector_DMatch_R(keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), nn1.as_raw_VectorOfi32(), nn2.as_raw_VectorOfi32(), matches1to2.as_raw_mut_VectorOfDMatch()) }.into_result()
+	let ret = unsafe { sys::cv_xfeatures2d_matchLOGOS_const_vector_KeyPoint_R_const_vector_KeyPoint_R_const_vector_int_R_const_vector_int_R_vector_DMatch_R(keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), nn1.as_raw_VectorOfi32(), nn2.as_raw_VectorOfi32(), matches1to2.as_raw_mut_VectorOfDMatch()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Class used for extracting Speeded Up Robust Features (SURF) from an image. :
@@ -233,75 +236,95 @@ pub trait SURF_CUDATraitConst {
 
 	#[inline]
 	fn hessian_threshold(&self) -> f64 {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropHessianThreshold_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: hessian_threshold")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropHessianThreshold_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	#[inline]
 	fn n_octaves(&self) -> i32 {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaves_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: n_octaves")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaves_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	#[inline]
 	fn n_octave_layers(&self) -> i32 {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: n_octave_layers")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	#[inline]
 	fn extended(&self) -> bool {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropExtended_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: extended")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropExtended_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	#[inline]
 	fn upright(&self) -> bool {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropUpright_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: upright")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropUpright_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 	#[inline]
 	fn keypoints_ratio(&self) -> f32 {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(self.as_raw_SURF_CUDA()) }.into_result().expect("Infallible function failed: keypoints_ratio")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(self.as_raw_SURF_CUDA()) };
+		ret
 	}
 	
 	#[inline]
 	fn sum(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropSum_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: sum")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropSum_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn mask1(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropMask1_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: mask1")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMask1_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn mask_sum(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropMaskSum_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: mask_sum")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMaskSum_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn det(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropDet_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: det")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropDet_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn trace(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropTrace_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: trace")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropTrace_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	#[inline]
 	fn max_pos_buffer(&self) -> core::GpuMat {
-		unsafe { sys::cv_cuda_SURF_CUDA_getPropMaxPosBuffer_const(self.as_raw_SURF_CUDA()) }.into_result().map(|r| unsafe { core::GpuMat::opencv_from_extern(r) } ).expect("Infallible function failed: max_pos_buffer")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMaxPosBuffer_const(self.as_raw_SURF_CUDA()) };
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		ret
 	}
 	
 	/// returns the descriptor size in float's (64 or 128)
 	#[inline]
 	fn descriptor_size(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_SURF_CUDA_descriptorSize_const(self.as_raw_SURF_CUDA()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_descriptorSize_const(self.as_raw_SURF_CUDA()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// returns the default norm type
 	#[inline]
 	fn default_norm(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_SURF_CUDA_defaultNorm_const(self.as_raw_SURF_CUDA()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_defaultNorm_const(self.as_raw_SURF_CUDA()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -311,81 +334,96 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 
 	#[inline]
 	fn set_hessian_threshold(&mut self, val: f64) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_hessian_threshold")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_n_octaves(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_n_octaves")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_n_octave_layers(&mut self, val: i32) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_n_octave_layers")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_extended(&mut self, val: bool) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropExtended_bool(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_extended")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropExtended_bool(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_upright(&mut self, val: bool) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropUpright_bool(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_upright")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropUpright_bool(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 	#[inline]
 	fn set_keypoints_ratio(&mut self, val: f32) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) }.into_result().expect("Infallible function failed: set_keypoints_ratio")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) };
+		ret
 	}
 	
 	#[inline]
 	fn set_sum(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_sum")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_mask1(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_mask1")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_mask_sum(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_mask_sum")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_det(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_det")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_trace(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_trace")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	#[inline]
 	fn set_max_pos_buffer(&mut self, mut val: core::GpuMat) {
-		unsafe { sys::cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) }.into_result().expect("Infallible function failed: set_max_pos_buffer")
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		ret
 	}
 	
 	/// upload host keypoints to device memory
 	#[inline]
 	fn upload_keypoints(&mut self, keypoints: &core::Vector<core::KeyPoint>, keypoints_gpu: &mut core::GpuMat) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_uploadKeypoints_const_vector_KeyPoint_R_GpuMatR(self.as_raw_mut_SURF_CUDA(), keypoints.as_raw_VectorOfKeyPoint(), keypoints_gpu.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_uploadKeypoints_const_vector_KeyPoint_R_GpuMatR(self.as_raw_mut_SURF_CUDA(), keypoints.as_raw_VectorOfKeyPoint(), keypoints_gpu.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// download keypoints from device to host memory
 	#[inline]
 	fn download_keypoints(&mut self, keypoints_gpu: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vector_KeyPoint_R(self.as_raw_mut_SURF_CUDA(), keypoints_gpu.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vector_KeyPoint_R(self.as_raw_mut_SURF_CUDA(), keypoints_gpu.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// download descriptors from device to host memory
 	#[inline]
 	fn download_descriptors(&mut self, descriptors_gpu: &core::GpuMat, descriptors: &mut core::Vector<f32>) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vector_float_R(self.as_raw_mut_SURF_CUDA(), descriptors_gpu.as_raw_GpuMat(), descriptors.as_raw_mut_VectorOff32()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vector_float_R(self.as_raw_mut_SURF_CUDA(), descriptors_gpu.as_raw_GpuMat(), descriptors.as_raw_mut_VectorOff32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Finds the keypoints using fast hessian detector used in SURF
@@ -396,7 +434,8 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 	/// * keypoints: Detected keypoints.
 	#[inline]
 	fn detect(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_detect_const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_detect_const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Finds the keypoints and computes their descriptors using fast hessian detector used in SURF
@@ -412,12 +451,14 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 	/// * use_provided_keypoints: false
 	#[inline]
 	fn detect_with_descriptors(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat, descriptors: &mut core::GpuMat, use_provided_keypoints: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_detectWithDescriptors_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_detectWithDescriptors_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn release_memory(&mut self) -> Result<()> {
-		unsafe { sys::cv_cuda_SURF_CUDA_releaseMemory(self.as_raw_mut_SURF_CUDA()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_releaseMemory(self.as_raw_mut_SURF_CUDA()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -481,7 +522,9 @@ impl SURF_CUDA {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<crate::xfeatures2d::SURF_CUDA> {
-		unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA() }.into_result().map(|r| unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA() }.into_result()?;
+		let ret = unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// the full constructor taking all the necessary parameters
@@ -494,7 +537,9 @@ impl SURF_CUDA {
 	/// * _upright: false
 	#[inline]
 	pub fn new(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<crate::xfeatures2d::SURF_CUDA> {
-		unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright) }.into_result().map(|r| unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright) }.into_result()?;
+		let ret = unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -515,7 +560,9 @@ impl SURF_CUDA {
 	/// * _upright: false
 	#[inline]
 	pub fn create(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<core::Ptr<crate::xfeatures2d::SURF_CUDA>> {
-		unsafe { sys::cv_cuda_SURF_CUDA_create_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::SURF_CUDA>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_cuda_SURF_CUDA_create_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::SURF_CUDA>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -545,7 +592,8 @@ pub trait AffineFeature2D: crate::features2d::Feature2DTrait + crate::xfeatures2
 	fn detect(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__InputArrayR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), mask.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__InputArrayR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), mask.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Detects keypoints and computes descriptors for their surrounding
@@ -558,7 +606,8 @@ pub trait AffineFeature2D: crate::features2d::Feature2DTrait + crate::xfeatures2
 		input_array_arg!(image);
 		input_array_arg!(mask);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__OutputArrayR_bool(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vector_Elliptic_KeyPoint_R_const__OutputArrayR_bool(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -568,14 +617,18 @@ impl dyn AffineFeature2D + '_ {
 	/// descriptor extractor.
 	#[inline]
 	pub fn create(mut keypoint_detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor_extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<dyn crate::xfeatures2d::AffineFeature2D>> {
-		unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D__Ptr_Feature2D_(keypoint_detector.as_raw_mut_PtrOfFeature2D(), descriptor_extractor.as_raw_mut_PtrOfFeature2D()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D__Ptr_Feature2D_(keypoint_detector.as_raw_mut_PtrOfFeature2D(), descriptor_extractor.as_raw_mut_PtrOfFeature2D()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates an instance where keypoint detector and descriptor
 	/// extractor are identical.
 	#[inline]
 	pub fn create_1(mut keypoint_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<dyn crate::xfeatures2d::AffineFeature2D>> {
-		unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D_(keypoint_detector.as_raw_mut_PtrOfFeature2D()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D_(keypoint_detector.as_raw_mut_PtrOfFeature2D()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -685,7 +738,9 @@ impl BEBLID {
 	/// * n_bits: BEBLID::SIZE_512_BITS
 	#[inline]
 	pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<crate::xfeatures2d::BEBLID>> {
-		unsafe { sys::cv_xfeatures2d_BEBLID_create_float_int(scale_factor, n_bits) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_BEBLID_create_float_int(scale_factor, n_bits) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -725,12 +780,14 @@ pub trait BoostDescConst: crate::features2d::Feature2DTraitConst {
 
 	#[inline]
 	fn get_use_scale_orientation(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_getUseScaleOrientation_const(self.as_raw_BoostDesc()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_BoostDesc_getUseScaleOrientation_const(self.as_raw_BoostDesc()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_scale_factor(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_getScaleFactor_const(self.as_raw_BoostDesc()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_BoostDesc_getScaleFactor_const(self.as_raw_BoostDesc()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -740,12 +797,14 @@ pub trait BoostDesc: crate::features2d::Feature2DTrait + crate::xfeatures2d::Boo
 
 	#[inline]
 	fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_const_bool(self.as_raw_mut_BoostDesc(), use_scale_orientation) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_const_bool(self.as_raw_mut_BoostDesc(), use_scale_orientation) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_setScaleFactor_const_float(self.as_raw_mut_BoostDesc(), scale_factor) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_BoostDesc_setScaleFactor_const_float(self.as_raw_mut_BoostDesc(), scale_factor) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -757,7 +816,9 @@ impl dyn BoostDesc + '_ {
 	/// * scale_factor: 6.25f
 	#[inline]
 	pub fn create(desc: i32, use_scale_orientation: bool, scale_factor: f32) -> Result<core::Ptr<dyn crate::xfeatures2d::BoostDesc>> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_create_int_bool_float(desc, use_scale_orientation, scale_factor) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::BoostDesc>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_BoostDesc_create_int_bool_float(desc, use_scale_orientation, scale_factor) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::BoostDesc>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -826,7 +887,9 @@ impl BriefDescriptorExtractor {
 	/// * use_orientation: false
 	#[inline]
 	pub fn create(bytes: i32, use_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>> {
-		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -860,7 +923,8 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 	/// * descriptor: supplied array for descriptor storage
 	#[inline]
 	fn get_descriptor(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -871,7 +935,8 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 	/// * H: homography matrix for warped grid
 	#[inline]
 	fn get_descriptor_1(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32, h: &mut f64) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -881,7 +946,8 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 	/// * descriptor: supplied array for descriptor storage
 	#[inline]
 	fn get_unnormalized_descriptor(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -892,7 +958,8 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 	/// * H: homography matrix for warped grid
 	#[inline]
 	fn get_unnormalized_descriptor_1(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32, h: &mut f64) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -908,14 +975,16 @@ pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYCo
 	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn compute_1(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(images);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_vector_KeyPoint__R_const__OutputArrayR(self.as_raw_mut_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vector_vector_KeyPoint__R_const__OutputArrayR(self.as_raw_mut_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -926,7 +995,8 @@ pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYCo
 	fn compute_2(&mut self, image: &dyn core::ToInputArray, roi: core::Rect, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), roi.opencv_as_extern(), descriptors.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), roi.opencv_as_extern(), descriptors.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// ## Parameters
@@ -936,7 +1006,8 @@ pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYCo
 	fn compute_3(&mut self, image: &dyn core::ToInputArray, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -954,7 +1025,9 @@ impl dyn DAISY + '_ {
 	#[inline]
 	pub fn create(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: crate::xfeatures2d::DAISY_NormalizationType, h: &dyn core::ToInputArray, interpolation: bool, use_orientation: bool) -> Result<core::Ptr<dyn crate::xfeatures2d::DAISY>> {
 		input_array_arg!(h);
-		unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayR_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::DAISY>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayR_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::DAISY>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -965,19 +1038,22 @@ pub trait Elliptic_KeyPointTraitConst {
 	/// the lengths of the major and minor ellipse axes
 	#[inline]
 	fn axes(&self) -> core::Size_<f32> {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropAxes_const(self.as_raw_Elliptic_KeyPoint()) }.into_result().expect("Infallible function failed: axes")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropAxes_const(self.as_raw_Elliptic_KeyPoint()) };
+		ret
 	}
 	
 	/// the integration scale at which the parameters were estimated
 	#[inline]
 	fn si(&self) -> f32 {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropSi_const(self.as_raw_Elliptic_KeyPoint()) }.into_result().expect("Infallible function failed: si")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropSi_const(self.as_raw_Elliptic_KeyPoint()) };
+		ret
 	}
 	
 	/// the transformation between image space and local patch space
 	#[inline]
 	fn transf(&self) -> core::Matx23f {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropTransf_const(self.as_raw_Elliptic_KeyPoint()) }.into_result().expect("Infallible function failed: transf")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropTransf_const(self.as_raw_Elliptic_KeyPoint()) };
+		ret
 	}
 	
 }
@@ -988,19 +1064,22 @@ pub trait Elliptic_KeyPointTrait: crate::xfeatures2d::Elliptic_KeyPointTraitCons
 	/// the lengths of the major and minor ellipse axes
 	#[inline]
 	fn set_axes(&mut self, val: core::Size_<f32>) {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropAxes_Size__float_(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_axes")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropAxes_Size__float_(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+		ret
 	}
 	
 	/// the integration scale at which the parameters were estimated
 	#[inline]
 	fn set_si(&mut self, val: f32) {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) }.into_result().expect("Infallible function failed: set_si")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
+		ret
 	}
 	
 	/// the transformation between image space and local patch space
 	#[inline]
 	fn set_transf(&mut self, val: core::Matx23f) {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_transf")
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+		ret
 	}
 	
 }
@@ -1032,12 +1111,16 @@ impl crate::xfeatures2d::Elliptic_KeyPointTrait for Elliptic_KeyPoint {
 impl Elliptic_KeyPoint {
 	#[inline]
 	pub fn default() -> Result<crate::xfeatures2d::Elliptic_KeyPoint> {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint() }.into_result().map(|r| unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint() }.into_result()?;
+		let ret = unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(pt: core::Point2f, angle: f32, axes: core::Size, size: f32, si: f32) -> Result<crate::xfeatures2d::Elliptic_KeyPoint> {
-		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(pt.opencv_as_extern(), angle, axes.opencv_as_extern(), size, si) }.into_result().map(|r| unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(pt.opencv_as_extern(), angle, axes.opencv_as_extern(), size, si) }.into_result()?;
+		let ret = unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1134,7 +1217,9 @@ impl FREAK {
 	/// * selected_pairs: std::vector<int>()
 	#[inline]
 	pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &core::Vector<i32>) -> Result<core::Ptr<crate::xfeatures2d::FREAK>> {
-		unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_R(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_R(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1212,7 +1297,9 @@ impl HarrisLaplaceFeatureDetector {
 	/// * num_layers: 4
 	#[inline]
 	pub fn create(num_octaves: i32, corn_thresh: f32, dog_thresh: f32, max_corners: i32, num_layers: i32) -> Result<core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>> {
-		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_create_int_float_float_int_int(num_octaves, corn_thresh, dog_thresh, max_corners, num_layers) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_create_int_float_float_int_int(num_octaves, corn_thresh, dog_thresh, max_corners, num_layers) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1310,7 +1397,9 @@ impl LATCH {
 	/// * sigma: 2.0
 	#[inline]
 	pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32, sigma: f64) -> Result<core::Ptr<crate::xfeatures2d::LATCH>> {
-		unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int_double(bytes, rotation_invariance, half_ssd_size, sigma) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int_double(bytes, rotation_invariance, half_ssd_size, sigma) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1392,7 +1481,9 @@ impl LUCID {
 	/// * blur_kernel: 2
 	#[inline]
 	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr<crate::xfeatures2d::LUCID>> {
-		unsafe { sys::cv_xfeatures2d_LUCID_create_const_int_const_int(lucid_kernel, blur_kernel) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_LUCID_create_const_int_const_int(lucid_kernel, blur_kernel) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1483,7 +1574,9 @@ impl MSDDetector {
 	/// * m_compute_orientation: false
 	#[inline]
 	pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::MSDDetector>> {
-		unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -1515,7 +1608,8 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	fn compute_signature(&self, image: &dyn core::ToInputArray, signature: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(signature);
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCTSignatures(), image.as_raw__InputArray(), signature.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCTSignatures(), image.as_raw__InputArray(), signature.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Computes signatures for multiple images in parallel.
@@ -1524,13 +1618,15 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	/// * signatures: Vector of computed signatures.
 	#[inline]
 	fn compute_signatures(&self, images: &core::Vector<core::Mat>, signatures: &mut core::Vector<core::Mat>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_R_vector_Mat_R(self.as_raw_PCTSignatures(), images.as_raw_VectorOfMat(), signatures.as_raw_mut_VectorOfMat()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_R_vector_Mat_R(self.as_raw_PCTSignatures(), images.as_raw_VectorOfMat(), signatures.as_raw_mut_VectorOfMat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of initial samples taken from the image.
 	#[inline]
 	fn get_sample_count(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getSampleCount_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getSampleCount_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Color resolution of the greyscale bitmap represented in allocated bits
@@ -1538,7 +1634,8 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	///       The greyscale bitmap is used for computing contrast and entropy values.
 	#[inline]
 	fn get_grayscale_bits(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getGrayscaleBits_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getGrayscaleBits_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Size of the texture sampling window used to compute contrast and entropy
@@ -1546,63 +1643,73 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	///       of the corresponding feature sample).
 	#[inline]
 	fn get_window_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWindowRadius_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWindowRadius_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_x(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightX_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightX_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_y(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightY_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightY_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_l(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightL_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightL_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_a(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightA_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightA_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_b(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightB_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightB_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_contrast(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightContrast_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightContrast_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn get_weight_entropy(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightEntropy_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightEntropy_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Initial samples taken from the image.
 	///       These sampled features become the input for clustering.
 	#[inline]
 	fn get_sampling_points(&self) -> Result<core::Vector<core::Point2f>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getSamplingPoints_const(self.as_raw_PCTSignatures()) }.into_result().map(|r| unsafe { core::Vector::<core::Point2f>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getSamplingPoints_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ** clusterizer ***
@@ -1610,13 +1717,16 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	/// * Initial seeds (initial number of clusters) for the k-means algorithm.
 	#[inline]
 	fn get_init_seed_indexes(&self) -> Result<core::Vector<i32>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedIndexes_const(self.as_raw_PCTSignatures()) }.into_result().map(|r| unsafe { core::Vector::<i32>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedIndexes_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Number of initial seeds (initial number of clusters) for the k-means algorithm.
 	#[inline]
 	fn get_init_seed_count(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedCount_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedCount_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of iterations of the k-means clustering.
@@ -1624,14 +1734,16 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	///       (not iteratively refining k clusters).
 	#[inline]
 	fn get_iteration_count(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getIterationCount_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getIterationCount_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Maximal number of generated clusters. If the number is exceeded,
 	///       the clusters are sorted by their weights and the smallest clusters are cropped.
 	#[inline]
 	fn get_max_clusters_count(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getMaxClustersCount_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getMaxClustersCount_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This parameter multiplied by the index of iteration gives lower limit for cluster size.
@@ -1639,7 +1751,8 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	///       and points are reassigned.
 	#[inline]
 	fn get_cluster_min_size(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getClusterMinSize_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getClusterMinSize_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Threshold euclidean distance between two centroids.
@@ -1647,19 +1760,22 @@ pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	///       one of the centroid is dismissed and points are reassigned.
 	#[inline]
 	fn get_joining_distance(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getJoiningDistance_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getJoiningDistance_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Remove centroids in k-means whose weight is lesser or equal to given threshold.
 	#[inline]
 	fn get_drop_threshold(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getDropThreshold_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getDropThreshold_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Distance function selector used for measuring distance between two points in k-means.
 	#[inline]
 	fn get_distance_function(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getDistanceFunction_const(self.as_raw_PCTSignatures()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_getDistanceFunction_const(self.as_raw_PCTSignatures()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1672,7 +1788,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       The greyscale bitmap is used for computing contrast and entropy values.
 	#[inline]
 	fn set_grayscale_bits(&mut self, grayscale_bits: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setGrayscaleBits_int(self.as_raw_mut_PCTSignatures(), grayscale_bits) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setGrayscaleBits_int(self.as_raw_mut_PCTSignatures(), grayscale_bits) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Size of the texture sampling window used to compute contrast and entropy
@@ -1680,56 +1797,64 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       of the corresponding feature sample).
 	#[inline]
 	fn set_window_radius(&mut self, radius: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWindowRadius_int(self.as_raw_mut_PCTSignatures(), radius) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWindowRadius_int(self.as_raw_mut_PCTSignatures(), radius) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_x(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightX_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightX_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_y(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightY_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightY_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_l(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightL_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightL_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_a(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightA_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightA_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_b(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightB_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightB_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_contrast(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightContrast_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightContrast_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	#[inline]
 	fn set_weight_entropy(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightEntropy_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightEntropy_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space.
@@ -1748,7 +1873,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       ENTROPY_IDX = 7;
 	#[inline]
 	fn set_weight(&mut self, idx: i32, value: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeight_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeight_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space.
@@ -1766,7 +1892,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       ENTROPY_IDX = 7;
 	#[inline]
 	fn set_weights(&mut self, weights: &core::Vector<f32>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_R(self.as_raw_mut_PCTSignatures(), weights.as_raw_VectorOff32()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_R(self.as_raw_mut_PCTSignatures(), weights.as_raw_VectorOff32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Translations of the individual axes of the feature space.
@@ -1785,7 +1912,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       ENTROPY_IDX = 7;
 	#[inline]
 	fn set_translation(&mut self, idx: i32, value: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslation_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslation_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Translations of the individual axes of the feature space.
@@ -1803,7 +1931,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       ENTROPY_IDX = 7;
 	#[inline]
 	fn set_translations(&mut self, translations: &core::Vector<f32>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_R(self.as_raw_mut_PCTSignatures(), translations.as_raw_VectorOff32()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_R(self.as_raw_mut_PCTSignatures(), translations.as_raw_VectorOff32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Sets sampling points used to sample the input image.
@@ -1813,13 +1942,15 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	/// Note: Number of sampling points must be greater or equal to clusterization seed count.
 	#[inline]
 	fn set_sampling_points(&mut self, mut sampling_points: core::Vector<core::Point2f>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setSamplingPoints_vector_Point2f_(self.as_raw_mut_PCTSignatures(), sampling_points.as_raw_mut_VectorOfPoint2f()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setSamplingPoints_vector_Point2f_(self.as_raw_mut_PCTSignatures(), sampling_points.as_raw_mut_VectorOfPoint2f()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Initial seed indexes for the k-means algorithm.
 	#[inline]
 	fn set_init_seed_indexes(&mut self, mut init_seed_indexes: core::Vector<i32>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setInitSeedIndexes_vector_int_(self.as_raw_mut_PCTSignatures(), init_seed_indexes.as_raw_mut_VectorOfi32()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setInitSeedIndexes_vector_int_(self.as_raw_mut_PCTSignatures(), init_seed_indexes.as_raw_mut_VectorOfi32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Number of iterations of the k-means clustering.
@@ -1827,14 +1958,16 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       (not iteratively refining k clusters).
 	#[inline]
 	fn set_iteration_count(&mut self, iteration_count: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setIterationCount_int(self.as_raw_mut_PCTSignatures(), iteration_count) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setIterationCount_int(self.as_raw_mut_PCTSignatures(), iteration_count) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Maximal number of generated clusters. If the number is exceeded,
 	///       the clusters are sorted by their weights and the smallest clusters are cropped.
 	#[inline]
 	fn set_max_clusters_count(&mut self, max_clusters_count: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setMaxClustersCount_int(self.as_raw_mut_PCTSignatures(), max_clusters_count) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setMaxClustersCount_int(self.as_raw_mut_PCTSignatures(), max_clusters_count) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This parameter multiplied by the index of iteration gives lower limit for cluster size.
@@ -1842,7 +1975,8 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       and points are reassigned.
 	#[inline]
 	fn set_cluster_min_size(&mut self, cluster_min_size: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setClusterMinSize_int(self.as_raw_mut_PCTSignatures(), cluster_min_size) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setClusterMinSize_int(self.as_raw_mut_PCTSignatures(), cluster_min_size) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Threshold euclidean distance between two centroids.
@@ -1850,20 +1984,23 @@ pub trait PCTSignatures: core::AlgorithmTrait + crate::xfeatures2d::PCTSignature
 	///       one of the centroid is dismissed and points are reassigned.
 	#[inline]
 	fn set_joining_distance(&mut self, joining_distance: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setJoiningDistance_float(self.as_raw_mut_PCTSignatures(), joining_distance) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setJoiningDistance_float(self.as_raw_mut_PCTSignatures(), joining_distance) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Remove centroids in k-means whose weight is lesser or equal to given threshold.
 	#[inline]
 	fn set_drop_threshold(&mut self, drop_threshold: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDropThreshold_float(self.as_raw_mut_PCTSignatures(), drop_threshold) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setDropThreshold_float(self.as_raw_mut_PCTSignatures(), drop_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Distance function selector used for measuring distance between two points in k-means.
 	///       Available: L0_25, L0_5, L1, L2, L2SQUARED, L5, L_INFINITY.
 	#[inline]
 	fn set_distance_function(&mut self, distance_function: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDistanceFunction_int(self.as_raw_mut_PCTSignatures(), distance_function) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_setDistanceFunction_int(self.as_raw_mut_PCTSignatures(), distance_function) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1886,7 +2023,9 @@ impl dyn PCTSignatures + '_ {
 	/// * point_distribution: 0
 	#[inline]
 	pub fn create(init_sample_count: i32, init_seed_count: i32, point_distribution: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::PCTSignatures>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_int_const_int_const_int(init_sample_count, init_seed_count, point_distribution) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_int_const_int_const_int(init_sample_count, init_seed_count, point_distribution) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1900,7 +2039,9 @@ impl dyn PCTSignatures + '_ {
 	/// Created algorithm.
 	#[inline]
 	pub fn create_1(init_sampling_points: &core::Vector<core::Point2f>, init_seed_count: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::PCTSignatures>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1913,7 +2054,9 @@ impl dyn PCTSignatures + '_ {
 	/// Created algorithm.
 	#[inline]
 	pub fn create_2(init_sampling_points: &core::Vector<core::Point2f>, init_cluster_seed_indexes: &core::Vector<i32>) -> Result<core::Ptr<dyn crate::xfeatures2d::PCTSignatures>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_vector_int_R(init_sampling_points.as_raw_VectorOfPoint2f(), init_cluster_seed_indexes.as_raw_VectorOfi32()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_R_const_vector_int_R(init_sampling_points.as_raw_VectorOfPoint2f(), init_cluster_seed_indexes.as_raw_VectorOfi32()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// Draws signature in the source image and outputs the result.
@@ -1936,7 +2079,8 @@ impl dyn PCTSignatures + '_ {
 		input_array_arg!(source);
 		input_array_arg!(signature);
 		output_array_arg!(result);
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_int(source.as_raw__InputArray(), signature.as_raw__InputArray(), result.as_raw__OutputArray(), radius_to_shorter_side_ratio, border_thickness) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_int(source.as_raw__InputArray(), signature.as_raw__InputArray(), result.as_raw__OutputArray(), radius_to_shorter_side_ratio, border_thickness) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Generates initial sampling points according to selected point distribution.
@@ -1949,7 +2093,8 @@ impl dyn PCTSignatures + '_ {
 	/// Note: Generated coordinates are in range [0..1)
 	#[inline]
 	pub fn generate_init_points(init_points: &mut core::Vector<core::Point2f>, count: i32, point_distribution: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_const_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_R_const_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1971,7 +2116,8 @@ pub trait PCTSignaturesSQFDConst: core::AlgorithmTraitConst {
 	fn compute_quadratic_form_distance(&self, _signature0: &dyn core::ToInputArray, _signature1: &dyn core::ToInputArray) -> Result<f32> {
 		input_array_arg!(_signature0);
 		input_array_arg!(_signature1);
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(self.as_raw_PCTSignaturesSQFD(), _signature0.as_raw__InputArray(), _signature1.as_raw__InputArray()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(self.as_raw_PCTSignaturesSQFD(), _signature0.as_raw__InputArray(), _signature1.as_raw__InputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Computes Signature Quadratic Form Distance between the reference signature
@@ -1982,7 +2128,8 @@ pub trait PCTSignaturesSQFDConst: core::AlgorithmTraitConst {
 	/// * distances: Output vector of measured distances.
 	#[inline]
 	fn compute_quadratic_form_distances(&self, source_signature: &core::Mat, image_signatures: &core::Vector<core::Mat>, distances: &mut core::Vector<f32>) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatR_const_vector_Mat_R_vector_float_R(self.as_raw_PCTSignaturesSQFD(), source_signature.as_raw_Mat(), image_signatures.as_raw_VectorOfMat(), distances.as_raw_mut_VectorOff32()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatR_const_vector_Mat_R_vector_float_R(self.as_raw_PCTSignaturesSQFD(), source_signature.as_raw_Mat(), image_signatures.as_raw_VectorOfMat(), distances.as_raw_mut_VectorOff32()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2008,7 +2155,9 @@ impl dyn PCTSignaturesSQFD + '_ {
 	/// * similarity_parameter: 1.0f
 	#[inline]
 	pub fn create(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<core::Ptr<dyn crate::xfeatures2d::PCTSignaturesSQFD>> {
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_const_int_const_int_const_float(distance_function, similarity_function, similarity_parameter) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_const_int_const_int_const_float(distance_function, similarity_function, similarity_parameter) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -2046,27 +2195,32 @@ pub trait SURFConst: crate::features2d::Feature2DTraitConst {
 
 	#[inline]
 	fn get_hessian_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_xfeatures2d_SURF_getHessianThreshold_const(self.as_raw_SURF()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_getHessianThreshold_const(self.as_raw_SURF()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_n_octaves(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_SURF_getNOctaves_const(self.as_raw_SURF()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_getNOctaves_const(self.as_raw_SURF()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_n_octave_layers(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_SURF_getNOctaveLayers_const(self.as_raw_SURF()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_getNOctaveLayers_const(self.as_raw_SURF()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_extended(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_SURF_getExtended_const(self.as_raw_SURF()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_getExtended_const(self.as_raw_SURF()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_upright(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_SURF_getUpright_const(self.as_raw_SURF()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_getUpright_const(self.as_raw_SURF()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2076,27 +2230,32 @@ pub trait SURF: crate::features2d::Feature2DTrait + crate::xfeatures2d::SURFCons
 
 	#[inline]
 	fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_mut_SURF(), hessian_threshold) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_mut_SURF(), hessian_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_n_octaves(&mut self, n_octaves: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setNOctaves_int(self.as_raw_mut_SURF(), n_octaves) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_setNOctaves_int(self.as_raw_mut_SURF(), n_octaves) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setNOctaveLayers_int(self.as_raw_mut_SURF(), n_octave_layers) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_setNOctaveLayers_int(self.as_raw_mut_SURF(), n_octave_layers) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_extended(&mut self, extended: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setExtended_bool(self.as_raw_mut_SURF(), extended) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_setExtended_bool(self.as_raw_mut_SURF(), extended) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_upright(&mut self, upright: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setUpright_bool(self.as_raw_mut_SURF(), upright) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_setUpright_bool(self.as_raw_mut_SURF(), upright) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2119,7 +2278,9 @@ impl dyn SURF + '_ {
 	/// * upright: false
 	#[inline]
 	pub fn create(hessian_threshold: f64, n_octaves: i32, n_octave_layers: i32, extended: bool, upright: bool) -> Result<core::Ptr<dyn crate::xfeatures2d::SURF>> {
-		unsafe { sys::cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold, n_octaves, n_octave_layers, extended, upright) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::SURF>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold, n_octaves, n_octave_layers, extended, upright) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::SURF>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -2185,7 +2346,9 @@ impl StarDetector {
 	/// * suppress_nonmax_size: 5
 	#[inline]
 	pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<core::Ptr<crate::xfeatures2d::StarDetector>> {
-		unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size) }.into_result().map(|r| unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size) }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -2215,22 +2378,26 @@ pub trait TBMRConst: crate::xfeatures2d::AffineFeature2DConst {
 
 	#[inline]
 	fn get_min_area(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_TBMR_getMinArea_const(self.as_raw_TBMR()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_getMinArea_const(self.as_raw_TBMR()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_area_relative(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_TBMR_getMaxAreaRelative_const(self.as_raw_TBMR()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_getMaxAreaRelative_const(self.as_raw_TBMR()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_scale_factor(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_TBMR_getScaleFactor_const(self.as_raw_TBMR()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_getScaleFactor_const(self.as_raw_TBMR()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_n_scales(&self) -> Result<i32> {
-		unsafe { sys::cv_xfeatures2d_TBMR_getNScales_const(self.as_raw_TBMR()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_getNScales_const(self.as_raw_TBMR()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2240,22 +2407,26 @@ pub trait TBMR: crate::xfeatures2d::AffineFeature2D + crate::xfeatures2d::TBMRCo
 
 	#[inline]
 	fn set_min_area(&mut self, min_area: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_TBMR_setMinArea_int(self.as_raw_mut_TBMR(), min_area) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_setMinArea_int(self.as_raw_mut_TBMR(), min_area) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_area_relative(&mut self, max_area: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_TBMR_setMaxAreaRelative_float(self.as_raw_mut_TBMR(), max_area) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_setMaxAreaRelative_float(self.as_raw_mut_TBMR(), max_area) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_TBMR_setScaleFactor_float(self.as_raw_mut_TBMR(), scale_factor) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_setScaleFactor_float(self.as_raw_mut_TBMR(), scale_factor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_n_scales(&mut self, n_scales: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_TBMR_setNScales_int(self.as_raw_mut_TBMR(), n_scales) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_setNScales_int(self.as_raw_mut_TBMR(), n_scales) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2268,7 +2439,9 @@ impl dyn TBMR + '_ {
 	/// * n_scales: -1
 	#[inline]
 	pub fn create(min_area: i32, max_area_relative: f32, scale_factor: f32, n_scales: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::TBMR>> {
-		unsafe { sys::cv_xfeatures2d_TBMR_create_int_float_float_int(min_area, max_area_relative, scale_factor, n_scales) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::TBMR>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_TBMR_create_int_float_float_int(min_area, max_area_relative, scale_factor, n_scales) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::TBMR>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -2293,27 +2466,32 @@ pub trait VGGConst: crate::features2d::Feature2DTraitConst {
 
 	#[inline]
 	fn get_sigma(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_VGG_getSigma_const(self.as_raw_VGG()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_getSigma_const(self.as_raw_VGG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_normalize_image(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeImage_const(self.as_raw_VGG()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeImage_const(self.as_raw_VGG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_scale_orientation(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_VGG_getUseScaleOrientation_const(self.as_raw_VGG()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_getUseScaleOrientation_const(self.as_raw_VGG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_scale_factor(&self) -> Result<f32> {
-		unsafe { sys::cv_xfeatures2d_VGG_getScaleFactor_const(self.as_raw_VGG()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_getScaleFactor_const(self.as_raw_VGG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_normalize_descriptor(&self) -> Result<bool> {
-		unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeDescriptor_const(self.as_raw_VGG()) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeDescriptor_const(self.as_raw_VGG()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2323,27 +2501,32 @@ pub trait VGG: crate::features2d::Feature2DTrait + crate::xfeatures2d::VGGConst 
 
 	#[inline]
 	fn set_sigma(&mut self, isigma: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setSigma_const_float(self.as_raw_mut_VGG(), isigma) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_setSigma_const_float(self.as_raw_mut_VGG(), isigma) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_normalize_image(&mut self, img_normalize: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeImage_const_bool(self.as_raw_mut_VGG(), img_normalize) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeImage_const_bool(self.as_raw_mut_VGG(), img_normalize) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseScaleOrientation_const_bool(self.as_raw_mut_VGG(), use_scale_orientation) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_setUseScaleOrientation_const_bool(self.as_raw_mut_VGG(), use_scale_orientation) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setScaleFactor_const_float(self.as_raw_mut_VGG(), scale_factor) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_setScaleFactor_const_float(self.as_raw_mut_VGG(), scale_factor) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_normalize_descriptor(&mut self, dsc_normalize: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeDescriptor_const_bool(self.as_raw_mut_VGG(), dsc_normalize) }.into_result()
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeDescriptor_const_bool(self.as_raw_mut_VGG(), dsc_normalize) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -2358,7 +2541,9 @@ impl dyn VGG + '_ {
 	/// * dsc_normalize: false
 	#[inline]
 	pub fn create(desc: i32, isigma: f32, img_normalize: bool, use_scale_orientation: bool, scale_factor: f32, dsc_normalize: bool) -> Result<core::Ptr<dyn crate::xfeatures2d::VGG>> {
-		unsafe { sys::cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(desc, isigma, img_normalize, use_scale_orientation, scale_factor, dsc_normalize) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::xfeatures2d::VGG>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(desc, isigma, img_normalize, use_scale_orientation, scale_factor, dsc_normalize) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::VGG>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

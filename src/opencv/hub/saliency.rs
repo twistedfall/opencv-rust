@@ -69,12 +69,14 @@ pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSalienc
 
 	#[inline]
 	fn get_image_width(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageWidth_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageWidth_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_image_height(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageHeight_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageHeight_const(self.as_raw_MotionSaliencyBinWangApr2014()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -86,7 +88,8 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + c
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MotionSaliencyBinWangApr2014(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MotionSaliencyBinWangApr2014(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This is a utility function that allows to set the correct size (taken from the input image) in the
@@ -96,24 +99,28 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + c
 	/// * H: height of input image
 	#[inline]
 	fn set_imagesize(&mut self, w: i32, h: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImagesize_int_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), w, h) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImagesize_int_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), w, h) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This function allows the correct initialization of all data structures that will be used by the
 	/// algorithm.
 	#[inline]
 	fn init(&mut self) -> Result<bool> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_init(self.as_raw_mut_MotionSaliencyBinWangApr2014()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_init(self.as_raw_mut_MotionSaliencyBinWangApr2014()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_image_width(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageWidth_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageWidth_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_image_height(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageHeight_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageHeight_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -176,12 +183,16 @@ impl crate::saliency::MotionSaliencyBinWangApr2014Trait for MotionSaliencyBinWan
 impl MotionSaliencyBinWangApr2014 {
 	#[inline]
 	pub fn default() -> Result<crate::saliency::MotionSaliencyBinWangApr2014> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014() }.into_result().map(|r| unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014() }.into_result()?;
+		let ret = unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>> {
-		unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -205,22 +216,26 @@ pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessConst {
 
 	#[inline]
 	fn write(&self) -> Result<()> {
-		unsafe { sys::cv_saliency_ObjectnessBING_write_const(self.as_raw_ObjectnessBING()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_write_const(self.as_raw_ObjectnessBING()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_base(&self) -> Result<f64> {
-		unsafe { sys::cv_saliency_ObjectnessBING_getBase_const(self.as_raw_ObjectnessBING()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_getBase_const(self.as_raw_ObjectnessBING()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_nss(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_ObjectnessBING_getNSS_const(self.as_raw_ObjectnessBING()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_getNSS_const(self.as_raw_ObjectnessBING()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_w(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_ObjectnessBING_getW_const(self.as_raw_ObjectnessBING()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_getW_const(self.as_raw_ObjectnessBING()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -232,12 +247,14 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
-		unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn read(&mut self) -> Result<()> {
-		unsafe { sys::cv_saliency_ObjectnessBING_read(self.as_raw_mut_ObjectnessBING()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_read(self.as_raw_mut_ObjectnessBING()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Return the list of the rectangles' objectness value,
@@ -247,7 +264,9 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	/// object window.
 	#[inline]
 	fn getobjectness_values(&mut self) -> Result<core::Vector<f32>> {
-		unsafe { sys::cv_saliency_ObjectnessBING_getobjectnessValues(self.as_raw_mut_ObjectnessBING()) }.into_result().map(|r| unsafe { core::Vector::<f32>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_getobjectnessValues(self.as_raw_mut_ObjectnessBING()) }.into_result()?;
+		let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// This is a utility function that allows to set the correct path from which the algorithm will load
@@ -257,7 +276,8 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	#[inline]
 	fn set_training_path(&mut self, training_path: &str) -> Result<()> {
 		extern_container_arg!(training_path);
-		unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// This is a utility function that allows to set an arbitrary path in which the algorithm will save the
@@ -270,22 +290,26 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	#[inline]
 	fn set_bb_res_dir(&mut self, results_dir: &str) -> Result<()> {
 		extern_container_arg!(results_dir);
-		unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_as_extern()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_as_extern()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_base(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_saliency_ObjectnessBING_setBase_double(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_setBase_double(self.as_raw_mut_ObjectnessBING(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_nss(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_ObjectnessBING_setNSS_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_setNSS_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_w(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_ObjectnessBING_setW_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_setW_int(self.as_raw_mut_ObjectnessBING(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -341,12 +365,16 @@ impl crate::saliency::ObjectnessBINGTrait for ObjectnessBING {
 impl ObjectnessBING {
 	#[inline]
 	pub fn default() -> Result<crate::saliency::ObjectnessBING> {
-		unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING() }.into_result().map(|r| unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING() }.into_result()?;
+		let ret = unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::ObjectnessBING>> {
-		unsafe { sys::cv_saliency_ObjectnessBING_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_ObjectnessBING_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -370,7 +398,8 @@ pub trait Saliency: core::AlgorithmTrait + crate::saliency::SaliencyConst {
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
-		unsafe { sys::cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Saliency(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Saliency(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -403,7 +432,8 @@ pub trait StaticSaliency: crate::saliency::Saliency + crate::saliency::StaticSal
 	fn compute_binary_map(&mut self, _saliency_map: &dyn core::ToInputArray, _binary_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(_saliency_map);
 		output_array_arg!(_binary_map);
-		unsafe { sys::cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliency(), _saliency_map.as_raw__InputArray(), _binary_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliency(), _saliency_map.as_raw__InputArray(), _binary_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -424,7 +454,8 @@ pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency + crat
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
-		unsafe { sys::cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencyFineGrained(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencyFineGrained(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -483,12 +514,16 @@ impl crate::saliency::StaticSaliencyFineGrainedTrait for StaticSaliencyFineGrain
 impl StaticSaliencyFineGrained {
 	#[inline]
 	pub fn default() -> Result<crate::saliency::StaticSaliencyFineGrained> {
-		unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained() }.into_result().map(|r| unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained() }.into_result()?;
+		let ret = unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencyFineGrained>> {
-		unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -506,17 +541,20 @@ pub trait StaticSaliencySpectralResidualTraitConst: crate::saliency::StaticSalie
 
 	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(self.as_raw_StaticSaliencySpectralResidual(), fs.as_raw_mut_FileStorage()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(self.as_raw_StaticSaliencySpectralResidual(), fs.as_raw_mut_FileStorage()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_image_width(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageWidth_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageWidth_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_image_height(&self) -> Result<i32> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageHeight_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageHeight_const(self.as_raw_StaticSaliencySpectralResidual()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -528,22 +566,26 @@ pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliency +
 	fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(saliency_map);
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencySpectralResidual(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencySpectralResidual(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(self.as_raw_mut_StaticSaliencySpectralResidual(), fn_.as_raw_FileNode()) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(self.as_raw_mut_StaticSaliencySpectralResidual(), fn_.as_raw_FileNode()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_image_width(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageWidth_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageWidth_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_image_height(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -604,12 +646,16 @@ impl crate::saliency::StaticSaliencySpectralResidualTrait for StaticSaliencySpec
 impl StaticSaliencySpectralResidual {
 	#[inline]
 	pub fn default() -> Result<crate::saliency::StaticSaliencySpectralResidual> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual() }.into_result().map(|r| unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual() }.into_result()?;
+		let ret = unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencySpectralResidual>> {
-		unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create() }.into_result().map(|r| unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create() }.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

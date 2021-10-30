@@ -1069,20 +1069,21 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool) -> Cow<str> {
+	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool, error_handling: &str) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
 		if self.as_string().is_some() || self.is_by_ptr() {
 			format!(
-				".map(|r| {unsafety_call}{{ {typ}::opencv_from_extern(r) }} )",
+				"let ret = {unsafety_call}{{ {typ}::opencv_from_extern(ret) }};",
 				unsafety_call=unsafety_call,
 				typ=self.rust_return_func_decl(FishStyle::Turbo, is_static_func),
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.constness().is_const() { "ref" } else { "mut" };
 			format!(
-				".and_then(|x| {unsafety_call}{{ x.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())))",
+				"let ret = {unsafety_call}{{ ret.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())){error_handling};",
 				unsafety_call=unsafety_call,
 				ptr_call=ptr_call,
+				error_handling=error_handling,
 			).into()
 		} else {
 			"".into()
@@ -1266,7 +1267,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
 		if let Some(Dir::Out(_)) = self.as_string() {
-			format!("string_arg_output_receive!(out, {name}_via => {name})", name = name)
+			format!("string_arg_output_receive!({name}_via => {name})", name = name)
 		} else {
 			"".to_string()
 		}

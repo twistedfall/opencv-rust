@@ -24,11 +24,12 @@ mod scalar_inner {
 }
 
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
+/// Named `VecN` to avoid name clash with std's `Vec`.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
-pub struct Vec<T, const N: usize> (pub [T; N]);
+pub struct VecN<T, const N: usize> (pub [T; N]);
 
-impl<T, const N: usize> Default for Vec<T, N>
+impl<T, const N: usize> Default for VecN<T, N>
 	where
 		[T; N]: Default
 {
@@ -38,7 +39,7 @@ impl<T, const N: usize> Default for Vec<T, N>
 	}
 }
 
-impl<T: Copy, const N: usize> Vec<T, N> {
+impl<T: Copy, const N: usize> VecN<T, N> {
 	#[inline]
 	pub fn all(v0: T) -> Self {
 		Self::from([v0; N])
@@ -55,14 +56,14 @@ impl<T: Copy, const N: usize> Vec<T, N> {
 	}
 }
 
-impl<T, const N: usize> From<[T; N]> for Vec<T, N> {
+impl<T, const N: usize> From<[T; N]> for VecN<T, N> {
 	#[inline]
 	fn from(s: [T; N]) -> Self {
 		Self(s)
 	}
 }
 
-impl<T, const N: usize> Deref for Vec<T, N> {
+impl<T, const N: usize> Deref for VecN<T, N> {
 	type Target = [T; N];
 
 	#[inline]
@@ -71,14 +72,14 @@ impl<T, const N: usize> Deref for Vec<T, N> {
 	}
 }
 
-impl<T, const N: usize> DerefMut for Vec<T, N> {
+impl<T, const N: usize> DerefMut for VecN<T, N> {
 	#[inline]
 	fn deref_mut(&mut self) -> &mut Self::Target {
 		&mut self.0
 	}
 }
 
-impl<T, const N: usize> IntoIterator for Vec<T, N> {
+impl<T, const N: usize> IntoIterator for VecN<T, N> {
 	type Item = T;
 	type IntoIter = array::IntoIter<T, N>;
 
@@ -88,7 +89,7 @@ impl<T, const N: usize> IntoIterator for Vec<T, N> {
 	}
 }
 
-impl<F: num_traits::Float> Vec<F, 2> {
+impl<F: num_traits::Float> VecN<F, 2> {
 	/// conjugation (makes sense for complex numbers and quaternions)
 	#[inline]
 	pub fn conj(&self) -> Self {
@@ -96,7 +97,7 @@ impl<F: num_traits::Float> Vec<F, 2> {
 	}
 }
 
-impl<F: num_traits::Float> Vec<F, 3> {
+impl<F: num_traits::Float> VecN<F, 3> {
 	/// cross product of the two 3D vectors
 	#[inline]
 	pub fn cross(&self, v: Self) -> Self {
@@ -108,7 +109,7 @@ impl<F: num_traits::Float> Vec<F, 3> {
 	}
 }
 
-impl<F: num_traits::Float> Vec<F, 4> {
+impl<F: num_traits::Float> VecN<F, 4> {
 	/// conjugation (makes sense for complex numbers and quaternions)
 	#[inline]
 	pub fn conj(&self) -> Self {
@@ -116,7 +117,7 @@ impl<F: num_traits::Float> Vec<F, 4> {
 	}
 }
 
-impl<T: AddAssign, const N: usize> AddAssign for Vec<T, N> {
+impl<T: AddAssign, const N: usize> AddAssign for VecN<T, N> {
 	#[inline]
 	fn add_assign(&mut self, rhs: Self) {
 		self.iter_mut()
@@ -125,7 +126,7 @@ impl<T: AddAssign, const N: usize> AddAssign for Vec<T, N> {
 	}
 }
 
-impl<T: Add<Output=T> + Copy, const N: usize> Add for Vec<T, N> {
+impl<T: Add<Output=T> + Copy, const N: usize> Add for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -137,7 +138,7 @@ impl<T: Add<Output=T> + Copy, const N: usize> Add for Vec<T, N> {
 	}
 }
 
-impl<T: SubAssign, const N: usize> SubAssign for Vec<T, N> {
+impl<T: SubAssign, const N: usize> SubAssign for VecN<T, N> {
 	#[inline]
 	fn sub_assign(&mut self, rhs: Self) {
 		self.iter_mut()
@@ -146,7 +147,7 @@ impl<T: SubAssign, const N: usize> SubAssign for Vec<T, N> {
 	}
 }
 
-impl<T: Sub<Output=T> + Copy, const N: usize> Sub for Vec<T, N> {
+impl<T: Sub<Output=T> + Copy, const N: usize> Sub for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -158,7 +159,7 @@ impl<T: Sub<Output=T> + Copy, const N: usize> Sub for Vec<T, N> {
 	}
 }
 
-impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for Vec<T, N> {
+impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn mul_assign(&mut self, rhs: Rhs) {
 		self.iter_mut()
@@ -166,7 +167,7 @@ impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for Ve
 	}
 }
 
-impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for Vec<T, N> {
+impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn div_assign(&mut self, rhs: Rhs) {
 		self.iter_mut()
@@ -174,7 +175,7 @@ impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for Ve
 	}
 }
 
-impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for Vec<T, N> {
+impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -185,7 +186,7 @@ impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> f
 	}
 }
 
-impl<Rhs: ValidVecType, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for Vec<T, N> {
+impl<Rhs: ValidVecType, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -196,7 +197,7 @@ impl<Rhs: ValidVecType, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> f
 	}
 }
 
-impl<T: Neg<Output=T> + Copy, const N: usize> Neg for Vec<T, N> {
+impl<T: Neg<Output=T> + Copy, const N: usize> Neg for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -207,7 +208,7 @@ impl<T: Neg<Output=T> + Copy, const N: usize> Neg for Vec<T, N> {
 	}
 }
 
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for Vec<T, 4> {
+impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for VecN<T, 4> {
 	type Output = Self;
 
 	#[inline]
@@ -221,14 +222,14 @@ impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for Vec<T, 4> 
 	}
 }
 
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> MulAssign for Vec<T, 4> {
+impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> MulAssign for VecN<T, 4> {
 	#[inline]
 	fn mul_assign(&mut self, rhs: Self) {
 		*self = *self * rhs;
 	}
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVType<'_> for Vec<T, N> {
+impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
 	type ExternReceive = Self;
 	type ExternContainer = Self;
@@ -243,7 +244,7 @@ impl<T: ValidVecType, const N: usize> OpenCVType<'_> for Vec<T, N> {
 	unsafe fn opencv_from_extern(s: Self) -> Self { s }
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for Vec<T, N> {
+impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]
@@ -253,7 +254,7 @@ impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for Vec<T, N> {
 	fn opencv_into_extern_container_nofail(self) -> Self { self }
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for Vec<T, N> {
+impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -267,7 +268,7 @@ impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for Vec<T, N> {
 	fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
 }
 
-pub type Scalar_<T> = Vec<T, 4>;
+pub type Scalar_<T> = VecN<T, 4>;
 
 impl<T: ValidScalarType> Scalar_<T> {
 	#[inline]

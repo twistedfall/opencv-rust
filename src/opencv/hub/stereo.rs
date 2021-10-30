@@ -29,13 +29,15 @@ pub const CV_STAR_KERNEL: i32 = 6;
 /// *
 #[inline]
 pub fn census_transform(image1: &core::Mat, image2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_censusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int(image1.as_raw_Mat(), image2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
+	let ret = unsafe { sys::cv_stereo_censusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int(image1.as_raw_Mat(), image2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// single image census transform
 #[inline]
 pub fn census_transform_1(image1: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_censusTransform_const_MatR_int_MatR_const_int(image1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
+	let ret = unsafe { sys::cv_stereo_censusTransform_const_MatR_int_MatR_const_int(image1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// STANDARD_MCT - Modified census which is memorizing for each pixel 2 bits and includes a tolerance to the pixel comparison
@@ -48,7 +50,8 @@ pub fn census_transform_1(image1: &core::Mat, kernel_size: i32, dist1: &mut core
 /// * integral_image2: Mat()
 #[inline]
 pub fn modified_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32, t: i32, integral_image1: &core::Mat, integral_image2: &core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int_int_const_MatR_const_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, t, integral_image1.as_raw_Mat(), integral_image2.as_raw_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int_int_const_MatR_const_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, t, integral_image1.as_raw_Mat(), integral_image2.as_raw_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// single version of modified census transform descriptor
@@ -58,19 +61,22 @@ pub fn modified_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size
 /// * integral_image: Mat()
 #[inline]
 pub fn modified_census_transform_1(img1: &core::Mat, kernel_size: i32, dist: &mut core::Mat, typ: i32, t: i32, integral_image: &core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_int_MatR_const_int_int_const_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat(), typ, t, integral_image.as_raw_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_int_MatR_const_int_int_const_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat(), typ, t, integral_image.as_raw_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// in a 9x9 kernel only certain positions are choosen
 #[inline]
 pub fn star_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_starCensusTransform_const_MatR_const_MatR_int_MatR_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_stereo_starCensusTransform_const_MatR_const_MatR_int_MatR_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// single image version of star kernel
 #[inline]
 pub fn star_census_transform_1(img1: &core::Mat, kernel_size: i32, dist: &mut core::Mat) -> Result<()> {
-	unsafe { sys::cv_stereo_starCensusTransform_const_MatR_int_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat()) }.into_result()
+	let ret = unsafe { sys::cv_stereo_starCensusTransform_const_MatR_int_MatR(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat()) }.into_result()?;
+	Ok(ret)
 }
 
 /// The classical center symetric census
@@ -78,13 +84,15 @@ pub fn star_census_transform_1(img1: &core::Mat, kernel_size: i32, dist: &mut co
 /// *
 #[inline]
 pub fn symetric_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()
+	let ret = unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// single version of census transform
 #[inline]
 pub fn symetric_census_transform_1(img1: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, typ: i32) -> Result<()> {
-	unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_int_MatR_const_int(img1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()
+	let ret = unsafe { sys::cv_stereo_symetricCensusTransform_const_MatR_int_MatR_const_int(img1.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), typ) }.into_result()?;
+	Ok(ret)
 }
 
 /// \addtogroup stereo
@@ -101,7 +109,8 @@ opencv_type_simple! { crate::stereo::MatchQuasiDense }
 impl MatchQuasiDense {
 	#[inline]
 	pub fn default() -> Result<crate::stereo::MatchQuasiDense> {
-		unsafe { sys::cv_stereo_MatchQuasiDense_MatchQuasiDense() }.into_result()
+		let ret = unsafe { sys::cv_stereo_MatchQuasiDense_MatchQuasiDense() }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -157,7 +166,8 @@ pub trait QuasiDenseStereoConst {
 
 	#[inline]
 	fn param(&self) -> crate::stereo::PropagationParameters {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo()) }.into_result().expect("Infallible function failed: param")
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo()) };
+		ret
 	}
 	
 }
@@ -167,7 +177,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 
 	#[inline]
 	fn set_param(&mut self, val: crate::stereo::PropagationParameters) {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_setPropParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) }.into_result().expect("Infallible function failed: set_param")
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_setPropParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
+		ret
 	}
 	
 	/// Load a file containing the configuration parameters of the class.
@@ -189,7 +200,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	#[inline]
 	fn load_parameters(&mut self, filepath: &str) -> Result<i32> {
 		extern_container_arg!(mut filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Save a file containing all the configuration parameters the class is currently set to.
@@ -205,7 +217,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	#[inline]
 	fn save_parameters(&mut self, filepath: &str) -> Result<i32> {
 		extern_container_arg!(mut filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Get The sparse corresponding points.
@@ -217,7 +230,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
 	#[inline]
 	fn get_sparse_matches(&mut self, s_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Get The dense corresponding points.
@@ -229,7 +243,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	/// Note: The returned Match elements inside the sMatches vector, do not use corr member.
 	#[inline]
 	fn get_dense_matches(&mut self, dense_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatchQuasiDense()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Main process of the algorithm. This method computes the sparse seeds and then densifies them.
@@ -247,7 +262,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	/// quasiDenseMatching
 	#[inline]
 	fn process(&mut self, img_left: &core::Mat, img_right: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_process_const_MatR_const_MatR(self.as_raw_mut_QuasiDenseStereo(), img_left.as_raw_Mat(), img_right.as_raw_Mat()) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_process_const_MatR_const_MatR(self.as_raw_mut_QuasiDenseStereo(), img_left.as_raw_Mat(), img_right.as_raw_Mat()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Specify pixel coordinates in the left image and get its corresponding location in the right image.
@@ -260,7 +276,8 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	/// Note: This method should be always called after process, otherwise the matches will not be correct.
 	#[inline]
 	fn get_match(&mut self, x: i32, y: i32) -> Result<core::Point2f> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getMatch_const_int_const_int(self.as_raw_mut_QuasiDenseStereo(), x, y) }.into_result()
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_getMatch_const_int_const_int(self.as_raw_mut_QuasiDenseStereo(), x, y) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Compute and return the disparity map based on the correspondences found in the "process" method.
@@ -273,7 +290,9 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	/// quantizeDisparity
 	#[inline]
 	fn get_disparity(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getDisparity(self.as_raw_mut_QuasiDenseStereo()) }.into_result().map(|r| unsafe { core::Mat::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_getDisparity(self.as_raw_mut_QuasiDenseStereo()) }.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -284,7 +303,9 @@ impl dyn QuasiDenseStereo + '_ {
 	#[inline]
 	pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<dyn crate::stereo::QuasiDenseStereo>> {
 		extern_container_arg!(mut param_filepath);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut()) }.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

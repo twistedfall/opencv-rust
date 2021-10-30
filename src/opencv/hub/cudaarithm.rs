@@ -29,7 +29,8 @@ pub mod prelude {
 pub fn abs_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_absSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_absSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes an absolute value of each matrix element.
@@ -47,7 +48,8 @@ pub fn abs_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> R
 pub fn abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_abs_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_abs_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
@@ -67,7 +69,8 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the weighted sum of two arrays.
@@ -100,7 +103,8 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a matrix-matrix or matrix-scalar sum.
@@ -127,7 +131,8 @@ pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element bitwise conjunction of two matrices (or of matrix and scalar).
@@ -149,7 +154,8 @@ pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element bitwise inversion.
@@ -169,7 +175,8 @@ pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element bitwise disjunction of two matrices (or of matrix and scalar).
@@ -191,7 +198,8 @@ pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, 
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
@@ -213,7 +221,8 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -224,7 +233,8 @@ pub fn calc_abs_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -235,7 +245,8 @@ pub fn calc_norm_diff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArr
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -246,7 +257,8 @@ pub fn calc_norm(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_calcNorm_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcNorm_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -257,7 +269,8 @@ pub fn calc_sqr_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_calcSqrSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcSqrSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -268,7 +281,8 @@ pub fn calc_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts Cartesian coordinates into polar.
@@ -292,7 +306,8 @@ pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, mag
 	input_array_arg!(y);
 	output_array_arg!(magnitude);
 	output_array_arg!(angle);
-	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Compares elements of two matrices (or of a matrix and scalar).
@@ -319,7 +334,8 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Forms a border around an image.
@@ -345,7 +361,8 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Counts non-zero matrix elements.
@@ -359,7 +376,8 @@ pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 #[inline]
 pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 	input_array_arg!(src);
-	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Counts non-zero matrix elements.
@@ -379,7 +397,8 @@ pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
 pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_countNonZero_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::Convolution .
@@ -393,7 +412,9 @@ pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// * user_block_size: Size()
 #[inline]
 pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaarithm::Convolution>> {
-	unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::DFT.
@@ -411,7 +432,9 @@ pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn c
 /// real-complex transform, so the destination matrix must be real.
 #[inline]
 pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::cudaarithm::DFT>> {
-	unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates implementation for cuda::LookUpTable .
@@ -421,7 +444,9 @@ pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crat
 #[inline]
 pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::cudaarithm::LookUpTable>> {
 	input_array_arg!(lut);
-	unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray()) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudaarithm::LookUpTable>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray()) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::LookUpTable>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Performs a forward or inverse discrete Fourier transform (1D or 2D) of the floating point matrix.
@@ -467,7 +492,8 @@ pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dy
 pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), flags, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), flags, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a matrix-matrix or matrix-scalar division.
@@ -494,7 +520,8 @@ pub fn divide(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst:
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes an exponent of each matrix element.
@@ -512,7 +539,8 @@ pub fn divide(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst:
 pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_exp_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_exp_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -524,7 +552,8 @@ pub fn find_min_max_loc(src: &dyn core::ToInputArray, min_max_vals: &mut dyn cor
 	output_array_arg!(min_max_vals);
 	output_array_arg!(loc);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_findMinMaxLoc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), min_max_vals.as_raw__OutputArray(), loc.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_findMinMaxLoc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), min_max_vals.as_raw__OutputArray(), loc.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -535,7 +564,8 @@ pub fn find_min_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_findMinMax_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_findMinMax_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Flips a 2D matrix around vertical, horizontal, or both axes.
@@ -558,7 +588,8 @@ pub fn find_min_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_flip_const__InputArrayR_const__OutputArrayR_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_flip_const__InputArrayR_const__OutputArrayR_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs generalized matrix multiplication.
@@ -597,7 +628,8 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 	input_array_arg!(src2);
 	input_array_arg!(src3);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 ///  Checks if array elements lie between two scalars.
@@ -630,7 +662,8 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes an integral image.
@@ -648,7 +681,8 @@ pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core
 pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(sum);
-	unsafe { sys::cv_cuda_integral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_integral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a natural logarithm of absolute value of each matrix element.
@@ -666,7 +700,8 @@ pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray,
 pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_log_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_log_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs pixel by pixel right left of an image by a constant value.
@@ -684,7 +719,8 @@ pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -693,7 +729,8 @@ pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 pub fn lshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes squared magnitudes of complex matrix elements.
@@ -719,7 +756,8 @@ pub fn magnitude_sqr_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, m
 	input_array_arg!(x);
 	input_array_arg!(y);
 	output_array_arg!(magnitude);
-	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes squared magnitudes of complex matrix elements.
@@ -735,7 +773,8 @@ pub fn magnitude_sqr_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, m
 pub fn magnitude_sqr(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(xy);
 	output_array_arg!(magnitude);
-	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes magnitudes of complex matrix elements.
@@ -763,7 +802,8 @@ pub fn magnitude_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magni
 	input_array_arg!(x);
 	input_array_arg!(y);
 	output_array_arg!(magnitude);
-	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes magnitudes of complex matrix elements.
@@ -781,7 +821,8 @@ pub fn magnitude_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magni
 pub fn magnitude(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(xy);
 	output_array_arg!(magnitude);
-	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the per-element maximum of two matrices (or a matrix and a scalar).
@@ -801,7 +842,8 @@ pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a mean value and a standard deviation of matrix elements.
@@ -815,7 +857,8 @@ pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 #[inline]
 pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
 	input_array_arg!(mtx);
-	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev) }.into_result()
+	let ret = unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a mean value and a standard deviation of matrix elements.
@@ -835,7 +878,8 @@ pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stdde
 pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(mtx);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_StreamR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_StreamR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Makes a multi-channel matrix out of several single-channel matrices.
@@ -853,7 +897,8 @@ pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 #[inline]
 pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Makes a multi-channel matrix out of several single-channel matrices.
@@ -873,7 +918,8 @@ pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, s
 #[inline]
 pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_merge_const_vector_GpuMat_R_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_merge_const_vector_GpuMat_R_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds global minimum and maximum matrix elements and returns their values with locations.
@@ -896,7 +942,8 @@ pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArr
 pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Finds global minimum and maximum matrix elements and returns their values.
@@ -917,7 +964,8 @@ pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mu
 pub fn min_max(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &dyn core::ToInputArray) -> Result<()> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes the per-element minimum of two matrices (or a matrix and a scalar).
@@ -937,7 +985,8 @@ pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element multiplication of two Fourier spectrums and scales the result.
@@ -964,7 +1013,8 @@ pub fn mul_and_scale_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::T
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, scale, conj_b, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, scale, conj_b, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs a per-element multiplication of two Fourier spectrums.
@@ -990,7 +1040,8 @@ pub fn mul_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArra
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, conj_b, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, conj_b, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a matrix-matrix or matrix-scalar per-element product.
@@ -1015,7 +1066,8 @@ pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src1);
 	input_array_arg!(src2);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the difference of two matrices.
@@ -1033,7 +1085,8 @@ pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 pub fn norm_1(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(src2);
-	unsafe { sys::cv_cuda_norm_const__InputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type) }.into_result()
+	let ret = unsafe { sys::cv_cuda_norm_const__InputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the norm of a matrix (or difference of two matrices).
@@ -1051,7 +1104,8 @@ pub fn norm_1(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm
 pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
 	input_array_arg!(src1);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Normalizes the norm or value range of an array.
@@ -1079,7 +1133,8 @@ pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes polar angles of complex matrix elements.
@@ -1101,7 +1156,8 @@ pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut
 	input_array_arg!(x);
 	input_array_arg!(y);
 	output_array_arg!(angle);
-	unsafe { sys::cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Converts polar coordinates into Cartesian.
@@ -1123,7 +1179,8 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 	input_array_arg!(angle);
 	output_array_arg!(x);
 	output_array_arg!(y);
-	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Raises every matrix element to a power.
@@ -1146,7 +1203,8 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR_StreamR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR_StreamR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a standard deviation of integral images.
@@ -1165,7 +1223,8 @@ pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, 
 	input_array_arg!(src);
 	input_array_arg!(sqr);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Reduces a matrix to a vector.
@@ -1202,7 +1261,8 @@ pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, 
 pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(mtx);
 	output_array_arg!(vec);
-	unsafe { sys::cv_cuda_reduce_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(mtx.as_raw__InputArray(), vec.as_raw__OutputArray(), dim, reduce_op, dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_reduce_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(mtx.as_raw__InputArray(), vec.as_raw__OutputArray(), dim, reduce_op, dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Performs pixel by pixel right shift of an image by a constant value.
@@ -1219,7 +1279,8 @@ pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, d
 pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// ## C++ default parameters
@@ -1228,7 +1289,8 @@ pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Copies each plane of a multi-channel matrix into an array.
@@ -1245,7 +1307,8 @@ pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn c
 #[inline]
 pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
-	unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Copies each plane of a multi-channel matrix into an array.
@@ -1264,7 +1327,8 @@ pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut 
 #[inline]
 pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
-	unsafe { sys::cv_cuda_split_const__InputArrayR_vector_GpuMat_R_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_split_const__InputArrayR_vector_GpuMat_R_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a squared integral image.
@@ -1281,7 +1345,8 @@ pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat
 pub fn sqr_integral(src: &dyn core::ToInputArray, sqsum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(sqsum);
-	unsafe { sys::cv_cuda_sqrIntegral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sqsum.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_sqrIntegral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sqsum.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the squared sum of matrix elements.
@@ -1296,7 +1361,8 @@ pub fn sqr_integral(src: &dyn core::ToInputArray, sqsum: &mut dyn core::ToOutput
 pub fn sqr_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_sqrSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_sqrSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a square value of each matrix element.
@@ -1312,7 +1378,8 @@ pub fn sqr_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> R
 pub fn sqr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_sqr_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_sqr_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a square root of each matrix element.
@@ -1330,7 +1397,8 @@ pub fn sqr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Computes a matrix-matrix or matrix-scalar difference.
@@ -1357,7 +1425,8 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 	input_array_arg!(src2);
 	output_array_arg!(dst);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Returns the sum of matrix elements.
@@ -1374,7 +1443,8 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 pub fn sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
 	input_array_arg!(src);
 	input_array_arg!(mask);
-	unsafe { sys::cv_cuda_sum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_sum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Applies a fixed-level threshold to each array element.
@@ -1396,7 +1466,8 @@ pub fn sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resul
 pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut core::Stream) -> Result<f64> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_threshold_const__InputArrayR_const__OutputArrayR_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_threshold_const__InputArrayR_const__OutputArrayR_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Transposes a matrix.
@@ -1414,7 +1485,8 @@ pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn transpose(src1: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src1);
 	output_array_arg!(dst);
-	unsafe { sys::cv_cuda_transpose_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_transpose_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Base class for convolution (or cross-correlation) operator. :
@@ -1445,7 +1517,8 @@ pub trait Convolution: core::AlgorithmTrait + crate::cudaarithm::ConvolutionCons
 		input_array_arg!(image);
 		input_array_arg!(templ);
 		output_array_arg!(result);
-		unsafe { sys::cv_cuda_Convolution_convolve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_Convolution(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ccorr, stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_Convolution_convolve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_Convolution(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ccorr, stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1472,7 +1545,8 @@ pub trait DFT: core::AlgorithmTrait + crate::cudaarithm::DFTConst {
 	fn compute(&mut self, image: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(result);
-		unsafe { sys::cv_cuda_DFT_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_DFT(), image.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DFT_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_DFT(), image.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -1500,7 +1574,8 @@ pub trait LookUpTable: core::AlgorithmTrait + crate::cudaarithm::LookUpTableCons
 	fn transform(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_LookUpTable(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_LookUpTable(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

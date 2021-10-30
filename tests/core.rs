@@ -65,12 +65,7 @@ fn in_range() -> Result<()> {
 #[test]
 #[cfg(ocvrs_opencv_branch_4)]
 fn file_storage() -> Result<()> {
-	use opencv::{
-		core::{FileStorage_Mode, FileStorage, FileNode},
-		Error,
-	};
-
-	use matches::assert_matches;
+	use opencv::core::{FileStorage_Mode, FileStorage};
 
 	{
 		let mut st = FileStorage::new(".yml", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
@@ -97,17 +92,10 @@ fn file_storage() -> Result<()> {
 		assert_eq!("default string", str_out);
 	}
 
-	{ // test to correctly handle output string on error condition
-		let st = FileStorage::new("", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
-		let node = FileNode::new(&st, 0, 0)?;
-		let mut out = String::new();
-		assert_matches!(core::read_str(&node, &mut out, "123"), Err(Error { code: core::StsAssert, .. }));
-		assert_eq!("", out);
-	}
-
 	Ok(())
 }
 
+/// Make sure that arguments to min_max_loc are nullable
 #[test]
 fn min_max_loc() -> Result<()> {
 	let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::typ(), Scalar::all(5.))?;

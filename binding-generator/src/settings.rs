@@ -332,8 +332,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_vconcat_const_MatX_size_t_const__OutputArrayR" => "-", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
 
 	// ### cudaimgproc ###
-	"cv_cuda_histEven_const__InputArrayR_GpuMat_X__4__int_X__4__int_X__4__int_X__4__StreamR" => "-", // slice of boxed objects
-	"cv_cuda_histRange_const__InputArrayR_GpuMat_X__4__const_GpuMat_X__4__StreamR" => "-", // slice of boxed objects
+	"cv_cuda_histEven_const__InputArrayR_GpuMatXX_intXX_intXX_intXX_StreamR" => "-", // slice of boxed objects
+	"cv_cuda_histRange_const__InputArrayR_GpuMatXX_const_GpuMatXX_StreamR" => "-", // slice of boxed objects
 
 	// ### dnn ###
 	"cv_dnn_DictValue_DictValue_bool" => "from_bool",
@@ -679,9 +679,10 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = L
 	"cv::dnn::KeypointsModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
 	"cv::dnn::Model" => ExportConfig::make_boxed as _,
 	"cv::dnn::SegmentationModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
-	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+	"cv::dnn::TextDetectionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+	"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()

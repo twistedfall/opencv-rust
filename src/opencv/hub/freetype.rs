@@ -29,7 +29,9 @@ pub mod prelude {
 /// The function createFreeType2 create instance to draw UTF-8 strings.
 #[inline]
 pub fn create_free_type2() -> Result<core::Ptr<dyn crate::freetype::FreeType2>> {
-	unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_freetype_createFreeType2() }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 pub trait FreeType2Const: core::AlgorithmTraitConst {
@@ -50,7 +52,8 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	#[inline]
 	fn load_font_data(&mut self, font_file_name: &str, id: i32) -> Result<()> {
 		extern_container_arg!(mut font_file_name);
-		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), id) }.into_result()
+		let ret = unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), id) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Set Split Number from Bezier-curve to line
@@ -63,7 +66,8 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// * num: number of split points from bezier-curve to line
 	#[inline]
 	fn set_split_number(&mut self, num: i32) -> Result<()> {
-		unsafe { sys::cv_freetype_FreeType2_setSplitNumber_int(self.as_raw_mut_FreeType2(), num) }.into_result()
+		let ret = unsafe { sys::cv_freetype_FreeType2_setSplitNumber_int(self.as_raw_mut_FreeType2(), num) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Draws a text string.
@@ -83,7 +87,8 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		extern_container_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin) }.into_result()
+		let ret = unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Calculates the width and height of a text string.
@@ -146,7 +151,8 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	#[inline]
 	fn get_text_size(&mut self, text: &str, font_height: i32, thickness: i32, base_line: &mut i32) -> Result<core::Size> {
 		extern_container_arg!(text);
-		unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_as_extern(), font_height, thickness, base_line) }.into_result()
+		let ret = unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_as_extern(), font_height, thickness, base_line) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

@@ -26,7 +26,9 @@ pub mod prelude {
 /// * iters: 1
 #[inline]
 pub fn create_disparity_bilateral_filter(ndisp: i32, radius: i32, iters: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>> {
-	unsafe { sys::cv_cuda_createDisparityBilateralFilter_int_int_int(ndisp, radius, iters) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createDisparityBilateralFilter_int_int_int(ndisp, radius, iters) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates StereoBM object.
@@ -45,7 +47,9 @@ pub fn create_disparity_bilateral_filter(ndisp: i32, radius: i32, iters: i32) ->
 /// * block_size: 19
 #[inline]
 pub fn create_stereo_bm(num_disparities: i32, block_size: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoBM>> {
-	unsafe { sys::cv_cuda_createStereoBM_int_int(num_disparities, block_size) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createStereoBM_int_int(num_disparities, block_size) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates StereoBeliefPropagation object.
@@ -63,7 +67,9 @@ pub fn create_stereo_bm(num_disparities: i32, block_size: i32) -> Result<core::P
 /// * msg_type: CV_32F
 #[inline]
 pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg_type: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>> {
-	unsafe { sys::cv_cuda_createStereoBeliefPropagation_int_int_int_int(ndisp, iters, levels, msg_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createStereoBeliefPropagation_int_int_int_int(ndisp, iters, levels, msg_type) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates StereoConstantSpaceBP object.
@@ -83,7 +89,9 @@ pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg
 /// * msg_type: CV_32F
 #[inline]
 pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_plane: i32, msg_type: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
-	unsafe { sys::cv_cuda_createStereoConstantSpaceBP_int_int_int_int_int(ndisp, iters, levels, nr_plane, msg_type) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createStereoConstantSpaceBP_int_int_int_int_int(ndisp, iters, levels, nr_plane, msg_type) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Creates StereoSGM object.
@@ -108,7 +116,9 @@ pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_p
 /// * mode: cv::cuda::StereoSGM::MODE_HH4
 #[inline]
 pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: i32, uniqueness_ratio: i32, mode: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoSGM>> {
-	unsafe { sys::cv_cuda_createStereoSGM_int_int_int_int_int_int(min_disparity, num_disparities, p1, p2, uniqueness_ratio, mode) }.into_result().map(|r| unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(r) } )
+	let ret = unsafe { sys::cv_cuda_createStereoSGM_int_int_int_int_int_int(min_disparity, num_disparities, p1, p2, uniqueness_ratio, mode) }.into_result()?;
+	let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
+	Ok(ret)
 }
 
 /// Colors a disparity image.
@@ -132,7 +142,8 @@ pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: 
 pub fn draw_color_disp(src_disp: &dyn core::ToInputArray, dst_disp: &mut dyn core::ToOutputArray, ndisp: i32, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src_disp);
 	output_array_arg!(dst_disp);
-	unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Reprojects a disparity image to 3D space.
@@ -158,7 +169,8 @@ pub fn reproject_image_to_3d(disp: &dyn core::ToInputArray, xyzw: &mut dyn core:
 	input_array_arg!(disp);
 	output_array_arg!(xyzw);
 	input_array_arg!(q);
-	unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), dst_cn, stream.as_raw_mut_Stream()) }.into_result()
+	let ret = unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), dst_cn, stream.as_raw_mut_Stream()) }.into_result()?;
+	Ok(ret)
 }
 
 /// Class refining a disparity map using joint bilateral filtering. :
@@ -169,35 +181,41 @@ pub trait CUDA_DisparityBilateralFilterConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_num_disparities(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumDisparities_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumDisparities_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_radius(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getRadius_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getRadius_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumIters_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumIters_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// truncation of data continuity
 	#[inline]
 	fn get_edge_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getEdgeThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getEdgeThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// truncation of disparity continuity
 	#[inline]
 	fn get_max_disc_threshold(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getMaxDiscThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getMaxDiscThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// filter range sigma
 	#[inline]
 	fn get_sigma_range(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_getSigmaRange_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_getSigmaRange_const(self.as_raw_CUDA_DisparityBilateralFilter()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -220,37 +238,44 @@ pub trait CUDA_DisparityBilateralFilter: core::AlgorithmTrait + crate::cudastere
 		input_array_arg!(disparity);
 		input_array_arg!(image);
 		output_array_arg!(dst);
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumDisparities_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), num_disparities) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumDisparities_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), num_disparities) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_radius(&mut self, radius: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setRadius_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), radius) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setRadius_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), radius) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iters(&mut self, iters: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumIters_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), iters) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumIters_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), iters) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_edge_threshold(&mut self, edge_threshold: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setEdgeThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), edge_threshold) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setEdgeThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), edge_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_disc_threshold(&mut self, max_disc_threshold: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setMaxDiscThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), max_disc_threshold) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setMaxDiscThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), max_disc_threshold) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_sigma_range(&mut self, sigma_range: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_DisparityBilateralFilter_setSigmaRange_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), sigma_range) }.into_result()
+		let ret = unsafe { sys::cv_cuda_DisparityBilateralFilter_setSigmaRange_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), sigma_range) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -271,7 +296,8 @@ pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_Ster
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_cuda_StereoBM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -315,43 +341,50 @@ pub trait CUDA_StereoBeliefPropagationConst: crate::calib3d::StereoMatcherConst 
 	/// number of BP iterations on each level
 	#[inline]
 	fn get_num_iters(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumIters_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumIters_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// number of levels
 	#[inline]
 	fn get_num_levels(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumLevels_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumLevels_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// truncation of data cost
 	#[inline]
 	fn get_max_data_term(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDataTerm_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDataTerm_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// data weight
 	#[inline]
 	fn get_data_weight(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getDataWeight_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getDataWeight_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// truncation of discontinuity cost
 	#[inline]
 	fn get_max_disc_term(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDiscTerm_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDiscTerm_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// discontinuity single jump
 	#[inline]
 	fn get_disc_single_jump(&self) -> Result<f64> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getDiscSingleJump_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getDiscSingleJump_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// type for messages (CV_16SC1 or CV_32FC1)
 	#[inline]
 	fn get_msg_type(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_getMsgType_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_getMsgType_const(self.as_raw_CUDA_StereoBeliefPropagation()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -375,7 +408,8 @@ pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::c
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Enables the stereo correspondence operator that finds the disparity for the specified data cost.
@@ -394,42 +428,50 @@ pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::c
 	fn compute_1(&mut self, data: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 		input_array_arg!(data);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_iters(&mut self, iters: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumIters_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), iters) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumIters_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), iters) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_levels(&mut self, levels: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumLevels_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), levels) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumLevels_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), levels) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_data_term(&mut self, max_data_term: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDataTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_data_term) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDataTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_data_term) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_data_weight(&mut self, data_weight: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setDataWeight_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data_weight) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setDataWeight_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data_weight) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_disc_term(&mut self, max_disc_term: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDiscTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_disc_term) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDiscTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_disc_term) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_disc_single_jump(&mut self, disc_single_jump: f64) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setDiscSingleJump_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), disc_single_jump) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setDiscSingleJump_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), disc_single_jump) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_msg_type(&mut self, msg_type: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_setMsgType_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), msg_type) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_setMsgType_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), msg_type) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -439,7 +481,8 @@ impl dyn CUDA_StereoBeliefPropagation + '_ {
 	/// specified image size ( width and height ).
 	#[inline]
 	pub fn estimate_recommended_params(width: i32, height: i32, ndisp: &mut i32, iters: &mut i32, levels: &mut i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoBeliefPropagation_estimateRecommendedParams_int_int_intR_intR_intR(width, height, ndisp, iters, levels) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoBeliefPropagation_estimateRecommendedParams_int_int_intR_intR_intR(width, height, ndisp, iters, levels) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -470,12 +513,14 @@ pub trait CUDA_StereoConstantSpaceBPConst: crate::cudastereo::CUDA_StereoBeliefP
 	/// number of active disparity on the first level
 	#[inline]
 	fn get_nr_plane(&self) -> Result<i32> {
-		unsafe { sys::cv_cuda_StereoConstantSpaceBP_getNrPlane_const(self.as_raw_CUDA_StereoConstantSpaceBP()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoConstantSpaceBP_getNrPlane_const(self.as_raw_CUDA_StereoConstantSpaceBP()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_local_init_data_cost(&self) -> Result<bool> {
-		unsafe { sys::cv_cuda_StereoConstantSpaceBP_getUseLocalInitDataCost_const(self.as_raw_CUDA_StereoConstantSpaceBP()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoConstantSpaceBP_getUseLocalInitDataCost_const(self.as_raw_CUDA_StereoConstantSpaceBP()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -485,12 +530,14 @@ pub trait CUDA_StereoConstantSpaceBP: crate::cudastereo::CUDA_StereoBeliefPropag
 
 	#[inline]
 	fn set_nr_plane(&mut self, nr_plane: i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoConstantSpaceBP_setNrPlane_int(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), nr_plane) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoConstantSpaceBP_setNrPlane_int(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), nr_plane) }.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_local_init_data_cost(&mut self, use_local_init_data_cost: bool) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoConstantSpaceBP_setUseLocalInitDataCost_bool(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), use_local_init_data_cost) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoConstantSpaceBP_setUseLocalInitDataCost_bool(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), use_local_init_data_cost) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -500,7 +547,8 @@ impl dyn CUDA_StereoConstantSpaceBP + '_ {
 	/// image size (widthand height).
 	#[inline]
 	pub fn estimate_recommended_params(width: i32, height: i32, ndisp: &mut i32, iters: &mut i32, levels: &mut i32, nr_plane: &mut i32) -> Result<()> {
-		unsafe { sys::cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(width, height, ndisp, iters, levels, nr_plane) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(width, height, ndisp, iters, levels, nr_plane) }.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -534,7 +582,8 @@ pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_S
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Computes disparity map with specified CUDA Stream
@@ -545,7 +594,8 @@ pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_S
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()
+		let ret = unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream()) }.into_result()?;
+		Ok(ret)
 	}
 	
 }

@@ -42,7 +42,9 @@ pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector<String>> {
 		input_array_arg!(img);
 		output_array_arg!(points);
-		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result().map(|r| unsafe { core::Vector::<String>::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()?;
+		let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -97,7 +99,9 @@ impl WeChatQRCode {
 		extern_container_arg!(detector_caffe_model_path);
 		extern_container_arg!(super_resolution_prototxt_path);
 		extern_container_arg!(super_resolution_caffe_model_path);
-		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern()) }.into_result().map(|r| unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(r) } )
+		let ret = unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern()) }.into_result()?;
+		let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }

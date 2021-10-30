@@ -104,23 +104,27 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	} else {
 		format!(" -> {}", return_type_func_decl).into()
 	};
-	let mut prefix = String::new();
-	let mut suffix = if is_infallible {
-		format!(".expect(\"Infallible function failed: {name}\")", name = name)
+	if is_infallible {
+		post_call_args.push("ret".to_string());
 	} else {
-		String::new()
-	};
-	if !post_call_args.is_empty() {
-		post_call_args.push("out".into());
-		prefix.push_str("let out = ");
-		suffix.push(';');
+		post_call_args.push("Ok(ret)".to_string());
 	}
 	let decl_args = decl_args.join(", ");
 	let pre_call_args = pre_call_args.join("\n");
 	let call_args = call_args.join(", ");
 	let forward_args = forward_args.join(", ");
 	let post_call_args = post_call_args.join("\n");
-	let ret_map = return_type.rust_return_map(is_safe, is_static_func);
+	let error_handling = if is_infallible {
+		format!(".expect(\"Infallible function failed: {name}\")", name=name).into()
+	} else {
+		Cow::Borrowed("?")
+	};
+	let ret_convert = if is_infallible {
+		Cow::Borrowed("")
+	} else {
+		format!(".into_result(){}", error_handling).into()
+	};
+	let ret_map = return_type.rust_return_map(is_safe, is_static_func, &error_handling);
 	let mut attributes = String::new();
 	if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
 		attributes = format!("#[cfg({})]", attrs.0);
@@ -142,14 +146,13 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		"decl_args" => &decl_args,
 		"rv_rust_full" => return_type_func_decl.as_ref(),
 		"pre_call_args" => &pre_call_args,
-		"prefix" => &prefix,
 		"unsafety_call" => if is_safe { "unsafe " } else { "" },
 		"identifier" => identifier.as_ref(),
 		"call_args" => &call_args,
 		"forward_args" => &forward_args,
-		"suffix" => &suffix,
-		"post_call_args" => &post_call_args,
+		"ret_convert" => &ret_convert,
 		"ret_map" => ret_map.as_ref(),
+		"post_call_args" => &post_call_args,
 	})
 }
 
@@ -258,30 +261,40 @@ fn cpp_call_invoke(f: &Func) -> String {
 		})
 }
 
-fn cpp_method_return<'f>(f: &'f Func) -> Cow<'f, str> {
+fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 	let return_type = f.return_type();
-	if return_type.is_void() {
-		"Ok()".into()
+	let ret = if return_type.is_void() {
+		"".into()
 	} else if return_type.is_by_ptr() && !f.as_constructor().is_some() {
 		let out = return_type.source()
 			.as_class()
 			.and_then(|cls| if cls.is_abstract() {
-				Some(Cow::Borrowed("Ok(ret)"))
+				Some(Cow::Borrowed("ret"))
 			} else {
 				None
 			});
-		out.unwrap_or_else(|| format!("Ok(new {typ}(ret))", typ=return_type.cpp_full()).into())
+		out.unwrap_or_else(|| format!("new {typ}(ret)", typ=return_type.cpp_full()).into())
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		match string_type {
 			StrType::StdString | StrType::CvString => {
-				"Ok(ocvrs_create_string(ret.c_str()))".into()
+				"ocvrs_create_string(ret.c_str())".into()
 			},
 			StrType::CharPtr => {
-				"Ok(ocvrs_create_string(ret))".into()
+				"ocvrs_create_string(ret)".into()
 			},
 		}
 	} else {
-		format!("Ok<{typ}>(ret)", typ=return_type.cpp_extern_return()).into()
+		// fixme
+		return if is_infallible {
+			format!("({typ})ret", typ=return_type.cpp_extern_return()).into()
+		} else {
+			format!("Ok<{typ}>(ret)", typ=return_type.cpp_extern_return()).into()
+		};
+	};
+	if is_infallible {
+		ret
+	} else {
+		format!("Ok({})", ret).into()
 	}
 }
 
@@ -307,6 +320,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		);
 
 		let identifier = self.identifier();
+		let is_infallible = self.is_infallible();
 
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
@@ -324,7 +338,17 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			args.push(arg.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 		}
 		let return_type = self.return_type();
-		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();
+		let return_wrapper_type = if is_infallible {
+			return_type.rust_extern_return()
+		} else {
+			return_type.rust_extern_return_wrapper_full()
+		};
+
+		let return_wrapper_type = if return_wrapper_type == "()" {
+			Cow::Borrowed("")
+		} else {
+			format!(" -> {}", return_wrapper_type).into()
+		};
 		TPL.interpolate(&hashmap! {
 			"attributes" => attributes.into(),
 			"debug" => get_debug(self).into(),
@@ -339,7 +363,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation()
 		);
 
+		static TPL_INFALLIBLE: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("tpl/func/cpp_infallible.tpl.cpp").compile_interpolation()
+		);
+
 		let identifier = self.identifier();
+		let is_infallible = self.is_infallible();
 
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
@@ -368,16 +397,30 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		}
 
 		let return_type = self.return_type();
-		let return_wrapper_full = return_type.cpp_extern_return_wrapper_full();
-		let ret = cpp_method_return(self);
+		let return_wrapper_full = if is_infallible {
+			return_type.cpp_extern_return()
+		} else {
+			return_type.cpp_extern_return_wrapper_full()
+		};
+		let ret = cpp_method_return(self, is_infallible);
 		let ret = if cleanup_args.is_empty() {
-			format!("return {};", ret).into()
+			if ret.is_empty() {
+				"".into()
+			} else {
+				format!("return {};", ret).into()
+			}
 		} else {
 			pre_post_arg_handle(format!("{typ} f_ret = {expr}", typ=return_wrapper_full, expr=ret), &mut post_call_args);
 			"return f_ret;".into()
 		};
 
-		TPL.interpolate(&hashmap! {
+		let tpl = if is_infallible {
+			&TPL_INFALLIBLE
+		} else {
+			&TPL
+		};
+
+		tpl.interpolate(&hashmap! {
 			"attributes_begin" => attributes_begin.into(),
 			"debug" => get_debug(self).into(),
 			"return_wrapper_type" => return_wrapper_full,
