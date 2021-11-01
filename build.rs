@@ -35,7 +35,7 @@ static OPENCV_BRANCH_32: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.2
 static OPENCV_BRANCH_34: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
 static OPENCV_BRANCH_4: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 16] = [
+static ENV_VARS: [&str; 14] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -45,8 +45,6 @@ static ENV_VARS: [&str; 16] = [
 	"OPENCV_LINK_PATHS",
 	"OPENCV_INCLUDE_PATHS",
 	"OPENCV_DISABLE_PROBES",
-	"OPENCV_MODULE_WHITELIST",
-	"OPENCV_MODULE_BLACKLIST",
 	"CMAKE_PREFIX_PATH",
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",
@@ -148,33 +146,21 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 		"opencv",
 		"opencv_modules",
 	].iter().copied().collect();
-	let env_whitelist = env::var("OPENCV_MODULE_WHITELIST").ok();
-	let env_whitelist = env_whitelist.as_ref()
-		.map(|wl| wl.split(',')
-			.map(|e| e.trim())
-			.collect::<HashSet<_>>()
-		);
-	let feature_whitelist = env::vars_os().filter_map(|(k, _)|
+
+	let enable_modules = [
+		"core"
+	].iter().map(ToString::to_string).chain(env::vars_os().filter_map(|(k, _)|
 		k.to_str().and_then(|s| s.strip_prefix("CARGO_FEATURE_").map(str::to_lowercase))
-	).collect::<HashSet<_>>();
+	)).collect::<HashSet<_>>();
 
-	let env_blacklist = env::var("OPENCV_MODULE_BLACKLIST").ok();
-	let env_blacklist = env_blacklist.as_ref()
-		.map(|wl| wl.split(',')
-			.map(|e| e.trim())
-			.collect::<HashSet<_>>()
-		);
-
-	let modules: Vec<String> = glob(&format!("{}/*.hpp", opencv_dir.to_str().ok_or("Can't OpenCV header directory to UTF-8 string")?))?
+	let modules = glob(&format!("{}/*.hpp", opencv_dir.to_str().ok_or("Can't OpenCV header directory to UTF-8 string")?))?
 		.filter_map(|entry| {
 			let entry = entry.expect("Can't get path for module file");
 			let module = entry.file_stem()
 				.and_then(OsStr::to_str).expect("Can't calculate file stem");
 			Some(module)
-				.filter(|m| !ignore_modules.contains(m))
-				.filter(|m| env_blacklist.as_ref().map_or(true, |bl| !bl.contains(m)))
-				.filter(|m| env_whitelist.as_ref().map_or(true, |wl| wl.contains(m)))
-				.filter(|&m| feature_whitelist.contains(m))
+				.filter(|&m| !ignore_modules.contains(m))
+				.filter(|&m| enable_modules.contains(m))
 				.map(str::to_string)
 		})
 		.collect();
