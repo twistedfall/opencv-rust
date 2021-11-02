@@ -217,10 +217,8 @@ The following variables are rarely used, but you might need them under some circ
     * vcpkg
 
 * `OPENCV_MODULE_WHITELIST` and `OPENCV_MODULE_BLACKLIST`
-  Comma separated lists that affect modules that get their bindings generated. Setting whitelist will only
-  generate the specified modules, setting blacklist will exclude the specified modules from generation. If the
-  same module is specified in both list it will be excluded (i.e. blacklist has precedence). E.g.
-  "core,dnn,features2d" .
+  Not used anymore. These used to be used to select modules that get their binding generated. We have switched to
+  using cargo features for module selection. Please see the section on features to learn how to switch.
 
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
@@ -258,6 +256,10 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
   workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
+* `all-modules` - include all OpenCV modules. This is the default.
+* If you don't want to include all modules you can specify the module name as a feature. Make sure to include
+  all dependent modules, e.g.
+  `opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}`.
 
 ## API details
 
