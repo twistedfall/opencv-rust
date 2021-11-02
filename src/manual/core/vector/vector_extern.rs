@@ -155,6 +155,7 @@ macro_rules! vector_extern {
 pub trait VectorExternCopyNonBool<T> {
 	#[doc(hidden)] unsafe fn extern_data(&self) -> *const T;
 	#[doc(hidden)] unsafe fn extern_data_mut(&mut self) -> *mut T;
+	#[doc(hidden)] unsafe fn extern_from_slice(data: *const T, len: size_t) -> *mut c_void;
 }
 
 #[macro_export]
@@ -165,6 +166,7 @@ macro_rules! vector_copy_non_bool {
 		$vector_extern_mut: ty,
 		$extern_data_const: ident,
 		$extern_data_mut: ident,
+		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
 		impl $crate::manual::core::Vector<$type> where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
@@ -200,6 +202,12 @@ macro_rules! vector_copy_non_bool {
 			unsafe fn extern_data_mut(&mut self) -> *mut $type {
 				extern "C" { fn $extern_data_mut(instance: $vector_extern_mut) -> *mut $type; }
 				$extern_data_mut(self.as_raw_mut())
+			}
+
+			#[inline]
+			unsafe fn extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> $vector_extern_mut {
+				extern "C" { fn $extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> $vector_extern_mut; }
+				$extern_from_slice(data, len)
 			}
 		}
 	};

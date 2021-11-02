@@ -46,6 +46,11 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		out
 	}
 
+	#[inline]
+	pub fn from_slice(s: &[T]) -> Self where Self: VectorExternCopyNonBool<T> {
+		unsafe { Self::from_raw(Self::extern_from_slice(s.as_ptr(), s.len())) }
+	}
+
 	/// Return Vector length
 	pub fn len(&self) -> size_t {
 		unsafe { self.extern_len() }

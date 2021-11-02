@@ -29,7 +29,6 @@ use opencv::{
 	}
 };
 
-
 #[test]
 fn boxed() -> Result<()> {
 	{
@@ -629,6 +628,32 @@ fn clone() -> Result<()> {
 		vec_of_vec.set(1, VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]))?;
 		assert_eq!(41., vec_of_vec.get(1)?.get(0)?.y);
 		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn from_slice() -> Result<()> {
+	{
+		let bytes: &[u8] = &[1, 2, 3, 4, 5];
+		let v = VectorOfu8::from_slice(bytes);
+		assert_eq!(bytes.len(), v.len());
+		assert_eq!(bytes, v.as_slice());
+	}
+
+	{
+		let ints: &[i32] = &[5, 10, 15, 20];
+		let v = VectorOfi32::from_slice(ints);
+		assert_eq!(ints.len(), v.len());
+		assert_eq!(ints, v.as_slice());
+	}
+
+	{
+		let points: &[Point2d] = &[Point2d::new(10., 40.), Point2d::new(0., -55.), Point2d::new(100., -1.)];
+		let v = VectorOfPoint2d::from_slice(points);
+		assert_eq!(points.len(), v.len());
+		assert_eq!(points, v.as_slice());
 	}
 
 	Ok(())
