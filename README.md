@@ -253,13 +253,15 @@ The following variables affect the building the of the `opencv` crate, but belon
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
 
 ## Cargo features
+* There is a feature named after each OpenCV module (e.g. `imgproc`, `highgui`, etc.). They are all enabled by
+  default, but if a corresponding module is not found then it will silently be ignored. If you need to select a
+  specific set of modules be sure to disable the default features and provide the required feature set:
+  ```
+  opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
+  ```
 * `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
   workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
-* `all-modules` - include all OpenCV modules. This is the default.
-* If you don't want to include all modules you can specify the module name as a feature. Make sure to include
-  all dependent modules, e.g.
-  `opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}`.
 
 ## API details
 

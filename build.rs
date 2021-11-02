@@ -138,20 +138,22 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 }
 
 fn make_modules(opencv_dir: &Path) -> Result<()> {
-	let ignore_modules: HashSet<&'static str> = [
+	let ignore_modules = IntoIterator::into_iter([
 		"core_detect",
 		"cudalegacy",
 		"cudev",
 		"gapi",
 		"opencv",
 		"opencv_modules",
-	].iter().copied().collect();
+	]).collect::<HashSet<_>>();
 
-	let enable_modules = [
-		"core"
-	].iter().map(ToString::to_string).chain(env::vars_os().filter_map(|(k, _)|
-		k.to_str().and_then(|s| s.strip_prefix("CARGO_FEATURE_").map(str::to_lowercase))
-	)).collect::<HashSet<_>>();
+	let enable_modules = IntoIterator::into_iter(["core".to_string()])
+		.chain(env::vars_os()
+			.filter_map(|(k, _)| k.to_str()
+				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
+				.map(str::to_lowercase)
+			)
+		).collect::<HashSet<_>>();
 
 	let modules = glob(&format!("{}/*.hpp", opencv_dir.to_str().ok_or("Can't OpenCV header directory to UTF-8 string")?))?
 		.filter_map(|entry| {
