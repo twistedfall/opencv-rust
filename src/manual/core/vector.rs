@@ -28,11 +28,13 @@ pub struct Vector<T: VectorElement> where Self: VectorExtern<T> {
 
 impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a new Vector
+	#[inline]
 	pub fn new() -> Self {
 		unsafe { Self::from_raw(Self::extern_new()) }
 	}
 
 	/// Create a Vector with pre-defined capacity
+	#[inline]
 	pub fn with_capacity(capacity: size_t) -> Self {
 		let mut out = Self::new();
 		out.reserve(capacity);
@@ -40,6 +42,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Create a Vector from iterator
+	#[inline]
 	pub fn from_iter<'a>(s: impl IntoIterator<Item=<T as OpenCVType<'a>>::Arg>) -> Self {
 		let mut out = Self::new();
 		out.extend(s);
@@ -52,36 +55,43 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Return Vector length
+	#[inline]
 	pub fn len(&self) -> size_t {
 		unsafe { self.extern_len() }
 	}
 
 	/// Return true if Vector is empty
+	#[inline]
 	pub fn is_empty(&self) -> bool {
 		unsafe { self.extern_is_empty() }
 	}
 
 	/// Return Vector current capacity
+	#[inline]
 	pub fn capacity(&self) -> size_t {
 		unsafe { self.extern_capacity() }
 	}
 
 	/// Free extra capacity
+	#[inline]
 	pub fn shrink_to_fit(&mut self) {
 		unsafe { self.extern_shrink_to_fit() }
 	}
 
 	/// Reserve capacity for `additional` new elements
+	#[inline]
 	pub fn reserve(&mut self, additional: size_t) {
 		unsafe { self.extern_reserve(additional) }
 	}
 
 	/// Remove all elements
+	#[inline]
 	pub fn clear(&mut self) {
 		unsafe { self.extern_clear() }
 	}
 
 	/// Remove the element at the specified `index`
+	#[inline]
 	pub fn remove(&mut self, index: size_t) -> Result<()> {
 		vector_index_check(index, self.len())?;
 		unsafe { self.extern_remove(index) }
@@ -89,6 +99,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Swap 2 elements in the Vector
+	#[inline]
 	pub fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
 		let len = self.len();
 		vector_index_check(index1, len)?;
@@ -100,17 +111,20 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Add new element
+	#[inline]
 	pub fn push(&mut self, val: <T as OpenCVType>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { self.extern_push(val.opencv_as_extern()) }
 	}
 
+	#[inline]
 	pub(crate) fn push_owned(&mut self, val: T) {
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { self.extern_push_owned(val.opencv_as_extern()) }
 	}
 
 	/// Insert a new element at the specified `index`
+	#[inline]
 	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
 		vector_index_check(index, self.len() + 1)?;
 		let val = val.opencv_into_extern_container()?;
@@ -119,6 +133,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 
 	/// Set element at the specified `index`
+	#[inline]
 	pub fn set(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
 		vector_index_check(index, self.len())?;
 		let val = val.opencv_into_extern_container()?;
@@ -129,12 +144,14 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Same as `set()` but without bounds checking
 	/// # Safety
 	/// Caller must ensure that the specified `index` is within the `Vector` bounds
+	#[inline]
 	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType>::Arg) {
 		let val = val.opencv_into_extern_container_nofail();
 		self.extern_set(index, val.opencv_as_extern())
 	}
 
 	/// Get element at the specified `index`
+	#[inline]
 	pub fn get(&self, index: size_t) -> Result<T> {
 		vector_index_check(index, self.len())?;
 		unsafe { self.extern_get(index) }
@@ -145,6 +162,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Same as `get()` but without bounds checking
 	/// # Safety
 	/// Caller must ensure that the specified `index` is within the `Vector` bounds
+	#[inline]
 	pub unsafe fn get_unchecked(&self, index: size_t) -> T {
 		self.extern_get(index)
 			.into_result()
@@ -152,6 +170,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 			.unwrap() // fixme, make it return value directly
 	}
 
+	#[inline]
 	pub fn iter(&self) -> VectorRefIterator<T> {
 		VectorRefIterator::new(self)
 	}
@@ -160,6 +179,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	///
 	/// This method is only available for OpenCV types that are Copy, with the exception of bool
 	/// because bool is handled in a special way on the C++ side.
+	#[inline]
 	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			slice::from_raw_parts(self.extern_data(), self.len())
@@ -170,12 +190,14 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	///
 	/// This method is only available for OpenCV types that are Copy, with the exception of bool
 	/// because bool is handled in a special way on the C++ side.
+	#[inline]
 	pub fn as_mut_slice(&mut self) -> &mut [T] where Self: VectorExternCopyNonBool<T> {
 		unsafe {
 			slice::from_raw_parts_mut(self.extern_data_mut(), self.len())
 		}
 	}
 
+	#[inline]
 	pub fn to_vec(&self) -> Vec<T> {
 		T::opencv_vector_to_vec(self)
 	}

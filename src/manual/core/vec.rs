@@ -306,6 +306,7 @@ impl<T: ValidScalarType> From<(T, T, T, T)> for Scalar_<T> {
 }
 
 impl ToInputArray for Scalar_<f64> {
+	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		extern "C" { fn cv_Scalar_input_array(instance: *const Scalar_<f64>) -> sys::Result<*mut c_void>; }
 		unsafe { cv_Scalar_input_array(self) }
