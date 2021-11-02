@@ -149,7 +149,7 @@ mod barcode_types {
 		cv_VectorOfBarcodeType_push, cv_VectorOfBarcodeType_insert,
 	}
 	vector_copy_non_bool! { crate::barcode::BarcodeType, *const c_void, *mut c_void,
-		cv_VectorOfBarcodeType_data, cv_VectorOfBarcodeType_data_mut,
+		cv_VectorOfBarcodeType_data, cv_VectorOfBarcodeType_data_mut, cv_VectorOfBarcodeType_from_slice,
 		cv_VectorOfBarcodeType_clone,
 	}
 	
@@ -828,7 +828,7 @@ mod core_types {
 		cv_VectorOfDMatch_push, cv_VectorOfDMatch_insert,
 	}
 	vector_copy_non_bool! { core::DMatch, *const c_void, *mut c_void,
-		cv_VectorOfDMatch_data, cv_VectorOfDMatch_data_mut,
+		cv_VectorOfDMatch_data, cv_VectorOfDMatch_data_mut, cv_VectorOfDMatch_from_slice,
 		cv_VectorOfDMatch_clone,
 	}
 	
@@ -871,7 +871,7 @@ mod core_types {
 		cv_VectorOfKeyPoint_push, cv_VectorOfKeyPoint_insert,
 	}
 	vector_copy_non_bool! { core::KeyPoint, *const c_void, *mut c_void,
-		cv_VectorOfKeyPoint_data, cv_VectorOfKeyPoint_data_mut,
+		cv_VectorOfKeyPoint_data, cv_VectorOfKeyPoint_data_mut, cv_VectorOfKeyPoint_from_slice,
 		cv_VectorOfKeyPoint_clone,
 	}
 	
@@ -934,7 +934,7 @@ mod core_types {
 		cv_VectorOfPoint_push, cv_VectorOfPoint_insert,
 	}
 	vector_copy_non_bool! { core::Point, *const c_void, *mut c_void,
-		cv_VectorOfPoint_data, cv_VectorOfPoint_data_mut,
+		cv_VectorOfPoint_data, cv_VectorOfPoint_data_mut, cv_VectorOfPoint_from_slice,
 		cv_VectorOfPoint_clone,
 	}
 	
@@ -989,7 +989,7 @@ mod core_types {
 		cv_VectorOfPoint2d_push, cv_VectorOfPoint2d_insert,
 	}
 	vector_copy_non_bool! { core::Point2d, *const c_void, *mut c_void,
-		cv_VectorOfPoint2d_data, cv_VectorOfPoint2d_data_mut,
+		cv_VectorOfPoint2d_data, cv_VectorOfPoint2d_data_mut, cv_VectorOfPoint2d_from_slice,
 		cv_VectorOfPoint2d_clone,
 	}
 	
@@ -1044,7 +1044,7 @@ mod core_types {
 		cv_VectorOfPoint2f_push, cv_VectorOfPoint2f_insert,
 	}
 	vector_copy_non_bool! { core::Point2f, *const c_void, *mut c_void,
-		cv_VectorOfPoint2f_data, cv_VectorOfPoint2f_data_mut,
+		cv_VectorOfPoint2f_data, cv_VectorOfPoint2f_data_mut, cv_VectorOfPoint2f_from_slice,
 		cv_VectorOfPoint2f_clone,
 	}
 	
@@ -1099,7 +1099,7 @@ mod core_types {
 		cv_VectorOfPoint3d_push, cv_VectorOfPoint3d_insert,
 	}
 	vector_copy_non_bool! { core::Point3d, *const c_void, *mut c_void,
-		cv_VectorOfPoint3d_data, cv_VectorOfPoint3d_data_mut,
+		cv_VectorOfPoint3d_data, cv_VectorOfPoint3d_data_mut, cv_VectorOfPoint3d_from_slice,
 		cv_VectorOfPoint3d_clone,
 	}
 	
@@ -1154,7 +1154,7 @@ mod core_types {
 		cv_VectorOfPoint3f_push, cv_VectorOfPoint3f_insert,
 	}
 	vector_copy_non_bool! { core::Point3f, *const c_void, *mut c_void,
-		cv_VectorOfPoint3f_data, cv_VectorOfPoint3f_data_mut,
+		cv_VectorOfPoint3f_data, cv_VectorOfPoint3f_data_mut, cv_VectorOfPoint3f_from_slice,
 		cv_VectorOfPoint3f_clone,
 	}
 	
@@ -1209,7 +1209,7 @@ mod core_types {
 		cv_VectorOfPoint3i_push, cv_VectorOfPoint3i_insert,
 	}
 	vector_copy_non_bool! { core::Point3i, *const c_void, *mut c_void,
-		cv_VectorOfPoint3i_data, cv_VectorOfPoint3i_data_mut,
+		cv_VectorOfPoint3i_data, cv_VectorOfPoint3i_data_mut, cv_VectorOfPoint3i_from_slice,
 		cv_VectorOfPoint3i_clone,
 	}
 	
@@ -1284,7 +1284,7 @@ mod core_types {
 		cv_VectorOfRect_push, cv_VectorOfRect_insert,
 	}
 	vector_copy_non_bool! { core::Rect, *const c_void, *mut c_void,
-		cv_VectorOfRect_data, cv_VectorOfRect_data_mut,
+		cv_VectorOfRect_data, cv_VectorOfRect_data_mut, cv_VectorOfRect_from_slice,
 		cv_VectorOfRect_clone,
 	}
 	
@@ -1339,7 +1339,7 @@ mod core_types {
 		cv_VectorOfRect2d_push, cv_VectorOfRect2d_insert,
 	}
 	vector_copy_non_bool! { core::Rect2d, *const c_void, *mut c_void,
-		cv_VectorOfRect2d_data, cv_VectorOfRect2d_data_mut,
+		cv_VectorOfRect2d_data, cv_VectorOfRect2d_data_mut, cv_VectorOfRect2d_from_slice,
 		cv_VectorOfRect2d_clone,
 	}
 	
@@ -1414,7 +1414,7 @@ mod core_types {
 		cv_VectorOfScalar_push, cv_VectorOfScalar_insert,
 	}
 	vector_copy_non_bool! { core::Scalar, *const c_void, *mut c_void,
-		cv_VectorOfScalar_data, cv_VectorOfScalar_data_mut,
+		cv_VectorOfScalar_data, cv_VectorOfScalar_data_mut, cv_VectorOfScalar_from_slice,
 		cv_VectorOfScalar_clone,
 	}
 	
@@ -1469,7 +1469,7 @@ mod core_types {
 		cv_VectorOfSize_push, cv_VectorOfSize_insert,
 	}
 	vector_copy_non_bool! { core::Size, *const c_void, *mut c_void,
-		cv_VectorOfSize_data, cv_VectorOfSize_data_mut,
+		cv_VectorOfSize_data, cv_VectorOfSize_data_mut, cv_VectorOfSize_from_slice,
 		cv_VectorOfSize_clone,
 	}
 	
@@ -1564,7 +1564,7 @@ mod core_types {
 		cv_VectorOfVec2d_push, cv_VectorOfVec2d_insert,
 	}
 	vector_copy_non_bool! { core::Vec2d, *const c_void, *mut c_void,
-		cv_VectorOfVec2d_data, cv_VectorOfVec2d_data_mut,
+		cv_VectorOfVec2d_data, cv_VectorOfVec2d_data_mut, cv_VectorOfVec2d_from_slice,
 		cv_VectorOfVec2d_clone,
 	}
 	
@@ -1619,7 +1619,7 @@ mod core_types {
 		cv_VectorOfVec2f_push, cv_VectorOfVec2f_insert,
 	}
 	vector_copy_non_bool! { core::Vec2f, *const c_void, *mut c_void,
-		cv_VectorOfVec2f_data, cv_VectorOfVec2f_data_mut,
+		cv_VectorOfVec2f_data, cv_VectorOfVec2f_data_mut, cv_VectorOfVec2f_from_slice,
 		cv_VectorOfVec2f_clone,
 	}
 	
@@ -1674,7 +1674,7 @@ mod core_types {
 		cv_VectorOfVec2i_push, cv_VectorOfVec2i_insert,
 	}
 	vector_copy_non_bool! { core::Vec2i, *const c_void, *mut c_void,
-		cv_VectorOfVec2i_data, cv_VectorOfVec2i_data_mut,
+		cv_VectorOfVec2i_data, cv_VectorOfVec2i_data_mut, cv_VectorOfVec2i_from_slice,
 		cv_VectorOfVec2i_clone,
 	}
 	
@@ -1729,7 +1729,7 @@ mod core_types {
 		cv_VectorOfVec3d_push, cv_VectorOfVec3d_insert,
 	}
 	vector_copy_non_bool! { core::Vec3d, *const c_void, *mut c_void,
-		cv_VectorOfVec3d_data, cv_VectorOfVec3d_data_mut,
+		cv_VectorOfVec3d_data, cv_VectorOfVec3d_data_mut, cv_VectorOfVec3d_from_slice,
 		cv_VectorOfVec3d_clone,
 	}
 	
@@ -1784,7 +1784,7 @@ mod core_types {
 		cv_VectorOfVec3f_push, cv_VectorOfVec3f_insert,
 	}
 	vector_copy_non_bool! { core::Vec3f, *const c_void, *mut c_void,
-		cv_VectorOfVec3f_data, cv_VectorOfVec3f_data_mut,
+		cv_VectorOfVec3f_data, cv_VectorOfVec3f_data_mut, cv_VectorOfVec3f_from_slice,
 		cv_VectorOfVec3f_clone,
 	}
 	
@@ -1839,7 +1839,7 @@ mod core_types {
 		cv_VectorOfVec3i_push, cv_VectorOfVec3i_insert,
 	}
 	vector_copy_non_bool! { core::Vec3i, *const c_void, *mut c_void,
-		cv_VectorOfVec3i_data, cv_VectorOfVec3i_data_mut,
+		cv_VectorOfVec3i_data, cv_VectorOfVec3i_data_mut, cv_VectorOfVec3i_from_slice,
 		cv_VectorOfVec3i_clone,
 	}
 	
@@ -1894,7 +1894,7 @@ mod core_types {
 		cv_VectorOfVec4f_push, cv_VectorOfVec4f_insert,
 	}
 	vector_copy_non_bool! { core::Vec4f, *const c_void, *mut c_void,
-		cv_VectorOfVec4f_data, cv_VectorOfVec4f_data_mut,
+		cv_VectorOfVec4f_data, cv_VectorOfVec4f_data_mut, cv_VectorOfVec4f_from_slice,
 		cv_VectorOfVec4f_clone,
 	}
 	
@@ -1949,7 +1949,7 @@ mod core_types {
 		cv_VectorOfVec4i_push, cv_VectorOfVec4i_insert,
 	}
 	vector_copy_non_bool! { core::Vec4i, *const c_void, *mut c_void,
-		cv_VectorOfVec4i_data, cv_VectorOfVec4i_data_mut,
+		cv_VectorOfVec4i_data, cv_VectorOfVec4i_data_mut, cv_VectorOfVec4i_from_slice,
 		cv_VectorOfVec4i_clone,
 	}
 	
@@ -2004,7 +2004,7 @@ mod core_types {
 		cv_VectorOfVec6f_push, cv_VectorOfVec6f_insert,
 	}
 	vector_copy_non_bool! { core::Vec6f, *const c_void, *mut c_void,
-		cv_VectorOfVec6f_data, cv_VectorOfVec6f_data_mut,
+		cv_VectorOfVec6f_data, cv_VectorOfVec6f_data_mut, cv_VectorOfVec6f_from_slice,
 		cv_VectorOfVec6f_clone,
 	}
 	
@@ -2783,7 +2783,7 @@ mod core_types {
 		cv_VectorOff32_push, cv_VectorOff32_insert,
 	}
 	vector_copy_non_bool! { f32, *const c_void, *mut c_void,
-		cv_VectorOff32_data, cv_VectorOff32_data_mut,
+		cv_VectorOff32_data, cv_VectorOff32_data_mut, cv_VectorOff32_from_slice,
 		cv_VectorOff32_clone,
 	}
 	
@@ -2838,7 +2838,7 @@ mod core_types {
 		cv_VectorOff64_push, cv_VectorOff64_insert,
 	}
 	vector_copy_non_bool! { f64, *const c_void, *mut c_void,
-		cv_VectorOff64_data, cv_VectorOff64_data_mut,
+		cv_VectorOff64_data, cv_VectorOff64_data_mut, cv_VectorOff64_from_slice,
 		cv_VectorOff64_clone,
 	}
 	
@@ -2893,7 +2893,7 @@ mod core_types {
 		cv_VectorOfi32_push, cv_VectorOfi32_insert,
 	}
 	vector_copy_non_bool! { i32, *const c_void, *mut c_void,
-		cv_VectorOfi32_data, cv_VectorOfi32_data_mut,
+		cv_VectorOfi32_data, cv_VectorOfi32_data_mut, cv_VectorOfi32_from_slice,
 		cv_VectorOfi32_clone,
 	}
 	
@@ -2948,7 +2948,7 @@ mod core_types {
 		cv_VectorOfi8_push, cv_VectorOfi8_insert,
 	}
 	vector_copy_non_bool! { i8, *const c_void, *mut c_void,
-		cv_VectorOfi8_data, cv_VectorOfi8_data_mut,
+		cv_VectorOfi8_data, cv_VectorOfi8_data_mut, cv_VectorOfi8_from_slice,
 		cv_VectorOfi8_clone,
 	}
 	
@@ -3003,7 +3003,7 @@ mod core_types {
 		cv_VectorOfsize_t_push, cv_VectorOfsize_t_insert,
 	}
 	vector_copy_non_bool! { size_t, *const c_void, *mut c_void,
-		cv_VectorOfsize_t_data, cv_VectorOfsize_t_data_mut,
+		cv_VectorOfsize_t_data, cv_VectorOfsize_t_data_mut, cv_VectorOfsize_t_from_slice,
 		cv_VectorOfsize_t_clone,
 	}
 	
@@ -3026,7 +3026,7 @@ mod core_types {
 		cv_VectorOfu8_push, cv_VectorOfu8_insert,
 	}
 	vector_copy_non_bool! { u8, *const c_void, *mut c_void,
-		cv_VectorOfu8_data, cv_VectorOfu8_data_mut,
+		cv_VectorOfu8_data, cv_VectorOfu8_data_mut, cv_VectorOfu8_from_slice,
 		cv_VectorOfu8_clone,
 	}
 	
@@ -6532,7 +6532,7 @@ mod dnn_types {
 		cv_VectorOfTarget_push, cv_VectorOfTarget_insert,
 	}
 	vector_copy_non_bool! { crate::dnn::Target, *const c_void, *mut c_void,
-		cv_VectorOfTarget_data, cv_VectorOfTarget_data_mut,
+		cv_VectorOfTarget_data, cv_VectorOfTarget_data_mut, cv_VectorOfTarget_from_slice,
 		cv_VectorOfTarget_clone,
 	}
 	
@@ -7705,7 +7705,7 @@ mod flann_types {
 		cv_VectorOfFlannIndexType_push, cv_VectorOfFlannIndexType_insert,
 	}
 	vector_copy_non_bool! { crate::flann::FlannIndexType, *const c_void, *mut c_void,
-		cv_VectorOfFlannIndexType_data, cv_VectorOfFlannIndexType_data_mut,
+		cv_VectorOfFlannIndexType_data, cv_VectorOfFlannIndexType_data_mut, cv_VectorOfFlannIndexType_from_slice,
 		cv_VectorOfFlannIndexType_clone,
 	}
 	
@@ -8282,7 +8282,7 @@ mod line_descriptor_types {
 		cv_VectorOfKeyLine_push, cv_VectorOfKeyLine_insert,
 	}
 	vector_copy_non_bool! { crate::line_descriptor::KeyLine, *const c_void, *mut c_void,
-		cv_VectorOfKeyLine_data, cv_VectorOfKeyLine_data_mut,
+		cv_VectorOfKeyLine_data, cv_VectorOfKeyLine_data_mut, cv_VectorOfKeyLine_from_slice,
 		cv_VectorOfKeyLine_clone,
 	}
 	
@@ -10657,7 +10657,7 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Feature_push, cv_VectorOfLinemod_Feature_insert,
 	}
 	vector_copy_non_bool! { crate::rgbd::Linemod_Feature, *const c_void, *mut c_void,
-		cv_VectorOfLinemod_Feature_data, cv_VectorOfLinemod_Feature_data_mut,
+		cv_VectorOfLinemod_Feature_data, cv_VectorOfLinemod_Feature_data_mut, cv_VectorOfLinemod_Feature_from_slice,
 		cv_VectorOfLinemod_Feature_clone,
 	}
 	
@@ -11356,7 +11356,7 @@ mod stereo_types {
 		cv_VectorOfMatchQuasiDense_push, cv_VectorOfMatchQuasiDense_insert,
 	}
 	vector_copy_non_bool! { crate::stereo::MatchQuasiDense, *const c_void, *mut c_void,
-		cv_VectorOfMatchQuasiDense_data, cv_VectorOfMatchQuasiDense_data_mut,
+		cv_VectorOfMatchQuasiDense_data, cv_VectorOfMatchQuasiDense_data_mut, cv_VectorOfMatchQuasiDense_from_slice,
 		cv_VectorOfMatchQuasiDense_clone,
 	}
 	
@@ -13903,7 +13903,7 @@ mod videoio_types {
 		cv_VectorOfVideoCaptureAPIs_push, cv_VectorOfVideoCaptureAPIs_insert,
 	}
 	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs, *const c_void, *mut c_void,
-		cv_VectorOfVideoCaptureAPIs_data, cv_VectorOfVideoCaptureAPIs_data_mut,
+		cv_VectorOfVideoCaptureAPIs_data, cv_VectorOfVideoCaptureAPIs_data_mut, cv_VectorOfVideoCaptureAPIs_from_slice,
 		cv_VectorOfVideoCaptureAPIs_clone,
 	}
 	

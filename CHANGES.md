@@ -1,3 +1,11 @@
+* 0.59.0
+  * You can now select which OpenCV modules you want to include in generation using the crate features, there is a feature for
+    every OpenCV module except core. This supersedes the old system with environment variables `OPENCV_MODULE_WHITELIST` and
+    `OPENCV_MODULE_BLACKLIST`, they are no longer supported (kudos to nsabovic).
+  * You can now use the `rgb` crate types as elements of `Mat`, just enable the `rgb` feature (kudos to fzyzcjy).
+  * You can now use `Vector::from_slice()` for a faster construction of `Vector` from a slice. This only works for simple types
+    like `u8` or `Point`.
+
 * 0.58.0
   * Infallible functions are no longer using exception handling internally so they should be faster.
   * `core::Vec` is renamed to `core::VecN` to avoid name conflict with std's `Vec`.

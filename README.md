@@ -15,7 +15,7 @@ generation) are installed in your system.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.58"
+opencv = "0.59"
 ```
 
 Import prelude
@@ -259,6 +259,7 @@ The following variables affect the building the of the `opencv` crate, but belon
   ```
   opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
   ```
+* `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
 * `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
   workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
@@ -278,7 +279,7 @@ The following OpenCV versions are supported at the moment:
 
 ### Minimum rustc version
 
-Generally you should use the latest stable rustc to compile this crate.
+Currently, version 1.53.0 is required, but generally you should use the latest stable rustc to compile this crate.
 
 ### Platform support
 
