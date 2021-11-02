@@ -616,3 +616,12 @@ fn mat_equals() -> Result<()> {
 	assert!(res.data_typed::<u8>()?.iter().all(|&e| e == 0));
 	Ok(())
 }
+
+#[test]
+fn mat_rgb() -> Result<()> {
+	#![cfg(feature = "rgb")]
+	let m = Mat::new_rows_cols_with_default(3, 3, rgb::RGBA8::typ(), Scalar::all(1.))?;
+	assert_eq!(rgb::RGBA::new(1, 1, 1, 1), *m.at_2d(1, 1)?);
+	assert_matches!(m.at_2d::<rgb::RGB8>(1, 1), Err(Error { code: core::StsUnmatchedFormats, .. }));
+	Ok(())
+}

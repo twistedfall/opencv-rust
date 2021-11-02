@@ -56,7 +56,7 @@ name = "window"
 libc = "0.2"
 num-traits = "0.2"
 once_cell = "1.0"
-rgb = { version = "0.8.27", features = ["argb"], optional = true }
+rgb = { version = "0.8", features = ["argb"], optional = true }
 
 [features]
 clang-runtime = ["clang/runtime"]

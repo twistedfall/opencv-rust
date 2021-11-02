@@ -49,25 +49,21 @@ data_type!(f32, core::CV_32F, 1);
 data_type!(f64, core::CV_64F, 1);
 
 #[cfg(feature = "rgb")]
-use rgb::*;
+data_type!(rgb::RGB8, core::CV_8U, 3);
 #[cfg(feature = "rgb")]
-use rgb::alt::*;
+data_type!(rgb::RGBA8, core::CV_8U, 4);
 #[cfg(feature = "rgb")]
-data_type!(GRAY8, core::CV_8U, 1);
+data_type!(rgb::alt::GRAY8, core::CV_8U, 1);
 #[cfg(feature = "rgb")]
-data_type!(GRAYA8, core::CV_8U, 2);
+data_type!(rgb::alt::GRAYA8, core::CV_8U, 2);
 #[cfg(feature = "rgb")]
-data_type!(RGB8, core::CV_8U, 3);
+data_type!(rgb::alt::BGR8, core::CV_8U, 3);
 #[cfg(feature = "rgb")]
-data_type!(BGR8, core::CV_8U, 3);
+data_type!(rgb::alt::ARGB8, core::CV_8U, 4);
 #[cfg(feature = "rgb")]
-data_type!(RGBA8, core::CV_8U, 4);
+data_type!(rgb::alt::BGRA8, core::CV_8U, 4);
 #[cfg(feature = "rgb")]
-data_type!(ARGB8, core::CV_8U, 4);
-#[cfg(feature = "rgb")]
-data_type!(BGRA8, core::CV_8U, 4);
-#[cfg(feature = "rgb")]
-data_type!(ABGR8, core::CV_8U, 4);
+data_type!(rgb::alt::ABGR8, core::CV_8U, 4);
 
 impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 	#[inline]
