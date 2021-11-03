@@ -5,16 +5,16 @@ set -vex
 if [[ "$OS_FAMILY" == "windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
 	export LIBCLANG_PATH="/C/Program Files/LLVM/bin"
-	if [[ "$CHOCO_OPENCV_VERSION" != "" ]]; then # chocolatey build
-		export PATH="/C/tools/opencv/build/x64/vc15/bin:$PATH"
-		export OPENCV_LINK_PATHS="/C/tools/opencv/build/x64/vc15/lib"
-		export OPENCV_LINK_LIBS="opencv_world${CHOCO_OPENCV_VERSION//./}"
-		export OPENCV_INCLUDE_PATHS="/C/tools/opencv/build/include"
-	else # vcpkg build
+	if [[ "$VCPKG_OPENCV_VERSION" != "" ]]; then # vcpkg build
 		export VCPKGRS_DYNAMIC=1
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
+	else # chocolatey build
+		export PATH="/C/tools/opencv/build/x64/vc15/bin:$PATH"
+		export OPENCV_LINK_PATHS="/C/tools/opencv/build/x64/vc15/lib"
+		export OPENCV_LINK_LIBS="opencv_world${OPENCV_VERSION//./}"
+		export OPENCV_INCLUDE_PATHS="/C/tools/opencv/build/include"
 	fi
 	echo "=== Installed chocolatey packages:"
 	choco list --local-only

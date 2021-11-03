@@ -135,44 +135,36 @@ jobs:
             family: osx
           - image: windows-2019
             family: windows
-          - image: ubuntu-18.04
-            family: linux
         rust:
           - stable
           - beta
         version:
-          - branch: 3.2
-            opencv: 3.2.0
-            brew: "excluded"
           - branch: 3.4
             opencv: 3.4.15
             brew: "@3"
           - branch: 4
             opencv: 4.5.3
             brew: "@4"
-        exclude:
+        include:
           - os:
-              family: osx
-            version:
-              branch: 3.2
-          - os:
-              family: windows
-            version:
-              branch: 3.2
-          - os:
+              image: ubuntu-18.04
               family: linux
+            rust: stable
             version:
-              branch: 3.4
+              opencv: 3.2.0
+              brew: excluded
           - os:
+              image: ubuntu-20.04
               family: linux
+            rust: stable
             version:
-              branch: 4
+              opencv: 4.2.0
+              brew: excluded
     runs-on: ${{ matrix.os.image }}
     env:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       OPENCV_VERSION: ${{ matrix.version.opencv }}
-      CHOCO_OPENCV_VERSION: ${{ matrix.version.opencv }}
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
     steps:
       - uses: actions/checkout@v2
