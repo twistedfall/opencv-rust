@@ -239,6 +239,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_ocl_Kernel_set_int_const_UMatR" => "+_umat",
 	"cv_ocl_ProgramSource_ProgramSource_const_StringR" => "from_str",
 	"cv_ocl_Program_getPrefix_const_StringR" => "+_build_flags",
+	"cv_ogl_Buffer_create_Size_int_Target_bool" => "+_size",
 	"cv_operatorA_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
 	"cv_operatorA_const_MatExprR_const_MatR" => "+_matexpr_mat",
 	"cv_operatorA_const_MatExprR_const_ScalarR" => "+_matexpr_scalar",

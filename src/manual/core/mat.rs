@@ -137,6 +137,7 @@ impl Mat {
 		Ok(out)
 	}
 
+	#[inline]
 	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>> where Self: Sized {
 		self.try_into()
 	}

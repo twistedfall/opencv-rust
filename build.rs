@@ -185,7 +185,8 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
 		// crate warnings
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
-		.flag_if_supported("-Wno-ignored-qualifiers") //  type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
+		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
+		.flag_if_supported("-Wnoreturn-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 	;
 	opencv.include_paths.iter().for_each(|p| { out.include(p); });
 	if cfg!(target_env = "msvc") {
@@ -195,6 +196,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag_if_supported("-wd4996")
 			.flag_if_supported("-wd5054") // deprecated between enumerations of different types
 			.flag_if_supported("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
+			.flag_if_supported("-wd4702") // core.cpp(386) : unreachable code
 			.pic(false)
 		;
 	} else {

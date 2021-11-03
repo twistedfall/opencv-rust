@@ -49,6 +49,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		out
 	}
 
+	/// Create a Vector from slice, the element type needs to be Copy (and not bool)
 	#[inline]
 	pub fn from_slice(s: &[T]) -> Self where Self: VectorExternCopyNonBool<T> {
 		unsafe { Self::from_raw(Self::extern_from_slice(s.as_ptr(), s.len())) }
