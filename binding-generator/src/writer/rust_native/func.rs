@@ -114,17 +114,12 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let call_args = call_args.join(", ");
 	let forward_args = forward_args.join(", ");
 	let post_call_args = post_call_args.join("\n");
-	let error_handling = if is_infallible {
-		format!(".expect(\"Infallible function failed: {name}\")", name=name).into()
-	} else {
-		Cow::Borrowed("?")
-	};
 	let ret_convert = if is_infallible {
-		Cow::Borrowed("")
+		""
 	} else {
-		format!(".into_result(){}", error_handling).into()
+		".into_result()?"
 	};
-	let ret_map = return_type.rust_return_map(is_safe, is_static_func, &error_handling);
+	let ret_map = return_type.rust_return_map(is_safe, is_static_func, is_infallible);
 	let mut attributes = String::new();
 	if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
 		attributes = format!("#[cfg({})]", attrs.0);
@@ -150,7 +145,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		"identifier" => identifier.as_ref(),
 		"call_args" => &call_args,
 		"forward_args" => &forward_args,
-		"ret_convert" => &ret_convert,
+		"ret_convert" => ret_convert,
 		"ret_map" => ret_map.as_ref(),
 		"post_call_args" => &post_call_args,
 	})

@@ -314,7 +314,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			.and_then(|_| {
 				let data = self.data();
 				if data.is_null() {
-					Err(Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
+					Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
 				} else {
 					Ok(unsafe { slice::from_raw_parts(data, self.total()? * self.elem_size()?) })
 				}
@@ -334,7 +334,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let data = self.data();
 		if data.is_null() {
-			Err(Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
+			Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
 		} else {
 			Ok(slice::from_raw_parts(data as *const T, self.total()?))
 		}

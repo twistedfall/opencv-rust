@@ -1069,7 +1069,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool, error_handling: &str) -> Cow<str> {
+	pub fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool, is_infallible: bool) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
 		if self.as_string().is_some() || self.is_by_ptr() {
 			format!(
@@ -1079,8 +1079,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			).into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
 			let ptr_call = if self.constness().is_const() { "ref" } else { "mut" };
+			let error_handling = if is_infallible {
+				".expect(\"Function returned null pointer\")"
+			} else {
+				".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\".to_string()))?"
+			};
 			format!(
-				"let ret = {unsafety_call}{{ ret.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())){error_handling};",
+				"let ret = {unsafety_call}{{ ret.as_{ptr_call}() }}{error_handling};",
 				unsafety_call=unsafety_call,
 				ptr_call=ptr_call,
 				error_handling=error_handling,
