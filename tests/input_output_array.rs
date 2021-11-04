@@ -36,7 +36,7 @@ fn input_output_array() -> Result<()> {
 		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		{
 			let mut trg = VectorOfu8::new();
-			core::add(&mat_expr, &umat, &mut trg, &core::no_array()?, -1)?;
+			core::add(&mat_expr, &umat, &mut trg, &core::no_array(), -1)?;
 			assert_eq!(3, trg.len());
 			assert_eq!(4, trg.get(0)?);
 			assert_eq!(4, trg.get(1)?);
@@ -45,7 +45,7 @@ fn input_output_array() -> Result<()> {
 
 		{
 			let mut trg = VectorOfu8::new();
-			core::add(&&mat_expr, &&umat, &mut &mut trg, &core::no_array()?, -1)?;
+			core::add(&&mat_expr, &&umat, &mut &mut trg, &core::no_array(), -1)?;
 			assert_eq!(3, trg.len());
 			assert_eq!(4, trg.get(0)?);
 			assert_eq!(4, trg.get(1)?);
@@ -55,7 +55,7 @@ fn input_output_array() -> Result<()> {
 
 	{
 		let mut t = VectorOff64::new();
-		core::add(&2.5, &4., &mut t, &core::no_array()?, -1)?;
+		core::add(&2.5, &4., &mut t, &core::no_array(), -1)?;
 		assert_eq!(6.5, t.get(0)?);
 	}
 
@@ -83,11 +83,11 @@ fn input_output_array() -> Result<()> {
 fn no_array() -> Result<()> {
 	use self::core::no_array;
 
-	assert!(no_array()?.empty()?);
+	assert!(no_array().empty()?);
 
 	{
 		let m = Mat::new_rows_cols_with_default(1, 1, u16::typ(), Scalar::all(0.))?;
-		assert_matches!(core::mean_std_dev(&m, &mut no_array()?, &mut no_array()?, &no_array()?), Ok(()));
+		assert_matches!(core::mean_std_dev(&m, &mut no_array(), &mut no_array(), &no_array()), Ok(()));
 	}
 	Ok(())
 }

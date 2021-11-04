@@ -813,6 +813,33 @@ pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 });
 
 pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| hashset! {
+	// just returns static/constant data
+	FuncId::new("cv::noArray", []),
+	FuncId::new("cv::getVersionMajor", []),
+	FuncId::new("cv::getVersionMinor", []),
+	FuncId::new("cv::getVersionRevision", []),
+	// not doing anything that can cause an exception
+	FuncId::new("cv::Mat::empty", []),
+	FuncId::new("cv::Mat::total", []),
+	FuncId::new("cv::Mat::isContinuous", []),
+	FuncId::new("cv::Mat::isSubmatrix", []),
+	FuncId::new("cv::Mat::elemSize1", []),
+	FuncId::new("cv::Mat::type", []),
+	FuncId::new("cv::Mat::depth", []),
+	FuncId::new("cv::Mat::channels", []),
+	FuncId::new("cv::UMat::empty", []),
+	FuncId::new("cv::UMat::total", []),
+	FuncId::new("cv::UMat::isContinuous", []),
+	FuncId::new("cv::UMat::isSubmatrix", []),
+	FuncId::new("cv::UMat::elemSize1", []),
+	FuncId::new("cv::UMat::type", []),
+	FuncId::new("cv::UMat::depth", []),
+	FuncId::new("cv::UMat::channels", []),
+	FuncId::new("cv::SparseMat::elemSize", []),
+	FuncId::new("cv::SparseMat::elemSize1", []),
+	FuncId::new("cv::SparseMat::type", []),
+	FuncId::new("cv::SparseMat::depth", []),
+	FuncId::new("cv::SparseMat::channels", []),
 	// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
 	FuncId::new("cv::Mat::Mat", []),
 	FuncId::new("cv::MatSize::MatSize", ["_p"]),

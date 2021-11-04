@@ -22,7 +22,7 @@ fn qr_code() -> Result<()> {
 		let res = detector.detect_and_decode(&src, &mut pts, &mut straight)?;
 		assert_eq!(res, "https://crates.io/crates/opencv");
 		assert_eq!(4, pts.len());
-		assert!(!straight.empty()?);
+		assert!(!straight.empty());
 	}
 
 	{
@@ -35,7 +35,7 @@ fn qr_code() -> Result<()> {
 		let mut straight = Mat::default();
 		let res = detector.decode(&src, &pts, &mut straight)?;
 		assert_eq!(res, "https://crates.io/crates/opencv");
-		assert!(!straight.empty()?);
+		assert!(!straight.empty());
 	}
 
 	#[cfg(ocvrs_opencv_branch_34)] {
@@ -49,7 +49,7 @@ fn qr_code() -> Result<()> {
 		let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
 		assert!(res);
 		assert_eq!(out, "https://crates.io/crates/opencv");
-		assert!(!straight.empty()?);
+		assert!(!straight.empty());
 	}
 	Ok(())
 }

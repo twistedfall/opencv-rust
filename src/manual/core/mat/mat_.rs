@@ -29,7 +29,7 @@ impl<T: DataType> TryFrom<Mat> for Mat_<T> {
 
 	#[inline]
 	fn try_from(mat: Mat) -> Result<Self, Self::Error> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.map(|_| Self { inner: mat, _type: PhantomData })
 	}
 }

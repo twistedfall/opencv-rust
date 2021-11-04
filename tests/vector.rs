@@ -37,20 +37,20 @@ fn boxed() -> Result<()> {
 		vec.push(Mat::new_rows_cols_with_default(1, 3, u16::typ(), Scalar::all(2.))?);
 		vec.push(Mat::new_rows_cols_with_default(1, 3, i32::typ(), Scalar::all(3.))?);
 		assert_eq!(3, vec.len());
-		assert_eq!(u8::typ(), vec.get(0)?.typ()?);
+		assert_eq!(u8::typ(), vec.get(0)?.typ());
 		assert_eq!(1, *vec.get(0)?.at_2d::<u8>(0, 1)?);
-		assert_eq!(u16::typ(), vec.get(1)?.typ()?);
+		assert_eq!(u16::typ(), vec.get(1)?.typ());
 		assert_eq!(2, *vec.get(1)?.at_2d::<u16>(0, 1)?);
-		assert_eq!(i32::typ(), vec.get(2)?.typ()?);
+		assert_eq!(i32::typ(), vec.get(2)?.typ());
 		assert_eq!(3, *vec.get(2)?.at_2d::<i32>(0, 1)?);
 		vec.set(0, Mat::new_rows_cols_with_default(1, 3, f32::typ(), Scalar::all(3.))?)?;
 		unsafe { vec.set_unchecked(1, Mat::new_rows_cols_with_default(1, 3, f64::typ(), Scalar::all(4.))?); }
 		vec.set(2, Mat::new_rows_cols_with_default(1, 3, i16::typ(), Scalar::all(5.))?)?;
-		assert_eq!(f32::typ(), unsafe { vec.get_unchecked(0) }.typ()?);
+		assert_eq!(f32::typ(), unsafe { vec.get_unchecked(0) }.typ());
 		assert_eq!(3., *unsafe { vec.get_unchecked(0) }.at_2d::<f32>(0, 1)?);
-		assert_eq!(f64::typ(), unsafe { vec.get_unchecked(1) }.typ()?);
+		assert_eq!(f64::typ(), unsafe { vec.get_unchecked(1) }.typ());
 		assert_eq!(4., *unsafe { vec.get_unchecked(1) }.at_2d::<f64>(0, 1)?);
-		assert_eq!(i16::typ(), unsafe { vec.get_unchecked(2) }.typ()?);
+		assert_eq!(i16::typ(), unsafe { vec.get_unchecked(2) }.typ());
 		assert_eq!(5, *unsafe { vec.get_unchecked(2) }.at_2d::<i16>(0, 1)?);
 	}
 
@@ -529,11 +529,11 @@ fn to_vec() -> Result<()> {
 		vec.push(Mat::new_rows_cols_with_default(5, 8, u16::typ(), Scalar::all(8.))?);
 		vec.push(Mat::new_rows_cols_with_default(3, 3, u8::typ(), Scalar::all(19.))?);
 		let mat_vec = vec.to_vec();
-		assert_eq!(vec.get(0)?.total()?, mat_vec[0].total()?);
-		assert_eq!(vec.get(0)?.typ()?, mat_vec[0].typ()?);
+		assert_eq!(vec.get(0)?.total(), mat_vec[0].total());
+		assert_eq!(vec.get(0)?.typ(), mat_vec[0].typ());
 		assert_eq!(vec.get(0)?.at_2d::<u16>(2, 2)?, mat_vec[0].at_2d::<u16>(2, 2)?);
-		assert_eq!(vec.get(1)?.total()?, mat_vec[1].total()?);
-		assert_eq!(vec.get(1)?.typ()?, mat_vec[1].typ()?);
+		assert_eq!(vec.get(1)?.total(), mat_vec[1].total());
+		assert_eq!(vec.get(1)?.typ(), mat_vec[1].typ());
 		assert_eq!(vec.get(1)?.at_2d::<u8>(2, 2)?, mat_vec[1].at_2d::<u8>(2, 2)?);
 	}
 

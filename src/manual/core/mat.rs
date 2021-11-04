@@ -69,7 +69,7 @@ fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()>
 
 #[inline]
 fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
-	let size = mat.total()?;
+	let size = mat.total();
 	if 0 <= idx && (idx as usize) < size {
 		Ok(())
 	} else {
@@ -79,7 +79,7 @@ fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 
 #[inline]
 fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
-	if mat.is_continuous()? {
+	if mat.is_continuous() {
 		Ok(())
 	} else {
 		Err(Error::new(core::StsUnmatchedSizes, "Mat is not continuous, operation is not applicable".to_string()))
@@ -88,7 +88,7 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 
 #[inline(always)]
 fn idx_to_row_col(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<(i32, i32)> {
-	Ok(if mat.is_continuous()? {
+	Ok(if mat.is_continuous() {
 		(0, i0)
 	} else {
 		let mat_size = mat.size()?;
@@ -148,7 +148,7 @@ pub(crate) mod mat_forward {
 
 	#[inline]
 	pub fn at<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<&T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_dims(mat, 2))
 			.and_then(|_| match_total(mat, i0))
 			.and_then(|_| unsafe { mat.at_unchecked(i0) })
@@ -156,7 +156,7 @@ pub(crate) mod mat_forward {
 
 	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_dims(mat, 2))
 			.and_then(|_| match_total(mat, i0))?;
 		unsafe { mat.at_unchecked_mut(i0) }
@@ -164,14 +164,14 @@ pub(crate) mod mat_forward {
 
 	#[inline]
 	pub fn at_2d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), row: i32, col: i32) -> Result<&T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, &[row, col]))
 			.and_then(|_| unsafe { mat.at_2d_unchecked(row, col) })
 	}
 
 	#[inline]
 	pub fn at_2d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), row: i32, col: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, &[row, col]))?;
 		unsafe { mat.at_2d_unchecked_mut(row, col) }
 	}
@@ -188,28 +188,28 @@ pub(crate) mod mat_forward {
 
 	#[inline]
 	pub fn at_3d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, &[i0, i1, i2]))
 			.and_then(|_| unsafe { mat.at_3d_unchecked(i0, i1, i2) })
 	}
 
 	#[inline]
 	pub fn at_3d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, &[i0, i1, i2]))?;
 		unsafe { mat.at_3d_unchecked_mut(i0, i1, i2) }
 	}
 
 	#[inline]
 	pub fn at_nd<'s, T: core::DataType>(mat: &'s (impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<&'s T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, idx))
 			.and_then(|_| unsafe { mat.at_nd_unchecked(idx) })
 	}
 
 	#[inline]
 	pub fn at_nd_mut<'s, T: core::DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
-		match_format::<T>(mat.typ()?)
+		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, idx))?;
 		unsafe { mat.at_nd_unchecked_mut(idx) }
 	}
@@ -223,7 +223,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	#[inline]
 	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> Result<&T> {
 		let mat_size = self.size()?;
-		let (i, j) = if self.is_continuous()? || mat_size.width == 1 {
+		let (i, j) = if self.is_continuous() || mat_size.width == 1 {
 			(0, i0)
 		} else if mat_size.height == 1 {
 			(i0, 0)
@@ -273,7 +273,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Return a complete read-only row
 	#[inline]
 	fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
-		match_format::<T>(self.typ()?)
+		match_format::<T>(self.typ())
 			.and_then(|_| match_indices(self, &[row, 0]))
 			.and_then(|_| unsafe { self.at_row_unchecked(row) })
 	}
@@ -316,14 +316,14 @@ pub trait MatTraitConstManual: MatTraitConst {
 				if data.is_null() {
 					Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
 				} else {
-					Ok(unsafe { slice::from_raw_parts(data, self.total()? * self.elem_size()?) })
+					Ok(unsafe { slice::from_raw_parts(data, self.total() * self.elem_size()?) })
 				}
 			})
 	}
 
 	#[inline]
 	fn data_typed<T: DataType>(&self) -> Result<&[T]> {
-		match_format::<T>(self.typ()?)
+		match_format::<T>(self.typ())
 			.and_then(|_| match_is_continuous(self))
 			.and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
@@ -336,17 +336,17 @@ pub trait MatTraitConstManual: MatTraitConst {
 		if data.is_null() {
 			Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
 		} else {
-			Ok(slice::from_raw_parts(data as *const T, self.total()?))
+			Ok(slice::from_raw_parts(data as *const T, self.total()))
 		}
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
-		match_format::<T>(self.typ()?)
+		match_format::<T>(self.typ())
 			.and_then(|_| match_dims(self, 2))
 			.and_then(|_| {
 				let size = Self::size(self)?;
 				let width = size.width as usize;
-				if self.is_continuous()? {
+				if self.is_continuous() {
 					let data = self.data_typed()?;
 					Ok((0..size.height)
 						.map(|row_n| {
@@ -422,7 +422,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Return a complete writeable row
 	#[inline]
 	fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
-		match_format::<T>(self.typ()?)
+		match_format::<T>(self.typ())
 			.and_then(|_| match_indices(self, &[row, 0]))?;
 		unsafe { self.at_row_unchecked_mut(row) }
 	}
@@ -453,13 +453,13 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
 		match_is_continuous(self)
 			.and_then(|_| {
-				Ok(unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total()? * self.elem_size()?) })
+				Ok(unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total() * self.elem_size()?) })
 			})
 	}
 
 	#[inline]
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
-		match_format::<T>(self.typ()?)
+		match_format::<T>(self.typ())
 			.and_then(|_| match_is_continuous(self))?;
 		unsafe { self.data_typed_unchecked_mut() }
 	}
@@ -468,7 +468,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
-		let total = self.total()?;
+		let total = self.total();
 		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut u8 as *mut T, total))
 	}
 }
@@ -484,23 +484,23 @@ impl fmt::Debug for Mat {
 		let typ = self.typ();
 		let depth = self.depth();
 		#[cfg(not(ocvrs_opencv_branch_32))]
-		let typ = typ.and_then(core::type_to_string);
+		let typ = core::type_to_string(typ).map_err(|_| fmt::Error)?;
 		#[cfg(not(ocvrs_opencv_branch_32))]
-		let depth = depth.and_then(core::depth_to_string);
+		let depth = core::depth_to_string(depth).map_err(|_| fmt::Error)?;
 		f.debug_struct("Mat")
-			.field("type", &typ.map_err(|_| fmt::Error)?)
+			.field("type", &typ)
 			.field("flags", &self.flags())
-			.field("channels", &self.channels().map_err(|_| fmt::Error)?)
-			.field("depth", &depth.map_err(|_| fmt::Error)?)
+			.field("channels", &self.channels())
+			.field("depth", &depth)
 			.field("dims", &self.dims())
 			.field("size", &self.size().map_err(|_| fmt::Error)?)
 			.field("rows", &self.rows())
 			.field("cols", &self.cols())
 			.field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
-			.field("elem_size1", &self.elem_size1().map_err(|_| fmt::Error)?)
-			.field("total", &self.total().map_err(|_| fmt::Error)?)
-			.field("is_continuous", &self.is_continuous().map_err(|_| fmt::Error)?)
-			.field("is_submatrix", &self.is_submatrix().map_err(|_| fmt::Error)?)
+			.field("elem_size1", &self.elem_size1())
+			.field("total", &self.total())
+			.field("is_continuous", &self.is_continuous())
+			.field("is_submatrix", &self.is_submatrix())
 			.finish()
 	}
 }

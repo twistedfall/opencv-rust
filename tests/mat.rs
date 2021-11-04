@@ -15,9 +15,9 @@ const PIXEL: &[u8] = include_bytes!("pixel.png");
 #[test]
 fn mat_default() -> Result<()> {
 	let mat = Mat::default();
-	assert_eq!(u8::typ(), mat.typ()?);
-	assert_eq!(u8::depth(), mat.depth()?);
-	assert_eq!(u8::channels(), mat.channels()?);
+	assert_eq!(u8::typ(), mat.typ());
+	assert_eq!(u8::depth(), mat.depth());
+	assert_eq!(u8::channels(), mat.channels());
 	assert_eq!(Size::new(0, 0), mat.size()?);
 	assert_eq!(0, mat.dims());
 	assert!(!mat.is_allocated());
@@ -52,7 +52,7 @@ fn mat_from_iter() -> Result<()> {
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		assert_eq!(3, mat.rows());
 		assert_eq!(1, mat.cols());
-		assert_eq!(i32::typ(), mat.typ()?);
+		assert_eq!(i32::typ(), mat.typ());
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
 		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
@@ -63,7 +63,7 @@ fn mat_from_iter() -> Result<()> {
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		assert_eq!(3, mat.rows());
 		assert_eq!(1, mat.cols());
-		assert_eq!(i32::typ(), mat.typ()?);
+		assert_eq!(i32::typ(), mat.typ());
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
 		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
@@ -74,11 +74,11 @@ fn mat_from_iter() -> Result<()> {
 #[test]
 fn mat_for_rows_and_cols() -> Result<()> {
 	let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::typ()) }?;
-	assert_eq!(Vec3d::typ(), mat.typ()?);
-	assert_eq!(Vec3d::depth(), mat.depth()?);
-	assert_eq!(Vec3d::channels(), mat.channels()?);
-	assert!(mat.is_continuous()?);
-	assert!(!mat.is_submatrix()?);
+	assert_eq!(Vec3d::typ(), mat.typ());
+	assert_eq!(Vec3d::depth(), mat.depth());
+	assert_eq!(Vec3d::channels(), mat.channels());
+	assert!(mat.is_continuous());
+	assert!(!mat.is_submatrix());
 	assert_eq!(Size::new(300, 400), mat.size()?);
 	assert_eq!(400, mat.rows());
 	assert_eq!(300, mat.cols());
@@ -90,10 +90,10 @@ fn mat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(7200, mat.mat_step()[0]);
 	assert_eq!(24, mat.mat_step()[1]);
 	assert_eq!(24, mat.elem_size()?);
-	assert_eq!(8, mat.elem_size1()?);
+	assert_eq!(8, mat.elem_size1());
 	assert_eq!(900, mat.step1(0)?);
 	assert_eq!(3, mat.step1(1)?);
-	assert_eq!(120000, mat.total()?);
+	assert_eq!(120000, mat.total());
 	Ok(())
 }
 
@@ -312,11 +312,11 @@ fn mat_continuous() -> Result<()> {
 
 	{
 		let sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
-		assert_eq!(mat.typ()?, sub_mat_non_cont.typ()?);
+		assert_eq!(mat.typ(), sub_mat_non_cont.typ());
 		assert_eq!(2, sub_mat_non_cont.rows());
 		assert_eq!(2, sub_mat_non_cont.cols());
-		assert!(sub_mat_non_cont.is_submatrix()?);
-		assert!(!sub_mat_non_cont.is_continuous()?);
+		assert!(sub_mat_non_cont.is_submatrix());
+		assert!(!sub_mat_non_cont.is_continuous());
 		assert_eq!(5., *sub_mat_non_cont.at_2d::<f32>(0, 0)?);
 		assert_eq!(6., *sub_mat_non_cont.at_2d::<f32>(0, 1)?);
 		assert_eq!(8., *sub_mat_non_cont.at_2d::<f32>(1, 0)?);
@@ -329,11 +329,11 @@ fn mat_continuous() -> Result<()> {
 		assert_eq!(9., vec[1][1]);
 
 		let mat_clone = sub_mat_non_cont.try_clone()?;
-		assert_eq!(mat.typ()?, mat_clone.typ()?);
+		assert_eq!(mat.typ(), mat_clone.typ());
 		assert_eq!(2, mat_clone.rows());
 		assert_eq!(2, mat_clone.cols());
-		assert!(!mat_clone.is_submatrix()?);
-		assert!(mat_clone.is_continuous()?);
+		assert!(!mat_clone.is_submatrix());
+		assert!(mat_clone.is_continuous());
 		assert_eq!(5., *mat_clone.at_2d::<f32>(0, 0)?);
 		assert_eq!(6., *mat_clone.at_2d::<f32>(0, 1)?);
 		assert_eq!(8., *mat_clone.at_2d::<f32>(1, 0)?);
@@ -342,11 +342,11 @@ fn mat_continuous() -> Result<()> {
 
 	{
 		let sub_mat_cont = Mat::roi(&mat, Rect::new(0, 1, 3, 2))?;
-		assert_eq!(mat.typ()?, sub_mat_cont.typ()?);
+		assert_eq!(mat.typ(), sub_mat_cont.typ());
 		assert_eq!(2, sub_mat_cont.rows());
 		assert_eq!(3, sub_mat_cont.cols());
-		assert!(sub_mat_cont.is_submatrix()?);
-		assert!(sub_mat_cont.is_continuous()?);
+		assert!(sub_mat_cont.is_submatrix());
+		assert!(sub_mat_cont.is_continuous());
 		assert_eq!(4., *sub_mat_cont.at_2d::<f32>(0, 0)?);
 		assert_eq!(6., *sub_mat_cont.at_2d::<f32>(0, 2)?);
 		assert_eq!(7., *sub_mat_cont.at_2d::<f32>(1, 0)?);
@@ -361,7 +361,7 @@ fn mat_continuous() -> Result<()> {
 
 	{
 		let mut sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 1, 2))?;
-		assert!(!sub_mat_non_cont.is_continuous()?);
+		assert!(!sub_mat_non_cont.is_continuous());
 		assert_matches!(sub_mat_non_cont.data_typed::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
 		assert_matches!(sub_mat_non_cont.data_typed_mut::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
 	}
@@ -376,7 +376,7 @@ fn mat_operations() -> Result<()> {
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(2.))?);
 	let mut merged = Mat::default();
 	core::merge(&src, &mut merged)?;
-	assert_eq!(merged.typ()?, Vec2b::typ());
+	assert_eq!(merged.typ(), Vec2b::typ());
 	assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);
 	assert_eq!(merged.at_2d::<Vec2b>(0, 2)?[1], 2);
 
@@ -384,12 +384,12 @@ fn mat_operations() -> Result<()> {
 	core::split(&merged, &mut split)?;
 	assert_eq!(2, split.len());
 	let mat = split.get(0)?;
-	assert_eq!(u8::typ(), mat.typ()?);
-	assert_eq!(1, mat.channels()?);
+	assert_eq!(u8::typ(), mat.typ());
+	assert_eq!(1, mat.channels());
 	assert_eq!(1, *mat.at_2d::<u8>(0, 2)?);
 	let mat = split.get(1)?;
-	assert_eq!(u8::typ(), mat.typ()?);
-	assert_eq!(1, mat.channels()?);
+	assert_eq!(u8::typ(), mat.typ());
+	assert_eq!(1, mat.channels());
 	assert_eq!(2, *mat.at_2d::<u8>(0, 0)?);
 
 	Ok(())
@@ -411,7 +411,7 @@ fn mat_from_data() -> Result<()> {
 			)?
 		};
 		assert_eq!(Size::new(PIXEL.len() as _, 1), src.size()?);
-		assert_eq!(PIXEL.len(), src.total()?);
+		assert_eq!(PIXEL.len(), src.total());
 		let row = src.at_row::<u8>(0)?;
 		assert_eq!(0x89, row[0]);
 		assert_eq!(0x50, row[1]);
@@ -430,7 +430,7 @@ fn mat_from_data() -> Result<()> {
 			)?
 		};
 		assert_eq!(Size::new(5_, 3), src.size()?);
-		assert_eq!(PIXEL.len(), src.total()?);
+		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
 		assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
 		assert_eq!(0x1A, *src.at_3d::<u8>(0, 1, 0)?);
@@ -495,7 +495,7 @@ fn mat_from_matexpr() -> Result<()> {
 fn mat_iterator() -> Result<()> {
 	let mat = Mat::from_slice(&[1, 2, 3, 4])?;
 	let mut iter = MatConstIterator::over(&mat)?;
-	assert_eq!(iter.typ(), mat.typ()?);
+	assert_eq!(iter.typ(), mat.typ());
 	assert_eq!(1, *iter.current::<i32>()?);
 	assert_eq!(Point::new(0, 0), iter.pos()?);
 	assert!(iter.has_elements());
@@ -541,7 +541,7 @@ fn mat_convert() -> Result<()> {
 	assert_eq!(3, *mat_.at(2)?);
 	*mat_.at_mut(3)? = 8;
 	assert_eq!(8, *mat_.at(3)?);
-	assert_eq!(mat.typ()?, mat_.typ()?);
+	assert_eq!(mat.typ(), mat_.typ());
 	assert_eq!(mat.size()?, mat_.size()?);
 	let mat_back = mat_.into_untyped();
 	assert_eq!(mat.size()?, mat_back.size()?);
@@ -553,27 +553,27 @@ fn mat_mul() -> Result<()> {
 	{
 		let expr = Mat::ones(1, 5, f64::typ())?;
 		let res = core::mul_matexpr_f64(&expr, 4.)?.to_mat()?;
-		assert_eq!(res.typ()?, f64::typ());
+		assert_eq!(res.typ(), f64::typ());
 		assert_eq!(res.data_typed::<f64>()?, &[4., 4., 4., 4., 4.]);
 	}
 	{
 		let expr = Mat::new_rows_cols_with_default(2, 3, i32::typ(), Scalar::from(9.))?;
 		let res = core::sub_mat_scalar(&expr, Scalar::from(5.))?.to_mat()?;
-		assert_eq!(res.typ()?, i32::typ());
+		assert_eq!(res.typ(), i32::typ());
 		assert_eq!(res.data_typed::<i32>()?, &[4, 4, 4, 4, 4, 4]);
 	}
 	{
 		let mat1 = Mat::from_slice_2d(&[[1f32, 2., 3.], [4., 5., 6.]])?;
 		let mat2 = Mat::from_slice_2d(&[[7f32, 8.], [9., 10.], [11., 12.]])?;
 		let res = core::mul_mat_mat(&mat1, &mat2)?.to_mat()?;
-		assert_eq!(res.typ()?, f32::typ());
+		assert_eq!(res.typ(), f32::typ());
 		assert_eq!(res.size()?, Size::new(2, 2));
 		assert_eq!(res.data_typed::<f32>()?, &[58., 64., 139., 154.]);
 	}
 	{
 		let mat = Mat::from_slice(&[1u8, 2, 3, 4, 5, 6])?;
 		let res = core::div_mat_f64(&mat, 2.)?.to_mat()?;
-		assert_eq!(res.typ()?, u8::typ());
+		assert_eq!(res.typ(), u8::typ());
 		assert_eq!(res.data_typed::<u8>()?, &[0, 1, 2, 2, 2, 3]);
 	}
 	Ok(())

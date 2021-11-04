@@ -17,7 +17,7 @@ fn decode() -> Result<()> {
 		let src = Mat::from_slice::<u8>(PIXEL)?;
 		let dest = imgcodecs::imdecode(&src, imgcodecs::IMREAD_COLOR)?;
 		assert_eq!(dest.size()?, Size::new(1, 1));
-		assert_eq!(dest.channels()?, 3);
+		assert_eq!(dest.channels(), 3);
 		assert_eq!(*dest.at_2d::<Vec3b>(0, 0)?, Vec3b::from([56u8, 56, 191]));
 	}
 
@@ -27,7 +27,7 @@ fn decode() -> Result<()> {
 		let mut dest = Mat::default();
 		imgcodecs::imdecode_to(&src, imgcodecs::IMREAD_COLOR, &mut dest)?;
 		assert_eq!(dest.size()?, Size::new(1, 1));
-		assert_eq!(dest.channels()?, 3);
+		assert_eq!(dest.channels(), 3);
 		assert_eq!(*dest.at_2d::<Vec3b>(0, 0)?, Vec3b::from([56u8, 56, 191]));
 	}
 

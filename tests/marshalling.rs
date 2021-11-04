@@ -8,7 +8,7 @@ fn simple_struct_arg() -> Result<()> {
 	use opencv::{imgproc, core::{Point, Size}};
 
 	let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, Size { width: 100, height: 100 }, Point { x: 50, y: 50 })?;
-	assert_eq!(res.typ()?, 0);
+	assert_eq!(res.typ(), 0);
 	let size = res.size()?;
 	assert_eq!(size.width, 100);
 	assert_eq!(size.height, 100);

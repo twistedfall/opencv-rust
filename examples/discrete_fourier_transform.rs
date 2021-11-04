@@ -13,7 +13,7 @@ fn main() -> opencv::Result<()> {
 	#![allow(non_snake_case)]
 	let filename = env::args().skip(1).next().expect("Must supply image filename");
 	let I = imgcodecs::imread(&filename, imgcodecs::IMREAD_GRAYSCALE)?;
-	if I.empty()? {
+	if I.empty() {
 		panic!("Error opening image: {}", filename);
 	}
 	let mut padded = Mat::default();
@@ -35,7 +35,7 @@ fn main() -> opencv::Result<()> {
 	let mut magI = Mat::default();
 	core::magnitude(&planes.get(0)?, &planes.get(1)?, &mut magI)?;
 	let mut magI_tmp = Mat::default();
-	core::add(&magI, &Scalar::all(1.), &mut magI_tmp, &core::no_array()?, -1)?;
+	core::add(&magI, &Scalar::all(1.), &mut magI_tmp, &core::no_array(), -1)?;
 	magI = magI_tmp;
 	let mut magI_log = Mat::default();
 	core::log(&magI, &mut magI_log)?;
@@ -54,7 +54,7 @@ fn main() -> opencv::Result<()> {
 	q2.copy_to(&mut q1)?;
 	tmp.copy_to(&mut q2)?;
 	let mut magI_tmp = Mat::default();
-	core::normalize(&magI, &mut magI_tmp, 0., 1., core::NORM_MINMAX, -1, &core::no_array()?)?;
+	core::normalize(&magI, &mut magI_tmp, 0., 1., core::NORM_MINMAX, -1, &core::no_array())?;
 	let magI = magI_tmp;
 	highgui::imshow("Input Image", &I)?;
 	highgui::imshow("spectrum magnitude", &magI)?;
