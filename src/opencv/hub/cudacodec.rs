@@ -282,9 +282,8 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// 
 	/// Callback must allocate buffer for CUDA encoder and return pointer to it and it's size.
 	#[inline]
-	fn acquire_bit_stream(&mut self, buffer_size: &mut i32) -> Result<&mut u8> {
+	fn acquire_bit_stream(&mut self, buffer_size: &mut i32) -> Result<*mut u8> {
 		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size) }.into_result()?;
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
 		Ok(ret)
 	}
 	

@@ -583,8 +583,8 @@ pub trait IndexParamsTrait: crate::flann::IndexParamsTraitConst {
 	}
 	
 	#[inline]
-	fn set_params(&mut self, val: *mut c_void) {
-		let ret = unsafe { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) };
+	unsafe fn set_params(&mut self, val: *mut c_void) {
+		let ret = { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) };
 		ret
 	}
 	

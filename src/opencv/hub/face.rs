@@ -2371,8 +2371,8 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// ## C++ default parameters
 	/// * parameters: 0
 	#[inline]
-	fn training(&mut self, parameters: *mut c_void) -> Result<()> {
-		let ret = unsafe { sys::cv_face_FacemarkTrain_training_voidX(self.as_raw_mut_FacemarkTrain(), parameters) }.into_result()?;
+	unsafe fn training(&mut self, parameters: *mut c_void) -> Result<()> {
+		let ret = { sys::cv_face_FacemarkTrain_training_voidX(self.as_raw_mut_FacemarkTrain(), parameters) }.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2455,8 +2455,8 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// ## C++ default parameters
 	/// * items: 0
 	#[inline]
-	fn get_data(&mut self, items: *mut c_void) -> Result<bool> {
-		let ret = unsafe { sys::cv_face_FacemarkTrain_getData_voidX(self.as_raw_mut_FacemarkTrain(), items) }.into_result()?;
+	unsafe fn get_data(&mut self, items: *mut c_void) -> Result<bool> {
+		let ret = { sys::cv_face_FacemarkTrain_getData_voidX(self.as_raw_mut_FacemarkTrain(), items) }.into_result()?;
 		Ok(ret)
 	}
 	

@@ -866,7 +866,7 @@ pub trait ERStatTrait: crate::text::ERStatTraitConst {
 	#[inline]
 	fn raw_moments(&mut self) -> &mut [f64; 2] {
 		let ret = unsafe { sys::cv_text_ERStat_getPropRaw_moments(self.as_raw_mut_ERStat()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: raw_moments");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	
@@ -874,7 +874,7 @@ pub trait ERStatTrait: crate::text::ERStatTraitConst {
 	#[inline]
 	fn central_moments(&mut self) -> &mut [f64; 3] {
 		let ret = unsafe { sys::cv_text_ERStat_getPropCentral_moments(self.as_raw_mut_ERStat()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: central_moments");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	

@@ -6784,9 +6784,8 @@ pub trait LineIteratorTraitConst {
 	fn as_raw_LineIterator(&self) -> *const c_void;
 
 	#[inline]
-	fn ptr0(&self) -> &u8 {
+	fn ptr0(&self) -> *const u8 {
 		let ret = unsafe { sys::cv_LineIterator_getPropPtr0_const(self.as_raw_LineIterator()) };
-		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: ptr0");
 		ret
 	}
 	
@@ -6875,15 +6874,14 @@ pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 	fn as_raw_mut_LineIterator(&mut self) -> *mut c_void;
 
 	#[inline]
-	fn ptr(&mut self) -> &mut u8 {
+	fn ptr(&mut self) -> *mut u8 {
 		let ret = unsafe { sys::cv_LineIterator_getPropPtr(self.as_raw_mut_LineIterator()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: ptr");
 		ret
 	}
 	
 	#[inline]
-	fn set_ptr(&mut self, val: &mut u8) {
-		let ret = unsafe { sys::cv_LineIterator_setPropPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
+	unsafe fn set_ptr(&mut self, val: *mut u8) {
+		let ret = { sys::cv_LineIterator_setPropPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
 		ret
 	}
 	
@@ -6967,9 +6965,8 @@ pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 	
 	/// returns pointer to the current pixel
 	#[inline]
-	fn try_deref_mut(&mut self) -> Result<&mut u8> {
+	fn try_deref_mut(&mut self) -> Result<*mut u8> {
 		let ret = unsafe { sys::cv_LineIterator_operatorX(self.as_raw_mut_LineIterator()) }.into_result()?;
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))?;
 		Ok(ret)
 	}
 	

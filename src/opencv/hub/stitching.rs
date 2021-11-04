@@ -6271,35 +6271,35 @@ pub trait Detail_ProjectorBaseTrait: crate::stitching::Detail_ProjectorBaseTrait
 	#[inline]
 	fn k(&mut self) -> &mut [f32; 9] {
 		let ret = unsafe { sys::cv_detail_ProjectorBase_getPropK(self.as_raw_mut_Detail_ProjectorBase()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: k");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	
 	#[inline]
 	fn rinv(&mut self) -> &mut [f32; 9] {
 		let ret = unsafe { sys::cv_detail_ProjectorBase_getPropRinv(self.as_raw_mut_Detail_ProjectorBase()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: rinv");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	
 	#[inline]
 	fn r_kinv(&mut self) -> &mut [f32; 9] {
 		let ret = unsafe { sys::cv_detail_ProjectorBase_getPropR_kinv(self.as_raw_mut_Detail_ProjectorBase()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: r_kinv");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	
 	#[inline]
 	fn k_rinv(&mut self) -> &mut [f32; 9] {
 		let ret = unsafe { sys::cv_detail_ProjectorBase_getPropK_rinv(self.as_raw_mut_Detail_ProjectorBase()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: k_rinv");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	
 	#[inline]
 	fn t(&mut self) -> &mut [f32; 3] {
 		let ret = unsafe { sys::cv_detail_ProjectorBase_getPropT(self.as_raw_mut_Detail_ProjectorBase()) };
-		let ret = unsafe { ret.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: t");
+		let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 		ret
 	}
 	

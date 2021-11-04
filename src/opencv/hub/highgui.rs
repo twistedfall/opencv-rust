@@ -1251,23 +1251,20 @@ pub trait QtFontTraitConst {
 	
 	/// font data and metrics
 	#[inline]
-	fn ascii(&self) -> &i32 {
+	fn ascii(&self) -> *const i32 {
 		let ret = unsafe { sys::cv_QtFont_getPropAscii_const(self.as_raw_QtFont()) };
-		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: ascii");
 		ret
 	}
 	
 	#[inline]
-	fn greek(&self) -> &i32 {
+	fn greek(&self) -> *const i32 {
 		let ret = unsafe { sys::cv_QtFont_getPropGreek_const(self.as_raw_QtFont()) };
-		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: greek");
 		ret
 	}
 	
 	#[inline]
-	fn cyrillic(&self) -> &i32 {
+	fn cyrillic(&self) -> *const i32 {
 		let ret = unsafe { sys::cv_QtFont_getPropCyrillic_const(self.as_raw_QtFont()) };
-		let ret = unsafe { ret.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())).expect("Infallible function failed: cyrillic");
 		ret
 	}
 	

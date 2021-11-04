@@ -1,3 +1,12 @@
+* 0.60.0
+  * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for 
+    some other one.
+  * Infallible functions returning references should be faster now due to the streamlined error handling.
+  * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`). 
+  * Functions that returned references to some internal data (e.g. `Mat::ptr()`, `Mat::data_mut()`) now return raw pointers, it
+    makes more sense and allows checking for null pointer outside of call. The corresponding property setters also accept pointers.
+  * Functions that accept raw pointers are now marked as unsafe.
+
 * 0.59.0
   * You can now select which OpenCV modules you want to include in generation using the crate features, there is a feature for
     every OpenCV module except core. This supersedes the old system with environment variables `OPENCV_MODULE_WHITELIST` and
