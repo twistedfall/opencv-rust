@@ -75,6 +75,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			FieldTypeHint::ArgOverride(ArgumentOverride::Slice) => TypeRefTypeHint::Slice,
 			FieldTypeHint::ArgOverride(ArgumentOverride::NullableSlice) => TypeRefTypeHint::NullableSlice,
 			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ),
+			FieldTypeHint::FieldSetter => TypeRefTypeHint::PrimitiveRefAsPointer,
 			_ => TypeRefTypeHint::None,
 		};
 		TypeRef::new_ext(self.entity.get_type().expect("Can't get type"), type_hint, Some(self.entity), self.gen_env)
@@ -127,7 +128,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		let type_ref = self.type_ref();
 		let leafname = self.cpp_localname();
 		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == "unnamed")
-			&& type_ref.as_pointer().map_or(false, |inner| inner.is_void())
+			&& type_ref.is_void_ptr()
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {

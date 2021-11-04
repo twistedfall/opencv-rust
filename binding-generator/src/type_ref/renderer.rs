@@ -320,11 +320,12 @@ fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeR
 pub struct RustRenderer {
 	pub name_style: NameStyle,
 	pub lifetime: Lifetime,
+	pub primitive_ref_as_ptr: bool,
 }
 
 impl RustRenderer {
-	pub fn new(name_style: NameStyle, lifetime: Lifetime) -> Self {
-		Self { name_style, lifetime }
+	pub fn new(name_style: NameStyle, lifetime: Lifetime, primitive_ref_as_ptr: bool) -> Self {
+		Self { name_style, lifetime, primitive_ref_as_ptr }
 	}
 
 	fn wrap_nullable<'a>(&self, type_ref: &TypeRef, typ: Cow<'a, str>) -> Cow<'a, str> {
@@ -365,21 +366,26 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
 				inner.render(self.recurse()).into_owned().into()
 			}
-			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				if inner.is_void() {
-					format!(
-						"*{cnst}c_void",
-						cnst=type_ref.constness().rust_qual(true),
-					).into()
+			Kind::Pointer(inner) if self.primitive_ref_as_ptr || inner.is_void() => {
+				let typ = if inner.is_void() {
+					"c_void".into()
 				} else {
-					let typ = format!(
-						"&{lt: <}{cnst}{typ}",
-						cnst=type_ref.constness().rust_qual(false),
-						lt=self.lifetime,
-						typ=inner.render(self.recurse())
-					);
-					self.wrap_nullable(type_ref, typ.into())
-				}
+					inner.render(self.recurse())
+				};
+				format!(
+					"*{cnst}{typ}",
+					cnst=type_ref.constness().rust_qual(true),
+					typ=typ
+				).into()
+			}
+			Kind::Pointer(inner) | Kind::Reference(inner) => {
+				let typ = format!(
+					"&{lt: <}{cnst}{typ}",
+					cnst=type_ref.constness().rust_qual(false),
+					lt=self.lifetime,
+					typ=inner.render(self.recurse())
+				);
+				self.wrap_nullable(type_ref, typ.into())
 			}
 			Kind::SmartPtr(ptr) => {
 				ptr.rust_name(self.name_style).into_owned().into()
@@ -425,6 +431,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 		Self {
 			name_style: self.name_style,
 			lifetime: self.lifetime.next().expect("Too many lifetimes"),
+			primitive_ref_as_ptr: self.primitive_ref_as_ptr,
 		}
 	}
 }

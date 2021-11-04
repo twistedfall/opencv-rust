@@ -21,13 +21,13 @@ use crate::{
 mod mat_;
 
 #[inline(always)]
-unsafe fn convert_ptr<T>(r: &u8) -> &T {
-	&*(r as *const u8 as *const T)
+unsafe fn convert_ptr<'r, T>(r: *const u8) -> &'r T {
+	&*(r as *const T)
 }
 
 #[inline(always)]
-unsafe fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
-	&mut *(r as *mut u8 as *mut T)
+unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
+	&mut *(r as *mut T)
 }
 
 #[inline]
@@ -535,8 +535,7 @@ impl Deref for MatSize {
 
 	#[inline]
 	fn deref(&self) -> &Self::Target {
-		let ptr = self.to_ri32() as *const i32;
-		unsafe { slice::from_raw_parts(ptr, self.dims() as usize) }
+		unsafe { slice::from_raw_parts(self.to_xconst_i32(), self.dims() as usize) }
 	}
 }
 

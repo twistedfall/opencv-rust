@@ -1,6 +1,9 @@
 use std::{
+	cell::RefCell,
 	collections::HashSet,
 	env,
+	fmt,
+	mem,
 	path::{Path, PathBuf},
 };
 
@@ -13,6 +16,7 @@ use opencv_binding_generator::{
 	EntityWalker,
 	EntityWalkerVisitor,
 	Func,
+	FuncId,
 	Generator,
 	GeneratorEnv,
 	opencv_module_from_path,
@@ -21,25 +25,29 @@ use opencv_binding_generator::{
 
 struct FunctionFinder<'tu, 'f> {
 	pub gen_env: GeneratorEnv<'tu>,
-	pub func_rename_unused: &'f mut HashSet<&'static str>,
-	pub func_cfg_attr_unused: &'f mut HashSet<&'static str>,
-	pub func_unsafe_unused: &'f mut HashSet<&'static str>,
-	pub func_manual_unused: &'f mut HashSet<&'static str>,
-	pub func_specialize_unused: &'f mut HashSet<&'static str>,
-	pub argument_override_unused: &'f mut HashSet<String>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
+	pub func_rename_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_unsafe_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
+	pub func_manual_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_specialize_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub argument_override_unused: RefCell<&'f mut HashSet<String>>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
 }
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
-	pub fn update_used_func_identifier(&mut self, identifier: &str) {
-		self.func_rename_unused.remove(identifier);
-		self.func_cfg_attr_unused.remove(identifier);
-		self.func_unsafe_unused.remove(identifier);
-		self.func_manual_unused.remove(identifier);
-		self.func_specialize_unused.remove(identifier);
-	}
+	pub fn update_used_func(&self, f: &Func) {
+		let identifier = f.identifier();
+		let func_id = f.func_id();
+		let cpp_fullname = f.cpp_fullname();
 
-	pub fn update_used_func_cpp_fullname(&mut self, cpp_fullname: &str) {
-		self.argument_override_unused.remove(cpp_fullname);
+		self.func_rename_unused.borrow_mut().remove(identifier.as_ref());
+		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_ref());
+		{
+			let static_func_id: FuncId<'static> = unsafe { mem::transmute(func_id) };
+			self.func_unsafe_unused.borrow_mut().remove(&static_func_id);
+		}
+		self.func_manual_unused.borrow_mut().remove(identifier.as_ref());
+		self.func_specialize_unused.borrow_mut().remove(identifier.as_ref());
+		self.argument_override_unused.borrow_mut().remove(cpp_fullname.as_ref());
 	}
 }
 
@@ -69,12 +77,8 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 						}
 						true
 					});
-					let methods = methods.into_iter()
-						.map(|m| (m.identifier().into_owned(), m.cpp_fullname().into_owned()))
-						.collect::<Vec<_>>();
-					for (identifier, cpp_fullname) in methods {
-						self.update_used_func_identifier(&identifier);
-						self.update_used_func_cpp_fullname(&cpp_fullname);
+					for f in methods {
+						self.update_used_func(&f);
 					}
 					entity.walk_classes_while(|child| {
 						self.visit_entity(child)
@@ -84,8 +88,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 			}
 			EntityKind::FunctionDecl => {
 				let f = Func::new(entity, &self.gen_env);
-				let identifier = f.identifier().into_owned();
-				self.update_used_func_identifier(&identifier);
+				self.update_used_func(&f);
 				true
 			}
 			_ => true
@@ -93,10 +96,10 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 	}
 }
 
-fn show<S: AsRef<str>>(c: impl IntoIterator<Item=S>) {
+fn show<S: fmt::Display>(c: impl IntoIterator<Item=S>) {
 	let v = c.into_iter().collect::<Vec<_>>();
 	let mut sorted = v.iter()
-		.map(|s| s.as_ref())
+		.map(|s| s.to_string())
 		.collect::<Vec<_>>();
 	sorted.sort_unstable();
 	for f in sorted {
@@ -140,13 +143,13 @@ fn main() {
 				let walker = EntityWalker::new(root_entity);
 				walker.walk_opencv_entities(FunctionFinder {
 					gen_env,
-					func_rename_unused: &mut func_rename_unused,
-					func_cfg_attr_unused: &mut func_cfg_attr_unused,
-					func_unsafe_unused: &mut func_unsafe_unused,
-					func_manual_unused: &mut func_manual_unused,
-					func_specialize_unused: &mut func_specialize_unused,
-					argument_override_unused: &mut argument_override_unused,
-					});
+					func_rename_unused: RefCell::new(&mut func_rename_unused),
+					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
+					func_unsafe_unused: RefCell::new(&mut func_unsafe_unused),
+					func_manual_unused: RefCell::new(&mut func_manual_unused),
+					func_specialize_unused: RefCell::new(&mut func_specialize_unused),
+					argument_override_unused: RefCell::new(&mut argument_override_unused),
+				});
 				});
 		}
 	}

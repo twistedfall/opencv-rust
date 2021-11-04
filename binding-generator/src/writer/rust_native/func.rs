@@ -91,7 +91,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		"pub "
 	};
 	let identifier = f.identifier();
-	let is_safe = !settings::FUNC_UNSAFE.contains(identifier.as_ref());
+	let is_safe = !f.is_unsafe();
 	let is_static_func = matches!(f.kind(), Kind::StaticMethod(..) | Kind::Function);
 	let return_type = f.return_type();
 	let return_type_func_decl = if is_infallible {

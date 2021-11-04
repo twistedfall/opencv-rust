@@ -88,6 +88,7 @@ pub enum TypeRefTypeHint<'tu> {
 	Nullable,
 	Slice,
 	NullableSlice,
+	PrimitiveRefAsPointer,
 	Specialized(Type<'tu>),
 }
 
@@ -632,6 +633,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		matches!(self.canonical().kind(), Kind::Primitive("bool", _))
 	}
 
+	pub fn is_void_ptr(&self) -> bool {
+		self.as_pointer().map_or(false, |inner| inner.is_void())
+	}
+
 	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let Kind::Pointer(out) = self.canonical().kind() {
 			Some(out)
@@ -795,6 +800,20 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		settings::DATA_TYPES.contains(self.cpp_full().as_ref())
 	}
 
+	pub fn can_pass_by_ptr(&self) -> bool {
+		if let Some(inner) = self.as_pointer() {
+			if inner.is_primitive() && !self.as_string().is_some() {
+				return true;
+			}
+		}
+		false
+	}
+
+	pub fn is_pass_by_ptr(&self) -> bool {
+		self.is_void_ptr() ||
+			matches!(self.type_hint, TypeRefTypeHint::PrimitiveRefAsPointer) && self.can_pass_by_ptr()
+	}
+
 	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu, 'ge>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
@@ -900,7 +919,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn rust_name(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
-		self.render(RustRenderer::new(name_style, lifetime))
+		self.render(RustRenderer::new(name_style, lifetime, self.is_pass_by_ptr()))
 	}
 
 	pub fn rust_local(&self) -> Cow<str> {
@@ -1077,7 +1096,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				unsafety_call=unsafety_call,
 				typ=self.rust_return_func_decl(FishStyle::Turbo, is_static_func),
 			).into()
-		} else if self.as_pointer().map_or(false, |i| !i.is_void()) || self.as_fixed_array().is_some() {
+		} else if self.as_pointer().map_or(false, |i| !i.is_void()) && !self.is_pass_by_ptr() || self.as_fixed_array().is_some() {
 			let ptr_call = if self.constness().is_const() { "ref" } else { "mut" };
 			let error_handling = if is_infallible {
 				".expect(\"Function returned null pointer\")"

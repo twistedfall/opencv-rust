@@ -37,7 +37,7 @@ pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, opencv
 pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
-pub use func::{Func, FunctionTypeHint};
+pub use func::{Func, FuncId, FunctionTypeHint};
 use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};

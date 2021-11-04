@@ -146,6 +146,12 @@ impl<'f> FuncId<'f> {
 	}
 }
 
+impl fmt::Display for FuncId<'_> {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{}({})", self.name, self.args.join(", "))
+	}
+}
+
 #[derive(Clone)]
 pub struct Func<'tu, 'ge> {
 	entity: Entity<'tu>,
@@ -340,6 +346,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			|| settings::FORCE_INFALLIBLE.contains(&self.func_id())
 	}
 
+	pub fn is_unsafe(&self) -> bool {
+		settings::FUNC_UNSAFE.contains(&self.func_id())
+			|| self.arguments().into_iter().any(|a| a.type_ref().is_pass_by_ptr() && !a.is_user_data())
+	}
+
 	pub fn is_default_constructor(&self) -> bool {
 		self.entity.is_default_constructor() && !self.has_arguments()
 	}
@@ -372,7 +383,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			Kind::Function | Kind::InstanceMethod(..) | Kind::StaticMethod(..)
 			| Kind::ConversionMethod(..) | Kind::GenericInstanceMethod(..) | Kind::GenericFunction
 			| Kind::FunctionOperator(..) | Kind::InstanceOperator(..) => {
-				let mut out = TypeRef::new(self.entity.get_result_type().expect("Can't get return type"), self.gen_env);
+				let mut out = TypeRef::new_ext(self.entity.get_result_type().expect("Can't get return type"), TypeRefTypeHint::PrimitiveRefAsPointer, None, self.gen_env);
 				if let Some(spec) = self.as_specialized() {
 					if out.is_generic() {
 						let spec_type = spec.get(out.base().cpp_full().as_ref())
@@ -392,7 +403,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if self.type_hint == FunctionTypeHint::FieldSetter {
 					TypeRef::new(self.gen_env.resolve_type("void").expect("Can't resolve void type"), self.gen_env)
 				} else {
-					Field::new(self.entity, self.gen_env).type_ref()
+					let mut out = Field::new(self.entity, self.gen_env).type_ref();
+					out.set_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
+					out
 				}
 			}
 		}
@@ -510,7 +523,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn func_id(&self) -> FuncId {
-		FuncId::from_entity(self.entity)
+		let mut out = FuncId::from_entity(self.entity);
+		if self.as_field_setter().is_some() {
+			out.args.push("val".into());
+		}
+		out
 	}
 }
 
