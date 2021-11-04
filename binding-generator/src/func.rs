@@ -105,7 +105,7 @@ pub struct FuncId<'f> {
 impl<'f> FuncId<'f> {
 	/// # Parameters
 	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
-	/// args: C++ argument names ("unnamed", "unnamed_1", ... for unnamed ones)
+	/// args: C++ argument names ("unnamed" for unnamed ones)
 	pub fn new<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
 		FuncId {
 			name: name.into(),
@@ -337,7 +337,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn is_infallible(&self) -> bool {
 		self.as_field_accessor().is_some()
 			|| matches!(self.entity.get_exception_specification(), Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated))
-			|| settings::FORCE_NOEXCEPT.contains(&(self.cpp_fullname().as_ref(), self.clang_arguments().len()))
+			|| settings::FORCE_INFALLIBLE.contains(&self.func_id())
 	}
 
 	pub fn is_default_constructor(&self) -> bool {

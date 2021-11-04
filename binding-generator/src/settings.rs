@@ -812,26 +812,25 @@ pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::UMat::step",
 });
 
-/// (cpp_fullname, argument count)
-pub static FORCE_NOEXCEPT: Lazy<HashSet<(&str, usize)>> = Lazy::new(|| hashset! {
+pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| hashset! {
 	// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
-	("cv::Mat::Mat", 0),
-	("cv::MatSize::MatSize", 1),
-	("cv::MatSize::dims", 0),
-	("cv::MatSize::operator const int*", 0),
-	("cv::MatStep::MatStep", 0),
-	("cv::MatStep::operator[]", 1),
-	("cv::UMat::UMat", 1),
-	("cv::ocl::Context::Context", 0),
-	("cv::ocl::Device::Device", 0),
-	("cv::ocl::Image2D::Image2D", 0),
-	("cv::ocl::Kernel::Kernel", 0),
-	("cv::ocl::KernelArg::KernelArg", 0),
-	("cv::ocl::Platform::Platform", 0),
-	("cv::ocl::PlatformInfo::PlatformInfo", 0),
-	("cv::ocl::Program::Program", 0),
-	("cv::ocl::ProgramSource::ProgramSource", 0),
-	("cv::ocl::Queue::Queue", 0),
+	FuncId::new("cv::Mat::Mat", []),
+	FuncId::new("cv::MatSize::MatSize", ["_p"]),
+	FuncId::new("cv::MatSize::dims", []),
+	FuncId::new("cv::MatSize::operator const int *", []),
+	FuncId::new("cv::MatStep::MatStep", []),
+	FuncId::new("cv::MatStep::operator[]", ["i"]),
+	FuncId::new("cv::UMat::UMat", ["usageFlags"]),
+	FuncId::new("cv::ocl::Context::Context", []),
+	FuncId::new("cv::ocl::Device::Device", []),
+	FuncId::new("cv::ocl::Image2D::Image2D", []),
+	FuncId::new("cv::ocl::Kernel::Kernel", []),
+	FuncId::new("cv::ocl::KernelArg::KernelArg", []),
+	FuncId::new("cv::ocl::Platform::Platform", []),
+	FuncId::new("cv::ocl::PlatformInfo::PlatformInfo", []),
+	FuncId::new("cv::ocl::Program::Program", []),
+	FuncId::new("cv::ocl::ProgramSource::ProgramSource", []),
+	FuncId::new("cv::ocl::Queue::Queue", []),
 });
 
 /// cpp_fullname => ( rust_fullname, cpp_fullname )
