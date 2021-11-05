@@ -56,7 +56,8 @@ name = "window"
 libc = "0.2"
 num-traits = "0.2"
 once_cell = "1.0"
-rgb = { version = "0.8", features = ["argb"], optional = true }
+# version 0.8.20 doesn't contain the deficiency mentioned in https://deps.rs/crate/opencv/0.59.0#vulnerabilities
+rgb = { version = "0.8.20", features = ["argb"], optional = true }
 
 [features]
 clang-runtime = ["clang/runtime"]
