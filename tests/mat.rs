@@ -493,32 +493,50 @@ fn mat_from_matexpr() -> Result<()> {
 
 #[test]
 fn mat_iterator() -> Result<()> {
-	let mat = Mat::from_slice(&[1, 2, 3, 4])?;
-	let mut iter = MatConstIterator::over(&mat)?;
-	assert_eq!(iter.typ(), mat.typ());
-	assert_eq!(1, *iter.current::<i32>()?);
-	assert_eq!(Point::new(0, 0), iter.pos()?);
-	assert!(iter.has_elements());
-	iter.seek(1, true)?;
-	assert_eq!(2, *iter.current::<i32>()?);
-	assert_eq!(Point::new(1, 0), iter.pos()?);
-	assert!(iter.has_elements());
-	iter.seek(1, true)?;
-	assert_eq!(3, *iter.current::<i32>()?);
-	assert_eq!(Point::new(2, 0), iter.pos()?);
-	assert!(iter.has_elements());
-	iter.seek(1, true)?;
-	assert_eq!(4, *iter.current::<i32>()?);
-	assert_eq!(Point::new(3, 0), iter.pos()?);
-	assert!(iter.has_elements());
-	iter.seek(1, true)?;
-	assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
-	assert_eq!(Point::new(0, 1), iter.pos()?);
-	assert!(!iter.has_elements());
-	iter.seek(1, true)?;
-	assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
-	assert_eq!(Point::new(0, 1), iter.pos()?);
-	assert!(!iter.has_elements());
+	{
+		let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+		let mut iter = MatConstIterator::over(&mat)?;
+		assert_eq!(iter.typ(), mat.typ());
+		assert_eq!(1, *iter.current::<i32>()?);
+		assert_eq!(Point::new(0, 0), iter.pos()?);
+		assert!(iter.has_elements());
+		iter.seek(1, true)?;
+		assert_eq!(2, *iter.current::<i32>()?);
+		assert_eq!(Point::new(1, 0), iter.pos()?);
+		assert!(iter.has_elements());
+		iter.seek(1, true)?;
+		assert_eq!(3, *iter.current::<i32>()?);
+		assert_eq!(Point::new(2, 0), iter.pos()?);
+		assert!(iter.has_elements());
+		iter.seek(1, true)?;
+		assert_eq!(4, *iter.current::<i32>()?);
+		assert_eq!(Point::new(3, 0), iter.pos()?);
+		assert!(iter.has_elements());
+		iter.seek(1, true)?;
+		assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+		assert_eq!(Point::new(0, 1), iter.pos()?);
+		assert!(!iter.has_elements());
+		iter.seek(1, true)?;
+		assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+		assert_eq!(Point::new(0, 1), iter.pos()?);
+		assert!(!iter.has_elements());
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[
+			[1, 2],
+			[3, 4]
+		])?;
+		for (pos, x) in mat.iter::<i32>()? {
+			match pos {
+				Point { x: 0, y: 0 } => assert_eq!(x, 1),
+				Point { x: 1, y: 0 } => assert_eq!(x, 2),
+				Point { x: 0, y: 1 } => assert_eq!(x, 3),
+				Point { x: 1, y: 1 } => assert_eq!(x, 4),
+				_ => panic!("Too many elements"),
+			}
+		}
+	}
 	Ok(())
 }
 

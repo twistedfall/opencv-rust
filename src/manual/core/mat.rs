@@ -2,6 +2,7 @@ use std::{
 	convert::TryInto,
 	ffi::c_void,
 	fmt,
+	marker::PhantomData,
 	ops::Deref,
 	slice,
 };
@@ -9,7 +10,7 @@ use std::{
 pub use mat_::*;
 
 use crate::{
-	core::{self, MatExpr, MatSize, MatStep, Point, Scalar, UMat},
+	core::{self, MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat},
 	Error,
 	input_output_array,
 	platform_types::size_t,
@@ -140,6 +141,36 @@ impl Mat {
 	#[inline]
 	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>> where Self: Sized {
 		self.try_into()
+	}
+
+	/// Returns iterator over Mat elements and their positions
+	#[inline]
+	pub fn iter<T: DataType>(&self) -> Result<MatIter<T>> {
+		match_format::<T>(self.typ())?;
+		Ok(MatIter {
+			iter: MatConstIterator::over(self)?,
+			_d: PhantomData,
+		})
+	}
+}
+
+pub struct MatIter<'m, T> {
+	iter: MatConstIterator,
+	_d: PhantomData<&'m T>,
+}
+
+impl<T: DataType> Iterator for MatIter<'_, T> {
+	type Item = (Point, T);
+
+	fn next(&mut self) -> Option<Self::Item> {
+		if self.iter.has_elements() {
+			let cur = self.iter.current().ok()?;
+			let out = (self.iter.pos().ok()?, *cur);
+			self.iter.seek(1, true).ok()?;
+			Some(out)
+		} else {
+			None
+		}
 	}
 }
 
