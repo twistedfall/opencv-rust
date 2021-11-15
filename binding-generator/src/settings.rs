@@ -899,95 +899,96 @@ pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashse
 });
 
 #[derive(Clone, Copy, Debug)]
-pub enum ArgumentOverride {
+pub enum ArgOverride {
 	Nullable,
-	Slice,
 	NullableSlice,
+	Slice,
 	LenForSlice(&'static str, usize),
+	StringAsBytes,
 }
 
-pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgumentOverride>>> = Lazy::new(|| hashmap! {
+pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> = Lazy::new(|| hashmap! {
 	FuncId::new("cv::Mat::at", ["idx"]) => hashmap! {
-		"idx" => ArgumentOverride::Slice
+		"idx" => ArgOverride::Slice
 	},
 	FuncId::new("cv::Mat::ptr", ["idx"])  => hashmap! {
-		"idx" => ArgumentOverride::Slice
+		"idx" => ArgOverride::Slice
 	},
 	FuncId::new("cv::Mat::Mat", ["sizes", "type", "data", "steps"]) => hashmap! {
-		"steps" => ArgumentOverride::NullableSlice,
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"steps" => ArgOverride::NullableSlice,
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "s"]) => hashmap! {
-		"steps" => ArgumentOverride::NullableSlice,
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"steps" => ArgOverride::NullableSlice,
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::Mat", ["ndims", "sizes", "type", "data", "steps"]) => hashmap! {
-		"steps" => ArgumentOverride::NullableSlice,
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"steps" => ArgOverride::NullableSlice,
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::zeros", ["ndims", "sz", "type"]) => hashmap! {
-		"sz" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sz", 1),
+		"sz" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sz", 1),
 	},
 	FuncId::new("cv::Mat::ones", ["ndims", "sz", "type"]) => hashmap! {
-		"sz" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sz", 1),
+		"sz" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sz", 1),
 	},
 	FuncId::new("cv::Mat::create", ["ndims", "sizes", "type"]) => hashmap! {
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::Mat::reshape", ["cn", "newndims", "newsz"]) => hashmap! {
-		"newsz" => ArgumentOverride::Slice,
-		"newndims" => ArgumentOverride::LenForSlice("newsz", 1),
+		"newsz" => ArgOverride::Slice,
+		"newndims" => ArgOverride::LenForSlice("newsz", 1),
 	},
 	FuncId::new("cv::SparseMat::Hdr::Hdr", ["_dims", "_sizes", "_type"]) => hashmap! {
-		"_sizes" => ArgumentOverride::Slice,
-		"_dims" => ArgumentOverride::LenForSlice("_sizes", 1),
+		"_sizes" => ArgOverride::Slice,
+		"_dims" => ArgOverride::LenForSlice("_sizes", 1),
 	},
 	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::UMat::UMat", ["ndims", "sizes", "type", "s", "usageFlags"]) => hashmap! {
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]) => hashmap! {
-		"sizes" => ArgumentOverride::Slice,
-		"ndims" => ArgumentOverride::LenForSlice("sizes", 1),
+		"sizes" => ArgOverride::Slice,
+		"ndims" => ArgOverride::LenForSlice("sizes", 1),
 	},
 	FuncId::new("cv::_OutputArray::create", ["dims", "size", "type", "i", "allowTransposed", "fixedDepthMask"]) => hashmap! {
-		"size" => ArgumentOverride::Slice,
-		"dims" => ArgumentOverride::LenForSlice("size", 1),
+		"size" => ArgOverride::Slice,
+		"dims" => ArgOverride::LenForSlice("size", 1),
 	},
 	FuncId::new("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]) => hashmap! {
-		"fromTo" => ArgumentOverride::Slice,
-		"npairs" => ArgumentOverride::LenForSlice("from_to", 2),
+		"fromTo" => ArgOverride::Slice,
+		"npairs" => ArgOverride::LenForSlice("from_to", 2),
 	},
 	FuncId::new("cv::createTrackbar", ["trackbarname", "winname", "value", "count", "onChange", "userdata"]) => hashmap! {
-		"value" => ArgumentOverride::Nullable,
+		"value" => ArgOverride::Nullable,
 	},
 	FuncId::new("cv::minMaxLoc", ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"]) => hashmap! {
-		"minVal" => ArgumentOverride::Nullable,
-		"maxVal" => ArgumentOverride::Nullable,
-		"minLoc" => ArgumentOverride::Nullable,
-		"maxLoc" => ArgumentOverride::Nullable,
+		"minVal" => ArgOverride::Nullable,
+		"maxVal" => ArgOverride::Nullable,
+		"minLoc" => ArgOverride::Nullable,
+		"maxLoc" => ArgOverride::Nullable,
 	},
 	FuncId::new("cv::minMaxLoc", ["a", "minVal", "maxVal", "minIdx", "maxIdx"]) => hashmap! {
-		"minVal" => ArgumentOverride::Nullable,
-		"maxVal" => ArgumentOverride::Nullable,
-		"minIdx" => ArgumentOverride::Nullable,
-		"maxIdx" => ArgumentOverride::Nullable,
+		"minVal" => ArgOverride::Nullable,
+		"maxVal" => ArgOverride::Nullable,
+		"minIdx" => ArgOverride::Nullable,
+		"maxIdx" => ArgOverride::Nullable,
 	},
 	FuncId::new("cv::minMaxIdx", ["src", "minVal", "maxVal", "minIdx", "maxIdx", "mask"]) => hashmap! {
-		"minVal" => ArgumentOverride::Nullable,
-		"maxVal" => ArgumentOverride::Nullable,
-		"minIdx" => ArgumentOverride::Nullable,
-		"maxIdx" => ArgumentOverride::Nullable,
+		"minVal" => ArgOverride::Nullable,
+		"maxVal" => ArgOverride::Nullable,
+		"minIdx" => ArgOverride::Nullable,
+		"maxIdx" => ArgOverride::Nullable,
 	},
 });
 

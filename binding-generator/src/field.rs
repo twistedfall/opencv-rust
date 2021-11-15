@@ -22,7 +22,7 @@ use crate::{
 	EntityElement,
 	GeneratorEnv,
 	NamePool,
-	settings::ArgumentOverride,
+	settings::ArgOverride,
 	type_ref::{FishStyle, TypeRefTypeHint},
 	TypeRef,
 };
@@ -30,7 +30,7 @@ use crate::{
 #[derive(Clone, Copy, Debug)]
 pub enum FieldTypeHint<'tu> {
 	None,
-	ArgOverride(ArgumentOverride),
+	ArgOverride(ArgOverride),
 	FieldSetter,
 	Specialized(Type<'tu>),
 }
@@ -71,9 +71,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		let type_hint = match self.type_hint {
-			FieldTypeHint::ArgOverride(ArgumentOverride::Nullable) => TypeRefTypeHint::Nullable,
-			FieldTypeHint::ArgOverride(ArgumentOverride::Slice) => TypeRefTypeHint::Slice,
-			FieldTypeHint::ArgOverride(ArgumentOverride::NullableSlice) => TypeRefTypeHint::NullableSlice,
+			FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over),
 			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ),
 			FieldTypeHint::FieldSetter => TypeRefTypeHint::PrimitiveRefAsPointer,
 			_ => TypeRefTypeHint::None,
@@ -132,7 +130,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {
-		if let FieldTypeHint::ArgOverride(ArgumentOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint {
+		if let FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint {
 			Some((ptr_arg, len_div))
 		} else {
 			None

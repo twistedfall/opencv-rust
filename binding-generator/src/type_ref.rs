@@ -42,6 +42,7 @@ use crate::{
 	Typedef,
 	Vector,
 };
+use crate::settings::ArgOverride;
 
 mod renderer;
 
@@ -85,9 +86,7 @@ pub enum Kind<'tu, 'ge> {
 #[derive(Clone, Copy, Debug)]
 pub enum TypeRefTypeHint<'tu> {
 	None,
-	Nullable,
-	Slice,
-	NullableSlice,
+	ArgOverride(ArgOverride),
 	PrimitiveRefAsPointer,
 	Specialized(Type<'tu>),
 }
@@ -161,7 +160,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				let pointee_typeref = TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind()
-				} else if matches!(self.type_hint, TypeRefTypeHint::Slice | TypeRefTypeHint::NullableSlice) {
+				} else if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::Slice) | TypeRefTypeHint::ArgOverride(ArgOverride::NullableSlice)) {
 					Kind::Array(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env), None)
 				} else {
 					Kind::Pointer(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env))
@@ -683,7 +682,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_nullable(&self) -> bool {
-		matches!(self.type_hint, TypeRefTypeHint::NullableSlice | TypeRefTypeHint::Nullable)
+		matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::NullableSlice) | TypeRefTypeHint::ArgOverride(ArgOverride::Nullable))
 	}
 
 	pub fn as_class(&self) -> Option<Class<'tu, 'ge>> {
