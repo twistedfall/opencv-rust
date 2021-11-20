@@ -235,9 +235,6 @@ impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
-
-	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self { self }
 
 	#[inline]
@@ -246,9 +243,6 @@ impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
 
 impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self { self }

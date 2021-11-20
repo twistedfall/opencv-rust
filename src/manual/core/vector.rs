@@ -298,11 +298,6 @@ impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> 
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
-
-	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		self
 	}
@@ -315,11 +310,6 @@ impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> 
 
 impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T> where Self: VectorExtern<T> {
 	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {

@@ -87,9 +87,13 @@ macro_rules! string_array_arg_mut {
 	};
 }
 
+/// The return type of this function goes into `receive_string`
 #[no_mangle]
-extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {
-	Box::into_raw(Box::new(unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned()))
+unsafe extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {
+	let s = CStr::from_ptr(s)
+		.to_string_lossy()
+		.into_owned();
+	Box::into_raw(Box::new(s))
 }
 
 #[inline]

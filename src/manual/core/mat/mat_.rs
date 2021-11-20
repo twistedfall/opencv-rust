@@ -136,11 +136,6 @@ impl<T> OpenCVType<'_> for Mat_<T> {
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
-
-	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		self
 	}
@@ -153,11 +148,6 @@ impl<T> OpenCVType<'_> for Mat_<T> {
 
 impl<T> OpenCVTypeArg<'_> for Mat_<T> {
 	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {

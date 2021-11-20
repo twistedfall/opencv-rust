@@ -441,15 +441,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
-		let args = self.clang_arguments();
-
 		let empty_spec_hashmap = HashMap::new();
 		let spec = self.as_specialized().unwrap_or_else(|| &empty_spec_hashmap);
 
 		let is_field_setter = self.as_field_setter().is_some();
 		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 
-		args.into_iter()
+		self.clang_arguments().into_iter()
 			.map(|a| {
 				if is_field_setter {
 					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)

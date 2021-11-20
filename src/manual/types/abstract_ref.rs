@@ -3,10 +3,7 @@ use std::{
 	marker::PhantomData,
 };
 
-use crate::{
-	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
-};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 
 pub struct AbstractRefMut<'r, T: ?Sized> {
 	ptr: *mut c_void,
@@ -41,11 +38,6 @@ impl<'r, T: ?Sized> OpenCVType<'r> for AbstractRefMut<'r, T> {
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
-
-	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		self
 	}
@@ -58,11 +50,6 @@ impl<'r, T: ?Sized> OpenCVType<'r> for AbstractRefMut<'r, T> {
 
 impl<'r, T: ?Sized> OpenCVTypeArg<'r> for AbstractRefMut<'r, T> {
 	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {

@@ -5,60 +5,62 @@ use std::{
 
 use crate::Result;
 
-#[doc(hidden)]
 /// Common trait of all OpenCV related types, helps with generic handling of FFI marshalling
 ///
 /// This trait is somewhat unnecessary complex because of the need of handling String, we need to be able to
 /// pass &str as argument to functions that await String and do necessary conversion through CString.
+#[doc(hidden)]
 pub trait OpenCVType<'a>: Sized {
-	#[doc(hidden)]
 	/// Type when passed as argument to function, e.g. &str for String, for most other types it's Self
-	type Arg: OpenCVTypeArg<'a>;
 	#[doc(hidden)]
+	type Arg: OpenCVTypeArg<'a>;
 	/// Return type when this type is returned over the FFI boundary from the C++ function, Self for simple
 	/// types, *mut c_void for complex ones
-	type ExternReceive;
 	#[doc(hidden)]
+	type ExternReceive;
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
 	/// types it's Self
+	#[doc(hidden)]
 	type ExternContainer: OpenCVTypeExternContainer;
 
-	#[doc(hidden)]
 	/// Convert Self into external container with possible error result, it shouldn't panic
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer>;
 	#[doc(hidden)]
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> { Ok(self.opencv_into_extern_container_nofail()) }
 	/// Convert Self into external container in the nofail context, this can panic
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
 	#[doc(hidden)]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
 	/// Construct the new Self from the data received from C++ function
+	#[doc(hidden)]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self;
 }
 
 #[doc(hidden)]
 pub trait OpenCVTypeArg<'a>: Sized {
-	#[doc(hidden)]
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
 	/// types it's Self
+	#[doc(hidden)]
 	type ExternContainer: OpenCVTypeExternContainer;
 
-	#[doc(hidden)]
 	/// Convert Self into external container with possible error result, it shouldn't panic
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer>;
 	#[doc(hidden)]
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> { Ok(self.opencv_into_extern_container_nofail()) }
 	/// Convert Self into external container in the nofail context, this can panic
+	#[doc(hidden)]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
 }
 
-#[doc(hidden)]
 /// Common trait for the type that is used to help marshall OpenCV related type over the FFI boundary
+#[doc(hidden)]
 pub trait OpenCVTypeExternContainer {
-	#[doc(hidden)]
 	/// Type when constant Self is sent to C++ function, usually it's Self for simple types or *const c_void
 	/// for complex ones
-	type ExternSend;
 	#[doc(hidden)]
+	type ExternSend;
 	/// Type when mutable Self is sent to C++ function, usually it's Self for simple types or *mut c_void for
 	/// complex ones
+	#[doc(hidden)]
 	type ExternSendMut;
 
 	#[doc(hidden)]
@@ -231,7 +233,7 @@ impl OpenCVTypeExternContainer for CString {
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_ptr() as _  // fixme: use as_mut_ptr() when it's stabilized
+		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized
 	}
 
 	#[inline]

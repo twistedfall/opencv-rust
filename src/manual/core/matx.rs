@@ -153,7 +153,6 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	type ExternReceive = Self;
 	type ExternContainer = Self;
 
-	#[inline] fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
 	#[inline] fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
 	#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
 }
@@ -161,8 +160,6 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
 	type ExternContainer = Self;
 
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self> { Ok(self) }
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
 }
