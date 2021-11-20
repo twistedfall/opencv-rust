@@ -1914,25 +1914,6 @@ pub trait QRCodeDetectorTraitConst {
 		Ok(ret)
 	}
 	
-	/// Both detects and decodes QR codes
-	/// ## Parameters
-	/// * img: grayscale or color (BGR) image containing QR codes.
-	/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
-	/// * points: optional output vector of vertices of the found QR code quadrangles. Will be empty if not found.
-	/// * straight_qrcode: The optional output vector of images containing rectified and binarized QR codes
-	/// 
-	/// ## C++ default parameters
-	/// * points: noArray()
-	/// * straight_qrcode: noArray()
-	#[inline]
-	fn detect_and_decode_multi(&self, img: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(img);
-		output_array_arg!(points);
-		output_array_arg!(straight_qrcode);
-		let ret = unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()?;
-		Ok(ret)
-	}
-	
 }
 
 pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
@@ -1969,12 +1950,12 @@ pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
 	/// ## C++ default parameters
 	/// * straight_qrcode: noArray()
 	#[inline]
-	fn decode(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+	fn decode(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		let ret = unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()?;
-		let ret = unsafe { String::opencv_from_extern(ret) };
+		let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1989,12 +1970,12 @@ pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
 	/// ## C++ default parameters
 	/// * straight_qrcode: noArray()
 	#[inline]
-	fn decode_curved(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+	fn decode_curved(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		let ret = unsafe { sys::cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()?;
-		let ret = unsafe { String::opencv_from_extern(ret) };
+		let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -2009,12 +1990,12 @@ pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
 	/// * points: noArray()
 	/// * straight_qrcode: noArray()
 	#[inline]
-	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		let ret = unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()?;
-		let ret = unsafe { String::opencv_from_extern(ret) };
+		let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -2029,12 +2010,12 @@ pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
 	/// * points: noArray()
 	/// * straight_qrcode: noArray()
 	#[inline]
-	fn detect_and_decode_curved(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+	fn detect_and_decode_curved(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		let ret = unsafe { sys::cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()?;
-		let ret = unsafe { String::opencv_from_extern(ret) };
+		let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	

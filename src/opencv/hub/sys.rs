@@ -4934,7 +4934,6 @@ mod objdetect_sys {
 		pub fn cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, img: *const c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vector_string_R_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void, decoded_info: *mut c_void, straight_qrcode: *const c_void) -> Result<bool>;
-		pub fn cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, decoded_info: *mut c_void, points: *const c_void, straight_qrcode: *const c_void) -> Result<bool>;
 		pub fn cv_SimilarRects_getPropEps_const(instance: *const c_void) -> f64;
 		pub fn cv_SimilarRects_setPropEps_double(instance: *mut c_void, val: f64);
 		pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> Result<*mut c_void>;

@@ -24111,7 +24111,7 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * target: ARRAY_BUFFER
 	/// * auto_release: false
 	#[inline]
-	fn create_1(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+	fn create_size(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 		let ret = unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, target, auto_release) }.into_result()?;
 		Ok(ret)
 	}

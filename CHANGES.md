@@ -1,3 +1,9 @@
+* 0.61.0
+  * The QR code decoding function in `objdetect` module are now returning `Vec<u8>` instead of `String` because the codes can
+    contain binary raw binary data and are not always UTF-8.
+  * You can now iterate over `Mat` using `for` loop. The iterator will yield elements of type `(Point, T)`, a position and an
+    element.
+
 * 0.60.0
   * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for 
     some other one.
