@@ -392,6 +392,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 							out.set_type_hint(TypeRefTypeHint::Specialized(spec_type));
 						}
 					}
+				} else if let Some(&over) = settings::ARGUMENT_OVERRIDE.get(&self.func_id()).and_then(|x| x.get("return")) {
+					out.set_type_hint(TypeRefTypeHint::ArgOverride(over))
 				}
 				if let Some(type_ref) = out.as_reference() {
 					type_ref

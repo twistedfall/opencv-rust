@@ -54,9 +54,16 @@ pub enum DependentTypeMode {
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum StrType {
-	StdString,
-	CvString,
+	StdString(StrEnc),
+	CvString(StrEnc),
 	CharPtr,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum StrEnc {
+	Text,
+	/// string with binary data, e.g. can contain 0 byte
+	Binary,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -499,16 +506,24 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn as_string(&self) -> Option<Dir<StrType>> {
-		fn class_string_type(cls: Class) -> Option<StrType> {
+		let class_string_type = |cls: Class| -> Option<StrType> {
 			let cpp_fullname = cls.cpp_fullname();
 			if cpp_fullname.starts_with("std::") && cpp_fullname.ends_with("::string") {
-				Some(StrType::StdString)
+				Some(StrType::StdString(if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::StringAsBytes)) {
+					StrEnc::Binary
+				} else {
+					StrEnc::Text
+				}))
 			} else if cpp_fullname == "cv::String" {
-				Some(StrType::CvString)
+				Some(StrType::CvString(if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::StringAsBytes)) {
+					StrEnc::Binary
+				} else {
+					StrEnc::Text
+				}))
 			} else {
 				None
 			}
-		}
+		};
 
 		match self.canonical().kind() {
 			Kind::Class(cls) => {
@@ -555,11 +570,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_std_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::StdString)))
+		matches!(self.as_string(), Some(Dir::In(StrType::StdString(_))))
 	}
 
 	pub fn is_cv_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::CvString)))
+		matches!(self.as_string(), Some(Dir::In(StrType::CvString(_))))
 	}
 
 	pub fn is_char_ptr_string(&self) -> bool {
@@ -1049,8 +1064,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		let typ = 'decl_type: loop {
 			if let Some(dir) = self.as_string() {
 				break 'decl_type match dir {
-					Dir::In(_) => "&str".into(),
-					Dir::Out(_) => "&mut String".into(),
+					Dir::In(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => "&str".into(),
+					Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&[u8]".into(),
+					Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => "&mut String".into(),
+					Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&mut Vec<u8>".into(),
 				};
 			} else if self.is_input_array() {
 				break 'decl_type "&dyn core::ToInputArray".into();
@@ -1289,10 +1306,16 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
-		if let Some(Dir::Out(_)) = self.as_string() {
-			format!("string_arg_output_receive!({name}_via => {name})", name = name)
-		} else {
-			"".to_string()
+		match self.as_string() {
+			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr)) => {
+				format!("string_arg_output_receive!({name}_via => {name})", name = name)
+			}
+			Some(Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))) => {
+				format!("byte_string_arg_output_receive!({name}_via => {name})", name = name)
+			}
+			_ => {
+				"".to_string()
+			}
 		}
 	}
 
@@ -1327,7 +1350,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					}
 					// implement workaround for race when type with std::string gets generated first
 					// we only want vector<cv::String> because it's more compatible across OpenCV versions
-					if str_type == StrType::StdString {
+					if matches!(str_type, StrType::StdString(_)) {
 						let tref = TypeRef::new(vec_cv_string, self.gen_env);
 						out.push(DependentType::from_vector(tref.as_vector().expect("Not possible unless something is terribly broken")));
 					} else {
@@ -1471,18 +1494,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn cpp_arg_pre_call(&self, name: &str) -> String {
 		match self.as_string() {
-			Some(Dir::Out(StrType::StdString)) => {
-				return format!("std::string {name}_out", name=name);
+			Some(Dir::Out(StrType::StdString(_))) => {
+				format!("std::string {name}_out", name=name)
 			}
-			Some(Dir::Out(StrType::CvString)) => {
-				return format!("cv::String {name}_out", name=name);
+			Some(Dir::Out(StrType::CvString(_))) => {
+				format!("cv::String {name}_out", name=name)
 			}
 			Some(Dir::Out(StrType::CharPtr)) => {
-				return format!("char* {name}_out = new char[1024]()", name=name);
+				format!("char* {name}_out = new char[1024]()", name=name)
 			}
-			Some(_) | None => {}
+			Some(Dir::In(_)) | None => {
+				"".to_string()
+			}
 		}
-		"".to_string()
 	}
 
 	pub fn cpp_arg_func_call<'a>(&self, name: impl Into<Cow<'a, str>>) -> Cow<'a, str> {
@@ -1493,10 +1517,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				let ptr = if str_type != StrType::CharPtr && self.as_pointer().is_some() { "&" } else { "" };
 				return format!("{ptr}{name}_out", ptr=ptr, name=name).into();
 			}
-			Some(Dir::In(StrType::StdString)) => {
+			Some(Dir::In(StrType::StdString(_))) => {
 				return format!("std::string({name})", name=name).into();
 			},
-			Some(Dir::In(StrType::CvString)) => {
+			Some(Dir::In(StrType::CvString(_))) => {
 				return format!("cv::String({name})", name=name).into();
 			},
 			Some(Dir::In(StrType::CharPtr)) | None => {}
@@ -1528,15 +1552,22 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn cpp_arg_post_call(&self, name: &str) -> String {
 		match self.as_string() {
-			Some(Dir::Out(StrType::StdString)) | Some(Dir::Out(StrType::CvString)) => {
-				return format!("*{name} = ocvrs_create_string({name}_out.c_str())", name=name);
+			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text))) => {
+				format!("*{name} = ocvrs_create_string({name}_out.c_str())", name=name)
 			}
 			Some(Dir::Out(StrType::CharPtr)) => {
-				return format!("*{name} = ocvrs_create_string({name}_out)", name=name);
+				format!("*{name} = ocvrs_create_string({name}_out)", name=name)
 			}
-			_ => {}
+			Some(Dir::Out(StrType::StdString(StrEnc::Binary))) => {
+				format!("*{name} = ocvrs_create_byte_string({name}_out.data(), {name}_out.size())", name=name)
+			}
+			Some(Dir::Out(StrType::CvString(StrEnc::Binary))) => {
+				format!("*{name} = ocvrs_create_byte_string({name}_out.begin(), {name}_out.size())", name=name)
+			}
+			Some(Dir::In(_)) | None => {
+				"".to_string()
+			}
 		}
-		"".to_string()
 	}
 
 	// we need cleanup as a separate step from post_call because in cv_ocl_convertTypeStr_int_int_int_charX the
@@ -1586,14 +1617,20 @@ impl fmt::Debug for TypeRef<'_, '_> {
 				},
 			};
 			match str_type {
-				StrType::StdString => {
+				StrType::StdString(StrEnc::Text) => {
 					props.push("std_string");
 				},
-				StrType::CvString => {
+				StrType::CvString(StrEnc::Text) => {
 					props.push("cv_string");
 				},
 				StrType::CharPtr => {
 					props.push("char_ptr_string");
+				},
+				StrType::StdString(StrEnc::Binary) => {
+					props.push("byte_std_string");
+				},
+				StrType::CvString(StrEnc::Binary) => {
+					props.push("byte_cv_string");
 				},
 			}
 		}

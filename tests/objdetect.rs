@@ -26,10 +26,10 @@ fn qr_code() -> Result<()> {
 		let res = detector.detect_and_decode(&src, &mut pts, &mut straight)?;
 		assert_eq!(4, pts.len());
 		if objdetect_missing_quirc {
-			assert_eq!(res, "");
+			assert_eq!(res, b"");
 			assert!(straight.empty());
 		} else {
-			assert_eq!(res, "https://crates.io/crates/opencv");
+			assert_eq!(res, b"https://crates.io/crates/opencv");
 			assert!(!straight.empty());
 		}
 	}
@@ -44,25 +44,51 @@ fn qr_code() -> Result<()> {
 		let mut straight = Mat::default();
 		let res = detector.decode(&src, &pts, &mut straight)?;
 		if objdetect_missing_quirc {
-			assert_eq!(res, "");
+			assert_eq!(res, b"");
 			assert!(straight.empty());
 		} else {
-			assert_eq!(res, "https://crates.io/crates/opencv");
+			assert_eq!(res, b"https://crates.io/crates/opencv");
 			assert!(!straight.empty());
 		}
 	}
 
+	let binary_qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr-binary.png");
+
+	{
+		let mut detector = objdetect::QRCodeDetector::default()?;
+		let src = imgcodecs::imread(binary_qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
+		let mut pts = VectorOfPoint::new();
+		let mut straight = Mat::default();
+		let res = detector.detect_and_decode(&src, &mut pts, &mut straight)?;
+		assert_eq!(4, pts.len());
+		if objdetect_missing_quirc {
+			assert_eq!(res, b"");
+			assert!(straight.empty());
+		} else {
+			assert_eq!(res, [0, 1, 2, 3, 4, 5]);
+			assert!(!straight.empty());
+		}
+	}
+
+	Ok(())
+}
+
+/// Return of string binary data into Vec<u8> via output argument
+#[test]
+fn output_byte_string() -> Result<()> {
 	#[cfg(ocvrs_opencv_branch_34)] {
+		let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
+
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
 		let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
 		assert!(res);
 		assert_eq!(4, pts.len());
-		let mut out = String::new();
+		let mut out = Vec::new();
 		let mut straight = Mat::default();
 		let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
 		assert!(res);
-		assert_eq!(out, "https://crates.io/crates/opencv");
+		assert_eq!(out, b"https://crates.io/crates/opencv");
 		assert!(!straight.empty());
 	}
 	Ok(())

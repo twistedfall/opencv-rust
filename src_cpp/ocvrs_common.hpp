@@ -32,6 +32,7 @@ CODE_CATCH(OCVRS_TYPE(return_type), std::out_of_range, cv::Error::Code::StsOutOf
 
 // defined in src/templ.rs
 extern "C" void* ocvrs_create_string(const char*);
+extern "C" void* ocvrs_create_byte_string(const char*, size_t);
 
 template<typename T> struct Result {
 	int error_code;

@@ -472,6 +472,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| hashmap! {
 	"cv_groupRectangles_vector_Rect_R_vector_int_R_int_double" => "+_weights",
 	"cv_groupRectangles_vector_Rect_R_int_double_vector_int_X_vector_double_X" => "+_levelweights",
 
+	"cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR" => "-", // fixme: stores data to Vector<String>, that doesn't work yet
+
 	// ### optflow ###
 	"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector" => "-", // support of "operator &" missing
 
@@ -989,6 +991,21 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 		"maxVal" => ArgOverride::Nullable,
 		"minIdx" => ArgOverride::Nullable,
 		"maxIdx" => ArgOverride::Nullable,
+	},
+	FuncId::new("cv::decodeQRCode", ["in", "points", "decoded_info", "straight_qrcode"]) => hashmap! {
+		"decoded_info" => ArgOverride::StringAsBytes,
+	},
+	FuncId::new("cv::QRCodeDetector::decode", ["img", "points", "straight_qrcode"]) => hashmap! {
+		"return" => ArgOverride::StringAsBytes,
+	},
+	FuncId::new("cv::QRCodeDetector::decodeCurved", ["img", "points", "straight_qrcode"]) => hashmap! {
+		"return" => ArgOverride::StringAsBytes,
+	},
+	FuncId::new("cv::QRCodeDetector::detectAndDecode", ["img", "points", "straight_qrcode"]) => hashmap! {
+		"return" => ArgOverride::StringAsBytes,
+	},
+	FuncId::new("cv::QRCodeDetector::detectAndDecodeCurved", ["img", "points", "straight_qrcode"]) => hashmap! {
+		"return" => ArgOverride::StringAsBytes,
 	},
 });
 

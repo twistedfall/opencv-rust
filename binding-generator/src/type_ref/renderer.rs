@@ -3,7 +3,7 @@ use std::{
 	fmt::{self, Write},
 };
 
-use crate::{Element, settings, StringExt};
+use crate::{Element, settings, StringExt, type_ref::{Dir, StrEnc, StrType}};
 
 use super::{Kind, TemplateArg, TypeRef};
 
@@ -341,9 +341,15 @@ impl TypeRefRenderer<'_> for RustRenderer {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		if type_ref.as_string().is_some() {
+		if let Some(str_type) = type_ref.as_string() {
 			#[allow(clippy::if_same_then_else)]
-				return if type_ref.constness().is_const() {
+			return if matches!(str_type, Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) | Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))) {
+				if self.name_style.turbo_fish_style().is_turbo() {
+					"Vec::<u8>"
+				} else {
+					"Vec<u8>"
+				}
+			} else if type_ref.constness().is_const() {
 				"String" // todo implement receiving const str's
 			} else {
 				"String"

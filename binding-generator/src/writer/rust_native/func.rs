@@ -18,7 +18,7 @@ use crate::{
 	settings,
 	StrExt,
 	StringExt,
-	type_ref::{Dir, FishStyle, StrType},
+	type_ref::{Dir, FishStyle, StrEnc, StrType},
 };
 
 use super::RustNativeGeneratedElement;
@@ -271,12 +271,18 @@ fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 		out.unwrap_or_else(|| format!("new {typ}(ret)", typ=return_type.cpp_full()).into())
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		match string_type {
-			StrType::StdString | StrType::CvString => {
+			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
 				"ocvrs_create_string(ret.c_str())".into()
 			},
 			StrType::CharPtr => {
 				"ocvrs_create_string(ret)".into()
 			},
+			StrType::StdString(StrEnc::Binary) => {
+				"ocvrs_create_byte_string(ret.data(), ret.size())".into()
+			}
+			StrType::CvString(StrEnc::Binary) => {
+				"ocvrs_create_byte_string(ret.begin(), ret.size())".into()
+			}
 		}
 	} else {
 		// fixme

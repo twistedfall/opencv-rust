@@ -242,6 +242,57 @@ impl OpenCVTypeExternContainer for CString {
 	}
 }
 
+impl<'a> OpenCVType<'a> for Vec<u8> {
+	type Arg = Self;
+	type ExternReceive = *mut c_void;
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self)
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
+	}
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
+		crate::templ::receive_byte_string(s as *mut Vec<u8>)
+	}
+}
+
+impl OpenCVTypeArg<'_> for Vec<u8> {
+	type ExternContainer = Self;
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self.to_vec()
+	}
+}
+
+impl OpenCVTypeExternContainer for Vec<u8> {
+	type ExternSend = *const u8;
+	type ExternSendMut = *mut u8;
+
+	#[inline]
+	fn opencv_as_extern(&self) -> Self::ExternSend {
+		self.as_ptr()
+	}
+
+	#[inline]
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+		self.as_mut_ptr()
+	}
+
+	#[inline]
+	fn opencv_into_extern(self) -> Self::ExternSendMut {
+		unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage")
+	}
+}
+
+
 opencv_type_copy! {
 	(),
 	bool,
