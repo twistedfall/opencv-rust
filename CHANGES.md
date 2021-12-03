@@ -1,3 +1,6 @@
+* 0.61.1
+  * Make sure that `VectorOfVectorOfPoint` type is generated for the `imgproc` module.
+
 * 0.61.0
   * The QR code decoding function in `objdetect` module are now returning `Vec<u8>` instead of `String` because the codes can
     contain binary raw binary data and are not always UTF-8.
