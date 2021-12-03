@@ -42,8 +42,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_fullname(FishStyle::No),
-			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"inner_rust_full" => pointee_type.rust_full(),
 		};
 

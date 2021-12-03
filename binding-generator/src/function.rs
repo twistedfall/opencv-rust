@@ -10,7 +10,7 @@ use crate::{
 	Field,
 	GeneratorEnv,
 	IteratorExt,
-	type_ref::{FishStyle, NameStyle},
+	type_ref::{ConstnessOverride, FishStyle, NameStyle},
 	TypeRef,
 };
 
@@ -54,10 +54,10 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 
 	pub fn rust_extern(&self) -> Cow<str> {
 		let args = self.arguments().into_iter()
-			.map(|a| a.type_ref().rust_extern().into_owned())
+			.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!(r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#, args=args, ret=ret.rust_extern()).into()
+		format!(r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#, args=args, ret=ret.rust_extern(ConstnessOverride::No)).into()
 	}
 }
 
@@ -106,13 +106,13 @@ impl Element for Function<'_, '_> {
 		let ret = self.return_type();
 		if self.has_userdata() {
 			let args = self.rust_arguments().into_iter()
-				.map(|a| a.type_ref().rust_extern().into_owned())
+				.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
 				.join(", ");
 			format!(
 				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
-				fish = fish_style.rust_qual(),
-				args = args,
-				ret = ret.rust_extern(),
+				fish=fish_style.rust_qual(),
+				args=args,
+				ret=ret.rust_extern(ConstnessOverride::No),
 			).into()
 		} else {
 			self.rust_extern()

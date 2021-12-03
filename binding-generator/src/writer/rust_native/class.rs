@@ -155,8 +155,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"rust_trait_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Mut),
 			"rust_trait_local_const" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
 			"rust_local" => type_ref.rust_local(),
-			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"trait_bases_const" => trait_bases_const.into(),
 			"trait_bases_mut" => trait_bases_mut.into(),
 			"trait_const_methods" => trait_const_methods.into(),
@@ -224,8 +224,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					"base_const_rust_full" => base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const),
 					"rust_local" => type_ref.rust_local(),
 					"base_rust_local" => base_type_ref.rust_local(),
-					"base_rust_extern_const" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
-					"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+					"base_rust_extern_const" => base_type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
+					"base_rust_extern_mut" => base_type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 				})
 			})
 			.collect::<Vec<_>>();
@@ -313,8 +313,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
 			"rust_full" => c.rust_fullname(FishStyle::No),
-			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"fields" => fields.join("").into(),
 			"bases" => bases.join("").into(),
 			"impl" => IMPL_TPL.interpolate(&hashmap! {

@@ -33,8 +33,8 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 			"rust_full" => cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut),
 			"rust_const_full" => cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const),
 			"rust_local" => type_ref.rust_local(),
-			"rust_extern_mut" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
-			"rust_extern_const" => type_ref.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 		})
 	}
 }

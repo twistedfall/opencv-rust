@@ -977,11 +977,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
 	}
 
-	pub fn rust_extern(&self) -> Cow<str> {
-		self.rust_extern_with_const(ConstnessOverride::No)
-	}
-
-	pub fn rust_extern_with_const(&self, constness: ConstnessOverride) -> Cow<str> {
+	pub fn rust_extern(&self, constness: ConstnessOverride) -> Cow<str> {
 		let constness = constness.with(self.constness());
 		#[allow(clippy::never_loop)] // fixme use named block when stable
 		'typ: loop {
@@ -1014,7 +1010,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				} else if self.as_string().is_some() {
 					out += "c_char";
 				} else {
-					out += &inner.rust_extern_with_const(ConstnessOverride::Yes(constness))
+					out += inner.rust_extern(ConstnessOverride::Yes(constness)).as_ref()
 				}
 				break 'typ out.into();
 			}
@@ -1022,7 +1018,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
 					cnst=self.constness().rust_qual(true),
-					typ=elem.rust_extern_with_const(ConstnessOverride::Yes(constness)),
+					typ=elem.rust_extern(ConstnessOverride::Yes(constness)),
 					len=len,
 				).into();
 			}
@@ -1032,7 +1028,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
 					format!("*{cnst}c_char", cnst=elem.clang_constness().rust_qual(true)).into()
 				} else {
-					elem.rust_extern_with_const(ConstnessOverride::Yes(constness))
+					elem.rust_extern(ConstnessOverride::Yes(constness))
 				};
 				break 'typ format!(
 					"*{cnst}{typ}",
@@ -1177,10 +1173,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {tramp_userdata_arg} in callbacks => {name}({fw_args}) -> {fw_ret})",
 					name=name,
 					tramp_args=tramp_args,
-					tramp_ret=ret.rust_extern(),
+					tramp_ret=ret.rust_extern(ConstnessOverride::No),
 					tramp_userdata_arg=userdata_name,
 					fw_args=fw_args,
-					fw_ret=ret.rust_extern(),
+					fw_ret=ret.rust_extern(ConstnessOverride::No),
 				);
 			}
 		}
@@ -1282,7 +1278,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
-		let mut typ = self.rust_extern_with_const(constness);
+		let mut typ = self.rust_extern(constness);
 		if self.as_simple_class().is_some() {
 			*typ.to_mut() = format!("*const {}", typ)
 		}
@@ -1293,7 +1289,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		if self.as_string().is_some() {
 			"*mut c_void".into()
 		} else {
-			self.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut))
+			self.rust_extern(ConstnessOverride::Yes(Constness::Mut))
 		}
 	}
 
@@ -1395,7 +1391,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					if !self.is_generic() && !self.is_void() {
 						if self.as_string().is_some() {
 							let type_ref = TypeRef::new(
-								self.gen_env.resolve_type(&self.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"),
+								self.gen_env.resolve_type(self.cpp_extern_return().as_ref())
+									.expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
 							);
 							let def_location = match def_location {
@@ -1413,7 +1410,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 								self.gen_env,
 							)));
 							if self.as_abstract_class_ptr().is_some() {
-								out.push(DependentType::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone(), self.gen_env)))
+								out.push(DependentType::from_abstract_ref_wrapper(AbstractRefWrapper::new(self.clone())))
 							}
 						}
 					}
@@ -1657,7 +1654,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		dbg
 			.field("rust_safe_id", &self.rust_safe_id())
 			.field("rust_full", &self.rust_full())
-			.field("rust_extern", &self.rust_extern())
+			.field("rust_extern", &self.rust_extern(ConstnessOverride::No))
 			.field("cpp_safe_id", &self.cpp_safe_id())
 			.field("cpp_full", &self.cpp_full())
 			.field("cpp_extern", &self.cpp_extern())

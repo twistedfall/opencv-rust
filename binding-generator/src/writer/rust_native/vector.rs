@@ -50,8 +50,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_fullname(FishStyle::No),
-			"rust_extern_const" => vec_type.rust_extern_with_const(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => vec_type.rust_extern_with_const(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Const)),
+			"rust_extern_mut" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"inner_rust_full" => element_type.rust_full(),
 			"inner_rust_extern_return" => element_type.rust_extern_return(),
 		};

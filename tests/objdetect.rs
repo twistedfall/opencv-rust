@@ -75,21 +75,21 @@ fn qr_code() -> Result<()> {
 
 /// Return of string binary data into Vec<u8> via output argument
 #[test]
+#[cfg(ocvrs_opencv_branch_34)]
 fn output_byte_string() -> Result<()> {
-	#[cfg(ocvrs_opencv_branch_34)] {
-		let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
+	let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
-		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-		let mut pts = VectorOfPoint::new();
-		let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
-		assert!(res);
-		assert_eq!(4, pts.len());
-		let mut out = Vec::new();
-		let mut straight = Mat::default();
-		let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
-		assert!(res);
-		assert_eq!(out, b"https://crates.io/crates/opencv");
-		assert!(!straight.empty());
-	}
-	Ok(())
+	let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
+	let mut pts = VectorOfPoint::new();
+	let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
+	assert!(res);
+	assert_eq!(4, pts.len());
+	let mut out = Vec::new();
+	let mut straight = Mat::default();
+	let res = objdetect::decode_qr_code(&src, &pts, &mut out, &mut straight)?;
+	assert!(res);
+	assert_eq!(out, b"https://crates.io/crates/opencv");
+	assert!(!straight.empty());
+
+		Ok(())
 }
