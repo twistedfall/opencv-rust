@@ -1137,6 +1137,7 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		generate_types: vec![
 			// for findContours()
 			"std::vector<cv::Vec4i>",
+			"std::vector<std::vector<cv::Point>>",
 			// for HoughLines()
 			"std::vector<cv::Vec2f>",
 			"std::vector<cv::Vec2d>",
