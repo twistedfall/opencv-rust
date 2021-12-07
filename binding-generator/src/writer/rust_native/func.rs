@@ -312,7 +312,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			self.rust_leafname(FishStyle::No)
 		};
-		gen_rust_with_name(self, &name, opencv_version)
+		gen_rust_with_name(self, name.as_ref(), opencv_version)
 	}
 
 	fn gen_rust_exports(&self) -> String {

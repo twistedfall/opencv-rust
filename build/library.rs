@@ -305,7 +305,7 @@ impl Library {
 		let mut errors = vec![];
 		let mut opencv = None;
 		let possible_opencvs = PackageName::vcpkg().into_iter()
-			.map(|pkg_name| config.find_package(&pkg_name));
+			.map(|pkg_name| config.find_package(pkg_name.as_ref()));
 		for possible_opencv in possible_opencvs {
 			match possible_opencv {
 				Ok(possible_opencv) => {
