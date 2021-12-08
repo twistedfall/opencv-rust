@@ -367,6 +367,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
+	pub fn is_no_discard(&self) -> bool {
+		self.gen_env.get_export_config(self.entity).map_or(false, |c| c.no_discard)
+	}
+
 	pub fn as_specialized(&self) -> Option<&'static HashMap<&'static str, &'static str>> {
 		if let FunctionTypeHint::Specialized(spec) = self.type_hint {
 			Some(spec)

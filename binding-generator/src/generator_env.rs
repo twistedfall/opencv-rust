@@ -33,6 +33,7 @@ pub struct ExportConfig {
 	pub deprecated: bool,
 	pub no_return: bool,
 	pub no_except: bool,
+	pub no_discard: bool,
 	pub only_dependent_types: bool,
 }
 

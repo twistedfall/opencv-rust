@@ -262,6 +262,8 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 						self.gen_env.make_export_config(entity).no_except = true;
 					} else if name == "CV_DEPRECATED" || name == "CV_DEPRECATED_EXTERNAL" {
 						self.gen_env.make_export_config(entity).deprecated = true;
+					} else if name == "CV_NODISCARD_STD" || name == "CV_NODISCARD" {
+						self.gen_env.make_export_config(entity).no_discard = true;
 					} else if name == "OCVRS_ONLY_DEPENDENT_TYPES" {
 						self.gen_env.make_export_config(entity).only_dependent_types = true;
 					}
