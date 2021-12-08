@@ -1,3 +1,6 @@
+* 0.61.2
+  * Add support for parsing `CV_NODISCARD` attributes, they are converted to `#[must_use]`.
+
 * 0.61.1
   * Make sure that `VectorOfVectorOfPoint` type is generated for the `imgproc` module.
 

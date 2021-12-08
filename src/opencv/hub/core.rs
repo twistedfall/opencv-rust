@@ -9984,6 +9984,7 @@ pub trait MatTraitConst {
 	/// The method creates a full copy of the array. The original step[] is not taken into account. So, the
 	/// array copy is a continuous array occupying total()*elemSize() bytes.
 	#[inline]
+	#[must_use]
 	fn try_clone(&self) -> Result<core::Mat> {
 		let ret = unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat()) }.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -12022,6 +12023,7 @@ impl Mat {
 	/// ## Parameters
 	/// * d: One-dimensional matrix that represents the main diagonal.
 	#[inline]
+	#[must_use]
 	pub fn diag_mat(d: &core::Mat) -> Result<core::Mat> {
 		let ret = unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat()) }.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -12044,6 +12046,7 @@ impl Mat {
 	/// * cols: Number of columns.
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12071,6 +12074,7 @@ impl Mat {
 	/// * size: Alternative to the matrix size specification Size(cols, rows) .
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12099,6 +12103,7 @@ impl Mat {
 	/// * sz: Array of integers specifying the array shape.
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12124,6 +12129,7 @@ impl Mat {
 	/// * cols: Number of columns.
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12154,6 +12160,7 @@ impl Mat {
 	/// * size: Alternative to the matrix size specification Size(cols, rows) .
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn ones_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12185,6 +12192,7 @@ impl Mat {
 	/// * sz: Array of integers specifying the array shape.
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12208,6 +12216,7 @@ impl Mat {
 	/// * cols: Number of columns.
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -12236,6 +12245,7 @@ impl Mat {
 	/// * size: Alternative matrix size specification as Size(cols, rows) .
 	/// * type: Created matrix type.
 	#[inline]
+	#[must_use]
 	pub fn eye_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 		let ret = unsafe { sys::cv_Mat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -15218,6 +15228,7 @@ pub trait SparseMatTraitConst {
 	
 	/// creates full copy of the matrix
 	#[inline]
+	#[must_use]
 	fn try_clone(&self) -> Result<core::SparseMat> {
 		let ret = unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat()) }.into_result()?;
 		let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
@@ -16522,6 +16533,7 @@ pub trait UMatTraitConst {
 	
 	/// returns deep copy of the matrix, i.e. the data is copied
 	#[inline]
+	#[must_use]
 	fn try_clone(&self) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_clone_const(self.as_raw_UMat()) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17010,6 +17022,7 @@ impl UMat {
 	
 	/// constructs a square diagonal matrix which main diagonal is vector "d"
 	#[inline]
+	#[must_use]
 	pub fn diag(d: &core::UMat, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17017,6 +17030,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn diag_1(d: &core::UMat) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat()) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17025,6 +17039,7 @@ impl UMat {
 	
 	/// Matlab-style matrix initialization
 	#[inline]
+	#[must_use]
 	pub fn zeros(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17032,6 +17047,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn zeros_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17039,6 +17055,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn zeros_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17046,6 +17063,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn zeros_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17053,6 +17071,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn zeros_4(size: core::Size, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17060,6 +17079,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn zeros_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_zeros_int_const_intX_int(ndims, sz, typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17067,6 +17087,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17074,6 +17095,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17081,6 +17103,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17088,6 +17111,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17095,6 +17119,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones_4(size: core::Size, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17102,6 +17127,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn ones_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_ones_int_const_intX_int(ndims, sz, typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17109,6 +17135,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn eye(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17116,6 +17143,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn eye_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17123,6 +17151,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn eye_2(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -17130,6 +17159,7 @@ impl UMat {
 	}
 	
 	#[inline]
+	#[must_use]
 	pub fn eye_3(size: core::Size, typ: i32) -> Result<core::UMat> {
 		let ret = unsafe { sys::cv_UMat_eye_Size_int(size.opencv_as_extern(), typ) }.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };

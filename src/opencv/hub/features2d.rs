@@ -690,6 +690,7 @@ pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherConst {
 	/// ## C++ default parameters
 	/// * empty_train_data: false
 	#[inline]
+	#[must_use]
 	fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<dyn crate::features2d::DescriptorMatcher>> {
 		let ret = unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data) }.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
@@ -1425,6 +1426,7 @@ pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	/// ## C++ default parameters
 	/// * empty_train_data: false
 	#[inline]
+	#[must_use]
 	fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<dyn crate::features2d::DescriptorMatcher>> {
 		let ret = unsafe { sys::cv_DescriptorMatcher_clone_const_bool(self.as_raw_DescriptorMatcher(), empty_train_data) }.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
@@ -1961,6 +1963,7 @@ pub trait FlannBasedMatcherTraitConst: crate::features2d::DescriptorMatcherConst
 	/// ## C++ default parameters
 	/// * empty_train_data: false
 	#[inline]
+	#[must_use]
 	fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<dyn crate::features2d::DescriptorMatcher>> {
 		let ret = unsafe { sys::cv_FlannBasedMatcher_clone_const_bool(self.as_raw_FlannBasedMatcher(), empty_train_data) }.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
