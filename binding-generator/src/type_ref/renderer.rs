@@ -15,7 +15,7 @@ pub trait TypeRefRenderer<'a> {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
- pub enum Lifetime {
+pub enum Lifetime {
 	Elided,
 	Static,
 	Explicit(u8),

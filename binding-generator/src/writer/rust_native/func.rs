@@ -125,7 +125,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		attributes = format!("#[cfg({})]", attrs.0);
 	}
 	if f.is_no_discard() {
-		attributes.push_str(&format!("#[must_use]"));
+		attributes.push_str("#[must_use]");
 	}
 
 	let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
