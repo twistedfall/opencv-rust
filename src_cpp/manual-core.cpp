@@ -22,13 +22,22 @@ template<typename T> inline Result<void*> ocvrs_input_output_array(T* instance) 
 	} OCVRS_CATCH(Result<void*>)
 }
 
-#define ocvrs_matx(base) \
-	Result<void*> cv_##base##f_input_array(const cv::base##f* instance) { return ocvrs_input_array(instance); } \
-	Result<void*> cv_##base##f_output_array(cv::base##f* instance) { return ocvrs_output_array(instance); } \
-	Result<void*> cv_##base##f_input_output_array(cv::base##f* instance) { return ocvrs_input_output_array(instance); } \
-	Result<void*> cv_##base##d_input_array(const cv::base##d* instance) { return ocvrs_input_array(instance); } \
-	Result<void*> cv_##base##d_output_array(cv::base##d* instance) { return ocvrs_output_array(instance); } \
-	Result<void*> cv_##base##d_input_output_array(cv::base##d* instance) { return ocvrs_input_output_array(instance); }
+#define ocvrs_ioa(base) \
+	Result<void*> cv_##base##_input_array(const cv::base* instance) { return ocvrs_input_array(instance); } \
+	Result<void*> cv_##base##_output_array(cv::base* instance) { return ocvrs_output_array(instance); } \
+	Result<void*> cv_##base##_input_output_array(cv::base* instance) { return ocvrs_input_output_array(instance); }
+
+#define ocvrs_ioa_df(base) \
+	ocvrs_ioa(base##d) \
+	ocvrs_ioa(base##f)
+
+#define ocvrs_ioa_bdfisw(base) \
+	ocvrs_ioa(base##b) \
+	ocvrs_ioa(base##d) \
+	ocvrs_ioa(base##f) \
+	ocvrs_ioa(base##i) \
+	ocvrs_ioa(base##s) \
+	ocvrs_ioa(base##w)
 
 extern "C" {
 	Result<cv::Size> cv_manual_Mat_size(const cv::Mat* instance) {
@@ -74,27 +83,38 @@ extern "C" {
 	Result<void*> cv_OutputArray_output_array(cv::_OutputArray* instance) { return ocvrs_output_array(instance); }
 	Result<void*> cv_InputOutputArray_input_output_array(cv::_InputOutputArray* instance) { return ocvrs_input_output_array(instance); }
 
-	Result<void*> cv_Scalar_input_array(cv::Scalar* instance) { return ocvrs_input_array(instance); }
+	ocvrs_ioa_df(Matx12)
+	ocvrs_ioa_df(Matx13)
+	ocvrs_ioa_df(Matx14)
+	ocvrs_ioa_df(Matx16)
 
-	ocvrs_matx(Matx12)
-	ocvrs_matx(Matx13)
-	ocvrs_matx(Matx14)
-	ocvrs_matx(Matx16)
+	ocvrs_ioa_df(Matx21)
+	ocvrs_ioa_df(Matx31)
+	ocvrs_ioa_df(Matx41)
+	ocvrs_ioa_df(Matx61)
 
-	ocvrs_matx(Matx21)
-	ocvrs_matx(Matx31)
-	ocvrs_matx(Matx41)
-	ocvrs_matx(Matx61)
+	ocvrs_ioa_df(Matx22)
+	ocvrs_ioa_df(Matx23)
+	ocvrs_ioa_df(Matx32)
 
-	ocvrs_matx(Matx22)
-	ocvrs_matx(Matx23)
-	ocvrs_matx(Matx32)
+	ocvrs_ioa_df(Matx33)
 
-	ocvrs_matx(Matx33)
+	ocvrs_ioa_df(Matx34)
+	ocvrs_ioa_df(Matx43)
 
-	ocvrs_matx(Matx34)
-	ocvrs_matx(Matx43)
+	ocvrs_ioa_df(Matx44)
+	ocvrs_ioa_df(Matx66)
 
-	ocvrs_matx(Matx44)
-	ocvrs_matx(Matx66)
+	ocvrs_ioa_bdfisw(Vec2)
+	ocvrs_ioa_bdfisw(Vec3)
+	ocvrs_ioa_bdfisw(Vec4)
+
+	ocvrs_ioa_df(Vec6)
+	ocvrs_ioa(Vec6i)
+
+	ocvrs_ioa(Vec8i)
+
+	Result<void*> cv_Vec18d_input_array(cv::Vec<double, 18>* instance) { return ocvrs_input_array(instance); }
+	Result<void*> cv_Vec18d_output_array(cv::Vec<double, 18>* instance) { return ocvrs_output_array(instance); }
+	Result<void*> cv_Vec18d_input_output_array(cv::Vec<double, 18>* instance) { return ocvrs_input_output_array(instance); }
 }
