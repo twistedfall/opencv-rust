@@ -1,27 +1,13 @@
 use std::{
 	array,
-	ffi::c_void,
-	ops::{Add, AddAssign, Deref, DerefMut, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign},
+	ops::{Deref, DerefMut, Mul},
 };
 
-use crate::{
-	core::{_InputArray, ToInputArray},
-	input_array_ref_forward,
-	Result,
-	sys,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
-};
+use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 
-pub use self::{scalar_inner::ValidScalarType, vec_inner::ValidVecType};
+mod operations;
 
-// additional modules needed because valid_types! introduces module named "private"
-mod vec_inner {
-	valid_types!(ValidVecType: i8, u8, i16, u16, i32, f32, f64);
-}
-
-mod scalar_inner {
-	valid_types!(ValidScalarType: i32, f64);
-}
+valid_types!(ValidVecType: i8, u8, i16, u16, i32, f32, f64);
 
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 /// Named `VecN` to avoid name clash with std's `Vec`.
@@ -117,118 +103,6 @@ impl<F: num_traits::Float> VecN<F, 4> {
 	}
 }
 
-impl<T: AddAssign, const N: usize> AddAssign for VecN<T, N> {
-	#[inline]
-	fn add_assign(&mut self, rhs: Self) {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out += v)
-	}
-}
-
-impl<T: Add<Output=T> + Copy, const N: usize> Add for VecN<T, N> {
-	type Output = Self;
-
-	#[inline]
-	fn add(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out = *out + v);
-		self
-	}
-}
-
-impl<T: SubAssign, const N: usize> SubAssign for VecN<T, N> {
-	#[inline]
-	fn sub_assign(&mut self, rhs: Self) {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out -= v)
-	}
-}
-
-impl<T: Sub<Output=T> + Copy, const N: usize> Sub for VecN<T, N> {
-	type Output = Self;
-
-	#[inline]
-	fn sub(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out = *out - v);
-		self
-	}
-}
-
-impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for VecN<T, N> {
-	#[inline]
-	fn mul_assign(&mut self, rhs: Rhs) {
-		self.iter_mut()
-			.for_each(|out| *out *= rhs)
-	}
-}
-
-impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for VecN<T, N> {
-	#[inline]
-	fn div_assign(&mut self, rhs: Rhs) {
-		self.iter_mut()
-			.for_each(|out| *out /= rhs)
-	}
-}
-
-impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
-	type Output = Self;
-
-	#[inline]
-	fn mul(mut self, rhs: Rhs) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = *out * rhs);
-		self
-	}
-}
-
-impl<Rhs: ValidVecType, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
-	type Output = Self;
-
-	#[inline]
-	fn div(mut self, rhs: Rhs) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = *out / rhs);
-		self
-	}
-}
-
-impl<T: Neg<Output=T> + Copy, const N: usize> Neg for VecN<T, N> {
-	type Output = Self;
-
-	#[inline]
-	fn neg(mut self) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = -*out);
-		self
-	}
-}
-
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for VecN<T, 4> {
-	type Output = Self;
-
-	#[inline]
-	fn mul(self, rhs: Self) -> Self::Output {
-		Self([
-			self[0] * rhs[0] - self[1] * rhs[1] - self[2] * rhs[2] - self[3] * rhs[3],
-			self[0] * rhs[1] + self[1] * rhs[0] + self[2] * rhs[3] - self[3] * rhs[2],
-			self[0] * rhs[2] - self[1] * rhs[3] + self[2] * rhs[0] + self[3] * rhs[1],
-			self[0] * rhs[3] + self[1] * rhs[2] - self[2] * rhs[1] + self[3] * rhs[0],
-		])
-	}
-}
-
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> MulAssign for VecN<T, 4> {
-	#[inline]
-	fn mul_assign(&mut self, rhs: Self) {
-		*self = *self * rhs;
-	}
-}
-
 impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
 	type ExternReceive = Self;
@@ -261,52 +135,3 @@ impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
 }
-
-pub type Scalar_<T> = VecN<T, 4>;
-
-impl<T: ValidScalarType> Scalar_<T> {
-	#[inline]
-	pub fn new(v0: T, v1: T, v2: T, v3: T) -> Self {
-		Self::from([v0, v1, v2, v3])
-	}
-}
-
-impl<T: ValidScalarType> From<T> for Scalar_<T> {
-	#[inline]
-	fn from(v0: T) -> Self {
-		Self::from([v0, T::zero(), T::zero(), T::zero()])
-	}
-}
-
-impl<T: ValidScalarType> From<(T, T)> for Scalar_<T> {
-	#[inline]
-	fn from(v: (T, T)) -> Self {
-		Self::from([v.0, v.1, T::zero(), T::zero()])
-	}
-}
-
-impl<T: ValidScalarType> From<(T, T, T)> for Scalar_<T> {
-	#[inline]
-	fn from(v: (T, T, T)) -> Self {
-		Self::from([v.0, v.1, v.2, T::zero()])
-	}
-}
-
-impl<T: ValidScalarType> From<(T, T, T, T)> for Scalar_<T> {
-	#[inline]
-	fn from(v: (T, T, T, T)) -> Self {
-		Self::from([v.0, v.1, v.2, v.3])
-	}
-}
-
-impl ToInputArray for Scalar_<f64> {
-	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
-		extern "C" { fn cv_Scalar_input_array(instance: *const Scalar_<f64>) -> sys::Result<*mut c_void>; }
-		unsafe { cv_Scalar_input_array(self) }
-			.into_result()
-			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
-	}
-}
-
-input_array_ref_forward! { Scalar_<f64> }
