@@ -133,7 +133,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 		Some(Version::new(major.parse().ok()?, minor.parse().ok()?, revision.parse().ok()?))
 	} else {
-		Some(Version::new(0, 0, 0))
+		None
 	}
 }
 
@@ -186,17 +186,17 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		// crate warnings
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
-		.flag_if_supported("-Wnoreturn-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
+		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 	;
 	opencv.include_paths.iter().for_each(|p| { out.include(p); });
 	if cfg!(target_env = "msvc") {
-		out.flag_if_supported("-std:c++latest")
-			.flag_if_supported("-EHsc")
-			.flag_if_supported("-bigobj")
-			.flag_if_supported("-wd4996")
-			.flag_if_supported("-wd5054") // deprecated between enumerations of different types
-			.flag_if_supported("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
-			.flag_if_supported("-wd4702") // core.cpp(386) : unreachable code
+		out.flag("-std:c++latest")
+			.flag("-EHsc")
+			.flag("-bigobj")
+			.flag("-wd4996")
+			.flag("-wd5054") // deprecated between enumerations of different types
+			.flag("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
+			.flag("-wd4702") // core.cpp(386) : unreachable code
 			.pic(false)
 		;
 	} else {

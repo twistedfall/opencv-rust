@@ -62,7 +62,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 		Some(format!("{}.{}.{}", major, minor, revision))
 	} else {
-		Some("0.0.0".to_string())
+		None
 	}
 }
 
