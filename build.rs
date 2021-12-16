@@ -83,18 +83,22 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 	}
 }
 
-fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
-	let out = header_dir.join("opencv2/core/version.hpp");
-	if out.is_file() {
-		Some(out)
-	} else {
-		let out = header_dir.join("Headers/core/version.hpp");
-		if out.is_file() {
-			Some(out)
-		} else {
-			None
-		}
+fn get_module_header_dir(header_dir: &Path) -> Option<PathBuf> {
+	let mut out = header_dir.join("opencv2.framework/Headers");
+	if out.exists() {
+		return Some(out);
 	}
+	out = header_dir.join("opencv2");
+	if out.exists() {
+		return Some(out);
+	}
+	None
+}
+
+fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
+	get_module_header_dir(header_dir)
+		.map(|dir| dir.join("core/version.hpp"))
+		.filter(|dir| dir.is_file())
 }
 
 fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
@@ -188,7 +192,12 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 	;
-	opencv.include_paths.iter().for_each(|p| { out.include(p); });
+	opencv.include_paths.iter().for_each(|p| {
+		out.include(p);
+		if cfg!(target_vendor = "apple") {
+			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
+		}
+	});
 	if cfg!(target_env = "msvc") {
 		out.flag("-std:c++latest")
 			.flag("-EHsc")
@@ -310,7 +319,9 @@ fn main() -> Result<()> {
 		.find(|p| get_version_header(p).is_some())
 		.expect("Discovered OpenCV include paths is empty or contains non-existent paths");
 
-	make_modules(&opencv_header_dir.join("opencv2"))?;
+	let opencv_module_header_dir = get_module_header_dir(&opencv_header_dir).expect("Can't find OpenCV module header dir");
+	eprintln!("=== Detected OpenCV module header dir at: {}", opencv_module_header_dir.display());
+	make_modules(&opencv_module_header_dir)?;
 
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
 		if header_version != opencv.version {

@@ -168,12 +168,12 @@ impl Library {
 		Self::process_env_var_list(link_paths, sys_link_paths).into_iter()
 			.map(move |path| {
 				let out = iter::once(Self::emit_link_search(&path, typ));
-				#[cfg(target_os = "macos")] {
+				#[cfg(target_vendor = "apple")] {
 					out.chain(
 						iter::once(Self::emit_link_search(&path, Some("framework")))
 					)
 				}
-				#[cfg(not(target_os = "macos"))] {
+				#[cfg(not(target_vendor = "apple"))] {
 					out
 				}
 			})

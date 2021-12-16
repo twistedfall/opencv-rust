@@ -56,11 +56,10 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
-	let opencv_dir = opencv_header_dir.join("opencv2");
 
 	eprintln!("=== Generating code in: {}", out_dir_as_str);
 	eprintln!("=== Placing generated bindings into: {}", target_hub_dir.display());
-	eprintln!("=== Using OpenCV headers from: {}", opencv_dir.display());
+	eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
 
 	let modules = MODULES.get().expect("MODULES not initialized");
 

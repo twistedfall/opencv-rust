@@ -257,7 +257,7 @@ pub fn is_opencv_path(path: &Path) -> bool {
 	path.components()
 		.rfind(|c| {
 			if let Component::Normal(c) = c {
-				if *c == "opencv2" {
+				if *c == "opencv2" || *c == "Headers" {
 					return true;
 				}
 			}
@@ -276,7 +276,7 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {
 		if let Some(&parent) = module_comp.peek() {
-			if parent == "opencv2" || parent == "src_cpp" {
+			if parent == "opencv2" || parent == "src_cpp" || parent == "Headers" {
 				module = Some(cur);
 				break;
 			}

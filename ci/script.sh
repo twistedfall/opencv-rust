@@ -29,8 +29,7 @@ elif [[ "$OS_FAMILY" == "osx" ]]; then
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
 		export OPENCV_LINK_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build,$clang_dir/lib/darwin"
 		export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"
-#		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/opencv2.framework"
-		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/build/build-x86_64-macosx/install/include"
+		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build"
 	fi
 	echo "=== Installed brew packages:"
 	brew list --versions

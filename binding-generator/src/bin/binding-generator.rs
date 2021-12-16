@@ -17,7 +17,7 @@ fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	if out.is_file() {
 		Some(out)
 	} else {
-		let out = header_dir.join("Headers/core/version.hpp");
+		let out = header_dir.join("opencv2.framework/Headers/core/version.hpp");
 		if out.is_file() {
 			Some(out)
 		} else {

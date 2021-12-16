@@ -203,12 +203,13 @@ impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
 pub struct Generator {
 	clang_include_dirs: Vec<PathBuf>,
 	opencv_include_dir: PathBuf,
+	opencv_module_header_dir: PathBuf,
 	src_cpp_dir: PathBuf,
 	clang: Clang,
 }
 
 struct OpenCvWalker<'tu, 'r, V: GeneratorVisitor> {
-	opencv_include_dir: &'r Path,
+	opencv_module_header_dir: &'r Path,
 	module: &'r str,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
@@ -298,8 +299,8 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 }
 
 impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
-	pub fn new(opencv_include_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
-		Self { opencv_include_dir, module, visitor, gen_env, comment_found: false }
+	pub fn new(opencv_module_header_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+		Self { opencv_module_header_dir, module, visitor, gen_env, comment_found: false }
 	}
 
 	fn process_const(&mut self, const_decl: Entity) {
@@ -443,10 +444,8 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 		if !self.comment_found {
 			// some module level comments like "bioinspired" are not attached to anything and libclang
 			// doesn't seem to offer a way to extract them, do it the hard way then
-			let mut module_path = self.opencv_include_dir.join("opencv2");
-			module_path.push(self.gen_env.module());
-			module_path.set_extension("hpp");
 			let mut comment = String::with_capacity(2048);
+			let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
 			let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
 			let mut found_module_comment = false;
 			let mut defgroup_found = false;
@@ -496,9 +495,14 @@ impl Generator {
 				}
 			};
 		}
+		let mut opencv_module_header_dir = opencv_include_dir.join("opencv2.framework/Headers");
+		if !opencv_module_header_dir.exists() {
+			opencv_module_header_dir = opencv_include_dir.join("opencv2");
+		}
 		Self {
 			clang_include_dirs,
 			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
+			opencv_module_header_dir: canonicalize(opencv_module_header_dir).expect("Can't canonicalize opencv_module_header_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
 			clang,
 		}
@@ -528,7 +532,13 @@ impl Generator {
 		let mut args = self.clang_include_dirs.iter()
 			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
 			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter()
-				.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")).into())
+				.flat_map(|d| {
+					let include_path = d.to_str().expect("Incorrect include path");
+					[
+						format!("-I{}", include_path).into(),
+						format!("-F{}", include_path).into(),
+					]
+				})
 			)
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
@@ -542,7 +552,7 @@ impl Generator {
 		let index = Index::new(&self.clang, true, false);
 		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
 		if !module_file.exists() {
-			module_file = self.opencv_include_dir.join(format!("opencv2/{}.hpp", module));
+			module_file = self.opencv_module_header_dir.join(format!("{}.hpp", module));
 		}
 		let mut root_tu: TranslationUnit = index.parser(module_file)
 			.unsaved(&[self.make_ephemeral_header("")])
@@ -565,7 +575,7 @@ impl Generator {
 			visitor.visit_ephemeral_header(&ephemeral_header);
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCvWalker::new(
-				&self.opencv_include_dir,
+				&self.opencv_module_header_dir,
 				module,
 				visitor,
 				gen_env,
