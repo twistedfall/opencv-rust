@@ -1,3 +1,7 @@
+* 0.61.3
+  * Implement `ToInput/OutputArray` for `Scalar` and all other often used combinations of `VecN`.
+  * Fix building on macOS with OpenCV as framework.
+
 * 0.61.2
   * Add support for parsing `CV_NODISCARD` attributes, they are converted to `#[must_use]`.
 
