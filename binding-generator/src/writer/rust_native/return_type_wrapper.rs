@@ -1,25 +1,14 @@
-use std::borrow::Cow;
-
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::{
 	CompiledInterpolation,
-	ConstnessOverride,
 	ReturnTypeWrapper,
 	StrExt,
 	StringExt,
-	type_ref::CppExternReturnRenderer,
-	TypeRef,
 };
 
 use super::RustNativeGeneratedElement;
-
-fn cpp_extern_return<'t>(type_ref: &'t TypeRef, constness: ConstnessOverride) -> Cow<'t, str> {
-	let mut renderer = CppExternReturnRenderer::new();
-	renderer.constness_override = constness;
-	type_ref.render(renderer)
-}
 
 impl RustNativeGeneratedElement for ReturnTypeWrapper<'_, '_> {
 	fn element_order(&self) -> u8 {
@@ -27,7 +16,7 @@ impl RustNativeGeneratedElement for ReturnTypeWrapper<'_, '_> {
 	}
 
 	fn element_safe_id(&self) -> String {
-		let mut name = cpp_extern_return(self.type_ref(), self.const_hint()).into_owned();
+		let mut name = self.type_ref().cpp_extern_return(self.const_hint()).into_owned();
 		name.cleanup_name();
 		format!("{}-{}", self.definition_location(), name)
 	}
@@ -40,7 +29,7 @@ impl RustNativeGeneratedElement for ReturnTypeWrapper<'_, '_> {
 		);
 
 		CPP_TPL.interpolate(&hashmap! {
-			"cpp_full" => cpp_extern_return(self.type_ref(), self.const_hint()),
+			"cpp_full" => self.type_ref().cpp_extern_return(self.const_hint()),
 		})
 	}
 }

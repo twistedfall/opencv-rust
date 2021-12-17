@@ -113,12 +113,12 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_full" => vec_type.cpp_full(),
-			"cpp_extern_return" => vec_type.cpp_extern_return(),
+			"cpp_extern_return" => vec_type.cpp_extern_return(ConstnessOverride::No),
 			"inner_cpp_full" => element_type.cpp_full(),
 			"inner_cpp_func_decl" => element_type.cpp_arg_func_decl("val").into(),
 			"inner_cpp_func_call" => element_type.cpp_arg_func_call("val"),
-			"inner_cpp_extern_return" => element_type.cpp_extern_return(),
-			"inner_cpp_extern_return_wrapper" => element_type.cpp_extern_return_wrapper_full(),
+			"inner_cpp_extern_return" => element_type.cpp_extern_return(ConstnessOverride::No),
+			"inner_cpp_extern_return_wrapper" => element_type.cpp_extern_return_wrapper_full(ConstnessOverride::No),
 			"swap_func" => swap_func.into(),
 		};
 

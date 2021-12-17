@@ -146,7 +146,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 		});
 	}
 	for join_handle in join_handles {
-		join_handle.join().expect("Can't join thread");
+		join_handle.join().expect("Generator thread panicked");
 	}
 	eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 
@@ -158,8 +158,7 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 	}
 
 	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
-		writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?;
-		Ok(())
+		Ok(writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?)
 	}
 
 	let add_manual = |file: &mut File, module: &str| -> Result<bool> {

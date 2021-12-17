@@ -1113,7 +1113,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			let error_handling = if is_infallible {
 				".expect(\"Function returned null pointer\")"
 			} else {
-				".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\".to_string()))?"
+				".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\"))?"
 			};
 			format!(
 				"let ret = {unsafety_call}{{ ret.as_{ptr_call}() }}{error_handling};",
@@ -1391,7 +1391,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					if !self.is_generic() && !self.is_void() {
 						if self.as_string().is_some() {
 							let type_ref = TypeRef::new(
-								self.gen_env.resolve_type(self.cpp_extern_return().as_ref())
+								self.gen_env.resolve_type(self.cpp_extern_return(ConstnessOverride::No).as_ref())
 									.expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
 							);
@@ -1535,15 +1535,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		name
 	}
 
-	pub fn cpp_extern_return(&self) -> Cow<str> {
-		self.render(CppExternReturnRenderer::new())
+	pub fn cpp_extern_return(&self, constness: ConstnessOverride) -> Cow<str> {
+		self.render(CppExternReturnRenderer::new(constness))
 	}
 
-	pub fn cpp_extern_return_wrapper_full(&self) -> Cow<str> {
+	pub fn cpp_extern_return_wrapper_full(&self, constness: ConstnessOverride) -> Cow<str> {
 		if self.is_void() {
 			"Result_void".into()
 		} else {
-			format!("Result<{ext}>", ext=self.cpp_extern_return()).into()
+			format!("Result<{ext}>", ext=self.cpp_extern_return(constness)).into()
 		}
 	}
 

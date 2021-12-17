@@ -275,7 +275,7 @@ impl Library {
 		);
 		let mut probe_result = cmake.probe_ninja(ninja_bin)
 			.or_else(|e| {
-				eprintln!("=== Probing with cmake ninja generator failed, will try makefile generator, error: {}", e);
+				eprintln!("=== Probing with cmake ninja generator failed, will try Makefile generator, error: {}", e);
 				cmake.probe_makefile()
 			})
 			.or_else(|e| {

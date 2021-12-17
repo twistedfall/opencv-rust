@@ -292,7 +292,6 @@ impl OpenCVTypeExternContainer for Vec<u8> {
 	}
 }
 
-
 opencv_type_copy! {
 	(),
 	bool,

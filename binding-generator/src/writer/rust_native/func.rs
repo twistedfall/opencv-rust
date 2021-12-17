@@ -261,8 +261,8 @@ fn cpp_call_invoke(f: &Func) -> String {
 
 fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 	let return_type = f.return_type();
-	let ret = if return_type.is_void() {
-		"".into()
+	let (ret, ret_cast) = if return_type.is_void() {
+		("".into(), "".into())
 	} else if return_type.is_by_ptr() && !f.as_constructor().is_some() {
 		let out = return_type.source()
 			.as_class()
@@ -271,9 +271,10 @@ fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 			} else {
 				None
 			});
-		out.unwrap_or_else(|| format!("new {typ}(ret)", typ=return_type.cpp_full()).into())
+		let out = out.unwrap_or_else(|| format!("new {typ}(ret)", typ = return_type.cpp_full()).into());
+		(out, "".into())
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
-		match string_type {
+		let str_mk = match string_type {
 			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
 				"ocvrs_create_string(ret.c_str())".into()
 			},
@@ -286,19 +287,21 @@ fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 			StrType::CvString(StrEnc::Binary) => {
 				"ocvrs_create_byte_string(ret.begin(), ret.size())".into()
 			}
-		}
-	} else {
-		// fixme
-		return if is_infallible {
-			format!("({typ})ret", typ=return_type.cpp_extern_return()).into()
-		} else {
-			format!("Ok<{typ}>(ret)", typ=return_type.cpp_extern_return()).into()
 		};
+		(str_mk, "".into())
+	} else {
+		("ret".into(), return_type.cpp_extern_return(ConstnessOverride::No))
 	};
 	if is_infallible {
-		ret
-	} else {
+		if ret_cast.is_empty() {
+			ret
+		} else {
+			format!("({typ})ret", typ = ret_cast).into()
+		}
+	} else if ret_cast.is_empty() {
 		format!("Ok({})", ret).into()
+	} else {
+		format!("Ok<{typ}>({ret})", typ = ret_cast, ret = ret).into()
 	}
 }
 
@@ -402,9 +405,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 
 		let return_type = self.return_type();
 		let return_wrapper_full = if is_infallible {
-			return_type.cpp_extern_return()
+			return_type.cpp_extern_return(ConstnessOverride::No)
 		} else {
-			return_type.cpp_extern_return_wrapper_full()
+			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::No)
 		};
 		let ret = cpp_method_return(self, is_infallible);
 		let ret = if cleanup_args.is_empty() {

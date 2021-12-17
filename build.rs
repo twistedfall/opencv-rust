@@ -199,6 +199,9 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		}
 	});
 	if cfg!(target_env = "msvc") {
+		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
+	}
+	if out.get_compiler().is_like_msvc() {
 		out.flag("-std:c++latest")
 			.flag("-EHsc")
 			.flag("-bigobj")
@@ -230,11 +233,13 @@ fn setup_rerun() -> Result<()> {
 			}
 		}
 	}
+	println!("cargo:rerun-if-changed=Cargo.toml");
 	Ok(())
 }
 
 fn build_wrapper(opencv: &Library) {
 	let mut cc = build_compiler(opencv);
+	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
 	for module in &["sys", "types"] { // special internal modules
 		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);

@@ -83,7 +83,7 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 	if mat.is_continuous() {
 		Ok(())
 	} else {
-		Err(Error::new(core::StsUnmatchedSizes, "Mat is not continuous, operation is not applicable".to_string()))
+		Err(Error::new(core::StsUnmatchedSizes, "Mat is not continuous, operation is not applicable"))
 	}
 }
 
@@ -345,7 +345,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			.and_then(|_| {
 				let data = self.data();
 				if data.is_null() {
-					Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
+					Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
 				} else {
 					Ok(unsafe { slice::from_raw_parts(data, self.total() * self.elem_size()?) })
 				}
@@ -365,7 +365,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let data = self.data();
 		if data.is_null() {
-			Err(Error::new(core::StsNullPtr, "Function returned null pointer".to_string()))
+			Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
 		} else {
 			Ok(slice::from_raw_parts(data as *const T, self.total()))
 		}
@@ -612,7 +612,7 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 		if self.has_elements() {
 			self.try_deref().map(|ptr| unsafe { convert_ptr(ptr) })
 		} else {
-			Err(Error::new(core::StsOutOfRange, "MatConstIterator doesn't have any more elements".to_owned()))
+			Err(Error::new(core::StsOutOfRange, "MatConstIterator doesn't have any more elements"))
 		}
 	}
 }

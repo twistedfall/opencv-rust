@@ -12,20 +12,23 @@ pub struct Error {
 }
 
 impl Error {
-	pub fn new(code: i32, message: String) -> Self {
-		Self { code, message }
+	#[inline]
+	pub fn new(code: i32, message: impl Into<String>) -> Self {
+		Self { code, message: message.into() }
 	}
 }
 
 impl fmt::Display for Error {
+	#[inline]
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{} (code: {})", self.message, self.code)
 	}
 }
 
 impl From<NulError> for Error {
+	#[inline]
 	fn from(_: NulError) -> Self {
-		Self::new(core::StsBadArg, "Passed Rust string contains nul byte".into())
+		Self::new(core::StsBadArg, "Passed Rust string contains nul byte")
 	}
 }
 

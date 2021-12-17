@@ -9,6 +9,7 @@ use clang::{
 };
 
 use crate::{
+	ConstnessOverride,
 	DefaultElement,
 	DefinitionLocation,
 	DependentType,
@@ -56,7 +57,7 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 		out.reserve(1 + if is_data_type { 3 } else { 0 });
 		if element_type.as_string().is_some() {
 			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				TypeRef::new(self.gen_env.resolve_type(&element_type.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"), self.gen_env),
+				TypeRef::new(self.gen_env.resolve_type(&element_type.cpp_extern_return(ConstnessOverride::No)).expect("Can't resolve string cpp_extern_return()"), self.gen_env),
 				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
 				self.gen_env,
 			)));
