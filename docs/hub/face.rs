@@ -59,7 +59,7 @@ pub fn create_facemark_lbf() -> Result<core::Ptr<dyn crate::face::Facemark>> {
 /// * color: The color of points in BGR format represented by cv::Scalar.
 /// 
 /// <B>Example of usage</B>
-/// ```ignore
+/// ```C++
 /// std::vector<Rect> faces;
 /// std::vector<std::vector<Point2f> > landmarks;
 /// facemark->getFaces(img, faces);
@@ -107,7 +107,7 @@ pub fn get_faces_haar(image: &dyn core::ToInputArray, faces: &mut dyn core::ToOu
 /// * params: detector parameters
 /// 
 /// <B>Example of usage</B>
-/// ```ignore
+/// ```C++
 /// std::vector<cv::Rect> faces;
 /// CParams params("haarcascade_frontalface_alt.xml");
 /// cv::face::getFaces(frame, faces, &params);
@@ -136,7 +136,7 @@ pub fn get_faces(image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputA
 /// * annotations: The loaded paths of annotation files.
 /// 
 /// Example of usage:
-/// ```ignore
+/// ```C++
 /// String imageFiles = "images_path.txt";
 /// String ptsFiles = "annotations_path.txt";
 /// std::vector<String> images_train;
@@ -163,14 +163,14 @@ pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut c
 /// * offset: An offset value to adjust the loaded points.
 /// 
 /// <B>Example of usage</B>
-/// ```ignore
+/// ```C++
 /// std::vector<Point2f> points;
 /// face::loadFacePoints("filename.txt", points, 0.0f);
 /// ```
 /// 
 /// 
 /// The annotation file should follow the default format which is
-/// ```ignore
+/// ```C++
 /// version: 1
 /// n_points:  68
 /// {
@@ -209,7 +209,7 @@ pub fn load_face_points(filename: &str, points: &mut dyn core::ToOutputArray, of
 /// * offset: An offset value to adjust the loaded points.
 /// 
 /// <B>Example of usage</B>
-/// ```ignore
+/// ```C++
 /// cv::String imageFiles = "../data/images_train.txt";
 /// cv::String ptsFiles = "../data/points_train.txt";
 /// std::vector<String> images;
@@ -219,7 +219,7 @@ pub fn load_face_points(filename: &str, points: &mut dyn core::ToOutputArray, of
 /// 
 /// 
 /// example of content in the images_train.txt
-/// ```ignore
+/// ```C++
 /// /home/user/ibug/image_003_1.jpg
 /// /home/user/ibug/image_004_1.jpg
 /// /home/user/ibug/image_005_1.jpg
@@ -228,7 +228,7 @@ pub fn load_face_points(filename: &str, points: &mut dyn core::ToOutputArray, of
 /// 
 /// 
 /// example of content in the points_train.txt
-/// ```ignore
+/// ```C++
 /// /home/user/ibug/image_003_1.pts
 /// /home/user/ibug/image_004_1.pts
 /// /home/user/ibug/image_005_1.pts
@@ -257,7 +257,7 @@ pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut c
 /// Each line contains the filename of an image followed by
 /// pairs of x and y values of facial landmarks points separated by a space.
 /// Example
-/// ```ignore
+/// ```C++
 /// /home/user/ibug/image_003_1.jpg 336.820955 240.864510 334.238298 260.922709 335.266918 ...
 /// /home/user/ibug/image_005_1.jpg 376.158428 230.845712 376.736984 254.924635 383.265403 ...
 /// ```
@@ -269,7 +269,7 @@ pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut c
 /// * offset: An offset value to adjust the loaded points.
 /// 
 /// <B>Example of usage</B>
-/// ```ignore
+/// ```C++
 /// cv::String imageFiles = "../data/images_train.txt";
 /// cv::String ptsFiles = "../data/points_train.txt";
 /// std::vector<String> images;
@@ -767,7 +767,7 @@ impl dyn EigenFaceRecognizer + '_ {
 /// 
 /// Here is an example of setting a threshold for the Eigenfaces method, when creating the model:
 /// 
-/// ```ignore
+/// ```C++
 /// // Let's say we want to keep 10 Eigenfaces and have a threshold value of 10.0
 /// int num_components = 10;
 /// double threshold = 10.0;
@@ -781,7 +781,7 @@ impl dyn EigenFaceRecognizer + '_ {
 /// Algorithm it's possible to set internal model thresholds during runtime. Let's see how we would
 /// set/get the prediction for the Eigenface model, we've created above:
 /// 
-/// ```ignore
+/// ```C++
 /// // The following line reads the threshold from the Eigenfaces model:
 /// double current_threshold = model->getDouble("threshold");
 /// // And this line sets the threshold to 0.0:
@@ -791,7 +791,7 @@ impl dyn EigenFaceRecognizer + '_ {
 /// 
 /// If you've set the threshold to 0.0 as we did above, then:
 /// 
-/// ```ignore
+/// ```C++
 /// //
 /// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
 /// // Get a prediction from the model. Note: We've set a threshold of 0.0 above,
@@ -809,7 +809,7 @@ impl dyn EigenFaceRecognizer + '_ {
 /// Since every FaceRecognizer is a Algorithm, you can use Algorithm::name to get the name of a
 /// FaceRecognizer:
 /// 
-/// ```ignore
+/// ```C++
 /// // Create a FaceRecognizer:
 /// Ptr<FaceRecognizer> model = EigenFaceRecognizer::create();
 /// // And here's how to get its name:
@@ -831,7 +831,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	/// 
 	/// The following example shows how to get a prediction from a trained model:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// using namespace cv;
 	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
 	/// // ...
@@ -844,7 +844,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	/// 
 	/// Or to get a prediction and the associated confidence (e.g. distance):
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// using namespace cv;
 	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
 	/// // ...
@@ -880,7 +880,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	/// 
 	/// The following example shows how to get a prediction from a trained model:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// using namespace cv;
 	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
 	/// // ...
@@ -893,7 +893,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	/// 
 	/// Or to get a prediction and the associated confidence (e.g. distance):
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// using namespace cv;
 	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
 	/// // ...
@@ -1049,7 +1049,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 	/// the same label. For the available FaceRecognizer you don't have to pay any attention to the order of
 	/// the labels, just make sure same persons have the same label:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// // holds images and labels
 	/// vector<Mat> images;
 	/// vector<int> labels;
@@ -1069,7 +1069,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 	/// Now that you have read some images, we can create a new FaceRecognizer. In this example I'll create
 	/// a Fisherfaces model and decide to keep all of the possible Fisherfaces:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// // Create a new Fisherfaces model and retain all available Fisherfaces,
 	/// // this is the most common usage of this specific FaceRecognizer:
 	/// //
@@ -1079,7 +1079,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 	/// 
 	/// And finally train it on the given dataset (the face images and labels):
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// // This is the common interface to train all of the available cv::FaceRecognizer
 	/// // implementations:
 	/// //
@@ -1111,7 +1111,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 	/// re-estimate the model with FaceRecognizer::train. In any case, a call to train empties the existing
 	/// model and learns a new model, while update does not delete any model data.
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// // Create a new LBPH model (it can be updated) and use the default parameters,
 	/// // this is the most common usage of this specific FaceRecognizer:
 	/// //
@@ -1137,7 +1137,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 	/// Calling update on an Eigenfaces model (see EigenFaceRecognizer::create), which doesn't support
 	/// updating, will throw an error similar to:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// OpenCV Error: The function/feature is not implemented (This FaceRecognizer (FaceRecognizer.Eigenfaces) does not support updating, you have to use FaceRecognizer::train to update it.) in update, file /home/philipp/git/opencv/modules/contrib/src/facerec.cpp, line 305
 	/// terminate called after throwing an instance of "cv::Exception"
 	/// ```
@@ -1225,7 +1225,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizerCons
 /// Therefore, the users should declare a desired algorithm before they can use it in their application.
 /// 
 /// Here is an example on how to declare a facemark algorithm:
-/// ```ignore
+/// ```C++
 /// // Using Facemark in your code:
 /// Ptr<Facemark> facemark = createFacemarkLBF();
 /// ```
@@ -1247,7 +1247,7 @@ pub trait Facemark: core::AlgorithmTrait + crate::face::FacemarkConst {
 	/// * model: A string represent the filename of a trained model.
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// facemark->loadModel("../data/lbf.model");
 	/// ```
 	/// 
@@ -1269,7 +1269,7 @@ pub trait Facemark: core::AlgorithmTrait + crate::face::FacemarkConst {
 	/// * landmarks: The detected landmark points for each faces.
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// Mat image = imread("image.jpg");
 	/// std::vector<Rect> faces;
 	/// std::vector<std::vector<Point2f> > landmarks;
@@ -2495,7 +2495,7 @@ impl FacemarkLBF_Params {
 /// provides a unified access to those facemark algorithms in OpenCV.
 /// 
 /// Here is an example on how to declare facemark algorithm:
-/// ```ignore
+/// ```C++
 /// // Using Facemark in your code:
 /// Ptr<Facemark> facemark = FacemarkLBF::create();
 /// ```
@@ -2528,7 +2528,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// * landmarks: The ground-truth of facial landmarks points corresponds to the image.
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// String imageFiles = "../data/images_train.txt";
 	/// String ptsFiles = "../data/points_train.txt";
 	/// std::vector<String> images_train;
@@ -2550,7 +2550,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// The contents in the training files should follows the standard format.
 	/// Here are examples for the contents in these files.
 	/// example of content in the images_train.txt
-	/// ```ignore
+	/// ```C++
 	/// /home/user/ibug/image_003_1.jpg
 	/// /home/user/ibug/image_004_1.jpg
 	/// /home/user/ibug/image_005_1.jpg
@@ -2559,7 +2559,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// 
 	/// 
 	/// example of content in the points_train.txt
-	/// ```ignore
+	/// ```C++
 	/// /home/user/ibug/image_003_1.pts
 	/// /home/user/ibug/image_004_1.pts
 	/// /home/user/ibug/image_005_1.pts
@@ -2585,7 +2585,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// * parameters: Optional extra parameters (algorithm dependent).
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// FacemarkLBF::Params params;
 	/// params.model_filename = "ibug68.model"; // filename to save the trained model
 	/// Ptr<Facemark> facemark = FacemarkLBF::create(params);
@@ -2613,14 +2613,14 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// * userData: Detector parameters
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// MyDetectorParameters detectorParameters(...);
 	/// facemark->setFaceDetector(myDetector, &detectorParameters);
 	/// ```
 	/// 
 	/// 
 	/// Example of a user defined face detector
-	/// ```ignore
+	/// ```C++
 	/// bool myDetector( InputArray image, OutputArray faces, void* userData)
 	/// {
 	///    MyDetectorParameters* params = (MyDetectorParameters*)userData;
@@ -2652,7 +2652,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// * faces: Output of the function which represent region of interest of the detected faces. Each face is stored in cv::Rect container.
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// std::vector<cv::Rect> faces;
 	/// facemark->getFaces(img, faces);
 	/// for(int j=0;j<faces.size();j++){
@@ -2677,7 +2677,7 @@ pub trait FacemarkTrain: crate::face::Facemark + crate::face::FacemarkTrainConst
 	/// * items: The obtained data, algorithm dependent.
 	/// 
 	/// <B>Example of usage</B>
-	/// ```ignore
+	/// ```C++
 	/// Ptr<FacemarkAAM> facemark = FacemarkAAM::create();
 	/// facemark->loadModel("AAM.yml");
 	/// 
@@ -2956,7 +2956,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 ///    this implementation is largely based on: https://code.google.com/archive/p/pam-face-authentication (GSOC 2009)
 /// 
 ///    use it like:
-///    ```ignore
+///    ```C++
 /// 
 ///    Ptr<face::MACE> mace = face::MACE::create(64);
 /// 
@@ -2971,7 +2971,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 /// 
 ///    you can also use two-factor authentication, with an additional passphrase:
 /// 
-///    ```ignore
+///    ```C++
 ///    String owners_passphrase = "ilikehotdogs";
 ///    Ptr<face::MACE> mace = face::MACE::create(64);
 ///    mace->salt(owners_passphrase);
@@ -2989,7 +2989,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 /// 
 /// 
 ///    save/load your model:
-///    ```ignore
+///    ```C++
 ///    Ptr<face::MACE> mace = face::MACE::create(64);
 ///    mace->train(pos_images);
 ///    mace->save("my_mace.xml");

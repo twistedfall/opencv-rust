@@ -11,7 +11,6 @@ OUT_DIR="$script_dir/../out/generator/"
 
 cd "$script_dir/.."
 
-export RUSTFLAGS=-Clink-arg=-fuse-ld=lld
 export RUST_BACKTRACE=full
 if ! cargo build --release -p opencv-binding-generator --bin binding-generator; then
 	exit

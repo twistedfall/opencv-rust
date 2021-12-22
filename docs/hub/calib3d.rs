@@ -2161,7 +2161,7 @@ pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, patt
 /// different parameters if returned coordinates are not accurate enough.
 /// 
 /// Sample usage of detecting and drawing chessboard corners: :
-/// ```ignore
+/// ```C++
 ///    Size patternsize(8,6); //interior number of corners
 ///    Mat gray = ....; //source image
 ///    vector<Point2f> corners; //this will be filled by the detected corners
@@ -2222,7 +2222,7 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 /// row). Otherwise, if the function fails to find all the corners or reorder them, it returns 0.
 /// 
 /// Sample usage of detecting and drawing the centers of circles: :
-/// ```ignore
+/// ```C++
 ///    Size patternsize(7,7); //number of centers
 ///    Mat gray = ...; //source image
 ///    vector<Point2f> centers; //this will be filled by the detected centers
@@ -2274,7 +2274,7 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// row). Otherwise, if the function fails to find all the corners or reorder them, it returns 0.
 /// 
 /// Sample usage of detecting and drawing the centers of circles: :
-/// ```ignore
+/// ```C++
 ///    Size patternsize(7,7); //number of centers
 ///    Mat gray = ...; //source image
 ///    vector<Point2f> centers; //this will be filled by the detected centers
@@ -2662,7 +2662,7 @@ pub fn find_fundamental_mat_2(points1: &dyn core::ToInputArray, points2: &dyn co
 /// The calculated fundamental matrix may be passed further to #computeCorrespondEpilines that finds the
 /// epipolar lines corresponding to the specified points. It can also be passed to
 /// #stereoRectifyUncalibrated to compute the rectification transformation. :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -2734,7 +2734,7 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 /// The calculated fundamental matrix may be passed further to #computeCorrespondEpilines that finds the
 /// epipolar lines corresponding to the specified points. It can also be passed to
 /// #stereoRectifyUncalibrated to compute the rectification transformation. :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -2807,7 +2807,7 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 /// The calculated fundamental matrix may be passed further to #computeCorrespondEpilines that finds the
 /// epipolar lines corresponding to the specified points. It can also be passed to
 /// #stereoRectifyUncalibrated to compute the rectification transformation. :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -3871,7 +3871,7 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for findEssentialMat.:
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -3947,7 +3947,7 @@ pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn co
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -4017,7 +4017,7 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);
@@ -4115,7 +4115,7 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
-/// ```ignore
+/// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 ///    int point_count = 100;
 ///    vector<Point2f> points1(point_count);

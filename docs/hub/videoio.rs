@@ -1216,7 +1216,7 @@ pub trait VideoCaptureTraitConst {
 	/// 
 	/// Note: Reading / writing properties involves many layers. Some unexpected result might happens
 	/// along this chain.
-	/// ```ignore
+	/// ```C++
 	/// VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware
 	/// ```
 	/// 

@@ -23,7 +23,7 @@
 //! Widgets are **implicitly shared**. Therefore, one can add a widget to the scene, and modify the
 //! widget without re-adding the widget.
 //! 
-//! ```ignore
+//! ```C++
 //! // Create a cloud widget
 //! viz::WCloud cw(cloud, viz::Color::red());
 //! // Display it in a window

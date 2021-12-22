@@ -11,8 +11,12 @@ use semver::{Version, VersionReq};
 
 use library::Library;
 
+use crate::docs::{handle_running_in_docsrs, GenerateFullBindings};
+
 #[path = "build/cmake_probe.rs"]
 mod cmake_probe;
+#[path = "build/docs.rs"]
+mod docs;
 #[path = "build/generator.rs"]
 mod generator;
 #[path = "build/library.rs"]
@@ -36,7 +40,7 @@ static OPENCV_BRANCH_34: Lazy<VersionReq> =
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 14] = [
+static ENV_VARS: [&str; 16] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -51,6 +55,8 @@ static ENV_VARS: [&str; 14] = [
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
 	"VCPKGRS_DYNAMIC",
+	"OCVRS_DOCS_GENERATE_DIR",
+	"DOCS_RS",
 ];
 
 fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
@@ -310,18 +316,7 @@ fn build_wrapper(opencv: &Library) {
 }
 
 fn main() -> Result<()> {
-	if cfg!(feature = "docs-only") {
-		// fake setup for docs.rs
-		println!(r#"cargo:rustc-cfg=ocvrs_opencv_branch_4"#);
-		for entry in SRC_DIR.join("opencv/hub").read_dir().expect("Can't read hub dir") {
-			let entry = entry.expect("Can't read directory entry");
-			let path = entry.path();
-			if entry.file_type().map(|f| f.is_file()).unwrap_or(false) && path.extension().map_or(false, |e| e == "rs") {
-				if let Some(module) = path.file_stem().and_then(OsStr::to_str) {
-					println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
-				}
-			}
-		}
+	if matches!(handle_running_in_docsrs(), GenerateFullBindings::Stop) {
 		return Ok(());
 	}
 

@@ -522,7 +522,7 @@ impl ICP {
 
 /// Class, allowing the load and matching 3D models.
 /// Typical Use:
-/// ```ignore
+/// ```C++
 /// // Train a model
 /// ppf_match_3d::PPF3DDetector detector(0.05, 0.05);
 /// detector.trainModel(pc);
@@ -597,7 +597,7 @@ pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 
 /// Class, allowing the load and matching 3D models.
 /// Typical Use:
-/// ```ignore
+/// ```C++
 /// // Train a model
 /// ppf_match_3d::PPF3DDetector detector(0.05, 0.05);
 /// detector.trainModel(pc);

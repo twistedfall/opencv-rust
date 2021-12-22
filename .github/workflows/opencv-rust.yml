@@ -55,13 +55,6 @@ jobs:
         run: ci/script.sh
         shell: bash
 
-      - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: generated-bindings-src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
-          path: src/opencv
-
   vcpkg:
     strategy:
       fail-fast: false
@@ -97,13 +90,6 @@ jobs:
           OS_FAMILY: ${{ runner.os }}
         run: ci/script.sh
         shell: bash
-
-      - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: generated-bindings-vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}
-          path: src/opencv
 
   bin:
     strategy:
@@ -145,13 +131,6 @@ jobs:
           OS_FAMILY: ${{ runner.os }}
         run: ci/script.sh
         shell: bash
-
-      - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: generated-bindings-bin-${{ matrix.version.opencv }}-${{ matrix.os-image }}
-          path: src/opencv
 
   docs-rs:
     runs-on: ubuntu-20.04

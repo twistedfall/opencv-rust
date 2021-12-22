@@ -917,7 +917,7 @@ pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst 
 	///    This value can then be used to separate strong from weaker classifications.
 	/// 
 	///    A code sample on how to use it efficiently can be found below:
-	///    ```ignore
+	///    ```C++
 	///    Mat img;
 	///    vector<double> weights;
 	///    vector<int> levels;

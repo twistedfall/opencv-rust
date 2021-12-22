@@ -2087,7 +2087,7 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 /// channel is processed independently.
 /// The function can be replaced with a matrix expression:
-/// ```ignore
+/// ```C++
 ///    dst = src1*alpha + src2*beta + gamma;
 /// ```
 /// 
@@ -2135,7 +2135,7 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 /// channel is processed independently.
 /// 
 /// The first function in the list above can be replaced with matrix expressions:
-/// ```ignore
+/// ```C++
 ///    dst = src1 + src2;
 ///    dst += src1; // equivalent to add(dst, src1, dst);
 /// ```
@@ -2359,7 +2359,7 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// cv::BORDER_WRAP mode in the horizontal direction, cv::BORDER_REFLECT_101 in the vertical direction and
 /// want to compute value of the "virtual" pixel Point(-5, 100) in a floating-point image img , it
 /// looks like:
-/// ```ignore
+/// ```C++
 ///    float val = img.at<float>(borderInterpolate(100, img.rows, cv::BORDER_REFLECT_101),
 ///                               borderInterpolate(-5, img.cols, cv::BORDER_WRAP));
 /// ```
@@ -2519,7 +2519,7 @@ pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Poin
 /// When the comparison result is true, the corresponding element of output
 /// array is set to 255. The comparison operations can be replaced with the
 /// equivalent matrix expressions:
-/// ```ignore
+/// ```C++
 ///    Mat dst1 = src1 >= src2;
 ///    Mat dst2 = src1 < 8;
 ///    ...
@@ -2605,7 +2605,7 @@ pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// emulated by calling the Mat::convertTo method (or by using matrix
 /// expressions) and then by calculating an absolute value of the result.
 /// For example:
-/// ```ignore
+/// ```C++
 ///    Mat_<float> A(30,30);
 ///    randu(A, Scalar(-100), Scalar(100));
 ///    Mat_<float> B = A*5 + 3;
@@ -2646,7 +2646,7 @@ pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 /// The function supports the mode when src is already in the middle of dst . In this case, the
 /// function does not copy src itself but simply constructs the border, for example:
 /// 
-/// ```ignore
+/// ```C++
 ///    // let border be the same in all directions
 ///    int border=2;
 ///    // constructs a larger image to fit both the image and the border
@@ -2964,7 +2964,7 @@ pub fn unregister_page_locked(m: &mut core::Mat) -> Result<()> {
 /// Also, the function performance depends very much, and not monotonically, on the array size (see
 /// getOptimalDFTSize ). In the current implementation DCT of a vector of size N is calculated via DFT
 /// of a vector of size N/2 . Thus, the optimal DCT size N1 \>= N can be calculated as:
-/// ```ignore
+/// ```C++
 ///    size_t getOptimalDCTSize(size_t N) { return 2*getOptimalDFTSize((N+1)/2); }
 ///    N1 = getOptimalDCTSize(N);
 /// ```
@@ -3257,7 +3257,7 @@ pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
 /// method.
 /// 
 /// The sample below illustrates how to calculate a DFT-based convolution of two 2D real arrays:
-/// ```ignore
+/// ```C++
 ///    void convolveDFT(InputArray A, InputArray B, OutputArray C)
 ///    {
 ///        // reallocate the output array if needed
@@ -3477,7 +3477,7 @@ pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToO
 /// Note: Assumes real eigenvalues.
 /// 
 /// The function calculates eigenvalues and eigenvectors (optional) of the square matrix src:
-/// ```ignore
+/// ```C++
 ///    src*eigenvectors.row(i).t() = eigenvalues.at<srcType>(i)*eigenvectors.row(i).t()
 /// ```
 /// 
@@ -3504,7 +3504,7 @@ pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn c
 /// 
 /// The function cv::eigen calculates just eigenvalues, or eigenvalues and eigenvectors of the symmetric
 /// matrix src:
-/// ```ignore
+/// ```C++
 ///    src*eigenvectors.row(i).t() = eigenvalues.at<srcType>(i)*eigenvectors.row(i).t()
 /// ```
 /// 
@@ -3647,7 +3647,7 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// as threshold(), compare(), >, ==, etc, return all of
 /// the non-zero indices as a cv::Mat or std::vector<cv::Point> (x,y)
 /// For example:
-/// ```ignore
+/// ```C++
 ///    cv::Mat binaryImage; // input, binary image
 ///    cv::Mat locations;   // output, locations of non-zero pixels
 ///    cv::findNonZero(binaryImage, locations);
@@ -3657,7 +3657,7 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// ```
 /// 
 /// or
-/// ```ignore
+/// ```C++
 ///    cv::Mat binaryImage; // input, binary image
 ///    vector<Point> locations;   // output, locations of non-zero pixels
 ///    cv::findNonZero(binaryImage, locations);
@@ -3746,7 +3746,7 @@ pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fli
 /// 
 /// The function can be replaced with a matrix expression. For example, the
 /// above call can be replaced with:
-/// ```ignore
+/// ```C++
 ///    dst = alpha*src1.t()*src2 + beta*src3.t();
 /// ```
 /// 
@@ -3975,7 +3975,7 @@ pub fn get_tick_count() -> Result<i64> {
 /// 
 /// The function returns the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// ```ignore
+/// ```C++
 ///    double t = (double)getTickCount();
 ///    // do something ...
 ///    t = ((double)getTickCount() - t)/getTickFrequency();
@@ -4052,7 +4052,7 @@ pub fn have_openvx() -> Result<bool> {
 /// Applies horizontal concatenation to given matrices.
 /// 
 /// The function horizontally concatenates two or more cv::Mat matrices (with the same number of rows).
-/// ```ignore
+/// ```C++
 ///    cv::Mat matArray[] = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 ///                            cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 ///                            cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -4075,7 +4075,7 @@ pub fn have_openvx() -> Result<bool> {
 /// 
 /// ## Overloaded parameters
 /// 
-///  ```ignore
+///  ```C++
 ///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 4,
 ///                                                   2, 5,
 ///                                                   3, 6);
@@ -4109,7 +4109,7 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// Applies horizontal concatenation to given matrices.
 /// 
 /// The function horizontally concatenates two or more cv::Mat matrices (with the same number of rows).
-/// ```ignore
+/// ```C++
 ///    cv::Mat matArray[] = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 ///                            cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 ///                            cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -4132,7 +4132,7 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// 
 /// ## Overloaded parameters
 /// 
-///  ```ignore
+///  ```C++
 ///    std::vector<cv::Mat> matrices = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 ///                                       cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 ///                                       cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -4971,7 +4971,7 @@ pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 /// 
 /// In the example below, the code splits a 4-channel BGRA image into a 3-channel BGR (with B and R
 /// channels swapped) and a separate alpha-channel image:
-/// ```ignore
+/// ```C++
 ///    Mat bgra( 100, 100, CV_8UC4, Scalar(255,0,0,255) );
 ///    Mat bgr( bgra.rows, bgra.cols, CV_8UC3 );
 ///    Mat alpha( bgra.rows, bgra.cols, CV_8UC1 );
@@ -5041,7 +5041,7 @@ pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOut
 /// 
 /// In the example below, the code splits a 4-channel BGRA image into a 3-channel BGR (with B and R
 /// channels swapped) and a separate alpha-channel image:
-/// ```ignore
+/// ```C++
 ///    Mat bgra( 100, 100, CV_8UC4, Scalar(255,0,0,255) );
 ///    Mat bgr( bgra.rows, bgra.cols, CV_8UC3 );
 ///    Mat alpha( bgra.rows, bgra.cols, CV_8UC1 );
@@ -5344,7 +5344,7 @@ pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToIn
 /// the range transformation for sparse matrices is not allowed since it can shift the zero level.
 /// 
 /// Possible usage with some positive example data:
-/// ```ignore
+/// ```C++
 ///    vector<double> positiveData = { 2.0, 8.0, 10.0 };
 ///    vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 /// 
@@ -5421,7 +5421,7 @@ pub fn normalize_sparse(src: &core::SparseMat, dst: &mut core::SparseMat, alpha:
 /// the range transformation for sparse matrices is not allowed since it can shift the zero level.
 /// 
 /// Possible usage with some positive example data:
-/// ```ignore
+/// ```C++
 ///    vector<double> positiveData = { 2.0, 8.0, 10.0 };
 ///    vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 /// 
@@ -6716,7 +6716,7 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 /// elements are used. However, it is possible to get true values for
 /// negative values using some extra operations. In the example below,
 /// computing the 5th root of array src shows:
-/// ```ignore
+/// ```C++
 ///    Mat mask = src < 0;
 ///    pow(src, 1./5, dst);
 ///    subtract(Scalar::all(0), dst, dst, mask);
@@ -7203,7 +7203,7 @@ pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Resu
 /// the sum of a scaled array and another array:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29)
 /// The function can also be emulated with a matrix expression, for example:
-/// ```ignore
+/// ```C++
 ///    Mat A(3, 3, CV_64F);
 ///    ...
 ///    A.row(0) = A.row(1)*2 + A.row(2);
@@ -7250,7 +7250,7 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 /// 
 /// The function can also be emulated using the matrix initializers and the
 /// matrix expressions:
-/// ```ignore
+/// ```C++
 ///    Mat A = Mat::eye(4, 3, CV_32F)*5;
 ///    // A will be set to [[5, 0, 0], [0, 5, 0], [0, 0, 5], [0, 0, 0]]
 /// ```
@@ -7492,7 +7492,7 @@ pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: 
 /// ascending or descending order. So you should pass two operation flags to
 /// get desired behaviour. Instead of reordering the elements themselves, it
 /// stores the indices of sorted elements in the output array. For example:
-/// ```ignore
+/// ```C++
 ///    Mat A = Mat::eye(3,3,CV_32F), B;
 ///    sortIdx(A, B, SORT_EVERY_ROW + SORT_ASCENDING);
 ///    // B will probably contain
@@ -7637,7 +7637,7 @@ pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> 
 /// channel is processed independently.
 /// 
 /// The first function in the list above can be replaced with matrix expressions:
-/// ```ignore
+/// ```C++
 ///    dst = src1 - src2;
 ///    dst -= src1; // equivalent to subtract(dst, src1, dst);
 /// ```
@@ -8374,7 +8374,7 @@ pub unsafe fn initialize_context_from_va(display: core::va_display, try_interop:
 /// Applies vertical concatenation to given matrices.
 /// 
 /// The function vertically concatenates two or more cv::Mat matrices (with the same number of cols).
-/// ```ignore
+/// ```C++
 ///    cv::Mat matArray[] = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 ///                            cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 ///                            cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -8396,7 +8396,7 @@ pub unsafe fn initialize_context_from_va(display: core::va_display, try_interop:
 /// 
 /// ## Overloaded parameters
 /// 
-///  ```ignore
+///  ```C++
 ///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 7,
 ///                                                   2, 8,
 ///                                                   3, 9);
@@ -8433,7 +8433,7 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// Applies vertical concatenation to given matrices.
 /// 
 /// The function vertically concatenates two or more cv::Mat matrices (with the same number of cols).
-/// ```ignore
+/// ```C++
 ///    cv::Mat matArray[] = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 ///                            cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 ///                            cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -8455,7 +8455,7 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// 
 /// ## Overloaded parameters
 /// 
-///  ```ignore
+///  ```C++
 ///    std::vector<cv::Mat> matrices = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 ///                                       cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 ///                                       cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -9042,7 +9042,7 @@ impl Default for AsyncPromise {
 /// Designed for command line parsing
 /// 
 /// The sample below demonstrates how to use CommandLineParser:
-/// ```ignore
+/// ```C++
 ///    CommandLineParser parser(argc, argv, keys);
 ///    parser.about("Application name v1.0.0");
 /// 
@@ -9082,7 +9082,7 @@ impl Default for AsyncPromise {
 /// 
 /// For example:
 /// 
-/// ```ignore
+/// ```C++
 ///    const String keys =
 ///        "{help h usage ? |      | print this message   }"
 ///        "{@image1        |      | image1 for compare   }"
@@ -9108,7 +9108,7 @@ impl Default for AsyncPromise {
 /// 
 /// For the described keys:
 /// 
-/// ```ignore
+/// ```C++
 ///    # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
 ///    $ ./app -N=200 1.png 2.jpg 19 -ts
 /// 
@@ -9126,7 +9126,7 @@ pub trait CommandLineParserTraitConst {
 	/// This method returns the path to the executable from the command line (`argv[0]`).
 	/// 
 	/// For example, if the application has been started with such a command:
-	/// ```ignore
+	/// ```C++
 	/// $ ./bin/my-executable
 	/// ```
 	/// 
@@ -9217,7 +9217,7 @@ pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 /// Designed for command line parsing
 /// 
 /// The sample below demonstrates how to use CommandLineParser:
-/// ```ignore
+/// ```C++
 ///    CommandLineParser parser(argc, argv, keys);
 ///    parser.about("Application name v1.0.0");
 /// 
@@ -9257,7 +9257,7 @@ pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 /// 
 /// For example:
 /// 
-/// ```ignore
+/// ```C++
 ///    const String keys =
 ///        "{help h usage ? |      | print this message   }"
 ///        "{@image1        |      | image1 for compare   }"
@@ -9283,7 +9283,7 @@ pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 /// 
 /// For the described keys:
 /// 
-/// ```ignore
+/// ```C++
 ///    # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
 ///    $ ./app -N=200 1.png 2.jpg 19 -ts
 /// 
@@ -9379,7 +9379,7 @@ impl CommandLineParser {
 /// 
 /// 
 /// Note: term criteria should meet following condition:
-/// ```ignore
+/// ```C++
 ///    termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 ///    // or
 ///    termcrit.type == TermCriteria::MAX_ITER) && termcrit.maxCount > 0
@@ -9510,7 +9510,7 @@ impl DMatch {
 /// 
 /// 
 /// Note: term criteria should meet following condition:
-/// ```ignore
+/// ```C++
 ///    termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
 /// 
@@ -11552,7 +11552,7 @@ impl LDA {
 /// constructor. A new array of the specified size and type is allocated. type has the same meaning as
 /// in the cvCreateMat method. For example, CV_8UC1 means a 8-bit single-channel array, CV_32FC2
 /// means a 2-channel (complex) floating-point array, and so on.
-/// ```ignore
+/// ```C++
 ///    // make a 7x7 complex matrix filled with 1+3j.
 ///    Mat M(7,7,CV_32FC2,Scalar(1,3));
 ///    // and now turn M to a 100x60 15-channel 8-bit matrix.
@@ -11564,7 +11564,7 @@ impl LDA {
 /// or type of the current array are different from the specified ones.
 /// 
 /// - Create a multi-dimensional array:
-/// ```ignore
+/// ```C++
 ///    // create a 100x100x100 8-bit array
 ///    int sz[] = {100, 100, 100};
 ///    Mat bigCube(3, sz, CV_8U, Scalar::all(0));
@@ -11583,7 +11583,7 @@ impl LDA {
 /// rows, several columns, rectangular region in the array (called a *minor* in algebra) or a
 /// diagonal. Such operations are also O(1) because the new header references the same data. You can
 /// actually modify a part of the array using this feature, for example:
-/// ```ignore
+/// ```C++
 ///    // add the 5-th row, multiplied by 3 to the 3rd row
 ///    M.row(3) = M.row(3) + M.row(5)*3;
 ///    // now copy the 7-th column to the 1-st column
@@ -11601,7 +11601,7 @@ impl LDA {
 /// 
 /// Due to the additional datastart and dataend members, it is possible to compute a relative
 /// sub-array position in the main *container* array using locateROI():
-/// ```ignore
+/// ```C++
 ///    Mat A = Mat::eye(10, 10, CV_32S);
 ///    // extracts A columns, 1 (inclusive) to 3 (exclusive).
 ///    Mat B = A(Range::all(), Range(1, 3));
@@ -11619,7 +11619,7 @@ impl LDA {
 /// - Make a header for user-allocated data. It can be useful to do the following:
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
-///    ```ignore
+///    ```C++
 ///        Mat process_video_frame(const unsigned char* pixels,
 ///                                 int width, int height, int step)
 ///        {
@@ -11634,7 +11634,7 @@ impl LDA {
 ///    ```
 /// 
 ///    -# Quickly initialize small matrices and/or get a super-fast element access.
-///    ```ignore
+///    ```C++
 ///        double m[3][3] = {{a, b, c}, {d, e, f}, {g, h, i}};
 ///        Mat M = Mat(3, 3, CV_64F, m).inv();
 ///    ```
@@ -11642,14 +11642,14 @@ impl LDA {
 ///    .
 /// 
 /// - Use MATLAB-style array initializers, zeros(), ones(), eye(), for example:
-/// ```ignore
+/// ```C++
 ///    // create a double-precision identity matrix and add it to M.
 ///    M += Mat::eye(M.rows, M.cols, CV_64F);
 /// ```
 /// 
 /// 
 /// - Use a comma-separated initializer:
-/// ```ignore
+/// ```C++
 ///    // create a 3x3 double-precision identity matrix
 ///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
 /// ```
@@ -11668,7 +11668,7 @@ impl LDA {
 /// described how to compute an address of each array element. Normally, you are not required to use the
 /// formula directly in the code. If you know the array element type (which can be retrieved using the
 /// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M%5F%7Bij%7D) of a 2-dimensional array as:
-/// ```ignore
+/// ```C++
 ///    M.at<double>(i,j) += 1.f;
 /// ```
 /// 
@@ -11677,7 +11677,7 @@ impl LDA {
 /// 
 /// If you need to process a whole row of a 2D array, the most efficient way is to get the pointer to
 /// the row first, and then just use the plain C operator [] :
-/// ```ignore
+/// ```C++
 ///    // compute sum of positive matrix elements
 ///    // (assuming that M is a double-precision matrix)
 ///    double sum=0;
@@ -11694,7 +11694,7 @@ impl LDA {
 /// for example, array addition). Such operations are called *element-wise*. It makes sense to check
 /// whether all the input/output arrays are continuous, namely, have no gaps at the end of each row. If
 /// yes, process them as a long single row:
-/// ```ignore
+/// ```C++
 ///    // compute the sum of positive matrix elements, optimized variant
 ///    double sum=0;
 ///    int cols = M.cols, rows = M.rows;
@@ -11715,7 +11715,7 @@ impl LDA {
 /// smaller, which is especially noticeable in case of small matrices.
 /// 
 /// Finally, there are STL-style iterators that are smart enough to skip gaps between successive rows:
-/// ```ignore
+/// ```C++
 ///    // compute sum of positive matrix elements, iterator-based variant
 ///    double sum=0;
 ///    MatConstIterator_<double> it = M.begin<double>(), it_end = M.end<double>();
@@ -11816,7 +11816,7 @@ pub trait MatTraitConst {
 	/// operation, regardless of the matrix size. The underlying data of the new matrix is shared with the
 	/// original matrix. Here is the example of one of the classical basic matrix processing operations,
 	/// axpy, used by LU and many other algorithms:
-	/// ```ignore
+	/// ```C++
 	///    inline void matrix_axpy(Mat& A, int i, int j, double alpha)
 	///    {
 	///        A.row(i) += A.row(j)*alpha;
@@ -11825,7 +11825,7 @@ pub trait MatTraitConst {
 	/// 
 	/// 
 	/// Note: In the current implementation, the following code does not work as expected:
-	/// ```ignore
+	/// ```C++
 	///    Mat A;
 	///    ...
 	///    A.row(i) = A.row(j); // will not work
@@ -11836,7 +11836,7 @@ pub trait MatTraitConst {
 	/// assignment is not true if you may have expected the j-th row to be copied to the i-th row. To
 	/// achieve that, you should either turn this simple assignment into an expression or use the
 	/// Mat::copyTo method:
-	/// ```ignore
+	/// ```C++
 	///    Mat A;
 	///    ...
 	///    // works, but looks a bit obscure.
@@ -11962,7 +11962,7 @@ pub trait MatTraitConst {
 	/// - `d>0` is a diagonal from the upper half. For example, d=1 means the diagonal is set
 	///   immediately above the main one.
 	/// For example:
-	/// ```ignore
+	/// ```C++
 	///    Mat m = (Mat_<int>(3,3) <<
 	///                1,2,3,
 	///                4,5,6,
@@ -11973,7 +11973,7 @@ pub trait MatTraitConst {
 	/// ```
 	/// 
 	/// The resulting matrices are
-	/// ```ignore
+	/// ```C++
 	///  d0 =
 	///    [1;
 	///    5;
@@ -12017,7 +12017,7 @@ pub trait MatTraitConst {
 	/// Copies the matrix to another one.
 	/// 
 	/// The method copies the matrix data to another matrix. Before copying the data, the method invokes :
-	/// ```ignore
+	/// ```C++
 	///    m.create(this->size(), this->type());
 	/// ```
 	/// 
@@ -12043,7 +12043,7 @@ pub trait MatTraitConst {
 	/// Copies the matrix to another one.
 	/// 
 	/// The method copies the matrix data to another matrix. Before copying the data, the method invokes :
-	/// ```ignore
+	/// ```C++
 	///    m.create(this->size(), this->type());
 	/// ```
 	/// 
@@ -12131,7 +12131,7 @@ pub trait MatTraitConst {
 	/// 
 	/// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
 	/// points as a 3xN matrix, do the following:
-	/// ```ignore
+	/// ```C++
 	///    std::vector<Point3f> vec;
 	///    ...
 	///    Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
@@ -12169,7 +12169,7 @@ pub trait MatTraitConst {
 	/// 
 	/// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
 	/// points as a 3xN matrix, do the following:
-	/// ```ignore
+	/// ```C++
 	///    std::vector<Point3f> vec;
 	///    ...
 	///    Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
@@ -12206,7 +12206,7 @@ pub trait MatTraitConst {
 	/// 
 	/// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
 	/// points as a 3xN matrix, do the following:
-	/// ```ignore
+	/// ```C++
 	///    std::vector<Point3f> vec;
 	///    ...
 	///    Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
@@ -12236,7 +12236,7 @@ pub trait MatTraitConst {
 	/// The method performs matrix transposition by means of matrix expressions. It does not perform the
 	/// actual transposition but returns a temporary matrix transposition object that can be further used as
 	/// a part of more complex matrix expressions or can be assigned to a matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat A1 = A + Mat::eye(A.size(), A.type())*lambda;
 	///    Mat C = A1.t()*A1; // compute (A + lambda*I)^t * (A + lamda*I)
 	/// ```
@@ -12277,7 +12277,7 @@ pub trait MatTraitConst {
 	/// scale. Note that this is not a matrix multiplication that corresponds to a simpler "\*" operator.
 	/// 
 	/// Example:
-	/// ```ignore
+	/// ```C++
 	///    Mat C = A.mul(5/B); // equivalent to divide(A, B, C, 5)
 	/// ```
 	/// 
@@ -12461,7 +12461,7 @@ pub trait MatTraitConst {
 	/// The continuity flag is stored as a bit in the Mat::flags field and is computed automatically when
 	/// you construct a matrix header. Thus, the continuity check is a very fast operation, though
 	/// theoretically it could be done as follows:
-	/// ```ignore
+	/// ```C++
 	///    // alternative implementation of Mat::isContinuous()
 	///    bool myCheckMatContinuity(const Mat& m)
 	///    {
@@ -12475,7 +12475,7 @@ pub trait MatTraitConst {
 	/// transformations, and others) do not depend on the image geometry. Thus, if all the input and output
 	/// arrays are continuous, the functions can process them as very long single-row vectors. The example
 	/// below illustrates how an alpha-blending function can be implemented:
-	/// ```ignore
+	/// ```C++
 	///    template<typename T>
 	///    void alphaBlendRGBA(const Mat& src1, const Mat& src2, Mat& dst)
 	///    {
@@ -12768,7 +12768,7 @@ pub trait MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -12808,7 +12808,7 @@ pub trait MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -12846,7 +12846,7 @@ pub trait MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -12885,7 +12885,7 @@ pub trait MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -12922,7 +12922,7 @@ pub trait MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13051,7 +13051,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// Such a scheme makes the memory management robust and efficient at the same time and helps avoid
 	/// extra typing for you. This means that usually there is no need to explicitly allocate output arrays.
 	/// That is, instead of writing:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray(color.rows, color.cols, color.depth());
@@ -13059,7 +13059,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ```
 	/// 
 	/// you can simply write:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray;
@@ -13095,7 +13095,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// Such a scheme makes the memory management robust and efficient at the same time and helps avoid
 	/// extra typing for you. This means that usually there is no need to explicitly allocate output arrays.
 	/// That is, instead of writing:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray(color.rows, color.cols, color.depth());
@@ -13103,7 +13103,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ```
 	/// 
 	/// you can simply write:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray;
@@ -13144,7 +13144,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// Such a scheme makes the memory management robust and efficient at the same time and helps avoid
 	/// extra typing for you. This means that usually there is no need to explicitly allocate output arrays.
 	/// That is, instead of writing:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray(color.rows, color.cols, color.depth());
@@ -13152,7 +13152,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ```
 	/// 
 	/// you can simply write:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray;
@@ -13194,7 +13194,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// Such a scheme makes the memory management robust and efficient at the same time and helps avoid
 	/// extra typing for you. This means that usually there is no need to explicitly allocate output arrays.
 	/// That is, instead of writing:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray(color.rows, color.cols, color.depth());
@@ -13202,7 +13202,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// ```
 	/// 
 	/// you can simply write:
-	/// ```ignore
+	/// ```C++
 	///    Mat color;
 	///    ...
 	///    Mat gray;
@@ -13390,7 +13390,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// can be required for filtering operations when pixels outside of the ROI should be taken into
 	/// account. When all the method parameters are positive, the ROI needs to grow in all directions by the
 	/// specified amount, for example:
-	/// ```ignore
+	/// ```C++
 	///    A.adjustROI(2, 2, 2, 2);
 	/// ```
 	/// 
@@ -13505,7 +13505,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13541,7 +13541,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13579,7 +13579,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13618,7 +13618,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13655,7 +13655,7 @@ pub trait MatTrait: core::MatTraitConst {
 	/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
 	/// 
 	/// The example below initializes a Hilbert matrix:
-	/// ```ignore
+	/// ```C++
 	///    Mat H(100, 100, CV_64F);
 	///    for(int i = 0; i < H.rows; i++)
 	///        for(int j = 0; j < H.cols; j++)
@@ -13721,7 +13721,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// constructor. A new array of the specified size and type is allocated. type has the same meaning as
 /// in the cvCreateMat method. For example, CV_8UC1 means a 8-bit single-channel array, CV_32FC2
 /// means a 2-channel (complex) floating-point array, and so on.
-/// ```ignore
+/// ```C++
 ///    // make a 7x7 complex matrix filled with 1+3j.
 ///    Mat M(7,7,CV_32FC2,Scalar(1,3));
 ///    // and now turn M to a 100x60 15-channel 8-bit matrix.
@@ -13733,7 +13733,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// or type of the current array are different from the specified ones.
 /// 
 /// - Create a multi-dimensional array:
-/// ```ignore
+/// ```C++
 ///    // create a 100x100x100 8-bit array
 ///    int sz[] = {100, 100, 100};
 ///    Mat bigCube(3, sz, CV_8U, Scalar::all(0));
@@ -13752,7 +13752,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// rows, several columns, rectangular region in the array (called a *minor* in algebra) or a
 /// diagonal. Such operations are also O(1) because the new header references the same data. You can
 /// actually modify a part of the array using this feature, for example:
-/// ```ignore
+/// ```C++
 ///    // add the 5-th row, multiplied by 3 to the 3rd row
 ///    M.row(3) = M.row(3) + M.row(5)*3;
 ///    // now copy the 7-th column to the 1-st column
@@ -13770,7 +13770,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// 
 /// Due to the additional datastart and dataend members, it is possible to compute a relative
 /// sub-array position in the main *container* array using locateROI():
-/// ```ignore
+/// ```C++
 ///    Mat A = Mat::eye(10, 10, CV_32S);
 ///    // extracts A columns, 1 (inclusive) to 3 (exclusive).
 ///    Mat B = A(Range::all(), Range(1, 3));
@@ -13788,7 +13788,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// - Make a header for user-allocated data. It can be useful to do the following:
 ///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
 ///    a processing module for gstreamer, and so on). For example:
-///    ```ignore
+///    ```C++
 ///        Mat process_video_frame(const unsigned char* pixels,
 ///                                 int width, int height, int step)
 ///        {
@@ -13803,7 +13803,7 @@ pub trait MatTrait: core::MatTraitConst {
 ///    ```
 /// 
 ///    -# Quickly initialize small matrices and/or get a super-fast element access.
-///    ```ignore
+///    ```C++
 ///        double m[3][3] = {{a, b, c}, {d, e, f}, {g, h, i}};
 ///        Mat M = Mat(3, 3, CV_64F, m).inv();
 ///    ```
@@ -13811,14 +13811,14 @@ pub trait MatTrait: core::MatTraitConst {
 ///    .
 /// 
 /// - Use MATLAB-style array initializers, zeros(), ones(), eye(), for example:
-/// ```ignore
+/// ```C++
 ///    // create a double-precision identity matrix and add it to M.
 ///    M += Mat::eye(M.rows, M.cols, CV_64F);
 /// ```
 /// 
 /// 
 /// - Use a comma-separated initializer:
-/// ```ignore
+/// ```C++
 ///    // create a 3x3 double-precision identity matrix
 ///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
 /// ```
@@ -13837,7 +13837,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// described how to compute an address of each array element. Normally, you are not required to use the
 /// formula directly in the code. If you know the array element type (which can be retrieved using the
 /// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M%5F%7Bij%7D) of a 2-dimensional array as:
-/// ```ignore
+/// ```C++
 ///    M.at<double>(i,j) += 1.f;
 /// ```
 /// 
@@ -13846,7 +13846,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// 
 /// If you need to process a whole row of a 2D array, the most efficient way is to get the pointer to
 /// the row first, and then just use the plain C operator [] :
-/// ```ignore
+/// ```C++
 ///    // compute sum of positive matrix elements
 ///    // (assuming that M is a double-precision matrix)
 ///    double sum=0;
@@ -13863,7 +13863,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// for example, array addition). Such operations are called *element-wise*. It makes sense to check
 /// whether all the input/output arrays are continuous, namely, have no gaps at the end of each row. If
 /// yes, process them as a long single row:
-/// ```ignore
+/// ```C++
 ///    // compute the sum of positive matrix elements, optimized variant
 ///    double sum=0;
 ///    int cols = M.cols, rows = M.rows;
@@ -13884,7 +13884,7 @@ pub trait MatTrait: core::MatTraitConst {
 /// smaller, which is especially noticeable in case of small matrices.
 /// 
 /// Finally, there are STL-style iterators that are smart enough to skip gaps between successive rows:
-/// ```ignore
+/// ```C++
 ///    // compute sum of positive matrix elements, iterator-based variant
 ///    double sum=0;
 ///    MatConstIterator_<double> it = M.begin<double>(), it_end = M.end<double>();
@@ -14378,7 +14378,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
 	/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-	/// ```ignore
+	/// ```C++
 	///    Mat A;
 	///    A = Mat::zeros(3, 3, CV_32F);
 	/// ```
@@ -14404,7 +14404,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
 	/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-	/// ```ignore
+	/// ```C++
 	///    Mat A;
 	///    A = Mat::zeros(3, 3, CV_32F);
 	/// ```
@@ -14435,7 +14435,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
 	/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-	/// ```ignore
+	/// ```C++
 	///    Mat A;
 	///    A = Mat::zeros(3, 3, CV_32F);
 	/// ```
@@ -14467,7 +14467,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
 	/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-	/// ```ignore
+	/// ```C++
 	///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
 	/// ```
 	/// 
@@ -14496,7 +14496,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
 	/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-	/// ```ignore
+	/// ```C++
 	///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
 	/// ```
 	/// 
@@ -14530,7 +14530,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
 	/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-	/// ```ignore
+	/// ```C++
 	///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
 	/// ```
 	/// 
@@ -14565,7 +14565,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
 	/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
-	/// ```ignore
+	/// ```C++
 	///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
 	///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
 	/// ```
@@ -14592,7 +14592,7 @@ impl Mat {
 	/// 
 	/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
 	/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
-	/// ```ignore
+	/// ```C++
 	///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
 	///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
 	/// ```
@@ -14905,7 +14905,7 @@ impl MatConstIterator {
 /// explicit Mat() or Mat_<T>() constructor calls to resolve a possible ambiguity.
 /// 
 /// Here are examples of matrix expressions:
-/// ```ignore
+/// ```C++
 ///    // compute pseudo-inverse of A, equivalent to A.inv(DECOMP_SVD)
 ///    SVD svd(A);
 ///    Mat pinvA = svd.vt.t()*Mat::diag(1./svd.w)*svd.u.t();
@@ -15205,7 +15205,7 @@ pub trait MatExprTrait: core::MatExprTraitConst {
 /// explicit Mat() or Mat_<T>() constructor calls to resolve a possible ambiguity.
 /// 
 /// Here are examples of matrix expressions:
-/// ```ignore
+/// ```C++
 ///    // compute pseudo-inverse of A, equivalent to A.inv(DECOMP_SVD)
 ///    SVD svd(A);
 ///    Mat pinvA = svd.vt.t()*Mat::diag(1./svd.w)*svd.u.t();
@@ -16410,7 +16410,7 @@ impl Moments {
 /// reconstructed back, and then the reconstruction error norm is computed
 /// and printed for each vector. :
 /// 
-/// ```ignore
+/// ```C++
 /// using namespace cv;
 /// 
 /// PCA compressPCA(const Mat& pcaset, int maxComponents,
@@ -16752,7 +16752,7 @@ pub trait PCATrait: core::PCATraitConst {
 /// reconstructed back, and then the reconstruction error norm is computed
 /// and printed for each vector. :
 /// 
-/// ```ignore
+/// ```C++
 /// using namespace cv;
 /// 
 /// PCA compressPCA(const Mat& pcaset, int maxComponents,
@@ -17088,7 +17088,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// from the input parameter type, from the range [a, b) . There is a nuance
 	/// illustrated by the following sample:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// RNG rng;
 	/// 
 	/// // always produces 0
@@ -17134,7 +17134,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// from the input parameter type, from the range [a, b) . There is a nuance
 	/// illustrated by the following sample:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// RNG rng;
 	/// 
 	/// // always produces 0
@@ -17182,7 +17182,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// from the input parameter type, from the range [a, b) . There is a nuance
 	/// illustrated by the following sample:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// RNG rng;
 	/// 
 	/// // always produces 0
@@ -17544,7 +17544,7 @@ impl RNG_MT19937 {
 /// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
 /// OpenCV that take Range support this special Range::all() value. But, of course, in case of your own
 /// custom processing, you will probably have to check and handle it explicitly:
-/// ```ignore
+/// ```C++
 ///    void my_function(..., const Range& r, ....)
 ///    {
 ///        if(r == Range::all()) {
@@ -17619,7 +17619,7 @@ pub trait RangeTrait: core::RangeTraitConst {
 /// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
 /// OpenCV that take Range support this special Range::all() value. But, of course, in case of your own
 /// custom processing, you will probably have to check and handle it explicitly:
-/// ```ignore
+/// ```C++
 ///    void my_function(..., const Range& r, ....)
 ///    {
 ///        if(r == Range::all()) {
@@ -18062,7 +18062,7 @@ impl SVD {
 	/// and SVD::operator(), they store the results to the user-provided
 	/// matrices:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// Mat A, w, u, vt;
 	/// SVD::compute(A, w, u, vt);
 	/// ```
@@ -18096,7 +18096,7 @@ impl SVD {
 	/// and SVD::operator(), they store the results to the user-provided
 	/// matrices:
 	/// 
-	/// ```ignore
+	/// ```C++
 	/// Mat A, w, u, vt;
 	/// SVD::compute(A, w, u, vt);
 	/// ```
@@ -18177,7 +18177,7 @@ impl SVD {
 /// Elements can be accessed using the following methods:
 /// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
 ///    SparseMat::find), for example:
-///    ```ignore
+///    ```C++
 ///        const int dims = 5;
 ///        int size[5] = {10, 10, 10, 10, 10};
 ///        SparseMat sparse_mat(dims, size, CV_32F);
@@ -18193,7 +18193,7 @@ impl SVD {
 /// 
 /// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
 ///    That is, the iteration loop is familiar to STL users:
-///    ```ignore
+///    ```C++
 ///        // prints elements of a sparse floating-point matrix
 ///        // and the sum of elements.
 ///        SparseMatConstIterator_<float>
@@ -18222,7 +18222,7 @@ impl SVD {
 /// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
 ///    simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
 ///    floating-point sparse matrices:
-///    ```ignore
+///    ```C++
 ///        double cross_corr(const SparseMat& a, const SparseMat& b)
 ///        {
 ///            const SparseMat *_a = &a, *_b = &b;
@@ -18726,7 +18726,7 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 /// Elements can be accessed using the following methods:
 /// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
 ///    SparseMat::find), for example:
-///    ```ignore
+///    ```C++
 ///        const int dims = 5;
 ///        int size[5] = {10, 10, 10, 10, 10};
 ///        SparseMat sparse_mat(dims, size, CV_32F);
@@ -18742,7 +18742,7 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 /// 
 /// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
 ///    That is, the iteration loop is familiar to STL users:
-///    ```ignore
+///    ```C++
 ///        // prints elements of a sparse floating-point matrix
 ///        // and the sum of elements.
 ///        SparseMatConstIterator_<float>
@@ -18771,7 +18771,7 @@ pub trait SparseMatTrait: core::SparseMatTraitConst {
 /// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
 ///    simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
 ///    floating-point sparse matrices:
-///    ```ignore
+///    ```C++
 ///        double cross_corr(const SparseMat& a, const SparseMat& b)
 ///        {
 ///            const SparseMat *_a = &a, *_b = &b;
@@ -20951,7 +20951,7 @@ impl UMatData {
 /// This is the proxy class for passing read-only input arrays into OpenCV functions.
 /// 
 /// It is defined as:
-/// ```ignore
+/// ```C++
 ///    typedef const _InputArray& InputArray;
 /// ```
 /// 
@@ -20976,7 +20976,7 @@ impl UMatData {
 ///    `vector<>` etc., but normally it is not needed.
 /// 
 /// Here is how you can use a function that takes InputArray :
-/// ```ignore
+/// ```C++
 ///    std::vector<Point2f> vec;
 ///    // points or a circle
 ///    for( int i = 0; i < 30; i++ )
@@ -20990,7 +20990,7 @@ impl UMatData {
 /// 
 /// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
 /// it, according to the assertion statement inside) :
-/// ```ignore
+/// ```C++
 ///    void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
 ///    {
 ///        // get Mat headers for input arrays. This is O(1) operation,
@@ -21019,7 +21019,7 @@ impl UMatData {
 /// 
 /// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
 /// InputArray:
-/// ```ignore
+/// ```C++
 ///    typedef InputArray InputArrayOfArrays;
 /// ```
 /// 
@@ -21421,7 +21421,7 @@ pub trait _InputArrayTrait: core::_InputArrayTraitConst {
 /// This is the proxy class for passing read-only input arrays into OpenCV functions.
 /// 
 /// It is defined as:
-/// ```ignore
+/// ```C++
 ///    typedef const _InputArray& InputArray;
 /// ```
 /// 
@@ -21446,7 +21446,7 @@ pub trait _InputArrayTrait: core::_InputArrayTraitConst {
 ///    `vector<>` etc., but normally it is not needed.
 /// 
 /// Here is how you can use a function that takes InputArray :
-/// ```ignore
+/// ```C++
 ///    std::vector<Point2f> vec;
 ///    // points or a circle
 ///    for( int i = 0; i < 30; i++ )
@@ -21460,7 +21460,7 @@ pub trait _InputArrayTrait: core::_InputArrayTraitConst {
 /// 
 /// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
 /// it, according to the assertion statement inside) :
-/// ```ignore
+/// ```C++
 ///    void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
 ///    {
 ///        // get Mat headers for input arrays. This is O(1) operation,
@@ -21489,7 +21489,7 @@ pub trait _InputArrayTrait: core::_InputArrayTraitConst {
 /// 
 /// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
 /// InputArray:
-/// ```ignore
+/// ```C++
 ///    typedef InputArray InputArrayOfArrays;
 /// ```
 /// 
@@ -21906,7 +21906,7 @@ boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_t
 /// 
 /// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
 /// generators:
-/// ```ignore
+/// ```C++
 ///    typedef OutputArray OutputArrayOfArrays;
 ///    typedef OutputArray InputOutputArray;
 ///    typedef OutputArray InputOutputArrayOfArrays;
@@ -22166,7 +22166,7 @@ pub trait _OutputArrayTrait: core::_InputArrayTrait + core::_OutputArrayTraitCon
 /// 
 /// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
 /// generators:
-/// ```ignore
+/// ```C++
 ///    typedef OutputArray OutputArrayOfArrays;
 ///    typedef OutputArray InputOutputArray;
 ///    typedef OutputArray InputOutputArrayOfArrays;
@@ -22395,7 +22395,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// BufferPool utilizes Stream's allocator to create new buffers for GpuMat's. It is
 /// only useful when enabled with #setBufferPoolUsage.
 /// 
-/// ```ignore
+/// ```C++
 ///    setBufferPoolUsage(true);
 /// ```
 /// 
@@ -22414,7 +22414,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// 
 /// Below is an example that utilizes BufferPool with StackAllocator:
 /// 
-/// ```ignore
+/// ```C++
 ///    #include <opencv2/opencv.hpp>
 /// 
 ///    using namespace cv;
@@ -22443,7 +22443,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// If we allocate another GpuMat on pool1 in the above example, it will be carried out by
 /// the DefaultAllocator since the stack for pool1 is full.
 /// 
-/// ```ignore
+/// ```C++
 ///    GpuMat d_add1 = pool1.getBuffer(1024, 1024, CV_8UC1);   // Stack for pool1 is full, memory is allocated with DefaultAllocator
 /// ```
 /// 
@@ -22452,7 +22452,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// within that stream will also be carried out by the DefaultAllocator because we've run out of
 /// stacks.
 /// 
-/// ```ignore
+/// ```C++
 ///    Stream stream3;                                         // Only 2 stacks were allocated, we've run out of stacks
 ///    BufferPool pool3(stream3);
 ///    GpuMat d_src3 = pool3.getBuffer(1024, 1024, CV_8UC1);   // Memory is allocated with DefaultAllocator
@@ -22465,7 +22465,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// erroneous usage that violates LIFO rule. If OpenCV is compiled in Debug mode, this
 /// sample code will emit CV_Assert error.
 /// 
-/// ```ignore
+/// ```C++
 ///    int main()
 ///    {
 ///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
@@ -22484,7 +22484,7 @@ boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArr
 /// the code sample below satisfies the LIFO rule. Local GpuMat's are deallocated
 /// and the corresponding memory is automatically returned to the pool for later usage.
 /// 
-/// ```ignore
+/// ```C++
 ///    int main()
 ///    {
 ///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
@@ -22561,7 +22561,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// BufferPool utilizes Stream's allocator to create new buffers for GpuMat's. It is
 /// only useful when enabled with #setBufferPoolUsage.
 /// 
-/// ```ignore
+/// ```C++
 ///    setBufferPoolUsage(true);
 /// ```
 /// 
@@ -22580,7 +22580,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// 
 /// Below is an example that utilizes BufferPool with StackAllocator:
 /// 
-/// ```ignore
+/// ```C++
 ///    #include <opencv2/opencv.hpp>
 /// 
 ///    using namespace cv;
@@ -22609,7 +22609,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// If we allocate another GpuMat on pool1 in the above example, it will be carried out by
 /// the DefaultAllocator since the stack for pool1 is full.
 /// 
-/// ```ignore
+/// ```C++
 ///    GpuMat d_add1 = pool1.getBuffer(1024, 1024, CV_8UC1);   // Stack for pool1 is full, memory is allocated with DefaultAllocator
 /// ```
 /// 
@@ -22618,7 +22618,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// within that stream will also be carried out by the DefaultAllocator because we've run out of
 /// stacks.
 /// 
-/// ```ignore
+/// ```C++
 ///    Stream stream3;                                         // Only 2 stacks were allocated, we've run out of stacks
 ///    BufferPool pool3(stream3);
 ///    GpuMat d_src3 = pool3.getBuffer(1024, 1024, CV_8UC1);   // Memory is allocated with DefaultAllocator
@@ -22631,7 +22631,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// erroneous usage that violates LIFO rule. If OpenCV is compiled in Debug mode, this
 /// sample code will emit CV_Assert error.
 /// 
-/// ```ignore
+/// ```C++
 ///    int main()
 ///    {
 ///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
@@ -22650,7 +22650,7 @@ pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 /// the code sample below satisfies the LIFO rule. Local GpuMat's are deallocated
 /// and the corresponding memory is automatically returned to the pool for later usage.
 /// 
-/// ```ignore
+/// ```C++
 ///    int main()
 ///    {
 ///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
@@ -25377,7 +25377,7 @@ impl Clone for HostMem {
 /// 
 /// Note: The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
 /// 
-/// ```ignore
+/// ```C++
 /// void thread1()
 /// {
 ///    cv::cuda::Stream stream1;
@@ -25476,7 +25476,7 @@ pub trait StreamTrait: core::StreamTraitConst {
 /// 
 /// Note: The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
 /// 
-/// ```ignore
+/// ```C++
 /// void thread1()
 /// {
 ///    cv::cuda::Stream stream1;
@@ -25545,7 +25545,7 @@ impl Stream {
 	/// 
 	/// Note: The cudaFlags parameter is passed to the underlying api cudaStreamCreateWithFlags() and
 	/// supports the same parameter values.
-	/// ```ignore
+	/// ```C++
 	///    // creates an OpenCV cuda::Stream that manages an asynchronous, non-blocking,
 	///    // non-default CUDA stream
 	///    cv::cuda::Stream cvStream(cudaStreamNonBlocking);

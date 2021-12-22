@@ -3438,7 +3438,7 @@ pub fn connected_components_with_algorithm(image: &dyn core::ToInputArray, label
 /// results for contours with self-intersections.
 /// 
 /// Example:
-/// ```ignore
+/// ```C++
 ///    vector<Point> contour;
 ///    contour.push_back(Point2f(0, 0));
 ///    contour.push_back(Point2f(10, 0));
@@ -3792,7 +3792,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::G
 /// for more information.
 /// 
 /// An example is shown below:
-/// ```ignore
+/// ```C++
 ///    // create hanning window of size 100x100 and type CV_32F
 ///    Mat hann;
 ///    createHanningWindow(hann, Size(100, 100), CV_32F);
@@ -3896,7 +3896,7 @@ pub fn cvt_color_two_plane(src1: &dyn core::ToInputArray, src2: &dyn core::ToInp
 /// 32-bit floating-point image directly converted from an 8-bit image without any scaling, then it will
 /// have the 0..255 value range instead of 0..1 assumed by the function. So, before calling #cvtColor ,
 /// you need first to scale the image down:
-/// ```ignore
+/// ```C++
 ///    img *= 1./255;
 ///    cvtColor(img, img, COLOR_BGR2Luv);
 /// ```
@@ -5337,7 +5337,7 @@ pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Poin
 /// 
 /// The function cv::getTextSize calculates and returns the size of a box that contains the specified text.
 /// That is, the following code renders some text, the tight box surrounding it, and the baseline: :
-/// ```ignore
+/// ```C++
 ///    String text = "Funny text inside the box";
 ///    int fontFace = FONT_HERSHEY_SCRIPT_SIMPLEX;
 ///    double fontScale = 2;
@@ -6241,7 +6241,7 @@ pub fn polylines(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// derivatives, and ![inline formula](https://latex.codecogs.com/png.latex?D%5F%7Bxy%7D) is the mixed derivative.
 /// 
 /// The corners can be found as local maximums of the functions, as shown below:
-/// ```ignore
+/// ```C++
 ///    Mat corners, dilated_corners;
 ///    preCornerDetect(image, corners, 3);
 ///    // dilation with 3x3 rectangular structuring element
@@ -6539,14 +6539,14 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ma
 /// initial dst type or size are not taken into account. Instead, the size and type are derived from
 /// the `src`,`dsize`,`fx`, and `fy`. If you want to resize src so that it fits the pre-created dst,
 /// you may call the function as follows:
-/// ```ignore
+/// ```C++
 ///    // explicitly specify dsize=dst.size(); fx and fy will be computed from that.
 ///    resize(src, dst, dst.size(), 0, 0, interpolation);
 /// ```
 /// 
 /// If you want to decimate the image by factor of 2 in each direction, you can call the function this
 /// way:
-/// ```ignore
+/// ```C++
 ///    // specify fx and fy and let the function compute the destination image size.
 ///    resize(src, dst, Size(), 0.5, 0.5, interpolation);
 /// ```
@@ -6651,7 +6651,7 @@ pub fn sep_filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// 
 /// Equivalent to calling:
 /// 
-/// ```ignore
+/// ```C++
 /// Sobel( src, dx, CV_16SC1, 1, 0, 3 );
 /// Sobel( src, dy, CV_16SC1, 0, 1, 3 );
 /// ```
@@ -7540,7 +7540,7 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough + crate::imgpro
 /// The number of pixels along the line is stored in LineIterator::count.
 /// The method LineIterator::pos returns the current position in the image:
 /// 
-/// ```ignore
+/// ```C++
 /// // grabs pixels along the line (pt1, pt2)
 /// // from 8-bit 3-channel image to the buffer
 /// LineIterator it(img, pt1, pt2, 8);
@@ -7786,7 +7786,7 @@ pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 /// The number of pixels along the line is stored in LineIterator::count.
 /// The method LineIterator::pos returns the current position in the image:
 /// 
-/// ```ignore
+/// ```C++
 /// // grabs pixels along the line (pt1, pt2)
 /// // from 8-bit 3-channel image to the buffer
 /// LineIterator it(img, pt1, pt2, 8);

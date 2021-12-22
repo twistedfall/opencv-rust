@@ -10,7 +10,6 @@ OPENCV_34_LD_LIBRARY_PATH="$opencv_lib_base_dir/opencv-3.4/install/lib64/"
 OPENCV_4_CMAKE_DIR="$opencv_lib_base_dir/opencv-4/install/lib64/cmake/opencv4"
 OPENCV_4_HEADER_DIR="$opencv_lib_base_dir/opencv-4/install/include/opencv4"
 OPENCV_4_LD_LIBRARY_PATH="$opencv_lib_base_dir/opencv-4/install/lib64/"
-OPENCV_4_OPENCV_INCLUDE_PATHS=+/opt/cuda/targets/x86_64-linux/include/
 
 # other OS machines
 MACOS_ADDR="<ssh address for macos machine>"

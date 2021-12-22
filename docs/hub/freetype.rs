@@ -108,7 +108,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// 
 	/// The function getTextSize calculates and returns the approximate size of a box that contains the specified text.
 	/// That is, the following code renders some text, the tight box surrounding it, and the baseline: :
-	/// ```ignore
+	/// ```C++
 	///    String text = "Funny text inside the box";
 	///    int fontHeight = 60;
 	///    int thickness = -1;

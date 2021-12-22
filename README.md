@@ -294,7 +294,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
   ```
 * `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
-* `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details
 

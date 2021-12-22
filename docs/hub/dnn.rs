@@ -9466,7 +9466,7 @@ boxed_cast_base! { NotLayer, crate::dnn::Layer, cv_NotLayer_to_Layer }
 /// Adds extra values for specific axes.
 /// ## Parameters
 /// * paddings: Vector of paddings in format
-///                ```ignore
+///                ```C++
 ///                [ pad_before, pad_after,  // [0]th dimension
 ///                   pad_before, pad_after,  // [1]st dimension
 ///                   ...
@@ -9496,7 +9496,7 @@ pub trait PaddingLayerTrait: crate::dnn::LayerTrait + crate::dnn::PaddingLayerTr
 /// Adds extra values for specific axes.
 /// ## Parameters
 /// * paddings: Vector of paddings in format
-///                ```ignore
+///                ```C++
 ///                [ pad_before, pad_after,  // [0]th dimension
 ///                   pad_before, pad_after,  // [1]st dimension
 ///                   ...

@@ -2056,7 +2056,7 @@ pub fn combine(lhs: &crate::gapi::GKernelPackage, rhs: &crate::gapi::GKernelPack
 /// Applies horizontal concatenation to given matrices.
 /// 
 /// The function horizontally concatenates two GMat matrices (with the same number of rows).
-/// ```ignore
+/// ```C++
 ///    GMat A = { 1, 4,
 ///                2, 5,
 ///                3, 6 };
@@ -2095,7 +2095,7 @@ pub fn concat_hor(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<
 /// Applies horizontal concatenation to given matrices.
 /// 
 /// The function horizontally concatenates two GMat matrices (with the same number of rows).
-/// ```ignore
+/// ```C++
 ///    GMat A = { 1, 4,
 ///                2, 5,
 ///                3, 6 };
@@ -2141,7 +2141,7 @@ pub fn concat_hor_1(v: &core::Vector<crate::gapi::GMat>) -> Result<crate::gapi::
 /// Applies vertical concatenation to given matrices.
 /// 
 /// The function vertically concatenates two GMat matrices (with the same number of cols).
-///  ```ignore
+///  ```C++
 ///    GMat A = { 1, 7,
 ///                2, 8,
 ///                3, 9 };
@@ -2184,7 +2184,7 @@ pub fn concat_vert(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result
 /// Applies vertical concatenation to given matrices.
 /// 
 /// The function vertically concatenates two GMat matrices (with the same number of cols).
-///  ```ignore
+///  ```C++
 ///    GMat A = { 1, 7,
 ///                2, 8,
 ///                3, 9 };
@@ -3445,14 +3445,14 @@ pub fn resize_p(src: &crate::gapi::GMatP, dsize: core::Size, interpolation: i32)
 /// 
 /// If you want to resize src so that it fits the pre-created dst,
 /// you may call the function as follows:
-/// ```ignore
+/// ```C++
 ///  explicitly specify dsize=dst.size(); fx and fy will be computed from that.
 ///    resize(src, dst, dst.size(), 0, 0, interpolation);
 /// ```
 /// 
 /// If you want to decimate the image by factor of 2 in each direction, you can call the function this
 /// way:
-/// ```ignore
+/// ```C++
 ///  specify fx and fy and let the function compute the destination image size.
 ///    resize(src, dst, Size(), 0.5, 0.5, interpolation);
 /// ```

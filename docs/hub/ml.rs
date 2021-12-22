@@ -1577,7 +1577,7 @@ pub trait DTrees_SplitTraitConst {
 	
 	/// < The threshold value in case of split on an ordered variable.
 	/// The rule is:
-	/// ```ignore
+	/// ```C++
 	/// if var_value < c
 	///   then next_node <- left
 	///   else next_node <- right
@@ -1591,7 +1591,7 @@ pub trait DTrees_SplitTraitConst {
 	
 	/// < Offset of the bitset used by the split on a categorical variable.
 	/// The rule is:
-	/// ```ignore
+	/// ```C++
 	/// if bitset[var_value] == 1
 	///    then next_node <- left
 	///    else next_node <- right
@@ -1639,7 +1639,7 @@ pub trait DTrees_SplitTrait: crate::ml::DTrees_SplitTraitConst {
 	
 	/// < The threshold value in case of split on an ordered variable.
 	/// The rule is:
-	/// ```ignore
+	/// ```C++
 	/// if var_value < c
 	///   then next_node <- left
 	///   else next_node <- right
@@ -1653,7 +1653,7 @@ pub trait DTrees_SplitTrait: crate::ml::DTrees_SplitTraitConst {
 	
 	/// < Offset of the bitset used by the split on a categorical variable.
 	/// The rule is:
-	/// ```ignore
+	/// ```C++
 	/// if bitset[var_value] == 1
 	///    then next_node <- left
 	///    else next_node <- right
@@ -3487,7 +3487,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait + crate::ml::SVM_KernelConst {
 /// 
 /// - after that, the label of a new feature vector can be predicted using the method predict().
 /// 
-/// ```ignore
+/// ```C++
 /// // Create empty object
 /// cv::Ptr<SVMSGD> svmsgd = SVMSGD::create();
 /// 

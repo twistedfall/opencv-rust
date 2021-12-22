@@ -81,7 +81,6 @@ vcpkg = "0.2.9"
 matches = "0.1"
 
 [features]
-docs-only = []
 default = [
 	"alphamat",
 	"aruco",
@@ -221,4 +220,3 @@ wechat_qrcode = []
 
 [package.metadata.docs.rs]
 no-default-features = true
-features = ["docs-only"]

@@ -39,7 +39,7 @@
 //!        created. Then, a new button is attached to it.
 //! 
 //!    See below the example used to generate the figure:
-//!    ```ignore
+//!    ```C++
 //!        int main(int argc, char *argv[])
 //!        {
 //! 
@@ -93,7 +93,7 @@
 //!    Sliders are attached below the image control. Every new slider is added below the previous one.
 //! 
 //!    See below the example used to generate the figure:
-//!    ```ignore
+//!    ```C++
 //!        void sample_app::MainPage::ShowWindow()
 //!        {
 //!            static cv::String windowName("sample");
@@ -451,7 +451,7 @@ pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, name_fo
 /// QT_NEW_BUTTONBAR flag is added to the type.
 /// 
 /// See below various examples of the cv::createButton function call: :
-/// ```ignore
+/// ```C++
 ///    createButton("",callbackButton);//create a push button "button 0", that will call callbackButton.
 ///    createButton("button2",callbackButton,NULL,QT_CHECKBOX,0);
 ///    createButton("button3",callbackButton,&value);
@@ -616,7 +616,7 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 /// The function fontQt creates a cv::QtFont object. This cv::QtFont is not compatible with putText .
 /// 
 /// A basic usage of this function is the following: :
-/// ```ignore
+/// ```C++
 ///    QtFont font = fontQt("Times");
 ///    addText( img1, "Hello World !", Point(50,50), font);
 /// ```
@@ -1089,7 +1089,7 @@ pub fn set_opengl_context(winname: &str) -> Result<()> {
 /// 
 /// The function setOpenGlDrawCallback can be used to draw 3D data on the window. See the example of
 /// callback function below:
-/// ```ignore
+/// ```C++
 ///    void on_opengl(void* param)
 ///    {
 ///        glLoadIdentity();

@@ -162,7 +162,7 @@ pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::Cascad
 	/// 
 	/// To get final array of detected objects use CascadeClassifier::convert method.
 	/// 
-	/// ```ignore
+	/// ```C++
 	///    Ptr<cuda::CascadeClassifier> cascade_gpu = cuda::CascadeClassifier::create(...);
 	/// 
 	///    Mat image_cpu = imread(...)

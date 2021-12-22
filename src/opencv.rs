@@ -14,4 +14,6 @@
 	clippy::unnecessary_operation,
 )]
 #[rustfmt::skip]
-pub mod hub;
+pub mod hub {
+	include!(concat!(env!("OUT_DIR"), "/opencv/hub.rs"));
+}

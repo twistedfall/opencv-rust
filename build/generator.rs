@@ -5,7 +5,9 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, Command};
 use std::sync::Arc;
 use std::time::Instant;
-use std::{fs, io, thread};
+use std::{env, fs, io, thread};
+
+use crate::docs::transfer_bindings_to_docs;
 
 use super::{files_with_extension, Library, Result, HOST_TRIPLE, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
@@ -50,12 +52,19 @@ pub fn gen_wrapper(
 	job_server: jobserver::Client,
 	mut generator_build: Child,
 ) -> Result<()> {
-	let target_hub_dir = SRC_DIR.join("opencv");
+	let target_docs_dir = env::var_os("OCVRS_DOCS_GENERATE_DIR").map(PathBuf::from);
+	let target_hub_dir = OUT_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
 
 	eprintln!("=== Generating code in: {}", OUT_DIR.display());
 	eprintln!("=== Placing generated bindings into: {}", target_hub_dir.display());
+	if let Some(target_docs_dir) = target_docs_dir.as_ref() {
+		eprintln!(
+			"=== Placing static generated docs bindings into: {}",
+			target_docs_dir.display()
+		);
+	}
 	eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
 
 	for entry in OUT_DIR.read_dir()?.flatten() {
@@ -140,12 +149,32 @@ pub fn gen_wrapper(
 	}
 	eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 
+	if !target_hub_dir.exists() {
+		fs::create_dir(&target_hub_dir)?;
+	}
+	if !target_module_dir.exists() {
+		fs::create_dir(&target_module_dir)?;
+	}
+	if let Some(target_docs_dir) = target_docs_dir.as_ref().filter(|dir| !dir.exists()) {
+		fs::create_dir(target_docs_dir)?;
+	}
 	for path in files_with_extension(&target_module_dir, "rs")? {
 		let _ = fs::remove_file(path);
 	}
 
 	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
 		Ok(writeln!(write, "#[cfg(ocvrs_has_module_{module})]")?)
+	}
+
+	fn write_module_path(write: &mut File, target_module_dir: &Path, module: &str) -> Result<()> {
+		Ok(writeln!(
+			write,
+			"#[path = r\"{}\"]",
+			target_module_dir
+				.join(format!("{}.rs", module))
+				.to_str()
+				.expect("Can't convert path to str")
+		)?)
 	}
 
 	let add_manual = |file: &mut File, module: &str| -> Result<bool> {
@@ -157,98 +186,108 @@ pub fn gen_wrapper(
 		}
 	};
 
-	let mut hub_rs = File::create(target_hub_dir.join("hub.rs"))?;
+	// block to close file handles before copying the bindings
+	{
+		let mut hub_rs = File::create(target_hub_dir.join("hub.rs"))?;
 
-	let mut types_rs = File::create(target_module_dir.join("types.rs"))?;
-	writeln!(types_rs)?;
+		let mut types_rs = File::create(target_module_dir.join("types.rs"))?;
+		writeln!(types_rs)?;
 
-	let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
-	writeln!(sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
-	writeln!(sys_rs)?;
+		let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
+		writeln!(sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
+		writeln!(sys_rs)?;
 
-	for module in modules {
-		// merge multiple *-type.cpp files into a single module_types.hpp
-		let module_cpp = OUT_DIR.join(format!("{module}.cpp"));
-		if module_cpp.is_file() {
-			let module_types_cpp = OUT_DIR.join(format!("{module}_types.hpp"));
-			let mut module_types_file = OpenOptions::new()
-				.create(true)
-				.truncate(true)
-				.write(true)
-				.open(module_types_cpp)?;
-			let mut type_files = files_with_extension(&OUT_DIR, "cpp")?
+		for module in modules {
+			// merge multiple *-type.cpp files into a single module_types.hpp
+			let module_cpp = OUT_DIR.join(format!("{module}.cpp"));
+			if module_cpp.is_file() {
+				let module_types_cpp = OUT_DIR.join(format!("{module}_types.hpp"));
+				let mut module_types_file = OpenOptions::new()
+					.create(true)
+					.truncate(true)
+					.write(true)
+					.open(module_types_cpp)?;
+				let mut type_files = files_with_extension(&OUT_DIR, "cpp")?
+					.filter(|f| is_type_file(f, module))
+					.collect::<Vec<_>>();
+				type_files.sort_unstable();
+				for entry in type_files {
+					io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
+					let _ = fs::remove_file(entry);
+				}
+			}
+
+			// add module entry to hub.rs and move the file into opencv/hub
+			write_has_module(&mut hub_rs, module)?;
+			write_module_path(&mut hub_rs, &target_module_dir, module)?;
+			writeln!(hub_rs, "pub mod {module};")?;
+			let module_filename = format!("{module}.rs");
+			let target_file = file_move_to_dir(&OUT_DIR.join(module_filename), &target_module_dir)?;
+			let mut f = OpenOptions::new().append(true).open(target_file)?;
+			add_manual(&mut f, module)?;
+
+			// merge multiple *-.type.rs files into a single types.rs
+			let mut header_written = false;
+			let mut type_files = files_with_extension(&OUT_DIR, "rs")?
 				.filter(|f| is_type_file(f, module))
 				.collect::<Vec<_>>();
 			type_files.sort_unstable();
 			for entry in type_files {
-				io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
+				if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
+					if !header_written {
+						write_has_module(&mut types_rs, module)?;
+						writeln!(types_rs, "mod {module}_types {{")?;
+						writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
+						writeln!(types_rs)?;
+						header_written = true;
+					}
+					copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
+				}
 				let _ = fs::remove_file(entry);
 			}
-		}
-
-		// add module entry to hub.rs and move the file into src/opencv/hub
-		write_has_module(&mut hub_rs, module)?;
-		writeln!(hub_rs, "pub mod {module};")?;
-		let module_filename = format!("{module}.rs");
-		let target_file = file_move_to_dir(&OUT_DIR.join(module_filename), &target_module_dir)?;
-		let mut f = OpenOptions::new().append(true).open(target_file)?;
-		add_manual(&mut f, module)?;
-
-		// merge multiple *-.type.rs files into a single types.rs
-		let mut header_written = false;
-		let mut type_files = files_with_extension(&OUT_DIR, "rs")?
-			.filter(|f| is_type_file(f, module))
-			.collect::<Vec<_>>();
-		type_files.sort_unstable();
-		for entry in type_files {
-			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
-				if !header_written {
-					write_has_module(&mut types_rs, module)?;
-					writeln!(types_rs, "mod {module}_types {{")?;
-					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
-					writeln!(types_rs)?;
-					header_written = true;
-				}
-				copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
+			if header_written {
+				writeln!(types_rs, "}}")?;
+				write_has_module(&mut types_rs, module)?;
+				writeln!(types_rs, "pub use {module}_types::*;")?;
+				writeln!(types_rs)?;
 			}
-			let _ = fs::remove_file(entry);
+
+			// merge module-specific *.externs.rs into a single sys.rs
+			let externs_rs = OUT_DIR.join(format!("{module}.externs.rs"));
+			write_has_module(&mut sys_rs, module)?;
+			writeln!(sys_rs, "mod {module}_sys {{")?;
+			writeln!(sys_rs, "\tuse super::*;")?;
+			writeln!(sys_rs)?;
+			copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
+			let _ = fs::remove_file(externs_rs);
+			writeln!(sys_rs, "}}")?;
+			write_has_module(&mut sys_rs, module)?;
+			writeln!(sys_rs, "pub use {module}_sys::*;")?;
+			writeln!(sys_rs)?;
 		}
-		if header_written {
-			writeln!(types_rs, "}}")?;
-			write_has_module(&mut types_rs, module)?;
-			writeln!(types_rs, "pub use {module}_types::*;")?;
-			writeln!(types_rs)?;
+		write_module_path(&mut hub_rs, &target_module_dir, "types")?;
+		writeln!(hub_rs, "pub mod types;")?;
+		write_module_path(&mut hub_rs, &target_module_dir, "sys")?;
+		writeln!(hub_rs, "#[doc(hidden)]")?;
+		writeln!(hub_rs, "pub mod sys;")?;
+
+		add_manual(&mut types_rs, "types")?;
+
+		add_manual(&mut sys_rs, "sys")?;
+
+		// write hub_prelude that imports all module-specific preludes
+		writeln!(hub_rs, "pub mod hub_prelude {{")?;
+		for module in modules {
+			write!(hub_rs, "\t")?;
+			write_has_module(&mut hub_rs, module)?;
+			writeln!(hub_rs, "\tpub use super::{module}::prelude::*;")?;
 		}
-
-		// merge module-specific *.externs.rs into a single sys.rs
-		let externs_rs = OUT_DIR.join(format!("{module}.externs.rs"));
-		write_has_module(&mut sys_rs, module)?;
-		writeln!(sys_rs, "mod {module}_sys {{")?;
-		writeln!(sys_rs, "\tuse super::*;")?;
-		writeln!(sys_rs)?;
-		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
-		let _ = fs::remove_file(externs_rs);
-		writeln!(sys_rs, "}}")?;
-		write_has_module(&mut sys_rs, module)?;
-		writeln!(sys_rs, "pub use {module}_sys::*;")?;
-		writeln!(sys_rs)?;
+		writeln!(hub_rs, "}}")?;
 	}
-	writeln!(hub_rs, "pub mod types;")?;
-	writeln!(hub_rs, "#[doc(hidden)]")?;
-	writeln!(hub_rs, "pub mod sys;")?;
 
-	add_manual(&mut types_rs, "types")?;
-
-	add_manual(&mut sys_rs, "sys")?;
-
-	// write hub_prelude that imports all module-specific preludes
-	writeln!(hub_rs, "pub mod hub_prelude {{")?;
-	for module in modules {
-		write!(hub_rs, "\t")?;
-		write_has_module(&mut hub_rs, module)?;
-		writeln!(hub_rs, "\tpub use super::{module}::prelude::*;")?;
+	if let Some(target_docs_dir) = target_docs_dir {
+		transfer_bindings_to_docs(&OUT_DIR, &target_docs_dir);
 	}
-	writeln!(hub_rs, "}}")?;
 
 	Ok(())
 }

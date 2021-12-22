@@ -5,7 +5,6 @@ set -e
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 cd "$script_dir/.."
 
-export RUSTFLAGS="-Clink-arg=-fuse-ld=lld"
 export OS_FAMILY="linux"
 
 (
