@@ -13,13 +13,13 @@ mod manual;
 mod traits;
 
 pub mod prelude {
-	#[cfg(ocvrs_has_module_core)]
-	pub use crate::core::{DataType, Mat};
 	pub use crate::{
 		hub_prelude::*,
 		manual::prelude::*,
 		traits::Boxed,
 	};
+	#[cfg(ocvrs_has_module_core)]
+	pub use crate::core::{DataType, Mat};
 }
 
 /// Reexported platform types that are used by OpenCV
@@ -47,6 +47,7 @@ pub(crate) mod mod_prelude {
 		mod_prelude_sys::*,
 		boxed_cast_base,
 		boxed_cast_descendant,
+		input_output_array_ref_forward,
 		opencv_type_boxed,
 		opencv_type_enum,
 		opencv_type_simple,
@@ -55,7 +56,6 @@ pub(crate) mod mod_prelude {
 		ptr_extern_ctor,
 		vector_copy_non_bool,
 		vector_extern,
-		input_output_array_ref_forward,
 		vector_non_copy_or_bool,
 	};
 }

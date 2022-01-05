@@ -155,9 +155,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	#[inline]
 	pub fn get(&self, index: size_t) -> Result<T> {
 		vector_index_check(index, self.len())?;
-		unsafe { self.extern_get(index) }
-			.into_result()
-			.map(|s| unsafe { T::opencv_from_extern(s) } )
+		Ok(unsafe { self.get_unchecked(index) })
 	}
 
 	/// Same as `get()` but without bounds checking
@@ -165,10 +163,8 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Caller must ensure that the specified `index` is within the `Vector` bounds
 	#[inline]
 	pub unsafe fn get_unchecked(&self, index: size_t) -> T {
-		self.extern_get(index)
-			.into_result()
-			.map(|s| T::opencv_from_extern(s) )
-			.unwrap() // fixme, make it return value directly
+		let val = self.extern_get(index);
+		T::opencv_from_extern(val)
 	}
 
 	#[inline]

@@ -3,7 +3,6 @@ use std::ffi::c_void;
 use crate::{
 	core::Vector,
 	platform_types::size_t,
-	sys::Result,
 	traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
 };
 
@@ -27,7 +26,7 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	#[doc(hidden)] unsafe fn extern_remove(&mut self, index: size_t);
 	#[doc(hidden)] unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
 	#[doc(hidden)] unsafe fn extern_clear(&mut self);
-	#[doc(hidden)] unsafe fn extern_get(&self, index: size_t) -> Result<<T as OpenCVType<'_>>::ExternReceive>;
+	#[doc(hidden)] unsafe fn extern_get(&self, index: size_t) -> <T as OpenCVType<'_>>::ExternReceive;
 	#[doc(hidden)] unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
 	#[doc(hidden)] unsafe fn extern_push_owned(&mut self, val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
 	#[doc(hidden)] unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
@@ -66,7 +65,7 @@ macro_rules! vector_extern {
 			fn $extern_remove(instance: $vector_extern_mut, index: $crate::platform_types::size_t);
 			fn $extern_swap(instance: $vector_extern_mut, index1: $crate::platform_types::size_t, index2: $crate::platform_types::size_t);
 			fn $extern_clear(instance: $vector_extern_mut);
-			fn $extern_get<'a>(instance: $vector_extern_const, index: $crate::platform_types::size_t) -> $crate::sys::Result<<$type as $crate::traits::OpenCVType<'a>>::ExternReceive>;
+			fn $extern_get<'a>(instance: $vector_extern_const, index: $crate::platform_types::size_t, ocvrs_return: *mut <$type as $crate::traits::OpenCVType<'a>>::ExternReceive);
 			fn $extern_push<'a>(instance: $vector_extern_mut, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend);
 			fn $extern_insert<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend);
 			fn $extern_set<'a>(instance: $vector_extern_mut, index: $crate::platform_types::size_t, val: <<<$type as $crate::traits::OpenCVType<'a>>::Arg as $crate::traits::OpenCVTypeArg<'a>>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend);
@@ -124,8 +123,11 @@ macro_rules! vector_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_get(&self, index: $crate::platform_types::size_t) -> $crate::sys::Result<<$type as $crate::traits::OpenCVType<'_>>::ExternReceive> {
-				$extern_get(self.as_raw(), index)
+			unsafe fn extern_get(&self, index: $crate::platform_types::size_t) -> <$type as $crate::traits::OpenCVType<'_>>::ExternReceive {
+				return_send!(via ocvrs_return);
+				$extern_get(self.as_raw(), index, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 
 			#[inline]

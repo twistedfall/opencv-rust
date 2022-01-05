@@ -47,8 +47,8 @@ extern "C" {
 		instance->insert(instance->begin() + index, {{inner_cpp_func_call}});
 	}
 
-	{{inner_cpp_extern_return_wrapper}} cv_{{rust_localalias}}_get(const {{cpp_full}}* instance, size_t index) {
-		return Ok<{{inner_cpp_extern_return}}>({{prefix}}(*instance)[index]{{suffix}});
+	void cv_{{rust_localalias}}_get(const {{cpp_full}}* instance, size_t index, {{inner_cpp_extern_return}}* ocvrs_return) {
+		*ocvrs_return = {{prefix}}(*instance)[index]{{suffix}};
 	}
 
 	void cv_{{rust_localalias}}_set({{cpp_full}}* instance, size_t index, {{inner_cpp_func_decl}}) {

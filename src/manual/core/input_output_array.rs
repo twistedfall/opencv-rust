@@ -41,28 +41,37 @@ pub trait ToInputOutputArray {
 }
 
 impl<T: _InputArrayTrait> ToInputArray for T {
+	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
-		extern "C" { fn cv_InputArray_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-		unsafe { cv_InputArray_input_array(self.as_raw__InputArray()) }
-			.into_result()
+		extern "C" { fn cv_InputArray_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_InputArray_input_array(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) }
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
 	}
 }
 
 impl<T: _OutputArrayTrait> ToOutputArray for T {
+	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
-		extern "C" { fn  cv_OutputArray_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-		unsafe {  cv_OutputArray_output_array(self.as_raw_mut__OutputArray()) }
-			.into_result()
+		extern "C" { fn cv_OutputArray_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_OutputArray_output_array(self.as_raw_mut__OutputArray(), ocvrs_return.as_mut_ptr()) }
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) })
 	}
 }
 
 impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
+	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		extern "C" { fn cv_InputOutputArray_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray()) }
-			.into_result()
+		extern "C" { fn cv_InputOutputArray_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray(), ocvrs_return.as_mut_ptr()) }
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
 	}
 }

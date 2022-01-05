@@ -29,9 +29,11 @@ impl fmt::Debug for DictValue {
 
 impl LayerParams {
 	pub fn default() -> Result<Self> {
-		extern "C" { fn cv_dnn_LayerParams_LayerParams() -> sys::Result<*mut c_void>; }
-		unsafe { cv_dnn_LayerParams_LayerParams() }
-			.into_result()
+		extern "C" { fn cv_dnn_LayerParams_LayerParams(ocvrs_return: *mut sys::Result<*mut c_void>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_dnn_LayerParams_LayerParams(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 			.map(|ptr| unsafe { LayerParams::from_raw(ptr) })
 	}
 }

@@ -321,9 +321,11 @@ pub trait MatTraitConstManual: MatTraitConst {
 
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		extern "C" { fn cv_manual_Mat_size(instance: *const c_void) -> sys::Result<core::Size>; }
-		unsafe { cv_manual_Mat_size(self.as_raw_Mat()) }
-			.into_result()
+		extern "C" { fn cv_manual_Mat_size(instance: *const c_void, ocvrs_return: *mut sys::Result<core::Size>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_manual_Mat_size(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 	}
 
 	#[inline]
@@ -474,9 +476,11 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// * s: Assigned scalar converted to the actual array type.
 	#[inline]
 	fn set(&mut self, s: Scalar) -> Result<()> {
-		extern "C" { fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar) -> sys::Result_void; }
-		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s) }
-			.into_result()
+		extern "C" { fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar, ocvrs_returl: *mut sys::Result_void); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s, ocvrs_return.as_mut_ptr()) }
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 	}
 
 	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
@@ -539,9 +543,11 @@ impl fmt::Debug for Mat {
 pub trait UMatTraitConstManual: UMatTraitConst {
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		extern "C" { fn cv_manual_UMat_size(instance: *const c_void) -> sys::Result<core::Size>; }
-		unsafe { cv_manual_UMat_size(self.as_raw_UMat()) }
-			.into_result()
+		extern "C" { fn cv_manual_UMat_size(instance: *const c_void, ocvrs_return: *mut sys::Result<core::Size>); }
+		return_send!(via ocvrs_return);
+		unsafe { cv_manual_UMat_size(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) }
+		return_receive!(unsafe ocvrs_return => ret);
+		ret.into_result()
 	}
 }
 

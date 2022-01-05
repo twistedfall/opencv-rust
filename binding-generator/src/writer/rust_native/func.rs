@@ -6,6 +6,7 @@ use once_cell::sync::Lazy;
 use crate::{
 	Class,
 	CompiledInterpolation,
+	Constness,
 	ConstnessOverride,
 	DefaultElement,
 	Element,
@@ -19,6 +20,7 @@ use crate::{
 	StrExt,
 	StringExt,
 	type_ref::{Dir, FishStyle, StrEnc, StrType},
+	TypeRef,
 };
 
 use super::RustNativeGeneratedElement;
@@ -78,6 +80,11 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		forward_args.push(type_ref.rust_arg_forward(&name));
 		pre_post_arg_handle(type_ref.rust_arg_post_call(&name, is_infallible), &mut post_call_args);
 	}
+	let naked_return = f.is_naked_return();
+	if !naked_return {
+		pre_call_args.push(format!("return_send!(via ocvrs_return);"));
+		call_args.push("ocvrs_return.as_mut_ptr()".to_string());
+	}
 
 	let doc_comment = f.rendered_doc_comment(opencv_version);
 	let debug = get_debug(f);
@@ -109,17 +116,27 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	} else {
 		post_call_args.push("Ok(ret)".to_string());
 	}
-	let decl_args = decl_args.join(", ");
-	let pre_call_args = pre_call_args.join("\n");
-	let call_args = call_args.join(", ");
-	let forward_args = forward_args.join(", ");
-	let post_call_args = post_call_args.join("\n");
-	let ret_convert = if is_infallible {
-		""
+	let ret_receive = if naked_return {
+		"let ret = "
 	} else {
-		".into_result()?"
+		""
 	};
+	let mut ret_convert = Vec::with_capacity(3);
+	if !naked_return {
+		let spec = if is_safe {
+			"return_receive!(unsafe ocvrs_return => ret);"
+		} else {
+			"return_receive!(ocvrs_return => ret);"
+		};
+		ret_convert.push(Cow::Borrowed(spec));
+	}
+	if !is_infallible {
+		ret_convert.push("let ret = ret.into_result()?;".into())
+	}
 	let ret_map = return_type.rust_return_map(is_safe, is_static_func, is_infallible);
+	if !ret_map.is_empty() {
+		ret_convert.push(ret_map);
+	}
 	let mut attributes = String::new();
 	if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
 		attributes = format!("#[cfg({})]", attrs.0);
@@ -128,6 +145,12 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		attributes.push_str("#[must_use]");
 	}
 
+	let decl_args = decl_args.join(", ");
+	let pre_call_args = pre_call_args.join("\n");
+	let call_args = call_args.join(", ");
+	let forward_args = forward_args.join(", ");
+	let post_call_args = post_call_args.join("\n");
+	let ret_convert = ret_convert.join("\n");
 	let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
 		tpl
 	} else {
@@ -148,8 +171,8 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		"identifier" => identifier.as_ref(),
 		"call_args" => &call_args,
 		"forward_args" => &forward_args,
-		"ret_convert" => ret_convert,
-		"ret_map" => ret_map.as_ref(),
+		"ret_receive" => ret_receive,
+		"ret_convert" => ret_convert.as_ref(),
 		"post_call_args" => &post_call_args,
 	})
 }
@@ -259,10 +282,9 @@ fn cpp_call_invoke(f: &Func) -> String {
 		})
 }
 
-fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
-	let return_type = f.return_type();
-	let (ret, ret_cast) = if return_type.is_void() {
-		("".into(), "".into())
+fn cpp_method_return<'f>(f: &'f Func, return_type: &TypeRef) -> (Cow<'f, str>, bool) {
+	if return_type.is_void() {
+		("".into(), false)
 	} else if return_type.is_by_ptr() && !f.as_constructor().is_some() {
 		let out = return_type.source()
 			.as_class()
@@ -272,7 +294,7 @@ fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 				None
 			});
 		let out = out.unwrap_or_else(|| format!("new {typ}(ret)", typ = return_type.cpp_full()).into());
-		(out, "".into())
+		(out, false)
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		let str_mk = match string_type {
 			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
@@ -288,20 +310,11 @@ fn cpp_method_return<'f>(f: &'f Func, is_infallible: bool) -> Cow<'f, str> {
 				"ocvrs_create_byte_string(ret.begin(), ret.size())".into()
 			}
 		};
-		(str_mk, "".into())
+		(str_mk, false)
+	} else if return_type.as_fixed_array().is_some() {
+		("ret".into(), true)
 	} else {
-		("ret".into(), return_type.cpp_extern_return(ConstnessOverride::No))
-	};
-	if is_infallible {
-		if ret_cast.is_empty() {
-			ret
-		} else {
-			format!("({typ})ret", typ = ret_cast).into()
-		}
-	} else if ret_cast.is_empty() {
-		format!("Ok({})", ret).into()
-	} else {
-		format!("Ok<{typ}>({ret})", typ = ret_cast, ret = ret).into()
+		("ret".into(), false)
 	}
 }
 
@@ -327,7 +340,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		);
 
 		let identifier = self.identifier();
-		let is_infallible = self.is_infallible();
 
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
@@ -344,14 +356,19 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		for (name, arg) in Field::rust_disambiguate_names(self.arguments()) {
 			args.push(arg.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 		}
+		let naked_return = self.is_naked_return();
+		let is_infallible = self.is_infallible();
 		let return_type = self.return_type();
 		let return_wrapper_type = if is_infallible {
 			return_type.rust_extern_return()
 		} else {
 			return_type.rust_extern_return_wrapper_full()
 		};
+		if !naked_return {
+			args.push(format!("ocvrs_return: *mut {}", return_wrapper_type));
+		}
 
-		let return_wrapper_type = if return_wrapper_type == "()" {
+		let return_wrapper_type = if return_wrapper_type == "()" || !naked_return {
 			Cow::Borrowed("")
 		} else {
 			format!(" -> {}", return_wrapper_type).into()
@@ -370,13 +387,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation()
 		);
 
-		static TPL_INFALLIBLE: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/func/cpp_infallible.tpl.cpp").compile_interpolation()
-		);
-
 		let identifier = self.identifier();
-		let is_infallible = self.is_infallible();
-
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
 			return "".to_string();
 		}
@@ -403,41 +414,88 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			pre_post_arg_handle(type_ref.cpp_arg_cleanup(&name), &mut cleanup_args);
 		}
 
+		let is_infallible = self.is_infallible();
+		let naked_return = self.is_naked_return();
 		let return_type = self.return_type();
-		let return_wrapper_full = if is_infallible {
-			return_type.cpp_extern_return(ConstnessOverride::No)
+		let cpp_extern_return = return_type.cpp_extern_return(ConstnessOverride::No);
+		let ret_wrapper_full = if is_infallible {
+			cpp_extern_return.clone()
 		} else {
 			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::No)
 		};
-		let ret = cpp_method_return(self, is_infallible);
+		let mut_ret_wrapper_full = if is_infallible {
+			return_type.cpp_extern_return(ConstnessOverride::Yes(Constness::Mut))
+		} else {
+			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::Yes(Constness::Mut))
+		};
+		if !naked_return {
+			decl_args.push(format!("{}* ocvrs_return", mut_ret_wrapper_full));
+		}
+		let return_spec = if !naked_return {
+			"void".into()
+		} else {
+			ret_wrapper_full.clone()
+		};
+		let (ret, ret_cast) = cpp_method_return(self, &return_type);
 		let ret = if cleanup_args.is_empty() {
 			if ret.is_empty() {
 				"".into()
 			} else {
-				format!("return {};", ret).into()
+				ret
 			}
 		} else {
-			pre_post_arg_handle(format!("{typ} f_ret = {expr}", typ=return_wrapper_full, expr=ret), &mut post_call_args);
-			"return f_ret;".into()
+			pre_post_arg_handle(format!("{typ} f_ret = {expr}", typ=cpp_extern_return, expr=ret), &mut post_call_args);
+			"f_ret".into()
 		};
-
-		let tpl = if is_infallible {
-			&TPL_INFALLIBLE
+		let ret = if naked_return {
+			if ret.is_empty() {
+				"".into()
+			} else if ret_cast {
+				format!("return ({typ}){ret};", typ=ret_wrapper_full, ret=ret).into()
+			} else {
+				format!("return {};", ret).into()
+			}
+		} else if is_infallible {
+			if ret.is_empty() {
+				"".into()
+			} else {
+				format!("*ocvrs_return = {};", ret).into()
+			}
 		} else {
-			&TPL
+			if ret.is_empty() {
+				"Ok(ocvrs_return);".into()
+			} else if ret_cast {
+				format!("Ok<{typ}>({ret}, ocvrs_return);", typ=cpp_extern_return, ret=ret).into()
+			} else {
+				format!("Ok({}, ocvrs_return);", ret).into()
+			}
 		};
 
-		tpl.interpolate(&hashmap! {
+		let func_try = if is_infallible {
+			""
+		} else {
+			"try {"
+		};
+
+		let func_catch = if is_infallible {
+			Cow::Borrowed("")
+		} else {
+			format!("}} OCVRS_CATCH(OCVRS_TYPE({return_wrapper_full}))", return_wrapper_full= mut_ret_wrapper_full).into()
+		};
+
+		TPL.interpolate(&hashmap! {
 			"attributes_begin" => attributes_begin.into(),
 			"debug" => get_debug(self).into(),
-			"return_wrapper_type" => return_wrapper_full,
+			"return_spec" => return_spec,
 			"identifier" => identifier,
 			"decl_args" => decl_args.join(", ").into(),
+			"try" => func_try.into(),
 			"pre_call_args" => pre_call_args.join("\n").into(),
 			"call" => cpp_call_invoke(self).into(),
 			"post_call_args" => post_call_args.join("\n").into(),
 			"cleanup_args" => cleanup_args.join("\n").into(),
 			"return" => ret,
+			"catch" => func_catch,
 			"attributes_end" => attributes_end.into(),
 		})
 	}

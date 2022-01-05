@@ -98,6 +98,21 @@ macro_rules! string_array_arg_mut {
 	};
 }
 
+macro_rules! return_send {
+	(via $name: ident) => {
+		let mut $name = ::std::mem::MaybeUninit::uninit();
+	};
+}
+
+macro_rules! return_receive {
+	(unsafe $name_via: ident => $name: ident) => {
+		let $name = unsafe { $name_via.assume_init() };
+	};
+	($name_via: ident => $name: ident) => {
+		let $name = $name_via.assume_init();
+	};
+}
+
 /// The return type of this function goes into `receive_string`
 #[no_mangle]
 unsafe extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {

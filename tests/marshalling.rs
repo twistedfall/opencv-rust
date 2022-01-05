@@ -229,6 +229,37 @@ fn field_access_on_ptr() -> Result<()> {
 	Ok(())
 }
 
+/// Test whether the return of the small simple structures works as intended
+#[test]
+fn simple_struct_return_infallible() -> Result<()> {
+	#![cfg(ocvrs_has_module_imgproc)]
+	use opencv::{
+		core::{Vector, Rect, Point2f, Size2f},
+		imgproc,
+	};
+	/*
+	There previously was in issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
+	differently by Rust (v1.57.0) and default compilers in Ubuntu 20.04 (Gcc 9.3.0 & Clang 10.0.0). That mismatch led to
+	miscellaneous memory problems like segmentation faults. That shouldn't happen anymore because such returns are now handled by
+	the output argument.
+	 */
+	let contour = Vector::<Point2f>::from_iter(IntoIterator::into_iter([
+		Point2f::new(5., 5.),
+		Point2f::new(5., 15.),
+		Point2f::new(15., 15.),
+		Point2f::new(15., 5.),
+		Point2f::new(5., 5.),
+	]));
+	let bound_rect = imgproc::bounding_rect(&contour)?;
+	assert_eq!(Rect::new(5, 5, 11, 11), bound_rect);
+	let min_area_rect = imgproc::min_area_rect(&contour)?;
+	assert_eq!(Point2f::new(10., 10.), min_area_rect.center());
+	assert_eq!(Size2f::new(10., 10.), min_area_rect.size());
+	// different versions of OpenCV return -90 and 90
+	assert_eq!(90., min_area_rect.angle().abs());
+	Ok(())
+}
+
 // The TrackerSamplerPF_Params no longer exists since OpenCV 4.5.1 and there no other methods that
 // accept typed Mat's, so disable the test for now.
 // #[test]

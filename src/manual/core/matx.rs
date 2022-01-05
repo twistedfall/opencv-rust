@@ -270,20 +270,29 @@ macro_rules! matx_extern {
 		impl $crate::manual::core::MatxExtern<$type, $array> for $crate::manual::core::Matx<$type, $array> {
 			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::Matx<$type, $array>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_input_array(self)
+				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::Matx<$type, $array>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_input_array(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 
 			#[inline]
 			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::Matx<$type, $array>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_ouput_array(self)
+				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::Matx<$type, $array>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 
 			#[inline]
 			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::Matx<$type, $array>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_input_array_output(self)
+				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::Matx<$type, $array>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 		}
 	}

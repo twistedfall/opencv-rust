@@ -143,6 +143,7 @@ impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 }
 
 impl<T: ValidVecType, const N: usize> ToInputArray for VecN<T, N> where Self: VecExtern<T, N> {
+	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		unsafe { self.extern_input_array() }
 			.into_result()
@@ -151,12 +152,14 @@ impl<T: ValidVecType, const N: usize> ToInputArray for VecN<T, N> where Self: Ve
 }
 
 impl<T: ValidVecType, const N: usize> ToInputArray for &VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		(*self).input_array()
 	}
 }
 
 impl<T: ValidVecType, const N: usize> ToOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		unsafe { self.extern_output_array() }
 			.into_result()
@@ -165,12 +168,14 @@ impl<T: ValidVecType, const N: usize> ToOutputArray for VecN<T, N> where Self: V
 }
 
 impl<T: ValidVecType, const N: usize> ToOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		(*self).output_array()
 	}
 }
 
 impl<T: ValidVecType, const N: usize> ToInputOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		unsafe { self.extern_input_output_array() }
 			.into_result()
@@ -179,6 +184,7 @@ impl<T: ValidVecType, const N: usize> ToInputOutputArray for VecN<T, N> where Se
 }
 
 impl<T: ValidVecType, const N: usize> ToInputOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		(*self).input_output_array()
 	}
@@ -194,19 +200,31 @@ pub trait VecExtern<T: ValidVecType, const N: usize> {
 macro_rules! vecn_extern {
 	($type: ty, $len: expr, $extern_input_array: ident, $extern_ouput_array: ident, $extern_input_array_output: ident) => {
 		impl $crate::manual::core::VecExtern<$type, $len> for $crate::manual::core::VecN<$type, $len> {
+			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::VecN<$type, $len>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_input_array(self)
+				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_input_array(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 
+			#[inline]
 			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::VecN<$type, $len>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_ouput_array(self)
+				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 
+			#[inline]
 			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::VecN<$type, $len>) -> $crate::sys::Result<*mut ::std::ffi::c_void>; }
-				$extern_input_array_output(self)
+				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+				return_send!(via ocvrs_return);
+				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
+				return_receive!(ocvrs_return => ret);
+				ret
 			}
 		}
 	}

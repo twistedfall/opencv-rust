@@ -30,29 +30,29 @@ macro_rules! opencv_type_boxed {
 	($type: ty) => {
 		impl $crate::traits::Boxed for $type {
 			#[inline]
-			unsafe fn from_raw(ptr: *mut std::ffi::c_void) -> Self {
+			unsafe fn from_raw(ptr: *mut ::std::ffi::c_void) -> Self {
 				Self { ptr }
 			}
 
 			#[inline]
-			fn into_raw(self) -> *mut std::ffi::c_void {
-				std::mem::ManuallyDrop::new(self).ptr
+			fn into_raw(self) -> *mut ::std::ffi::c_void {
+				::std::mem::ManuallyDrop::new(self).ptr
 			}
 
 			#[inline]
-			fn as_raw(&self) -> *const std::ffi::c_void {
+			fn as_raw(&self) -> *const ::std::ffi::c_void {
 				self.ptr
 			}
 
 			#[inline]
-			fn as_raw_mut(&mut self) -> *mut std::ffi::c_void {
+			fn as_raw_mut(&mut self) -> *mut ::std::ffi::c_void {
 				self.ptr
 			}
 		}
 
 		impl $crate::traits::OpenCVType<'_> for $type {
 			type Arg = Self;
-			type ExternReceive = *mut std::ffi::c_void;
+			type ExternReceive = *mut ::std::ffi::c_void;
 			type ExternContainer = Self;
 
 			#[inline]
@@ -86,8 +86,8 @@ macro_rules! opencv_type_boxed {
 		}
 
 		impl $crate::traits::OpenCVTypeExternContainer for $type {
-			type ExternSend = *const std::ffi::c_void;
-			type ExternSendMut = *mut std::ffi::c_void;
+			type ExternSend = *const ::std::ffi::c_void;
+			type ExternSendMut = *mut ::std::ffi::c_void;
 
 			#[inline]
 			fn opencv_as_extern(&self) -> Self::ExternSend {
@@ -110,11 +110,11 @@ macro_rules! opencv_type_boxed {
 #[macro_export]
 macro_rules! boxed_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
-		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
-
 		impl ::std::convert::From<$type> for $base {
 			#[inline]
 			fn from(s: $type) -> Self {
+				extern "C" { fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void; }
+
 				unsafe { Self::from_raw($extern_convert(s.into_raw())) }
 			}
 		}
@@ -124,14 +124,19 @@ macro_rules! boxed_cast_base {
 #[macro_export]
 macro_rules! boxed_cast_descendant {
 	($type: ty, $descendant: ty, $extern_convert: ident $(,)?) => {
-		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
-
 		impl ::std::convert::TryFrom<$type> for $descendant {
 			type Error = $crate::Error;
 
 			#[inline]
 			fn try_from(s: $type) -> $crate::Result<Self> {
-				Ok(unsafe { Self::from_raw($extern_convert(s.into_raw())) })
+				extern "C" { fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void; }
+
+				let ret = unsafe { $extern_convert(s.into_raw()) };
+				if ret.is_null() {
+					Err($crate::Error::new($crate::core::StsBadArg, format!("Unable to cast base class: {} to: {}", stringify!($type), stringify!($descendant))))
+				} else {
+					Ok(unsafe { Self::from_raw(ret) })
+				}
 			}
 		}
 	};

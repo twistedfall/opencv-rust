@@ -122,3 +122,49 @@ fn cast_base() -> Result<()> {
 	assert_eq!("my_object", &a.get_default_name()?);
 	Ok(())
 }
+
+#[test]
+fn cast_descendant() -> Result<()> {
+	#![cfg(ocvrs_has_module_rgbd)]
+	use std::convert::TryFrom;
+	use opencv::rgbd::{OdometryFrame, RgbdFrame};
+
+	let image = Mat::new_rows_cols_with_default(1, 2, i32::typ(), Scalar::from(1.))?;
+	let depth = Mat::default();
+	let mask = Mat::default();
+	let normals = Mat::default();
+	let child = OdometryFrame::new(&image, &depth, &mask, &normals, 345)?;
+	assert_eq!(345, child.id());
+	assert_eq!(2, child.image().cols());
+	let mut base = RgbdFrame::from(child);
+	assert_eq!(345, base.id());
+	assert_eq!(2, base.image().cols());
+	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::from(2.))?);
+	let child = OdometryFrame::try_from(base)?;
+	assert_eq!(345, child.id());
+	assert_eq!(20, child.image().cols());
+
+	Ok(())
+}
+
+#[test]
+fn cast_descendant_fail() -> Result<()> {
+	#![cfg(ocvrs_has_module_stitching)]
+	use std::convert::TryFrom;
+	use opencv::{
+		core,
+		stitching::{Detail_FeatherBlender, Detail_MultiBandBlender, Detail_Blender},
+		Error,
+	};
+
+	let child = Detail_FeatherBlender::new(43.)?;
+	assert_eq!(43., child.sharpness()?);
+	let base = Detail_Blender::from(child);
+	let correct_child = Detail_FeatherBlender::try_from(base)?;
+	let base = Detail_Blender::from(correct_child);
+	let incorrect_child = Detail_MultiBandBlender::try_from(base);
+	if !matches!(incorrect_child, Err(Error { code: core::StsBadArg, .. })) {
+		panic!("It shouldn't be possible to downcast to the incorrect descendant class");
+	}
+	Ok(())
+}

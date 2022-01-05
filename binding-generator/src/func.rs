@@ -371,6 +371,14 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		self.gen_env.get_export_config(self.entity).map_or(false, |c| c.no_discard)
 	}
 
+	pub fn is_naked_return(&self) -> bool {
+		self.is_infallible() && {
+			let ret_type = self.return_type();
+			ret_type.is_primitive() || ret_type.as_pointer().is_some() || ret_type.as_array().is_some()
+				|| ret_type.is_by_ptr() || ret_type.as_string().is_some()
+		}
+	}
+
 	pub fn as_specialized(&self) -> Option<&'static HashMap<&'static str, &'static str>> {
 		if let FunctionTypeHint::Specialized(spec) = self.type_hint {
 			Some(spec)
