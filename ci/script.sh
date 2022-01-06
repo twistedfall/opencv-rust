@@ -60,3 +60,8 @@ cargo test --release -vv --features "$FEATURES,clang-runtime"
 pushd ci/test-proj-clang-runtime
 cargo run -vv
 popd
+
+export CXX=clang++
+touch build.rs
+cargo test -vv
+cargo test --release -vv
