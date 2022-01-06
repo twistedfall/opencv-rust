@@ -1,3 +1,9 @@
+* 0.62.0
+  * Fixed a segfault when using functions that return small structures (like Point2f) with some C++ compiler combinations, e.g.
+    when using repository OpenCV with the default compiler in Ubuntu 20.04.
+  * Fix segfault and error handling while casting to descendant classes.
+  * Test with OpenCV 4.5.5 and 3.4.17.
+
 * 0.61.3
   * Implement `ToInput/OutputArray` for `Scalar` and all other often used combinations of `VecN`.
   * Fix building on macOS with OpenCV as framework.

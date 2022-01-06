@@ -144,7 +144,10 @@ pub type Viz3d_MouseCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send 
 #[inline]
 pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutputArray) -> Result<()> {
 	output_array_arg!(normals);
-	let ret = unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -161,7 +164,10 @@ pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutput
 #[inline]
 pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
-	let ret = unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -174,7 +180,10 @@ pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
 	input_array_arg!(image);
-	let ret = unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -190,7 +199,10 @@ pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: co
 /// This function returns pose of the camera in global coordinate frame.
 #[inline]
 pub fn make_camera_pose(position: core::Vec3d, focal_point: core::Vec3d, y_dir: core::Vec3d) -> Result<core::Affine3d> {
-	let ret = unsafe { sys::cv_viz_makeCameraPose_const_Vec3dR_const_Vec3dR_const_Vec3dR(&position, &focal_point, &y_dir) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_makeCameraPose_const_Vec3dR_const_Vec3dR_const_Vec3dR(&position, &focal_point, &y_dir, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -212,7 +224,10 @@ pub fn make_camera_pose(position: core::Vec3d, focal_point: core::Vec3d, y_dir: 
 /// * origin: Vec3d::all(0)
 #[inline]
 pub fn make_transform_to_global(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z: core::Vec3d, origin: core::Vec3d) -> Result<core::Affine3d> {
-	let ret = unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, &origin) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, &origin, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -232,7 +247,10 @@ pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mu
 	extern_container_arg!(file);
 	output_array_arg!(colors);
 	output_array_arg!(normals);
-	let ret = unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -242,7 +260,10 @@ pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mu
 #[inline]
 pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 	extern_container_arg!(file);
-	let ret = unsafe { sys::cv_viz_readMesh_const_StringR(file.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readMesh_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -258,7 +279,10 @@ pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<bool> {
 	extern_container_arg!(file);
 	extern_container_arg!(tag);
-	let ret = unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_as_extern(), pose, tag.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_as_extern(), pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -284,14 +308,20 @@ pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, s
 	output_array_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
-	let ret = unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(traj.as_raw__OutputArray(), files_format.opencv_as_extern(), start, end, tag.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(traj.as_raw__OutputArray(), files_format.opencv_as_extern(), start, end, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Unregisters all Viz windows from internal database. After it 'getWindowByName()' will create new windows instead of getting existing from the database.
 #[inline]
 pub fn unregister_all_windows() -> Result<()> {
-	let ret = unsafe { sys::cv_viz_unregisterAllWindows() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_unregisterAllWindows(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -313,7 +343,10 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 	input_array_arg!(cloud);
 	input_array_arg!(colors);
 	input_array_arg!(normals);
-	let ret = unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -328,7 +361,10 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
 	extern_container_arg!(file);
 	extern_container_arg!(tag);
-	let ret = unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_as_extern(), &pose, tag.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_as_extern(), &pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -352,7 +388,10 @@ pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start
 	input_array_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
-	let ret = unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(traj.as_raw__InputArray(), files_format.opencv_as_extern(), start, tag.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(traj.as_raw__InputArray(), files_format.opencv_as_extern(), start, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -365,31 +404,46 @@ pub trait CameraTraitConst {
 
 	#[inline]
 	fn get_clip(&self) -> Result<core::Vec2d> {
-		let ret = unsafe { sys::cv_viz_Camera_getClip_const(self.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getClip_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_window_size(&self) -> Result<core::Size> {
-		let ret = unsafe { sys::cv_viz_Camera_getWindowSize_const(self.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getWindowSize_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_fov(&self) -> Result<core::Vec2d> {
-		let ret = unsafe { sys::cv_viz_Camera_getFov_const(self.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getFov_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_principal_point(&self) -> Result<core::Vec2d> {
-		let ret = unsafe { sys::cv_viz_Camera_getPrincipalPoint_const(self.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getPrincipalPoint_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_focal_length(&self) -> Result<core::Vec2d> {
-		let ret = unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -401,7 +455,10 @@ pub trait CameraTraitConst {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
 	#[inline]
 	fn compute_projection_matrix(&self, proj: &mut core::Matx44d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(self.as_raw_Camera(), proj) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(self.as_raw_Camera(), proj, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -412,19 +469,28 @@ pub trait CameraTrait: crate::viz::CameraTraitConst {
 
 	#[inline]
 	fn set_clip(&mut self, clip: core::Vec2d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Camera_setClip_const_Vec2dR(self.as_raw_mut_Camera(), &clip) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setClip_const_Vec2dR(self.as_raw_mut_Camera(), &clip, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Camera_setWindowSize_const_SizeR(self.as_raw_mut_Camera(), &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setWindowSize_const_SizeR(self.as_raw_mut_Camera(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_fov(&mut self, fov: core::Vec2d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Camera_setFov_const_Vec2dR(self.as_raw_mut_Camera(), &fov) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setFov_const_Vec2dR(self.as_raw_mut_Camera(), &fov, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -469,7 +535,10 @@ impl Camera {
 	/// point determines the field of view.
 	#[inline]
 	pub fn new(fx: f64, fy: f64, cx: f64, cy: f64, window_size: core::Size) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Camera_Camera_double_double_double_double_const_SizeR(fx, fy, cx, cy, &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_double_double_double_double_const_SizeR(fx, fy, cx, cy, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -491,7 +560,10 @@ impl Camera {
 	///            by default.
 	#[inline]
 	pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Camera_Camera_const_Vec2dR_const_SizeR(&fov, &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Vec2dR_const_SizeR(&fov, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -514,7 +586,10 @@ impl Camera {
 	///            the field of view.
 	#[inline]
 	pub fn new_2(k: core::Matx33d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Camera_Camera_const_Matx33dR_const_SizeR(&k, &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx33dR_const_SizeR(&k, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -538,7 +613,10 @@ impl Camera {
 	///            the field of view.
 	#[inline]
 	pub fn new_3(proj: core::Matx44d, window_size: core::Size) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Camera_Camera_const_Matx44dR_const_SizeR(&proj, &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx44dR_const_SizeR(&proj, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -553,7 +631,10 @@ impl Camera {
 	/// determines the field of view.
 	#[inline]
 	pub fn kinect_camera(window_size: core::Size) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Camera_KinectCamera_const_SizeR(&window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_KinectCamera_const_SizeR(&window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -566,7 +647,10 @@ pub trait ColorTraitConst {
 
 	#[inline]
 	fn to_vec3b(&self) -> Result<core::Vec3b> {
-		let ret = unsafe { sys::cv_viz_Color_operator_cv_Vec3b_const(self.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_operator_cv_Vec3b_const(self.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -606,7 +690,10 @@ impl Color {
 	/// cv::viz::Color
 	#[inline]
 	pub fn default() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_Color() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -614,266 +701,380 @@ impl Color {
 	/// The three channels will have the same value equal to gray.
 	#[inline]
 	pub fn new(gray: f64) -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_Color_double(gray) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_double(gray, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_1(blue: f64, green: f64, red: f64) -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_2(color: core::Scalar) -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_Color_const_ScalarR(&color) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_const_ScalarR(&color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn black() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_black() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_black(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn blue() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_blue() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_blue(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn green() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_green() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_green(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn red() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_red() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_red(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn cyan() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_cyan() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_cyan(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn yellow() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_yellow() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_yellow(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn magenta() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_magenta() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_magenta(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn white() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_white() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_white(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn gray() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_gray() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_gray(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn silver() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_silver() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_silver(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn mlab() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_mlab() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_mlab(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn navy() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_navy() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_navy(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn maroon() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_maroon() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_maroon(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn teal() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_teal() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_teal(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn olive() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_olive() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_olive(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn purple() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_purple() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_purple(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn azure() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_azure() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_azure(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn chartreuse() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_chartreuse() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_chartreuse(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn rose() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_rose() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_rose(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn lime() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_lime() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_lime(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn gold() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_gold() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_gold(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn orange() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_orange() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_orange(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn orange_red() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_orange_red() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_orange_red(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn indigo() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_indigo() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_indigo(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn brown() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_brown() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_brown(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn apricot() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_apricot() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_apricot(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn pink() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_pink() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_pink(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn raspberry() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_raspberry() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_raspberry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn cherry() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_cherry() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_cherry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn violet() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_violet() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_violet(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn amethyst() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_amethyst() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_amethyst(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn bluberry() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_bluberry() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_bluberry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn celestial_blue() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_celestial_blue() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_celestial_blue(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn turquoise() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_turquoise() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_turquoise(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn not_set() -> Result<crate::viz::Color> {
-		let ret = unsafe { sys::cv_viz_Color_not_set() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_not_set(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -886,7 +1087,9 @@ pub trait KeyboardEventTraitConst {
 
 	#[inline]
 	fn action(&self) -> crate::viz::KeyboardEvent_Action {
-		let ret = unsafe { sys::cv_viz_KeyboardEvent_getPropAction_const(self.as_raw_KeyboardEvent()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_KeyboardEvent_getPropAction_const(self.as_raw_KeyboardEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -976,7 +1179,10 @@ impl KeyboardEvent {
 	#[inline]
 	pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
 		extern_container_arg!(symbol);
-		let ret = unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::KeyboardEvent::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1109,7 +1315,10 @@ impl crate::viz::MeshTrait for Mesh {
 impl Mesh {
 	#[inline]
 	pub fn default() -> Result<crate::viz::Mesh> {
-		let ret = unsafe { sys::cv_viz_Mesh_Mesh() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Mesh_Mesh(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1129,7 +1338,10 @@ impl Mesh {
 	#[inline]
 	pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
 		extern_container_arg!(file);
-		let ret = unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1142,19 +1354,25 @@ pub trait MouseEventTraitConst {
 
 	#[inline]
 	fn typ(&self) -> crate::viz::MouseEvent_Type {
-		let ret = unsafe { sys::cv_viz_MouseEvent_getPropType_const(self.as_raw_MouseEvent()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_getPropType_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
 	#[inline]
 	fn button(&self) -> crate::viz::MouseEvent_MouseButton {
-		let ret = unsafe { sys::cv_viz_MouseEvent_getPropButton_const(self.as_raw_MouseEvent()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_getPropButton_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
 	#[inline]
 	fn pointer(&self) -> core::Point {
-		let ret = unsafe { sys::cv_viz_MouseEvent_getPropPointer_const(self.as_raw_MouseEvent()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_getPropPointer_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -1231,7 +1449,10 @@ impl MouseEvent {
 	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
 	#[inline]
 	pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
-		let ret = unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(&typ, &button, &pointer, modifiers) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(&typ, &button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::MouseEvent::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1252,7 +1473,10 @@ pub trait Viz3dTraitConst {
 	#[inline]
 	fn get_widget(&self, id: &str) -> Result<crate::viz::Widget> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1264,14 +1488,20 @@ pub trait Viz3dTraitConst {
 	#[inline]
 	fn get_widget_pose(&self, id: &str) -> Result<core::Affine3d> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Returns a camera object that contains intrinsic parameters of the current viewer.
 	#[inline]
 	fn get_camera(&self) -> Result<crate::viz::Camera> {
-		let ret = unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1279,14 +1509,20 @@ pub trait Viz3dTraitConst {
 	/// Returns the current pose of the viewer.
 	#[inline]
 	fn get_viewer_pose(&self) -> Result<core::Affine3d> {
-		let ret = unsafe { sys::cv_viz_Viz3d_getViewerPose_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getViewerPose_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Returns the current size of the window.
 	#[inline]
 	fn get_window_size(&self) -> Result<core::Size> {
-		let ret = unsafe { sys::cv_viz_Viz3d_getWindowSize_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWindowSize_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1294,7 +1530,10 @@ pub trait Viz3dTraitConst {
 	/// `Viz - ` is prepended to the name if necessary.
 	#[inline]
 	fn get_window_name(&self) -> Result<String> {
-		let ret = unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1302,7 +1541,10 @@ pub trait Viz3dTraitConst {
 	/// Returns the Mat screenshot of the current scene.
 	#[inline]
 	fn get_screenshot(&self) -> Result<core::Mat> {
-		let ret = unsafe { sys::cv_viz_Viz3d_getScreenshot_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getScreenshot_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1310,7 +1552,10 @@ pub trait Viz3dTraitConst {
 	/// Returns whether the event loop has been stopped.
 	#[inline]
 	fn was_stopped(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_viz_Viz3d_wasStopped_const(self.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_wasStopped_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1330,7 +1575,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn show_widget(&mut self, id: &str, widget: &crate::viz::Widget, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1341,14 +1589,20 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn remove_widget(&mut self, id: &str) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Removes all widgets from the window.
 	#[inline]
 	fn remove_all_widgets(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_removeAllWidgets(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeAllWidgets(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1363,7 +1617,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn show_image(&mut self, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<()> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1374,7 +1631,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn set_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1386,7 +1646,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn update_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1396,7 +1659,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * camera: Camera object wrapping intrinsic parameters.
 	#[inline]
 	fn set_camera(&mut self, camera: &crate::viz::Camera) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setCamera_const_CameraR(self.as_raw_mut_Viz3d(), camera.as_raw_Camera()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setCamera_const_CameraR(self.as_raw_mut_Viz3d(), camera.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1406,7 +1672,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * pose: The new pose of the viewer.
 	#[inline]
 	fn set_viewer_pose(&mut self, pose: core::Affine3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setViewerPose_const_Affine3dR(self.as_raw_mut_Viz3d(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setViewerPose_const_Affine3dR(self.as_raw_mut_Viz3d(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1417,14 +1686,20 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn reset_camera_viewpoint(&mut self, id: &str) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Resets camera.
 	#[inline]
 	fn reset_camera(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_resetCamera(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_resetCamera(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1435,7 +1710,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * window_coord: Output point in window coordinate system.
 	#[inline]
 	fn convert_to_window_coordinates(&mut self, pt: core::Point3d, window_coord: &mut core::Point3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dR_Point3dR(self.as_raw_mut_Viz3d(), &pt, window_coord) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dR_Point3dR(self.as_raw_mut_Viz3d(), &pt, window_coord, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1446,7 +1724,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * direction: Output direction of the ray.
 	#[inline]
 	fn conver_to3_d_ray(&mut self, window_coord: core::Point3d, origin: &mut core::Point3d, direction: &mut core::Vec3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_converTo3DRay_const_Point3dR_Point3dR_Vec3dR(self.as_raw_mut_Viz3d(), &window_coord, origin, direction) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_converTo3DRay_const_Point3dR_Point3dR_Vec3dR(self.as_raw_mut_Viz3d(), &window_coord, origin, direction, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1456,7 +1737,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * window_size: New size of the window.
 	#[inline]
 	fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setWindowSize_const_SizeR(self.as_raw_mut_Viz3d(), &window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWindowSize_const_SizeR(self.as_raw_mut_Viz3d(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1467,7 +1751,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn save_screenshot(&mut self, file: &str) -> Result<()> {
 		extern_container_arg!(file);
-		let ret = unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringR(self.as_raw_mut_Viz3d(), file.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringR(self.as_raw_mut_Viz3d(), file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1477,7 +1764,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * window_position: coordinates of the window
 	#[inline]
 	fn set_window_position(&mut self, window_position: core::Point) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setWindowPosition_const_PointR(self.as_raw_mut_Viz3d(), &window_position) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWindowPosition_const_PointR(self.as_raw_mut_Viz3d(), &window_position, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1490,7 +1780,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * mode: true
 	#[inline]
 	fn set_full_screen(&mut self, mode: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setFullScreen_bool(self.as_raw_mut_Viz3d(), mode) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setFullScreen_bool(self.as_raw_mut_Viz3d(), mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1501,7 +1794,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * color2: Color::not_set()
 	#[inline]
 	fn set_background_color(&mut self, color: &crate::viz::Viz3d_Color, color2: &crate::viz::Viz3d_Color) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setBackgroundColor_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), color.as_raw_Color(), color2.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundColor_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), color.as_raw_Color(), color2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1510,20 +1806,29 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn set_background_texture(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_background_mesh_lab(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setBackgroundMeshLab(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundMeshLab(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// The window renders and starts the event loop.
 	#[inline]
 	fn spin(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_spin(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_spin(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1538,21 +1843,30 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * force_redraw: false
 	#[inline]
 	fn spin_once(&mut self, time: i32, force_redraw: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_spinOnce_int_bool(self.as_raw_mut_Viz3d(), time, force_redraw) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_spinOnce_int_bool(self.as_raw_mut_Viz3d(), time, force_redraw, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Create a window in memory instead of on the screen.
 	#[inline]
 	fn set_off_screen_rendering(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setOffScreenRendering(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setOffScreenRendering(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Remove all lights from the current scene.
 	#[inline]
 	fn remove_all_lights(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_removeAllLights(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeAllLights(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1574,13 +1888,19 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * specular_color: Color::white()
 	#[inline]
 	fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, color: &crate::viz::Viz3d_Color, diffuse_color: &crate::viz::Viz3d_Color, ambient_color: &crate::viz::Viz3d_Color, specular_color: &crate::viz::Viz3d_Color) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR_const_Vec3dR_const_ColorR_const_ColorR_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_Color(), diffuse_color.as_raw_Color(), ambient_color.as_raw_Color(), specular_color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR_const_Vec3dR_const_ColorR_const_ColorR_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_Color(), diffuse_color.as_raw_Color(), ambient_color.as_raw_Color(), specular_color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn close(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_close(self.as_raw_mut_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_close(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1597,7 +1917,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	fn register_keyboard_callback(&mut self, callback: crate::viz::Viz3d_KeyboardCallback) -> Result<()> {
 		callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callbacks => callback(unnamed: *const c_void) -> ());
 		userdata_arg!(cookie in callbacks => callback);
-		let ret = unsafe { sys::cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1613,7 +1936,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	fn register_mouse_callback(&mut self, callback: crate::viz::Viz3d_MouseCallback) -> Result<()> {
 		callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callbacks => callback(unnamed: *const c_void) -> ());
 		userdata_arg!(cookie in callbacks => callback);
-		let ret = unsafe { sys::cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1646,7 +1972,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn set_rendering_property(&mut self, id: &str, property: i32, value: f64) -> Result<()> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1678,7 +2007,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	#[inline]
 	fn get_rendering_property(&mut self, id: &str, property: i32) -> Result<f64> {
 		extern_container_arg!(id);
-		let ret = unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringR_int(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringR_int(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1691,7 +2023,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// *   **REPRESENTATION_SURFACE**
 	#[inline]
 	fn set_representation(&mut self, representation: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setRepresentation_int(self.as_raw_mut_Viz3d(), representation) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setRepresentation_int(self.as_raw_mut_Viz3d(), representation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1699,7 +2034,10 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * enabled: false
 	#[inline]
 	fn set_global_warnings(&mut self, enabled: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Viz3d_setGlobalWarnings_bool(self.as_raw_mut_Viz3d(), enabled) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setGlobalWarnings_bool(self.as_raw_mut_Viz3d(), enabled, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1740,14 +2078,20 @@ impl Viz3d {
 	#[inline]
 	pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
 		extern_container_arg!(window_name);
-		let ret = unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(unnamed: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
-		let ret = unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1822,7 +2166,10 @@ impl WArrow {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WArrow> {
-		let ret = unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR_double_const_ColorR(&pt1, &pt2, thickness, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR_double_const_ColorR(&pt1, &pt2, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WArrow::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1887,13 +2234,16 @@ impl crate::viz::WCameraPositionTrait for WCameraPosition {
 impl WCameraPosition {
 	/// Creates camera coordinate frame at the origin.
 	/// 
-	/// ![Camera coordinate frame](https://docs.opencv.org/4.5.4/cpw1.png)
+	/// ![Camera coordinate frame](https://docs.opencv.org/4.5.5/cpw1.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	#[inline]
 	pub fn new(scale: f64) -> Result<crate::viz::WCameraPosition> {
-		let ret = unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1906,14 +2256,17 @@ impl WCameraPosition {
 	/// 
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 	/// 
-	/// ![Camera viewing frustum](https://docs.opencv.org/4.5.4/cpw2.png)
+	/// ![Camera viewing frustum](https://docs.opencv.org/4.5.5/cpw2.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		let ret = unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_double_const_ColorR(&k, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_double_const_ColorR(&k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1926,14 +2279,17 @@ impl WCameraPosition {
 	/// 
 	/// Creates viewing frustum of the camera based on its field of view fov.
 	/// 
-	/// ![Camera viewing frustum](https://docs.opencv.org/4.5.4/cpw2.png)
+	/// ![Camera viewing frustum](https://docs.opencv.org/4.5.5/cpw2.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_2(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		let ret = unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(&fov, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(&fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1949,7 +2305,7 @@ impl WCameraPosition {
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 	/// the far end plane.
 	/// 
-	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.5.4/cpw3.png)
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.5.5/cpw3.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -1957,7 +2313,10 @@ impl WCameraPosition {
 	#[inline]
 	pub fn new_3(k: core::Matx33d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1973,7 +2332,7 @@ impl WCameraPosition {
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 	/// the far end plane.
 	/// 
-	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.5.4/cpw3.png)
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.5.5/cpw3.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -1981,7 +2340,10 @@ impl WCameraPosition {
 	#[inline]
 	pub fn new_4(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2056,7 +2418,10 @@ impl WCircle {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(radius: f64, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
-		let ret = unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorR(radius, thickness, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorR(radius, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2075,7 +2440,10 @@ impl WCircle {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
-		let ret = unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(radius, &center, &normal, thickness, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(radius, &center, &normal, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2155,7 +2523,10 @@ impl WCloud {
 	pub fn new(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
-		let ret = unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2172,7 +2543,10 @@ impl WCloud {
 	#[inline]
 	pub fn new_1(cloud: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
-		let ret = unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2189,7 +2563,10 @@ impl WCloud {
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
 		input_array_arg!(normals);
-		let ret = unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2206,7 +2583,10 @@ impl WCloud {
 	pub fn new_3(cloud: &dyn core::ToInputArray, color: &crate::viz::Color, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
 		input_array_arg!(cloud);
 		input_array_arg!(normals);
-		let ret = unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2241,7 +2621,10 @@ pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate:
 	fn add_cloud(&mut self, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, pose: core::Affine3d) -> Result<()> {
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
-		let ret = unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2258,7 +2641,10 @@ pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate:
 	#[inline]
 	fn add_cloud_1(&mut self, cloud: &dyn core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
 		input_array_arg!(cloud);
-		let ret = unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2267,7 +2653,10 @@ pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate:
 	/// Useful for large cloud collections to reduce memory usage
 	#[inline]
 	fn finalize(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_WCloudCollection_finalize(self.as_raw_mut_WCloudCollection()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_finalize(self.as_raw_mut_WCloudCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2318,7 +2707,10 @@ impl crate::viz::WCloudCollectionTrait for WCloudCollection {
 impl WCloudCollection {
 	#[inline]
 	pub fn default() -> Result<crate::viz::WCloudCollection> {
-		let ret = unsafe { sys::cv_viz_WCloudCollection_WCloudCollection() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_WCloudCollection(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloudCollection::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2401,7 +2793,10 @@ impl WCloudNormals {
 	pub fn new(cloud: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
 		input_array_arg!(cloud);
 		input_array_arg!(normals);
-		let ret = unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCloudNormals::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2477,7 +2872,10 @@ impl WCone {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(length: f64, radius: f64, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
-		let ret = unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorR(length, radius, resolution, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorR(length, radius, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2496,7 +2894,10 @@ impl WCone {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
-		let ret = unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2568,7 +2969,10 @@ impl WCoordinateSystem {
 	/// * scale: 1.0
 	#[inline]
 	pub fn new(scale: f64) -> Result<crate::viz::WCoordinateSystem> {
-		let ret = unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCoordinateSystem::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2639,7 +3043,7 @@ impl WCube {
 	/// * wire_frame: If true, cube is represented as wireframe.
 	/// * color: Color of the cube.
 	/// 
-	/// ![Cube Widget](https://docs.opencv.org/4.5.4/cube_widget.png)
+	/// ![Cube Widget](https://docs.opencv.org/4.5.5/cube_widget.png)
 	/// 
 	/// ## C++ default parameters
 	/// * min_point: Vec3d::all(-0.5)
@@ -2648,7 +3052,10 @@ impl WCube {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &crate::viz::Color) -> Result<crate::viz::WCube> {
-		let ret = unsafe { sys::cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(&min_point, &max_point, wire_frame, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(&min_point, &max_point, wire_frame, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCube::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2725,7 +3132,10 @@ impl WCylinder {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &crate::viz::Color) -> Result<crate::viz::WCylinder> {
-		let ret = unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double_int_const_ColorR(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double_int_const_ColorR(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WCylinder::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2801,7 +3211,10 @@ impl WGrid {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
-		let ret = unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iR_const_Vec2dR_const_ColorR(&cells, &cells_spacing, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iR_const_Vec2dR_const_ColorR(&cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2814,7 +3227,10 @@ impl WGrid {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
-		let ret = unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2841,7 +3257,10 @@ pub trait WImage3DTrait: crate::viz::WImage3DTraitConst + crate::viz::Widget3DTr
 	#[inline]
 	fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2851,7 +3270,10 @@ pub trait WImage3DTrait: crate::viz::WImage3DTraitConst + crate::viz::Widget3DTr
 	/// * size: the new size of the image.
 	#[inline]
 	fn set_size(&mut self, size: core::Size) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_WImage3D_setSize_const_SizeR(self.as_raw_mut_WImage3D(), &size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_setSize_const_SizeR(self.as_raw_mut_WImage3D(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2906,7 +3328,10 @@ impl WImage3D {
 	#[inline]
 	pub fn new(image: &dyn core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2922,7 +3347,10 @@ impl WImage3D {
 	#[inline]
 	pub fn new_1(image: &dyn core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2949,7 +3377,10 @@ pub trait WImageOverlayTrait: crate::viz::WImageOverlayTraitConst + crate::viz::
 	#[inline]
 	fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -3004,7 +3435,10 @@ impl WImageOverlay {
 	#[inline]
 	pub fn new(image: &dyn core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WImageOverlay::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3078,7 +3512,10 @@ impl WLine {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &crate::viz::Color) -> Result<crate::viz::WLine> {
-		let ret = unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR_const_ColorR(&pt1, &pt2, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR_const_ColorR(&pt1, &pt2, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WLine::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3157,7 +3594,10 @@ impl crate::viz::WMeshTrait for WMesh {
 impl WMesh {
 	#[inline]
 	pub fn new(mesh: &crate::viz::Mesh) -> Result<crate::viz::WMesh> {
-		let ret = unsafe { sys::cv_viz_WMesh_WMesh_const_MeshR(mesh.as_raw_Mesh()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WMesh_WMesh_const_MeshR(mesh.as_raw_Mesh(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3171,7 +3611,10 @@ impl WMesh {
 		input_array_arg!(polygons);
 		input_array_arg!(colors);
 		input_array_arg!(normals);
-		let ret = unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3236,7 +3679,10 @@ impl WPaintedCloud {
 	#[inline]
 	pub fn new(cloud: &dyn core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		let ret = unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3245,7 +3691,10 @@ impl WPaintedCloud {
 	#[inline]
 	pub fn new_1(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		let ret = unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3254,7 +3703,10 @@ impl WPaintedCloud {
 	#[inline]
 	pub fn new_2(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
 		input_array_arg!(cloud);
-		let ret = unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3328,7 +3780,10 @@ impl WPlane {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
-		let ret = unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dR_const_ColorR(&size, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dR_const_ColorR(&size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3347,7 +3802,10 @@ impl WPlane {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
-		let ret = unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(&center, &normal, &new_yaxis, &size, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(&center, &normal, &new_yaxis, &size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3414,7 +3872,10 @@ impl WPolyLine {
 	pub fn new(points: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WPolyLine> {
 		input_array_arg!(points);
 		input_array_arg!(colors);
-		let ret = unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(points.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(points.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3430,7 +3891,10 @@ impl WPolyLine {
 	#[inline]
 	pub fn new_1(points: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
 		input_array_arg!(points);
-		let ret = unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3506,7 +3970,10 @@ impl WSphere {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WSphere> {
-		let ret = unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(&center, radius, sphere_resolution, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(&center, radius, sphere_resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WSphere::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3524,7 +3991,10 @@ pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
 	/// Returns the current text content of the widget.
 	#[inline]
 	fn get_text(&self) -> Result<String> {
-		let ret = unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3541,7 +4011,10 @@ pub trait WTextTrait: crate::viz::WTextTraitConst + crate::viz::Widget2DTrait {
 	#[inline]
 	fn set_text(&mut self, text: &str) -> Result<()> {
 		extern_container_arg!(text);
-		let ret = unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -3602,7 +4075,10 @@ impl WText {
 	#[inline]
 	pub fn new(text: &str, pos: core::Point, font_size: i32, color: &crate::viz::Color) -> Result<crate::viz::WText> {
 		extern_container_arg!(text);
-		let ret = unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WText::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3620,7 +4096,10 @@ pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
 	/// Returns the current text content of the widget.
 	#[inline]
 	fn get_text(&self) -> Result<String> {
-		let ret = unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3637,7 +4116,10 @@ pub trait WText3DTrait: crate::viz::WText3DTraitConst + crate::viz::Widget3DTrai
 	#[inline]
 	fn set_text(&mut self, text: &str) -> Result<()> {
 		extern_container_arg!(text);
-		let ret = unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -3700,7 +4182,10 @@ impl WText3D {
 	#[inline]
 	pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &crate::viz::Color) -> Result<crate::viz::WText3D> {
 		extern_container_arg!(text);
-		let ret = unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_as_extern(), &position, text_scale, face_camera, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_as_extern(), &position, text_scale, face_camera, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WText3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3784,7 +4269,10 @@ impl WTrajectory {
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
 		input_array_arg!(path);
-		let ret = unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WTrajectory::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3863,7 +4351,10 @@ impl WTrajectoryFrustums {
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
 		input_array_arg!(path);
-		let ret = unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3884,7 +4375,10 @@ impl WTrajectoryFrustums {
 	#[inline]
 	pub fn new_1(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
 		input_array_arg!(path);
-		let ret = unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -3970,7 +4464,10 @@ impl WTrajectorySpheres {
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
 		input_array_arg!(path);
-		let ret = unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WTrajectorySpheres::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -4001,14 +4498,20 @@ pub trait WWidgetMergerTrait: crate::viz::WWidgetMergerTraitConst + crate::viz::
 	/// * pose: Affine3d::Identity()
 	#[inline]
 	fn add_widget(&mut self, widget: &crate::viz::Widget3D, pose: core::Affine3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Repacks internal structure to single widget
 	#[inline]
 	fn finalize(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_WWidgetMerger_finalize(self.as_raw_mut_WWidgetMerger()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_finalize(self.as_raw_mut_WWidgetMerger(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4062,7 +4565,10 @@ impl crate::viz::WWidgetMergerTrait for WWidgetMerger {
 impl WWidgetMerger {
 	#[inline]
 	pub fn default() -> Result<crate::viz::WWidgetMerger> {
-		let ret = unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::WWidgetMerger::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -4104,7 +4610,10 @@ pub trait WidgetTraitConst {
 	/// *   **SHADING_PHONG**
 	#[inline]
 	fn get_rendering_property(&self, property: i32) -> Result<f64> {
-		let ret = unsafe { sys::cv_viz_Widget_getRenderingProperty_const_int(self.as_raw_Widget(), property) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_getRenderingProperty_const_int(self.as_raw_Widget(), property, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4140,7 +4649,10 @@ pub trait WidgetTrait: crate::viz::WidgetTraitConst {
 	/// *   **SHADING_PHONG**
 	#[inline]
 	fn set_rendering_property(&mut self, property: i32, value: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget_setRenderingProperty_int_double(self.as_raw_mut_Widget(), property, value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_setRenderingProperty_int_double(self.as_raw_mut_Widget(), property, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4173,14 +4685,20 @@ impl crate::viz::WidgetTrait for Widget {
 impl Widget {
 	#[inline]
 	pub fn default() -> Result<crate::viz::Widget> {
-		let ret = unsafe { sys::cv_viz_Widget_Widget() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_Widget(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(other: &crate::viz::Widget) -> Result<crate::viz::Widget> {
-		let ret = unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -4192,7 +4710,10 @@ impl Widget {
 	#[inline]
 	pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
 		extern_container_arg!(file_name);
-		let ret = unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -4214,7 +4735,10 @@ pub trait Widget2DTrait: crate::viz::Widget2DTraitConst + crate::viz::WidgetTrai
 	/// * color: color of type Color
 	#[inline]
 	fn set_color(&mut self, color: &crate::viz::Color) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget2D_setColor_const_ColorR(self.as_raw_mut_Widget2D(), color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget2D_setColor_const_ColorR(self.as_raw_mut_Widget2D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4255,7 +4779,10 @@ impl crate::viz::Widget2DTrait for Widget2D {
 impl Widget2D {
 	#[inline]
 	pub fn default() -> Result<crate::viz::Widget2D> {
-		let ret = unsafe { sys::cv_viz_Widget2D_Widget2D() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget2D_Widget2D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget2D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -4271,7 +4798,10 @@ pub trait Widget3DTraitConst: crate::viz::WidgetTraitConst {
 	/// Returns the current pose of the widget.
 	#[inline]
 	fn get_pose(&self) -> Result<core::Affine3d> {
-		let ret = unsafe { sys::cv_viz_Widget3D_getPose_const(self.as_raw_Widget3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_getPose_const(self.as_raw_Widget3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4286,7 +4816,10 @@ pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrai
 	/// * pose: The new pose of the widget.
 	#[inline]
 	fn set_pose(&mut self, pose: core::Affine3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget3D_setPose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_setPose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4296,7 +4829,10 @@ pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrai
 	/// * pose: The pose that the current pose of the widget will be pre-multiplied by.
 	#[inline]
 	fn update_pose(&mut self, pose: core::Affine3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget3D_updatePose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_updatePose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4306,7 +4842,10 @@ pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrai
 	/// * transform: Specified transformation to apply.
 	#[inline]
 	fn apply_transform(&mut self, transform: core::Affine3d) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget3D_applyTransform_const_Affine3dR(self.as_raw_mut_Widget3D(), &transform) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_applyTransform_const_Affine3dR(self.as_raw_mut_Widget3D(), &transform, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4316,7 +4855,10 @@ pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrai
 	/// * color: color of type Color
 	#[inline]
 	fn set_color(&mut self, color: &crate::viz::Color) -> Result<()> {
-		let ret = unsafe { sys::cv_viz_Widget3D_setColor_const_ColorR(self.as_raw_mut_Widget3D(), color.as_raw_Color()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_setColor_const_ColorR(self.as_raw_mut_Widget3D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4357,7 +4899,10 @@ impl crate::viz::Widget3DTrait for Widget3D {
 impl Widget3D {
 	#[inline]
 	pub fn default() -> Result<crate::viz::Widget3D> {
-		let ret = unsafe { sys::cv_viz_Widget3D_Widget3D() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_Widget3D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::viz::Widget3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}

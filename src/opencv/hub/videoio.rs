@@ -122,6 +122,24 @@ pub const CAP_OPENNI_VGA_30HZ: i32 = 0;
 pub const CAP_PROP_APERTURE: i32 = 17008;
 /// Automatically trigger frame capture if camera is configured with software trigger
 pub const CAP_PROP_ARAVIS_AUTOTRIGGER: i32 = 600;
+/// (read-only) Index of the first audio channel for .retrieve() calls. That audio channel number continues enumeration after video channels.
+pub const CAP_PROP_AUDIO_BASE_INDEX: i32 = 63;
+/// (open, read) Alternative definition to bits-per-sample, but with clear handling of 32F / 32S
+pub const CAP_PROP_AUDIO_DATA_DEPTH: i32 = 61;
+/// (read-only) Audio position is measured in samples. Accurate audio sample timestamp of previous grabbed fragment. See CAP_PROP_AUDIO_SAMPLES_PER_SECOND and CAP_PROP_AUDIO_SHIFT_NSEC.
+pub const CAP_PROP_AUDIO_POS: i32 = 59;
+/// (open, read) determined from file/codec input. If not specified, then selected audio sample rate is 44100
+pub const CAP_PROP_AUDIO_SAMPLES_PER_SECOND: i32 = 62;
+/// (read only) Contains the time difference between the start of the audio stream and the video stream in nanoseconds. Positive value means that audio is started after the first video frame. Negative value means that audio is started before the first video frame.
+pub const CAP_PROP_AUDIO_SHIFT_NSEC: i32 = 60;
+/// (**open-only**) Specify stream in multi-language media files, -1 - disable audio processing or microphone. Default value is -1.
+pub const CAP_PROP_AUDIO_STREAM: i32 = 58;
+/// (open, read) Enables audio synchronization.
+pub const CAP_PROP_AUDIO_SYNCHRONIZE: i32 = 66;
+/// (read-only) Number of audio channels in the selected audio stream (mono, stereo, etc)
+pub const CAP_PROP_AUDIO_TOTAL_CHANNELS: i32 = 64;
+/// (read-only) Number of audio streams.
+pub const CAP_PROP_AUDIO_TOTAL_STREAMS: i32 = 65;
 pub const CAP_PROP_AUTOFOCUS: i32 = 39;
 /// DC1394: exposure control done by camera, user can adjust reference level using this feature.
 pub const CAP_PROP_AUTO_EXPOSURE: i32 = 21;
@@ -137,6 +155,8 @@ pub const CAP_PROP_BRIGHTNESS: i32 = 10;
 pub const CAP_PROP_BUFFERSIZE: i32 = 38;
 /// Video input or Channel Number (only for those cameras that support)
 pub const CAP_PROP_CHANNEL: i32 = 43;
+/// Positive index indicates that returning extra data is supported by the video back end.  This can be retrieved as cap.retrieve(data, <returned index>).  E.g. When reading from a h264 encoded RTSP stream, the FFmpeg backend could return the SPS and/or PPS if available (if sent in reply to a DESCRIBE request), from calls to cap.retrieve(data, <returned index>).
+pub const CAP_PROP_CODEC_EXTRADATA_INDEX: i32 = 68;
 /// (read-only) codec's pixel format. 4-character code - see VideoWriter::fourcc . Subset of [AV_PIX_FMT_*](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/raw.c) or -1 if unknown
 pub const CAP_PROP_CODEC_PIXEL_FORMAT: i32 = 46;
 /// Contrast of the image (only for cameras).
@@ -217,6 +237,8 @@ pub const CAP_PROP_IOS_DEVICE_TORCH: i32 = 9005;
 pub const CAP_PROP_IOS_DEVICE_WHITEBALANCE: i32 = 9004;
 pub const CAP_PROP_IRIS: i32 = 36;
 pub const CAP_PROP_ISO_SPEED: i32 = 30;
+/// FFmpeg back-end only - Indicates whether the Last Raw Frame (LRF), output from VideoCapture::read() when VideoCapture is initialized with VideoCapture::open(CAP_FFMPEG, {CAP_PROP_FORMAT, -1}) or VideoCapture::set(CAP_PROP_FORMAT,-1) is called before the first call to VideoCapture::read(), contains encoded data for a key frame.
+pub const CAP_PROP_LRF_HAS_KEY_FRAME: i32 = 67;
 /// Backend-specific value indicating the current capture mode.
 pub const CAP_PROP_MODE: i32 = 9;
 pub const CAP_PROP_MONOCHROME: i32 = 19;
@@ -287,6 +309,10 @@ pub const CAP_PROP_TEMPERATURE: i32 = 23;
 pub const CAP_PROP_TILT: i32 = 34;
 pub const CAP_PROP_TRIGGER: i32 = 24;
 pub const CAP_PROP_TRIGGER_DELAY: i32 = 25;
+/// (**open-only**) Specify video stream, 0-based index. Use -1 to disable video stream from file or IP cameras. Default value is 0.
+pub const CAP_PROP_VIDEO_STREAM: i32 = 57;
+/// (read-only) Number of video channels
+pub const CAP_PROP_VIDEO_TOTAL_CHANNELS: i32 = 56;
 /// Enter liveview mode.
 pub const CAP_PROP_VIEWFINDER: i32 = 17010;
 /// white-balance color temperature
@@ -651,7 +677,7 @@ pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
-pub const CV__CAP_PROP_LATEST: i32 = 56;
+pub const CV__CAP_PROP_LATEST: i32 = 69;
 pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 9;
 /// Defaults to CV_8U.
 pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
@@ -900,7 +926,33 @@ pub enum VideoCaptureProperties {
 	/// (**open-only**) timeout in milliseconds for reading from a video capture (applicable for FFmpeg back-end only)
 	CAP_PROP_READ_TIMEOUT_MSEC = 54,
 	CAP_PROP_STREAM_OPEN_TIME_USEC = 55,
-	CV__CAP_PROP_LATEST = 56,
+	/// (read-only) Number of video channels
+	CAP_PROP_VIDEO_TOTAL_CHANNELS = 56,
+	/// (**open-only**) Specify video stream, 0-based index. Use -1 to disable video stream from file or IP cameras. Default value is 0.
+	CAP_PROP_VIDEO_STREAM = 57,
+	/// (**open-only**) Specify stream in multi-language media files, -1 - disable audio processing or microphone. Default value is -1.
+	CAP_PROP_AUDIO_STREAM = 58,
+	/// (read-only) Audio position is measured in samples. Accurate audio sample timestamp of previous grabbed fragment. See CAP_PROP_AUDIO_SAMPLES_PER_SECOND and CAP_PROP_AUDIO_SHIFT_NSEC.
+	CAP_PROP_AUDIO_POS = 59,
+	/// (read only) Contains the time difference between the start of the audio stream and the video stream in nanoseconds. Positive value means that audio is started after the first video frame. Negative value means that audio is started before the first video frame.
+	CAP_PROP_AUDIO_SHIFT_NSEC = 60,
+	/// (open, read) Alternative definition to bits-per-sample, but with clear handling of 32F / 32S
+	CAP_PROP_AUDIO_DATA_DEPTH = 61,
+	/// (open, read) determined from file/codec input. If not specified, then selected audio sample rate is 44100
+	CAP_PROP_AUDIO_SAMPLES_PER_SECOND = 62,
+	/// (read-only) Index of the first audio channel for .retrieve() calls. That audio channel number continues enumeration after video channels.
+	CAP_PROP_AUDIO_BASE_INDEX = 63,
+	/// (read-only) Number of audio channels in the selected audio stream (mono, stereo, etc)
+	CAP_PROP_AUDIO_TOTAL_CHANNELS = 64,
+	/// (read-only) Number of audio streams.
+	CAP_PROP_AUDIO_TOTAL_STREAMS = 65,
+	/// (open, read) Enables audio synchronization.
+	CAP_PROP_AUDIO_SYNCHRONIZE = 66,
+	/// FFmpeg back-end only - Indicates whether the Last Raw Frame (LRF), output from VideoCapture::read() when VideoCapture is initialized with VideoCapture::open(CAP_FFMPEG, {CAP_PROP_FORMAT, -1}) or VideoCapture::set(CAP_PROP_FORMAT,-1) is called before the first call to VideoCapture::read(), contains encoded data for a key frame.
+	CAP_PROP_LRF_HAS_KEY_FRAME = 67,
+	/// Positive index indicates that returning extra data is supported by the video back end.  This can be retrieved as cap.retrieve(data, <returned index>).  E.g. When reading from a h264 encoded RTSP stream, the FFmpeg backend could return the SPS and/or PPS if available (if sent in reply to a DESCRIBE request), from calls to cap.retrieve(data, <returned index>).
+	CAP_PROP_CODEC_EXTRADATA_INDEX = 68,
+	CV__CAP_PROP_LATEST = 69,
 }
 
 opencv_type_enum! { crate::videoio::VideoCaptureProperties }
@@ -938,7 +990,10 @@ opencv_type_enum! { crate::videoio::VideoWriterProperties }
 /// * api: backend ID (#VideoCaptureAPIs)
 #[inline]
 pub fn get_backend_name(api: crate::videoio::VideoCaptureAPIs) -> Result<String> {
-	let ret = unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -946,7 +1001,10 @@ pub fn get_backend_name(api: crate::videoio::VideoCaptureAPIs) -> Result<String>
 /// Returns list of all available backends
 #[inline]
 pub fn get_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
-	let ret = unsafe { sys::cv_videoio_registry_getBackends() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getBackends(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -954,7 +1012,10 @@ pub fn get_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> 
 /// Returns description and ABI/API version of videoio plugin's camera interface
 #[inline]
 pub fn get_camera_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
-	let ret = unsafe { sys::cv_videoio_registry_getCameraBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getCameraBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -962,7 +1023,10 @@ pub fn get_camera_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, 
 /// Returns list of available backends which works via `cv::VideoCapture(int index)`
 #[inline]
 pub fn get_camera_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
-	let ret = unsafe { sys::cv_videoio_registry_getCameraBackends() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getCameraBackends(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -970,7 +1034,10 @@ pub fn get_camera_backends() -> Result<core::Vector<crate::videoio::VideoCapture
 /// Returns description and ABI/API version of videoio plugin's stream capture interface
 #[inline]
 pub fn get_stream_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
-	let ret = unsafe { sys::cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -978,7 +1045,10 @@ pub fn get_stream_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, 
 /// Returns list of available backends which works via `cv::VideoCapture(filename)`
 #[inline]
 pub fn get_stream_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
-	let ret = unsafe { sys::cv_videoio_registry_getStreamBackends() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getStreamBackends(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -986,7 +1056,10 @@ pub fn get_stream_backends() -> Result<core::Vector<crate::videoio::VideoCapture
 /// Returns description and ABI/API version of videoio plugin's writer interface
 #[inline]
 pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
-	let ret = unsafe { sys::cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -994,7 +1067,10 @@ pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, 
 /// Returns list of available backends which works via `cv::VideoWriter()`
 #[inline]
 pub fn get_writer_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
-	let ret = unsafe { sys::cv_videoio_registry_getWriterBackends() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_getWriterBackends(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -1002,14 +1078,20 @@ pub fn get_writer_backends() -> Result<core::Vector<crate::videoio::VideoCapture
 /// Returns true if backend is available
 #[inline]
 pub fn has_backend(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
-	let ret = unsafe { sys::cv_videoio_registry_hasBackend_VideoCaptureAPIs(api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_hasBackend_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Returns true if backend is built in (false if backend is used as plugin)
 #[inline]
 pub fn is_backend_built_in(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
-	let ret = unsafe { sys::cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1041,7 +1123,10 @@ pub trait VideoCaptureTraitConst {
 	/// true.
 	#[inline]
 	fn is_opened(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_isOpened_const(self.as_raw_VideoCapture()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_isOpened_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1066,7 +1151,10 @@ pub trait VideoCaptureTraitConst {
 	/// driver and API Backend
 	#[inline]
 	fn get(&self, prop_id: i32) -> Result<f64> {
-		let ret = unsafe { sys::cv_VideoCapture_get_const_int(self.as_raw_VideoCapture(), prop_id) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_get_const_int(self.as_raw_VideoCapture(), prop_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1076,7 +1164,10 @@ pub trait VideoCaptureTraitConst {
 	/// Note: Stream should be opened.
 	#[inline]
 	fn get_backend_name(&self) -> Result<String> {
-		let ret = unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1101,7 +1192,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	#[inline]
 	fn open_file(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1119,7 +1213,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	#[inline]
 	fn open(&mut self, filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1137,7 +1234,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// * api_preference: CAP_ANY
 	#[inline]
 	fn open_1(&mut self, index: i32, api_preference: i32) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_open_int_int(self.as_raw_mut_VideoCapture(), index, api_preference) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_open_int_int(self.as_raw_mut_VideoCapture(), index, api_preference, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1154,7 +1254,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	#[inline]
 	fn open_2(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_open_int_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_open_int_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1166,7 +1269,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// The C function also deallocates memory and clears \*capture pointer.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_VideoCapture_release(self.as_raw_mut_VideoCapture()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_release(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1191,7 +1297,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// @ref tutorial_kinect_openni
 	#[inline]
 	fn grab(&mut self) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_grab(self.as_raw_mut_VideoCapture()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_grab(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1219,7 +1328,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	#[inline]
 	fn retrieve(&mut self, image: &mut dyn core::ToOutputArray, flag: i32) -> Result<bool> {
 		output_array_arg!(image);
-		let ret = unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1242,7 +1354,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	#[inline]
 	fn read(&mut self, image: &mut dyn core::ToOutputArray) -> Result<bool> {
 		output_array_arg!(image);
-		let ret = unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1259,7 +1374,10 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// value has been accepted by the capture device. See note in VideoCapture::get()
 	#[inline]
 	fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_set_int_double(self.as_raw_mut_VideoCapture(), prop_id, value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_set_int_double(self.as_raw_mut_VideoCapture(), prop_id, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1268,14 +1386,20 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// methods raise exceptions if not successful instead of returning an error code
 	#[inline]
 	fn set_exception_mode(&mut self, enable: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_VideoCapture_setExceptionMode_bool(self.as_raw_mut_VideoCapture(), enable) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_setExceptionMode_bool(self.as_raw_mut_VideoCapture(), enable, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// query if exception mode is active
 	#[inline]
 	fn get_exception_mode(&mut self) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_getExceptionMode(self.as_raw_mut_VideoCapture()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_getExceptionMode(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1331,7 +1455,10 @@ impl VideoCapture {
 	/// destructor.
 	#[inline]
 	pub fn default() -> Result<crate::videoio::VideoCapture> {
-		let ret = unsafe { sys::cv_VideoCapture_VideoCapture() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_VideoCapture(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1364,7 +1491,10 @@ impl VideoCapture {
 	#[inline]
 	pub fn from_file(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_as_extern(), api_preference) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_as_extern(), api_preference, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1384,7 +1514,10 @@ impl VideoCapture {
 	#[inline]
 	pub fn from_file_with_params(filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1411,7 +1544,10 @@ impl VideoCapture {
 	/// * api_preference: CAP_ANY
 	#[inline]
 	pub fn new(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
-		let ret = unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1430,7 +1566,10 @@ impl VideoCapture {
 	///    See cv::VideoCaptureProperties
 	#[inline]
 	pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
-		let ret = unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vector_int_R(index, api_preference, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vector_int_R(index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1455,7 +1594,10 @@ impl VideoCapture {
 	/// * timeout_ns: 0
 	#[inline]
 	pub fn wait_any(streams: &core::Vector<crate::videoio::VideoCapture>, ready_index: &mut core::Vector<i32>, timeout_ns: i64) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoCapture_waitAny_const_vector_VideoCapture_R_vector_int_R_int64_t(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), timeout_ns) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoCapture_waitAny_const_vector_VideoCapture_R_vector_int_R_int64_t(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), timeout_ns, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1470,7 +1612,10 @@ pub trait VideoWriterTraitConst {
 	/// Returns true if video writer has been successfully initialized.
 	#[inline]
 	fn is_opened(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoWriter_isOpened_const(self.as_raw_VideoWriter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_isOpened_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1485,7 +1630,10 @@ pub trait VideoWriterTraitConst {
 	/// not supported by the backend used by the VideoWriter instance.
 	#[inline]
 	fn get(&self, prop_id: i32) -> Result<f64> {
-		let ret = unsafe { sys::cv_VideoWriter_get_const_int(self.as_raw_VideoWriter(), prop_id) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_get_const_int(self.as_raw_VideoWriter(), prop_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1495,7 +1643,10 @@ pub trait VideoWriterTraitConst {
 	/// Note: Stream should be opened.
 	#[inline]
 	fn get_backend_name(&self) -> Result<String> {
-		let ret = unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1519,7 +1670,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	#[inline]
 	fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1539,7 +1693,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	#[inline]
 	fn open_with_backend(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1556,7 +1713,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	#[inline]
 	fn open_1(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1573,7 +1733,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	#[inline]
 	fn open_2(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1583,7 +1746,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	/// destructor.
 	#[inline]
 	fn release(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_VideoWriter_release(self.as_raw_mut_VideoWriter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_release(self.as_raw_mut_VideoWriter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1597,7 +1763,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	#[inline]
 	fn write(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(image);
-		let ret = unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1612,7 +1781,10 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	/// `true` if the property is supported by the backend used by the VideoWriter instance.
 	#[inline]
 	fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
-		let ret = unsafe { sys::cv_VideoWriter_set_int_double(self.as_raw_mut_VideoWriter(), prop_id, value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_set_int_double(self.as_raw_mut_VideoWriter(), prop_id, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1653,7 +1825,10 @@ impl VideoWriter {
 	/// *   On MacOSX AVFoundation is used.
 	#[inline]
 	pub fn default() -> Result<crate::videoio::VideoWriter> {
-		let ret = unsafe { sys::cv_VideoWriter_VideoWriter() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_VideoWriter(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1693,7 +1868,10 @@ impl VideoWriter {
 	#[inline]
 	pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1715,7 +1893,10 @@ impl VideoWriter {
 	#[inline]
 	pub fn new_with_backend(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1734,7 +1915,10 @@ impl VideoWriter {
 	#[inline]
 	pub fn new_1(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1750,7 +1934,10 @@ impl VideoWriter {
 	#[inline]
 	pub fn new_2(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
-		let ret = unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1764,7 +1951,10 @@ impl VideoWriter {
 	/// VideoWriter::VideoWriter or VideoWriter::open.
 	#[inline]
 	pub fn fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
-		let ret = unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(c1, c2, c3, c4) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(c1, c2, c3, c4, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

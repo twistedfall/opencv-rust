@@ -67,7 +67,7 @@
 //! ----------------------------------------------
 //! 
 //! The state of the algorithms in order to achieve the task 3D matching is heavily based on
-//! [drost2010](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
+//! [drost2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
 //! approach is composed of extracting 3D feature points randomly from depth images or generic point
 //! clouds, indexing them and later in runtime querying them efficiently. Only the 3D structure is
 //! considered, and a trivial hash table is used for feature queries.
@@ -77,7 +77,7 @@
 //! methods (Typically for such algorithms training on a CAD model is not needed, and a point cloud
 //! would be sufficient). Below is the outline of the entire algorithm:
 //! 
-//! ![Outline of the Algorithm](https://docs.opencv.org/4.5.4/outline.jpg)
+//! ![Outline of the Algorithm](https://docs.opencv.org/4.5.5/outline.jpg)
 //! 
 //! As explained, the algorithm relies on the extraction and indexing of point pair features, which are
 //! defined as follows:
@@ -226,7 +226,7 @@
 //! increase the speed. However this is not an optimality guarantee and many times causes wrong points
 //! to be matched. Luckily the assignments are corrected over iterations.
 //! 
-//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
+//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
 //! correspondences) are two well-known methods. Picky ICP first finds the correspondences in the
 //! old-fashioned way and then among the resulting corresponding pairs, if more than one scene point
 //! ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) is assigned to the same model point ![inline formula](https://latex.codecogs.com/png.latex?m%5Fj), it selects ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) that corresponds to the minimum
@@ -253,7 +253,7 @@
 //! 
 //! ### Error Metric
 //! 
-//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
+//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
 //! both speeds up the registration process and improves convergence.
 //! 
 //! ### Minimization
@@ -302,11 +302,11 @@
 //! This section is dedicated to the results of surface matching (point-pair-feature matching and a
 //! following ICP refinement):
 //! 
-//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.5.4/gsoc_forg_matches.jpg)
+//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.5.5/gsoc_forg_matches.jpg)
 //! 
 //! Matches of different models for Mian dataset is presented below:
 //! 
-//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.5.4/snapshot27.jpg)
+//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.5.5/snapshot27.jpg)
 //! 
 //! You might checkout the video on [youTube here](http://www.youtube.com/watch?v=uFnqLFznuZU).
 //! 
@@ -330,8 +330,8 @@
 //! quadratically increased as the complexity is O(N\^2). This is especially a concern for 32 bit
 //! systems, where large models can easily overshoot the available memory. Typically, values in the
 //! range of 0.025 - 0.05 seem adequate for most of the applications, where the default value is 0.03.
-//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_drost2010) . In
-//! [drost2010](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
+//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_drost2010) . In
+//! [drost2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
 //! sampling. In my implementation, the cuboid is a rectangular prism, and each dimension is quantized
 //! independently. I do not take reference from the diameter but along the individual dimensions.
 //! 
@@ -408,7 +408,10 @@ pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
 	#[inline]
 	fn register_model_to_scene(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
-		let ret = unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -424,7 +427,10 @@ pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
 	#[inline]
 	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
-		let ret = unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -472,7 +478,10 @@ impl crate::surface_matching::ICPTrait for ICP {
 impl ICP {
 	#[inline]
 	pub fn default() -> Result<crate::surface_matching::ICP> {
-		let ret = unsafe { sys::cv_ppf_match_3d_ICP_ICP() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_ICP_ICP(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::ICP::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -500,7 +509,10 @@ impl ICP {
 	/// * num_max_corr: 1
 	#[inline]
 	pub fn new(iterations: i32, tolerence: f32, rejection_scale: f32, num_levels: i32, sample_type: i32, num_max_corr: i32) -> Result<crate::surface_matching::ICP> {
-		let ret = unsafe { sys::cv_ppf_match_3d_ICP_ICP_const_int_const_float_const_float_const_int_const_int_const_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_ICP_ICP_const_int_const_float_const_float_const_int_const_int_const_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::ICP::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -538,7 +550,10 @@ pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 	/// * use_weighted_clustering: false
 	#[inline]
 	fn set_search_params(&mut self, position_threshold: f64, rotation_threshold: f64, use_weighted_clustering: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_const_double_const_double_const_bool(self.as_raw_mut_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_const_double_const_double_const_bool(self.as_raw_mut_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -550,7 +565,10 @@ pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 	/// \details Uses the parameters set in the constructor to downsample and learn a new model. When the model is learnt, the instance gets ready for calling "match".
 	#[inline]
 	fn train_model(&mut self, model: &core::Mat) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatR(self.as_raw_mut_PPF3DDetector(), model.as_raw_Mat()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatR(self.as_raw_mut_PPF3DDetector(), model.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -567,7 +585,10 @@ pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 	/// * relative_scene_distance: 0.03
 	#[inline]
 	fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -611,7 +632,10 @@ impl PPF3DDetector {
 	/// \brief Empty constructor. Sets default arguments
 	#[inline]
 	pub fn default() -> Result<crate::surface_matching::PPF3DDetector> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -627,7 +651,10 @@ impl PPF3DDetector {
 	/// * num_angles: 30
 	#[inline]
 	pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -666,7 +693,9 @@ pub trait Pose3DTraitConst {
 	
 	#[inline]
 	fn pose(&self) -> core::Matx44d {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropPose_const(self.as_raw_Pose3D()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_getPropPose_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -678,13 +707,17 @@ pub trait Pose3DTraitConst {
 	
 	#[inline]
 	fn t(&self) -> core::Vec3d {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropT_const(self.as_raw_Pose3D()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_getPropT_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
 	#[inline]
 	fn q(&self) -> core::Vec4d {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropQ_const(self.as_raw_Pose3D()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_getPropQ_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -745,21 +778,30 @@ pub trait Pose3DTrait: crate::surface_matching::Pose3DTraitConst {
 	/// \param [in] NewPose New pose to overwrite
 	#[inline]
 	fn update_pose(&mut self, new_pose: &mut core::Matx44d) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx44dR(self.as_raw_mut_Pose3D(), new_pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx44dR(self.as_raw_mut_Pose3D(), new_pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// \brief Updates the pose with the new one
 	#[inline]
 	fn update_pose_1(&mut self, new_r: &mut core::Matx33d, new_t: &mut core::Vec3d) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx33dR_Vec3dR(self.as_raw_mut_Pose3D(), new_r, new_t) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx33dR_Vec3dR(self.as_raw_mut_Pose3D(), new_r, new_t, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// \brief Updates the pose with the new one, but this time using quaternions to represent rotation
 	#[inline]
 	fn update_pose_quat(&mut self, q: &mut core::Vec4d, new_t: &mut core::Vec3d) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dR_Vec3dR(self.as_raw_mut_Pose3D(), q, new_t) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dR_Vec3dR(self.as_raw_mut_Pose3D(), q, new_t, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -767,19 +809,28 @@ pub trait Pose3DTrait: crate::surface_matching::Pose3DTraitConst {
 	/// \param [in] IncrementalPose New pose to apply
 	#[inline]
 	fn append_pose(&mut self, incremental_pose: &mut core::Matx44d) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_appendPose_Matx44dR(self.as_raw_mut_Pose3D(), incremental_pose) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_appendPose_Matx44dR(self.as_raw_mut_Pose3D(), incremental_pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn print_pose(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_printPose(self.as_raw_mut_Pose3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_printPose(self.as_raw_mut_Pose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn clone(&mut self) -> Result<core::Ptr<crate::surface_matching::Pose3D>> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_clone(self.as_raw_mut_Pose3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_clone(self.as_raw_mut_Pose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::surface_matching::Pose3D>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -787,14 +838,20 @@ pub trait Pose3DTrait: crate::surface_matching::Pose3DTraitConst {
 	#[inline]
 	fn write_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn read_pose(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringR(self.as_raw_mut_Pose3D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -829,7 +886,10 @@ impl crate::surface_matching::Pose3DTrait for Pose3D {
 impl Pose3D {
 	#[inline]
 	pub fn default() -> Result<crate::surface_matching::Pose3D> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -839,7 +899,10 @@ impl Pose3D {
 	/// * num_votes: 0
 	#[inline]
 	pub fn new(alpha: f64, model_index: size_t, num_votes: size_t) -> Result<crate::surface_matching::Pose3D> {
-		let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha, model_index, num_votes) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha, model_index, num_votes, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -899,21 +962,30 @@ pub trait PoseCluster3DTrait: crate::surface_matching::PoseCluster3DTraitConst {
 	/// \param [in] newPose Pose to add to the cluster
 	#[inline]
 	fn add_pose(&mut self, mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<()> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_addPose_Pose3DPtr(self.as_raw_mut_PoseCluster3D(), new_pose.as_raw_mut_PtrOfPose3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_addPose_Pose3DPtr(self.as_raw_mut_PoseCluster3D(), new_pose.as_raw_mut_PtrOfPose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn write_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn read_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		extern_container_arg!(file_name);
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringR(self.as_raw_mut_PoseCluster3D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -948,21 +1020,30 @@ impl crate::surface_matching::PoseCluster3DTrait for PoseCluster3D {
 impl PoseCluster3D {
 	#[inline]
 	pub fn default() -> Result<crate::surface_matching::PoseCluster3D> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new(mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<crate::surface_matching::PoseCluster3D> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_mut_PtrOfPose3D()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_mut_PtrOfPose3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn new_1(mut new_pose: crate::surface_matching::Pose3DPtr, new_id: i32) -> Result<crate::surface_matching::PoseCluster3D> {
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_mut_PtrOfPose3D(), new_id) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_mut_PtrOfPose3D(), new_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
 		Ok(ret)
 	}

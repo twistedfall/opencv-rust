@@ -58,13 +58,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// tends to have more regions remained if this value is large and vice versa.
 	#[inline]
 	fn set_seg_egb_threshold_i(&mut self, c: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdI_float(self.as_raw_mut_HfsSegment(), c) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdI_float(self.as_raw_mut_HfsSegment(), c, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_seg_egb_threshold_i(&mut self) -> Result<f32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdI(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdI(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -74,13 +80,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// pixels then this parameter will be merged into it's adjacent region.
 	#[inline]
 	fn set_min_region_size_i(&mut self, n: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeI_int(self.as_raw_mut_HfsSegment(), n) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeI_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_region_size_i(&mut self) -> Result<i32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeI(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeI(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -91,13 +103,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// this value is large and vice versa.
 	#[inline]
 	fn set_seg_egb_threshold_ii(&mut self, c: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdII_float(self.as_raw_mut_HfsSegment(), c) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdII_float(self.as_raw_mut_HfsSegment(), c, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_seg_egb_threshold_ii(&mut self) -> Result<f32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdII(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdII(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -106,13 +124,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// mentioned above. It serves the same purpose as minRegionSizeI
 	#[inline]
 	fn set_min_region_size_ii(&mut self, n: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeII_int(self.as_raw_mut_HfsSegment(), n) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeII_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_region_size_ii(&mut self) -> Result<i32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeII(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeII(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -126,13 +150,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// if this value is larger.
 	#[inline]
 	fn set_spatial_weight(&mut self, w: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setSpatialWeight_float(self.as_raw_mut_HfsSegment(), w) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setSpatialWeight_float(self.as_raw_mut_HfsSegment(), w, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_spatial_weight(&mut self) -> Result<f32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getSpatialWeight(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getSpatialWeight(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -144,13 +174,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// pixels in the beginning.
 	#[inline]
 	fn set_slic_spixel_size(&mut self, n: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setSlicSpixelSize_int(self.as_raw_mut_HfsSegment(), n) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setSlicSpixelSize_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_slic_spixel_size(&mut self) -> Result<i32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getSlicSpixelSize(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getSlicSpixelSize(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -159,13 +195,19 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// describes how many iteration to perform when executing SLIC.
 	#[inline]
 	fn set_num_slic_iter(&mut self, n: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_setNumSlicIter_int(self.as_raw_mut_HfsSegment(), n) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_setNumSlicIter_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_slic_iter(&mut self) -> Result<i32> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_getNumSlicIter(self.as_raw_mut_HfsSegment()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_getNumSlicIter(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -184,7 +226,10 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	#[inline]
 	fn perform_segment_gpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
-		let ret = unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -198,7 +243,10 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	#[inline]
 	fn perform_segment_cpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
-		let ret = unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -228,7 +276,10 @@ impl dyn HfsSegment + '_ {
 	/// * num_slic_iter: 5
 	#[inline]
 	pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<dyn crate::hfs::HfsSegment>> {
-		let ret = unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::hfs::HfsSegment>::opencv_from_extern(ret) };
 		Ok(ret)
 	}

@@ -35,19 +35,19 @@ pub mod prelude {
 pub const GPC_DESCRIPTOR_DCT: i32 = 0;
 /// Worse quality but much faster
 pub const GPC_DESCRIPTOR_WHT: i32 = 1;
-/// <  Edge-preserving interpolation using ximgproc::EdgeAwareInterpolator, see [Revaud2015](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
+/// <  Edge-preserving interpolation using ximgproc::EdgeAwareInterpolator, see [Revaud2015](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
 pub const INTERP_EPIC: i32 = 1;
-/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016)
+/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016)
 pub const INTERP_GEO: i32 = 0;
-/// <  SLIC based robust interpolation using ximgproc::RICInterpolator, see [Hu2017](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Hu2017).
+/// <  SLIC based robust interpolation using ximgproc::RICInterpolator, see [Hu2017](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Hu2017).
 pub const INTERP_RIC: i32 = 2;
 /// <  Apply a adaptive support region obtained by cross-based segmentation
-/// as described in [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
+/// as described in [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
 pub const SR_CROSS: i32 = 1;
 /// <  Apply a constant support region
 pub const SR_FIXED: i32 = 0;
 /// < Apply optimized iterative refinement based bilinear equation solutions
-/// as described in [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013)
+/// as described in [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013)
 pub const ST_BILINEAR: i32 = 1;
 /// < Apply standard iterative refinement
 pub const ST_STANDART: i32 = 0;
@@ -66,11 +66,11 @@ opencv_type_enum! { crate::optflow::GPCDescType }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum InterpolationType {
-	/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016)
+	/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016)
 	INTERP_GEO = 0,
-	/// <  Edge-preserving interpolation using ximgproc::EdgeAwareInterpolator, see [Revaud2015](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
+	/// <  Edge-preserving interpolation using ximgproc::EdgeAwareInterpolator, see [Revaud2015](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
 	INTERP_EPIC = 1,
-	/// <  SLIC based robust interpolation using ximgproc::RICInterpolator, see [Hu2017](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Hu2017).
+	/// <  SLIC based robust interpolation using ximgproc::RICInterpolator, see [Hu2017](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Hu2017).
 	INTERP_RIC = 2,
 }
 
@@ -82,7 +82,7 @@ pub enum SolverType {
 	/// < Apply standard iterative refinement
 	ST_STANDART = 0,
 	/// < Apply optimized iterative refinement based bilinear equation solutions
-	/// as described in [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013)
+	/// as described in [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013)
 	ST_BILINEAR = 1,
 }
 
@@ -94,7 +94,7 @@ pub enum SupportRegionType {
 	/// <  Apply a constant support region
 	SR_FIXED = 0,
 	/// <  Apply a adaptive support region obtained by cross-based segmentation
-	/// as described in [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// as described in [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
 	SR_CROSS = 1,
 }
 
@@ -119,7 +119,10 @@ pub fn calc_global_orientation(orientation: &dyn core::ToInputArray, mask: &dyn 
 	input_array_arg!(orientation);
 	input_array_arg!(mask);
 	input_array_arg!(mhi);
-	let ret = unsafe { sys::cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(orientation.as_raw__InputArray(), mask.as_raw__InputArray(), mhi.as_raw__InputArray(), timestamp, duration) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(orientation.as_raw__InputArray(), mask.as_raw__InputArray(), mhi.as_raw__InputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -160,7 +163,10 @@ pub fn calc_motion_gradient(mhi: &dyn core::ToInputArray, mask: &mut dyn core::T
 	input_array_arg!(mhi);
 	output_array_arg!(mask);
 	output_array_arg!(orientation);
-	let ret = unsafe { sys::cv_motempl_calcMotionGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double_int(mhi.as_raw__InputArray(), mask.as_raw__OutputArray(), orientation.as_raw__OutputArray(), delta1, delta2, aperture_size) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_motempl_calcMotionGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double_int(mhi.as_raw__InputArray(), mask.as_raw__OutputArray(), orientation.as_raw__OutputArray(), delta1, delta2, aperture_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -183,7 +189,10 @@ pub fn calc_motion_gradient(mhi: &dyn core::ToInputArray, mask: &mut dyn core::T
 pub fn segment_motion(mhi: &dyn core::ToInputArray, segmask: &mut dyn core::ToOutputArray, bounding_rects: &mut core::Vector<core::Rect>, timestamp: f64, seg_thresh: f64) -> Result<()> {
 	input_array_arg!(mhi);
 	output_array_arg!(segmask);
-	let ret = unsafe { sys::cv_motempl_segmentMotion_const__InputArrayR_const__OutputArrayR_vector_Rect_R_double_double(mhi.as_raw__InputArray(), segmask.as_raw__OutputArray(), bounding_rects.as_raw_mut_VectorOfRect(), timestamp, seg_thresh) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_motempl_segmentMotion_const__InputArrayR_const__OutputArrayR_vector_Rect_R_double_double(mhi.as_raw__InputArray(), segmask.as_raw__OutputArray(), bounding_rects.as_raw_mut_VectorOfRect(), timestamp, seg_thresh, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -204,23 +213,26 @@ pub fn segment_motion(mhi: &dyn core::ToInputArray, segmask: &mut dyn core::ToOu
 /// where the motion happened last time a long time ago are cleared.
 /// 
 /// The function, together with calcMotionGradient and calcGlobalOrientation , implements a motion
-/// templates technique described in [Davis97](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Davis97) and [Bradski00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bradski00) .
+/// templates technique described in [Davis97](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Davis97) and [Bradski00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bradski00) .
 #[inline]
 pub fn update_motion_history(silhouette: &dyn core::ToInputArray, mhi: &mut dyn core::ToInputOutputArray, timestamp: f64, duration: f64) -> Result<()> {
 	input_array_arg!(silhouette);
 	input_output_array_arg!(mhi);
-	let ret = unsafe { sys::cv_motempl_updateMotionHistory_const__InputArrayR_const__InputOutputArrayR_double_double(silhouette.as_raw__InputArray(), mhi.as_raw__InputOutputArray(), timestamp, duration) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_motempl_updateMotionHistory_const__InputArrayR_const__InputOutputArrayR_double_double(silhouette.as_raw__InputArray(), mhi.as_raw__InputOutputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation scheme.
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// 
-/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016)).
+/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016)).
 /// For this scheme the following steps are applied:
 /// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
 /// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
@@ -246,8 +258,8 @@ pub fn update_motion_history(silhouette: &dyn core::ToInputArray, mhi: &mut dyn 
 /// base of the vector field interpolation.
 /// * interp_type: interpolation method used to compute the dense optical flow. Two interpolation algorithms are
 /// supported:
-/// - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016).
-/// - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
+/// - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016).
+/// - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
 /// * epicK: see ximgproc::EdgeAwareInterpolator sets the respective parameter.
 /// * epicSigma: see ximgproc::EdgeAwareInterpolator sets the respective parameter.
 /// * epicLambda: see ximgproc::EdgeAwareInterpolator sets the respective parameter.
@@ -258,7 +270,7 @@ pub fn update_motion_history(silhouette: &dyn core::ToInputArray, mhi: &mut dyn 
 /// * fgsSigma: sets the respective ximgproc::fastGlobalSmootherFilter() parameter.
 /// * use_variational_refinement: enables VariationalRefinement
 /// 
-/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014), [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016).
+/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014), [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016).
 /// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
 /// 
 /// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 that the dense optical flow field is purely
@@ -290,7 +302,10 @@ pub fn calc_optical_flow_dense_rlof(i0: &dyn core::ToInputArray, i1: &dyn core::
 	input_array_arg!(i0);
 	input_array_arg!(i1);
 	input_output_array_arg!(flow);
-	let ret = unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -316,7 +331,7 @@ pub fn calc_optical_flow_dense_rlof(i0: &dyn core::ToInputArray, i1: &dyn core::
 /// * speed_up_thr: threshold to detect point with irregular flow - where flow should be
 /// recalculated after upscale
 /// 
-/// See [Tao2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Tao2012) . And site of project - <http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/>.
+/// See [Tao2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Tao2012) . And site of project - <http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/>.
 /// 
 /// 
 /// Note:
@@ -328,7 +343,10 @@ pub fn calc_optical_flow_sf(from: &dyn core::ToInputArray, to: &dyn core::ToInpu
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(flow);
-	let ret = unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -354,7 +372,7 @@ pub fn calc_optical_flow_sf(from: &dyn core::ToInputArray, to: &dyn core::ToInpu
 /// * speed_up_thr: threshold to detect point with irregular flow - where flow should be
 /// recalculated after upscale
 /// 
-/// See [Tao2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Tao2012) . And site of project - <http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/>.
+/// See [Tao2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Tao2012) . And site of project - <http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/>.
 /// 
 /// 
 /// Note:
@@ -364,16 +382,19 @@ pub fn calc_optical_flow_sf_1(from: &dyn core::ToInputArray, to: &dyn core::ToIn
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(flow);
-	let ret = unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int_double_double_double_int_double_double_double(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, sigma_dist, sigma_color, postprocess_window, sigma_dist_fix, sigma_color_fix, occ_thr, upscale_averaging_radius, upscale_sigma_dist, upscale_sigma_color, speed_up_thr) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int_double_double_double_int_double_double_double(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, sigma_dist, sigma_color, postprocess_window, sigma_dist_fix, sigma_color_fix, occ_thr, upscale_averaging_radius, upscale_sigma_dist, upscale_sigma_color, speed_up_thr, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Calculates fast optical flow for a sparse feature set using the robust local optical flow (RLOF) similar
 /// to optflow::calcOpticalFlowPyrLK().
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// 
 /// ## Parameters
@@ -395,7 +416,7 @@ pub fn calc_optical_flow_sf_1(from: &dyn core::ToInputArray, to: &dyn core::ToIn
 /// 
 /// Note: SIMD parallelization is only available when compiling with SSE4.1.
 /// 
-/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016).
+/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016).
 /// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
 /// 
 /// ## C++ default parameters
@@ -409,7 +430,10 @@ pub fn calc_optical_flow_sparse_rlof(prev_img: &dyn core::ToInputArray, next_img
 	input_output_array_arg!(next_pts);
 	output_array_arg!(status);
 	output_array_arg!(err);
-	let ret = unsafe { sys::cv_optflow_calcOpticalFlowSparseRLOF_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Ptr_RLOFOpticalFlowParameter__float(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_calcOpticalFlowSparseRLOF_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Ptr_RLOFOpticalFlowParameter__float(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -444,13 +468,16 @@ pub fn calc_optical_flow_sparse_to_dense(from: &dyn core::ToInputArray, to: &dyn
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(flow);
-	let ret = unsafe { sys::cv_optflow_calcOpticalFlowSparseToDense_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool_float_float(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), grid_step, k, sigma, use_post_proc, fgs_lambda, fgs_sigma) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_calcOpticalFlowSparseToDense_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool_float_float(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), grid_step, k, sigma, use_post_proc, fgs_lambda, fgs_sigma, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// DeepFlow optical flow algorithm implementation.
 /// 
-/// The class implements the DeepFlow optical flow algorithm described in [Weinzaepfel2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Weinzaepfel2013) . See
+/// The class implements the DeepFlow optical flow algorithm described in [Weinzaepfel2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Weinzaepfel2013) . See
 /// also <http://lear.inrialpes.fr/src/deepmatching/> .
 /// Parameters - class fields - that may be modified after creating a class instance:
 /// *   member float alpha
@@ -474,7 +501,10 @@ pub fn calc_optical_flow_sparse_to_dense(from: &dyn core::ToInputArray, to: &dyn
 /// Relaxation factor in SOR
 #[inline]
 pub fn create_opt_flow_deep_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_DeepFlow() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_DeepFlow(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -482,7 +512,10 @@ pub fn create_opt_flow_deep_flow() -> Result<core::Ptr<dyn crate::video::DenseOp
 /// Additional interface to the Dense RLOF algorithm - optflow::calcOpticalFlowDenseRLOF()
 #[inline]
 pub fn create_opt_flow_dense_rlof() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_DenseRLOF() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_DenseRLOF(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -490,7 +523,10 @@ pub fn create_opt_flow_dense_rlof() -> Result<core::Ptr<dyn crate::video::DenseO
 /// Creates instance of cv::DenseOpticalFlow
 #[inline]
 pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<dyn crate::optflow::DualTVL1OpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_DualTVL1() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_DualTVL1(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -498,7 +534,10 @@ pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<dyn crate::optflow::DualT
 /// Additional interface to the Farneback's algorithm - calcOpticalFlowFarneback()
 #[inline]
 pub fn create_opt_flow_farneback() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_Farneback() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_Farneback(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -506,7 +545,10 @@ pub fn create_opt_flow_farneback() -> Result<core::Ptr<dyn crate::video::DenseOp
 /// Creates an instance of PCAFlow
 #[inline]
 pub fn create_opt_flow_pca_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_PCAFlow() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_PCAFlow(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -514,7 +556,10 @@ pub fn create_opt_flow_pca_flow() -> Result<core::Ptr<dyn crate::video::DenseOpt
 /// Additional interface to the SimpleFlow algorithm - calcOpticalFlowSF()
 #[inline]
 pub fn create_opt_flow_simple_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_SimpleFlow() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_SimpleFlow(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -522,7 +567,10 @@ pub fn create_opt_flow_simple_flow() -> Result<core::Ptr<dyn crate::video::Dense
 /// Additional interface to the Sparse RLOF algorithm - optflow::calcOpticalFlowSparseRLOF()
 #[inline]
 pub fn create_opt_flow_sparse_rlof() -> Result<core::Ptr<dyn crate::video::SparseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_SparseRLOF() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_SparseRLOF(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::SparseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -530,33 +578,42 @@ pub fn create_opt_flow_sparse_rlof() -> Result<core::Ptr<dyn crate::video::Spars
 /// Additional interface to the SparseToDenseFlow algorithm - calcOpticalFlowSparseToDense()
 #[inline]
 pub fn create_opt_flow_sparse_to_dense() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
-	let ret = unsafe { sys::cv_optflow_createOptFlow_SparseToDense() }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_optflow_createOptFlow_SparseToDense(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
 #[inline]
 pub fn read(fn_: &core::FileNode, node: &mut crate::optflow::GPCTree_Node, unnamed: crate::optflow::GPCTree_Node) -> Result<()> {
-	let ret = unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, unnamed.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, unnamed.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 #[inline]
 pub fn write(fs: &mut core::FileStorage, name: &str, node: crate::optflow::GPCTree_Node) -> Result<()> {
 	extern_container_arg!(name);
-	let ret = unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), &node) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), &node, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation
 /// scheme.
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// 
-/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016)).
+/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016)).
 /// For this scheme the following steps are applied:
 /// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
 /// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
@@ -565,7 +622,7 @@ pub fn write(fs: &mut core::FileStorage, name: &str, node: crate::optflow::GPCTr
 /// -# Vector field interpolation is applied to the motion vector set to obtain a dense vector field.
 /// 
 /// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016).
+/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016).
 /// 
 /// 
 /// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
@@ -584,7 +641,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///    optflow::RLOFOpticalFlowParameter, setRLOFOpticalFlowParameter
 	#[inline]
 	fn get_rlof_optical_flow_parameter(&self) -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -600,7 +660,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setForwardBackward
 	#[inline]
 	fn get_forward_backward(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -610,19 +673,25 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: getForwardBackward, setGridStep
 	#[inline]
 	fn get_grid_step(&self) -> Result<core::Size> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getGridStep_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getGridStep_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Interpolation used to compute the dense optical flow.
 	/// Two interpolation algorithms are supported
-	///      * - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016).
-	///      * - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
+	///      * - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016).
+	///      * - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
 	///      * see also: ximgproc::EdgeAwareInterpolator, getInterpolation
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setInterpolation
 	#[inline]
 	fn get_interpolation(&self) -> Result<crate::optflow::InterpolationType> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getInterpolation_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getInterpolation_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -632,7 +701,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::EdgeAwareInterpolator,  setEPICK
 	#[inline]
 	fn get_epick(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICK_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICK_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -643,7 +715,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
 	#[inline]
 	fn get_epic_sigma(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICSigma_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICSigma_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -653,7 +728,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
 	#[inline]
 	fn get_epic_lambda(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICLambda_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICLambda_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -662,7 +740,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setFgsLambda
 	#[inline]
 	fn get_fgs_lambda(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsLambda_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsLambda_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -671,7 +752,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, setFgsSigma
 	#[inline]
 	fn get_fgs_sigma(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsSigma_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsSigma_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -681,7 +765,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::fastGlobalSmootherFilter, setUsePostProc
 	#[inline]
 	fn get_use_post_proc(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUsePostProc_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUsePostProc_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -691,7 +778,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    see also: ximgproc::fastGlobalSmootherFilter, setUsePostProc
 	#[inline]
 	fn get_use_variational_refinement(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUseVariationalRefinement_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUseVariationalRefinement_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -701,7 +791,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///    *    see also: setRICSPSize
 	#[inline]
 	fn get_ricsp_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSPSize_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSPSize_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -714,7 +807,10 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	///      *    setRICSLICType
 	#[inline]
 	fn get_ricslic_type(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSLICType_const(self.as_raw_DenseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSLICType_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -728,7 +824,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	/// optflow::RLOFOpticalFlowParameter, getRLOFOpticalFlowParameter
 	#[inline]
 	fn set_rlof_optical_flow_parameter(&mut self, mut val: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRLOFOpticalFlowParameter_Ptr_RLOFOpticalFlowParameter_(self.as_raw_mut_DenseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRLOFOpticalFlowParameter_Ptr_RLOFOpticalFlowParameter_(self.as_raw_mut_DenseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -741,7 +840,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: getForwardBackward, setGridStep
 	#[inline]
 	fn set_forward_backward(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -752,18 +854,24 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: getGridStep
 	#[inline]
 	fn set_grid_step(&mut self, val: core::Size) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(self.as_raw_mut_DenseRLOFOpticalFlow(), val.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(self.as_raw_mut_DenseRLOFOpticalFlow(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Interpolation used to compute the dense optical flow.
 	/// Two interpolation algorithms are supported
-	///      * - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Geistert2016).
-	///      * - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
+	///      * - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Geistert2016).
+	///      * - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
 	///      * see also: ximgproc::EdgeAwareInterpolator, getInterpolation
 	#[inline]
 	fn set_interpolation(&mut self, val: crate::optflow::InterpolationType) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setInterpolation_InterpolationType(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setInterpolation_InterpolationType(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -774,7 +882,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: ximgproc::EdgeAwareInterpolator, getEPICK
 	#[inline]
 	fn set_epick(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICK_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICK_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -786,7 +897,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *  see also: ximgproc::EdgeAwareInterpolator, getEPICSigma
 	#[inline]
 	fn set_epic_sigma(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -797,7 +911,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: ximgproc::EdgeAwareInterpolator, getEPICLambda
 	#[inline]
 	fn set_epic_lambda(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -807,7 +924,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsLambda
 	#[inline]
 	fn set_fgs_lambda(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -817,7 +937,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsSigma
 	#[inline]
 	fn set_fgs_sigma(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -826,7 +949,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	/// * see also: getUsePostProc
 	#[inline]
 	fn set_use_post_proc(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUsePostProc_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUsePostProc_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -835,7 +961,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	/// * see also: getUseVariationalRefinement
 	#[inline]
 	fn set_use_variational_refinement(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUseVariationalRefinement_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUseVariationalRefinement_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -844,7 +973,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	/// * see also: cv::ximgproc::createSuperpixelSLIC, cv::ximgproc::RICInterpolator
 	#[inline]
 	fn set_ricsp_size(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSPSize_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSPSize_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -856,7 +988,10 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 	/// cv::ximgproc::createSuperpixelSLIC, cv::ximgproc::RICInterpolator
 	#[inline]
 	fn set_ricslic_type(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSLICType_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSLICType_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -896,7 +1031,10 @@ impl dyn DenseRLOFOpticalFlow + '_ {
 	/// * use_variational_refinement: false
 	#[inline]
 	pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<dyn crate::optflow::DenseRLOFOpticalFlow>> {
-		let ret = unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -904,8 +1042,8 @@ impl dyn DenseRLOFOpticalFlow + '_ {
 }
 /// "Dual TV L1" Optical Flow Algorithm.
 /// 
-/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zach2007) and
-/// [Javier2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Javier2012) .
+/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zach2007) and
+/// [Javier2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Javier2012) .
 /// Here are important members of the class that control the algorithm, which you can set after
 /// constructing the class instance:
 /// 
@@ -951,7 +1089,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setTau
 	#[inline]
 	fn get_tau(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -960,7 +1101,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setLambda
 	#[inline]
 	fn get_lambda(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getLambda_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getLambda_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -969,7 +1113,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setTheta
 	#[inline]
 	fn get_theta(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTheta_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTheta_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -978,7 +1125,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setGamma
 	#[inline]
 	fn get_gamma(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getGamma_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getGamma_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -987,7 +1137,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setScalesNumber
 	#[inline]
 	fn get_scales_number(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -996,7 +1149,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setWarpingsNumber
 	#[inline]
 	fn get_warpings_number(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1005,7 +1161,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setEpsilon
 	#[inline]
 	fn get_epsilon(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1014,7 +1173,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setInnerIterations
 	#[inline]
 	fn get_inner_iterations(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getInnerIterations_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getInnerIterations_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1023,7 +1185,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setOuterIterations
 	#[inline]
 	fn get_outer_iterations(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getOuterIterations_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getOuterIterations_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1032,7 +1197,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setUseInitialFlow
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1041,7 +1209,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setScaleStep
 	#[inline]
 	fn get_scale_step(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScaleStep_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScaleStep_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1050,7 +1221,10 @@ pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
 	/// setMedianFiltering
 	#[inline]
 	fn get_median_filtering(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getMedianFiltering_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getMedianFiltering_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1064,7 +1238,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setTau getTau
 	#[inline]
 	fn set_tau(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1073,7 +1250,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setLambda getLambda
 	#[inline]
 	fn set_lambda(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1082,7 +1262,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setTheta getTheta
 	#[inline]
 	fn set_theta(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1091,7 +1274,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setGamma getGamma
 	#[inline]
 	fn set_gamma(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setGamma_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setGamma_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1100,7 +1286,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setScalesNumber getScalesNumber
 	#[inline]
 	fn set_scales_number(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1109,7 +1298,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setWarpingsNumber getWarpingsNumber
 	#[inline]
 	fn set_warpings_number(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1118,7 +1310,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setEpsilon getEpsilon
 	#[inline]
 	fn set_epsilon(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1127,7 +1322,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setInnerIterations getInnerIterations
 	#[inline]
 	fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setInnerIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setInnerIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1136,7 +1334,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setOuterIterations getOuterIterations
 	#[inline]
 	fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setOuterIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setOuterIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1145,7 +1346,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setUseInitialFlow getUseInitialFlow
 	#[inline]
 	fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1154,7 +1358,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setScaleStep getScaleStep
 	#[inline]
 	fn set_scale_step(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScaleStep_double(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScaleStep_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1163,7 +1370,10 @@ pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate:
 	/// setMedianFiltering getMedianFiltering
 	#[inline]
 	fn set_median_filtering(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setMedianFiltering_int(self.as_raw_mut_DualTVL1OpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setMedianFiltering_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1187,7 +1397,10 @@ impl dyn DualTVL1OpticalFlow + '_ {
 	/// * use_initial_flow: false
 	#[inline]
 	pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<dyn crate::optflow::DualTVL1OpticalFlow>> {
-		let ret = unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1229,13 +1442,19 @@ impl crate::optflow::GPCDetailsTrait for GPCDetails {
 impl GPCDetails {
 	#[inline]
 	pub fn get_all_descriptors_for_image(img_ch: &core::Mat, descr: &mut core::Vector<crate::optflow::GPCPatchDescriptor>, mp: crate::optflow::GPCMatchingParams, typ: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCDetails_getAllDescriptorsForImage_const_MatX_vector_GPCPatchDescriptor_R_const_GPCMatchingParamsR_int(img_ch.as_raw_Mat(), descr.as_raw_mut_VectorOfGPCPatchDescriptor(), &mp, typ) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCDetails_getAllDescriptorsForImage_const_MatX_vector_GPCPatchDescriptor_R_const_GPCMatchingParamsR_int(img_ch.as_raw_Mat(), descr.as_raw_mut_VectorOfGPCPatchDescriptor(), &mp, typ, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn get_coordinates_from_index(index: size_t, sz: core::Size, x: &mut i32, y: &mut i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, sz.opencv_as_extern(), x, y) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, sz.opencv_as_extern(), x, y, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1256,13 +1475,19 @@ impl GPCMatchingParams {
 	/// * _use_opencl: false
 	#[inline]
 	pub fn new(_use_opencl: bool) -> Result<crate::optflow::GPCMatchingParams> {
-		let ret = unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(_use_opencl) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(_use_opencl, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn copy(params: crate::optflow::GPCMatchingParams) -> Result<crate::optflow::GPCMatchingParams> {
-		let ret = unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(&params) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(&params, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1273,19 +1498,27 @@ pub trait GPCPatchDescriptorTraitConst {
 
 	#[inline]
 	fn feature(&self) -> core::VecN<f64, 18> {
-		let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_getPropFeature_const(self.as_raw_GPCPatchDescriptor()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCPatchDescriptor_getPropFeature_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
 	#[inline]
 	fn dot(&self, coef: core::VecN<f64, 18>) -> Result<f64> {
-		let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(self.as_raw_GPCPatchDescriptor(), &coef) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCPatchDescriptor_dot_const_const_Vec_double__18_R(self.as_raw_GPCPatchDescriptor(), &coef, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn is_separated(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_isSeparated_const(self.as_raw_GPCPatchDescriptor()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCPatchDescriptor_isSeparated_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1302,7 +1535,10 @@ pub trait GPCPatchDescriptorTrait: crate::optflow::GPCPatchDescriptorTraitConst 
 	
 	#[inline]
 	fn mark_as_separated(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_markAsSeparated(self.as_raw_mut_GPCPatchDescriptor()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCPatchDescriptor_markAsSeparated(self.as_raw_mut_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1362,7 +1598,10 @@ pub trait GPCPatchSampleTraitConst {
 	
 	#[inline]
 	fn get_directions(&self, refdir: &mut bool, posdir: &mut bool, negdir: &mut bool, coef: core::VecN<f64, 18>, rhs: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_Vec_double__18_R_double(self.as_raw_GPCPatchSample(), refdir, posdir, negdir, &coef, rhs) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_Vec_double__18_R_double(self.as_raw_GPCPatchSample(), refdir, posdir, negdir, &coef, rhs, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1436,7 +1675,10 @@ opencv_type_simple! { crate::optflow::GPCTrainingParams }
 impl GPCTrainingParams {
 	#[inline]
 	pub fn check(self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_GPCTrainingParams_check_const(self.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingParams_check_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1447,7 +1689,10 @@ impl GPCTrainingParams {
 	/// * _print_progress: true
 	#[inline]
 	pub fn new(_max_tree_depth: u32, _min_number_of_samples: i32, _descriptor_type: crate::optflow::GPCDescType, _print_progress: bool) -> Result<crate::optflow::GPCTrainingParams> {
-		let ret = unsafe { sys::cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(_max_tree_depth, _min_number_of_samples, _descriptor_type, _print_progress) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(_max_tree_depth, _min_number_of_samples, _descriptor_type, _print_progress, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1459,13 +1704,19 @@ pub trait GPCTrainingSamplesTraitConst {
 
 	#[inline]
 	fn size(&self) -> Result<size_t> {
-		let ret = unsafe { sys::cv_optflow_GPCTrainingSamples_size_const(self.as_raw_GPCTrainingSamples()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingSamples_size_const(self.as_raw_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn typ(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_GPCTrainingSamples_type_const(self.as_raw_GPCTrainingSamples()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingSamples_type_const(self.as_raw_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1505,7 +1756,10 @@ impl GPCTrainingSamples {
 	/// Sizes of all the provided vectors must be equal.
 	#[inline]
 	pub fn create(images_from: &core::Vector<String>, images_to: &core::Vector<String>, gt: &core::Vector<String>, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
-		let ret = unsafe { sys::cv_optflow_GPCTrainingSamples_create_const_vector_String_R_const_vector_String_R_const_vector_String_R_int(images_from.as_raw_VectorOfString(), images_to.as_raw_VectorOfString(), gt.as_raw_VectorOfString(), descriptor_type) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingSamples_create_const_vector_String_R_const_vector_String_R_const_vector_String_R_int(images_from.as_raw_VectorOfString(), images_to.as_raw_VectorOfString(), gt.as_raw_VectorOfString(), descriptor_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1515,7 +1769,10 @@ impl GPCTrainingSamples {
 		input_array_arg!(images_from);
 		input_array_arg!(images_to);
 		input_array_arg!(gt);
-		let ret = unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1528,25 +1785,37 @@ pub trait GPCTreeTraitConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_write_const_FileStorageR(self.as_raw_GPCTree(), fs.as_raw_mut_FileStorage()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_write_const_FileStorageR(self.as_raw_GPCTree(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn find_leaf_for_patch(&self, descr: &crate::optflow::GPCPatchDescriptor) -> Result<u32> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(self.as_raw_GPCTree(), descr.as_raw_GPCPatchDescriptor()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(self.as_raw_GPCTree(), descr.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn equals(&self, t: &crate::optflow::GPCTree) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(self.as_raw_GPCTree(), t.as_raw_GPCTree()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(self.as_raw_GPCTree(), t.as_raw_GPCTree(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_descriptor_type(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_getDescriptorType_const(self.as_raw_GPCTree()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_getDescriptorType_const(self.as_raw_GPCTree(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1559,13 +1828,19 @@ pub trait GPCTreeTrait: core::AlgorithmTrait + crate::optflow::GPCTreeTraitConst
 	/// * params: GPCTrainingParams()
 	#[inline]
 	fn train(&mut self, samples: &mut crate::optflow::GPCTrainingSamples, params: crate::optflow::GPCTrainingParams) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_read_const_FileNodeR(self.as_raw_mut_GPCTree(), fn_.as_raw_FileNode()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_read_const_FileNodeR(self.as_raw_mut_GPCTree(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1606,7 +1881,10 @@ impl crate::optflow::GPCTreeTrait for GPCTree {
 impl GPCTree {
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::optflow::GPCTree>> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_create() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_create(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::GPCTree>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1631,7 +1909,10 @@ opencv_type_simple! { crate::optflow::GPCTree_Node }
 impl GPCTree_Node {
 	#[inline]
 	pub fn equals(self, n: crate::optflow::GPCTree_Node) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(self.opencv_as_extern(), &n) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(self.opencv_as_extern(), &n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1651,13 +1932,19 @@ pub trait OpticalFlowPCAFlowTrait: crate::optflow::OpticalFlowPCAFlowTraitConst 
 		input_array_arg!(i0);
 		input_array_arg!(i1);
 		input_output_array_arg!(flow);
-		let ret = unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn collect_garbage(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_OpticalFlowPCAFlow_collectGarbage(self.as_raw_mut_OpticalFlowPCAFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_collectGarbage(self.as_raw_mut_OpticalFlowPCAFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1724,7 +2011,10 @@ impl OpticalFlowPCAFlow {
 	/// * _clahe_clip: 14
 	#[inline]
 	pub fn new(_prior: core::Ptr<crate::optflow::PCAPrior>, _basis_size: core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<crate::optflow::OpticalFlowPCAFlow> {
-		let ret = unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_Ptr_const_PCAPrior__const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1742,19 +2032,28 @@ pub trait PCAPriorTraitConst {
 
 	#[inline]
 	fn get_padding(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_PCAPrior_getPadding_const(self.as_raw_PCAPrior()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_PCAPrior_getPadding_const(self.as_raw_PCAPrior(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_basis_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_PCAPrior_getBasisSize_const(self.as_raw_PCAPrior()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_PCAPrior_getBasisSize_const(self.as_raw_PCAPrior(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn fill_constraints(&self, a1: &mut f32, a2: &mut f32, b1: &mut f32, b2: &mut f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_PCAPrior_fillConstraints_const_floatX_floatX_floatX_floatX(self.as_raw_PCAPrior(), a1, a2, b1, b2) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_PCAPrior_fillConstraints_const_floatX_floatX_floatX_floatX(self.as_raw_PCAPrior(), a1, a2, b1, b2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1796,7 +2095,10 @@ impl PCAPrior {
 	#[inline]
 	pub fn new(path_to_prior: &str) -> Result<crate::optflow::PCAPrior> {
 		extern_container_arg!(path_to_prior);
-		let ret = unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::optflow::PCAPrior::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -1805,23 +2107,23 @@ impl PCAPrior {
 
 /// This is used store and set up the parameters of the robust local optical flow (RLOF) algoritm.
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// This RLOF implementation can be seen as an improved pyramidal iterative Lucas-Kanade and includes
 /// a set of improving modules. The main improvements in respect to the pyramidal iterative Lucas-Kanade
 /// are:
-///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
+///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
 ///    motion boundaries and appearing and disappearing pixels.
 ///  - an adaptive support region strategies to improve the accuracy at motion boundaries to reduce the
 ///    corona effect, i.e oversmoothing of the PLK at motion/object boundaries. The cross-based segementation
-///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
+///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
 ///    shape of the support region.
 ///  - To deal with illumination changes (outdoor sequences and shadow) the intensity constancy assumption
 ///    based optical flow equation has been adopt with the Gennert and Negahdaripour illumination model
-///    (see [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
-///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
+///    (see [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
+///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
 ///    the accuracy could be significantly improved for large displacements. This initialization can be
 ///    switched on and of with useGlobalMotionPrior variable.
 /// 
@@ -1834,13 +2136,17 @@ pub trait RLOFOpticalFlowParameterTraitConst {
 
 	#[inline]
 	fn solver_type(&self) -> crate::optflow::SolverType {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSolverType_const(self.as_raw_RLOFOpticalFlowParameter()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
 	#[inline]
 	fn support_region_type(&self) -> crate::optflow::SupportRegionType {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -1918,85 +2224,127 @@ pub trait RLOFOpticalFlowParameterTraitConst {
 	
 	#[inline]
 	fn get_solver_type(&self) -> Result<crate::optflow::SolverType> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSolverType_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_support_region_type(&self) -> Result<crate::optflow::SupportRegionType> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_norm_sigma0(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma0_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma0_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_norm_sigma1(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma1_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma1_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_small_win_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSmallWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSmallWinSize_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_large_win_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getLargeWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getLargeWinSize_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_cross_segmentation_threshold(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getCrossSegmentationThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getCrossSegmentationThreshold_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_level(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxLevel_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxLevel_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_initial_flow(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseInitialFlow_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseInitialFlow_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_illumination_model(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseIlluminationModel_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseIlluminationModel_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_use_global_motion_prior(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseGlobalMotionPrior_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseGlobalMotionPrior_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_max_iteration(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxIteration_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxIteration_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_min_eigen_value(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMinEigenValue_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMinEigenValue_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_global_motion_ransac_threshold(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getGlobalMotionRansacThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getGlobalMotionRansacThreshold_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2097,91 +2445,136 @@ pub trait RLOFOpticalFlowParameterTrait: crate::optflow::RLOFOpticalFlowParamete
 	///      *    see also: setNormSigma0, setNormSigma1
 	#[inline]
 	fn set_use_m_estimator(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseMEstimator_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseMEstimator_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_solver_type_1(&mut self, val: crate::optflow::SolverType) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSolverType_SolverType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSolverType_SolverType(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_support_region_type_1(&mut self, val: crate::optflow::SupportRegionType) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSupportRegionType_SupportRegionType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSupportRegionType_SupportRegionType(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_norm_sigma0_1(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma0_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma0_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_norm_sigma1_1(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma1_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma1_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_small_win_size_1(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSmallWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSmallWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_large_win_size_1(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setLargeWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setLargeWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_cross_segmentation_threshold_1(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setCrossSegmentationThreshold_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setCrossSegmentationThreshold_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_level_1(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxLevel_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxLevel_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_initial_flow_1(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseInitialFlow_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseInitialFlow_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_illumination_model_1(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseIlluminationModel_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseIlluminationModel_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_use_global_motion_prior_1(&mut self, val: bool) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseGlobalMotionPrior_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseGlobalMotionPrior_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_max_iteration_1(&mut self, val: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxIteration_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxIteration_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_min_eigen_value_1(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMinEigenValue_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMinEigenValue_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_global_motion_ransac_threshold_1(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setGlobalMotionRansacThreshold_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setGlobalMotionRansacThreshold_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2189,23 +2582,23 @@ pub trait RLOFOpticalFlowParameterTrait: crate::optflow::RLOFOpticalFlowParamete
 
 /// This is used store and set up the parameters of the robust local optical flow (RLOF) algoritm.
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// This RLOF implementation can be seen as an improved pyramidal iterative Lucas-Kanade and includes
 /// a set of improving modules. The main improvements in respect to the pyramidal iterative Lucas-Kanade
 /// are:
-///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
+///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
 ///    motion boundaries and appearing and disappearing pixels.
 ///  - an adaptive support region strategies to improve the accuracy at motion boundaries to reduce the
 ///    corona effect, i.e oversmoothing of the PLK at motion/object boundaries. The cross-based segementation
-///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
+///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
 ///    shape of the support region.
 ///  - To deal with illumination changes (outdoor sequences and shadow) the intensity constancy assumption
 ///    based optical flow equation has been adopt with the Gennert and Negahdaripour illumination model
-///    (see [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
-///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
+///    (see [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
+///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
 ///    the accuracy could be significantly improved for large displacements. This initialization can be
 ///    switched on and of with useGlobalMotionPrior variable.
 /// 
@@ -2239,7 +2632,10 @@ impl crate::optflow::RLOFOpticalFlowParameterTrait for RLOFOpticalFlowParameter 
 impl RLOFOpticalFlowParameter {
 	#[inline]
 	pub fn default() -> Result<crate::optflow::RLOFOpticalFlowParameter> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::optflow::RLOFOpticalFlowParameter::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2247,7 +2643,10 @@ impl RLOFOpticalFlowParameter {
 	/// Creates instance of optflow::RLOFOpticalFlowParameter
 	#[inline]
 	pub fn create() -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
-		let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_create() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_create(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2256,13 +2655,13 @@ impl RLOFOpticalFlowParameter {
 
 /// Class used for calculation sparse optical flow and feature tracking with robust local optical flow (RLOF) algorithms.
 /// 
-/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014)
-/// and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-/// proposed by [Bouguet00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2019).
+/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014)
+/// and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+/// proposed by [Bouguet00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2019).
 /// The implementation is derived from optflow::calcOpticalFlowPyrLK().
 /// 
 /// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Senst2016).
+/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Senst2016).
 /// 
 /// 
 /// Note: SIMD parallelization is only available when compiling with SSE4.1.
@@ -2276,7 +2675,10 @@ pub trait SparseRLOFOpticalFlowConst: crate::video::SparseOpticalFlowConst {
 	/// setRLOFOpticalFlowParameter
 	#[inline]
 	fn get_rlof_optical_flow_parameter(&self) -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
-		let ret = unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_SparseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_SparseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -2291,7 +2693,10 @@ pub trait SparseRLOFOpticalFlowConst: crate::video::SparseOpticalFlowConst {
 	///      *    see also: setForwardBackward
 	#[inline]
 	fn get_forward_backward(&self) -> Result<f32> {
-		let ret = unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_SparseRLOFOpticalFlow()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_SparseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2303,7 +2708,10 @@ pub trait SparseRLOFOpticalFlow: crate::optflow::SparseRLOFOpticalFlowConst + cr
 	/// @copydoc DenseRLOFOpticalFlow::setRLOFOpticalFlowParameter
 	#[inline]
 	fn set_rlof_optical_flow_parameter(&mut self, mut val: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setRLOFOpticalFlowParameter_Ptr_RLOFOpticalFlowParameter_(self.as_raw_mut_SparseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setRLOFOpticalFlowParameter_Ptr_RLOFOpticalFlowParameter_(self.as_raw_mut_SparseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2316,7 +2724,10 @@ pub trait SparseRLOFOpticalFlow: crate::optflow::SparseRLOFOpticalFlowConst + cr
 	///      *    see also: setForwardBackward
 	#[inline]
 	fn set_forward_backward(&mut self, val: f32) -> Result<()> {
-		let ret = unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_SparseRLOFOpticalFlow(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_SparseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -2334,7 +2745,10 @@ impl dyn SparseRLOFOpticalFlow + '_ {
 	/// * forward_backward_threshold: 1.f
 	#[inline]
 	pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<dyn crate::optflow::SparseRLOFOpticalFlow>> {
-		let ret = unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_Ptr_RLOFOpticalFlowParameter__float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}

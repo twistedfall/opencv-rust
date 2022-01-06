@@ -943,9 +943,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint_input_array(self.as_raw_VectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint_input_array(self.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -953,9 +955,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint_output_array(self.as_raw_mut_VectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint_output_array(self.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -963,9 +967,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint_input_output_array(self.as_raw_mut_VectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint_input_output_array(self.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -998,9 +1004,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint2d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint2d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2d_input_array(self.as_raw_VectorOfPoint2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2d_input_array(self.as_raw_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1008,9 +1016,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint2d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint2d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2d_output_array(self.as_raw_mut_VectorOfPoint2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2d_output_array(self.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1018,9 +1028,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint2d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint2d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2d_input_output_array(self.as_raw_mut_VectorOfPoint2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2d_input_output_array(self.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1053,9 +1065,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint2f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint2f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2f_input_array(self.as_raw_VectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2f_input_array(self.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1063,9 +1077,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint2f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint2f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2f_output_array(self.as_raw_mut_VectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2f_output_array(self.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1073,9 +1089,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint2f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint2f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint2f_input_output_array(self.as_raw_mut_VectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint2f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint2f_input_output_array(self.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1108,9 +1126,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint3d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint3d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3d_input_array(self.as_raw_VectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3d_input_array(self.as_raw_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1118,9 +1138,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint3d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3d_output_array(self.as_raw_mut_VectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3d_output_array(self.as_raw_mut_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1128,9 +1150,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint3d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint3d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3d_input_output_array(self.as_raw_mut_VectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3d_input_output_array(self.as_raw_mut_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1163,9 +1187,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint3f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3f_input_array(self.as_raw_VectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3f_input_array(self.as_raw_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1173,9 +1199,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint3f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3f_output_array(self.as_raw_mut_VectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3f_output_array(self.as_raw_mut_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1183,9 +1211,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint3f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint3f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3f_input_output_array(self.as_raw_mut_VectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3f_input_output_array(self.as_raw_mut_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1218,9 +1248,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfPoint3i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfPoint3i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3i_input_array(self.as_raw_VectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3i_input_array(self.as_raw_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1228,9 +1260,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfPoint3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfPoint3i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3i_output_array(self.as_raw_mut_VectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3i_output_array(self.as_raw_mut_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1238,9 +1272,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfPoint3i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfPoint3i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfPoint3i_input_output_array(self.as_raw_mut_VectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfPoint3i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfPoint3i_input_output_array(self.as_raw_mut_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1293,9 +1329,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfRect {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfRect_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect_input_array(self.as_raw_VectorOfRect()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect_input_array(self.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1303,9 +1341,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfRect {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfRect_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect_output_array(self.as_raw_mut_VectorOfRect()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect_output_array(self.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1313,9 +1353,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfRect {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfRect_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect_input_output_array(self.as_raw_mut_VectorOfRect()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect_input_output_array(self.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1348,9 +1390,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfRect2d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfRect2d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect2d_input_array(self.as_raw_VectorOfRect2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect2d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect2d_input_array(self.as_raw_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1358,9 +1402,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfRect2d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfRect2d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect2d_output_array(self.as_raw_mut_VectorOfRect2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect2d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect2d_output_array(self.as_raw_mut_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1368,9 +1414,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfRect2d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfRect2d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfRect2d_input_output_array(self.as_raw_mut_VectorOfRect2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfRect2d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfRect2d_input_output_array(self.as_raw_mut_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1423,9 +1471,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfScalar {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfScalar_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfScalar_input_array(self.as_raw_VectorOfScalar()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfScalar_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfScalar_input_array(self.as_raw_VectorOfScalar(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1433,9 +1483,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfScalar {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfScalar_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfScalar_output_array(self.as_raw_mut_VectorOfScalar()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfScalar_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfScalar_output_array(self.as_raw_mut_VectorOfScalar(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1443,9 +1495,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfScalar {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfScalar_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfScalar_input_output_array(self.as_raw_mut_VectorOfScalar()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfScalar_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfScalar_input_output_array(self.as_raw_mut_VectorOfScalar(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1478,9 +1532,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfSize {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfSize_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfSize_input_array(self.as_raw_VectorOfSize()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfSize_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfSize_input_array(self.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1488,9 +1544,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfSize {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfSize_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfSize_output_array(self.as_raw_mut_VectorOfSize()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfSize_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfSize_output_array(self.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1498,9 +1556,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfSize {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfSize_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfSize_input_output_array(self.as_raw_mut_VectorOfSize()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfSize_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfSize_input_output_array(self.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1573,9 +1633,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec2d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec2d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2d_input_array(self.as_raw_VectorOfVec2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2d_input_array(self.as_raw_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1583,9 +1645,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec2d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec2d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2d_output_array(self.as_raw_mut_VectorOfVec2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2d_output_array(self.as_raw_mut_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1593,9 +1657,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec2d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec2d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2d_input_output_array(self.as_raw_mut_VectorOfVec2d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2d_input_output_array(self.as_raw_mut_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1628,9 +1694,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec2f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec2f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2f_input_array(self.as_raw_VectorOfVec2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2f_input_array(self.as_raw_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1638,9 +1706,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec2f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec2f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2f_output_array(self.as_raw_mut_VectorOfVec2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2f_output_array(self.as_raw_mut_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1648,9 +1718,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec2f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec2f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2f_input_output_array(self.as_raw_mut_VectorOfVec2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2f_input_output_array(self.as_raw_mut_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1683,9 +1755,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec2i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec2i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2i_input_array(self.as_raw_VectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2i_input_array(self.as_raw_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1693,9 +1767,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec2i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec2i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2i_output_array(self.as_raw_mut_VectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2i_output_array(self.as_raw_mut_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1703,9 +1779,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec2i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec2i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec2i_input_output_array(self.as_raw_mut_VectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec2i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec2i_input_output_array(self.as_raw_mut_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1738,9 +1816,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec3d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec3d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3d_input_array(self.as_raw_VectorOfVec3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3d_input_array(self.as_raw_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1748,9 +1828,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec3d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3d_output_array(self.as_raw_mut_VectorOfVec3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3d_output_array(self.as_raw_mut_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1758,9 +1840,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec3d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec3d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3d_input_output_array(self.as_raw_mut_VectorOfVec3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3d_input_output_array(self.as_raw_mut_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1793,9 +1877,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec3f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3f_input_array(self.as_raw_VectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3f_input_array(self.as_raw_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1803,9 +1889,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec3f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3f_output_array(self.as_raw_mut_VectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3f_output_array(self.as_raw_mut_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1813,9 +1901,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec3f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec3f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3f_input_output_array(self.as_raw_mut_VectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3f_input_output_array(self.as_raw_mut_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1848,9 +1938,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec3i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec3i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3i_input_array(self.as_raw_VectorOfVec3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3i_input_array(self.as_raw_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1858,9 +1950,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec3i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3i_output_array(self.as_raw_mut_VectorOfVec3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3i_output_array(self.as_raw_mut_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1868,9 +1962,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec3i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec3i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec3i_input_output_array(self.as_raw_mut_VectorOfVec3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec3i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec3i_input_output_array(self.as_raw_mut_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1903,9 +1999,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec4f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec4f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4f_input_array(self.as_raw_VectorOfVec4f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4f_input_array(self.as_raw_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1913,9 +2011,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec4f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec4f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4f_output_array(self.as_raw_mut_VectorOfVec4f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4f_output_array(self.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1923,9 +2023,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec4f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec4f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4f_input_output_array(self.as_raw_mut_VectorOfVec4f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4f_input_output_array(self.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -1958,9 +2060,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec4i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec4i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4i_input_array(self.as_raw_VectorOfVec4i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4i_input_array(self.as_raw_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -1968,9 +2072,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec4i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec4i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4i_output_array(self.as_raw_mut_VectorOfVec4i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4i_output_array(self.as_raw_mut_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -1978,9 +2084,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec4i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec4i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec4i_input_output_array(self.as_raw_mut_VectorOfVec4i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec4i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec4i_input_output_array(self.as_raw_mut_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2013,9 +2121,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVec6f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVec6f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec6f_input_array(self.as_raw_VectorOfVec6f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec6f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec6f_input_array(self.as_raw_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2023,9 +2133,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVec6f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVec6f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec6f_output_array(self.as_raw_mut_VectorOfVec6f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec6f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec6f_output_array(self.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2033,9 +2145,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVec6f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVec6f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVec6f_input_output_array(self.as_raw_mut_VectorOfVec6f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVec6f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVec6f_input_output_array(self.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2125,9 +2239,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfPoint {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint_input_array(self.as_raw_VectorOfVectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint_input_array(self.as_raw_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2135,9 +2251,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfPoint {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint_output_array(self.as_raw_mut_VectorOfVectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint_output_array(self.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2145,9 +2263,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfPoint {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2177,9 +2297,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfPoint2f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint2f_input_array(self.as_raw_VectorOfVectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint2f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint2f_input_array(self.as_raw_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2187,9 +2309,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfPoint2f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint2f_output_array(self.as_raw_mut_VectorOfVectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint2f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint2f_output_array(self.as_raw_mut_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2197,9 +2321,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfPoint2f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint2f_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint2f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint2f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint2f_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2229,9 +2355,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfPoint3d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3d_input_array(self.as_raw_VectorOfVectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3d_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3d_input_array(self.as_raw_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2239,9 +2367,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfPoint3d {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3d_output_array(self.as_raw_mut_VectorOfVectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3d_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3d_output_array(self.as_raw_mut_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2249,9 +2379,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfPoint3d {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3d_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3d()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3d_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3d_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2281,9 +2413,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfPoint3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3f_input_array(self.as_raw_VectorOfVectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3f_input_array(self.as_raw_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2291,9 +2425,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfPoint3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3f_output_array(self.as_raw_mut_VectorOfVectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3f_output_array(self.as_raw_mut_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2301,9 +2437,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfPoint3f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3f_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3f_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2333,9 +2471,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfPoint3i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3i_input_array(self.as_raw_VectorOfVectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3i_input_array(self.as_raw_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2343,9 +2483,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfPoint3i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3i_output_array(self.as_raw_mut_VectorOfVectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3i_output_array(self.as_raw_mut_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2353,9 +2495,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfPoint3i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfPoint3i_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfPoint3i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfPoint3i_input_output_array(self.as_raw_mut_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2405,9 +2549,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfVec2i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec2i_input_array(self.as_raw_VectorOfVectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec2i_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec2i_input_array(self.as_raw_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2415,9 +2561,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfVec2i {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec2i_output_array(self.as_raw_mut_VectorOfVectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec2i_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec2i_output_array(self.as_raw_mut_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2425,9 +2573,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfVec2i {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec2i_input_output_array(self.as_raw_mut_VectorOfVectorOfVec2i()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec2i_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec2i_input_output_array(self.as_raw_mut_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2457,9 +2607,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfVec3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec3f_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec3f_input_array(self.as_raw_VectorOfVectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec3f_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec3f_input_array(self.as_raw_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2467,9 +2619,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfVec3f {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec3f_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec3f_output_array(self.as_raw_mut_VectorOfVectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec3f_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec3f_output_array(self.as_raw_mut_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2477,9 +2631,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfVec3f {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfVec3f_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfVec3f_input_output_array(self.as_raw_mut_VectorOfVectorOfVec3f()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfVec3f_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfVec3f_input_output_array(self.as_raw_mut_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2509,9 +2665,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOff32 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOff32_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff32_input_array(self.as_raw_VectorOfVectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff32_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff32_input_array(self.as_raw_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2519,9 +2677,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOff32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOff32_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff32_output_array(self.as_raw_mut_VectorOfVectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff32_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff32_output_array(self.as_raw_mut_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2529,9 +2689,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOff32 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOff32_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff32_input_output_array(self.as_raw_mut_VectorOfVectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff32_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff32_input_output_array(self.as_raw_mut_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2561,9 +2723,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOff64 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOff64_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff64_input_array(self.as_raw_VectorOfVectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff64_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff64_input_array(self.as_raw_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2571,9 +2735,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOff64 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOff64_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff64_output_array(self.as_raw_mut_VectorOfVectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff64_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff64_output_array(self.as_raw_mut_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2581,9 +2747,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOff64 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOff64_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOff64_input_output_array(self.as_raw_mut_VectorOfVectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOff64_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOff64_input_output_array(self.as_raw_mut_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2613,9 +2781,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfi32 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi32_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi32_input_array(self.as_raw_VectorOfVectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi32_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi32_input_array(self.as_raw_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2623,9 +2793,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfi32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi32_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi32_output_array(self.as_raw_mut_VectorOfVectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi32_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi32_output_array(self.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2633,9 +2805,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfi32 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi32_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi32_input_output_array(self.as_raw_mut_VectorOfVectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi32_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi32_input_output_array(self.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2665,9 +2839,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfi8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi8_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi8_input_array(self.as_raw_VectorOfVectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi8_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi8_input_array(self.as_raw_VectorOfVectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2675,9 +2851,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfi8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi8_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi8_output_array(self.as_raw_mut_VectorOfVectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi8_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi8_output_array(self.as_raw_mut_VectorOfVectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2685,9 +2863,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfi8 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfi8_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfi8_input_output_array(self.as_raw_mut_VectorOfVectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfi8_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfi8_input_output_array(self.as_raw_mut_VectorOfVectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2717,9 +2897,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfVectorOfu8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfVectorOfu8_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfu8_input_array(self.as_raw_VectorOfVectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfu8_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfu8_input_array(self.as_raw_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2727,9 +2909,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfVectorOfu8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfu8_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfu8_output_array(self.as_raw_mut_VectorOfVectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfu8_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfu8_output_array(self.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2737,9 +2921,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfVectorOfu8 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfVectorOfu8_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfVectorOfu8_input_output_array(self.as_raw_mut_VectorOfVectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfVectorOfu8_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfVectorOfu8_input_output_array(self.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2792,9 +2978,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOff32 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOff32_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff32_input_array(self.as_raw_VectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff32_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff32_input_array(self.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2802,9 +2990,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOff32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOff32_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff32_output_array(self.as_raw_mut_VectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff32_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff32_output_array(self.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2812,9 +3002,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOff32 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOff32_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff32_input_output_array(self.as_raw_mut_VectorOff32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff32_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff32_input_output_array(self.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2847,9 +3039,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOff64 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOff64_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff64_input_array(self.as_raw_VectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff64_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff64_input_array(self.as_raw_VectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2857,9 +3051,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOff64 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOff64_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff64_output_array(self.as_raw_mut_VectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff64_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff64_output_array(self.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2867,9 +3063,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOff64 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOff64_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOff64_input_output_array(self.as_raw_mut_VectorOff64()) }
-				.into_result()
+			extern "C" { fn cv_VectorOff64_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOff64_input_output_array(self.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2902,9 +3100,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfi32 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfi32_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi32_input_array(self.as_raw_VectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi32_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi32_input_array(self.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2912,9 +3112,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfi32 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfi32_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi32_output_array(self.as_raw_mut_VectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi32_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi32_output_array(self.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2922,9 +3124,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfi32 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfi32_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi32_input_output_array(self.as_raw_mut_VectorOfi32()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi32_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi32_input_output_array(self.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -2957,9 +3161,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfi8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfi8_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi8_input_array(self.as_raw_VectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi8_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi8_input_array(self.as_raw_VectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -2967,9 +3173,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfi8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfi8_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi8_output_array(self.as_raw_mut_VectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi8_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi8_output_array(self.as_raw_mut_VectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -2977,9 +3185,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfi8 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfi8_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfi8_input_output_array(self.as_raw_mut_VectorOfi8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfi8_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfi8_input_output_array(self.as_raw_mut_VectorOfi8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -3035,9 +3245,11 @@ mod core_types {
 	impl core::ToInputArray for VectorOfu8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
-			extern "C" { fn cv_VectorOfu8_input_array(instance: *const c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfu8_input_array(self.as_raw_VectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfu8_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfu8_input_array(self.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) } )
 		}
 	}
@@ -3045,9 +3257,11 @@ mod core_types {
 	impl core::ToOutputArray for VectorOfu8 {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			extern "C" { fn cv_VectorOfu8_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfu8_output_array(self.as_raw_mut_VectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfu8_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfu8_output_array(self.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 		}
 	}
@@ -3055,9 +3269,11 @@ mod core_types {
 	impl core::ToInputOutputArray for VectorOfu8 {
 		#[inline]
 		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			extern "C" { fn cv_VectorOfu8_input_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-			unsafe { cv_VectorOfu8_input_output_array(self.as_raw_mut_VectorOfu8()) }
-				.into_result()
+			extern "C" { fn cv_VectorOfu8_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+			return_send!(via ocvrs_return);
+			unsafe { cv_VectorOfu8_input_output_array(self.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) }
+			return_receive!(unsafe ocvrs_return => ret);
+			ret.into_result()
 				.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 		}
 	}
@@ -4315,6 +4531,96 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfAcosLayer = core::Ptr<crate::dnn::AcosLayer>;
+	
+	ptr_extern! { crate::dnn::AcosLayer,
+		cv_PtrOfAcosLayer_delete, cv_PtrOfAcosLayer_get_inner_ptr, cv_PtrOfAcosLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AcosLayer, cv_PtrOfAcosLayer_new }
+	
+	impl PtrOfAcosLayer {
+		#[inline] pub fn as_raw_PtrOfAcosLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAcosLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AcosLayerTraitConst for PtrOfAcosLayer {
+		#[inline] fn as_raw_AcosLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AcosLayerTrait for PtrOfAcosLayer {
+		#[inline] fn as_raw_mut_AcosLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAcosLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAcosLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAcosLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAcosLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAcosLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAcosLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfAcoshLayer = core::Ptr<crate::dnn::AcoshLayer>;
+	
+	ptr_extern! { crate::dnn::AcoshLayer,
+		cv_PtrOfAcoshLayer_delete, cv_PtrOfAcoshLayer_get_inner_ptr, cv_PtrOfAcoshLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AcoshLayer, cv_PtrOfAcoshLayer_new }
+	
+	impl PtrOfAcoshLayer {
+		#[inline] pub fn as_raw_PtrOfAcoshLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAcoshLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AcoshLayerTraitConst for PtrOfAcoshLayer {
+		#[inline] fn as_raw_AcoshLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AcoshLayerTrait for PtrOfAcoshLayer {
+		#[inline] fn as_raw_mut_AcoshLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAcoshLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAcoshLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAcoshLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAcoshLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAcoshLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAcoshLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfActivationLayer = core::Ptr<crate::dnn::ActivationLayer>;
 	
 	ptr_extern! { crate::dnn::ActivationLayer,
@@ -4394,6 +4700,223 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfActivationLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfArgLayer = core::Ptr<crate::dnn::ArgLayer>;
+	
+	ptr_extern! { crate::dnn::ArgLayer,
+		cv_PtrOfArgLayer_delete, cv_PtrOfArgLayer_get_inner_ptr, cv_PtrOfArgLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ArgLayer, cv_PtrOfArgLayer_new }
+	
+	impl PtrOfArgLayer {
+		#[inline] pub fn as_raw_PtrOfArgLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfArgLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ArgLayerTraitConst for PtrOfArgLayer {
+		#[inline] fn as_raw_ArgLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ArgLayerTrait for PtrOfArgLayer {
+		#[inline] fn as_raw_mut_ArgLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfArgLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfArgLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfArgLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfArgLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfAsinLayer = core::Ptr<crate::dnn::AsinLayer>;
+	
+	ptr_extern! { crate::dnn::AsinLayer,
+		cv_PtrOfAsinLayer_delete, cv_PtrOfAsinLayer_get_inner_ptr, cv_PtrOfAsinLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AsinLayer, cv_PtrOfAsinLayer_new }
+	
+	impl PtrOfAsinLayer {
+		#[inline] pub fn as_raw_PtrOfAsinLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAsinLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AsinLayerTraitConst for PtrOfAsinLayer {
+		#[inline] fn as_raw_AsinLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AsinLayerTrait for PtrOfAsinLayer {
+		#[inline] fn as_raw_mut_AsinLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAsinLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAsinLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAsinLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAsinLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAsinLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAsinLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfAsinhLayer = core::Ptr<crate::dnn::AsinhLayer>;
+	
+	ptr_extern! { crate::dnn::AsinhLayer,
+		cv_PtrOfAsinhLayer_delete, cv_PtrOfAsinhLayer_get_inner_ptr, cv_PtrOfAsinhLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AsinhLayer, cv_PtrOfAsinhLayer_new }
+	
+	impl PtrOfAsinhLayer {
+		#[inline] pub fn as_raw_PtrOfAsinhLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAsinhLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AsinhLayerTraitConst for PtrOfAsinhLayer {
+		#[inline] fn as_raw_AsinhLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AsinhLayerTrait for PtrOfAsinhLayer {
+		#[inline] fn as_raw_mut_AsinhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAsinhLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAsinhLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAsinhLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAsinhLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAsinhLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAsinhLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfAtanLayer = core::Ptr<crate::dnn::AtanLayer>;
+	
+	ptr_extern! { crate::dnn::AtanLayer,
+		cv_PtrOfAtanLayer_delete, cv_PtrOfAtanLayer_get_inner_ptr, cv_PtrOfAtanLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AtanLayer, cv_PtrOfAtanLayer_new }
+	
+	impl PtrOfAtanLayer {
+		#[inline] pub fn as_raw_PtrOfAtanLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAtanLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AtanLayerTraitConst for PtrOfAtanLayer {
+		#[inline] fn as_raw_AtanLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AtanLayerTrait for PtrOfAtanLayer {
+		#[inline] fn as_raw_mut_AtanLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAtanLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAtanLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAtanLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAtanLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAtanLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAtanLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfAtanhLayer = core::Ptr<crate::dnn::AtanhLayer>;
+	
+	ptr_extern! { crate::dnn::AtanhLayer,
+		cv_PtrOfAtanhLayer_delete, cv_PtrOfAtanhLayer_get_inner_ptr, cv_PtrOfAtanhLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AtanhLayer, cv_PtrOfAtanhLayer_new }
+	
+	impl PtrOfAtanhLayer {
+		#[inline] pub fn as_raw_PtrOfAtanhLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAtanhLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AtanhLayerTraitConst for PtrOfAtanhLayer {
+		#[inline] fn as_raw_AtanhLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AtanhLayerTrait for PtrOfAtanhLayer {
+		#[inline] fn as_raw_mut_AtanhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfAtanhLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAtanhLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfAtanhLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfAtanhLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfAtanhLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfAtanhLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4617,6 +5140,96 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfCeilLayer = core::Ptr<crate::dnn::CeilLayer>;
+	
+	ptr_extern! { crate::dnn::CeilLayer,
+		cv_PtrOfCeilLayer_delete, cv_PtrOfCeilLayer_get_inner_ptr, cv_PtrOfCeilLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::CeilLayer, cv_PtrOfCeilLayer_new }
+	
+	impl PtrOfCeilLayer {
+		#[inline] pub fn as_raw_PtrOfCeilLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCeilLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::CeilLayerTraitConst for PtrOfCeilLayer {
+		#[inline] fn as_raw_CeilLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::CeilLayerTrait for PtrOfCeilLayer {
+		#[inline] fn as_raw_mut_CeilLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfCeilLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCeilLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfCeilLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfCeilLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfCeilLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfCeilLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCeluLayer = core::Ptr<crate::dnn::CeluLayer>;
+	
+	ptr_extern! { crate::dnn::CeluLayer,
+		cv_PtrOfCeluLayer_delete, cv_PtrOfCeluLayer_get_inner_ptr, cv_PtrOfCeluLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::CeluLayer, cv_PtrOfCeluLayer_new }
+	
+	impl PtrOfCeluLayer {
+		#[inline] pub fn as_raw_PtrOfCeluLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCeluLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::CeluLayerTraitConst for PtrOfCeluLayer {
+		#[inline] fn as_raw_CeluLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::CeluLayerTrait for PtrOfCeluLayer {
+		#[inline] fn as_raw_mut_CeluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfCeluLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCeluLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfCeluLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfCeluLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfCeluLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfCeluLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfConcatLayer = core::Ptr<crate::dnn::ConcatLayer>;
 	
 	ptr_extern! { crate::dnn::ConcatLayer,
@@ -4688,6 +5301,96 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfCorrelationLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCosLayer = core::Ptr<crate::dnn::CosLayer>;
+	
+	ptr_extern! { crate::dnn::CosLayer,
+		cv_PtrOfCosLayer_delete, cv_PtrOfCosLayer_get_inner_ptr, cv_PtrOfCosLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::CosLayer, cv_PtrOfCosLayer_new }
+	
+	impl PtrOfCosLayer {
+		#[inline] pub fn as_raw_PtrOfCosLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCosLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::CosLayerTraitConst for PtrOfCosLayer {
+		#[inline] fn as_raw_CosLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::CosLayerTrait for PtrOfCosLayer {
+		#[inline] fn as_raw_mut_CosLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfCosLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCosLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfCosLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfCosLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfCosLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfCosLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfCoshLayer = core::Ptr<crate::dnn::CoshLayer>;
+	
+	ptr_extern! { crate::dnn::CoshLayer,
+		cv_PtrOfCoshLayer_delete, cv_PtrOfCoshLayer_get_inner_ptr, cv_PtrOfCoshLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::CoshLayer, cv_PtrOfCoshLayer_new }
+	
+	impl PtrOfCoshLayer {
+		#[inline] pub fn as_raw_PtrOfCoshLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCoshLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::CoshLayerTraitConst for PtrOfCoshLayer {
+		#[inline] fn as_raw_CoshLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::CoshLayerTrait for PtrOfCoshLayer {
+		#[inline] fn as_raw_mut_CoshLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfCoshLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfCoshLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfCoshLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfCoshLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfCoshLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfCoshLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -4958,6 +5661,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfErfLayer = core::Ptr<crate::dnn::ErfLayer>;
+	
+	ptr_extern! { crate::dnn::ErfLayer,
+		cv_PtrOfErfLayer_delete, cv_PtrOfErfLayer_get_inner_ptr, cv_PtrOfErfLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ErfLayer, cv_PtrOfErfLayer_new }
+	
+	impl PtrOfErfLayer {
+		#[inline] pub fn as_raw_PtrOfErfLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfErfLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ErfLayerTraitConst for PtrOfErfLayer {
+		#[inline] fn as_raw_ErfLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ErfLayerTrait for PtrOfErfLayer {
+		#[inline] fn as_raw_mut_ErfLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfErfLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfErfLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfErfLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfErfLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfErfLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfErfLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfExpLayer = core::Ptr<crate::dnn::ExpLayer>;
 	
 	ptr_extern! { crate::dnn::ExpLayer,
@@ -5040,6 +5788,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfFloorLayer = core::Ptr<crate::dnn::FloorLayer>;
+	
+	ptr_extern! { crate::dnn::FloorLayer,
+		cv_PtrOfFloorLayer_delete, cv_PtrOfFloorLayer_get_inner_ptr, cv_PtrOfFloorLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::FloorLayer, cv_PtrOfFloorLayer_new }
+	
+	impl PtrOfFloorLayer {
+		#[inline] pub fn as_raw_PtrOfFloorLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFloorLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::FloorLayerTraitConst for PtrOfFloorLayer {
+		#[inline] fn as_raw_FloorLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::FloorLayerTrait for PtrOfFloorLayer {
+		#[inline] fn as_raw_mut_FloorLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfFloorLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfFloorLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfFloorLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfFloorLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfFloorLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfFloorLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfFlowWarpLayer = core::Ptr<crate::dnn::FlowWarpLayer>;
 	
 	ptr_extern! { crate::dnn::FlowWarpLayer,
@@ -5111,6 +5904,96 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfGRULayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfHardSigmoidLayer = core::Ptr<crate::dnn::HardSigmoidLayer>;
+	
+	ptr_extern! { crate::dnn::HardSigmoidLayer,
+		cv_PtrOfHardSigmoidLayer_delete, cv_PtrOfHardSigmoidLayer_get_inner_ptr, cv_PtrOfHardSigmoidLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::HardSigmoidLayer, cv_PtrOfHardSigmoidLayer_new }
+	
+	impl PtrOfHardSigmoidLayer {
+		#[inline] pub fn as_raw_PtrOfHardSigmoidLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHardSigmoidLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::HardSigmoidLayerTraitConst for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_HardSigmoidLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::HardSigmoidLayerTrait for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_mut_HardSigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfHardSigmoidLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfHardSwishLayer = core::Ptr<crate::dnn::HardSwishLayer>;
+	
+	ptr_extern! { crate::dnn::HardSwishLayer,
+		cv_PtrOfHardSwishLayer_delete, cv_PtrOfHardSwishLayer_get_inner_ptr, cv_PtrOfHardSwishLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::HardSwishLayer, cv_PtrOfHardSwishLayer_new }
+	
+	impl PtrOfHardSwishLayer {
+		#[inline] pub fn as_raw_PtrOfHardSwishLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfHardSwishLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::HardSwishLayerTraitConst for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_HardSwishLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::HardSwishLayerTrait for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_mut_HardSwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfHardSwishLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfHardSwishLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -5297,6 +6180,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfLogLayer = core::Ptr<crate::dnn::LogLayer>;
+	
+	ptr_extern! { crate::dnn::LogLayer,
+		cv_PtrOfLogLayer_delete, cv_PtrOfLogLayer_get_inner_ptr, cv_PtrOfLogLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::LogLayer, cv_PtrOfLogLayer_new }
+	
+	impl PtrOfLogLayer {
+		#[inline] pub fn as_raw_PtrOfLogLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLogLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::LogLayerTraitConst for PtrOfLogLayer {
+		#[inline] fn as_raw_LogLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LogLayerTrait for PtrOfLogLayer {
+		#[inline] fn as_raw_mut_LogLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfLogLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfLogLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfLogLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfLogLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfLogLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfLogLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfMVNLayer = core::Ptr<crate::dnn::MVNLayer>;
 	
 	ptr_extern! { crate::dnn::MVNLayer,
@@ -5450,6 +6378,51 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfNormalizeBBoxLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfNotLayer = core::Ptr<crate::dnn::NotLayer>;
+	
+	ptr_extern! { crate::dnn::NotLayer,
+		cv_PtrOfNotLayer_delete, cv_PtrOfNotLayer_get_inner_ptr, cv_PtrOfNotLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::NotLayer, cv_PtrOfNotLayer_new }
+	
+	impl PtrOfNotLayer {
+		#[inline] pub fn as_raw_PtrOfNotLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfNotLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::NotLayerTraitConst for PtrOfNotLayer {
+		#[inline] fn as_raw_NotLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::NotLayerTrait for PtrOfNotLayer {
+		#[inline] fn as_raw_mut_NotLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfNotLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfNotLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfNotLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfNotLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfNotLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfNotLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6075,6 +7048,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfRoundLayer = core::Ptr<crate::dnn::RoundLayer>;
+	
+	ptr_extern! { crate::dnn::RoundLayer,
+		cv_PtrOfRoundLayer_delete, cv_PtrOfRoundLayer_get_inner_ptr, cv_PtrOfRoundLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::RoundLayer, cv_PtrOfRoundLayer_new }
+	
+	impl PtrOfRoundLayer {
+		#[inline] pub fn as_raw_PtrOfRoundLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRoundLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::RoundLayerTraitConst for PtrOfRoundLayer {
+		#[inline] fn as_raw_RoundLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::RoundLayerTrait for PtrOfRoundLayer {
+		#[inline] fn as_raw_mut_RoundLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfRoundLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfRoundLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfRoundLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfRoundLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfRoundLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfRoundLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfScaleLayer = core::Ptr<crate::dnn::ScaleLayer>;
 	
 	ptr_extern! { crate::dnn::ScaleLayer,
@@ -6157,6 +7175,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfSeluLayer = core::Ptr<crate::dnn::SeluLayer>;
+	
+	ptr_extern! { crate::dnn::SeluLayer,
+		cv_PtrOfSeluLayer_delete, cv_PtrOfSeluLayer_get_inner_ptr, cv_PtrOfSeluLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SeluLayer, cv_PtrOfSeluLayer_new }
+	
+	impl PtrOfSeluLayer {
+		#[inline] pub fn as_raw_PtrOfSeluLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSeluLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SeluLayerTraitConst for PtrOfSeluLayer {
+		#[inline] fn as_raw_SeluLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SeluLayerTrait for PtrOfSeluLayer {
+		#[inline] fn as_raw_mut_SeluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSeluLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSeluLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSeluLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSeluLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSeluLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSeluLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfSigmoidLayer = core::Ptr<crate::dnn::SigmoidLayer>;
 	
 	ptr_extern! { crate::dnn::SigmoidLayer,
@@ -6199,6 +7262,96 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSigmoidLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSinLayer = core::Ptr<crate::dnn::SinLayer>;
+	
+	ptr_extern! { crate::dnn::SinLayer,
+		cv_PtrOfSinLayer_delete, cv_PtrOfSinLayer_get_inner_ptr, cv_PtrOfSinLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SinLayer, cv_PtrOfSinLayer_new }
+	
+	impl PtrOfSinLayer {
+		#[inline] pub fn as_raw_PtrOfSinLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSinLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SinLayerTraitConst for PtrOfSinLayer {
+		#[inline] fn as_raw_SinLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SinLayerTrait for PtrOfSinLayer {
+		#[inline] fn as_raw_mut_SinLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSinLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSinLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSinLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSinLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSinLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSinLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSinhLayer = core::Ptr<crate::dnn::SinhLayer>;
+	
+	ptr_extern! { crate::dnn::SinhLayer,
+		cv_PtrOfSinhLayer_delete, cv_PtrOfSinhLayer_get_inner_ptr, cv_PtrOfSinhLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SinhLayer, cv_PtrOfSinhLayer_new }
+	
+	impl PtrOfSinhLayer {
+		#[inline] pub fn as_raw_PtrOfSinhLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSinhLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SinhLayerTraitConst for PtrOfSinhLayer {
+		#[inline] fn as_raw_SinhLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SinhLayerTrait for PtrOfSinhLayer {
+		#[inline] fn as_raw_mut_SinhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSinhLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSinhLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSinhLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSinhLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSinhLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSinhLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6321,6 +7474,96 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfSoftplusLayer = core::Ptr<crate::dnn::SoftplusLayer>;
+	
+	ptr_extern! { crate::dnn::SoftplusLayer,
+		cv_PtrOfSoftplusLayer_delete, cv_PtrOfSoftplusLayer_get_inner_ptr, cv_PtrOfSoftplusLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SoftplusLayer, cv_PtrOfSoftplusLayer_new }
+	
+	impl PtrOfSoftplusLayer {
+		#[inline] pub fn as_raw_PtrOfSoftplusLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSoftplusLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SoftplusLayerTraitConst for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_SoftplusLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SoftplusLayerTrait for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_mut_SoftplusLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSoftplusLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSoftsignLayer = core::Ptr<crate::dnn::SoftsignLayer>;
+	
+	ptr_extern! { crate::dnn::SoftsignLayer,
+		cv_PtrOfSoftsignLayer_delete, cv_PtrOfSoftsignLayer_get_inner_ptr, cv_PtrOfSoftsignLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SoftsignLayer, cv_PtrOfSoftsignLayer_new }
+	
+	impl PtrOfSoftsignLayer {
+		#[inline] pub fn as_raw_PtrOfSoftsignLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSoftsignLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SoftsignLayerTraitConst for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_SoftsignLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SoftsignLayerTrait for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_mut_SoftsignLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSoftsignLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfSplitLayer = core::Ptr<crate::dnn::SplitLayer>;
 	
 	ptr_extern! { crate::dnn::SplitLayer,
@@ -6355,6 +7598,51 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSplitLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSqrtLayer = core::Ptr<crate::dnn::SqrtLayer>;
+	
+	ptr_extern! { crate::dnn::SqrtLayer,
+		cv_PtrOfSqrtLayer_delete, cv_PtrOfSqrtLayer_get_inner_ptr, cv_PtrOfSqrtLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SqrtLayer, cv_PtrOfSqrtLayer_new }
+	
+	impl PtrOfSqrtLayer {
+		#[inline] pub fn as_raw_PtrOfSqrtLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSqrtLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SqrtLayerTraitConst for PtrOfSqrtLayer {
+		#[inline] fn as_raw_SqrtLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SqrtLayerTrait for PtrOfSqrtLayer {
+		#[inline] fn as_raw_mut_SqrtLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSqrtLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSqrtLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSqrtLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSqrtLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSqrtLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSqrtLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -6445,6 +7733,96 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfTanHLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfTanLayer = core::Ptr<crate::dnn::TanLayer>;
+	
+	ptr_extern! { crate::dnn::TanLayer,
+		cv_PtrOfTanLayer_delete, cv_PtrOfTanLayer_get_inner_ptr, cv_PtrOfTanLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::TanLayer, cv_PtrOfTanLayer_new }
+	
+	impl PtrOfTanLayer {
+		#[inline] pub fn as_raw_PtrOfTanLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTanLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::TanLayerTraitConst for PtrOfTanLayer {
+		#[inline] fn as_raw_TanLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::TanLayerTrait for PtrOfTanLayer {
+		#[inline] fn as_raw_mut_TanLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfTanLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfTanLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfTanLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfTanLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfTanLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfTanLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfThresholdedReluLayer = core::Ptr<crate::dnn::ThresholdedReluLayer>;
+	
+	ptr_extern! { crate::dnn::ThresholdedReluLayer,
+		cv_PtrOfThresholdedReluLayer_delete, cv_PtrOfThresholdedReluLayer_get_inner_ptr, cv_PtrOfThresholdedReluLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ThresholdedReluLayer, cv_PtrOfThresholdedReluLayer_new }
+	
+	impl PtrOfThresholdedReluLayer {
+		#[inline] pub fn as_raw_PtrOfThresholdedReluLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfThresholdedReluLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ThresholdedReluLayerTraitConst for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_ThresholdedReluLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ThresholdedReluLayerTrait for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_mut_ThresholdedReluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfThresholdedReluLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfThresholdedReluLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
@@ -9012,6 +10390,25 @@ mod objdetect_types {
 	
 	impl crate::objdetect::FaceRecognizerSF for PtrOfFaceRecognizerSF {
 		#[inline] fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfQRCodeEncoder = core::Ptr<dyn crate::objdetect::QRCodeEncoder>;
+	
+	ptr_extern! { dyn crate::objdetect::QRCodeEncoder,
+		cv_PtrOfQRCodeEncoder_delete, cv_PtrOfQRCodeEncoder_get_inner_ptr, cv_PtrOfQRCodeEncoder_get_inner_ptr_mut
+	}
+	
+	impl PtrOfQRCodeEncoder {
+		#[inline] pub fn as_raw_PtrOfQRCodeEncoder(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfQRCodeEncoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::QRCodeEncoderConst for PtrOfQRCodeEncoder {
+		#[inline] fn as_raw_QRCodeEncoder(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::objdetect::QRCodeEncoder for PtrOfQRCodeEncoder {
+		#[inline] fn as_raw_mut_QRCodeEncoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type VectorOfDetectionBasedTracker_ExtObject = core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>;
@@ -16339,6 +17736,33 @@ mod ximgproc_types {
 	}
 	
 	impl core::AlgorithmTrait for PtrOfRidgeDetectionFilter {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfScanSegment = core::Ptr<dyn crate::ximgproc::ScanSegment>;
+	
+	ptr_extern! { dyn crate::ximgproc::ScanSegment,
+		cv_PtrOfScanSegment_delete, cv_PtrOfScanSegment_get_inner_ptr, cv_PtrOfScanSegment_get_inner_ptr_mut
+	}
+	
+	impl PtrOfScanSegment {
+		#[inline] pub fn as_raw_PtrOfScanSegment(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfScanSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::ximgproc::ScanSegmentConst for PtrOfScanSegment {
+		#[inline] fn as_raw_ScanSegment(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::ximgproc::ScanSegment for PtrOfScanSegment {
+		#[inline] fn as_raw_mut_ScanSegment(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfScanSegment {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfScanSegment {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	

@@ -27,7 +27,7 @@
 //! world to camera coordinate systems (or camera frame) and ![inline formula](https://latex.codecogs.com/png.latex?s) is the projective transformation's
 //! arbitrary scaling and not part of the camera model.
 //! 
-//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
+//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
 //! as ![inline formula](https://latex.codecogs.com/png.latex?K)) projects 3D points given in the camera coordinate system to 2D pixel coordinates, i.e.
 //! 
 //! ![block formula](https://latex.codecogs.com/png.latex?p%20%3D%20A%20P%5Fc%2E)
@@ -91,7 +91,7 @@
 //! 
 //! The following figure illustrates the pinhole camera model.
 //! 
-//! ![Pinhole camera model](https://docs.opencv.org/4.5.4/pinhole_camera_model.png)
+//! ![Pinhole camera model](https://docs.opencv.org/4.5.5/pinhole_camera_model.png)
 //! 
 //! Real lenses usually have some distortion, mostly radial distortion, and slight tangential distortion.
 //! So, the above model is extended as:
@@ -129,13 +129,13 @@
 //! the framework does not support the required integer programming and polynomial inequalities.
 //! See [issue #15992](https://github.com/opencv/opencv/issues/15992) for additional information.
 //! 
-//! ![](https://docs.opencv.org/4.5.4/distortion_examples.png)
-//! ![](https://docs.opencv.org/4.5.4/distortion_examples2.png)
+//! ![](https://docs.opencv.org/4.5.5/distortion_examples.png)
+//! ![](https://docs.opencv.org/4.5.5/distortion_examples2.png)
 //! 
 //! In some cases, the image sensor may be tilted in order to focus an oblique plane in front of the
 //! camera (Scheimpflug principle). This can be useful for particle image velocimetry (PIV) or
 //! triangulation with a laser fan. The tilt causes a perspective distortion of ![inline formula](https://latex.codecogs.com/png.latex?x%27%27) and
-//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Louhichi07).
+//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Louhichi07).
 //! 
 //! ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0Au%20%5C%5C%0Av%0A%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0Af%5Fx%20x%27%27%27%20%2B%20c%5Fx%20%5C%5C%0Af%5Fy%20y%27%27%27%20%2B%20c%5Fy%0A%5Cend%7Bbmatrix%7D%2C)
 //! 
@@ -277,21 +277,21 @@ pub const CALIB_FIX_PRINCIPAL_POINT: i32 = 4;
 pub const CALIB_FIX_S1_S2_S3_S4: i32 = 65536;
 pub const CALIB_FIX_TANGENT_DIST: i32 = 2097152;
 pub const CALIB_FIX_TAUX_TAUY: i32 = 524288;
-/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Andreff99)
+/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Andreff99)
 pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
-/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Daniilidis98)
+/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Daniilidis98)
 pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
-/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Horaud95)
+/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Horaud95)
 pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
-/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Park94)
+/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Park94)
 pub const CALIB_HAND_EYE_PARK: i32 = 1;
-/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Tsai89)
+/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Tsai89)
 pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 pub const CALIB_NINTRINSIC: i32 = 18;
 pub const CALIB_RATIONAL_MODEL: i32 = 16384;
-/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 pub const CALIB_ROBOT_WORLD_HAND_EYE_LI: i32 = 1;
-/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 pub const CALIB_ROBOT_WORLD_HAND_EYE_SHAH: i32 = 0;
 pub const CALIB_SAME_FOCAL_LENGTH: i32 = 512;
 pub const CALIB_THIN_PRISM_MODEL: i32 = 32768;
@@ -349,19 +349,19 @@ pub const SCORE_METHOD_LMEDS: i32 = 3;
 pub const SCORE_METHOD_MAGSAC: i32 = 2;
 pub const SCORE_METHOD_MSAC: i32 = 1;
 pub const SCORE_METHOD_RANSAC: i32 = 0;
-/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ke17)
+/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Ke17)
 pub const SOLVEPNP_AP3P: i32 = 5;
 /// **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
-/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_hesch2011direct)
+/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_hesch2011direct)
 pub const SOLVEPNP_DLS: i32 = 3;
-/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 pub const SOLVEPNP_EPNP: i32 = 1;
-/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14) 
+/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Collins14) 
 /// 
 /// Object points must be coplanar.
 pub const SOLVEPNP_IPPE: i32 = 6;
-/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14) 
+/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Collins14) 
 /// 
 /// This is a special case suitable for marker pose estimation.
 /// 
@@ -371,16 +371,21 @@ pub const SOLVEPNP_IPPE: i32 = 6;
 ///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 ///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 pub const SOLVEPNP_IPPE_SQUARE: i32 = 7;
+/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Eade13) 
+/// 
+/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
+/// 
+/// Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
 /// Used for count
 pub const SOLVEPNP_MAX_COUNT: i32 = 9;
-/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_gao2003complete)
+/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
-/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis20](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Terzakis20)
+/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 pub const SOLVEPNP_SQPNP: i32 = 8;
 /// **Broken implementation. Using this flag will fallback to EPnP.** 
 /// 
-/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
 pub const StereoBM_PREFILTER_XSOBEL: i32 = 1;
@@ -416,15 +421,15 @@ opencv_type_enum! { crate::calib3d::CirclesGridFinderParameters_GridType }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum HandEyeCalibrationMethod {
-	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Tsai89)
+	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Tsai89)
 	CALIB_HAND_EYE_TSAI = 0,
-	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Park94)
+	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Park94)
 	CALIB_HAND_EYE_PARK = 1,
-	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Horaud95)
+	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Horaud95)
 	CALIB_HAND_EYE_HORAUD = 2,
-	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Andreff99)
+	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Andreff99)
 	CALIB_HAND_EYE_ANDREFF = 3,
-	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Daniilidis98)
+	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Daniilidis98)
 	CALIB_HAND_EYE_DANIILIDIS = 4,
 }
 
@@ -455,9 +460,9 @@ opencv_type_enum! { crate::calib3d::NeighborSearchMethod }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum RobotWorldHandEyeCalibrationMethod {
-	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 	CALIB_ROBOT_WORLD_HAND_EYE_SHAH = 0,
-	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 	CALIB_ROBOT_WORLD_HAND_EYE_LI = 1,
 }
 
@@ -488,26 +493,31 @@ opencv_type_enum! { crate::calib3d::ScoreMethod }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum SolvePnPMethod {
+	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Eade13) 
+	/// 
+	/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
+	/// 
+	/// Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
 	SOLVEPNP_ITERATIVE = 0,
-	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 	SOLVEPNP_EPNP = 1,
-	/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_gao2003complete)
+	/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_gao2003complete)
 	SOLVEPNP_P3P = 2,
 	/// **Broken implementation. Using this flag will fallback to EPnP.** 
 	/// 
-	/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_hesch2011direct)
+	/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_hesch2011direct)
 	SOLVEPNP_DLS = 3,
 	/// **Broken implementation. Using this flag will fallback to EPnP.** 
 	/// 
-	/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+	/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 	SOLVEPNP_UPNP = 4,
-	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ke17)
+	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Ke17)
 	SOLVEPNP_AP3P = 5,
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Collins14) 
 	/// 
 	/// Object points must be coplanar.
 	SOLVEPNP_IPPE = 6,
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Collins14) 
 	/// 
 	/// This is a special case suitable for marker pose estimation.
 	/// 
@@ -517,7 +527,7 @@ pub enum SolvePnPMethod {
 	///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 	SOLVEPNP_IPPE_SQUARE = 7,
-	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis20](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Terzakis20)
+	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 	SOLVEPNP_SQPNP = 8,
 	/// Used for count
 	SOLVEPNP_MAX_COUNT = 9,
@@ -553,7 +563,7 @@ pub type CirclesGridFinderParameters2 = crate::calib3d::CirclesGridFinderParamet
 /// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 /// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 /// sequence of rotations about the three principal axes that results in the same orientation of an
-/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned tree rotation matrices and corresponding three Euler angles
+/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned tree rotation matrices and corresponding three Euler angles
 /// are only one of the possible solutions.
 /// 
 /// ## C++ default parameters
@@ -568,7 +578,10 @@ pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutput
 	output_array_arg!(qx);
 	output_array_arg!(qy);
 	output_array_arg!(qz);
-	let ret = unsafe { sys::cv_RQDecomp3x3_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mtx_r.as_raw__OutputArray(), mtx_q.as_raw__OutputArray(), qx.as_raw__OutputArray(), qy.as_raw__OutputArray(), qz.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_RQDecomp3x3_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mtx_r.as_raw__OutputArray(), mtx_q.as_raw__OutputArray(), qx.as_raw__OutputArray(), qy.as_raw__OutputArray(), qz.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -593,13 +606,13 @@ pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutput
 /// 
 /// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
 /// can be found in:
-///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
+///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
 /// 
 /// 
 /// Note: Useful information on SE(3) and Lie Groups can be found in:
-///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
-///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Eade17)
-///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Sol2018AML)
+///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
+///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Eade17)
+///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Sol2018AML)
 /// 
 /// ## C++ default parameters
 /// * jacobian: noArray()
@@ -608,14 +621,17 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	output_array_arg!(jacobian);
-	let ret = unsafe { sys::cv_Rodrigues_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), jacobian.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_Rodrigues_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 /// 
 /// This function is an extension of #calibrateCamera with the method of releasing object which was
-/// proposed in [strobl2011iccv](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+/// proposed in [strobl2011iccv](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 /// targets (calibration plates), this method can dramatically improve the precision of the estimated
 /// camera parameters. Both the object-releasing method and standard method are supported by this
 /// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -666,7 +682,7 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// the overall RMS re-projection error.
 /// 
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
 /// #calibrateCamera for other detailed explanations.
 /// ## See also
 /// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -687,14 +703,17 @@ pub fn calibrate_camera_ro_extended(object_points: &dyn core::ToInputArray, imag
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(std_deviations_obj_points);
 	output_array_arg!(per_view_errors);
-	let ret = unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 /// 
 /// This function is an extension of #calibrateCamera with the method of releasing object which was
-/// proposed in [strobl2011iccv](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+/// proposed in [strobl2011iccv](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 /// targets (calibration plates), this method can dramatically improve the precision of the estimated
 /// camera parameters. Both the object-releasing method and standard method are supported by this
 /// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -745,7 +764,7 @@ pub fn calibrate_camera_ro_extended(object_points: &dyn core::ToInputArray, imag
 /// the overall RMS re-projection error.
 /// 
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
 /// #calibrateCamera for other detailed explanations.
 /// ## See also
 /// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -764,7 +783,10 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
 	output_array_arg!(new_obj_points);
-	let ret = unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -851,7 +873,7 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 /// the overall RMS re-projection error.
 /// 
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -899,7 +921,10 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 	output_array_arg!(std_deviations_intrinsics);
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(per_view_errors);
-	let ret = unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -986,7 +1011,7 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// the overall RMS re-projection error.
 /// 
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -1033,7 +1058,10 @@ pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &d
 	input_output_array_arg!(dist_coeffs);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	let ret = unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1080,7 +1108,7 @@ pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &d
 /// end-effector. The transformation from the camera to the robot base frame can then be estimated by inputting
 /// the suitable transformations to the function, see below.
 /// 
-/// ![](https://docs.opencv.org/4.5.4/hand-eye_figure.png)
+/// ![](https://docs.opencv.org/4.5.5/hand-eye_figure.png)
 /// 
 /// The calibration procedure is the following:
 ///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1119,7 +1147,10 @@ pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2bas
 	input_array_arg!(t_target2cam);
 	output_array_arg!(r_cam2gripper);
 	output_array_arg!(t_cam2gripper);
-	let ret = unsafe { sys::cv_calibrateHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_HandEyeCalibrationMethod(r_gripper2base.as_raw__InputArray(), t_gripper2base.as_raw__InputArray(), r_target2cam.as_raw__InputArray(), t_target2cam.as_raw__InputArray(), r_cam2gripper.as_raw__OutputArray(), t_cam2gripper.as_raw__OutputArray(), method) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_HandEyeCalibrationMethod(r_gripper2base.as_raw__InputArray(), t_gripper2base.as_raw__InputArray(), r_target2cam.as_raw__InputArray(), t_target2cam.as_raw__InputArray(), r_cam2gripper.as_raw__OutputArray(), t_cam2gripper.as_raw__OutputArray(), method, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1163,7 +1194,7 @@ pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2bas
 /// The following picture describes the Robot-World/Hand-Eye calibration problem where the transformations between a robot and a world frame
 /// and between a robot gripper ("hand") and a camera ("eye") mounted at the robot end-effector have to be estimated.
 /// 
-/// ![](https://docs.opencv.org/4.5.4/robot-world_hand-eye_figure.png)
+/// ![](https://docs.opencv.org/4.5.5/robot-world_hand-eye_figure.png)
 /// 
 /// The calibration procedure is the following:
 ///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1201,7 +1232,10 @@ pub fn calibrate_robot_world_hand_eye(r_world2cam: &dyn core::ToInputArray, t_wo
 	output_array_arg!(t_base2world);
 	output_array_arg!(r_gripper2cam);
 	output_array_arg!(t_gripper2cam);
-	let ret = unsafe { sys::cv_calibrateRobotWorldHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_RobotWorldHandEyeCalibrationMethod(r_world2cam.as_raw__InputArray(), t_world2cam.as_raw__InputArray(), r_base2gripper.as_raw__InputArray(), t_base2gripper.as_raw__InputArray(), r_base2world.as_raw__OutputArray(), t_base2world.as_raw__OutputArray(), r_gripper2cam.as_raw__OutputArray(), t_gripper2cam.as_raw__OutputArray(), method) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrateRobotWorldHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_RobotWorldHandEyeCalibrationMethod(r_world2cam.as_raw__InputArray(), t_world2cam.as_raw__InputArray(), r_base2gripper.as_raw__InputArray(), t_base2gripper.as_raw__InputArray(), r_base2world.as_raw__OutputArray(), t_base2world.as_raw__OutputArray(), r_gripper2cam.as_raw__OutputArray(), t_gripper2cam.as_raw__OutputArray(), method, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1229,14 +1263,20 @@ pub fn calibrate_robot_world_hand_eye(r_world2cam: &dyn core::ToInputArray, t_wo
 #[inline]
 pub fn calibration_matrix_values(camera_matrix: &dyn core::ToInputArray, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
 	input_array_arg!(camera_matrix);
-	let ret = unsafe { sys::cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix.as_raw__InputArray(), image_size.opencv_as_extern(), aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix.as_raw__InputArray(), image_size.opencv_as_extern(), aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 #[inline]
 pub fn check_chessboard(img: &dyn core::ToInputArray, size: core::Size) -> Result<bool> {
 	input_array_arg!(img);
-	let ret = unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), size.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1295,7 +1335,10 @@ pub fn compose_rt(rvec1: &dyn core::ToInputArray, tvec1: &dyn core::ToInputArray
 	output_array_arg!(dt3dt1);
 	output_array_arg!(dt3dr2);
 	output_array_arg!(dt3dt2);
-	let ret = unsafe { sys::cv_composeRT_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(rvec1.as_raw__InputArray(), tvec1.as_raw__InputArray(), rvec2.as_raw__InputArray(), tvec2.as_raw__InputArray(), rvec3.as_raw__OutputArray(), tvec3.as_raw__OutputArray(), dr3dr1.as_raw__OutputArray(), dr3dt1.as_raw__OutputArray(), dr3dr2.as_raw__OutputArray(), dr3dt2.as_raw__OutputArray(), dt3dr1.as_raw__OutputArray(), dt3dt1.as_raw__OutputArray(), dt3dr2.as_raw__OutputArray(), dt3dt2.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_composeRT_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(rvec1.as_raw__InputArray(), tvec1.as_raw__InputArray(), rvec2.as_raw__InputArray(), tvec2.as_raw__InputArray(), rvec3.as_raw__OutputArray(), tvec3.as_raw__OutputArray(), dr3dr1.as_raw__OutputArray(), dr3dt1.as_raw__OutputArray(), dr3dr2.as_raw__OutputArray(), dr3dt2.as_raw__OutputArray(), dt3dr1.as_raw__OutputArray(), dt3dt1.as_raw__OutputArray(), dt3dr2.as_raw__OutputArray(), dt3dt2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1327,7 +1370,10 @@ pub fn compute_correspond_epilines(points: &dyn core::ToInputArray, which_image:
 	input_array_arg!(points);
 	input_array_arg!(f);
 	output_array_arg!(lines);
-	let ret = unsafe { sys::cv_computeCorrespondEpilines_const__InputArrayR_int_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), which_image, f.as_raw__InputArray(), lines.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_computeCorrespondEpilines_const__InputArrayR_int_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), which_image, f.as_raw__InputArray(), lines.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1344,7 +1390,10 @@ pub fn compute_correspond_epilines(points: &dyn core::ToInputArray, which_image:
 pub fn convert_points_from_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	let ret = unsafe { sys::cv_convertPointsFromHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_convertPointsFromHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1363,7 +1412,10 @@ pub fn convert_points_from_homogeneous(src: &dyn core::ToInputArray, dst: &mut d
 pub fn convert_points_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	let ret = unsafe { sys::cv_convertPointsHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_convertPointsHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1379,7 +1431,10 @@ pub fn convert_points_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn co
 pub fn convert_points_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(src);
 	output_array_arg!(dst);
-	let ret = unsafe { sys::cv_convertPointsToHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_convertPointsToHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1405,7 +1460,10 @@ pub fn correct_matches(f: &dyn core::ToInputArray, points1: &dyn core::ToInputAr
 	input_array_arg!(points2);
 	output_array_arg!(new_points1);
 	output_array_arg!(new_points2);
-	let ret = unsafe { sys::cv_correctMatches_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(f.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), new_points1.as_raw__OutputArray(), new_points2.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_correctMatches_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(f.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), new_points1.as_raw__OutputArray(), new_points2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1417,7 +1475,7 @@ pub fn correct_matches(f: &dyn core::ToInputArray, points1: &dyn core::ToInputAr
 /// * R2: Another possible rotation matrix.
 /// * t: One possible translation.
 /// 
-/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_HartleyZ00). In
+/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_HartleyZ00). In
 /// general, four possible poses exist for the decomposition of E. They are ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20t%5D),
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20%2Dt%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20%2Dt%5D).
 /// 
@@ -1433,7 +1491,10 @@ pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::To
 	output_array_arg!(r1);
 	output_array_arg!(r2);
 	output_array_arg!(t);
-	let ret = unsafe { sys::cv_decomposeEssentialMat_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_decomposeEssentialMat_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1448,7 +1509,7 @@ pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::To
 /// 
 /// This function extracts relative camera motion between two views of a planar object and returns up to
 /// four mathematical solution tuples of rotation, translation, and plane normal. The decomposition of
-/// the homography matrix H is described in detail in [Malis](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Malis).
+/// the homography matrix H is described in detail in [Malis](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Malis).
 /// 
 /// If the homography H, induced by the plane, gives the constraint
 /// ![block formula](https://latex.codecogs.com/png.latex?s%5Fi%20%5Cbegin%7Bbmatrix%7D%20x%27%5Fi%5C%5C%20y%27%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D%20%5Csim%20H%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%5C%5C%20y%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D) on the source image points
@@ -1466,7 +1527,10 @@ pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInpu
 	output_array_arg!(rotations);
 	output_array_arg!(translations);
 	output_array_arg!(normals);
-	let ret = unsafe { sys::cv_decomposeHomographyMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(h.as_raw__InputArray(), k.as_raw__InputArray(), rotations.as_raw__OutputArray(), translations.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_decomposeHomographyMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(h.as_raw__InputArray(), k.as_raw__InputArray(), rotations.as_raw__OutputArray(), translations.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1488,7 +1552,7 @@ pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInpu
 /// 
 /// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 /// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 /// tree rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 /// 
 /// The function is based on RQDecomp3x3 .
@@ -1508,7 +1572,10 @@ pub fn decompose_projection_matrix(proj_matrix: &dyn core::ToInputArray, camera_
 	output_array_arg!(rot_matrix_y);
 	output_array_arg!(rot_matrix_z);
 	output_array_arg!(euler_angles);
-	let ret = unsafe { sys::cv_decomposeProjectionMatrix_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(proj_matrix.as_raw__InputArray(), camera_matrix.as_raw__OutputArray(), rot_matrix.as_raw__OutputArray(), trans_vect.as_raw__OutputArray(), rot_matrix_x.as_raw__OutputArray(), rot_matrix_y.as_raw__OutputArray(), rot_matrix_z.as_raw__OutputArray(), euler_angles.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_decomposeProjectionMatrix_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(proj_matrix.as_raw__InputArray(), camera_matrix.as_raw__OutputArray(), rot_matrix.as_raw__OutputArray(), trans_vect.as_raw__OutputArray(), rot_matrix_x.as_raw__OutputArray(), rot_matrix_y.as_raw__OutputArray(), rot_matrix_z.as_raw__OutputArray(), euler_angles.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1528,7 +1595,10 @@ pub fn decompose_projection_matrix(proj_matrix: &dyn core::ToInputArray, camera_
 pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern_size: core::Size, corners: &dyn core::ToInputArray, pattern_was_found: bool) -> Result<()> {
 	input_output_array_arg!(image);
 	input_array_arg!(corners);
-	let ret = unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), pattern_was_found) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), pattern_was_found, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1558,7 +1628,10 @@ pub fn draw_frame_axes(image: &mut dyn core::ToInputOutputArray, camera_matrix: 
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(rvec);
 	input_array_arg!(tvec);
-	let ret = unsafe { sys::cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_int(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, thickness) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_int(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, thickness, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1567,7 +1640,10 @@ pub fn estimate_affine_2d_1(pts1: &dyn core::ToInputArray, pts2: &dyn core::ToIn
 	input_array_arg!(pts1);
 	input_array_arg!(pts2);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(pts1.as_raw__InputArray(), pts2.as_raw__InputArray(), inliers.as_raw__OutputArray(), &params) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(pts1.as_raw__InputArray(), pts2.as_raw__InputArray(), inliers.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -1625,7 +1701,10 @@ pub fn estimate_affine_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputA
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -1659,7 +1738,10 @@ pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputA
 	input_array_arg!(dst);
 	output_array_arg!(out);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1691,7 +1773,10 @@ pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputA
 pub fn estimate_affine_3d_1(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, scale: &mut f64, force_rotation: bool) -> Result<core::Mat> {
 	input_array_arg!(src);
 	input_array_arg!(dst);
-	let ret = unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), scale, force_rotation) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), scale, force_rotation, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -1752,7 +1837,10 @@ pub fn estimate_affine_partial_2d(from: &dyn core::ToInputArray, to: &dyn core::
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_estimateAffinePartial2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateAffinePartial2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -1795,7 +1883,10 @@ pub fn estimate_chessboard_sharpness(image: &dyn core::ToInputArray, pattern_siz
 	input_array_arg!(image);
 	input_array_arg!(corners);
 	output_array_arg!(sharpness);
-	let ret = unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1828,7 +1919,10 @@ pub fn estimate_translation_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToI
 	input_array_arg!(dst);
 	output_array_arg!(out);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1843,7 +1937,7 @@ pub fn estimate_translation_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToI
 /// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the #findHomography function
 /// 
 /// This function is intended to filter the output of the #decomposeHomographyMat based on additional
-/// information as described in [Malis](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the #decomposeHomographyMat function
+/// information as described in [Malis](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the #decomposeHomographyMat function
 /// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 /// sets of points visible in the camera frame before and after the homography transformation is applied,
 /// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -1860,7 +1954,10 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &dyn core::ToInp
 	input_array_arg!(after_points);
 	output_array_arg!(possible_solutions);
 	input_array_arg!(points_mask);
-	let ret = unsafe { sys::cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rotations.as_raw__InputArray(), normals.as_raw__InputArray(), before_points.as_raw__InputArray(), after_points.as_raw__InputArray(), possible_solutions.as_raw__OutputArray(), points_mask.as_raw__InputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rotations.as_raw__InputArray(), normals.as_raw__InputArray(), before_points.as_raw__InputArray(), after_points.as_raw__InputArray(), possible_solutions.as_raw__OutputArray(), points_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1883,7 +1980,10 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &dyn core::ToInp
 pub fn filter_speckles(img: &mut dyn core::ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut dyn core::ToInputOutputArray) -> Result<()> {
 	input_output_array_arg!(img);
 	input_output_array_arg!(buf);
-	let ret = unsafe { sys::cv_filterSpeckles_const__InputOutputArrayR_double_int_double_const__InputOutputArrayR(img.as_raw__InputOutputArray(), new_val, max_speckle_size, max_diff, buf.as_raw__InputOutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_filterSpeckles_const__InputOutputArrayR_double_int_double_const__InputOutputArrayR(img.as_raw__InputOutputArray(), new_val, max_speckle_size, max_diff, buf.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1892,7 +1992,10 @@ pub fn filter_speckles(img: &mut dyn core::ToInputOutputArray, new_val: f64, max
 pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, region_size: core::Size) -> Result<bool> {
 	input_array_arg!(img);
 	input_output_array_arg!(corners);
-	let ret = unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), region_size.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), region_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1922,7 +2025,7 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// transformation approximated by box filters being more robust to all sort of
 /// noise, faster on larger images and is able to directly return the sub-pixel
 /// position of the internal chessboard corners. The Method is based on the paper
-/// [duda2018](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+/// [duda2018](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 /// Calibration" demonstrating that the returned sub-pixel positions are more
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
@@ -1946,7 +2049,7 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// can be used as well.
 /// 
 /// Use gen_pattern.py (@ref tutorial_camera_calibration_pattern) to create checkerboard.
-/// ![Checkerboard](https://docs.opencv.org/4.5.4/checkerboard_radon.png)
+/// ![Checkerboard](https://docs.opencv.org/4.5.5/checkerboard_radon.png)
 /// 
 /// ## Overloaded parameters
 /// 
@@ -1956,7 +2059,10 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(corners);
-	let ret = unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -1986,7 +2092,7 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// transformation approximated by box filters being more robust to all sort of
 /// noise, faster on larger images and is able to directly return the sub-pixel
 /// position of the internal chessboard corners. The Method is based on the paper
-/// [duda2018](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+/// [duda2018](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 /// Calibration" demonstrating that the returned sub-pixel positions are more
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
@@ -2010,13 +2116,16 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// can be used as well.
 /// 
 /// Use gen_pattern.py (@ref tutorial_camera_calibration_pattern) to create checkerboard.
-/// ![Checkerboard](https://docs.opencv.org/4.5.4/checkerboard_radon.png)
+/// ![Checkerboard](https://docs.opencv.org/4.5.5/checkerboard_radon.png)
 #[inline]
 pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32, meta: &mut dyn core::ToOutputArray) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(corners);
 	output_array_arg!(meta);
-	let ret = unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2080,7 +2189,10 @@ pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, patt
 pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(corners);
-	let ret = unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2129,7 +2241,10 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
-	let ret = unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2172,7 +2287,10 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
-	let ret = unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2185,7 +2303,10 @@ pub fn find_essential_mat_4(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(dist_coeff1);
 	input_array_arg!(dist_coeff2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeff1.as_raw__InputArray(), dist_coeff2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeff1.as_raw__InputArray(), dist_coeff2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2226,8 +2347,8 @@ pub fn find_essential_mat_4(points1: &dyn core::ToInputArray, points2: &dyn core
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 /// 
@@ -2249,7 +2370,10 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(camera_matrix2);
 	input_array_arg!(dist_coeffs2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2290,8 +2414,8 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 /// 
@@ -2306,7 +2430,10 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 	input_array_arg!(points2);
 	input_array_arg!(camera_matrix);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2336,8 +2463,8 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// * maxIters: The maximum number of robust method iterations.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 /// 
@@ -2357,7 +2484,10 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 	input_array_arg!(points2);
 	input_array_arg!(camera_matrix);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, max_iters, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2398,8 +2528,8 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 /// 
@@ -2413,7 +2543,10 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2454,8 +2587,8 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 /// 
@@ -2502,7 +2635,10 @@ pub fn find_essential_mat_1(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, max_iters, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2512,7 +2648,10 @@ pub fn find_fundamental_mat_2(points1: &dyn core::ToInputArray, points2: &dyn co
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2581,7 +2720,10 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2651,7 +2793,10 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2716,7 +2861,10 @@ pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, max_iters, mask.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2726,7 +2874,10 @@ pub fn find_homography_1(src_points: &dyn core::ToInputArray, dst_points: &dyn c
 	input_array_arg!(src_points);
 	input_array_arg!(dst_points);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), &params) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2800,7 +2951,10 @@ pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn cor
 	input_array_arg!(src_points);
 	input_array_arg!(dst_points);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2875,7 +3029,10 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 	input_array_arg!(src_points);
 	input_array_arg!(dst_points);
 	output_array_arg!(mask);
-	let ret = unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -2927,7 +3084,10 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 	input_output_array_arg!(d);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	let ret = unsafe { sys::cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2953,7 +3113,10 @@ pub fn distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn 
 	output_array_arg!(distorted);
 	input_array_arg!(k);
 	input_array_arg!(d);
-	let ret = unsafe { sys::cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted.as_raw__InputArray(), distorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted.as_raw__InputArray(), distorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -2981,7 +3144,10 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &dyn core::ToInputArr
 	input_array_arg!(d);
 	input_array_arg!(r);
 	output_array_arg!(p);
-	let ret = unsafe { sys::cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_double_const_SizeR_double(k.as_raw__InputArray(), d.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), p.as_raw__OutputArray(), balance, &new_size, fov_scale) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_double_const_SizeR_double(k.as_raw__InputArray(), d.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), p.as_raw__OutputArray(), balance, &new_size, fov_scale, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3007,7 +3173,10 @@ pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn co
 	input_array_arg!(p);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	let ret = unsafe { sys::cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3042,7 +3211,10 @@ pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_poin
 	input_array_arg!(k);
 	input_array_arg!(d);
 	output_array_arg!(jacobian);
-	let ret = unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3081,7 +3253,10 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 	input_array_arg!(k);
 	input_array_arg!(d);
 	output_array_arg!(jacobian);
-	let ret = unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3132,7 +3307,10 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 	input_output_array_arg!(d2);
 	output_array_arg!(r);
 	output_array_arg!(t);
-	let ret = unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3184,7 +3362,10 @@ pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInpu
 	output_array_arg!(p1);
 	output_array_arg!(p2);
 	output_array_arg!(q);
-	let ret = unsafe { sys::cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double(k1.as_raw__InputArray(), d1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), tvec.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, &new_image_size, balance, fov_scale) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double(k1.as_raw__InputArray(), d1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), tvec.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, &new_image_size, balance, fov_scale, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3215,7 +3396,7 @@ pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInpu
 /// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 /// of image, we can notice that on image a) these points are distorted.
 /// 
-/// ![image](https://docs.opencv.org/4.5.4/fisheye_undistorted.jpg)
+/// ![image](https://docs.opencv.org/4.5.5/fisheye_undistorted.jpg)
 /// 
 /// ## C++ default parameters
 /// * knew: cv::noArray()
@@ -3227,7 +3408,10 @@ pub fn fisheye_undistort_image(distorted: &dyn core::ToInputArray, undistorted: 
 	input_array_arg!(k);
 	input_array_arg!(d);
 	input_array_arg!(knew);
-	let ret = unsafe { sys::cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), knew.as_raw__InputArray(), &new_size) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), knew.as_raw__InputArray(), &new_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3254,7 +3438,10 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 	input_array_arg!(d);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	let ret = unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3287,7 +3474,10 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 #[inline]
 pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
-	let ret = unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_as_extern(), center_principal_point) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_as_extern(), center_principal_point, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -3328,7 +3518,10 @@ pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, img
 pub fn get_optimal_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
-	let ret = unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), alpha, new_img_size.opencv_as_extern(), valid_pix_roi, center_principal_point) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), alpha, new_img_size.opencv_as_extern(), valid_pix_roi, center_principal_point, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -3336,7 +3529,10 @@ pub fn get_optimal_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, dis
 /// computes valid disparity ROI from the valid ROIs of the rectified images (that are returned by #stereoRectify)
 #[inline]
 pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity: i32, number_of_disparities: i32, block_size: i32) -> Result<core::Rect> {
-	let ret = unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1.opencv_as_extern(), roi2.opencv_as_extern(), min_disparity, number_of_disparities, block_size) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1.opencv_as_extern(), roi2.opencv_as_extern(), min_disparity, number_of_disparities, block_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3362,7 +3558,10 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 pub fn init_camera_matrix_2d(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
 	input_array_arg!(object_points);
 	input_array_arg!(image_points);
-	let ret = unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), aspect_ratio) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), aspect_ratio, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -3419,7 +3618,10 @@ pub fn init_inverse_rectification_map(camera_matrix: &dyn core::ToInputArray, di
 	input_array_arg!(new_camera_matrix);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	let ret = unsafe { sys::cv_initInverseRectificationMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_initInverseRectificationMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3474,7 +3676,10 @@ pub fn init_undistort_rectify_map(camera_matrix: &dyn core::ToInputArray, dist_c
 	input_array_arg!(new_camera_matrix);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	let ret = unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_as_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_as_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3489,7 +3694,10 @@ pub fn init_wide_angle_proj_map(camera_matrix: &dyn core::ToInputArray, dist_coe
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	let ret = unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3512,7 +3720,10 @@ pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a
 	input_array_arg!(b);
 	output_array_arg!(d_a_bd_a);
 	output_array_arg!(d_a_bd_b);
-	let ret = unsafe { sys::cv_matMulDeriv_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(a.as_raw__InputArray(), b.as_raw__InputArray(), d_a_bd_a.as_raw__OutputArray(), d_a_bd_b.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_matMulDeriv_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(a.as_raw__InputArray(), b.as_raw__InputArray(), d_a_bd_a.as_raw__OutputArray(), d_a_bd_b.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3563,7 +3774,10 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(image_points);
 	output_array_arg!(jacobian);
-	let ret = unsafe { sys::cv_projectPoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double(object_points.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_points.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), aspect_ratio) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_projectPoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double(object_points.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_points.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), aspect_ratio, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3605,7 +3819,7 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// 
 /// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
 /// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03).
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for findEssentialMat.:
@@ -3649,7 +3863,10 @@ pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn co
 	output_array_arg!(r);
 	output_array_arg!(t);
 	input_output_array_arg!(mask);
-	let ret = unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), e.as_raw__OutputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), method, prob, threshold, mask.as_raw__InputOutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), e.as_raw__OutputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), method, prob, threshold, mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3678,7 +3895,7 @@ pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn co
 /// 
 /// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
 /// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03).
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
@@ -3716,7 +3933,10 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 	output_array_arg!(r);
 	output_array_arg!(t);
 	input_output_array_arg!(mask);
-	let ret = unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), mask.as_raw__InputOutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3745,7 +3965,7 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 /// 
 /// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
 /// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03).
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
@@ -3811,7 +4031,10 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 	output_array_arg!(t);
 	input_output_array_arg!(mask);
 	output_array_arg!(triangulated_points);
-	let ret = unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), distance_thresh, mask.as_raw__InputOutputArray(), triangulated_points.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), distance_thresh, mask.as_raw__InputOutputArray(), triangulated_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3840,7 +4063,7 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 /// 
 /// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
 /// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Nister03).
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
 /// This function can be used to process the output E and mask from @ref findEssentialMat. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
@@ -3904,7 +4127,10 @@ pub fn recover_pose(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray
 	output_array_arg!(r);
 	output_array_arg!(t);
 	input_output_array_arg!(mask);
-	let ret = unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_Point2d_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, pp.opencv_as_extern(), mask.as_raw__InputOutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_Point2d_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, pp.opencv_as_extern(), mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3930,7 +4156,10 @@ pub fn rectify3_collinear(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1:
 	output_array_arg!(p2);
 	output_array_arg!(p3);
 	output_array_arg!(q);
-	let ret = unsafe { sys::cv_rectify3Collinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_double_Size_RectX_RectX_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), image_size.opencv_as_extern(), r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, new_img_size.opencv_as_extern(), roi1, roi2, flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_rectify3Collinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_double_Size_RectX_RectX_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), image_size.opencv_as_extern(), r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, new_img_size.opencv_as_extern(), roi1, roi2, flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3971,7 +4200,10 @@ pub fn reproject_image_to_3d(disparity: &dyn core::ToInputArray, _3d_image: &mut
 	input_array_arg!(disparity);
 	output_array_arg!(_3d_image);
 	input_array_arg!(q);
-	let ret = unsafe { sys::cv_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_int(disparity.as_raw__InputArray(), _3d_image.as_raw__OutputArray(), q.as_raw__InputArray(), handle_missing_values, ddepth) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_int(disparity.as_raw__InputArray(), _3d_image.as_raw__OutputArray(), q.as_raw__InputArray(), handle_missing_values, ddepth, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -3979,7 +4211,7 @@ pub fn reproject_image_to_3d(disparity: &dyn core::ToInputArray, _3d_image: &mut
 /// 
 /// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
 /// ![block formula](https://latex.codecogs.com/png.latex?%0Asd%28%20%5Ctexttt%7Bpt1%7D%20%2C%20%5Ctexttt%7Bpt2%7D%20%29%3D%0A%5Cfrac%7B%28%5Ctexttt%7Bpt2%7D%5Et%20%5Ccdot%20%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%5E2%7D%0A%7B%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%281%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%281%29%29%5E2%7D%0A)
-/// The fundamental matrix may be calculated using the #findFundamentalMat function. See [HartleyZ00](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
+/// The fundamental matrix may be calculated using the #findFundamentalMat function. See [HartleyZ00](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
 /// ## Parameters
 /// * pt1: first homogeneous 2d point
 /// * pt2: second homogeneous 2d point
@@ -3991,11 +4223,16 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 	input_array_arg!(pt1);
 	input_array_arg!(pt2);
 	input_array_arg!(f);
-	let ret = unsafe { sys::cv_sampsonDistance_const__InputArrayR_const__InputArrayR_const__InputArrayR(pt1.as_raw__InputArray(), pt2.as_raw__InputArray(), f.as_raw__InputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_sampsonDistance_const__InputArrayR_const__InputArrayR_const__InputArrayR(pt1.as_raw__InputArray(), pt2.as_raw__InputArray(), f.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds an object pose from 3 3D-2D point correspondences.
+/// ## See also
+/// @ref calib3d_solvePnP
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, 3x3 1-channel or
@@ -4011,9 +4248,9 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// * tvecs: Output translation vectors.
 /// * flags: Method for solving a P3P problem:
 /// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_gao2003complete)).
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke and S. Roumeliotis.
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ke17)).
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Ke17)).
 /// 
 /// The function estimates the object pose given 3 object points, their corresponding image
 /// projections, as well as the camera intrinsic matrix and the distortion coefficients.
@@ -4029,11 +4266,17 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	let ret = unsafe { sys::cv_solveP3P_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solveP3P_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
+/// ## See also
+/// @ref calib3d_solvePnP
+/// 
 /// This function returns a list of all the possible solutions (a solution is a <rotation vector, translation vector>
 /// couple), depending on the number of input points and the chosen method:
 /// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): 3 or 4 input points. Number of returned solutions can be between 0 and 4 with 3 input points.
@@ -4062,39 +4305,7 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
-/// * flags: Method for solving a PnP problem:
-/// *   @ref SOLVEPNP_ITERATIVE Iterative method is based on a Levenberg-Marquardt optimization. In
-/// this case the function finds such a pose that minimizes reprojection error, that is the sum
-/// of squared distances between the observed projections imagePoints and the projected (using
-///  #projectPoints ) objectPoints .
-/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_gao2003complete)).
-/// In this case the function requires exactly four object and image points.
-/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke, S. Roumeliotis
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ke17)).
-/// In this case the function requires exactly four object and image points.
-/// *   @ref SOLVEPNP_EPNP Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
-/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   @ref SOLVEPNP_DLS **Broken implementation. Using this flag will fallback to EPnP.** 
-/// 
-/// Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
-/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   @ref SOLVEPNP_UPNP **Broken implementation. Using this flag will fallback to EPnP.** 
-/// 
-/// Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
-/// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
-/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
-/// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
-/// focal length.
-/// *   @ref SOLVEPNP_IPPE Method is based on the paper of T. Collins and A. Bartoli.
-/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
-/// *   @ref SOLVEPNP_IPPE_SQUARE Method is based on the paper of Toby Collins and Adrien Bartoli.
-/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
-/// It requires 4 coplanar object points defined in the following order:
-///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
-///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
-///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
-///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
+/// * flags: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags
 /// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
 /// and useExtrinsicGuess is set to true.
 /// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
@@ -4103,22 +4314,7 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// (![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctext%7BRMSE%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Csum%5F%7Bi%7D%5E%7BN%7D%20%5Cleft%20%28%20%5Chat%7By%5Fi%7D%20%2D%20y%5Fi%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20)) between the input image points
 /// and the 3D object points projected with the estimated pose.
 /// 
-/// The function estimates the object pose given a set of object points, their corresponding image
-/// projections, as well as the camera intrinsic matrix and the distortion coefficients, see the figure below
-/// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
-/// and the Z-axis forward).
-/// 
-/// ![](https://docs.opencv.org/4.5.4/pnp.jpg)
-/// 
-/// Points expressed in the world frame ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BX%7D%5Fw%20) are projected into the image plane ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cleft%5B%20u%2C%20v%20%5Cright%5D%20)
-/// using the perspective projection model ![inline formula](https://latex.codecogs.com/png.latex?%20%5CPi%20) and the camera intrinsic parameters matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BA%7D%20):
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Balign%2A%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20u%20%5C%5C%0A%20%20v%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbf%7BA%7D%20%5Chspace%7B0%2E1em%7D%20%5CPi%20%5Chspace%7B0%2E2em%7D%20%5E%7Bc%7D%5Cbf%7BT%7D%5Fw%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%5C%5C%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20u%20%5C%5C%0A%20%20v%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20f%5Fx%20%26%200%20%26%20c%5Fx%20%5C%5C%0A%20%200%20%26%20f%5Fy%20%26%20c%5Fy%20%5C%5C%0A%20%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%201%20%26%200%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%201%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%200%20%26%201%20%26%200%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20r%5F%7B11%7D%20%26%20r%5F%7B12%7D%20%26%20r%5F%7B13%7D%20%26%20t%5Fx%20%5C%5C%0A%20%20r%5F%7B21%7D%20%26%20r%5F%7B22%7D%20%26%20r%5F%7B23%7D%20%26%20t%5Fy%20%5C%5C%0A%20%20r%5F%7B31%7D%20%26%20r%5F%7B32%7D%20%26%20r%5F%7B33%7D%20%26%20t%5Fz%20%5C%5C%0A%20%200%20%26%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cend%7Balign%2A%7D%0A)
-/// 
-/// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow transforming
-/// a 3D point expressed in the world frame into the camera frame:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Balign%2A%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5Fc%20%5C%5C%0A%20%20Y%5Fc%20%5C%5C%0A%20%20Z%5Fc%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Chspace%7B0%2E2em%7D%20%5E%7Bc%7D%5Cbf%7BT%7D%5Fw%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%5C%5C%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5Fc%20%5C%5C%0A%20%20Y%5Fc%20%5C%5C%0A%20%20Z%5Fc%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20r%5F%7B11%7D%20%26%20r%5F%7B12%7D%20%26%20r%5F%7B13%7D%20%26%20t%5Fx%20%5C%5C%0A%20%20r%5F%7B21%7D%20%26%20r%5F%7B22%7D%20%26%20r%5F%7B23%7D%20%26%20t%5Fy%20%5C%5C%0A%20%20r%5F%7B31%7D%20%26%20r%5F%7B32%7D%20%26%20r%5F%7B33%7D%20%26%20t%5Fz%20%5C%5C%0A%20%200%20%26%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cend%7Balign%2A%7D%0A)
+/// More information is described in @ref calib3d_solvePnP
 /// 
 /// 
 /// Note:
@@ -4168,11 +4364,16 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 	input_array_arg!(rvec);
 	input_array_arg!(tvec);
 	output_array_arg!(reprojection_error);
-	let ret = unsafe { sys::cv_solvePnPGeneric_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_SolvePnPMethod_const__InputArrayR_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), use_extrinsic_guess, flags, rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), reprojection_error.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnPGeneric_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_SolvePnPMethod_const__InputArrayR_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), use_extrinsic_guess, flags, rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), reprojection_error.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
+/// ## See also
+/// @ref calib3d_solvePnP
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -4231,7 +4432,10 @@ pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &d
 	output_array_arg!(rvec);
 	output_array_arg!(tvec);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw__OutputArray(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4246,12 +4450,17 @@ pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: 
 	output_array_arg!(rvec);
 	output_array_arg!(tvec);
 	output_array_arg!(inliers);
-	let ret = unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_UsacParamsR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), inliers.as_raw__OutputArray(), &params) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_UsacParamsR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), inliers.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
 /// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
+/// ## See also
+/// @ref calib3d_solvePnP
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
@@ -4271,7 +4480,7 @@ pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: 
 /// projections, an initial solution for the rotation and translation vector,
 /// as well as the camera intrinsic matrix and the distortion coefficients.
 /// The function minimizes the projection error with respect to the rotation and the translation vectors, according
-/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Eade13) process.
+/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Eade13) process.
 /// 
 /// ## C++ default parameters
 /// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -4283,12 +4492,17 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 	input_array_arg!(dist_coeffs);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	let ret = unsafe { sys::cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
 /// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
+/// ## See also
+/// @ref calib3d_solvePnP
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
@@ -4310,7 +4524,7 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// projections, an initial solution for the rotation and translation vector,
 /// as well as the camera intrinsic matrix and the distortion coefficients.
 /// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
-/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 /// 
 /// ## C++ default parameters
 /// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -4323,11 +4537,17 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 	input_array_arg!(dist_coeffs);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	let ret = unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), vv_slambda) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), vv_slambda, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
+/// ## See also
+/// @ref calib3d_solvePnP
+/// 
 /// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
 /// coordinate frame to the camera coordinate frame, using different methods:
 /// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): need 4 input points to return a unique solution.
@@ -4355,59 +4575,9 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
-/// * flags: Method for solving a PnP problem:
-/// *   @ref SOLVEPNP_ITERATIVE Iterative method is based on a Levenberg-Marquardt optimization. In
-/// this case the function finds such a pose that minimizes reprojection error, that is the sum
-/// of squared distances between the observed projections imagePoints and the projected (using
-/// @ref projectPoints ) objectPoints .
-/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_gao2003complete)).
-/// In this case the function requires exactly four object and image points.
-/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke, S. Roumeliotis
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ke17)).
-/// In this case the function requires exactly four object and image points.
-/// *   @ref SOLVEPNP_EPNP Method has been introduced by F. Moreno-Noguer, V. Lepetit and P. Fua in the
-/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   @ref SOLVEPNP_DLS **Broken implementation. Using this flag will fallback to EPnP.** 
+/// * flags: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags
 /// 
-/// Method is based on the paper of J. Hesch and S. Roumeliotis.
-/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   @ref SOLVEPNP_UPNP **Broken implementation. Using this flag will fallback to EPnP.** 
-/// 
-/// Method is based on the paper of A. Penate-Sanchez, J. Andrade-Cetto,
-/// F. Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
-/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy)
-/// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
-/// focal length.
-/// *   @ref SOLVEPNP_IPPE Method is based on the paper of T. Collins and A. Bartoli.
-/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
-/// *   @ref SOLVEPNP_IPPE_SQUARE Method is based on the paper of Toby Collins and Adrien Bartoli.
-/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
-/// It requires 4 coplanar object points defined in the following order:
-///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
-///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
-///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
-///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
-/// *   @ref SOLVEPNP_SQPNP Method is based on the paper "A Consistently Fast and Globally Optimal Solution to the
-/// Perspective-n-Point Problem" by G. Terzakis and M.Lourakis ([Terzakis20](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Terzakis20)). It requires 3 or more points.
-/// 
-/// 
-/// The function estimates the object pose given a set of object points, their corresponding image
-/// projections, as well as the camera intrinsic matrix and the distortion coefficients, see the figure below
-/// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
-/// and the Z-axis forward).
-/// 
-/// ![](https://docs.opencv.org/4.5.4/pnp.jpg)
-/// 
-/// Points expressed in the world frame ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BX%7D%5Fw%20) are projected into the image plane ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cleft%5B%20u%2C%20v%20%5Cright%5D%20)
-/// using the perspective projection model ![inline formula](https://latex.codecogs.com/png.latex?%20%5CPi%20) and the camera intrinsic parameters matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BA%7D%20):
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Balign%2A%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20u%20%5C%5C%0A%20%20v%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbf%7BA%7D%20%5Chspace%7B0%2E1em%7D%20%5CPi%20%5Chspace%7B0%2E2em%7D%20%5E%7Bc%7D%5Cbf%7BT%7D%5Fw%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%5C%5C%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20u%20%5C%5C%0A%20%20v%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20f%5Fx%20%26%200%20%26%20c%5Fx%20%5C%5C%0A%20%200%20%26%20f%5Fy%20%26%20c%5Fy%20%5C%5C%0A%20%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%201%20%26%200%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%201%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%200%20%26%201%20%26%200%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20r%5F%7B11%7D%20%26%20r%5F%7B12%7D%20%26%20r%5F%7B13%7D%20%26%20t%5Fx%20%5C%5C%0A%20%20r%5F%7B21%7D%20%26%20r%5F%7B22%7D%20%26%20r%5F%7B23%7D%20%26%20t%5Fy%20%5C%5C%0A%20%20r%5F%7B31%7D%20%26%20r%5F%7B32%7D%20%26%20r%5F%7B33%7D%20%26%20t%5Fz%20%5C%5C%0A%20%200%20%26%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cend%7Balign%2A%7D%0A)
-/// 
-/// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow transforming
-/// a 3D point expressed in the world frame into the camera frame:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Balign%2A%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5Fc%20%5C%5C%0A%20%20Y%5Fc%20%5C%5C%0A%20%20Z%5Fc%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Chspace%7B0%2E2em%7D%20%5E%7Bc%7D%5Cbf%7BT%7D%5Fw%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%5C%5C%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5Fc%20%5C%5C%0A%20%20Y%5Fc%20%5C%5C%0A%20%20Z%5Fc%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%20%26%3D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20r%5F%7B11%7D%20%26%20r%5F%7B12%7D%20%26%20r%5F%7B13%7D%20%26%20t%5Fx%20%5C%5C%0A%20%20r%5F%7B21%7D%20%26%20r%5F%7B22%7D%20%26%20r%5F%7B23%7D%20%26%20t%5Fy%20%5C%5C%0A%20%20r%5F%7B31%7D%20%26%20r%5F%7B32%7D%20%26%20r%5F%7B33%7D%20%26%20t%5Fz%20%5C%5C%0A%20%200%20%26%200%20%26%200%20%26%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20X%5F%7Bw%7D%20%5C%5C%0A%20%20Y%5F%7Bw%7D%20%5C%5C%0A%20%20Z%5F%7Bw%7D%20%5C%5C%0A%20%201%0A%20%20%5Cend%7Bbmatrix%7D%0A%20%20%5Cend%7Balign%2A%7D%0A)
+/// More information about Perspective-n-Points is described in @ref calib3d_solvePnP
 /// 
 /// 
 /// Note:
@@ -4452,7 +4622,10 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 	input_array_arg!(dist_coeffs);
 	output_array_arg!(rvec);
 	output_array_arg!(tvec);
-	let ret = unsafe { sys::cv_solvePnP_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_solvePnP_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4583,7 +4756,10 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 	output_array_arg!(e);
 	output_array_arg!(f);
 	output_array_arg!(per_view_errors);
-	let ret = unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4715,7 +4891,10 @@ pub fn stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &
 	output_array_arg!(t);
 	output_array_arg!(e);
 	output_array_arg!(f);
-	let ret = unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4739,7 +4918,7 @@ pub fn stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &
 /// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 /// related difference from #stereoRectify is that the function outputs not the rectification
 /// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Hartley99) .
+/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Hartley99) .
 /// 
 /// 
 /// Note:
@@ -4759,7 +4938,10 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 	input_array_arg!(f);
 	output_array_arg!(h1);
 	output_array_arg!(h2);
-	let ret = unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size.opencv_as_extern(), h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size.opencv_as_extern(), h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4851,7 +5033,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 /// their interiors are all valid pixels.
 /// 
-/// ![image](https://docs.opencv.org/4.5.4/stereo_undistort.jpg)
+/// ![image](https://docs.opencv.org/4.5.5/stereo_undistort.jpg)
 /// 
 /// ## C++ default parameters
 /// * flags: CALIB_ZERO_DISPARITY
@@ -4872,7 +5054,10 @@ pub fn stereo_rectify(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dy
 	output_array_arg!(p1);
 	output_array_arg!(p2);
 	output_array_arg!(q);
-	let ret = unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size.opencv_as_extern(), r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, new_image_size.opencv_as_extern(), valid_pix_roi1, valid_pix_roi2) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size.opencv_as_extern(), r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, new_image_size.opencv_as_extern(), valid_pix_roi1, valid_pix_roi2, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4908,7 +5093,10 @@ pub fn triangulate_points(proj_matr1: &dyn core::ToInputArray, proj_matr2: &dyn 
 	input_array_arg!(proj_points1);
 	input_array_arg!(proj_points2);
 	output_array_arg!(points4_d);
-	let ret = unsafe { sys::cv_triangulatePoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(proj_matr1.as_raw__InputArray(), proj_matr2.as_raw__InputArray(), proj_points1.as_raw__InputArray(), proj_points2.as_raw__InputArray(), points4_d.as_raw__OutputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_triangulatePoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(proj_matr1.as_raw__InputArray(), proj_matr2.as_raw__InputArray(), proj_points1.as_raw__InputArray(), proj_points2.as_raw__InputArray(), points4_d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4952,7 +5140,10 @@ pub fn undistort_points(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	let ret = unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -4997,7 +5188,10 @@ pub fn undistort_points_iter(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	let ret = unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -5039,7 +5233,10 @@ pub fn undistort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(new_camera_matrix);
-	let ret = unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -5051,7 +5248,10 @@ pub fn undistort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 pub fn validate_disparity(disparity: &mut dyn core::ToInputOutputArray, cost: &dyn core::ToInputArray, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
 	input_output_array_arg!(disparity);
 	input_array_arg!(cost);
-	let ret = unsafe { sys::cv_validateDisparity_const__InputOutputArrayR_const__InputArrayR_int_int_int(disparity.as_raw__InputOutputArray(), cost.as_raw__InputArray(), min_disparity, number_of_disparities, disp12_max_disp) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_validateDisparity_const__InputOutputArrayR_const__InputArrayR_int_int_int(disparity.as_raw__InputOutputArray(), cost.as_raw__InputArray(), min_disparity, number_of_disparities, disp12_max_disp, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -5083,7 +5283,10 @@ opencv_type_simple! { crate::calib3d::CirclesGridFinderParameters }
 impl CirclesGridFinderParameters {
 	#[inline]
 	pub fn default() -> Result<crate::calib3d::CirclesGridFinderParameters> {
-		let ret = unsafe { sys::cv_CirclesGridFinderParameters_CirclesGridFinderParameters() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_CirclesGridFinderParameters_CirclesGridFinderParameters(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5111,14 +5314,20 @@ pub trait LMSolverConst: core::AlgorithmTraitConst {
 	#[inline]
 	fn run(&self, param: &mut dyn core::ToInputOutputArray) -> Result<i32> {
 		input_output_array_arg!(param);
-		let ret = unsafe { sys::cv_LMSolver_run_const_const__InputOutputArrayR(self.as_raw_LMSolver(), param.as_raw__InputOutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_run_const_const__InputOutputArrayR(self.as_raw_LMSolver(), param.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Retrieves the current maximum number of iterations
 	#[inline]
 	fn get_max_iters(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_LMSolver_getMaxIters_const(self.as_raw_LMSolver()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_getMaxIters_const(self.as_raw_LMSolver(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5132,7 +5341,10 @@ pub trait LMSolver: core::AlgorithmTrait + crate::calib3d::LMSolverConst {
 	/// * maxIters: the number of iterations
 	#[inline]
 	fn set_max_iters(&mut self, max_iters: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_LMSolver_setMaxIters_int(self.as_raw_mut_LMSolver(), max_iters) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_setMaxIters_int(self.as_raw_mut_LMSolver(), max_iters, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5147,14 +5359,20 @@ impl dyn LMSolver + '_ {
 	///   modified using setMaxIters() method.
 	#[inline]
 	pub fn create(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
-		let ret = unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
 	pub fn create_ext(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
-		let ret = unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -5179,7 +5397,10 @@ pub trait LMSolver_CallbackConst {
 		input_array_arg!(param);
 		output_array_arg!(err);
 		output_array_arg!(j);
-		let ret = unsafe { sys::cv_LMSolver_Callback_compute_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_LMSolver_Callback(), param.as_raw__InputArray(), err.as_raw__OutputArray(), j.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LMSolver_Callback_compute_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_LMSolver_Callback(), param.as_raw__InputArray(), err.as_raw__OutputArray(), j.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5197,49 +5418,73 @@ pub trait StereoBMConst: crate::calib3d::StereoMatcherConst {
 
 	#[inline]
 	fn get_pre_filter_type(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_pre_filter_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getPreFilterSize_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getPreFilterSize_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_pre_filter_cap(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getPreFilterCap_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getPreFilterCap_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_texture_threshold(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getTextureThreshold_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getTextureThreshold_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getUniquenessRatio_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getUniquenessRatio_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_smaller_block_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoBM_getSmallerBlockSize_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getSmallerBlockSize_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_roi1(&self) -> Result<core::Rect> {
-		let ret = unsafe { sys::cv_StereoBM_getROI1_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getROI1_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_roi2(&self) -> Result<core::Rect> {
-		let ret = unsafe { sys::cv_StereoBM_getROI2_const(self.as_raw_StereoBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_getROI2_const(self.as_raw_StereoBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5250,49 +5495,73 @@ pub trait StereoBM: crate::calib3d::StereoBMConst + crate::calib3d::StereoMatche
 
 	#[inline]
 	fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_mut_StereoBM(), pre_filter_type) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_mut_StereoBM(), pre_filter_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_mut_StereoBM(), pre_filter_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_mut_StereoBM(), pre_filter_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_mut_StereoBM(), pre_filter_cap) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_mut_StereoBM(), pre_filter_cap, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_mut_StereoBM(), texture_threshold) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_mut_StereoBM(), texture_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_mut_StereoBM(), uniqueness_ratio) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_mut_StereoBM(), uniqueness_ratio, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_mut_StereoBM(), block_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_mut_StereoBM(), block_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), roi1.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), roi1.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_mut_StereoBM(), roi2.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_mut_StereoBM(), roi2.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5318,7 +5587,10 @@ impl dyn StereoBM + '_ {
 	/// * block_size: 21
 	#[inline]
 	pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr<dyn crate::calib3d::StereoBM>> {
-		let ret = unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::StereoBM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -5330,37 +5602,55 @@ pub trait StereoMatcherConst: core::AlgorithmTraitConst {
 
 	#[inline]
 	fn get_min_disparity(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getMinDisparity_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getMinDisparity_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_num_disparities(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getNumDisparities_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getNumDisparities_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_block_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getBlockSize_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getBlockSize_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_speckle_window_size(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getSpeckleWindowSize_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getSpeckleWindowSize_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_speckle_range(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getSpeckleRange_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getSpeckleRange_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_disp12_max_diff(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoMatcher_getDisp12MaxDiff_const(self.as_raw_StereoMatcher()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_getDisp12MaxDiff_const(self.as_raw_StereoMatcher(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5382,49 +5672,70 @@ pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherCon
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		let ret = unsafe { sys::cv_StereoMatcher_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_min_disparity(&mut self, min_disparity: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setMinDisparity_int(self.as_raw_mut_StereoMatcher(), min_disparity) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setMinDisparity_int(self.as_raw_mut_StereoMatcher(), min_disparity, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setNumDisparities_int(self.as_raw_mut_StereoMatcher(), num_disparities) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setNumDisparities_int(self.as_raw_mut_StereoMatcher(), num_disparities, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_block_size(&mut self, block_size: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setBlockSize_int(self.as_raw_mut_StereoMatcher(), block_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setBlockSize_int(self.as_raw_mut_StereoMatcher(), block_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_speckle_window_size(&mut self, speckle_window_size: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setSpeckleWindowSize_int(self.as_raw_mut_StereoMatcher(), speckle_window_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setSpeckleWindowSize_int(self.as_raw_mut_StereoMatcher(), speckle_window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_speckle_range(&mut self, speckle_range: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setSpeckleRange_int(self.as_raw_mut_StereoMatcher(), speckle_range) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setSpeckleRange_int(self.as_raw_mut_StereoMatcher(), speckle_range, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_disp12_max_diff(&mut self, disp12_max_diff: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoMatcher_setDisp12MaxDiff_int(self.as_raw_mut_StereoMatcher(), disp12_max_diff) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoMatcher_setDisp12MaxDiff_int(self.as_raw_mut_StereoMatcher(), disp12_max_diff, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 }
 
-/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
 /// 
 /// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
@@ -5433,7 +5744,7 @@ pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherCon
 /// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
 /// blocks to single pixels.
 /// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-/// sub-pixel metric from [BT98](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
+/// sub-pixel metric from [BT98](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
 /// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 /// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 /// check, quadratic interpolation and speckle filtering).
@@ -5447,31 +5758,46 @@ pub trait StereoSGBMConst: crate::calib3d::StereoMatcherConst {
 
 	#[inline]
 	fn get_pre_filter_cap(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_p1(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_p2(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn get_mode(&self) -> Result<i32> {
-		let ret = unsafe { sys::cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5482,31 +5808,46 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher + crate::calib3d::StereoSGBM
 
 	#[inline]
 	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_p1(&mut self, p1: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_p2(&mut self, p2: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
 	fn set_mode(&mut self, mode: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_mut_StereoSGBM(), mode) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_mut_StereoSGBM(), mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5565,7 +5906,10 @@ impl dyn StereoSGBM + '_ {
 	/// * mode: StereoSGBM::MODE_SGBM
 	#[inline]
 	pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<core::Ptr<dyn crate::calib3d::StereoSGBM>> {
-		let ret = unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::StereoSGBM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -5592,7 +5936,10 @@ opencv_type_simple! { crate::calib3d::UsacParams }
 impl UsacParams {
 	#[inline]
 	pub fn default() -> Result<crate::calib3d::UsacParams> {
-		let ret = unsafe { sys::cv_UsacParams_UsacParams() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_UsacParams_UsacParams(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

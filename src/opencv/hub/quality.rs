@@ -15,10 +15,10 @@ pub mod prelude {
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub trait QualityBRISQUETraitConst: crate::quality::QualityBaseConst {
 	fn as_raw_QualityBRISQUE(&self) -> *const c_void;
@@ -36,7 +36,10 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate:
 	#[inline]
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
-		let ret = unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -45,10 +48,10 @@ pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate:
 /// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 /// 
 /// BRISQUE computes a score based on extracting Natural Scene Statistics (https://en.wikipedia.org/wiki/Scene_statistics)
-/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 /// 
-/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 /// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 pub struct QualityBRISQUE {
 	ptr: *mut c_void
@@ -98,7 +101,10 @@ impl QualityBRISQUE {
 	pub fn create(model_file_path: &str, range_file_path: &str) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		let ret = unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringR_const_StringR(model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_StringR_const_StringR(model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -109,7 +115,10 @@ impl QualityBRISQUE {
 	/// * range: cv::Mat which contains BRISQUE range data
 	#[inline]
 	pub fn create_1(model: &core::Ptr<dyn crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
-		let ret = unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_R_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_R_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -126,7 +135,10 @@ impl QualityBRISQUE {
 		input_array_arg!(img);
 		extern_container_arg!(model_file_path);
 		extern_container_arg!(range_file_path);
-		let ret = unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(img.as_raw__InputArray(), model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR_const_StringR_const_StringR(img.as_raw__InputArray(), model_file_path.opencv_as_extern(), range_file_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -138,7 +150,10 @@ impl QualityBRISQUE {
 	pub fn compute_features(img: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(img);
 		output_array_arg!(features);
-		let ret = unsafe { sys::cv_quality_QualityBRISQUE_computeFeatures_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), features.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBRISQUE_computeFeatures_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), features.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -154,14 +169,20 @@ pub trait QualityBaseConst: core::AlgorithmTraitConst {
 	#[inline]
 	fn get_quality_map(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
-		let ret = unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::empty()
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_quality_QualityBase_empty_const(self.as_raw_QualityBase()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBase_empty_const(self.as_raw_QualityBase(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -176,14 +197,20 @@ pub trait QualityBase: core::AlgorithmTrait + crate::quality::QualityBaseConst {
 	#[inline]
 	fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(img);
-		let ret = unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::clear()
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualityBase_clear(self.as_raw_mut_QualityBase()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityBase_clear(self.as_raw_mut_QualityBase(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -197,7 +224,10 @@ pub trait QualityGMSDTraitConst: crate::quality::QualityBaseConst {
 	/// Implements Algorithm::empty()
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_quality_QualityGMSD_empty_const(self.as_raw_QualityGMSD()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityGMSD_empty_const(self.as_raw_QualityGMSD(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -214,14 +244,20 @@ pub trait QualityGMSDTrait: crate::quality::QualityBase + crate::quality::Qualit
 	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		let ret = unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::clear()
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualityGMSD_clear(self.as_raw_mut_QualityGMSD()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityGMSD_clear(self.as_raw_mut_QualityGMSD(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -275,7 +311,10 @@ impl QualityGMSD {
 	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
 		input_array_arg!(ref_);
-		let ret = unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityGMSD>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -292,7 +331,10 @@ impl QualityGMSD {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		let ret = unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -307,7 +349,10 @@ pub trait QualityMSETraitConst: crate::quality::QualityBaseConst {
 	/// Implements Algorithm::empty()
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_quality_QualityMSE_empty_const(self.as_raw_QualityMSE()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityMSE_empty_const(self.as_raw_QualityMSE(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -324,14 +369,20 @@ pub trait QualityMSETrait: crate::quality::QualityBase + crate::quality::Quality
 	#[inline]
 	fn compute(&mut self, cmp_imgs: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp_imgs);
-		let ret = unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::clear()
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualityMSE_clear(self.as_raw_mut_QualityMSE()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityMSE_clear(self.as_raw_mut_QualityMSE(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -384,7 +435,10 @@ impl QualityMSE {
 	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
 		input_array_arg!(ref_);
-		let ret = unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityMSE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -401,7 +455,10 @@ impl QualityMSE {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		let ret = unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -416,14 +473,20 @@ pub trait QualityPSNRTraitConst: crate::quality::QualityBaseConst {
 	/// Implements Algorithm::empty()
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_quality_QualityPSNR_empty_const(self.as_raw_QualityPSNR()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_empty_const(self.as_raw_QualityPSNR(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// return the maximum pixel value used for PSNR computation
 	#[inline]
 	fn get_max_pixel_value(&self) -> Result<f64> {
-		let ret = unsafe { sys::cv_quality_QualityPSNR_getMaxPixelValue_const(self.as_raw_QualityPSNR()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_getMaxPixelValue_const(self.as_raw_QualityPSNR(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -440,14 +503,20 @@ pub trait QualityPSNRTrait: crate::quality::QualityBase + crate::quality::Qualit
 	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		let ret = unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::clear()
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualityPSNR_clear(self.as_raw_mut_QualityPSNR()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_clear(self.as_raw_mut_QualityPSNR(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -456,7 +525,10 @@ pub trait QualityPSNRTrait: crate::quality::QualityBase + crate::quality::Qualit
 	/// * val: Maximum pixel value
 	#[inline]
 	fn set_max_pixel_value(&mut self, val: f64) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualityPSNR_setMaxPixelValue_double(self.as_raw_mut_QualityPSNR(), val) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_setMaxPixelValue_double(self.as_raw_mut_QualityPSNR(), val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -514,7 +586,10 @@ impl QualityPSNR {
 	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
 		input_array_arg!(ref_);
-		let ret = unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityPSNR>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -535,7 +610,10 @@ impl QualityPSNR {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		let ret = unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -550,7 +628,10 @@ pub trait QualitySSIMTraitConst: crate::quality::QualityBaseConst {
 	/// Implements Algorithm::empty()
 	#[inline]
 	fn empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_quality_QualitySSIM_empty_const(self.as_raw_QualitySSIM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualitySSIM_empty_const(self.as_raw_QualitySSIM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -567,14 +648,20 @@ pub trait QualitySSIMTrait: crate::quality::QualityBase + crate::quality::Qualit
 	#[inline]
 	fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(cmp);
-		let ret = unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Implements Algorithm::clear()
 	#[inline]
 	fn clear(&mut self) -> Result<()> {
-		let ret = unsafe { sys::cv_quality_QualitySSIM_clear(self.as_raw_mut_QualitySSIM()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualitySSIM_clear(self.as_raw_mut_QualitySSIM(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -627,7 +714,10 @@ impl QualitySSIM {
 	#[inline]
 	pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
 		input_array_arg!(ref_);
-		let ret = unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualitySSIM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -644,7 +734,10 @@ impl QualitySSIM {
 		input_array_arg!(ref_);
 		input_array_arg!(cmp);
 		output_array_arg!(quality_map);
-		let ret = unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

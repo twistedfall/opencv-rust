@@ -13,7 +13,7 @@
 //! ---------------------------------------------------------------
 //! 
 //! The object detector described below has been initially proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010a](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
+//! [Felzenszwalb2010a](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 //! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
 //! window approach, where a filter is applied at all positions and scales of an image. The first
 //! innovation is enriching the Dalal-Triggs model using a star-structured part-based model defined by a
@@ -29,7 +29,7 @@
 //! location.
 //! 
 //! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010b](https://docs.opencv.org/4.5.4/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
+//! [Felzenszwalb2010b](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 //! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
 //! model's parts. For a model with (n+1) parts, including the root, a sequence of (n+1) models is
 //! obtained. The i-th model in this sequence is defined by the first i parts from the original model.
@@ -49,7 +49,10 @@ pub trait DPMDetectorConst {
 
 	#[inline]
 	fn is_empty(&self) -> Result<bool> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -57,7 +60,10 @@ pub trait DPMDetectorConst {
 	/// models filenames in those methods.
 	#[inline]
 	fn get_class_names(&self) -> Result<core::Vector<String>> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_getClassNames_const(self.as_raw_DPMDetector()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_getClassNames_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -65,7 +71,10 @@ pub trait DPMDetectorConst {
 	/// Return a count of loaded models (classes).
 	#[inline]
 	fn get_class_count(&self) -> Result<size_t> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_getClassCount_const(self.as_raw_DPMDetector()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_getClassCount_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -81,7 +90,10 @@ pub trait DPMDetector: crate::dpm::DPMDetectorConst {
 	/// * objects: The detections: rectangulars, scores and class IDs.
 	#[inline]
 	fn detect(&mut self, image: &mut core::Mat, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -100,7 +112,10 @@ impl dyn DPMDetector + '_ {
 	/// * class_names: std::vector<std::string>()
 	#[inline]
 	pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<dyn crate::dpm::DPMDetector>> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::dpm::DPMDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -111,7 +126,9 @@ pub trait DPMDetector_ObjectDetectionTraitConst {
 
 	#[inline]
 	fn rect(&self) -> core::Rect {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropRect_const(self.as_raw_DPMDetector_ObjectDetection()) };
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropRect_const(self.as_raw_DPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
 		ret
 	}
 	
@@ -178,7 +195,10 @@ impl crate::dpm::DPMDetector_ObjectDetectionTrait for DPMDetector_ObjectDetectio
 impl DPMDetector_ObjectDetection {
 	#[inline]
 	pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -187,7 +207,10 @@ impl DPMDetector_ObjectDetection {
 	/// * class_id: -1
 	#[inline]
 	pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-		let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 		Ok(ret)
 	}

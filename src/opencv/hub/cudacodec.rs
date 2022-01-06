@@ -14,6 +14,8 @@ pub mod prelude {
 }
 
 pub const AV1: i32 = 11;
+pub const Adaptive: i32 = 2;
+pub const Bob: i32 = 1;
 pub const H264: i32 = 4;
 pub const H264_MVC: i32 = 7;
 pub const H264_SVC: i32 = 6;
@@ -45,10 +47,23 @@ pub const Uncompressed_YV12: i32 = 1498820914;
 pub const VC1: i32 = 3;
 pub const VP8: i32 = 9;
 pub const VP9: i32 = 10;
+/// Index for retrieving the decoded frame using retrieve().
+pub const VideoReaderProps_PROP_DECODED_FRAME_IDX: i32 = 0;
+/// Index for retrieving the extra data associated with a video source using retrieve().
+pub const VideoReaderProps_PROP_EXTRA_DATA_INDEX: i32 = 1;
+/// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
+pub const VideoReaderProps_PROP_LRF_HAS_KEY_FRAME: i32 = 5;
+/// Number of raw packages recieved since the last call to grab().
+pub const VideoReaderProps_PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB: i32 = 3;
+/// Status of raw mode.
+pub const VideoReaderProps_PROP_RAW_MODE: i32 = 4;
+/// Base index for retrieving raw encoded data using retrieve().
+pub const VideoReaderProps_PROP_RAW_PACKAGES_BASE_INDEX: i32 = 2;
+pub const Weave: i32 = 0;
 pub const YUV420: i32 = 1;
 pub const YUV422: i32 = 2;
 pub const YUV444: i32 = 3;
-/// Chroma formats supported by cudacodec::VideoReader .
+/// Chroma formats supported by cudacodec::VideoReader.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ChromaFormat {
@@ -92,6 +107,21 @@ pub enum Codec {
 
 opencv_type_enum! { crate::cudacodec::Codec }
 
+/// Deinterlacing mode used by decoder.
+/// ## Parameters
+/// * Weave: Weave both fields (no deinterlacing). For progressive content and for content that doesn't need deinterlacing.
+/// Bob Drop one field.
+/// * Adaptive: Adaptive deinterlacing needs more video memory than other deinterlacing modes.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum DeinterlaceMode {
+	Weave = 0,
+	Bob = 1,
+	Adaptive = 2,
+}
+
+opencv_type_enum! { crate::cudacodec::DeinterlaceMode }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum EncoderCallBack_PicType {
@@ -117,19 +147,47 @@ pub enum SurfaceFormat {
 
 opencv_type_enum! { crate::cudacodec::SurfaceFormat }
 
+/// cv::cudacodec::VideoReader generic properties identifier.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum VideoReaderProps {
+	/// Index for retrieving the decoded frame using retrieve().
+	PROP_DECODED_FRAME_IDX = 0,
+	/// Index for retrieving the extra data associated with a video source using retrieve().
+	PROP_EXTRA_DATA_INDEX = 1,
+	/// Base index for retrieving raw encoded data using retrieve().
+	PROP_RAW_PACKAGES_BASE_INDEX = 2,
+	/// Number of raw packages recieved since the last call to grab().
+	PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB = 3,
+	/// Status of raw mode.
+	PROP_RAW_MODE = 4,
+	/// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
+	PROP_LRF_HAS_KEY_FRAME = 5,
+}
+
+opencv_type_enum! { crate::cudacodec::VideoReaderProps }
+
 /// Creates video reader.
 /// 
 /// ## Parameters
 /// * filename: Name of the input video file.
+/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
 /// 
 /// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
 /// 
 /// ## Overloaded parameters
 /// 
 /// * source: RAW video source implemented by user.
+/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+/// 
+/// ## C++ default parameters
+/// * raw_mode: false
 #[inline]
-pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
-	let ret = unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R(source.as_raw_PtrOfRawVideoSource()) }.into_result()?;
+pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>, raw_mode: bool) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R_const_bool(source.as_raw_PtrOfRawVideoSource(), raw_mode, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -138,12 +196,19 @@ pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSo
 /// 
 /// ## Parameters
 /// * filename: Name of the input video file.
+/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
 /// 
 /// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
+/// 
+/// ## C++ default parameters
+/// * raw_mode: false
 #[inline]
-pub fn create_video_reader(filename: &str) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+pub fn create_video_reader(filename: &str, raw_mode: bool) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_bool(filename.opencv_as_extern(), raw_mode, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -175,7 +240,10 @@ pub fn create_video_reader(filename: &str) -> Result<core::Ptr<dyn crate::cudaco
 /// * format: SF_BGR
 #[inline]
 pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -199,7 +267,7 @@ pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 /// want to work with raw video stream.
 /// * frameSize: Size of the input video frames.
 /// * fps: Framerate of the created video stream.
-/// * params: Encoder parameters. See cudacodec::EncoderParams .
+/// * params: Encoder parameters. See cudacodec::EncoderParams.
 /// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
 /// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
 /// encoding, frames with other formats will be used as is.
@@ -208,7 +276,10 @@ pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 /// * format: SF_BGR
 #[inline]
 pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -231,7 +302,10 @@ pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 #[inline]
 pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -264,7 +338,10 @@ pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, fo
 #[inline]
 pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
-	let ret = unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -283,14 +360,20 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// Callback must allocate buffer for CUDA encoder and return pointer to it and it's size.
 	#[inline]
 	fn acquire_bit_stream(&mut self, buffer_size: &mut i32) -> Result<*mut u8> {
-		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Callback function to signal that the encoded bitstream is ready to be written to file.
 	#[inline]
 	fn release_bit_stream(&mut self, data: &mut u8, size: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_releaseBitStream_unsigned_charX_int(self.as_raw_mut_EncoderCallBack(), data, size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderCallBack_releaseBitStream_unsigned_charX_int(self.as_raw_mut_EncoderCallBack(), data, size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -301,7 +384,10 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
 	#[inline]
 	fn on_begin_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
-		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_onBeginFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderCallBack_onBeginFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -312,7 +398,10 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
 	#[inline]
 	fn on_end_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
-		let ret = unsafe { sys::cv_cudacodec_EncoderCallBack_onEndFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderCallBack_onEndFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -462,7 +551,10 @@ pub trait EncoderParamsTraitConst {
 	#[inline]
 	fn save(&self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -611,7 +703,10 @@ pub trait EncoderParamsTrait: crate::cudacodec::EncoderParamsTraitConst {
 	#[inline]
 	fn load(&mut self, config_file: &str) -> Result<()> {
 		extern_container_arg!(config_file);
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -644,7 +739,10 @@ impl crate::cudacodec::EncoderParamsTrait for EncoderParams {
 impl EncoderParams {
 	#[inline]
 	pub fn default() -> Result<crate::cudacodec::EncoderParams> {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams() }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -658,7 +756,10 @@ impl EncoderParams {
 	#[inline]
 	pub fn new(config_file: &str) -> Result<crate::cudacodec::EncoderParams> {
 		extern_container_arg!(config_file);
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -672,13 +773,23 @@ pub struct FormatInfo {
 	pub codec: crate::cudacodec::Codec,
 	pub chroma_format: crate::cudacodec::ChromaFormat,
 	pub n_bit_depth_minus8: i32,
-	/// Width of the decoded frame returned by nextFrame(frame)
+	/// Coded sequence width in pixels.
+	pub ul_width: i32,
+	/// Coded sequence height in pixels.
+	pub ul_height: i32,
+	/// Width of the decoded frame returned by nextFrame(frame).
 	pub width: i32,
-	/// Height of the decoded frame returned by nextFrame(frame)
+	/// Height of the decoded frame returned by nextFrame(frame).
 	pub height: i32,
+	pub ul_max_width: i32,
+	pub ul_max_height: i32,
 	/// ROI inside the decoded frame returned by nextFrame(frame), containing the useable video frame.
 	pub display_area: core::Rect,
 	pub valid: bool,
+	pub fps: f64,
+	/// Maximum number of internal decode surfaces.
+	pub ul_num_decode_surfaces: i32,
+	pub deinterlace_mode: crate::cudacodec::DeinterlaceMode,
 }
 
 opencv_type_simple! { crate::cudacodec::FormatInfo }
@@ -692,10 +803,36 @@ impl FormatInfo {
 pub trait RawVideoSourceConst {
 	fn as_raw_RawVideoSource(&self) -> *const c_void;
 
+	/// Returns true if the last packet contained a key frame.
+	#[inline]
+	fn last_packet_contains_key_frame(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_lastPacketContainsKeyFrame_const(self.as_raw_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Returns information about video file format.
 	#[inline]
 	fn format(&self) -> Result<crate::cudacodec::FormatInfo> {
-		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_format_const(self.as_raw_RawVideoSource()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_format_const(self.as_raw_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns any extra data associated with the video source.
+	/// 
+	/// ## Parameters
+	/// * extraData: 1D cv::Mat containing the extra data if it exists.
+	#[inline]
+	fn get_extra_data(&self, extra_data: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_getExtraData_const_MatR(self.as_raw_RawVideoSource(), extra_data.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -711,14 +848,20 @@ pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
 	/// * size: Size in bytes of current frame.
 	#[inline]
 	fn get_next_packet(&mut self, data: &mut &mut u8, size: &mut size_t) -> Result<bool> {
-		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_RawVideoSource(), data as *mut  _ as *mut  *mut  _, size) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_RawVideoSource(), data as *mut  _ as *mut  *mut  _, size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	/// Updates the coded width and height inside format.
 	#[inline]
-	fn update_format(&mut self, coded_width: i32, coded_height: i32) -> Result<()> {
-		let ret = unsafe { sys::cv_cudacodec_RawVideoSource_updateFormat_const_int_const_int(self.as_raw_mut_RawVideoSource(), coded_width, coded_height) }.into_result()?;
+	fn update_format(&mut self, video_format: crate::cudacodec::FormatInfo) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_updateFormat_const_FormatInfoR(self.as_raw_mut_RawVideoSource(), &video_format, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -736,7 +879,55 @@ pub trait VideoReaderConst {
 	/// Returns information about video file format.
 	#[inline]
 	fn format(&self) -> Result<crate::cudacodec::FormatInfo> {
-		let ret = unsafe { sys::cv_cudacodec_VideoReader_format_const(self.as_raw_VideoReader()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_format_const(self.as_raw_VideoReader(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns previously grabbed video data.
+	/// 
+	/// ## Parameters
+	/// * frame:[out] The returned data which depends on the provided idx.  If there is no new data since the last call to grab() the image will be empty.
+	/// * idx: Determins the returned data inside image. The returned data can be the:
+	/// Decoded frame, idx = get(PROP_DECODED_FRAME_IDX).
+	/// Extra data if available, idx = get(PROP_EXTRA_DATA_INDEX).
+	/// Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
+	/// ## Returns
+	/// `false` if no frames has been grabbed
+	/// 
+	/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
+	/// the method returns false and the function returns an empty image.
+	/// 
+	/// ## C++ default parameters
+	/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
+	#[inline]
+	fn retrieve(&self, frame: &mut dyn core::ToOutputArray, idx: size_t) -> Result<bool> {
+		output_array_arg!(frame);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR_const_size_t(self.as_raw_VideoReader(), frame.as_raw__OutputArray(), idx, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns the specified VideoReader property
+	/// 
+	/// ## Parameters
+	/// * property: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::PROP_DECODED_FRAME_IDX, cv::cudacodec::PROP_EXTRA_DATA_INDEX, ...)
+	/// * propertyVal: Optional value for the property.
+	/// ## Returns
+	/// Value for the specified property. Value -1 is returned when querying a property that is not supported.
+	/// 
+	/// ## C++ default parameters
+	/// * property_val: -1
+	#[inline]
+	fn get(&self, property: crate::cudacodec::VideoReaderProps, property_val: i32) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_get_const_const_VideoReaderProps_const_int(self.as_raw_VideoReader(), property, property_val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -754,7 +945,48 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	/// * stream: Stream::Null()
 	#[inline]
 	fn next_frame(&mut self, frame: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
-		let ret = unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Grabs the next frame from the video source.
+	/// 
+	/// ## Returns
+	/// `true` (non-zero) in the case of success.
+	/// 
+	/// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
+	/// the case of success.
+	/// 
+	/// The primary use of the function is for reading both the encoded and decoded video data when rawMode is enabled.  With rawMode enabled
+	/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
+	/// 
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	#[inline]
+	fn grab(&mut self, stream: &mut core::Stream) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_grab_StreamR(self.as_raw_mut_VideoReader(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Sets a property in the VideoReader.
+	/// 
+	/// ## Parameters
+	/// * property: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::PROP_DECODED_FRAME_IDX, cv::cudacodec::PROP_EXTRA_DATA_INDEX, ...)
+	/// * propertyVal: Value of the property.
+	/// ## Returns
+	/// `true` if the property has been set.
+	#[inline]
+	fn set(&mut self, property: crate::cudacodec::VideoReaderProps, property_val: f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_set_const_VideoReaderProps_const_double(self.as_raw_mut_VideoReader(), property, property_val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -776,7 +1008,10 @@ pub trait VideoWriterConst {
 
 	#[inline]
 	fn get_encoder_params(&self) -> Result<crate::cudacodec::EncoderParams> {
-		let ret = unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_VideoWriter()) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
 		Ok(ret)
 	}
@@ -800,7 +1035,10 @@ pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
 	#[inline]
 	fn write(&mut self, frame: &dyn core::ToInputArray, last_frame: bool) -> Result<()> {
 		input_array_arg!(frame);
-		let ret = unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR_bool(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), last_frame) }.into_result()?;
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR_bool(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), last_frame, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

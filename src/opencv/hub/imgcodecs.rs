@@ -284,7 +284,10 @@ opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
 #[inline]
 pub fn have_image_reader(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -295,7 +298,10 @@ pub fn have_image_reader(filename: &str) -> Result<bool> {
 #[inline]
 pub fn have_image_writer(filename: &str) -> Result<bool> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_as_extern()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -311,7 +317,10 @@ pub fn have_image_writer(filename: &str) -> Result<bool> {
 #[inline]
 pub fn imcount(filename: &str, flags: i32) -> Result<size_t> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_imcount_const_StringR_int(filename.opencv_as_extern(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imcount_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -330,7 +339,10 @@ pub fn imcount(filename: &str, flags: i32) -> Result<size_t> {
 #[inline]
 pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	let ret = unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -357,7 +369,10 @@ pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 #[inline]
 pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
 	input_array_arg!(buf);
-	let ret = unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -379,7 +394,10 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(ext);
 	input_array_arg!(img);
-	let ret = unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vector_unsigned_char_R_const_vector_int_R(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -441,7 +459,10 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<
 #[inline]
 pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_imread_const_StringR_int(filename.opencv_as_extern(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imread_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 	Ok(ret)
 }
@@ -461,7 +482,10 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 #[inline]
 pub fn imreadmulti(filename: &str, mats: &mut core::Vector<core::Mat>, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -482,7 +506,10 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector<core::Mat>, flags: i3
 #[inline]
 pub fn imreadmulti_range(filename: &str, mats: &mut core::Vector<core::Mat>, start: i32, count: i32, flags: i32) -> Result<bool> {
 	extern_container_arg!(filename);
-	let ret = unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, flags) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -522,7 +549,10 @@ pub fn imreadmulti_range(filename: &str, mats: &mut core::Vector<core::Mat>, sta
 pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
-	let ret = unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -534,6 +564,9 @@ pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vect
 pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
 	input_array_arg!(img);
-	let ret = unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32()) }.into_result()?;
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vector_int_R(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
