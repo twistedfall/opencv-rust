@@ -22,8 +22,8 @@ jobs:
           - stable
           - beta
         version:
-          - opencv: 3.4.16
-          - opencv: 4.5.4
+          - opencv: 3.4.17
+          - opencv: 4.5.5
         compiler:
           - cc: gcc
             cxx: g++
@@ -33,7 +33,7 @@ jobs:
           - os:
               family: osx
             version:
-              opencv: 3.4.16
+              opencv: 3.4.17
           - os:
               family: osx
             compiler:
@@ -140,10 +140,10 @@ jobs:
           - beta
         version:
           - branch: 3.4
-            opencv: 3.4.15
+            opencv: 3.4.16
             brew: "@3"
           - branch: 4
-            opencv: 4.5.3
+            opencv: 4.5.4
             brew: "@4"
         include:
           - os:
