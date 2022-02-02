@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, ToPrimitive};
 
 use crate::{
-	core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, VecN},
+	core::{Rect_, Size_, ValidSizeType, ValidVecType, VecN},
 	opencv_type_simple_generic,
 };
 
@@ -57,7 +57,7 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn inside(self, rect: Rect_<T>) -> bool where T: ValidRectType {
+	pub fn inside(self, rect: Rect_<T>) -> bool {
 		rect.contains(self)
 	}
 

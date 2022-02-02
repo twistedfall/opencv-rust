@@ -1,17 +1,14 @@
 use std::{
 	fmt,
-	ops::{Add, AddAssign, Sub, SubAssign},
+	ops::{Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, Mul, Sub, SubAssign},
 };
-use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign};
 
-use num_traits::{NumCast, ToPrimitive};
+use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
 use crate::{
 	core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType},
 	opencv_type_simple_generic,
 };
-
-valid_types!(ValidRectType: i32, f32, f64);
 
 #[inline(always)]
 fn partial_min<T: PartialOrd>(a: T, b: T) -> T {
@@ -26,14 +23,14 @@ fn partial_max<T: PartialOrd>(a: T, b: T) -> T {
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/d2/d44/classcv_1_1Rect__.html)
-pub struct Rect_<T: ValidRectType> {
+pub struct Rect_<T> {
 	pub x: T,
 	pub y: T,
 	pub width: T,
 	pub height: T,
 }
 
-impl<T: ValidRectType> Rect_<T> {
+impl<T> Rect_<T> {
 	#[inline]
 	pub fn new(x: T, y: T, width: T, height: T) -> Self {
 		Self { x, y, width, height }
@@ -45,7 +42,7 @@ impl<T: ValidRectType> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn from_points(pt1: Point_<T>, pt2: Point_<T>) -> Self where T: ValidPointType {
+	pub fn from_points(pt1: Point_<T>, pt2: Point_<T>) -> Self where T: PartialOrd + Sub<Output=T> + Copy {
 		let x = partial_min(pt1.x, pt2.x);
 		let y = partial_min(pt1.y, pt2.y);
 		Self::new(x, y, partial_max(pt1.x, pt2.x) - x, partial_max(pt1.y, pt2.y) - y)
@@ -57,7 +54,7 @@ impl<T: ValidRectType> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn br(&self) -> Point_<T> where T: ValidPointType {
+	pub fn br(&self) -> Point_<T> where T: Add<Output=T> + Copy {
 		Point_::new(self.x + self.width, self.y + self.height)
 	}
 
@@ -67,34 +64,30 @@ impl<T: ValidRectType> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn area(&self) -> T {
+	pub fn area(&self) -> T where T: Mul<Output=T> + Copy {
 		self.width * self.height
 	}
 
 	#[inline]
-	pub fn empty(&self) -> bool {
+	pub fn empty(&self) -> bool where T: PartialOrd + Zero {
 		self.width <= T::zero() || self.height <= T::zero()
 	}
 
 	#[inline]
-	pub fn contains(&self, pt: Point_<T>) -> bool where T: ValidPointType {
+	pub fn contains(&self, pt: Point_<T>) -> bool where T: PartialOrd + Add<Output=T> + Copy {
 		self.x <= pt.x && pt.x < self.x + self.width && self.y <= pt.y && pt.y < self.y + self.height
 	}
 
 	#[inline]
-	pub fn to<D: ValidRectType + NumCast>(&self) -> Option<Rect_<D>> where T: ToPrimitive {
+	pub fn to<D: NumCast>(&self) -> Option<Rect_<D>> where T: ToPrimitive + Copy {
 		Some(Rect_ { x: D::from(self.x)?, y: D::from(self.y)?, width: D::from(self.width)?, height: D::from(self.height)? })
 	}
 }
 
-opencv_type_simple_generic! { Rect_<ValidRectType> }
+opencv_type_simple_generic! { Rect_<Copy> }
 
-impl<P, R> Add<Point_<P>> for Rect_<R>
-	where
-		P: ValidPointType,
-		R: ValidRectType + AddAssign<P>
-{
-	type Output = Rect_<R>;
+impl<P: ValidPointType, R> Add<Point_<P>> for Rect_<R> where Self: AddAssign<Point_<P>> {
+	type Output = Self;
 
 	fn add(mut self, rhs: Point_<P>) -> Self::Output {
 		self += rhs;
@@ -102,12 +95,8 @@ impl<P, R> Add<Point_<P>> for Rect_<R>
 	}
 }
 
-impl<P, R> Sub<Point_<P>> for Rect_<R>
-	where
-		P: ValidPointType,
-		R: ValidRectType + SubAssign<P>
-{
-	type Output = Rect_<R>;
+impl<P: ValidPointType, R> Sub<Point_<P>> for Rect_<R> where Self: SubAssign<Point_<P>> {
+	type Output = Self;
 
 	fn sub(mut self, rhs: Point_<P>) -> Self::Output {
 		self -= rhs;
@@ -115,12 +104,8 @@ impl<P, R> Sub<Point_<P>> for Rect_<R>
 	}
 }
 
-impl<S, R> Add<Size_<S>> for Rect_<R>
-	where
-		S: ValidSizeType,
-		R: ValidRectType + AddAssign<S>
-{
-	type Output = Rect_<R>;
+impl<S: ValidSizeType, R> Add<Size_<S>> for Rect_<R> where Self: AddAssign<Size_<S>> {
+	type Output = Self;
 
 	fn add(mut self, rhs: Size_<S>) -> Self::Output {
 		self += rhs;
@@ -128,12 +113,8 @@ impl<S, R> Add<Size_<S>> for Rect_<R>
 	}
 }
 
-impl<S, R> Sub<Size_<S>> for Rect_<R>
-	where
-		S: ValidSizeType,
-		R: ValidRectType + SubAssign<S>
-{
-	type Output = Rect_<R>;
+impl<S: ValidSizeType, R> Sub<Size_<S>> for Rect_<R> where Self: SubAssign<Size_<S>> {
+	type Output = Self;
 
 	fn sub(mut self, rhs: Size_<S>) -> Self::Output {
 		self -= rhs;
@@ -141,7 +122,7 @@ impl<S, R> Sub<Size_<S>> for Rect_<R>
 	}
 }
 
-impl<T: ValidRectType> BitOr for Rect_<T> {
+impl<T> BitOr for Rect_<T> where Rect_<T>: BitOrAssign {
 	type Output = Rect_<T>;
 
 	fn bitor(mut self, rhs: Self) -> Self::Output {
@@ -150,7 +131,7 @@ impl<T: ValidRectType> BitOr for Rect_<T> {
 	}
 }
 
-impl<T: ValidRectType> BitAnd for Rect_<T> {
+impl<T> BitAnd for Rect_<T> where Rect_<T>: BitAndAssign {
 	type Output = Rect_<T>;
 
 	fn bitand(mut self, rhs: Self) -> Self::Output {
@@ -159,51 +140,35 @@ impl<T: ValidRectType> BitAnd for Rect_<T> {
 	}
 }
 
-impl<P, R> AddAssign<Point_<P>> for Rect_<R>
-	where
-		P: ValidPointType,
-		R: ValidRectType + AddAssign<P>
-{
+impl<P: ValidPointType, R: AddAssign<P>> AddAssign<Point_<P>> for Rect_<R> {
 	fn add_assign(&mut self, rhs: Point_<P>) {
 		self.x += rhs.x;
 		self.y += rhs.y;
 	}
 }
 
-impl<P, R> SubAssign<Point_<P>> for Rect_<R>
-	where
-		P: ValidPointType,
-		R: ValidRectType + SubAssign<P>
-{
+impl<P: ValidPointType, R: SubAssign<P>> SubAssign<Point_<P>> for Rect_<R> {
 	fn sub_assign(&mut self, rhs: Point_<P>) {
 		self.x -= rhs.x;
 		self.y -= rhs.y;
 	}
 }
 
-impl<S, R> AddAssign<Size_<S>> for Rect_<R>
-	where
-		S: ValidSizeType,
-		R: ValidRectType + AddAssign<S>
-{
+impl<S: ValidSizeType, R: AddAssign<S>> AddAssign<Size_<S>> for Rect_<R> {
 	fn add_assign(&mut self, rhs: Size_<S>) {
 		self.width += rhs.width;
 		self.height += rhs.height;
 	}
 }
 
-impl<S, R> SubAssign<Size_<S>> for Rect_<R>
-	where
-		S: ValidSizeType,
-		R: ValidRectType + SubAssign<S>
-{
+impl<S: ValidSizeType, R: SubAssign<S>> SubAssign<Size_<S>> for Rect_<R> {
 	fn sub_assign(&mut self, rhs: Size_<S>) {
 		self.width -= rhs.width;
 		self.height -= rhs.height;
 	}
 }
 
-impl<T: ValidRectType> BitOrAssign for Rect_<T> {
+impl<T: PartialOrd + NumOps + Zero + Copy> BitOrAssign for Rect_<T> {
 	fn bitor_assign(&mut self, rhs: Self) {
 		if self.empty() {
 			*self = rhs;
@@ -218,7 +183,7 @@ impl<T: ValidRectType> BitOrAssign for Rect_<T> {
 	}
 }
 
-impl<T: ValidRectType> BitAndAssign for Rect_<T> {
+impl<T: PartialOrd + NumOps + Zero + Copy> BitAndAssign for Rect_<T> where Self: Default {
 	fn bitand_assign(&mut self, rhs: Self) {
 		let x1 = partial_max(self.x, rhs.x);
 		let y1 = partial_max(self.y, rhs.y);
@@ -227,7 +192,7 @@ impl<T: ValidRectType> BitAndAssign for Rect_<T> {
 		self.x = x1;
 		self.y = y1;
 		if self.empty() {
-			*self = Rect_::default();
+			*self = Self::default();
 		}
 	}
 }
