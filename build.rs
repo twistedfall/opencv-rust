@@ -324,7 +324,7 @@ fn main() -> Result<()> {
 		.find(|p| get_version_header(p).is_some())
 		.expect("Discovered OpenCV include paths is empty or contains non-existent paths");
 
-	let opencv_module_header_dir = get_module_header_dir(&opencv_header_dir).expect("Can't find OpenCV module header dir");
+	let opencv_module_header_dir = get_module_header_dir(opencv_header_dir).expect("Can't find OpenCV module header dir");
 	eprintln!("=== Detected OpenCV module header dir at: {}", opencv_module_header_dir.display());
 	make_modules(&opencv_module_header_dir)?;
 

@@ -1252,19 +1252,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				);
 			}
 		}
-		if self.as_reference().is_some() || self.as_pointer().is_some() {
-			if self.is_nullable() {
-				let arg = if constness.with(self.constness()).is_const() {
-					format!("{name} as *_", name=name)
-				} else {
-					format!("{name} as *mut _", name=name)
-				};	return format!(
-					"{name}.map_or({null_ptr}, |{name}| {arg})",
-					name=name,
-					null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
-					arg=arg,
-				)
-			}
+		if self.is_nullable() && (self.as_reference().is_some() || self.as_pointer().is_some()) {
+			let arg = if constness.with(self.constness()).is_const() {
+				format!("{name} as *const _", name=name)
+			} else {
+				format!("{name} as *mut _", name=name)
+			};	return format!(
+				"{name}.map_or({null_ptr}, |{name}| {arg})",
+				name=name,
+				null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
+				arg=arg,
+			)
 		}
 		name.to_string()
 	}

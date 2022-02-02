@@ -44,6 +44,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// Create a Vector from iterator
 	#[inline]
 	pub fn from_iter<'a>(s: impl IntoIterator<Item=<T as OpenCVType<'a>>::Arg>) -> Self {
+		#![allow(clippy::should_implement_trait)]
 		let mut out = Self::new();
 		out.extend(s);
 		out

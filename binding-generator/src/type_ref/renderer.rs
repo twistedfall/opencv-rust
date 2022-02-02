@@ -471,7 +471,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				format!(
 					"{cnst}{typ}{name}",
 					cnst=cnst,
-					typ=cpp.to_string(),
+					typ=cpp,
 					name=space_name,
 				)
 			}
@@ -578,7 +578,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					if !self.name.is_empty() {
 						typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=self.name));
 					}
-					typ.into_owned().into()
+					typ.into_owned()
 				} else {
 					format!("{typ}{name}", typ=typ, name=space_name)
 				}

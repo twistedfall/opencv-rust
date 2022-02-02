@@ -82,7 +82,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	}
 	let naked_return = f.is_naked_return();
 	if !naked_return {
-		pre_call_args.push(format!("return_send!(via ocvrs_return);"));
+		pre_call_args.push("return_send!(via ocvrs_return);".to_string());
 		call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 	}
 
@@ -461,14 +461,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			} else {
 				format!("*ocvrs_return = {};", ret).into()
 			}
+		} else if ret.is_empty() {
+			"Ok(ocvrs_return);".into()
+		} else if ret_cast {
+			format!("Ok<{typ}>({ret}, ocvrs_return);", typ=cpp_extern_return, ret=ret).into()
 		} else {
-			if ret.is_empty() {
-				"Ok(ocvrs_return);".into()
-			} else if ret_cast {
-				format!("Ok<{typ}>({ret}, ocvrs_return);", typ=cpp_extern_return, ret=ret).into()
-			} else {
-				format!("Ok({}, ocvrs_return);", ret).into()
-			}
+			format!("Ok({}, ocvrs_return);", ret).into()
 		};
 
 		let func_try = if is_infallible {

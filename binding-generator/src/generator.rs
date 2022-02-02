@@ -377,7 +377,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 			if !func.is_excluded() {
 				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref())
 					.map_or_else(|| vec![FunctionTypeHint::None], |specs| specs.iter()
-						.map(|s| FunctionTypeHint::Specialized(s))
+						.map(FunctionTypeHint::Specialized)
 						.collect::<Vec<_>>(),
 					);
 				for type_hint in specs {
@@ -559,7 +559,7 @@ impl Generator {
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
-			.parse().expect(&format!("Cannot parse module: {}", module));
+			.parse().unwrap_or_else(|_| panic!("Cannot parse module: {}", module));
 		let mut ephem_gen = EphemeralGenerator::new(module);
 		let walker = EntityWalker::new(root_tu.get_entity());
 		walker.walk_opencv_entities(&mut ephem_gen);
@@ -572,7 +572,7 @@ impl Generator {
 	pub fn process_opencv_module(&self, module: &str, mut visitor: impl GeneratorVisitor) {
 		self.process_module(module, true, |root_tu, ephemeral_header| {
 			let root_entity = root_tu.get_entity();
-			visitor.visit_ephemeral_header(&ephemeral_header);
+			visitor.visit_ephemeral_header(ephemeral_header);
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCvWalker::new(
 				&self.opencv_module_header_dir,

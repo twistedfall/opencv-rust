@@ -676,6 +676,7 @@ pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(
 	"cv::ocl::Device" => ExportConfig::default(),
 });
 
+#[allow(clippy::type_complexity)]
 pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn (&mut ExportConfig)>> = Lazy::new(|| hashmap! {
 	"cv::dnn::ClassificationModel" => ExportConfig::make_boxed as _,
 	"cv::dnn::DetectionModel" => ExportConfig::make_boxed as _,

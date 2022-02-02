@@ -47,7 +47,7 @@ impl<'a> ToUnderlyingArg<'a, &'a MatExpr> for MatExpr {
 }
 impl<'a> ToUnderlyingArg<'a, Scalar> for Scalar {
 	fn to_underlying_arg(&'a self) -> Scalar {
-		self.clone()
+		*self
 	}
 }
 impl<'a> ToUnderlyingArg<'a, f64> for f64 {
