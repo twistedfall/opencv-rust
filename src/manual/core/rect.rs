@@ -6,7 +6,7 @@ use std::{
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
 use crate::{
-	core::{Point_, prelude::*, RotatedRect, Size_, ValidSizeType},
+	core::{Point_, prelude::*, RotatedRect, Size_},
 	opencv_type_simple_generic,
 };
 
@@ -37,7 +37,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn from_point_size(pt: Point_<T>, sz: Size_<T>) -> Self where T: ValidSizeType {
+	pub fn from_point_size(pt: Point_<T>, sz: Size_<T>) -> Self {
 		Self::new(pt.x, pt.y, sz.width, sz.height)
 	}
 
@@ -59,7 +59,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn size(&self) -> Size_<T> where T: ValidSizeType {
+	pub fn size(&self) -> Size_<T> where T: Copy {
 		Size_::new(self.width, self.height)
 	}
 
@@ -104,7 +104,7 @@ impl<P, R> Sub<Point_<P>> for Rect_<R> where Self: SubAssign<Point_<P>> {
 	}
 }
 
-impl<S: ValidSizeType, R> Add<Size_<S>> for Rect_<R> where Self: AddAssign<Size_<S>> {
+impl<S, R> Add<Size_<S>> for Rect_<R> where Self: AddAssign<Size_<S>> {
 	type Output = Self;
 
 	fn add(mut self, rhs: Size_<S>) -> Self::Output {
@@ -113,7 +113,7 @@ impl<S: ValidSizeType, R> Add<Size_<S>> for Rect_<R> where Self: AddAssign<Size_
 	}
 }
 
-impl<S: ValidSizeType, R> Sub<Size_<S>> for Rect_<R> where Self: SubAssign<Size_<S>> {
+impl<S, R> Sub<Size_<S>> for Rect_<R> where Self: SubAssign<Size_<S>> {
 	type Output = Self;
 
 	fn sub(mut self, rhs: Size_<S>) -> Self::Output {
@@ -154,14 +154,14 @@ impl<P, R: SubAssign<P>> SubAssign<Point_<P>> for Rect_<R> {
 	}
 }
 
-impl<S: ValidSizeType, R: AddAssign<S>> AddAssign<Size_<S>> for Rect_<R> {
+impl<S, R: AddAssign<S>> AddAssign<Size_<S>> for Rect_<R> {
 	fn add_assign(&mut self, rhs: Size_<S>) {
 		self.width += rhs.width;
 		self.height += rhs.height;
 	}
 }
 
-impl<S: ValidSizeType, R: SubAssign<S>> SubAssign<Size_<S>> for Rect_<R> {
+impl<S, R: SubAssign<S>> SubAssign<Size_<S>> for Rect_<R> {
 	fn sub_assign(&mut self, rhs: Size_<S>) {
 		self.width -= rhs.width;
 		self.height -= rhs.height;
