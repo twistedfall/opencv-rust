@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, ToPrimitive};
 
 use crate::{
-	core::{Point_, ValidPointType},
+	core::Point_,
 	opencv_type_simple_generic,
 };
 
@@ -24,7 +24,7 @@ impl<T: ValidSizeType> Size_<T> {
 	}
 
 	#[inline]
-	pub fn from_point(pt: Point_<T>) -> Self where T: ValidPointType {
+	pub fn from_point(pt: Point_<T>) -> Self {
 		Self { width: pt.x, height: pt.y }
 	}
 

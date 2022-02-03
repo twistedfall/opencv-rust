@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, ToPrimitive, Zero};
 
 use crate::{
-	core::{Point_, ValidPointType, ValidVecType, VecN},
+	core::{Point_, ValidVecType, VecN},
 	opencv_type_simple_generic,
 };
 
@@ -30,7 +30,7 @@ impl<T: ValidPoint3Type> Point3_<T> {
 	}
 
 	#[inline]
-	pub fn from_point(pt: Point_<T>) -> Self where T: ValidPointType + Zero {
+	pub fn from_point(pt: Point_<T>) -> Self where T: Zero {
 		Self::new(pt.x, pt.y, T::zero())
 	}
 

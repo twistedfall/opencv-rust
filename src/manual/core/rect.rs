@@ -6,7 +6,7 @@ use std::{
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
 use crate::{
-	core::{Point_, prelude::*, RotatedRect, Size_, ValidPointType, ValidSizeType},
+	core::{Point_, prelude::*, RotatedRect, Size_, ValidSizeType},
 	opencv_type_simple_generic,
 };
 
@@ -37,7 +37,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn from_point_size(pt: Point_<T>, sz: Size_<T>) -> Self where T: ValidPointType + ValidSizeType {
+	pub fn from_point_size(pt: Point_<T>, sz: Size_<T>) -> Self where T: ValidSizeType {
 		Self::new(pt.x, pt.y, sz.width, sz.height)
 	}
 
@@ -49,7 +49,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn tl(&self) -> Point_<T> where T: ValidPointType {
+	pub fn tl(&self) -> Point_<T> where T: Copy {
 		Point_::new(self.x, self.y)
 	}
 
@@ -86,7 +86,7 @@ impl<T> Rect_<T> {
 
 opencv_type_simple_generic! { Rect_<Copy> }
 
-impl<P: ValidPointType, R> Add<Point_<P>> for Rect_<R> where Self: AddAssign<Point_<P>> {
+impl<P, R> Add<Point_<P>> for Rect_<R> where Self: AddAssign<Point_<P>> {
 	type Output = Self;
 
 	fn add(mut self, rhs: Point_<P>) -> Self::Output {
@@ -95,7 +95,7 @@ impl<P: ValidPointType, R> Add<Point_<P>> for Rect_<R> where Self: AddAssign<Poi
 	}
 }
 
-impl<P: ValidPointType, R> Sub<Point_<P>> for Rect_<R> where Self: SubAssign<Point_<P>> {
+impl<P, R> Sub<Point_<P>> for Rect_<R> where Self: SubAssign<Point_<P>> {
 	type Output = Self;
 
 	fn sub(mut self, rhs: Point_<P>) -> Self::Output {
@@ -140,14 +140,14 @@ impl<T> BitAnd for Rect_<T> where Rect_<T>: BitAndAssign {
 	}
 }
 
-impl<P: ValidPointType, R: AddAssign<P>> AddAssign<Point_<P>> for Rect_<R> {
+impl<P, R: AddAssign<P>> AddAssign<Point_<P>> for Rect_<R> {
 	fn add_assign(&mut self, rhs: Point_<P>) {
 		self.x += rhs.x;
 		self.y += rhs.y;
 	}
 }
 
-impl<P: ValidPointType, R: SubAssign<P>> SubAssign<Point_<P>> for Rect_<R> {
+impl<P, R: SubAssign<P>> SubAssign<Point_<P>> for Rect_<R> {
 	fn sub_assign(&mut self, rhs: Point_<P>) {
 		self.x -= rhs.x;
 		self.y -= rhs.y;

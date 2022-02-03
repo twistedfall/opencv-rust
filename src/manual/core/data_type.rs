@@ -1,4 +1,4 @@
-use crate::core::{self, Point3_, Point_, Rect_, Size_, ValidPoint3Type, ValidPointType, ValidSizeType, VecN};
+use crate::core::{self, Point3_, Point_, Rect_, Size_, ValidPoint3Type, ValidSizeType, VecN};
 
 #[inline]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {
@@ -73,7 +73,7 @@ impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 	fn channels() -> i32 { N as i32 }
 }
 
-impl<T: ValidPointType + DataType> DataType for Point_<T> {
+impl<T: DataType> DataType for Point_<T> {
 	#[inline]
 	fn depth() -> i32 { T::depth() }
 
@@ -111,7 +111,7 @@ mod private {
 
 impl<T: DataType, const N: usize> private::Sealed for VecN<T, N> {}
 
-impl<T: ValidPointType + DataType> private::Sealed for Point_<T> {}
+impl<T: DataType> private::Sealed for Point_<T> {}
 
 impl<T: ValidPoint3Type + DataType> private::Sealed for Point3_<T> {}
 

@@ -1,31 +1,30 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-use num_traits::{NumCast, ToPrimitive};
+use num_traits::{NumCast, NumOps, ToPrimitive};
 
 use crate::{
 	core::{Rect_, Size_, ValidSizeType, ValidVecType, VecN},
 	opencv_type_simple_generic,
 };
 
-valid_types!(ValidPointType: i32, i64, f32, f64);
-
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/db/d4e/classcv_1_1Point__.html)
-pub struct Point_<T: ValidPointType> {
+pub struct Point_<T> {
 	pub x: T,
 	pub y: T,
 }
 
-impl<T: ValidPointType> Point_<T> {
+impl<T> Point_<T> {
 	#[inline]
 	pub fn new(x: T, y: T) -> Self {
 		Self { x, y }
 	}
 
 	#[inline]
-	pub fn from_vec2(vec: VecN<T, 2>) -> Self where T: ValidVecType {
-		Self::new(vec[0], vec[1])
+	pub fn from_vec2(vec: VecN<T, 2>) -> Self {
+		let [x, y] = vec.0;
+		Self::new(x, y)
 	}
 
 	#[inline]
@@ -43,7 +42,7 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn dot(self, pt: Point_<T>) -> T {
+	pub fn dot(self, pt: Point_<T>) -> T where T: NumOps {
 		self.x * pt.x + self.y * pt.y
 	}
 
@@ -57,7 +56,7 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn inside(self, rect: Rect_<T>) -> bool {
+	pub fn inside(self, rect: Rect_<T>) -> bool where T: PartialOrd + Add<Output=T> + Copy {
 		rect.contains(self)
 	}
 
@@ -69,47 +68,38 @@ impl<T: ValidPointType> Point_<T> {
 	}
 
 	#[inline]
-	pub fn to<D: ValidPointType + NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
+	pub fn to<D: NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
 		Some(Point_::new(D::from(self.x)?, D::from(self.y)?))
 	}
 
 	#[inline]
-	pub fn to_vec2(&self) -> VecN<T, 2> where T: ValidVecType {
+	pub fn to_vec2(self) -> VecN<T, 2> {
 		VecN::<_, 2>::from([self.x, self.y])
 	}
 }
 
-opencv_type_simple_generic! { Point_<ValidPointType> }
+opencv_type_simple_generic! { Point_<Copy> }
 
-impl<T> Add for Point_<T>
-	where
-		T: ValidPointType + AddAssign,
-{
-	type Output = Point_<T>;
+impl<T> Add for Point_<T> where Self: AddAssign, {
+	type Output = Self;
 
-	fn add(mut self, rhs: Point_<T>) -> Self::Output {
+	fn add(mut self, rhs: Self) -> Self::Output {
 		self += rhs;
 		self
 	}
 }
 
-impl<T> Sub for Point_<T>
-	where
-		T: ValidPointType + SubAssign,
-{
-	type Output = Point_<T>;
+impl<T> Sub for Point_<T> where Self: SubAssign {
+	type Output = Self;
 
-	fn sub(mut self, rhs: Point_<T>) -> Self::Output {
+	fn sub(mut self, rhs: Self) -> Self::Output {
 		self -= rhs;
 		self
 	}
 }
 
-impl<T> Mul<T> for Point_<T>
-	where
-		T: ValidPointType + MulAssign
-{
-	type Output = Point_<T>;
+impl<T> Mul<T> for Point_<T> where Self: MulAssign<T> {
+	type Output = Self;
 
 	fn mul(mut self, rhs: T) -> Self::Output {
 		self *= rhs;
@@ -117,11 +107,8 @@ impl<T> Mul<T> for Point_<T>
 	}
 }
 
-impl<T> Div<T> for Point_<T>
-	where
-		T: ValidPointType + DivAssign
-{
-	type Output = Point_<T>;
+impl<T> Div<T> for Point_<T> where Self: DivAssign<T> {
+	type Output = Self;
 
 	fn div(mut self, rhs: T) -> Self::Output {
 		self /= rhs;
@@ -129,40 +116,28 @@ impl<T> Div<T> for Point_<T>
 	}
 }
 
-impl<T> AddAssign for Point_<T>
-	where
-		T: ValidPointType + AddAssign,
-{
-	fn add_assign(&mut self, rhs: Point_<T>) {
+impl<T: AddAssign> AddAssign for Point_<T> {
+	fn add_assign(&mut self, rhs: Self) {
 		self.x += rhs.x;
 		self.y += rhs.y;
 	}
 }
 
-impl<T> SubAssign for Point_<T>
-	where
-		T: ValidPointType + SubAssign,
-{
-	fn sub_assign(&mut self, rhs: Point_<T>) {
+impl<T: SubAssign> SubAssign for Point_<T> {
+	fn sub_assign(&mut self, rhs: Self) {
 		self.x -= rhs.x;
 		self.y -= rhs.y;
 	}
 }
 
-impl<T> MulAssign<T> for Point_<T>
-	where
-		T: ValidPointType + MulAssign
-{
+impl<T: MulAssign + Copy> MulAssign<T> for Point_<T> {
 	fn mul_assign(&mut self, rhs: T) {
 		self.x *= rhs;
 		self.y *= rhs;
 	}
 }
 
-impl<T> DivAssign<T> for Point_<T>
-	where
-		T: ValidPointType + DivAssign
-{
+impl<T: DivAssign + Copy> DivAssign<T> for Point_<T> {
 	fn div_assign(&mut self, rhs: T) {
 		self.x /= rhs;
 		self.y /= rhs;
