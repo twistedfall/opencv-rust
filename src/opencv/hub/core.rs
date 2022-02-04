@@ -9960,6 +9960,17 @@ pub trait FileNodeIteratorTraitConst {
 pub trait FileNodeIteratorTrait: core::FileNodeIteratorTraitConst {
 	fn as_raw_mut_FileNodeIterator(&mut self) -> *mut c_void;
 
+	/// moves iterator to the next node
+	#[inline]
+	fn incr(&mut self) -> Result<core::FileNodeIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_FileNodeIterator_operatorAA(self.as_raw_mut_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Reads node elements to the buffer with the specified format.
 	/// 
 	/// Usually it is more convenient to use operator `>>` instead of this method.
@@ -14070,6 +14081,28 @@ pub trait MatConstIteratorTrait: core::MatConstIteratorTraitConst {
 	fn set_elem_size(&mut self, val: size_t) {
 		let ret = unsafe { sys::cv_MatConstIterator_setPropElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
 		ret
+	}
+	
+	/// decrements the iterator
+	#[inline]
+	fn decr(&mut self) -> Result<core::MatConstIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_MatConstIterator_operatorSS(self.as_raw_mut_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// increments the iterator
+	#[inline]
+	fn incr(&mut self) -> Result<core::MatConstIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_MatConstIterator_operatorAA(self.as_raw_mut_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -18274,6 +18307,28 @@ pub trait SparseMatConstIteratorTrait: core::SparseMatConstIteratorTraitConst {
 		ret
 	}
 	
+	/// moves iterator to the previous element
+	#[inline]
+	fn decr(&mut self) -> Result<core::SparseMatConstIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SparseMatConstIterator_operatorSS(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// moves iterator to the next element
+	#[inline]
+	fn incr(&mut self) -> Result<core::SparseMatConstIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SparseMatConstIterator_operatorAA(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// moves iterator to the element after the last element
 	#[inline]
 	fn seek_end(&mut self) -> Result<()> {
@@ -18379,6 +18434,17 @@ pub trait SparseMatIteratorTraitConst: core::SparseMatConstIteratorTraitConst {
 pub trait SparseMatIteratorTrait: core::SparseMatConstIteratorTrait + core::SparseMatIteratorTraitConst {
 	fn as_raw_mut_SparseMatIterator(&mut self) -> *mut c_void;
 
+	/// moves iterator to the next element
+	#[inline]
+	fn incr(&mut self) -> Result<core::SparseMatIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SparseMatIterator_operatorAA(self.as_raw_mut_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
 ///  Read-write Sparse Matrix Iterator

@@ -1,3 +1,8 @@
+* 0.63.0
+  * Provide bindings for `++` and `--` operators (fixes [#319](https://github.com/twistedfall/opencv-rust/issues/319))
+  * Drop type restrictions for `Rect_`, `Point_`, `Size_`, `Point3_`, `VecN` (and related structs) (fixes [#316](https://github.com/twistedfall/opencv-rust/issues/316))
+  * Make sure that `VectorOfVectorOff64` is generated for calib3d module (fixes [#321](https://github.com/twistedfall/opencv-rust/issues/321))
+
 * 0.62.0
   * Fixed a segfault when using functions that return small structures (like Point2f) with some C++ compiler combinations, e.g.
     when using repository OpenCV with the default compiler in Ubuntu 20.04.

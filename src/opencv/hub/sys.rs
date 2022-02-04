@@ -947,6 +947,7 @@ mod core_sys {
 		pub fn cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node: *const c_void, seek_end: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_operatorX_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_FileNodeIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_readRaw_const_StringR_voidX_size_t(instance: *mut c_void, fmt: *const c_char, vec: *mut c_void, len: size_t, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_remaining_const(instance: *const c_void, ocvrs_return: *mut Result<size_t>);
 		pub fn cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorR(instance: *const c_void, it: *const c_void, ocvrs_return: *mut Result<bool>);
@@ -1119,6 +1120,8 @@ mod core_sys {
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_MatConstIterator_operatorX_const(instance: *const c_void, ocvrs_return: *mut Result<*const u8>);
 		pub fn cv_MatConstIterator_operator___const_ptrdiff_t(instance: *const c_void, i: ptrdiff_t, ocvrs_return: *mut Result<*const u8>);
+		pub fn cv_MatConstIterator_operatorSS(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_MatConstIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_MatConstIterator_pos_const(instance: *const c_void, ocvrs_return: *mut Result<core::Point>);
 		pub fn cv_MatConstIterator_pos_const_intX(instance: *const c_void, _idx: *mut i32, ocvrs_return: *mut Result_void);
 		pub fn cv_MatConstIterator_lpos_const(instance: *const c_void, ocvrs_return: *mut Result<ptrdiff_t>);
@@ -1379,11 +1382,14 @@ mod core_sys {
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_node_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMatConstIterator_operatorSS(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMatConstIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_seekEnd(instance: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMatIterator_SparseMatIterator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_node_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMatIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_TLSDataContainer_cleanup(instance: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_TermCriteria_TermCriteria(ocvrs_return: *mut Result<core::TermCriteria>);
 		pub fn cv_TermCriteria_TermCriteria_int_int_double(typ: i32, max_count: i32, epsilon: f64, ocvrs_return: *mut Result<core::TermCriteria>);
@@ -4356,6 +4362,7 @@ mod imgproc_sys {
 		pub fn cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(bounding_area_rect: *const core::Rect, pt1: *const core::Point, pt2: *const core::Point, connectivity: i32, left_to_right: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_LineIterator_init_const_MatX_Rect_Point_Point_int_bool(instance: *mut c_void, img: *const c_void, bounding_area_rect: *const core::Rect, pt1: *const core::Point, pt2: *const core::Point, connectivity: i32, left_to_right: bool, ocvrs_return: *mut Result_void);
 		pub fn cv_LineIterator_operatorX(instance: *mut c_void, ocvrs_return: *mut Result<*mut u8>);
+		pub fn cv_LineIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_LineIterator_pos_const(instance: *const c_void, ocvrs_return: *mut Result<core::Point>);
 		pub fn cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(instance: *mut c_void, image: *const c_void, lines: *const c_void, width: *const c_void, prec: *const c_void, nfa: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(instance: *mut c_void, image: *const c_void, lines: *const c_void, ocvrs_return: *mut Result_void);

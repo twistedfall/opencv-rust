@@ -7613,6 +7613,17 @@ pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 		Ok(ret)
 	}
 	
+	/// prefix increment operator (++it). shifts iterator to the next pixel
+	#[inline]
+	fn incr(&mut self) -> Result<crate::imgproc::LineIterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_LineIterator_operatorAA(self.as_raw_mut_LineIterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
 /// Line iterator
