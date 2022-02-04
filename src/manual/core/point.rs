@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, NumOps, ToPrimitive};
 
 use crate::{
-	core::{Rect_, Size_, ValidVecType, VecN},
+	core::{Rect_, Size_, VecN},
 	opencv_type_simple_generic,
 };
 

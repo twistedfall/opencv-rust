@@ -1,6 +1,8 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-use super::{ValidVecType, VecN};
+use num_traits::Num;
+
+use super::VecN;
 
 impl<T: AddAssign, const N: usize> AddAssign for VecN<T, N> {
 	#[inline]
@@ -44,7 +46,7 @@ impl<T: Sub<Output=T> + Copy, const N: usize> Sub for VecN<T, N> {
 	}
 }
 
-impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for VecN<T, N> {
+impl<Rhs: Num + Copy, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn mul_assign(&mut self, rhs: Rhs) {
 		self.iter_mut()
@@ -52,7 +54,7 @@ impl<Rhs: ValidVecType, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for Ve
 	}
 }
 
-impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for VecN<T, N> {
+impl<Rhs: Copy, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn div_assign(&mut self, rhs: Rhs) {
 		self.iter_mut()
@@ -60,7 +62,7 @@ impl<Rhs: ValidVecType, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for Ve
 	}
 }
 
-impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
+impl<Rhs: Num + Copy, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
@@ -71,7 +73,7 @@ impl<Rhs: ValidVecType, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> f
 	}
 }
 
-impl<Rhs: ValidVecType, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
+impl<Rhs: Copy, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]

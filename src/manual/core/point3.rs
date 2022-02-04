@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
 use crate::{
-	core::{ValidVecType, VecN},
+	core::{Point_, VecN},
 	opencv_type_simple_generic,
 };
 
@@ -23,7 +23,7 @@ impl<T> Point3_<T> {
 	}
 
 	#[inline]
-	pub fn from_vec3(vec: VecN<T, 3>) -> Self where T: ValidVecType {
+	pub fn from_vec3(vec: VecN<T, 3>) -> Self {
 		let [x, y, z] = vec.0;
 		Self::new(x, y, z)
 	}
@@ -72,7 +72,7 @@ impl<T> Point3_<T> {
 	}
 
 	#[inline]
-	pub fn to_vec3(self) -> VecN<T, 3> where T: ValidVecType {
+	pub fn to_vec3(self) -> VecN<T, 3> {
 		VecN::<_, 3>::from([self.x, self.y, self.z])
 	}
 }

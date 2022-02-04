@@ -1,8 +1,10 @@
 use std::{
 	array,
 	ffi::c_void,
-	ops::{Deref, DerefMut, Mul},
+	ops::{Deref, DerefMut, MulAssign},
 };
+
+use num_traits::Float;
 
 use crate::{
 	core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray},
@@ -12,8 +14,6 @@ use crate::{
 };
 
 mod operations;
-
-valid_types!(ValidVecType: i8, u8, i16, u16, i32, f32, f64);
 
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 /// Named `VecN` to avoid name clash with std's `Vec`.
@@ -39,11 +39,11 @@ impl<T: Copy, const N: usize> VecN<T, N> {
 
 	/// per-element multiplication
 	#[inline]
-	pub fn mul(&self, v: Self) -> Self where T: Mul<Output=T> + Copy {
+	pub fn mul(&self, v: Self) -> Self where T: MulAssign {
 		let mut out = *self;
 		out.iter_mut()
 			.zip(v.into_iter())
-			.for_each(|(dest, m)| *dest = *dest * m);
+			.for_each(|(dest, m)| *dest *= m);
 		out
 	}
 }
@@ -81,7 +81,7 @@ impl<T, const N: usize> IntoIterator for VecN<T, N> {
 	}
 }
 
-impl<F: num_traits::Float> VecN<F, 2> {
+impl<F: Float> VecN<F, 2> {
 	/// conjugation (makes sense for complex numbers and quaternions)
 	#[inline]
 	pub fn conj(&self) -> Self {
@@ -89,7 +89,7 @@ impl<F: num_traits::Float> VecN<F, 2> {
 	}
 }
 
-impl<F: num_traits::Float> VecN<F, 3> {
+impl<F: Float> VecN<F, 3> {
 	/// cross product of the two 3D vectors
 	#[inline]
 	pub fn cross(&self, v: Self) -> Self {
@@ -101,7 +101,7 @@ impl<F: num_traits::Float> VecN<F, 3> {
 	}
 }
 
-impl<F: num_traits::Float> VecN<F, 4> {
+impl<F: Float> VecN<F, 4> {
 	/// conjugation (makes sense for complex numbers and quaternions)
 	#[inline]
 	pub fn conj(&self) -> Self {
@@ -109,7 +109,7 @@ impl<F: num_traits::Float> VecN<F, 4> {
 	}
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
+impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
 	type ExternReceive = Self;
 	type ExternContainer = Self;
@@ -121,14 +121,14 @@ impl<T: ValidVecType, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	unsafe fn opencv_from_extern(s: Self) -> Self { s }
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
+impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self { self }
 }
 
-impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
+impl<T, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -142,7 +142,7 @@ impl<T: ValidVecType, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
 }
 
-impl<T: ValidVecType, const N: usize> ToInputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToInputArray for VecN<T, N> where Self: VecExtern<T, N> {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		unsafe { self.extern_input_array() }
@@ -151,14 +151,14 @@ impl<T: ValidVecType, const N: usize> ToInputArray for VecN<T, N> where Self: Ve
 	}
 }
 
-impl<T: ValidVecType, const N: usize> ToInputArray for &VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToInputArray for &VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		(*self).input_array()
 	}
 }
 
-impl<T: ValidVecType, const N: usize> ToOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		unsafe { self.extern_output_array() }
@@ -167,14 +167,14 @@ impl<T: ValidVecType, const N: usize> ToOutputArray for VecN<T, N> where Self: V
 	}
 }
 
-impl<T: ValidVecType, const N: usize> ToOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		(*self).output_array()
 	}
 }
 
-impl<T: ValidVecType, const N: usize> ToInputOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToInputOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		unsafe { self.extern_input_output_array() }
@@ -183,7 +183,7 @@ impl<T: ValidVecType, const N: usize> ToInputOutputArray for VecN<T, N> where Se
 	}
 }
 
-impl<T: ValidVecType, const N: usize> ToInputOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToInputOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		(*self).input_output_array()
@@ -191,7 +191,7 @@ impl<T: ValidVecType, const N: usize> ToInputOutputArray for &mut VecN<T, N> whe
 }
 
 #[doc(hidden)]
-pub trait VecExtern<T: ValidVecType, const N: usize> {
+pub trait VecExtern<T, const N: usize> {
 	#[doc(hidden)] unsafe fn extern_input_array(&self) -> sys::Result<*mut c_void>;
 	#[doc(hidden)] unsafe fn extern_output_array(&mut self) -> sys::Result<*mut c_void>;
 	#[doc(hidden)] unsafe fn extern_input_output_array(&mut self) -> sys::Result<*mut c_void>;
