@@ -25,10 +25,8 @@ fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
 	}
 }
 
-valid_types!(ValidMatxType: f32, f64);
-
 pub trait MatxTrait: Sized {
-	type ElemType: ValidMatxType;
+	type ElemType;
 
 	fn rows(&self) -> usize;
 	fn cols(&self) -> usize;
@@ -48,12 +46,12 @@ pub trait MatxTrait: Sized {
 	}
 
 	#[inline]
-	fn zeros() -> Self {
+	fn zeros() -> Self where Self::ElemType: Zero {
 		Self::all(Self::ElemType::zero())
 	}
 
 	#[inline]
-	fn ones() -> Self {
+	fn ones() -> Self where Self::ElemType: One {
 		Self::all(Self::ElemType::one())
 	}
 
@@ -87,7 +85,7 @@ pub trait MatxTrait: Sized {
 	}
 
 	#[inline]
-	fn eye() -> Self {
+	fn eye() -> Self where Self::ElemType: One + Zero {
 		let mut out = Self::zeros();
 		(0..out.shortdim()).for_each(|i| {
 			unsafe { out.get_unchecked_mut((i, i)) }.set_one();
@@ -99,18 +97,18 @@ pub trait MatxTrait: Sized {
 /// [docs.opencv.org](https://docs.opencv.org/master/de/de1/classcv_1_1Matx.html)
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub struct Matx<T: ValidMatxType, A: SizedArray<T>> {
+pub struct Matx<T, A: SizedArray<T>> {
 	pub val: A::Storage,
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> Matx<T, A> {
+impl<T, A: SizedArray<T>> Matx<T, A> {
 	#[inline]
 	pub fn from(s: A::Storage) -> Self {
 		Self { val: s }
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> MatxTrait for Matx<T, A> {
+impl<T, A: SizedArray<T>> MatxTrait for Matx<T, A> {
 	type ElemType = T;
 
 	#[inline]
@@ -144,14 +142,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> MatxTrait for Matx<T, A> {
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> Default for Matx<T, A> {
+impl<T: Default, A: SizedArray<T>> Default for Matx<T, A> {
 	#[inline]
 	fn default() -> Self {
 		Self::all(T::default())
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> std::ops::Index<(usize, usize)> for Matx<T, A> {
+impl<T, A: SizedArray<T>> std::ops::Index<(usize, usize)> for Matx<T, A> {
 	type Output = T;
 
 	#[inline]
@@ -160,14 +158,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> std::ops::Index<(usize, usize)> for Mat
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for Matx<T, A> {
+impl<T, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for Matx<T, A> {
 	#[inline]
 	fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
 		self.get_mut(index).expect("Index out of range")
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
+impl<T, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	type Arg = Self;
 	type ExternReceive = Self;
 	type ExternContainer = Self;
@@ -176,14 +174,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
+impl<T, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
 	type ExternContainer = Self;
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A> {
+impl<T, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -192,14 +190,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A
 	#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *ManuallyDrop::new(self) as _ }
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> std::cmp::PartialEq for Matx<T, A> {
+impl<T: PartialEq, A: SizedArray<T>> PartialEq for Matx<T, A> {
 	#[inline]
 	fn eq(&self, other: &Matx<T, A>) -> bool {
 		self.val() == other.val()
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> fmt::Debug for Matx<T, A> {
+impl<T, A: SizedArray<T>> fmt::Debug for Matx<T, A> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_struct("Matx")
 			.field("rows", &self.rows())
@@ -210,7 +208,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> fmt::Debug for Matx<T, A> {
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToInputArray for Matx<T, A> where Self: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToInputArray for Matx<T, A> where Self: MatxExtern<T, A> {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		unsafe { self.extern_input_array() }
@@ -219,14 +217,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputArray for Matx<T, A> where Self:
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToInputArray for &Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToInputArray for &Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		(*self).input_array()
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToOutputArray for Matx<T, A> where Self: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToOutputArray for Matx<T, A> where Self: MatxExtern<T, A> {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		unsafe { self.extern_output_array() }
@@ -235,14 +233,14 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToOutputArray for Matx<T, A> where Self
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToOutputArray for &mut Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToOutputArray for &mut Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		(*self).output_array()
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for Matx<T, A> where Self: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToInputOutputArray for Matx<T, A> where Self: MatxExtern<T, A> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		unsafe { self.extern_input_output_array() }
@@ -251,7 +249,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for Matx<T, A> where
 	}
 }
 
-impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for &mut Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
+impl<T, A: SizedArray<T>> ToInputOutputArray for &mut Matx<T, A> where Matx<T, A>: MatxExtern<T, A> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		(*self).input_output_array()
@@ -259,7 +257,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for &mut Matx<T, A> 
 }
 
 #[doc(hidden)]
-pub trait MatxExtern<T: ValidMatxType, A: SizedArray<T>> {
+pub trait MatxExtern<T, A: SizedArray<T>> {
 	#[doc(hidden)] unsafe fn extern_input_array(&self) -> sys::Result<*mut c_void>;
 	#[doc(hidden)] unsafe fn extern_output_array(&mut self) -> sys::Result<*mut c_void>;
 	#[doc(hidden)] unsafe fn extern_input_output_array(&mut self) -> sys::Result<*mut c_void>;
