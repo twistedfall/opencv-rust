@@ -41,6 +41,8 @@ pub enum OperatorKind {
 	Div,
 	Deref,
 	Equals,
+	Incr,
+	Decr,
 }
 
 impl OperatorKind {
@@ -67,6 +69,12 @@ impl OperatorKind {
 			}
 			"==" => {
 				OperatorKind::Equals
+			}
+			"++" => {
+				OperatorKind::Incr
+			}
+			"--" => {
+				OperatorKind::Decr
 			}
 			_ => {
 				OperatorKind::Unsupported
@@ -290,13 +298,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_operator(&self) -> Option<(Option<Class<'tu, 'ge>>, OperatorKind)> {
+	pub fn as_operator(&self) -> Option<OperatorKind> {
 		match self.kind() {
 			Kind::FunctionOperator(kind) => {
-				Some((None, kind))
+				Some(kind)
 			}
-			Kind::InstanceOperator(cls, kind) => {
-				Some((Some(cls), kind))
+			Kind::InstanceOperator(_, kind) => {
+				Some(kind)
 			}
 			_ => {
 				None
@@ -557,11 +565,19 @@ impl Element for Func<'_, '_> {
 		}
 		DefaultElement::is_excluded(self)
 			|| self.is_generic()
+			|| self.as_operator().map_or(false, |kind| {
+				if matches!(kind, OperatorKind::Incr | OperatorKind::Decr) {
+					// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
+					self.clang_arguments().len() == 1
+				} else {
+					false
+				}
+			})
 			|| if let Some(cls) = self.as_constructor() { // don't generate constructors of abstract classes
-			cls.is_abstract()
-		} else {
-			false
-		}
+				cls.is_abstract()
+			} else {
+				false
+			}
 	}
 
 	fn is_ignored(&self) -> bool {
@@ -571,7 +587,7 @@ impl Element for Func<'_, '_> {
 		}
 		DefaultElement::is_ignored(self)
 			|| self.entity.get_availability() == Availability::Unavailable
-			|| self.as_operator().map_or(false, |(.., op)| op == OperatorKind::Unsupported)
+			|| self.as_operator().map_or(false, |op| op == OperatorKind::Unsupported)
 			|| self.arguments().into_iter().any(|a| a.type_ref().is_ignored())
 			|| {
 					let ret = self.return_type();
@@ -691,7 +707,7 @@ impl Element for Func<'_, '_> {
 			let mut name: String = self.return_type().rust_local().into_owned();
 			name.cleanup_name();
 			format!("to_{}", name).into()
-		} else if let Some((.., kind)) = self.as_operator() {
+		} else if let Some(kind) = self.as_operator() {
 			if cpp_name.starts_with("operator") {
 				match kind {
 					OperatorKind::Unsupported => {
@@ -725,6 +741,13 @@ impl Element for Func<'_, '_> {
 					}
 					OperatorKind::Equals => {
 						"equals".into()
+					}
+
+					OperatorKind::Incr => {
+						"incr".into()
+					}
+					OperatorKind::Decr => {
+						"decr".into()
 					}
 				}
 			} else {
