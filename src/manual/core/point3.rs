@@ -76,7 +76,27 @@ impl<T> Point3_<T> {
 		VecN::<_, 3>::from([self.x, self.y, self.z])
 	}
 }
-opencv_type_simple_generic! { Point3_<Copy> }
+
+impl<T> From<(T, T, T)> for Point3_<T> {
+	#[inline]
+	fn from(s: (T, T, T)) -> Self {
+		Self::new(s.0, s.1, s.2)
+	}
+}
+
+impl<T> From<VecN<T, 3>> for Point3_<T> {
+	#[inline]
+	fn from(s: VecN<T, 3>) -> Self {
+		Self::from_vec3(s)
+	}
+}
+
+impl<T: Zero> From<Point_<T>> for Point3_<T> {
+	#[inline]
+	fn from(s: Point_<T>) -> Self {
+		Self::from_point(s)
+	}
+}
 
 impl<T> Add for Point3_<T> where Self: AddAssign {
 	type Output = Self;
@@ -145,3 +165,5 @@ impl<T: DivAssign + Copy> DivAssign<T> for Point3_<T> {
 		self.z /= rhs;
 	}
 }
+
+opencv_type_simple_generic! { Point3_<Copy> }

@@ -11,6 +11,13 @@ impl<T> Scalar_<T> {
 	}
 }
 
+impl From<i32> for Scalar_<f64> {
+	#[inline]
+	fn from(v0: i32) -> Self {
+		Self::from(f64::from(v0))
+	}
+}
+
 impl<T: Zero> From<T> for Scalar_<T> {
 	#[inline]
 	fn from(v0: T) -> Self {

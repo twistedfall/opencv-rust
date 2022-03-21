@@ -84,7 +84,26 @@ impl<T> Rect_<T> {
 	}
 }
 
-opencv_type_simple_generic! { Rect_<Copy> }
+impl<T> From<(T, T, T, T)> for Rect_<T> {
+	#[inline]
+	fn from(s: (T, T, T, T)) -> Self {
+		Self::new(s.0, s.1, s.2, s.3)
+	}
+}
+
+impl<T> From<(Point_<T>, Size_<T>)> for Rect_<T> {
+	#[inline]
+	fn from(s: (Point_<T>, Size_<T>)) -> Self {
+		Self::from_point_size(s.0, s.1)
+	}
+}
+
+impl<T: PartialOrd + Sub<Output=T> + Copy> From<(Point_<T>, Point_<T>)> for Rect_<T> {
+	#[inline]
+	fn from(s: (Point_<T>, Point_<T>)) -> Self {
+		Self::from_points(s.0, s.1)
+	}
+}
 
 impl<P, R> Add<Point_<P>> for Rect_<R> where Self: AddAssign<Point_<P>> {
 	type Output = Self;
@@ -224,3 +243,5 @@ fn test_partial() {
 	assert_eq!(2, partial_max(2, 1));
 	assert_eq!(2, partial_max(2, 2));
 }
+
+opencv_type_simple_generic! { Rect_<Copy> }

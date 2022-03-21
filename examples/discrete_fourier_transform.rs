@@ -19,7 +19,7 @@ fn main() -> opencv::Result<()> {
 	let mut padded = Mat::default();
 	let m = core::get_optimal_dft_size(I.rows())?;
 	let n = core::get_optimal_dft_size(I.cols())?;
-	core::copy_make_border(&I, &mut padded, 0, m - I.rows(), 0, n - I.cols(), core::BORDER_CONSTANT, Scalar::all(0.))?;
+	core::copy_make_border(&I, &mut padded, 0, m - I.rows(), 0, n - I.cols(), core::BORDER_CONSTANT, 0.into())?;
 	let plane_size = padded.size()?;
 	let mut planes = core::Vector::<Mat>::new();
 	let mut padded_f32 = Mat::default();

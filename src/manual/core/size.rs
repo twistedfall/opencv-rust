@@ -42,7 +42,19 @@ impl<T> Size_<T> {
 	}
 }
 
-opencv_type_simple_generic! { Size_<Copy> }
+impl<T> From<(T, T)> for Size_<T> {
+	#[inline]
+	fn from(s: (T, T)) -> Self {
+		Self::new(s.0, s.1)
+	}
+}
+
+impl<T> From<Point_<T>> for Size_<T> {
+	#[inline]
+	fn from(s: Point_<T>) -> Self {
+		Self::from_point(s)
+	}
+}
 
 impl<T> Add for Size_<T> where Self: AddAssign {
 	type Output = Self;
@@ -107,3 +119,5 @@ impl<T: DivAssign + Copy> DivAssign<T> for Size_<T> {
 		self.height /= rhs;
 	}
 }
+
+opencv_type_simple_generic! { Size_<Copy> }
