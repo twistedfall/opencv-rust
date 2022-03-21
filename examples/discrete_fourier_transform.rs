@@ -39,7 +39,7 @@ fn main() -> opencv::Result<()> {
 	magI = magI_tmp;
 	let mut magI_log = Mat::default();
 	core::log(&magI, &mut magI_log)?;
-	magI = Mat::roi(&magI_log, core::Rect::new(0, 0, magI_log.cols() & -2, magI_log.rows() & -2))?;
+	magI = Mat::roi(&magI_log, Rect::new(0, 0, magI_log.cols() & -2, magI_log.rows() & -2))?;
 	let cx = magI.cols() / 2;
 	let cy = magI.rows() / 2;
 	let mut q0 = Mat::roi(&magI, Rect::new(0, 0, cx, cy))?;
