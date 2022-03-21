@@ -18309,6 +18309,7 @@ pub trait SparseMatConstIteratorTrait: core::SparseMatConstIteratorTraitConst {
 	
 	/// moves iterator to the previous element
 	#[inline]
+	#[cfg(not(target_os = "windows"))]
 	fn decr(&mut self) -> Result<core::SparseMatConstIterator> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SparseMatConstIterator_operatorSS(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };

@@ -1,3 +1,6 @@
+* 0.63.1
+  * Provide `From` implementations from tuples and similar C++ conversions for `Point`, `Size`, `Rect` and `Point3`.
+
 * 0.63.0
   * Provide bindings for `++` and `--` operators (fixes [#319](https://github.com/twistedfall/opencv-rust/issues/319))
   * Drop type restrictions for `Rect_`, `Point_`, `Size_`, `Point3_`, `VecN` (and related structs) (fixes [#316](https://github.com/twistedfall/opencv-rust/issues/316))

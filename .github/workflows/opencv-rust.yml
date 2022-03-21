@@ -84,7 +84,7 @@ jobs:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
-      VCPKG_TREE_COMMIT: 28af86cc15b53c09de6c0457e0ac737795e497e2
+      VCPKG_TREE_COMMIT: 2022.02.23
     steps:
       - uses: actions/checkout@v2
 
