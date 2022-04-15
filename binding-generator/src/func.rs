@@ -1,5 +1,4 @@
 use std::{
-	array::IntoIter,
 	borrow::Cow,
 	collections::HashMap,
 	fmt,
@@ -117,7 +116,7 @@ impl<'f> FuncId<'f> {
 	pub fn new<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
 		FuncId {
 			name: name.into(),
-			args: IntoIter::new(args).map(|a| a.into()).collect(),
+			args: IntoIterator::into_iter(args).map(|a| a.into()).collect(),
 		}
 	}
 

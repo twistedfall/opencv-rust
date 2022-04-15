@@ -31,6 +31,7 @@ pub struct VectorIterator<T: VectorElement> where Vector<T>: VectorExtern<T> {
 }
 
 impl<T: VectorElement> VectorIterator<T> where Vector<T>: VectorExtern<T> {
+	#[inline]
 	pub fn new(vec: Vector<T>) -> Self {
 		Self { vec, i: 0 }
 	}
@@ -39,17 +40,20 @@ impl<T: VectorElement> VectorIterator<T> where Vector<T>: VectorExtern<T> {
 impl<T: VectorElement> Iterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {
 	type Item = T;
 
+	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
 		let out = self.vec.get(self.i);
 		self.i += 1;
 		out.ok()
 	}
 
+	#[inline]
 	fn size_hint(&self) -> (usize, Option<usize>) {
 		let len = self.vec.len() - self.i;
 		(len, Some(len))
 	}
 
+	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
 		self.vec.get(n).ok()
 	}
@@ -65,6 +69,7 @@ pub struct VectorRefIterator<'v, T: VectorElement> where Vector<T>: VectorExtern
 }
 
 impl<'v, T: VectorElement> VectorRefIterator<'v, T> where Vector<T>: VectorExtern<T> {
+	#[inline]
 	pub fn new(vec: &'v Vector<T>) -> Self {
 		Self { vec, i: 0 }
 	}
@@ -73,17 +78,20 @@ impl<'v, T: VectorElement> VectorRefIterator<'v, T> where Vector<T>: VectorExter
 impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {
 	type Item = T;
 
+	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
 		let out = self.vec.get(self.i);
 		self.i += 1;
 		out.ok()
 	}
 
+	#[inline]
 	fn size_hint(&self) -> (usize, Option<usize>) {
 		let len = self.vec.len() - self.i;
 		(len, Some(len))
 	}
 
+	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
 		self.vec.get(n).ok()
 	}

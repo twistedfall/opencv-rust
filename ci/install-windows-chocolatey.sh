@@ -2,5 +2,5 @@
 
 set -vex
 
-choco install -y llvm --version 13.0.1
+choco install -y llvm --version 14.0.3
 choco install -y opencv --version "$OPENCV_VERSION"
