@@ -14,20 +14,22 @@ use opencv::{
 fn main() -> Result<()> {
 	let window = "video capture";
 	highgui::named_window(window, 1)?;
-	#[cfg(ocvrs_opencv_branch_32)]
-	let (xml, mut cam) = {
-		(
-			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
-			videoio::VideoCapture::new_default(0)?, // 0 is the default camera
-		)
-	};
-	#[cfg(not(ocvrs_opencv_branch_32))]
-	let (xml, mut cam) = {
-		(
-			core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,
-			videoio::VideoCapture::new(0, videoio::CAP_ANY)?, // 0 is the default camera
-		)
-	};
+	opencv::opencv_branch_32! {
+		let (xml, mut cam) = {
+			(
+				"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
+				videoio::VideoCapture::new_default(0)?, // 0 is the default camera
+			)
+		};
+	}
+	opencv::not_opencv_branch_32! {
+		let (xml, mut cam) = {
+			(
+				core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,
+				videoio::VideoCapture::new(0, videoio::CAP_ANY)?, // 0 is the default camera
+			)
+		};
+	}
 	let opened = videoio::VideoCapture::is_opened(&cam)?;
 	if !opened {
 		panic!("Unable to open default camera!");

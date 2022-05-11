@@ -1,5 +1,6 @@
 #![allow(broken_intra_doc_links)]
 
+pub use cond_macros::*;
 pub use error::{Error, Result};
 
 pub use crate::opencv::hub::*;
@@ -62,3 +63,4 @@ pub(crate) mod mod_prelude {
 
 #[cfg(test)]
 mod test;
+mod cond_macros;

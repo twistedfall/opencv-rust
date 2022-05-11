@@ -11,10 +11,12 @@ use opencv::{
 fn main() -> Result<()> {
 	let window = "video capture";
 	highgui::named_window(window, 1)?;
-	#[cfg(ocvrs_opencv_branch_32)]
-	let mut cam = videoio::VideoCapture::new_default(0)?; // 0 is the default camera
-	#[cfg(not(ocvrs_opencv_branch_32))]
-	let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY)?; // 0 is the default camera
+	opencv::opencv_branch_32! {
+		let mut cam = videoio::VideoCapture::new_default(0)?; // 0 is the default camera
+	}
+	opencv::not_opencv_branch_32! {
+		let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY)?; // 0 is the default camera
+	}
 	let opened = videoio::VideoCapture::is_opened(&cam)?;
 	if !opened {
 		panic!("Unable to open default camera!");
@@ -35,10 +37,12 @@ fn main() -> Result<()> {
 			let mask = Mat::default();
 			orb.detect(&gray, &mut kps, &mask)?;
 			let mut display = Mat::default();
-			#[cfg(ocvrs_opencv_branch_4)]
-			let default_draw_matches_flags = features2d::DrawMatchesFlags::DEFAULT;
-			#[cfg(not(ocvrs_opencv_branch_4))]
-			let default_draw_matches_flags = features2d::DrawMatchesFlags_DEFAULT;
+			opencv::opencv_branch_4! {
+				let default_draw_matches_flags = features2d::DrawMatchesFlags::DEFAULT;
+			}
+			opencv::not_opencv_branch_4! {
+				let default_draw_matches_flags = features2d::DrawMatchesFlags_DEFAULT;
+			}
 			features2d::draw_keypoints(
 				&gray,
 				&kps,

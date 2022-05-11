@@ -18,10 +18,12 @@ use opencv::{
 	types::VectorOfPoint,
 };
 
-#[cfg(ocvrs_opencv_branch_4)]
-use self::imgproc::LINE_8;
-#[cfg(not(ocvrs_opencv_branch_4))]
-use self::core::LINE_8;
+opencv::opencv_branch_4! {
+	use self::imgproc::LINE_8;
+}
+opencv::not_opencv_branch_4! {
+	use self::core::LINE_8;
+}
 
 fn help() {
 	// print a welcome message, and the OpenCV version
@@ -52,8 +54,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 	help();
 	let filename = env::args().skip(1).next().unwrap_or("data/right.jpg".into());
-	#[cfg(not(ocvrs_opencv_branch_32))]
-	let filename = core::find_file(&filename, true, false)?;
+	opencv::not_opencv_branch_32! {
+		let filename = core::find_file(&filename, true, false)?;
+	}
 	let original_image = imgcodecs::imread(&filename, imgcodecs::IMREAD_COLOR)?;
 	let mut image;
 	let original_image_cols = original_image.cols() as f32;
