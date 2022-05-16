@@ -167,10 +167,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				let pointee_typeref = TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind()
-				} else if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::Slice) | TypeRefTypeHint::ArgOverride(ArgOverride::NullableSlice)) {
-					Kind::Array(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env), None)
+				} else if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::Slice | ArgOverride::NullableSlice)) {
+					Kind::Array(pointee_typeref, None)
 				} else {
-					Kind::Pointer(TypeRef::new_ext(pointee, self.type_hint, self.parent_entity, self.gen_env))
+					Kind::Pointer(pointee_typeref)
 				}
 			}
 
