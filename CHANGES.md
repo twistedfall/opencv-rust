@@ -1,3 +1,6 @@
+* 0.63.2
+  * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4). 
+
 * 0.63.1
   * Provide `From` implementations from tuples and similar C++ conversions for `Point`, `Size`, `Rect` and `Point3`.
 
