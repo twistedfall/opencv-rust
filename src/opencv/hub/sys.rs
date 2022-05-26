@@ -641,7 +641,6 @@ mod core_sys {
 		pub fn cv_max_double_const_MatR(s: f64, a: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src: *const c_void, mean: *const c_void, stddev: *const c_void, mask: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_mean_const__InputArrayR_const__InputArrayR(src: *const c_void, mask: *const c_void, ocvrs_return: *mut Result<core::Scalar>);
-		pub fn cv_merge_const_MatX_size_t_const__OutputArrayR(mv: *const c_void, count: size_t, dst: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_merge_const__InputArrayR_const__OutputArrayR(mv: *const c_void, dst: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src: *const c_void, min_val: *mut f64, max_val: *mut f64, min_idx: *mut i32, max_idx: *mut i32, mask: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a: *const c_void, min_val: *mut f64, max_val: *mut f64, min_idx: *mut i32, max_idx: *mut i32, ocvrs_return: *mut Result_void);

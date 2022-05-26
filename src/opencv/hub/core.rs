@@ -4646,36 +4646,6 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// be equal to the parameter count.
 /// ## See also
 /// mixChannels, split, Mat::reshape
-#[inline]
-pub fn merge_slice(mv: &core::Mat, count: size_t, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(dst);
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_merge_const_MatX_size_t_const__OutputArrayR(mv.as_raw_Mat(), count, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	Ok(ret)
-}
-
-/// Creates one multi-channel array out of several single-channel ones.
-/// 
-/// The function cv::merge merges several arrays to make a single multi-channel array. That is, each
-/// element of the output array will be a concatenation of the elements of the input arrays, where
-/// elements of i-th input array are treated as mv[i].channels()-element vectors.
-/// 
-/// The function cv::split does the reverse operation. If you need to shuffle channels in some other
-/// advanced way, use cv::mixChannels.
-/// 
-/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
-/// 
-/// ## Parameters
-/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
-/// size and the same depth.
-/// * count: number of input matrices when mv is a plain C array; it must be greater than zero.
-/// * dst: output array of the same size and the same depth as mv[0]; The number of channels will
-/// be equal to the parameter count.
-/// ## See also
-/// mixChannels, split, Mat::reshape
 /// 
 /// ## Overloaded parameters
 /// 

@@ -1,3 +1,8 @@
+* 0.64.0
+  * Fix documentation for conditional compilation macros.
+  * Make sure to generate `VectorOfPoint3f` and `VectorOfVectorOfPoint3f` for `calib3d` module.
+  * Disable generation of `merge_slice` function because it's not usable from Rust.
+
 * 0.63.2
   * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4). 
 
