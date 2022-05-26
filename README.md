@@ -141,13 +141,13 @@ You need to set up the following environment variables to point to the installed
 
 7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
 
-   Enable the `clang-runtime` feature. The reason for the issue is that some crates (like `bindgen`) depend on
-   `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also enabled
-   for every other crate that depends on `clang-sys` (`opencv` in this case). During binding generation phase
+   Enable the `clang-runtime` feature or use crate version `0.66` and newer. The reason for the issue is that some crates
+   (like `bindgen`) depend on `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also 
+   enabled for every other crate that depends on `clang-sys` (`opencv` in this case). During binding generation phase
    `opencv` crate tries to use multiple threads and `clang-sys` with `runtime` feature enabled doesn't like
    that (hence the panic). Enabling `clang-runtime` feature switches to using multiple processes instead of
    multiple threads. This makes the build a bit longer because of the need to build the helper binary, but the
-   end result is the same.
+   end result is the same. Additionally since crate version `0.66` this behavior is now the default.
 
 ## Reporting issues
 
@@ -263,8 +263,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
   ```
 * `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
-* `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
-  workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details

@@ -4,8 +4,9 @@ use std::{
 	ffi::OsStr,
 	fs::File,
 	io::{BufRead, BufReader},
+	io,
 	path::{Path, PathBuf},
-	process::Command,
+	process::{Child, Command, Stdio},
 };
 
 use glob::glob;
@@ -219,6 +220,34 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	out
 }
 
+fn build_job_server() -> Option<jobserver::Client> {
+	unsafe { jobserver::Client::from_env() }
+		.or_else(|| {
+			let num_jobs = env::var("NUM_JOBS").ok()
+				.and_then(|jobs| jobs.parse().ok())
+				.unwrap_or(2)
+				.max(1);
+			eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
+			jobserver::Client::new(num_jobs).ok()
+		})
+}
+
+// todo: replace by https://github.com/rust-lang/cargo/issues/9096 when stable
+fn build_clang_generator() -> io::Result<Child> {
+	let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
+	let mut cargo = Command::new(cargo_bin);
+	// generator script is quite slow in debug mode, so we force it to be built in release mode
+	cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
+		.env("CARGO_TARGET_DIR", &*OUT_DIR);
+	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
+		cargo.args(&["--target", host_triple]);
+	}
+	println!("running: {:?}", &cargo);
+	cargo.stdout(Stdio::piped());
+	cargo.stderr(Stdio::piped());
+	cargo.spawn()
+}
+
 fn setup_rerun() -> Result<()> {
 	for &v in ENV_VARS.iter() {
 		println!("cargo:rerun-if-env-changed={}", v);
@@ -271,20 +300,8 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	let generator_build = if cfg!(feature = "clang-runtime") { // start building binding generator as early as possible
-		let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
-		let mut cargo = Command::new(cargo_bin);
-		// generator script is quite slow in debug mode, so we force it to be built in release mode
-		cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
-			.env("CARGO_TARGET_DIR", &*OUT_DIR);
-		if let Some(host_triple) = HOST_TRIPLE.as_ref() {
-			cargo.args(&["--target", host_triple]);
-		}
-		println!("running: {:?}", &cargo);
-		Some(cargo.spawn()?)
-	} else {
-		None
-	};
+	let job_server = build_job_server().ok_or("Can't create job server")?;
+	let generator_build = build_clang_generator()?;
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
@@ -345,7 +362,7 @@ fn main() -> Result<()> {
 
 	setup_rerun()?;
 
-	generator::gen_wrapper(opencv_header_dir, &opencv, generator_build)?;
+	generator::gen_wrapper(opencv_header_dir, &opencv, job_server, generator_build)?;
 	build_wrapper(&opencv);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();

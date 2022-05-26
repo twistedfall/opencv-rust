@@ -55,9 +55,8 @@ FEATURES=rgb
 
 cargo test -vv --features "$FEATURES"
 cargo test --release -vv --features "$FEATURES"
-cargo test --release -vv --features "$FEATURES,clang-runtime"
 
-pushd ci/test-proj-clang-runtime
+pushd ci/test-proj
 cargo run -vv
 popd
 

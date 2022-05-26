@@ -1,5 +1,4 @@
 use std::{
-	env,
 	ffi::OsStr,
 	fs::{self, DirEntry, File, OpenOptions},
 	io::{self, BufRead, BufReader, Write},
@@ -51,7 +50,7 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	Ok(target_file)
 }
 
-pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: Option<Child>) -> Result<()> {
+pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobserver::Client, generator_build: Child) -> Result<()> {
 	let out_dir_as_str = OUT_DIR.to_str().unwrap();
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
@@ -60,8 +59,6 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 	eprintln!("=== Generating code in: {}", out_dir_as_str);
 	eprintln!("=== Placing generated bindings into: {}", target_hub_dir.display());
 	eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
-
-	let modules = MODULES.get().expect("MODULES not initialized");
 
 	for entry in read_dir(&OUT_DIR)? {
 		let path = entry.path();
@@ -74,77 +71,58 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, generator_build: 
 		.filter(|&include_path| include_path != opencv_header_dir)
 		.cloned()
 		.collect::<Vec<_>>();
-	let num_jobs = env::var("NUM_JOBS").ok()
-		.and_then(|jobs| jobs.parse().ok())
-		.unwrap_or(2);
-	let job_server = jobserver::Client::new(num_jobs).expect("Can't create job server");
-	let mut join_handles = Vec::with_capacity(modules.len());
-	let start;
+
 	let clang = clang::Clang::new().expect("Cannot initialize clang");
-	println!("=== Clang: {}", clang::get_version());
+	eprintln!("=== Clang: {}", clang::get_version());
 	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
+	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+
+	eprintln!("=== Waiting until the binding-generator binary is built...");
+	let res = generator_build.wait_with_output()?;
+	if let Err(e) = io::stdout().write(&res.stdout) {
+		eprintln!("=== Can't write stdout: {:?}, error: {}", res.stdout, e)
+	}
+	if let Err(e) = io::stderr().write(&res.stderr) {
+		eprintln!("=== Can't write stderr: {:?}, error: {}", res.stdout, e)
+	}
+	if !res.status.success() {
+		return Err("Failed to build the bindings generator".into());
+	}
+
 	let additional_include_dirs = Arc::new(additional_include_dirs.iter().cloned()
 		.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string").to_string())
 		.collect::<Vec<_>>()
 	);
-	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
-	if cfg!(feature = "clang-runtime") {
-		let status = generator_build.expect("Impossible").wait()?;
-		if !status.success() {
-			return Err("Failed to build the bindings generator".into());
-		}
-		let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
-		start = Instant::now();
-		modules.iter().for_each(|module| {
-			let token = job_server.acquire().expect("Can't acquire token from job server");
-			let join_handle = thread::spawn({
-				let additional_include_dirs = Arc::clone(&additional_include_dirs);
-				let opencv_header_dir = Arc::clone(&opencv_header_dir);
-				move || {
-					let mut bin_generator = match HOST_TRIPLE.as_ref() {
-						Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
-						None => Command::new(OUT_DIR.join("release/binding-generator")),
-					};
-					bin_generator.arg(&*opencv_header_dir)
-						.arg(&*SRC_CPP_DIR)
-						.arg(&*OUT_DIR)
-						.arg(&module)
-						.arg(additional_include_dirs.join(","));
-					eprintln!("=== Running binding generator binary: {:#?}", bin_generator);
-					let res = bin_generator.status().expect("Can't run bindings generator");
-					if !res.success() {
-						panic!("Failed to run the bindings generator");
-					}
-					eprintln!("=== Generated: {}", module);
-					drop(token); // needed to move the token to the thread
+	let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+	let modules = MODULES.get().expect("MODULES not initialized");
+	let mut join_handles = Vec::with_capacity(modules.len());
+	let start = Instant::now();
+	modules.iter().for_each(|module| {
+		let token = job_server.acquire().expect("Can't acquire token from job server");
+		let join_handle = thread::spawn({
+			let additional_include_dirs = Arc::clone(&additional_include_dirs);
+			let opencv_header_dir = Arc::clone(&opencv_header_dir);
+			move || {
+				let mut bin_generator = match HOST_TRIPLE.as_ref() {
+					Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
+					None => Command::new(OUT_DIR.join("release/binding-generator")),
+				};
+				bin_generator.arg(&*opencv_header_dir)
+					.arg(&*SRC_CPP_DIR)
+					.arg(&*OUT_DIR)
+					.arg(&module)
+					.arg(additional_include_dirs.join(","));
+				eprintln!("=== Running: {:#?}", bin_generator);
+				let res = bin_generator.status().expect("Can't run bindings generator");
+				if !res.success() {
+					panic!("Failed to run the bindings generator");
 				}
-			});
-			join_handles.push(join_handle);
+				eprintln!("=== Generated: {}", module);
+				drop(token); // needed to move the token to the thread
+			}
 		});
-	} else {
-		let gen = Arc::new(gen);
-		start = Instant::now();
-		modules.iter().for_each(|module| {
-			let token = job_server.acquire().expect("Can't acquire token from job server");
-			let opencv_version = opencv.version.to_string();
-			let join_handle = thread::spawn({
-				let gen = Arc::clone(&gen);
-				move || {
-					let bindings_writer = binding_generator::writer::RustNativeBindingWriter::new(
-						&*SRC_CPP_DIR,
-						&*OUT_DIR,
-						module,
-						&opencv_version,
-						false,
-					);
-					gen.process_opencv_module(module, bindings_writer);
-					eprintln!("=== Generated: {}", module);
-					drop(token); // needed to move the token to the thread
-				}
-			});
-			join_handles.push(join_handle);
-		});
-	}
+		join_handles.push(join_handle);
+	});
 	for join_handle in join_handles {
 		join_handle.join().expect("Generator thread panicked");
 	}
