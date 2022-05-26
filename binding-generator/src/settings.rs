@@ -1090,8 +1090,11 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 	},
 	"calib3d" => ModuleTweak {
 		generate_types: vec![
+			// for calibrate_camera
 			"std::vector<cv::Point3i>",
 			"std::vector<std::vector<cv::Point3i>>",
+			"std::vector<cv::Point3f>",
+			"std::vector<std::vector<cv::Point3f>>",
 			"std::vector<cv::Point3d>",
 			"std::vector<std::vector<cv::Point3d>>",
 			"std::vector<cv::Vec3f>",
