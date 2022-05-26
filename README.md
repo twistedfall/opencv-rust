@@ -136,6 +136,9 @@ You need to set up the following environment variables to point to the installed
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
    ```
 
+   You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
+   please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
+
 7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
 
    Enable the `clang-runtime` feature. The reason for the issue is that some crates (like `bindgen`) depend on
