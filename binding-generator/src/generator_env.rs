@@ -66,7 +66,11 @@ impl<'tu> DbPopulator<'tu, '_> {
 		let raw_comment = entity.get_comment().unwrap_or_default();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
 			let name = entity.cpp_fullname().into_owned();
-			self.gen_env.func_comments.insert(name, comment::strip_comment_markers(&raw_comment));
+			let line = entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
+			let defs = self.gen_env.func_comments.entry(name).or_insert_with(|| vec![]);
+			defs.push((line, comment::strip_comment_markers(&raw_comment)));
+			// reverse sort due to how we're querying this
+			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));
 		}
 	}
 
@@ -150,7 +154,7 @@ pub struct GeneratorEnv<'tu> {
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	rename_map: HashMap<ExportIdx, RenameConfig>,
 	pub func_names: NamePool,
-	func_comments: HashMap<String, String>,
+	func_comments: HashMap<String, Vec<(u32, String)>>,
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
 	type_resolve_cache: HashMap<String, Type<'tu>>,
@@ -258,8 +262,14 @@ impl<'tu> GeneratorEnv<'tu> {
 		Self::get_with_fuzzy_key(entity, |key| self.rename_map.get(key))
 	}
 
-	pub fn get_func_comment(&self, cpp_fullname: &str) -> Option<&str> {
-		self.func_comments.get(cpp_fullname).map(|x| x.as_str())
+	pub fn get_func_comment(&self, line: u32, cpp_fullname: &str) -> Option<&str> {
+		self.func_comments.get(cpp_fullname)
+			.and_then(|comments| comments.iter()
+				// try to find the source function comment that is closest to the requested
+				.find(|(source_line, _)| *source_line <= line)
+				// if it fails return at least something
+				.or_else(|| comments.last()))
+			.map(|(_, comment)| comment.as_str())
 	}
 
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {

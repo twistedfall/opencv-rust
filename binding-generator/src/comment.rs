@@ -204,7 +204,8 @@ pub fn render_doc_comment_with_processor(doc_comment: &str, prefix: &str, opencv
 	}
 
 	// comment body markers
-	out.replace_in_place("@brief ", "");
+	static BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@brief[ :]*"#).unwrap());
+	out.replace_in_place_regex(&BRIEF, "");
 	out.replace_in_place("@note", "\nNote:");
 
 	// code blocks, don't run them during tests

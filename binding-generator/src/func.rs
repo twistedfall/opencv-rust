@@ -609,12 +609,13 @@ impl Element for Func<'_, '_> {
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
 		let mut comment = self.entity.get_comment().unwrap_or_default();
+		let line = self.entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
 		const OVERLOAD: &str = "@overload";
 		if let Some(idx) = comment.find(OVERLOAD) {
-			let rep = if let Some(copy) = self.gen_env.get_func_comment(self.entity.cpp_fullname().as_ref()) {
+			let rep = if let Some(copy) = self.gen_env.get_func_comment(line, self.entity.cpp_fullname().as_ref()) {
 				format!("{}\n\n## Overloaded parameters\n", copy)
 			} else {
-				"".to_string()
+				"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
 			};
 			comment.replace_range(idx..idx + OVERLOAD.len(), &rep);
 		}
@@ -624,7 +625,7 @@ impl Element for Func<'_, '_> {
 			let mut copy_full_name = self.cpp_namespace().into_owned();
 			copy_full_name += "::";
 			copy_full_name += copy_name;
-			if let Some(copy) = self.gen_env.get_func_comment(&copy_full_name) {
+			if let Some(copy) = self.gen_env.get_func_comment(line, &copy_full_name) {
 				Some(copy.into())
 			} else {
 				Some("".into())
