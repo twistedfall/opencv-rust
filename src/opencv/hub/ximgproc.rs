@@ -110,7 +110,7 @@ pub const WMF_IV2: i32 = 4;
 pub const WMF_JAC: i32 = 16;
 /// unweighted
 pub const WMF_OFF: i32 = 32;
-///   Specifies the part of Hough space to calculate
+/// Specifies the part of Hough space to calculate
 /// @details The enum specifies the part of Hough space to calculate. Each
 /// member specifies primarily direction of lines (horizontal or vertical)
 /// and the direction of angle changes.
@@ -158,7 +158,7 @@ pub enum EdgeDrawing_GradientOperator {
 
 opencv_type_enum! { crate::ximgproc::EdgeDrawing_GradientOperator }
 
-///   Specifies to do or not to do skewing of Hough transform image
+/// Specifies to do or not to do skewing of Hough transform image
 /// @details The enum specifies to do or not to do skewing of Hough transform image
 /// so it would be no cycling in Hough transform image through borders of image.
 #[repr(C)]
@@ -170,7 +170,7 @@ pub enum HoughDeskewOption {
 
 opencv_type_enum! { crate::ximgproc::HoughDeskewOption }
 
-///   Specifies binary operations.
+/// Specifies binary operations.
 /// @details The enum specifies binary operations, that is such ones which involve
 ///          two operands. Formally, a binary operation @f$ f @f$ on a set @f$ S @f$
 ///          is a binary relation that maps elements of the Cartesian product
@@ -204,7 +204,7 @@ pub enum LocalBinarizationMethods {
 
 opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods }
 
-///   Specifies the degree of rules validation.
+/// Specifies the degree of rules validation.
 /// @details The enum specifies the degree of rules validation. This can be used,
 ///          for example, to choose a proper way of input arguments validation.
 #[repr(C)]
@@ -270,7 +270,7 @@ pub fn bright_edges(_original: &mut core::Mat, _edgeview: &mut core::Mat, contra
 	Ok(ret)
 }
 
-///   Calculates 2D Fast Hough transform of an image.
+/// Calculates 2D Fast Hough transform of an image.
 /// ## Parameters
 /// * dst: The destination image, result of transformation.
 /// * src: The source (input) image.
@@ -297,7 +297,7 @@ pub fn fast_hough_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 	Ok(ret)
 }
 
-///   Applies X Deriche filter to an image.
+/// Applies X Deriche filter to an image.
 /// 
 /// For more details about this implementation, please see http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.476.5736&rep=rep1&type=pdf
 /// 
@@ -317,7 +317,7 @@ pub fn gradient_deriche_x(op: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 	Ok(ret)
 }
 
-///   Applies Y Deriche filter to an image.
+/// Applies Y Deriche filter to an image.
 /// 
 /// For more details about this implementation, please see http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.476.5736&rep=rep1&type=pdf
 /// 
@@ -348,7 +348,7 @@ pub fn gradient_paillou_x(op: &dyn core::ToInputArray, _dst: &mut dyn core::ToOu
 	Ok(ret)
 }
 
-///   Applies Paillou filter to an image.
+/// Applies Paillou filter to an image.
 /// 
 /// For more details about this implementation, please see [paillou1997detecting](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_paillou1997detecting)
 /// 
@@ -370,7 +370,7 @@ pub fn gradient_paillou_y(op: &dyn core::ToInputArray, _dst: &mut dyn core::ToOu
 	Ok(ret)
 }
 
-///   Calculates coordinates of line segment corresponded by point in Hough space.
+/// Calculates coordinates of line segment corresponded by point in Hough space.
 /// ## Parameters
 /// * houghPoint: Point in Hough space.
 /// * srcImgInfo: The source (input) image of Hough transform.
@@ -399,7 +399,7 @@ pub fn hough_point2_line(hough_point: core::Point, src_img_info: &dyn core::ToIn
 	Ok(ret)
 }
 
-///   Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
+/// Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
 /// 
 /// Assume given image ![inline formula](https://latex.codecogs.com/png.latex?I%3DT%28%5Cbar%7BI%7D%29) where ![inline formula](https://latex.codecogs.com/png.latex?%5Cbar%7BI%7D) is a normalized image and ![inline formula](https://latex.codecogs.com/png.latex?T) is an affine transformation distorting this image by translation, rotation, scaling and skew.
 /// The function returns an affine transformation matrix corresponding to the transformation ![inline formula](https://latex.codecogs.com/png.latex?T%5E%7B%2D1%7D) described in [PeiLin95].
@@ -420,7 +420,7 @@ pub fn pei_lin_normalization(i: &dyn core::ToInputArray) -> Result<core::Matx23d
 	Ok(ret)
 }
 
-///   Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
+/// Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
 /// 
 /// Assume given image ![inline formula](https://latex.codecogs.com/png.latex?I%3DT%28%5Cbar%7BI%7D%29) where ![inline formula](https://latex.codecogs.com/png.latex?%5Cbar%7BI%7D) is a normalized image and ![inline formula](https://latex.codecogs.com/png.latex?T) is an affine transformation distorting this image by translation, rotation, scaling and skew.
 /// The function returns an affine transformation matrix corresponding to the transformation ![inline formula](https://latex.codecogs.com/png.latex?T%5E%7B%2D1%7D) described in [PeiLin95].
@@ -444,7 +444,7 @@ pub fn pei_lin_normalization_1(i: &dyn core::ToInputArray, t: &mut dyn core::ToO
 	Ok(ret)
 }
 
-///   Calculate Radon Transform of an image.
+/// Calculate Radon Transform of an image.
 /// ## Parameters
 /// * src: The source (input) image.
 /// * dst: The destination image, result of transformation.
@@ -582,7 +582,7 @@ pub fn bilateral_texture_filter(src: &dyn core::ToInputArray, dst: &mut dyn core
 	Ok(ret)
 }
 
-///    Compares a color template against overlapped color image regions.
+/// Compares a color template against overlapped color image regions.
 /// 
 /// ## Parameters
 /// * img: Image where the search is running. It must be 3 channels image
@@ -648,7 +648,7 @@ pub fn compute_mse(gt: &dyn core::ToInputArray, src: &dyn core::ToInputArray, ro
 	Ok(ret)
 }
 
-///   Contour sampling .
+/// Contour sampling .
 /// 
 /// ## Parameters
 /// * src: contour type vector<Point> , vector<Point2f>  or vector<Point2d>
@@ -988,7 +988,7 @@ pub fn create_guided_filter(guide: &dyn core::ToInputArray, radius: i32, eps: f6
 	Ok(ret)
 }
 
-///   creates a quaternion image.
+/// creates a quaternion image.
 /// 
 /// ## Parameters
 /// * img: Source 8-bit, 32-bit or 64-bit image, with 3-channel image.
@@ -1336,7 +1336,7 @@ pub fn fast_global_smoother_filter(guide: &dyn core::ToInputArray, src: &dyn cor
 	Ok(ret)
 }
 
-///   Fourier descriptors for planed closed curves
+/// Fourier descriptors for planed closed curves
 /// 
 /// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_PersoonFu1977)
 /// 
@@ -1536,7 +1536,7 @@ pub fn ni_black_threshold(_src: &dyn core::ToInputArray, _dst: &mut dyn core::To
 	Ok(ret)
 }
 
-///   calculates conjugate of a quaternion image.
+/// calculates conjugate of a quaternion image.
 /// 
 /// ## Parameters
 /// * qimg: quaternion image.
@@ -1552,7 +1552,7 @@ pub fn qconj(qimg: &dyn core::ToInputArray, qcimg: &mut dyn core::ToOutputArray)
 	Ok(ret)
 }
 
-///    Performs a forward or inverse Discrete quaternion Fourier transform of a 2D quaternion array.
+/// Performs a forward or inverse Discrete quaternion Fourier transform of a 2D quaternion array.
 /// 
 /// ## Parameters
 /// * img: quaternion image.
@@ -1570,7 +1570,7 @@ pub fn qdft(img: &dyn core::ToInputArray, qimg: &mut dyn core::ToOutputArray, fl
 	Ok(ret)
 }
 
-///   Calculates the per-element quaternion product of two arrays
+/// Calculates the per-element quaternion product of two arrays
 /// 
 /// ## Parameters
 /// * src1: quaternion image.
@@ -1588,7 +1588,7 @@ pub fn qmultiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, d
 	Ok(ret)
 }
 
-///   divides each element by its modulus.
+/// divides each element by its modulus.
 /// 
 /// ## Parameters
 /// * qimg: quaternion image.
@@ -1624,7 +1624,7 @@ pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32>
 	Ok(ret)
 }
 
-///   Creates a run-length encoded image from a vector of runs (column begin, column end, row)
+/// Creates a run-length encoded image from a vector of runs (column begin, column end, row)
 /// 
 /// ## Parameters
 /// * runs: vector of runs
@@ -1644,7 +1644,7 @@ pub fn create_rle_image(runs: &core::Vector<core::Point3i>, res: &mut dyn core::
 	Ok(ret)
 }
 
-///   Dilates an run-length encoded binary image by using a specific structuring element.
+/// Dilates an run-length encoded binary image by using a specific structuring element.
 /// 
 /// 
 /// ## Parameters
@@ -1668,7 +1668,7 @@ pub fn dilate(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::ToOutputA
 	Ok(ret)
 }
 
-///   Erodes an run-length encoded binary image by using a specific structuring element.
+/// Erodes an run-length encoded binary image by using a specific structuring element.
 /// 
 /// 
 /// ## Parameters
@@ -1695,7 +1695,7 @@ pub fn erode(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::ToOutputAr
 	Ok(ret)
 }
 
-///   Returns a run length encoded structuring element of the specified size and shape.
+/// Returns a run length encoded structuring element of the specified size and shape.
 /// 
 /// 
 /// ## Parameters
@@ -1711,7 +1711,7 @@ pub fn get_structuring_element(shape: i32, ksize: core::Size) -> Result<core::Ma
 	Ok(ret)
 }
 
-///   Check whether a custom made structuring element can be used with run length morphological operations.
+/// Check whether a custom made structuring element can be used with run length morphological operations.
 ///          (It must consist of a continuous array of single runs per row)
 /// 
 /// ## Parameters
@@ -1726,7 +1726,7 @@ pub fn is_rl_morphology_possible(rl_structuring_element: &dyn core::ToInputArray
 	Ok(ret)
 }
 
-///   Applies a morphological operation to a run-length encoded binary image.
+/// Applies a morphological operation to a run-length encoded binary image.
 /// 
 /// 
 /// ## Parameters
@@ -1754,7 +1754,7 @@ pub fn morphology_ex(rl_src: &dyn core::ToInputArray, rl_dest: &mut dyn core::To
 	Ok(ret)
 }
 
-///   Paint run length encoded binary image into an image.
+/// Paint run length encoded binary image into an image.
 /// 
 /// 
 /// ## Parameters
@@ -1772,7 +1772,7 @@ pub fn paint(image: &mut dyn core::ToInputOutputArray, rl_src: &dyn core::ToInpu
 	Ok(ret)
 }
 
-///   Applies a fixed-level threshold to each array element.
+/// Applies a fixed-level threshold to each array element.
 /// 
 /// 
 /// ## Parameters
@@ -2004,7 +2004,7 @@ pub fn thinning(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 	Ok(ret)
 }
 
-///   transform a contour
+/// transform a contour
 /// 
 /// ## Parameters
 /// * src: contour or Fourier Descriptors if fd is true
@@ -2026,7 +2026,7 @@ pub fn transform_fd(src: &dyn core::ToInputArray, t: &dyn core::ToInputArray, ds
 	Ok(ret)
 }
 
-///   Applies weighted median filter to an image.
+/// Applies weighted median filter to an image.
 /// 
 /// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_zhang2014100)+
 /// 
@@ -3838,7 +3838,7 @@ pub trait RICInterpolator: crate::ximgproc::RICInterpolatorConst + crate::ximgpr
 	
 }
 
-///  Applies Ridge Detection Filter to an input image.
+/// Applies Ridge Detection Filter to an input image.
 /// Implements Ridge detection similar to the one in [Mathematica](http://reference.wolfram.com/language/ref/RidgeFilter.html)
 /// using the eigen values from the Hessian Matrix of the input image using Sobel Derivatives.
 /// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_M_RF)

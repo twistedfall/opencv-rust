@@ -818,13 +818,43 @@ impl dyn EigenFaceRecognizer + '_ {
 pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	fn as_raw_FaceRecognizer(&self) -> *const c_void;
 
-	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
+	/// Predicts a label and associated confidence (e.g. distance) for a given input image.
+	/// 
 	/// ## Parameters
 	/// * src: Sample image to get a prediction from.
-	/// * collector: User-defined collector object that accepts all results
+	/// * label: The predicted label for the given image.
+	/// * confidence: Associated confidence (e.g. distance) for the predicted label.
 	/// 
-	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
-	/// not try to get "best@ result, just resend it to caller side with given collector
+	/// The suffix const means that prediction does not affect the internal model state, so the method can
+	/// be safely called from within different threads.
+	/// 
+	/// The following example shows how to get a prediction from a trained model:
+	/// 
+	/// ```ignore
+	/// using namespace cv;
+	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
+	/// // ...
+	/// // Read in a sample image:
+	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
+	/// // And get a prediction from the cv::FaceRecognizer:
+	/// int predicted = model->predict(img);
+	/// ```
+	/// 
+	/// 
+	/// Or to get a prediction and the associated confidence (e.g. distance):
+	/// 
+	/// ```ignore
+	/// using namespace cv;
+	/// // Do your initialization here (create the cv::FaceRecognizer model) ...
+	/// // ...
+	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
+	/// // Some variables for the predicted label and associated confidence (e.g. distance):
+	/// int predicted_label = -1;
+	/// double predicted_confidence = 0.0;
+	/// // Get the prediction and associated confidence from the model
+	/// model->predict(img, predicted_label, predicted_confidence);
+	/// ```
+	/// 
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -949,6 +979,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn empty(&self) -> Result<bool> {
 		return_send!(via ocvrs_return);

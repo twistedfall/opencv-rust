@@ -574,7 +574,7 @@ impl dyn Retina + '_ {
 	}
 	
 }
-///  a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
+/// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
 /// 
 /// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
 /// As a summary, these are the model properties:

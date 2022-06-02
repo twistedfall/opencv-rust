@@ -2210,7 +2210,7 @@ pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	Ok(ret)
 }
 
-///  Inverts every bit of an array.
+/// Inverts every bit of an array.
 /// 
 /// The function cv::bitwise_not calculates per-element bit-wise inversion of the input
 /// array:
@@ -2663,7 +2663,7 @@ pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 	Ok(ret)
 }
 
-///  This is an overloaded member function, provided for convenience (python)
+/// This is an overloaded member function, provided for convenience (python)
 /// Copies the matrix to another one.
 /// When the operation mask is specified, if the Mat::create call shown above reallocates the matrix, the newly allocated matrix is initialized with all zeros before copying the data.
 /// ## Parameters
@@ -4137,7 +4137,7 @@ pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 	Ok(ret)
 }
 
-///  Checks if array elements lie between the elements of two other arrays.
+/// Checks if array elements lie between the elements of two other arrays.
 /// 
 /// The function checks the range as follows:
 /// *   For every element of a single-channel input array:
@@ -13290,7 +13290,10 @@ impl Mat {
 		ret
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13309,7 +13312,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13328,7 +13334,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13350,7 +13359,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13372,7 +13384,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13391,7 +13406,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13409,7 +13427,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13431,7 +13452,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13452,7 +13476,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13472,7 +13499,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13502,7 +13532,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13532,7 +13565,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13561,7 +13597,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13589,7 +13628,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13615,7 +13657,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -13636,7 +13681,10 @@ impl Mat {
 		Ok(ret)
 	}
 	
-	/// download data from GpuMat
+	/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+	/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+	/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+	/// allocated with Mat::create . In the former case, the old content is de-referenced.
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -16163,6 +16211,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_i8(&mut self) -> Result<i8> {
 		return_send!(via ocvrs_return);
@@ -16172,6 +16221,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_u16(&mut self) -> Result<u16> {
 		return_send!(via ocvrs_return);
@@ -16181,6 +16231,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_i16(&mut self) -> Result<i16> {
 		return_send!(via ocvrs_return);
@@ -16190,6 +16241,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_u32(&mut self) -> Result<u32> {
 		return_send!(via ocvrs_return);
@@ -16199,6 +16251,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_i32(&mut self) -> Result<i32> {
 		return_send!(via ocvrs_return);
@@ -16208,6 +16261,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_f32(&mut self) -> Result<f32> {
 		return_send!(via ocvrs_return);
@@ -16217,6 +16271,7 @@ pub trait RNGTrait: core::RNGTraitConst {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	#[inline]
 	fn to_f64(&mut self) -> Result<f64> {
 		return_send!(via ocvrs_return);
@@ -17192,12 +17247,28 @@ impl SVD {
 		Ok(ret)
 	}
 	
-	/// @todo document
+	/// decomposes matrix and stores the results to user-provided matrices
+	/// 
+	/// The methods/functions perform SVD of matrix. Unlike SVD::SVD constructor
+	/// and SVD::operator(), they store the results to the user-provided
+	/// matrices:
+	/// 
+	/// ```ignore
+	/// Mat A, w, u, vt;
+	/// SVD::compute(A, w, u, vt);
+	/// ```
+	/// 
+	/// 
+	/// ## Parameters
+	/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+	/// * w: calculated singular values
+	/// * u: calculated left singular vectors
+	/// * vt: transposed matrix of right singular vectors
+	/// * flags: operation flags - see SVD::Flags.
 	/// 
 	/// ## Overloaded parameters
 	/// 
 	///    computes singular values of a matrix
-	/// ## Parameters
 	/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
 	/// * w: calculated singular values
 	/// * flags: operation flags - see SVD::Flags.
@@ -18382,7 +18453,7 @@ impl SparseMatConstIterator {
 	
 }
 
-///  Read-write Sparse Matrix Iterator
+/// Read-write Sparse Matrix Iterator
 /// 
 /// The class is similar to cv::SparseMatConstIterator,
 /// but can be used for in-place modification of the matrix elements.
@@ -18418,7 +18489,7 @@ pub trait SparseMatIteratorTrait: core::SparseMatConstIteratorTrait + core::Spar
 	
 }
 
-///  Read-write Sparse Matrix Iterator
+/// Read-write Sparse Matrix Iterator
 /// 
 /// The class is similar to cv::SparseMatConstIterator,
 /// but can be used for in-place modification of the matrix elements.

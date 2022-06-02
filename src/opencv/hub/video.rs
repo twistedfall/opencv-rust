@@ -1899,6 +1899,7 @@ impl KalmanFilter {
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// ## Parameters
 	/// * dynamParams: Dimensionality of the state.
 	/// * measureParams: Dimensionality of the measurement.

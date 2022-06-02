@@ -252,6 +252,8 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -267,6 +269,8 @@ pub fn calc_abs_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * norm_type: NORM_L2
 /// * stream: Stream::Null()
@@ -282,6 +286,8 @@ pub fn calc_norm_diff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArr
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -297,6 +303,8 @@ pub fn calc_norm(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -312,6 +320,8 @@ pub fn calc_sqr_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -618,6 +628,8 @@ pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stre
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -634,6 +646,8 @@ pub fn find_min_max_loc(src: &dyn core::ToInputArray, min_max_vals: &mut dyn cor
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * stream: Stream::Null()
@@ -719,7 +733,7 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 	Ok(ret)
 }
 
-///  Checks if array elements lie between two scalars.
+/// Checks if array elements lie between two scalars.
 /// 
 /// The function checks the range as follows:
 /// *   For every element of a single-channel input array:

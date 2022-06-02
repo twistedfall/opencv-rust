@@ -155,6 +155,8 @@ pub fn create_face_detection_mask_generator() -> Result<core::Ptr<dyn crate::obj
 	Ok(ret)
 }
 
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+/// 
 /// ## C++ default parameters
 /// * detect_threshold: 0.0
 /// * win_det_size: Size(64,128)
@@ -1799,7 +1801,7 @@ pub trait HOGDescriptorTraitConst {
 		Ok(ret)
 	}
 	
-	///  Computes gradients and quantized gradient orientations.
+	/// Computes gradients and quantized gradient orientations.
 	/// ## Parameters
 	/// * img: Matrix contains the image to be computed
 	/// * grad: Matrix of type CV_32FC2 contains computed gradients

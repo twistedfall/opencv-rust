@@ -1,3 +1,6 @@
+* 0.64.1
+  * Improve function documentation generation (fixes [#266](https://github.com/twistedfall/opencv-rust/issues/266)).
+
 * 0.64.0
   * Fix documentation for conditional compilation macros.
   * Make sure to generate `VectorOfPoint3f` and `VectorOfVectorOfPoint3f` for `calib3d` module.

@@ -722,7 +722,7 @@ pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
 		Ok(ret)
 	}
 	
-	///  see ximgproc::EdgeAwareInterpolator() lambda value.
+	/// see ximgproc::EdgeAwareInterpolator() lambda value.
 	/// Lambda is a parameter defining the weight of the edge-aware term in geodesic distance,
 	///      *    should be in the range of 0 to 1000.
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
@@ -904,7 +904,7 @@ pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crat
 		Ok(ret)
 	}
 	
-	///  see ximgproc::EdgeAwareInterpolator() lambda value.
+	/// see ximgproc::EdgeAwareInterpolator() lambda value.
 	/// Lambda is a parameter defining the weight of the edge-aware term in geodesic distance,
 	///      *    should be in the range of 0 to 1000.
 	///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
@@ -2023,7 +2023,7 @@ impl OpticalFlowPCAFlow {
 
 boxed_cast_base! { OpticalFlowPCAFlow, core::Algorithm, cv_OpticalFlowPCAFlow_to_Algorithm }
 
-/// @brief
+/// 
 /// This class can be used for imposing a learned prior on the resulting optical flow.
 /// Solution will be regularized according to this prior.
 /// You need to generate appropriate prior file with "learn_prior.py" script beforehand.
@@ -2064,7 +2064,7 @@ pub trait PCAPriorTrait: crate::optflow::PCAPriorTraitConst {
 
 }
 
-/// @brief
+/// 
 /// This class can be used for imposing a learned prior on the resulting optical flow.
 /// Solution will be regularized according to this prior.
 /// You need to generate appropriate prior file with "learn_prior.py" script beforehand.

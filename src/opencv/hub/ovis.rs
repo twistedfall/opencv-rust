@@ -272,10 +272,10 @@ pub fn set_material_property(name: &str, prop: i32, value: core::Scalar) -> Resu
 	Ok(ret)
 }
 
-/// set the shader property of a material to the given value
+/// set the property of a material to the given value
 /// ## Parameters
 /// * name: material name
-/// * prop: property name
+/// * prop: @ref MaterialProperty
 /// * value: the value
 /// 
 /// ## Overloaded parameters

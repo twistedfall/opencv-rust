@@ -2378,30 +2378,18 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 	Ok(ret)
 }
 
-/// Calculates an essential matrix from the corresponding points in two images from potentially two different cameras.
+/// Calculates an essential matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix1: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
+/// same camera intrinsic matrix. If this assumption does not hold for your use case, use
 /// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
-/// * cameraMatrix2: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
-/// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
-/// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
-/// passing these coordinates, pass the identity matrix for this parameter.
-/// * distCoeffs1: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
-/// * distCoeffs2: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
 /// *   @ref RANSAC for the RANSAC algorithm.
 /// *   @ref LMEDS for the LMedS algorithm.
@@ -2413,6 +2401,7 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 /// point localization, image resolution, and the image noise.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
+/// * maxIters: The maximum number of robust method iterations.
 /// 
 /// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
 /// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
@@ -2492,30 +2481,18 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 	Ok(ret)
 }
 
-/// Calculates an essential matrix from the corresponding points in two images from potentially two different cameras.
+/// Calculates an essential matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix1: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
+/// same camera intrinsic matrix. If this assumption does not hold for your use case, use
 /// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
-/// * cameraMatrix2: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
-/// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
-/// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
-/// passing these coordinates, pass the identity matrix for this parameter.
-/// * distCoeffs1: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
-/// * distCoeffs2: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
 /// *   @ref RANSAC for the RANSAC algorithm.
 /// *   @ref LMEDS for the LMedS algorithm.
@@ -2527,6 +2504,7 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// point localization, image resolution, and the image noise.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
+/// * maxIters: The maximum number of robust method iterations.
 /// 
 /// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
 /// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
@@ -2551,30 +2529,18 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 	Ok(ret)
 }
 
-/// Calculates an essential matrix from the corresponding points in two images from potentially two different cameras.
+/// Calculates an essential matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
-/// * cameraMatrix1: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
+/// same camera intrinsic matrix. If this assumption does not hold for your use case, use
 /// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
+/// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
-/// * cameraMatrix2: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
-/// Note that this function assumes that points1 and points2 are feature points from cameras with the
-/// same camera matrix. If this assumption does not hold for your use case, use
-/// #undistortPoints with `P = cv::NoArray()` for both cameras to transform image points
-/// to normalized image coordinates, which are valid for the identity camera matrix. When
-/// passing these coordinates, pass the identity matrix for this parameter.
-/// * distCoeffs1: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
-/// * distCoeffs2: Input vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
-/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
 /// *   @ref RANSAC for the RANSAC algorithm.
 /// *   @ref LMEDS for the LMedS algorithm.
@@ -2586,6 +2552,7 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// point localization, image resolution, and the image noise.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
+/// * maxIters: The maximum number of robust method iterations.
 /// 
 /// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Nister03) .
 /// [SteweniusCFS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:

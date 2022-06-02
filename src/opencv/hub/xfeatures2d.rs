@@ -38,7 +38,7 @@ pub const VGG_VGG_120: i32 = 100;
 pub const VGG_VGG_48: i32 = 103;
 pub const VGG_VGG_64: i32 = 102;
 pub const VGG_VGG_80: i32 = 101;
-///  Descriptor number of bits, each bit is a boosting weak-learner.
+/// Descriptor number of bits, each bit is a boosting weak-learner.
 /// The user can choose between 512 or 256 bits.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -1054,6 +1054,7 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYConst {
 	fn as_raw_mut_DAISY(&mut self) -> *mut c_void;
 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// ## Parameters
 	/// * image: image to extract descriptors
 	/// * keypoints: of interest within image
@@ -1080,6 +1081,7 @@ pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYCo
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// ## Parameters
 	/// * image: image to extract descriptors
 	/// * roi: region of interest within image
@@ -1095,6 +1097,7 @@ pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYCo
 		Ok(ret)
 	}
 	
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// ## Parameters
 	/// * image: image to extract descriptors
 	/// * descriptors: resulted descriptors array for all image pixels

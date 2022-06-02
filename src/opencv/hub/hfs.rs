@@ -51,7 +51,7 @@ pub trait HfsSegmentConst: core::AlgorithmTraitConst {
 pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void;
 
-	/// @brief: set and get the parameter segEgbThresholdI.
+	/// set and get the parameter segEgbThresholdI.
 	/// This parameter is used in the second stage mentioned above.
 	/// It is a constant used to threshold weights of the edge when merging
 	/// adjacent nodes when applying EGB algorithm. The segmentation result
@@ -74,7 +74,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter minRegionSizeI.
+	/// set and get the parameter minRegionSizeI.
 	/// This parameter is used in the second stage
 	/// mentioned above. After the EGB segmentation, regions that have fewer
 	/// pixels then this parameter will be merged into it's adjacent region.
@@ -96,7 +96,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter segEgbThresholdII.
+	/// set and get the parameter segEgbThresholdII.
 	/// This parameter is used in the third stage
 	/// mentioned above. It serves the same purpose as segEgbThresholdI.
 	/// The segmentation result tends to have more regions remained if
@@ -119,7 +119,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter minRegionSizeII.
+	/// set and get the parameter minRegionSizeII.
 	/// This parameter is used in the third stage
 	/// mentioned above. It serves the same purpose as minRegionSizeI
 	#[inline]
@@ -140,7 +140,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter spatialWeight.
+	/// set and get the parameter spatialWeight.
 	/// This parameter is used in the first stage
 	/// mentioned above(the SLIC stage). It describes how important is the role
 	/// of position when calculating the distance between each pixel and it's
@@ -166,7 +166,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter slicSpixelSize.
+	/// set and get the parameter slicSpixelSize.
 	/// This parameter is used in the first stage mentioned
 	/// above(the SLIC stage). It describes the size of each
 	/// superpixel when initializing SLIC. Every superpixel
@@ -190,7 +190,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 		Ok(ret)
 	}
 	
-	/// @brief: set and get the parameter numSlicIter.
+	/// set and get the parameter numSlicIter.
 	/// This parameter is used in the first stage. It
 	/// describes how many iteration to perform when executing SLIC.
 	#[inline]
@@ -254,7 +254,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 }
 
 impl dyn HfsSegment + '_ {
-	/// @brief: create a hfs object
+	/// create a hfs object
 	/// ## Parameters
 	/// * height: : the height of the input image
 	/// * width: : the width of the input image

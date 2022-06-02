@@ -2321,7 +2321,7 @@ impl WCameraPosition {
 		Ok(ret)
 	}
 	
-	///  Display image on the far plane of the viewing frustum
+	/// Display image on the far plane of the viewing frustum
 	/// 
 	/// ## Parameters
 	/// * fov: Field of view of the camera (horizontal, vertical).

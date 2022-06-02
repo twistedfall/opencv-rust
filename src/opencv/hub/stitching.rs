@@ -138,7 +138,7 @@ pub fn auto_detect_wave_correct_kind(rmats: &core::Vector<core::Mat>) -> Result<
 	Ok(ret)
 }
 
-/// @brief
+/// 
 /// 
 /// ## Parameters
 /// * featuresFinder: 
@@ -159,7 +159,7 @@ pub fn compute_image_features2(features_finder: &core::Ptr<crate::features2d::Fe
 	Ok(ret)
 }
 
-/// @brief
+/// 
 /// 
 /// ## Parameters
 /// * featuresFinder: 

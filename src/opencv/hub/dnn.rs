@@ -6577,7 +6577,7 @@ pub trait LayerTrait: core::AlgorithmTrait + crate::dnn::LayerTraitConst {
 		Ok(ret)
 	}
 	
-	/// @brief
+	/// 
 	///  Computes and sets internal parameters according to inputs, outputs and blobs.
 	/// ## Parameters
 	/// * inputs: vector of already allocated input blobs
@@ -6600,7 +6600,7 @@ pub trait LayerTrait: core::AlgorithmTrait + crate::dnn::LayerTraitConst {
 		Ok(ret)
 	}
 	
-	/// @brief
+	/// 
 	///  Computes and sets internal parameters according to inputs, outputs and blobs.
 	/// ## Parameters
 	/// * inputs: vector of already allocated input blobs
@@ -8055,10 +8055,9 @@ pub trait NetTraitConst {
 	}
 	
 	/// Computes bytes number which are required to store
-	/// all weights and intermediate blobs for each layer.
+	/// all weights and intermediate blobs for model.
 	/// ## Parameters
 	/// * netInputShapes: vector of shapes for all net inputs.
-	/// * layerIds: output vector to save layer IDs.
 	/// * weights: output parameter to store resulting bytes for weights.
 	/// * blobs: output parameter to store resulting bytes for intermediate blobs.
 	/// 
@@ -8073,10 +8072,9 @@ pub trait NetTraitConst {
 	}
 	
 	/// Computes bytes number which are required to store
-	/// all weights and intermediate blobs for each layer.
+	/// all weights and intermediate blobs for model.
 	/// ## Parameters
 	/// * netInputShapes: vector of shapes for all net inputs.
-	/// * layerIds: output vector to save layer IDs.
 	/// * weights: output parameter to store resulting bytes for weights.
 	/// * blobs: output parameter to store resulting bytes for intermediate blobs.
 	/// 
@@ -8091,10 +8089,9 @@ pub trait NetTraitConst {
 	}
 	
 	/// Computes bytes number which are required to store
-	/// all weights and intermediate blobs for each layer.
+	/// all weights and intermediate blobs for model.
 	/// ## Parameters
 	/// * netInputShapes: vector of shapes for all net inputs.
-	/// * layerIds: output vector to save layer IDs.
 	/// * weights: output parameter to store resulting bytes for weights.
 	/// * blobs: output parameter to store resulting bytes for intermediate blobs.
 	/// 

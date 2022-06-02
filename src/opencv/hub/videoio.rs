@@ -1177,9 +1177,9 @@ pub trait VideoCaptureTraitConst {
 pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void;
 
-	///  Opens a video file or a capturing device or an IP video stream for video capturing.
+	/// Opens a video file or a capturing device or an IP video stream for video capturing.
 	/// 
-	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
 	/// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference = CAP_ANY)
 	/// ## Returns
@@ -1199,9 +1199,9 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 		Ok(ret)
 	}
 	
-	///  Opens a camera for video capturing
+	/// Opens a camera for video capturing
 	/// 
-	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
 	/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 	/// See cv::VideoCaptureProperties
@@ -1220,9 +1220,9 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 		Ok(ret)
 	}
 	
-	///  Opens a camera for video capturing
+	/// Opens a camera for video capturing
 	/// 
-	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
 	/// Parameters are same as the constructor VideoCapture(int index, int apiPreference = CAP_ANY)
 	/// ## Returns
@@ -1243,7 +1243,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	
 	/// Returns true if video capturing has been initialized already.
 	/// 
-	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
 	/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 	/// See cv::VideoCaptureProperties
@@ -1471,7 +1471,7 @@ impl VideoCapture {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///      Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
+	///    Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
 	/// 
 	/// ## Parameters
 	/// * filename: it can be:
@@ -1530,7 +1530,7 @@ impl VideoCapture {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///      Opens a camera for video capturing
+	///    Opens a camera for video capturing
 	/// 
 	/// ## Parameters
 	/// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.

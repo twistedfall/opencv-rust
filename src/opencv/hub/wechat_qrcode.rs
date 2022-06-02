@@ -13,7 +13,7 @@ pub mod prelude {
 	pub use { super::WeChatQRCodeTraitConst, super::WeChatQRCodeTrait };
 }
 
-/// *  WeChat QRCode includes two CNN-based models:
+/// * WeChat QRCode includes two CNN-based models:
 /// * A object detection model and a super resolution model.
 /// * Object detection model is applied to detect QRCode with the bounding box.
 /// * super resolution model is applied to zoom in QRCode when it is small.
@@ -26,7 +26,7 @@ pub trait WeChatQRCodeTraitConst {
 pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void;
 
-	///  Both detects and decodes QR code.
+	/// Both detects and decodes QR code.
 	/// To simplify the usage, there is a only API: detectAndDecode
 	/// 
 	/// ## Parameters
@@ -52,7 +52,7 @@ pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	
 }
 
-/// *  WeChat QRCode includes two CNN-based models:
+/// * WeChat QRCode includes two CNN-based models:
 /// * A object detection model and a super resolution model.
 /// * Object detection model is applied to detect QRCode with the bounding box.
 /// * super resolution model is applied to zoom in QRCode when it is small.

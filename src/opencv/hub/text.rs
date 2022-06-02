@@ -2022,6 +2022,8 @@ pub trait TextDetectorCNNConst: crate::text::TextDetectorConst {
 pub trait TextDetectorCNN: crate::text::TextDetector + crate::text::TextDetectorCNNConst {
 	fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void;
 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+	/// 
 	/// ## Parameters
 	/// * inputImage: an image expected to be a CV_U8C3 of any size
 	/// * Bbox: a vector of Rect that will store the detected word bounding box

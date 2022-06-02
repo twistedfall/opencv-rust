@@ -556,7 +556,7 @@ pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vect
 	Ok(ret)
 }
 
-/// multi-image overload for bindings
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. multi-image overload for bindings
 /// 
 /// ## C++ default parameters
 /// * params: std::vector<int>()

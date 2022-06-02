@@ -131,32 +131,30 @@ pub trait HDF5Const {
 		Ok(ret)
 	}
 	
-	/// Create and allocate storage for n-dimensional dataset, single or multichannel type.
+	/// Create and allocate storage for two dimensional single or multi channel dataset.
 	/// ## Parameters
-	/// * n_dims: declare number of dimensions
-	/// * sizes: array containing sizes for each dimensions
-	/// * type: type to be used, e.g., CV_8UC3, CV_32FC1, etc.
+	/// * rows: declare amount of rows
+	/// * cols: declare amount of columns
+	/// * type: type to be used, e.g, CV_8UC3, CV_32FC1 and etc.
 	/// * dslabel: specify the hdf5 dataset label. Existing dataset label will cause an error.
 	/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is the default value and means no compression.
 	///                      The value 0 also means no compression.
 	///                      A value 9 indicating the best compression ration. Note
 	///                      that a higher compression level indicates a higher computational cost. It relies
 	///                      on GNU gzip for compression.
-	/// * dims_chunks: each array member specifies chunking sizes to be used for block I/O,
+	/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 	///        by default NULL means none at all.
 	/// 
-	/// Note: If the dataset already exists, an exception will be thrown. Existence of the dataset can be checked
-	/// using hlexists().
 	/// 
-	/// - See example below that creates a 6 dimensional storage space:
+	/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
+	/// 
+	/// - Existence of the dataset can be checked using hlexists(), see in this example:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, sizes, CV_64FC2, "nddata" );
+	///   // create space for 100x50 CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert" ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert" );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -167,20 +165,16 @@ pub trait HDF5Const {
 	/// 
 	/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 	/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
-	/// If no custom chunking is specified, the default one will be invoked by the size of **whole** dataset
-	/// as single big chunk of data.
+	/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
+	/// as a single big chunk of data.
 	/// 
-	/// - See example of level 0 compression (shallow) using chunking against the first
-	/// dimension, thus storage will consists of 100 chunks of data:
+	/// - See example of level 9 compression using internal default chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    int chunks[n_dims] = {   1, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", 0, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert", 9 ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert", 9 );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -189,25 +183,28 @@ pub trait HDF5Const {
 	/// 
 	/// 
 	/// 
-	/// Note: A value of H5_UNLIMITED inside the **sizes** array means **unlimited** data on that dimension, thus it is
-	/// possible to expand anytime such dataset on those unlimited directions. Presence of H5_UNLIMITED on any dimension
-	/// **requires** to define custom chunking. No default chunking will be defined in unlimited scenario since the default size
-	/// on that dimension will be zero, and will grow once dataset is written. Writing into dataset that has H5_UNLIMITED on
-	/// some of its dimension requires dsinsert() instead of dswrite() that allows growth on unlimited dimension instead of
-	/// dswrite() that allows to write only in predefined data space.
+	/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
+	/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
+	/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
+	/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
+	/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
+	/// that allows to write only in predefined data space.
 	/// 
-	/// - Example below shows a 3 dimensional dataset using no compression with all unlimited sizes and one unit chunking:
+	/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   int n_dims = 3;
-	///   int chunks[n_dims] = { 1, 1, 1 };
-	///   int dsdims[n_dims] = { cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED };
-	///   h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", cv::hdf::HDF5::H5_NONE, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   int chunks[2] = { 100, 100 };
+	///   h5io->dscreate( 100, cv::hdf::HDF5::H5_UNLIMITED, CV_64FC2, "hilbert", cv::hdf::HDF5::H5_NONE, chunks );
 	///   // release
 	///   h5io->close();
 	/// ```
 	/// 
+	/// 
+	/// 
+	/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
+	/// Multiple datasets inside a single hdf5 file are allowed.
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -220,32 +217,30 @@ pub trait HDF5Const {
 		Ok(ret)
 	}
 	
-	/// Create and allocate storage for n-dimensional dataset, single or multichannel type.
+	/// Create and allocate storage for two dimensional single or multi channel dataset.
 	/// ## Parameters
-	/// * n_dims: declare number of dimensions
-	/// * sizes: array containing sizes for each dimensions
-	/// * type: type to be used, e.g., CV_8UC3, CV_32FC1, etc.
+	/// * rows: declare amount of rows
+	/// * cols: declare amount of columns
+	/// * type: type to be used, e.g, CV_8UC3, CV_32FC1 and etc.
 	/// * dslabel: specify the hdf5 dataset label. Existing dataset label will cause an error.
 	/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is the default value and means no compression.
 	///                      The value 0 also means no compression.
 	///                      A value 9 indicating the best compression ration. Note
 	///                      that a higher compression level indicates a higher computational cost. It relies
 	///                      on GNU gzip for compression.
-	/// * dims_chunks: each array member specifies chunking sizes to be used for block I/O,
+	/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 	///        by default NULL means none at all.
 	/// 
-	/// Note: If the dataset already exists, an exception will be thrown. Existence of the dataset can be checked
-	/// using hlexists().
 	/// 
-	/// - See example below that creates a 6 dimensional storage space:
+	/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
+	/// 
+	/// - Existence of the dataset can be checked using hlexists(), see in this example:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, sizes, CV_64FC2, "nddata" );
+	///   // create space for 100x50 CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert" ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert" );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -256,20 +251,16 @@ pub trait HDF5Const {
 	/// 
 	/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 	/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
-	/// If no custom chunking is specified, the default one will be invoked by the size of **whole** dataset
-	/// as single big chunk of data.
+	/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
+	/// as a single big chunk of data.
 	/// 
-	/// - See example of level 0 compression (shallow) using chunking against the first
-	/// dimension, thus storage will consists of 100 chunks of data:
+	/// - See example of level 9 compression using internal default chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    int chunks[n_dims] = {   1, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", 0, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert", 9 ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert", 9 );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -278,25 +269,28 @@ pub trait HDF5Const {
 	/// 
 	/// 
 	/// 
-	/// Note: A value of H5_UNLIMITED inside the **sizes** array means **unlimited** data on that dimension, thus it is
-	/// possible to expand anytime such dataset on those unlimited directions. Presence of H5_UNLIMITED on any dimension
-	/// **requires** to define custom chunking. No default chunking will be defined in unlimited scenario since the default size
-	/// on that dimension will be zero, and will grow once dataset is written. Writing into dataset that has H5_UNLIMITED on
-	/// some of its dimension requires dsinsert() instead of dswrite() that allows growth on unlimited dimension instead of
-	/// dswrite() that allows to write only in predefined data space.
+	/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
+	/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
+	/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
+	/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
+	/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
+	/// that allows to write only in predefined data space.
 	/// 
-	/// - Example below shows a 3 dimensional dataset using no compression with all unlimited sizes and one unit chunking:
+	/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   int n_dims = 3;
-	///   int chunks[n_dims] = { 1, 1, 1 };
-	///   int dsdims[n_dims] = { cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED };
-	///   h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", cv::hdf::HDF5::H5_NONE, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   int chunks[2] = { 100, 100 };
+	///   h5io->dscreate( 100, cv::hdf::HDF5::H5_UNLIMITED, CV_64FC2, "hilbert", cv::hdf::HDF5::H5_NONE, chunks );
 	///   // release
 	///   h5io->close();
 	/// ```
 	/// 
+	/// 
+	/// 
+	/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
+	/// Multiple datasets inside a single hdf5 file are allowed.
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -309,32 +303,30 @@ pub trait HDF5Const {
 		Ok(ret)
 	}
 	
-	/// Create and allocate storage for n-dimensional dataset, single or multichannel type.
+	/// Create and allocate storage for two dimensional single or multi channel dataset.
 	/// ## Parameters
-	/// * n_dims: declare number of dimensions
-	/// * sizes: array containing sizes for each dimensions
-	/// * type: type to be used, e.g., CV_8UC3, CV_32FC1, etc.
+	/// * rows: declare amount of rows
+	/// * cols: declare amount of columns
+	/// * type: type to be used, e.g, CV_8UC3, CV_32FC1 and etc.
 	/// * dslabel: specify the hdf5 dataset label. Existing dataset label will cause an error.
 	/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is the default value and means no compression.
 	///                      The value 0 also means no compression.
 	///                      A value 9 indicating the best compression ration. Note
 	///                      that a higher compression level indicates a higher computational cost. It relies
 	///                      on GNU gzip for compression.
-	/// * dims_chunks: each array member specifies chunking sizes to be used for block I/O,
+	/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 	///        by default NULL means none at all.
 	/// 
-	/// Note: If the dataset already exists, an exception will be thrown. Existence of the dataset can be checked
-	/// using hlexists().
 	/// 
-	/// - See example below that creates a 6 dimensional storage space:
+	/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
+	/// 
+	/// - Existence of the dataset can be checked using hlexists(), see in this example:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, sizes, CV_64FC2, "nddata" );
+	///   // create space for 100x50 CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert" ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert" );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -345,20 +337,16 @@ pub trait HDF5Const {
 	/// 
 	/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 	/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
-	/// If no custom chunking is specified, the default one will be invoked by the size of **whole** dataset
-	/// as single big chunk of data.
+	/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
+	/// as a single big chunk of data.
 	/// 
-	/// - See example of level 0 compression (shallow) using chunking against the first
-	/// dimension, thus storage will consists of 100 chunks of data:
+	/// - See example of level 9 compression using internal default chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   // create space for 6 dimensional CV_64FC2 matrix
-	///   if ( ! h5io->hlexists( "nddata" ) )
-	///    int n_dims = 5;
-	///    int dsdims[n_dims] = { 100, 100, 20, 10, 5, 5 };
-	///    int chunks[n_dims] = {   1, 100, 20, 10, 5, 5 };
-	///    h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", 0, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   if ( ! h5io->hlexists( "hilbert", 9 ) )
+	///    h5io->dscreate( 100, 50, CV_64FC2, "hilbert", 9 );
 	///   else
 	///    printf("DS already created, skipping\n" );
 	///   // release
@@ -367,25 +355,28 @@ pub trait HDF5Const {
 	/// 
 	/// 
 	/// 
-	/// Note: A value of H5_UNLIMITED inside the **sizes** array means **unlimited** data on that dimension, thus it is
-	/// possible to expand anytime such dataset on those unlimited directions. Presence of H5_UNLIMITED on any dimension
-	/// **requires** to define custom chunking. No default chunking will be defined in unlimited scenario since the default size
-	/// on that dimension will be zero, and will grow once dataset is written. Writing into dataset that has H5_UNLIMITED on
-	/// some of its dimension requires dsinsert() instead of dswrite() that allows growth on unlimited dimension instead of
-	/// dswrite() that allows to write only in predefined data space.
+	/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
+	/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
+	/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
+	/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
+	/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
+	/// that allows to write only in predefined data space.
 	/// 
-	/// - Example below shows a 3 dimensional dataset using no compression with all unlimited sizes and one unit chunking:
+	/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 	/// ```ignore
 	///   // open / autocreate hdf5 file
 	///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-	///   int n_dims = 3;
-	///   int chunks[n_dims] = { 1, 1, 1 };
-	///   int dsdims[n_dims] = { cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED, cv::hdf::HDF5::H5_UNLIMITED };
-	///   h5io->dscreate( n_dims, dsdims, CV_64FC2, "nddata", cv::hdf::HDF5::H5_NONE, chunks );
+	///   // create level 9 compressed space for CV_64FC2 matrix
+	///   int chunks[2] = { 100, 100 };
+	///   h5io->dscreate( 100, cv::hdf::HDF5::H5_UNLIMITED, CV_64FC2, "hilbert", cv::hdf::HDF5::H5_NONE, chunks );
 	///   // release
 	///   h5io->close();
 	/// ```
 	/// 
+	/// 
+	/// 
+	/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
+	/// Multiple datasets inside a single hdf5 file are allowed.
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -1311,18 +1302,22 @@ pub trait HDF5: crate::hdf::HDF5Const {
 		Ok(ret)
 	}
 	
-	/// Write an attribute into the root group.
+	/// Write an attribute inside the root group.
 	/// 
 	/// ## Parameters
-	/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
+	/// * value: attribute value.
 	/// * atlabel: attribute name.
+	/// 
+	/// The following example demonstrates how to write an attribute of type cv::String:
+	/// 
+	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 	/// to check whether it exists or not beforehand. And use atdelete() to delete
 	/// it if it already exists.
 	/// ## See also
-	/// atexists, atdelete, atread.
+	/// atexists, atdelete, atread
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -1338,8 +1333,12 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// Read an attribute from the root group.
 	/// 
 	/// ## Parameters
-	/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
-	/// * atlabel: attribute name.
+	/// * value: address where the attribute is read into
+	/// * atlabel: attribute name
+	/// 
+	/// The following example demonstrates how to read an attribute of type cv::String:
+	/// 
+	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
@@ -1358,18 +1357,22 @@ pub trait HDF5: crate::hdf::HDF5Const {
 		Ok(ret)
 	}
 	
-	/// Write an attribute into the root group.
+	/// Write an attribute inside the root group.
 	/// 
 	/// ## Parameters
-	/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
+	/// * value: attribute value.
 	/// * atlabel: attribute name.
+	/// 
+	/// The following example demonstrates how to write an attribute of type cv::String:
+	/// 
+	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 	/// to check whether it exists or not beforehand. And use atdelete() to delete
 	/// it if it already exists.
 	/// ## See also
-	/// atexists, atdelete, atread.
+	/// atexists, atdelete, atread
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
@@ -1386,8 +1389,12 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// Read an attribute from the root group.
 	/// 
 	/// ## Parameters
-	/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
-	/// * atlabel: attribute name.
+	/// * value: address where the attribute is read into
+	/// * atlabel: attribute name
+	/// 
+	/// The following example demonstrates how to read an attribute of type cv::String:
+	/// 
+	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()

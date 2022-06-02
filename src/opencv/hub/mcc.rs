@@ -253,7 +253,7 @@ pub enum COLOR_SPACE {
 
 opencv_type_enum! { crate::mcc::COLOR_SPACE }
 
-///  Macbeth and Vinyl ColorChecker with 2deg D50
+/// Macbeth and Vinyl ColorChecker with 2deg D50
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum CONST_COLOR {
