@@ -121,7 +121,7 @@ impl<'m> EphemeralGenerator<'m> {
 		}
 	}
 
-	pub fn make_generated_header(&self) -> String {
+	pub fn generate_header(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation()
 		);
@@ -563,7 +563,7 @@ impl Generator {
 		let mut ephem_gen = EphemeralGenerator::new(module);
 		let walker = EntityWalker::new(root_tu.get_entity());
 		walker.walk_opencv_entities(&mut ephem_gen);
-		let hdr = ephem_gen.make_generated_header();
+		let hdr = ephem_gen.generate_header();
 		root_tu = root_tu.reparse(&[self.make_ephemeral_header(&hdr)]).expect("Can't reparse file");
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
 		entity_processor(root_tu, &hdr);
