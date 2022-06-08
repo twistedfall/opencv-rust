@@ -62,7 +62,7 @@ rgb = { version = "0.8.20", features = ["argb"], optional = true }
 [build-dependencies]
 binding-generator = { package = "opencv-binding-generator", version = "0.44.0", path = "binding-generator" }
 cc = { version = "1.0", features = ["parallel"] }
-clang = { version = "1.0", features = ["clang_6_0"] }
+clang = { version = "2.0", features = ["clang_6_0"] }
 dunce = "1.0"
 glob = "0.3"
 jobserver = "0.1"
