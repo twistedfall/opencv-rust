@@ -1,3 +1,6 @@
+* 0.65.0
+  * Improve generation for OpenCV 4.6.0.
+
 * 0.64.1
   * Improve function documentation generation (fixes [#266](https://github.com/twistedfall/opencv-rust/issues/266)).
 

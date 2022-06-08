@@ -1199,7 +1199,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 		Ok(ret)
 	}
 	
-	/// Opens a camera for video capturing
+	/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
 	/// 
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
@@ -1241,7 +1241,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 		Ok(ret)
 	}
 	
-	/// Returns true if video capturing has been initialized already.
+	/// Opens a camera for video capturing with API Preference and parameters
 	/// 
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 

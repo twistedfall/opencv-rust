@@ -980,13 +980,20 @@ pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 /// Computes a mean value and a standard deviation of matrix elements.
 /// 
 /// ## Parameters
-/// * mtx: Source matrix. CV_8UC1 matrices are supported for now.
-/// * mean: Mean value.
-/// * stddev: Standard deviation value.
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
 /// ## See also
 /// meanStdDev
+/// 
+/// ## Overloaded parameters
+/// 
+/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * mean: Mean value.
+/// * stddev: Standard deviation value.
 #[inline]
-pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
+pub fn mean_std_dev_3(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
 	input_array_arg!(mtx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev, ocvrs_return.as_mut_ptr()) };
@@ -998,13 +1005,45 @@ pub fn mean_std_dev(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stdde
 /// Computes a mean value and a standard deviation of matrix elements.
 /// 
 /// ## Parameters
-/// * mtx: Source matrix. CV_8UC1 matrices are supported for now.
-/// * mean: Mean value.
-/// * stddev: Standard deviation value.
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
 /// ## See also
 /// meanStdDev
 /// 
 /// ## Overloaded parameters
+/// 
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * mean: Mean value.
+/// * stddev: Standard deviation value.
+/// * mask: Operation mask.
+#[inline]
+pub fn mean_std_dev_2(src: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &dyn core::ToInputArray) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR_const__InputArrayR(src.as_raw__InputArray(), mean, stddev, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+/// 
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+/// 
+/// ## Overloaded parameters
+/// 
+/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * stream: Stream for the asynchronous version.
 /// 
 /// ## C++ default parameters
 /// * stream: Stream::Null()
@@ -1014,6 +1053,30 @@ pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_StreamR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+/// 
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+/// 
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+#[inline]
+pub fn mean_std_dev(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1391,7 +1454,7 @@ pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutpu
 /// ## Parameters
 /// * src: Source image. Only the CV_32SC1 type is supported.
 /// * sqr: Squared source image. Only the CV_32FC1 type is supported.
-/// * dst: Destination image with the same type and size as src .
+/// * dst: Destination image with the same type and size as src.
 /// * rect: Rectangular window.
 /// * stream: Stream for the asynchronous version.
 /// 

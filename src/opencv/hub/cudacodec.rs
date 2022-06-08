@@ -16,6 +16,11 @@ pub mod prelude {
 pub const AV1: i32 = 11;
 pub const Adaptive: i32 = 2;
 pub const Bob: i32 = 1;
+pub const ColorFormat_BGR: i32 = 2;
+pub const ColorFormat_BGRA: i32 = 1;
+pub const ColorFormat_GRAY: i32 = 3;
+pub const ColorFormat_PROP_NOT_SUPPORTED: i32 = 5;
+pub const ColorFormat_YUV: i32 = 4;
 pub const H264: i32 = 4;
 pub const H264_MVC: i32 = 7;
 pub const H264_SVC: i32 = 6;
@@ -47,18 +52,25 @@ pub const Uncompressed_YV12: i32 = 1498820914;
 pub const VC1: i32 = 3;
 pub const VP8: i32 = 9;
 pub const VP9: i32 = 10;
+/// Status of VideoReaderInitParams::allowFrameDrop initialization.
+pub const VideoReaderProps_PROP_ALLOW_FRAME_DROP: i32 = 8;
+/// Set the ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
+pub const VideoReaderProps_PROP_COLOR_FORMAT: i32 = 6;
 /// Index for retrieving the decoded frame using retrieve().
 pub const VideoReaderProps_PROP_DECODED_FRAME_IDX: i32 = 0;
 /// Index for retrieving the extra data associated with a video source using retrieve().
 pub const VideoReaderProps_PROP_EXTRA_DATA_INDEX: i32 = 1;
 /// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
 pub const VideoReaderProps_PROP_LRF_HAS_KEY_FRAME: i32 = 5;
+pub const VideoReaderProps_PROP_NOT_SUPPORTED: i32 = 9;
 /// Number of raw packages recieved since the last call to grab().
 pub const VideoReaderProps_PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB: i32 = 3;
 /// Status of raw mode.
 pub const VideoReaderProps_PROP_RAW_MODE: i32 = 4;
 /// Base index for retrieving raw encoded data using retrieve().
 pub const VideoReaderProps_PROP_RAW_PACKAGES_BASE_INDEX: i32 = 2;
+/// Status of VideoReaderInitParams::udpSource initialization.
+pub const VideoReaderProps_PROP_UDP_SOURCE: i32 = 7;
 pub const Weave: i32 = 0;
 pub const YUV420: i32 = 1;
 pub const YUV422: i32 = 2;
@@ -106,6 +118,19 @@ pub enum Codec {
 }
 
 opencv_type_enum! { crate::cudacodec::Codec }
+
+/// ColorFormat for the frame returned by nextFrame()/retrieve().
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum ColorFormat {
+	BGRA = 1,
+	BGR = 2,
+	GRAY = 3,
+	YUV = 4,
+	PROP_NOT_SUPPORTED = 5,
+}
+
+opencv_type_enum! { crate::cudacodec::ColorFormat }
 
 /// Deinterlacing mode used by decoder.
 /// ## Parameters
@@ -163,6 +188,13 @@ pub enum VideoReaderProps {
 	PROP_RAW_MODE = 4,
 	/// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
 	PROP_LRF_HAS_KEY_FRAME = 5,
+	/// Set the ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
+	PROP_COLOR_FORMAT = 6,
+	/// Status of VideoReaderInitParams::udpSource initialization.
+	PROP_UDP_SOURCE = 7,
+	/// Status of VideoReaderInitParams::allowFrameDrop initialization.
+	PROP_ALLOW_FRAME_DROP = 8,
+	PROP_NOT_SUPPORTED = 9,
 }
 
 opencv_type_enum! { crate::cudacodec::VideoReaderProps }
@@ -171,21 +203,25 @@ opencv_type_enum! { crate::cudacodec::VideoReaderProps }
 /// 
 /// ## Parameters
 /// * filename: Name of the input video file.
-/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
+/// The `sourceParams` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+///    See cv::VideoCaptureProperties
+/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
+/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
 /// 
 /// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
 /// 
 /// ## Overloaded parameters
 /// 
 /// * source: RAW video source implemented by user.
-/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
 /// 
 /// ## C++ default parameters
-/// * raw_mode: false
+/// * params: VideoReaderInitParams()
 #[inline]
-pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>, raw_mode: bool) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R_const_bool(source.as_raw_PtrOfRawVideoSource(), raw_mode, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R_const_VideoReaderInitParams(source.as_raw_PtrOfRawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
@@ -196,17 +232,22 @@ pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSo
 /// 
 /// ## Parameters
 /// * filename: Name of the input video file.
-/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
+/// The `sourceParams` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+///    See cv::VideoCaptureProperties
+/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
+/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
 /// 
 /// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
 /// 
 /// ## C++ default parameters
-/// * raw_mode: false
+/// * source_params: {}
+/// * params: VideoReaderInitParams()
 #[inline]
-pub fn create_video_reader(filename: &str, raw_mode: bool) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_bool(filename.opencv_as_extern(), raw_mode, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vector_int_R_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
@@ -795,6 +836,15 @@ pub struct FormatInfo {
 opencv_type_simple! { crate::cudacodec::FormatInfo }
 
 impl FormatInfo {
+	#[inline]
+	pub fn default() -> Result<crate::cudacodec::FormatInfo> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_FormatInfo_FormatInfo(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Interface for video demultiplexing. :
@@ -831,6 +881,24 @@ pub trait RawVideoSourceConst {
 	fn get_extra_data(&self, extra_data: &mut core::Mat) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_RawVideoSource_getExtraData_const_MatR(self.as_raw_RawVideoSource(), extra_data.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Retrieves the specified property used by the VideoSource.
+	/// 
+	/// ## Parameters
+	/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
+	/// or one from @ref videoio_flags_others.
+	/// * propertyVal: Value for the specified property.
+	/// 
+	/// ## Returns
+	/// `true` unless the property is unset set or not supported.
+	#[inline]
+	fn get(&self, property_id: i32, property_val: &mut f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_RawVideoSource_get_const_const_int_doubleR(self.as_raw_RawVideoSource(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -889,13 +957,13 @@ pub trait VideoReaderConst {
 	/// Returns previously grabbed video data.
 	/// 
 	/// ## Parameters
-	/// * frame:[out] The returned data which depends on the provided idx.  If there is no new data since the last call to grab() the image will be empty.
-	/// * idx: Determins the returned data inside image. The returned data can be the:
-	/// Decoded frame, idx = get(PROP_DECODED_FRAME_IDX).
-	/// Extra data if available, idx = get(PROP_EXTRA_DATA_INDEX).
-	/// Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
+	/// * frame:[out] The returned data which depends on the provided idx.
+	/// * idx: Determines the returned data inside image. The returned data can be the:
+	///  - Decoded frame, idx = get(PROP_DECODED_FRAME_IDX).
+	///  - Extra data if available, idx = get(PROP_EXTRA_DATA_INDEX).
+	///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
 	/// ## Returns
-	/// `false` if no frames has been grabbed
+	/// `false` if no frames have been grabbed
 	/// 
 	/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
 	/// the method returns false and the function returns an empty image.
@@ -912,20 +980,88 @@ pub trait VideoReaderConst {
 		Ok(ret)
 	}
 	
+	/// Returns previously grabbed encoded video data.
+	/// 
+	/// ## Parameters
+	/// * frame:[out] The encoded video data.
+	/// * idx: Determines the returned data inside image. The returned data can be the:
+	///  - Extra data if available, idx = get(PROP_EXTRA_DATA_INDEX).
+	///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
+	/// ## Returns
+	/// `false` if no frames have been grabbed
+	/// 
+	/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
+	/// the method returns false and the function returns an empty image.
+	#[inline]
+	fn retrieve_1(&self, frame: &mut core::Mat, idx: size_t) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_MatR_const_size_t(self.as_raw_VideoReader(), frame.as_raw_mut_Mat(), idx, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns the next video frame.
+	/// 
+	/// ## Parameters
+	/// * frame:[out] The video frame.  If grab() has not been called then this will be empty().
+	/// ## Returns
+	/// `false` if no frames have been grabbed
+	/// 
+	/// The method returns data associated with the current video source since the last call to grab(). If no data is present
+	/// the method returns false and the function returns an empty image.
+	#[inline]
+	fn retrieve_2(&self, frame: &mut core::GpuMat) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_GpuMatR(self.as_raw_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Returns the specified VideoReader property
 	/// 
 	/// ## Parameters
-	/// * property: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::PROP_DECODED_FRAME_IDX, cv::cudacodec::PROP_EXTRA_DATA_INDEX, ...)
-	/// * propertyVal: Optional value for the property.
+	/// * propertyId: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::VideoReaderProps::PROP_DECODED_FRAME_IDX,
+	/// cv::cudacodec::VideoReaderProps::PROP_EXTRA_DATA_INDEX, ...).
+	/// * propertyVal: 
+	///  - In: Optional value required for querying specific propertyId's, e.g. the index of the raw package to be checked for a key frame (cv::cudacodec::VideoReaderProps::PROP_LRF_HAS_KEY_FRAME).
+	///  - Out: Value of the property.
 	/// ## Returns
-	/// Value for the specified property. Value -1 is returned when querying a property that is not supported.
-	/// 
-	/// ## C++ default parameters
-	/// * property_val: -1
+	/// `true` unless the property is not supported.
 	#[inline]
-	fn get(&self, property: crate::cudacodec::VideoReaderProps, property_val: i32) -> Result<i32> {
+	fn get(&self, property_id: crate::cudacodec::VideoReaderProps, property_val: &mut f64) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_VideoReader_get_const_const_VideoReaderProps_const_int(self.as_raw_VideoReader(), property, property_val, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_VideoReader_get_const_const_VideoReaderProps_doubleR(self.as_raw_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * property_val_in: 0
+	#[inline]
+	fn get_video_reader_props(&self, property_id: crate::cudacodec::VideoReaderProps, property_val_out: &mut f64, property_val_in: f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_getVideoReaderProps_const_const_VideoReaderProps_doubleR_double(self.as_raw_VideoReader(), property_id, property_val_out, property_val_in, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Retrieves the specified property used by the VideoSource.
+	/// 
+	/// ## Parameters
+	/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
+	/// or one from @ref videoio_flags_others.
+	/// * propertyVal: Value for the specified property.
+	/// 
+	/// ## Returns
+	/// `true` unless the property is unset set or not supported.
+	#[inline]
+	fn get_1(&self, property_id: i32, property_val: &mut f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_get_const_const_int_doubleR(self.as_raw_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -938,8 +1074,14 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 
 	/// Grabs, decodes and returns the next video frame.
 	/// 
-	/// If no frames has been grabbed (there are no more frames in video file), the methods return false .
-	/// The method throws Exception if error occurs.
+	/// ## Parameters
+	/// * frame:[out] The video frame.
+	/// * stream: Stream for the asynchronous version.
+	/// ## Returns
+	/// `false` if no frames have been grabbed.
+	/// 
+	/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
+	/// The method throws an Exception if error occurs.
 	/// 
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
@@ -954,6 +1096,8 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	
 	/// Grabs the next frame from the video source.
 	/// 
+	/// ## Parameters
+	/// * stream: Stream for the asynchronous version.
 	/// ## Returns
 	/// `true` (non-zero) in the case of success.
 	/// 
@@ -977,14 +1121,71 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	/// Sets a property in the VideoReader.
 	/// 
 	/// ## Parameters
-	/// * property: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::PROP_DECODED_FRAME_IDX, cv::cudacodec::PROP_EXTRA_DATA_INDEX, ...)
+	/// * propertyId: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::VideoReaderProps::PROP_DECODED_FRAME_IDX,
+	/// cv::cudacodec::VideoReaderProps::PROP_EXTRA_DATA_INDEX, ...).
 	/// * propertyVal: Value of the property.
 	/// ## Returns
 	/// `true` if the property has been set.
 	#[inline]
-	fn set(&mut self, property: crate::cudacodec::VideoReaderProps, property_val: f64) -> Result<bool> {
+	fn set(&mut self, property_id: crate::cudacodec::VideoReaderProps, property_val: f64) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_VideoReader_set_const_VideoReaderProps_const_double(self.as_raw_mut_VideoReader(), property, property_val, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_VideoReader_set_const_VideoReaderProps_const_double(self.as_raw_mut_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_video_reader_props(&mut self, property_id: crate::cudacodec::VideoReaderProps, property_val: f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_setVideoReaderProps_const_VideoReaderProps_double(self.as_raw_mut_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Set the desired ColorFormat for the frame returned by nextFrame()/retrieve().
+	/// 
+	/// ## Parameters
+	/// * colorFormat: Value of the ColorFormat.
+	#[inline]
+	fn set_1(&mut self, color_format: crate::cudacodec::ColorFormat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat(self.as_raw_mut_VideoReader(), color_format, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+/// VideoReader initialization parameters
+/// ## Parameters
+/// * udpSource: Remove validation which can cause VideoReader() to throw exceptions when reading from a UDP source.
+/// * allowFrameDrop: Allow frames to be dropped when ingesting from a live capture source to prevent delay and eventual disconnection
+/// when calls to nextFrame()/grab() cannot keep up with the source's fps.  Only use if delay and disconnection are a problem, i.e. not when decoding from
+/// video files where setting this flag will cause frames to be unnecessarily discarded.
+/// * minNumDecodeSurfaces: Minimum number of internal decode surfaces used by the hardware decoder.  NVDEC will automatically determine the minimum number of
+/// surfaces it requires for correct functionality and optimal video memory usage but not necessarily for best performance, which depends on the design of the
+/// overall application. The optimal number of decode surfaces (in terms of performance and memory utilization) should be decided by experimentation for each application,
+/// but it cannot go below the number determined by NVDEC.
+/// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct VideoReaderInitParams {
+	pub udp_source: bool,
+	pub allow_frame_drop: bool,
+	pub min_num_decode_surfaces: i32,
+	pub raw_mode: bool,
+}
+
+opencv_type_simple! { crate::cudacodec::VideoReaderInitParams }
+
+impl VideoReaderInitParams {
+	#[inline]
+	pub fn default() -> Result<crate::cudacodec::VideoReaderInitParams> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoReaderInitParams_VideoReaderInitParams(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

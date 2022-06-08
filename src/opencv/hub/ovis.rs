@@ -348,7 +348,7 @@ pub trait WindowSceneConst {
 pub trait WindowScene: crate::ovis::WindowSceneConst {
 	fn as_raw_mut_WindowScene(&mut self) -> *mut c_void;
 
-	/// set window background to custom image
+	/// set window background to custom image/ color
 	/// ## Parameters
 	/// * image: 
 	#[inline]
@@ -361,7 +361,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 		Ok(ret)
 	}
 	
-	/// set window background to custom image
+	/// set window background to custom image/ color
 	/// ## Parameters
 	/// * image: 
 	/// 
@@ -379,10 +379,10 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// 
 	/// this way you can add distortion or SSAO effects.
 	/// The effects themselves must be defined inside Ogre .compositor scripts.
-	/// ## See also
-	/// addResourceLocation
 	/// ## Parameters
 	/// * names: compositor names that will be applied in order of appearance
+	/// ## See also
+	/// addResourceLocation
 	#[inline]
 	fn set_compositors(&mut self, names: &core::Vector<String>) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -395,14 +395,14 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// place an entity of a mesh in the scene
 	/// 
 	/// the mesh needs to be created beforehand. Either programmatically
-	/// by e.g. @ref createPointCloudMesh or by placing an Ogre .mesh file in a resource location.
-	/// ## See also
-	/// addResourceLocation
+	/// by e.g. @ref createPointCloudMesh or by placing the respective file in a resource location.
 	/// ## Parameters
 	/// * name: entity name
 	/// * meshname: mesh name
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
+	/// ## See also
+	/// addResourceLocation
 	/// 
 	/// ## C++ default parameters
 	/// * tvec: noArray()
@@ -438,11 +438,16 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * name: entity name
 	/// * prop: @ref EntityProperty
 	/// * value: the value
+	/// * subEntityIdx: index of the sub-entity (default: all)
+	/// 
+	/// ## C++ default parameters
+	/// * sub_entity_idx: -1
 	#[inline]
-	fn set_entity_property(&mut self, name: &str, prop: i32, value: core::Scalar) -> Result<()> {
+	fn set_entity_property(&mut self, name: &str, prop: i32, value: &str, sub_entity_idx: i32) -> Result<()> {
 		extern_container_arg!(name);
+		extern_container_arg!(value);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_ScalarR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, &value, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR_int(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, value.opencv_as_extern(), sub_entity_idx, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -453,17 +458,14 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * name: entity name
 	/// * prop: @ref EntityProperty
 	/// * value: the value
+	/// * subEntityIdx: index of the sub-entity (default: all)
 	/// 
 	/// ## Overloaded parameters
-	/// 
-	/// ## C++ default parameters
-	/// * sub_entity_idx: -1
 	#[inline]
-	fn set_entity_property_1(&mut self, name: &str, prop: i32, value: &str, sub_entity_idx: i32) -> Result<()> {
+	fn set_entity_property_1(&mut self, name: &str, prop: i32, value: core::Scalar) -> Result<()> {
 		extern_container_arg!(name);
-		extern_container_arg!(value);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR_int(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, value.opencv_as_extern(), sub_entity_idx, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_ScalarR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, &value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -492,8 +494,8 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// * K: intrinsic matrix
 	/// * imsize: image size
 	/// * zFar: far plane in camera coordinates
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * color: line color
 	/// ## Returns
 	/// the extents of the Frustum at far plane, where the top left corner denotes the principal
@@ -519,8 +521,8 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// creates a point light in the scene
 	/// ## Parameters
 	/// * name: entity name
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * diffuseColor: 
 	/// * specularColor: 
 	/// 
@@ -544,8 +546,8 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// update entity pose by transformation in the parent coordinate space. (pre-rotation)
 	/// ## Parameters
 	/// * name: entity name
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// 
 	/// ## C++ default parameters
 	/// * tvec: noArray()
@@ -565,8 +567,8 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	/// set entity pose in the world coordinate space.
 	/// ## Parameters
 	/// * name: enitity name
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * invert: use the inverse of the given pose
 	/// 
 	/// ## C++ default parameters
@@ -724,8 +726,8 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	
 	/// Sets the current camera pose
 	/// ## Parameters
-	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * tvec: translation
+	/// * rot: @ref Rodrigues vector or 3x3 rotation matrix
 	/// * invert: use the inverse of the given pose
 	/// 
 	/// ## C++ default parameters

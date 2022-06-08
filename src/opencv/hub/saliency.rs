@@ -33,7 +33,7 @@
 //! to cover all objects in an image. Being able to perceive objects before identifying them is closely
 //! related to bottom up visual attention (saliency).
 //! 
-//! ![Saliency diagram](https://docs.opencv.org/4.5.5/saliency.png)
+//! ![Saliency diagram](https://docs.opencv.org/4.6.0/saliency.png)
 //! 
 //! To see how API works, try tracker demo:
 //! <https://github.com/fpuja/opencv_contrib/blob/saliencyModuleDevelop/modules/saliency/samples/computeSaliency.cpp>
@@ -63,7 +63,7 @@ pub trait MotionSaliency: crate::saliency::MotionSaliencyConst + crate::saliency
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSaliencyConst {
 	fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void;
 
@@ -153,7 +153,7 @@ pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + c
 ///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 ///  *
 /// 
-/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 pub struct MotionSaliencyBinWangApr2014 {
 	ptr: *mut c_void
 }
@@ -237,7 +237,7 @@ pub trait Objectness: crate::saliency::ObjectnessConst + crate::saliency::Salien
 
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BING)
 pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessConst {
 	fn as_raw_ObjectnessBING(&self) -> *const c_void;
 
@@ -377,7 +377,7 @@ pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::Ob
 	
 }
 
-/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BING)
+/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BING)
 pub struct ObjectnessBING {
 	ptr: *mut c_void
 }
@@ -513,7 +513,7 @@ pub trait StaticSaliency: crate::saliency::Saliency + crate::saliency::StaticSal
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -538,7 +538,7 @@ pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency + crat
 	
 }
 
-/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_FGS)
+/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_FGS)
 /// 
 /// This method calculates saliency based on center-surround differences.
 /// High resolution saliency maps are generated in real time by using integral images.
@@ -614,7 +614,7 @@ impl StaticSaliencyFineGrained {
 
 boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_StaticSaliencyFineGrained_to_Algorithm }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SR)
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -695,7 +695,7 @@ pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliency +
 	
 }
 
-/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_SR)
+/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_SR)
 /// 
 /// Starting from the principle of natural image statistics, this method simulate the behavior of
 /// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the

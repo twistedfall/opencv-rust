@@ -164,6 +164,18 @@ pub fn draw_color_disp(src_disp: &dyn core::ToInputArray, dst_disp: &mut dyn cor
 	Ok(ret)
 }
 
+/// ## C++ default parameters
+/// * dst_cn: 4
+/// * stream: Stream::Null()
+#[inline]
+pub fn reproject_image_to_3d_1(mut disp: core::GpuMat, xyzw: &mut core::GpuMat, mut q: core::Mat, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_reprojectImageTo3D_GpuMat_GpuMatR_Mat_int_StreamR(disp.as_raw_mut_GpuMat(), xyzw.as_raw_mut_GpuMat(), q.as_raw_mut_Mat(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
 /// Reprojects a disparity image to 3D space.
 /// 
 /// ## Parameters
@@ -196,7 +208,7 @@ pub fn reproject_image_to_3d(disp: &dyn core::ToInputArray, xyzw: &mut dyn core:
 
 /// Class refining a disparity map using joint bilateral filtering. :
 /// 
-/// The class implements [Yang2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
+/// The class implements [Yang2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
 pub trait CUDA_DisparityBilateralFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void;
 
@@ -367,7 +379,7 @@ pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_Ster
 
 /// Class computing stereo correspondence using the belief propagation algorithm. :
 /// 
-/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
+/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
 /// (using a truncated linear model) or use a user-provided data cost.
 /// 
 /// 
@@ -388,7 +400,7 @@ pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_Ster
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 /// 
-/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
+/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
 /// 
 /// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
 /// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -602,7 +614,7 @@ impl dyn CUDA_StereoBeliefPropagation + '_ {
 }
 /// Class computing stereo correspondence using the constant space belief propagation algorithm. :
 /// 
-/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
+/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
 /// minimum and global minimum data cost initialization algorithms. For more details, see the paper
 /// mentioned above. By default, a local algorithm is used. To enable a global algorithm, set
 /// use_local_init_data_cost to false .
@@ -613,7 +625,7 @@ impl dyn CUDA_StereoBeliefPropagation + '_ {
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 /// 
-/// For more details, see [Yang2010](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Yang2010) .
+/// For more details, see [Yang2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Yang2010) .
 /// 
 /// By default, StereoConstantSpaceBP uses floating-point arithmetics and the CV_32FC1 type for
 /// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -681,13 +693,13 @@ impl dyn CUDA_StereoConstantSpaceBP + '_ {
 	}
 	
 }
-/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_HH08).
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_HH08).
 /// Limitation and difference are as follows:
 /// 
 /// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
 /// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
 /// *   Mutual Information cost function is not implemented.
-/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Spangenberg2013)
+/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
 /// is used for robustness.
 /// ## See also
 /// cv::StereoSGBM

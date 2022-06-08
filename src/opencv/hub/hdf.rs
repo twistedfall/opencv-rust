@@ -58,7 +58,7 @@ pub const HDF5_H5_UNLIMITED: i32 = -1;
 /// ```
 /// 
 /// 
-/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/4.5.5/hdfview_demo.gif)
+/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/4.6.0/hdfview_demo.gif)
 /// 
 /// - Text dump (3x3 Hilbert matrix) of hdf5 dataset using **h5dump** tool:
 /// ```ignore
@@ -1212,11 +1212,11 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// - In this example, Group1 will have one subgroup called SubGroup1:
 	/// 
-	///  [create_group](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/create_groups.cpp#L1)
+	///  [create_group](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/create_groups.cpp#L1)
 	/// 
 	///  The corresponding result visualized using the HDFView tool is
 	/// 
-	///  ![Visualization of groups using the HDFView tool](https://docs.opencv.org/4.5.5/create_groups.png)
+	///  ![Visualization of groups using the HDFView tool](https://docs.opencv.org/4.6.0/create_groups.png)
 	/// 
 	/// 
 	/// Note: When a dataset is created with dscreate() or kpcreate(), it can be created within a group by specifying the
@@ -1259,7 +1259,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to write an attribute of type cv::String:
 	/// 
-	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1285,7 +1285,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to read an attribute of type cv::String:
 	/// 
-	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
@@ -1310,7 +1310,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to write an attribute of type cv::String:
 	/// 
-	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1338,7 +1338,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to read an attribute of type cv::String:
 	/// 
-	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
@@ -1365,7 +1365,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to write an attribute of type cv::String:
 	/// 
-	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1394,7 +1394,7 @@ pub trait HDF5: crate::hdf::HDF5Const {
 	/// 
 	/// The following example demonstrates how to read an attribute of type cv::String:
 	/// 
-	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.5.5/modules/hdf/samples/read_write_attributes.cpp#L1)
+	///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/read_write_attributes.cpp#L1)
 	/// 
 	/// 
 	/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()

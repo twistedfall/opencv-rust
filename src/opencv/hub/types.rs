@@ -95,6 +95,27 @@ mod aruco_types {
 		#[inline] fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfEstimateParameters = core::Ptr<crate::aruco::EstimateParameters>;
+	
+	ptr_extern! { crate::aruco::EstimateParameters,
+		cv_PtrOfEstimateParameters_delete, cv_PtrOfEstimateParameters_get_inner_ptr, cv_PtrOfEstimateParameters_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::aruco::EstimateParameters, cv_PtrOfEstimateParameters_new }
+	
+	impl PtrOfEstimateParameters {
+		#[inline] pub fn as_raw_PtrOfEstimateParameters(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::aruco::EstimateParametersTraitConst for PtrOfEstimateParameters {
+		#[inline] fn as_raw_EstimateParameters(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::aruco::EstimateParametersTrait for PtrOfEstimateParameters {
+		#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfGridBoard = core::Ptr<crate::aruco::GridBoard>;
 	
 	ptr_extern! { crate::aruco::GridBoard,
@@ -796,6 +817,27 @@ mod core_types {
 	
 	impl core::MinProblemSolver_Function for PtrOfMinProblemSolver_Function {
 		#[inline] fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfOriginalClassName = core::Ptr<core::OriginalClassName>;
+	
+	ptr_extern! { core::OriginalClassName,
+		cv_PtrOfOriginalClassName_delete, cv_PtrOfOriginalClassName_get_inner_ptr, cv_PtrOfOriginalClassName_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { core::OriginalClassName, cv_PtrOfOriginalClassName_new }
+	
+	impl PtrOfOriginalClassName {
+		#[inline] pub fn as_raw_PtrOfOriginalClassName(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfOriginalClassName(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::OriginalClassNameTraitConst for PtrOfOriginalClassName {
+		#[inline] fn as_raw_OriginalClassName(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::OriginalClassNameTrait for PtrOfOriginalClassName {
+		#[inline] fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
 	pub type PtrOff32 = core::Ptr<f32>;
@@ -6863,6 +6905,133 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfReciprocalLayer = core::Ptr<crate::dnn::ReciprocalLayer>;
+	
+	ptr_extern! { crate::dnn::ReciprocalLayer,
+		cv_PtrOfReciprocalLayer_delete, cv_PtrOfReciprocalLayer_get_inner_ptr, cv_PtrOfReciprocalLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ReciprocalLayer, cv_PtrOfReciprocalLayer_new }
+	
+	impl PtrOfReciprocalLayer {
+		#[inline] pub fn as_raw_PtrOfReciprocalLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReciprocalLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ReciprocalLayerTraitConst for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_ReciprocalLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ReciprocalLayerTrait for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_mut_ReciprocalLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfReciprocalLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfReduceLayer = core::Ptr<crate::dnn::ReduceLayer>;
+	
+	ptr_extern! { crate::dnn::ReduceLayer,
+		cv_PtrOfReduceLayer_delete, cv_PtrOfReduceLayer_get_inner_ptr, cv_PtrOfReduceLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ReduceLayer, cv_PtrOfReduceLayer_new }
+	
+	impl PtrOfReduceLayer {
+		#[inline] pub fn as_raw_PtrOfReduceLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReduceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ReduceLayerTraitConst for PtrOfReduceLayer {
+		#[inline] fn as_raw_ReduceLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ReduceLayerTrait for PtrOfReduceLayer {
+		#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfReduceLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfReduceLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfReduceLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfReduceLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfReduceLayerInt8 = core::Ptr<crate::dnn::ReduceLayerInt8>;
+	
+	ptr_extern! { crate::dnn::ReduceLayerInt8,
+		cv_PtrOfReduceLayerInt8_delete, cv_PtrOfReduceLayerInt8_get_inner_ptr, cv_PtrOfReduceLayerInt8_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ReduceLayerInt8, cv_PtrOfReduceLayerInt8_new }
+	
+	impl PtrOfReduceLayerInt8 {
+		#[inline] pub fn as_raw_PtrOfReduceLayerInt8(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfReduceLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ReduceLayerInt8TraitConst for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_ReduceLayerInt8(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ReduceLayerInt8Trait for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_mut_ReduceLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ReduceLayerTraitConst for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_ReduceLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ReduceLayerTrait for PtrOfReduceLayerInt8 {
+		#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfRegionLayer = core::Ptr<crate::dnn::RegionLayer>;
 	
 	ptr_extern! { crate::dnn::RegionLayer,
@@ -7220,6 +7389,51 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type PtrOfShrinkLayer = core::Ptr<crate::dnn::ShrinkLayer>;
+	
+	ptr_extern! { crate::dnn::ShrinkLayer,
+		cv_PtrOfShrinkLayer_delete, cv_PtrOfShrinkLayer_get_inner_ptr, cv_PtrOfShrinkLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ShrinkLayer, cv_PtrOfShrinkLayer_new }
+	
+	impl PtrOfShrinkLayer {
+		#[inline] pub fn as_raw_PtrOfShrinkLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfShrinkLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ShrinkLayerTraitConst for PtrOfShrinkLayer {
+		#[inline] fn as_raw_ShrinkLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ShrinkLayerTrait for PtrOfShrinkLayer {
+		#[inline] fn as_raw_mut_ShrinkLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfShrinkLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfShrinkLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfShrinkLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfShrinkLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfShrinkLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfShrinkLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
 	pub type PtrOfSigmoidLayer = core::Ptr<crate::dnn::SigmoidLayer>;
 	
 	ptr_extern! { crate::dnn::SigmoidLayer,
@@ -7262,6 +7476,51 @@ mod dnn_types {
 	}
 	
 	impl crate::dnn::LayerTrait for PtrOfSigmoidLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	pub type PtrOfSignLayer = core::Ptr<crate::dnn::SignLayer>;
+	
+	ptr_extern! { crate::dnn::SignLayer,
+		cv_PtrOfSignLayer_delete, cv_PtrOfSignLayer_get_inner_ptr, cv_PtrOfSignLayer_get_inner_ptr_mut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::SignLayer, cv_PtrOfSignLayer_new }
+	
+	impl PtrOfSignLayer {
+		#[inline] pub fn as_raw_PtrOfSignLayer(&self) -> *const c_void { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSignLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::SignLayerTraitConst for PtrOfSignLayer {
+		#[inline] fn as_raw_SignLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::SignLayerTrait for PtrOfSignLayer {
+		#[inline] fn as_raw_mut_SignLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for PtrOfSignLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PtrOfSignLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::ActivationLayerTraitConst for PtrOfSignLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for PtrOfSignLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for PtrOfSignLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for PtrOfSignLayer {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	

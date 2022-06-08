@@ -18,7 +18,7 @@
 //!   A network training is in principle not supported.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperConst, super::BackendWrapper, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerConst, super::LSTMLayer, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerConst, super::RNNLayer, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
+	pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperConst, super::BackendWrapper, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerConst, super::LSTMLayer, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerConst, super::RNNLayer, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::ReduceLayerTraitConst, super::ReduceLayerTrait, super::ReduceLayerInt8TraitConst, super::ReduceLayerInt8Trait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::SignLayerTraitConst, super::SignLayerTrait, super::ShrinkLayerTraitConst, super::ShrinkLayerTrait, super::ReciprocalLayerTraitConst, super::ReciprocalLayerTrait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
 }
 
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
@@ -42,6 +42,7 @@ pub const DNN_BACKEND_HALIDE: i32 = 1;
 /// setInferenceEngineBackendType
 pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 2;
 pub const DNN_BACKEND_OPENCV: i32 = 3;
+pub const DNN_BACKEND_TIMVX: i32 = 7;
 pub const DNN_BACKEND_VKCOM: i32 = 4;
 pub const DNN_BACKEND_WEBNN: i32 = 6;
 pub const DNN_TARGET_CPU: i32 = 0;
@@ -51,10 +52,11 @@ pub const DNN_TARGET_CUDA_FP16: i32 = 7;
 pub const DNN_TARGET_FPGA: i32 = 5;
 pub const DNN_TARGET_HDDL: i32 = 8;
 pub const DNN_TARGET_MYRIAD: i32 = 3;
+pub const DNN_TARGET_NPU: i32 = 9;
 pub const DNN_TARGET_OPENCL: i32 = 1;
 pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub const DNN_TARGET_VULKAN: i32 = 4;
-pub const OPENCV_DNN_API_VERSION: i32 = 20211220;
+pub const OPENCV_DNN_API_VERSION: i32 = 20220524;
 pub const SoftNMSMethod_SOFTNMS_GAUSSIAN: i32 = 2;
 pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 /// Enum of computation backends supported by layers.
@@ -79,6 +81,7 @@ pub enum Backend {
 	DNN_BACKEND_VKCOM = 4,
 	DNN_BACKEND_CUDA = 5,
 	DNN_BACKEND_WEBNN = 6,
+	DNN_BACKEND_TIMVX = 7,
 }
 
 opencv_type_enum! { crate::dnn::Backend }
@@ -111,6 +114,7 @@ pub enum Target {
 	DNN_TARGET_CUDA = 6,
 	DNN_TARGET_CUDA_FP16 = 7,
 	DNN_TARGET_HDDL = 8,
+	DNN_TARGET_NPU = 9,
 }
 
 opencv_type_enum! { crate::dnn::Target }
@@ -119,6 +123,10 @@ opencv_type_enum! { crate::dnn::Target }
 pub type LayerFactory_Constructor = Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>;
 pub type MatShape = core::Vector<i32>;
 /// Container for strings and integers.
+/// 
+/// 
+/// **Deprecated**: Use getLayerId() with int result.
+#[deprecated = "Use getLayerId() with int result."]
 pub type Net_LayerId = crate::dnn::DictValue;
 /// ## C++ default parameters
 /// * eta: 1.f
@@ -327,7 +335,9 @@ pub fn get_available_targets(be: crate::dnn::Backend) -> Result<core::Vector<cra
 /// 
 /// See values of `CV_DNN_BACKEND_INFERENCE_ENGINE_*` macros.
 /// 
-/// Default value is controlled through `OPENCV_DNN_BACKEND_INFERENCE_ENGINE_TYPE` runtime parameter (environment variable).
+/// `OPENCV_DNN_BACKEND_INFERENCE_ENGINE_TYPE` runtime parameter (environment variable) is ignored since 4.6.0.
+/// 
+/// @deprecated
 #[inline]
 pub fn get_inference_engine_backend_type() -> Result<String> {
 	return_send!(via ocvrs_return);
@@ -387,18 +397,6 @@ pub fn images_from_blob(blob_: &core::Mat, images_: &mut dyn core::ToOutputArray
 	output_array_arg!(images_);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_dnn_imagesFromBlob_const_MatR_const__OutputArrayR(blob_.as_raw_Mat(), images_.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	Ok(ret)
-}
-
-/// ## C++ default parameters
-/// * name: ""
-#[inline]
-pub fn print(shape: &crate::dnn::MatShape, name: &str) -> Result<()> {
-	extern_container_arg!(name);
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_dnn_print_const_MatShapeR_const_StringR(shape.as_raw_VectorOfi32(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -879,6 +877,8 @@ pub fn reset_myriad_device() -> Result<()> {
 /// 
 /// ## Returns
 /// previous value of internal backend API
+/// 
+/// @deprecated
 #[inline]
 pub fn set_inference_engine_backend_type(new_backend_type: &str) -> Result<String> {
 	extern_container_arg!(new_backend_type);
@@ -1037,19 +1037,6 @@ pub fn soft_nms_boxes(bboxes: &core::Vector<core::Rect>, scores: &core::Vector<f
 	unsafe { sys::cv_dnn_softNMSBoxes_const_vector_Rect_R_const_vector_float_R_vector_float_R_const_float_const_float_vector_int_R_size_t_const_float_SoftNMSMethod(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), updated_scores.as_raw_mut_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), top_k, sigma, method, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
-	Ok(ret)
-}
-
-/// ## C++ default parameters
-/// * name: ""
-#[inline]
-pub fn to_string(shape: &crate::dnn::MatShape, name: &str) -> Result<String> {
-	extern_container_arg!(name);
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_dnn_toString_const_MatShapeR_const_StringR(shape.as_raw_VectorOfi32(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	let ret = unsafe { String::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
@@ -1501,11 +1488,17 @@ boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLU6Layer, cv_ActivationL
 
 boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLULayer, cv_ActivationLayer_to_ReLULayer }
 
+boxed_cast_descendant! { ActivationLayer, crate::dnn::ReciprocalLayer, cv_ActivationLayer_to_ReciprocalLayer }
+
 boxed_cast_descendant! { ActivationLayer, crate::dnn::RoundLayer, cv_ActivationLayer_to_RoundLayer }
 
 boxed_cast_descendant! { ActivationLayer, crate::dnn::SeluLayer, cv_ActivationLayer_to_SeluLayer }
 
+boxed_cast_descendant! { ActivationLayer, crate::dnn::ShrinkLayer, cv_ActivationLayer_to_ShrinkLayer }
+
 boxed_cast_descendant! { ActivationLayer, crate::dnn::SigmoidLayer, cv_ActivationLayer_to_SigmoidLayer }
+
+boxed_cast_descendant! { ActivationLayer, crate::dnn::SignLayer, cv_ActivationLayer_to_SignLayer }
 
 boxed_cast_descendant! { ActivationLayer, crate::dnn::SinLayer, cv_ActivationLayer_to_SinLayer }
 
@@ -2996,11 +2989,41 @@ boxed_cast_base! { ChannelsPReLULayer, crate::dnn::Layer, cv_ChannelsPReLULayer_
 pub trait ClassificationModelTraitConst: crate::dnn::ModelTraitConst {
 	fn as_raw_ClassificationModel(&self) -> *const c_void;
 
+	/// Get enable/disable softmax post processing option.
+	/// 
+	/// This option defaults to false, softmax post processing is not applied within the classify() function.
+	#[inline]
+	fn get_enable_softmax_post_processing(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ClassificationModel_getEnableSoftmaxPostProcessing_const(self.as_raw_ClassificationModel(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 pub trait ClassificationModelTrait: crate::dnn::ClassificationModelTraitConst + crate::dnn::ModelTrait {
 	fn as_raw_mut_ClassificationModel(&mut self) -> *mut c_void;
 
+	/// Set enable/disable softmax post processing option.
+	/// 
+	/// If this option is true, softmax is applied after forward inference within the classify() function
+	/// to convert the confidences range to [0.0-1.0].
+	/// This function allows you to toggle this behavior.
+	/// Please turn true when not contain softmax layer in model.
+	/// ## Parameters
+	/// * enable: Set enable softmax post processing within the classify() function.
+	#[inline]
+	fn set_enable_softmax_post_processing(&mut self, enable: bool) -> Result<crate::dnn::ClassificationModel> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ClassificationModel_setEnableSoftmaxPostProcessing_bool(self.as_raw_mut_ClassificationModel(), enable, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::ClassificationModel::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Given the @p input frame, create input blob, run net and return top-1 prediction.
 	/// ## Parameters
 	/// * frame: The input image.
@@ -3055,6 +3078,16 @@ impl crate::dnn::ClassificationModelTrait for ClassificationModel {
 }
 
 impl ClassificationModel {
+	#[inline]
+	pub fn default() -> Result<crate::dnn::ClassificationModel> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ClassificationModel_ClassificationModel(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::ClassificationModel::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Create classification model from network represented in one of the supported formats.
 	/// An order of @p model and @p config arguments does not matter.
 	/// ## Parameters
@@ -3428,6 +3461,12 @@ pub trait ConvolutionLayerInt8TraitConst: crate::dnn::BaseConvolutionLayerTraitC
 	}
 	
 	#[inline]
+	fn input_sc(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropInput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
+		ret
+	}
+	
+	#[inline]
 	fn output_sc(&self) -> f32 {
 		let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropOutput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
 		ret
@@ -3447,6 +3486,12 @@ pub trait ConvolutionLayerInt8Trait: crate::dnn::BaseConvolutionLayerTrait + cra
 	#[inline]
 	fn set_output_zp(&mut self, val: i32) {
 		let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropOutput_zp_int(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_input_sc(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropInput_sc_float(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 		ret
 	}
 	
@@ -5801,8 +5846,26 @@ pub trait InnerProductLayerInt8TraitConst: crate::dnn::InnerProductLayerTraitCon
 	fn as_raw_InnerProductLayerInt8(&self) -> *const c_void;
 
 	#[inline]
+	fn input_zp(&self) -> i32 {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropInput_zp_const(self.as_raw_InnerProductLayerInt8()) };
+		ret
+	}
+	
+	#[inline]
 	fn output_zp(&self) -> i32 {
 		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropOutput_zp_const(self.as_raw_InnerProductLayerInt8()) };
+		ret
+	}
+	
+	#[inline]
+	fn input_sc(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropInput_sc_const(self.as_raw_InnerProductLayerInt8()) };
+		ret
+	}
+	
+	#[inline]
+	fn output_sc(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropOutput_sc_const(self.as_raw_InnerProductLayerInt8()) };
 		ret
 	}
 	
@@ -5812,8 +5875,26 @@ pub trait InnerProductLayerInt8Trait: crate::dnn::InnerProductLayerInt8TraitCons
 	fn as_raw_mut_InnerProductLayerInt8(&mut self) -> *mut c_void;
 
 	#[inline]
+	fn set_input_zp(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropInput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
 	fn set_output_zp(&mut self, val: i32) {
 		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropOutput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_input_sc(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropInput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_output_sc(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropOutput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
 		ret
 	}
 	
@@ -6701,16 +6782,6 @@ pub trait LayerTrait: core::AlgorithmTrait + crate::dnn::LayerTraitConst {
 	}
 	
 	#[inline]
-	fn init_inf_engine(&mut self, inputs: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Layer_initInfEngine_const_vector_Ptr_BackendWrapper__R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::dnn::BackendNode>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-	
-	#[inline]
 	fn init_ngraph(&mut self, inputs: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>, nodes: &core::Vector<core::Ptr<crate::dnn::BackendNode>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_Layer_initNgraph_const_vector_Ptr_BackendWrapper__R_const_vector_Ptr_BackendNode__R(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), nodes.as_raw_VectorOfPtrOfBackendNode(), ocvrs_return.as_mut_ptr()) };
@@ -6750,6 +6821,23 @@ pub trait LayerTrait: core::AlgorithmTrait + crate::dnn::LayerTraitConst {
 	unsafe fn init_cuda(&mut self, context: *mut c_void, inputs: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>, outputs: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
 		return_send!(via ocvrs_return);
 		{ sys::cv_dnn_Layer_initCUDA_voidX_const_vector_Ptr_BackendWrapper__R_const_vector_Ptr_BackendWrapper__R(self.as_raw_mut_Layer(), context, inputs.as_raw_VectorOfPtrOfBackendWrapper(), outputs.as_raw_VectorOfPtrOfBackendWrapper(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = { core::Ptr::<crate::dnn::BackendNode>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Returns a TimVX backend node
+	/// 
+	/// ## Parameters
+	/// * timVxInfo: void pointer to CSLContext object
+	/// * inputsWrapper: layer inputs
+	/// * outputsWrapper: layer outputs
+	/// * isLast: if the node is the last one of the TimVX Graph.
+	#[inline]
+	unsafe fn init_tim_vx(&mut self, tim_vx_info: *mut c_void, inputs_wrapper: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>, outputs_wrapper: &core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>, is_last: bool) -> Result<core::Ptr<crate::dnn::BackendNode>> {
+		return_send!(via ocvrs_return);
+		{ sys::cv_dnn_Layer_initTimVX_voidX_const_vector_Ptr_BackendWrapper__R_const_vector_Ptr_BackendWrapper__R_bool(self.as_raw_mut_Layer(), tim_vx_info, inputs_wrapper.as_raw_VectorOfPtrOfBackendWrapper(), outputs_wrapper.as_raw_VectorOfPtrOfBackendWrapper(), is_last, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = { core::Ptr::<crate::dnn::BackendNode>::opencv_from_extern(ret) };
@@ -6803,7 +6891,7 @@ pub trait LayerTrait: core::AlgorithmTrait + crate::dnn::LayerTraitConst {
 		Ok(ret)
 	}
 	
-	/// "Deattaches" all the layers, attached to particular layer.
+	/// "Detaches" all the layers, attached to particular layer.
 	#[inline]
 	fn unset_attached(&mut self) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -6955,6 +7043,8 @@ boxed_cast_descendant! { Layer, crate::dnn::ProposalLayer, cv_Layer_to_ProposalL
 
 boxed_cast_descendant! { Layer, crate::dnn::QuantizeLayer, cv_Layer_to_QuantizeLayer }
 
+boxed_cast_descendant! { Layer, crate::dnn::ReduceLayer, cv_Layer_to_ReduceLayer }
+
 boxed_cast_descendant! { Layer, crate::dnn::RegionLayer, cv_Layer_to_RegionLayer }
 
 boxed_cast_descendant! { Layer, crate::dnn::ReorgLayer, cv_Layer_to_ReorgLayer }
@@ -7034,6 +7124,17 @@ impl LayerFactory {
 		extern_container_arg!(typ);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_const_StringR(typ.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Check if layer is registered.
+	#[inline]
+	pub fn is_layer_registered(typ: &str) -> Result<bool> {
+		extern_container_arg!(typ);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_LayerFactory_isLayerRegistered_const_stringR(typ.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7816,6 +7917,19 @@ pub trait NetTraitConst {
 		Ok(ret)
 	}
 	
+	/// Converts string name of the layer to the integer identifier.
+	/// ## Returns
+	/// id of the layer, or -1 if the layer wasn't found.
+	#[inline]
+	fn get_layer_id(&self, layer: &str) -> Result<i32> {
+		extern_container_arg!(layer);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getLayerId_const_const_StringR(self.as_raw_Net(), layer.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	#[inline]
 	fn get_layer_names(&self) -> Result<core::Vector<String>> {
 		return_send!(via ocvrs_return);
@@ -7823,6 +7937,63 @@ pub trait NetTraitConst {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Returns pointer to layer with specified id or name which the network use.
+	#[inline]
+	fn get_layer(&self, layer_id: i32) -> Result<core::Ptr<crate::dnn::Layer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getLayer_const_int(self.as_raw_Net(), layer_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::Layer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Returns pointer to layer with specified id or name which the network use.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// 
+	/// **Deprecated**: Use int getLayerId(const String &layer)
+	#[deprecated = "Use int getLayerId(const String &layer)"]
+	#[inline]
+	fn get_layer_1(&self, layer_name: &str) -> Result<core::Ptr<crate::dnn::Layer>> {
+		extern_container_arg!(layer_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getLayer_const_const_StringR(self.as_raw_Net(), layer_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::Layer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Returns pointer to layer with specified id or name which the network use.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// 
+	/// **Deprecated**: to be removed
+	#[deprecated = "to be removed"]
+	#[inline]
+	fn get_layer_2(&self, layer_id: &crate::dnn::Net_LayerId) -> Result<core::Ptr<crate::dnn::Layer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getLayer_const_const_LayerIdR(self.as_raw_Net(), layer_id.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::Layer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Returns pointers to input layers of specific layer.
+	#[inline]
+	fn get_layer_inputs(&self, layer_id: i32) -> Result<core::Vector<core::Ptr<crate::dnn::Layer>>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getLayerInputs_const_int(self.as_raw_Net(), layer_id, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Ptr<crate::dnn::Layer>>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -7852,7 +8023,41 @@ pub trait NetTraitConst {
 		Ok(ret)
 	}
 	
+	/// Returns parameter blob of the layer.
+	/// ## Parameters
+	/// * layer: name or id of the layer.
+	/// * numParam: index of the layer parameter in the Layer::blobs array.
+	/// ## See also
+	/// Layer::blobs
+	/// 
+	/// ## C++ default parameters
+	/// * num_param: 0
+	#[inline]
+	fn get_param(&self, layer: i32, num_param: i32) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getParam_const_int_int(self.as_raw_Net(), layer, num_param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * num_param: 0
+	#[inline]
+	fn get_param_1(&self, layer_name: &str, num_param: i32) -> Result<core::Mat> {
+		extern_container_arg!(layer_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_getParam_const_const_StringR_int(self.as_raw_Net(), layer_name.opencv_as_extern(), num_param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Returns indexes of layers with unconnected outputs.
+	/// 
+	/// FIXIT: Rework API to registerOutput() approach, deprecate this call
 	#[inline]
 	fn get_unconnected_out_layers(&self) -> Result<core::Vector<i32>> {
 		return_send!(via ocvrs_return);
@@ -7864,6 +8069,8 @@ pub trait NetTraitConst {
 	}
 	
 	/// Returns names of layers with unconnected outputs.
+	/// 
+	/// FIXIT: Rework API to registerOutput() approach, deprecate this call
 	#[inline]
 	fn get_unconnected_out_layers_names(&self) -> Result<core::Vector<String>> {
 		return_send!(via ocvrs_return);
@@ -8244,41 +8451,6 @@ pub trait NetTrait: crate::dnn::NetTraitConst {
 		Ok(ret)
 	}
 	
-	/// Converts string name of the layer to the integer identifier.
-	/// ## Returns
-	/// id of the layer, or -1 if the layer wasn't found.
-	#[inline]
-	fn get_layer_id(&mut self, layer: &str) -> Result<i32> {
-		extern_container_arg!(layer);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Net_getLayerId_const_StringR(self.as_raw_mut_Net(), layer.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-	/// Returns pointer to layer with specified id or name which the network use.
-	#[inline]
-	fn get_layer(&mut self, mut layer_id: crate::dnn::Net_LayerId) -> Result<core::Ptr<crate::dnn::Layer>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Net_getLayer_LayerId(self.as_raw_mut_Net(), layer_id.as_raw_mut_DictValue(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::dnn::Layer>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-	
-	/// Returns pointers to input layers of specific layer.
-	#[inline]
-	fn get_layer_inputs(&mut self, mut layer_id: crate::dnn::Net_LayerId) -> Result<core::Vector<core::Ptr<crate::dnn::Layer>>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Net_getLayerInputs_LayerId(self.as_raw_mut_Net(), layer_id.as_raw_mut_DictValue(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<core::Ptr<crate::dnn::Layer>>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-	
 	/// Connects output of the first layer to input of the second layer.
 	/// ## Parameters
 	/// * outPin: descriptor of the first layer output.
@@ -8313,6 +8485,27 @@ pub trait NetTrait: crate::dnn::NetTraitConst {
 	fn connect(&mut self, out_layer_id: i32, out_num: i32, inp_layer_id: i32, inp_num: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_Net_connect_int_int_int_int(self.as_raw_mut_Net(), out_layer_id, out_num, inp_layer_id, inp_num, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Registers network output with name
+	/// 
+	/// Function may create additional 'Identity' layer.
+	/// 
+	/// ## Parameters
+	/// * outputName: identifier of the output
+	/// * layerId: identifier of the second layer
+	/// * outputPort: number of the second layer input
+	/// 
+	/// ## Returns
+	/// index of bound layer (the same as layerId or newly created)
+	#[inline]
+	fn register_output(&mut self, output_name: &str, layer_id: i32, output_port: i32) -> Result<i32> {
+		extern_container_arg!(output_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_Net_registerOutput_const_stringR_int_int(self.as_raw_mut_Net(), output_name.opencv_as_extern(), layer_id, output_port, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8548,30 +8741,21 @@ pub trait NetTrait: crate::dnn::NetTraitConst {
 	/// Note: If shape of the new blob differs from the previous shape,
 	/// then the following forward pass may fail.
 	#[inline]
-	fn set_param(&mut self, mut layer: crate::dnn::Net_LayerId, num_param: i32, blob: &core::Mat) -> Result<()> {
+	fn set_param(&mut self, layer: i32, num_param: i32, blob: &core::Mat) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Net_setParam_LayerId_int_const_MatR(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param, blob.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dnn_Net_setParam_int_int_const_MatR(self.as_raw_mut_Net(), layer, num_param, blob.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
-	/// Returns parameter blob of the layer.
-	/// ## Parameters
-	/// * layer: name or id of the layer.
-	/// * numParam: index of the layer parameter in the Layer::blobs array.
-	/// ## See also
-	/// Layer::blobs
-	/// 
-	/// ## C++ default parameters
-	/// * num_param: 0
 	#[inline]
-	fn get_param(&mut self, mut layer: crate::dnn::Net_LayerId, num_param: i32) -> Result<core::Mat> {
+	fn set_param_1(&mut self, layer_name: &str, num_param: i32, blob: &core::Mat) -> Result<()> {
+		extern_container_arg!(layer_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_Net_getParam_LayerId_int(self.as_raw_mut_Net(), layer.as_raw_mut_DictValue(), num_param, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dnn_Net_setParam_const_StringR_int_const_MatR(self.as_raw_mut_Net(), layer_name.opencv_as_extern(), num_param, blob.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -9362,6 +9546,18 @@ pub trait PoolingLayerInt8TraitConst: crate::dnn::PoolingLayerTraitConst {
 		ret
 	}
 	
+	#[inline]
+	fn input_sc(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropInput_sc_const(self.as_raw_PoolingLayerInt8()) };
+		ret
+	}
+	
+	#[inline]
+	fn output_sc(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropOutput_sc_const(self.as_raw_PoolingLayerInt8()) };
+		ret
+	}
+	
 }
 
 pub trait PoolingLayerInt8Trait: crate::dnn::PoolingLayerInt8TraitConst + crate::dnn::PoolingLayerTrait {
@@ -9376,6 +9572,18 @@ pub trait PoolingLayerInt8Trait: crate::dnn::PoolingLayerInt8TraitConst + crate:
 	#[inline]
 	fn set_output_zp(&mut self, val: i32) {
 		let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropOutput_zp_int(self.as_raw_mut_PoolingLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_input_sc(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropInput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_output_sc(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropOutput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
 		ret
 	}
 	
@@ -10040,6 +10248,249 @@ boxed_cast_base! { ReLULayer, crate::dnn::ActivationLayer, cv_ReLULayer_to_Activ
 boxed_cast_base! { ReLULayer, core::Algorithm, cv_ReLULayer_to_Algorithm }
 
 boxed_cast_base! { ReLULayer, crate::dnn::Layer, cv_ReLULayer_to_Layer }
+
+pub trait ReciprocalLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
+	fn as_raw_ReciprocalLayer(&self) -> *const c_void;
+
+}
+
+pub trait ReciprocalLayerTrait: crate::dnn::ActivationLayerTrait + crate::dnn::ReciprocalLayerTraitConst {
+	fn as_raw_mut_ReciprocalLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct ReciprocalLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ReciprocalLayer }
+
+impl Drop for ReciprocalLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ReciprocalLayer_delete(instance: *mut c_void); }
+		unsafe { cv_ReciprocalLayer_delete(self.as_raw_mut_ReciprocalLayer()) };
+	}
+}
+
+unsafe impl Send for ReciprocalLayer {}
+
+impl crate::dnn::ActivationLayerTraitConst for ReciprocalLayer {
+	#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ActivationLayerTrait for ReciprocalLayer {
+	#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl core::AlgorithmTraitConst for ReciprocalLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ReciprocalLayer {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTraitConst for ReciprocalLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::LayerTrait for ReciprocalLayer {
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ReciprocalLayerTraitConst for ReciprocalLayer {
+	#[inline] fn as_raw_ReciprocalLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ReciprocalLayerTrait for ReciprocalLayer {
+	#[inline] fn as_raw_mut_ReciprocalLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ReciprocalLayer {
+	#[inline]
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::ReciprocalLayer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ReciprocalLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::ReciprocalLayer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { ReciprocalLayer, crate::dnn::ActivationLayer, cv_ReciprocalLayer_to_ActivationLayer }
+
+boxed_cast_base! { ReciprocalLayer, core::Algorithm, cv_ReciprocalLayer_to_Algorithm }
+
+boxed_cast_base! { ReciprocalLayer, crate::dnn::Layer, cv_ReciprocalLayer_to_Layer }
+
+pub trait ReduceLayerTraitConst: crate::dnn::LayerTraitConst {
+	fn as_raw_ReduceLayer(&self) -> *const c_void;
+
+	#[inline]
+	fn reduce_type(&self) -> i32 {
+		let ret = unsafe { sys::cv_dnn_ReduceLayer_getPropReduceType_const(self.as_raw_ReduceLayer()) };
+		ret
+	}
+	
+	#[inline]
+	fn reduce_dims(&self) -> core::Vector<size_t> {
+		let ret = unsafe { sys::cv_dnn_ReduceLayer_getPropReduceDims_const(self.as_raw_ReduceLayer()) };
+		let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
+		ret
+	}
+	
+}
+
+pub trait ReduceLayerTrait: crate::dnn::LayerTrait + crate::dnn::ReduceLayerTraitConst {
+	fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_reduce_type(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_dnn_ReduceLayer_setPropReduceType_int(self.as_raw_mut_ReduceLayer(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_reduce_dims(&mut self, mut val: core::Vector<size_t>) {
+		let ret = unsafe { sys::cv_dnn_ReduceLayer_setPropReduceDims_vector_size_t_(self.as_raw_mut_ReduceLayer(), val.as_raw_mut_VectorOfsize_t()) };
+		ret
+	}
+	
+}
+
+pub struct ReduceLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ReduceLayer }
+
+impl Drop for ReduceLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ReduceLayer_delete(instance: *mut c_void); }
+		unsafe { cv_ReduceLayer_delete(self.as_raw_mut_ReduceLayer()) };
+	}
+}
+
+unsafe impl Send for ReduceLayer {}
+
+impl core::AlgorithmTraitConst for ReduceLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ReduceLayer {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTraitConst for ReduceLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::LayerTrait for ReduceLayer {
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ReduceLayerTraitConst for ReduceLayer {
+	#[inline] fn as_raw_ReduceLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ReduceLayerTrait for ReduceLayer {
+	#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ReduceLayer {
+	#[inline]
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::ReduceLayer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ReduceLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::ReduceLayer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { ReduceLayer, core::Algorithm, cv_ReduceLayer_to_Algorithm }
+
+boxed_cast_base! { ReduceLayer, crate::dnn::Layer, cv_ReduceLayer_to_Layer }
+
+pub trait ReduceLayerInt8TraitConst: crate::dnn::ReduceLayerTraitConst {
+	fn as_raw_ReduceLayerInt8(&self) -> *const c_void;
+
+}
+
+pub trait ReduceLayerInt8Trait: crate::dnn::ReduceLayerInt8TraitConst + crate::dnn::ReduceLayerTrait {
+	fn as_raw_mut_ReduceLayerInt8(&mut self) -> *mut c_void;
+
+}
+
+pub struct ReduceLayerInt8 {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ReduceLayerInt8 }
+
+impl Drop for ReduceLayerInt8 {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ReduceLayerInt8_delete(instance: *mut c_void); }
+		unsafe { cv_ReduceLayerInt8_delete(self.as_raw_mut_ReduceLayerInt8()) };
+	}
+}
+
+unsafe impl Send for ReduceLayerInt8 {}
+
+impl core::AlgorithmTraitConst for ReduceLayerInt8 {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ReduceLayerInt8 {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTraitConst for ReduceLayerInt8 {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::LayerTrait for ReduceLayerInt8 {
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ReduceLayerTraitConst for ReduceLayerInt8 {
+	#[inline] fn as_raw_ReduceLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ReduceLayerTrait for ReduceLayerInt8 {
+	#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ReduceLayerInt8TraitConst for ReduceLayerInt8 {
+	#[inline] fn as_raw_ReduceLayerInt8(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ReduceLayerInt8Trait for ReduceLayerInt8 {
+	#[inline] fn as_raw_mut_ReduceLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ReduceLayerInt8 {
+	#[inline]
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::ReduceLayerInt8>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ReduceLayerInt8_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::ReduceLayerInt8>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { ReduceLayerInt8, core::Algorithm, cv_ReduceLayerInt8_to_Algorithm }
+
+boxed_cast_base! { ReduceLayerInt8, crate::dnn::Layer, cv_ReduceLayerInt8_to_Layer }
+
+boxed_cast_base! { ReduceLayerInt8, crate::dnn::ReduceLayer, cv_ReduceLayerInt8_to_ReduceLayer }
 
 pub trait RegionLayerTraitConst: crate::dnn::LayerTraitConst {
 	fn as_raw_RegionLayer(&self) -> *const c_void;
@@ -11055,6 +11506,106 @@ boxed_cast_base! { ShiftLayerInt8, core::Algorithm, cv_ShiftLayerInt8_to_Algorit
 
 boxed_cast_base! { ShiftLayerInt8, crate::dnn::Layer, cv_ShiftLayerInt8_to_Layer }
 
+pub trait ShrinkLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
+	fn as_raw_ShrinkLayer(&self) -> *const c_void;
+
+	#[inline]
+	fn bias(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_ShrinkLayer_getPropBias_const(self.as_raw_ShrinkLayer()) };
+		ret
+	}
+	
+	#[inline]
+	fn lambd(&self) -> f32 {
+		let ret = unsafe { sys::cv_dnn_ShrinkLayer_getPropLambd_const(self.as_raw_ShrinkLayer()) };
+		ret
+	}
+	
+}
+
+pub trait ShrinkLayerTrait: crate::dnn::ActivationLayerTrait + crate::dnn::ShrinkLayerTraitConst {
+	fn as_raw_mut_ShrinkLayer(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_bias(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_ShrinkLayer_setPropBias_float(self.as_raw_mut_ShrinkLayer(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_lambd(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_dnn_ShrinkLayer_setPropLambd_float(self.as_raw_mut_ShrinkLayer(), val) };
+		ret
+	}
+	
+}
+
+pub struct ShrinkLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ShrinkLayer }
+
+impl Drop for ShrinkLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ShrinkLayer_delete(instance: *mut c_void); }
+		unsafe { cv_ShrinkLayer_delete(self.as_raw_mut_ShrinkLayer()) };
+	}
+}
+
+unsafe impl Send for ShrinkLayer {}
+
+impl crate::dnn::ActivationLayerTraitConst for ShrinkLayer {
+	#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ActivationLayerTrait for ShrinkLayer {
+	#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl core::AlgorithmTraitConst for ShrinkLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ShrinkLayer {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTraitConst for ShrinkLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::LayerTrait for ShrinkLayer {
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::ShrinkLayerTraitConst for ShrinkLayer {
+	#[inline] fn as_raw_ShrinkLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ShrinkLayerTrait for ShrinkLayer {
+	#[inline] fn as_raw_mut_ShrinkLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ShrinkLayer {
+	#[inline]
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::ShrinkLayer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_ShrinkLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::ShrinkLayer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { ShrinkLayer, crate::dnn::ActivationLayer, cv_ShrinkLayer_to_ActivationLayer }
+
+boxed_cast_base! { ShrinkLayer, core::Algorithm, cv_ShrinkLayer_to_Algorithm }
+
+boxed_cast_base! { ShrinkLayer, crate::dnn::Layer, cv_ShrinkLayer_to_Layer }
+
 /// Permute channels of 4-dimensional input blob.
 /// ## Parameters
 /// * group: Number of groups to split input channels and pick in turns
@@ -11224,6 +11775,82 @@ boxed_cast_base! { SigmoidLayer, crate::dnn::ActivationLayer, cv_SigmoidLayer_to
 boxed_cast_base! { SigmoidLayer, core::Algorithm, cv_SigmoidLayer_to_Algorithm }
 
 boxed_cast_base! { SigmoidLayer, crate::dnn::Layer, cv_SigmoidLayer_to_Layer }
+
+pub trait SignLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
+	fn as_raw_SignLayer(&self) -> *const c_void;
+
+}
+
+pub trait SignLayerTrait: crate::dnn::ActivationLayerTrait + crate::dnn::SignLayerTraitConst {
+	fn as_raw_mut_SignLayer(&mut self) -> *mut c_void;
+
+}
+
+pub struct SignLayer {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { SignLayer }
+
+impl Drop for SignLayer {
+	fn drop(&mut self) {
+		extern "C" { fn cv_SignLayer_delete(instance: *mut c_void); }
+		unsafe { cv_SignLayer_delete(self.as_raw_mut_SignLayer()) };
+	}
+}
+
+unsafe impl Send for SignLayer {}
+
+impl crate::dnn::ActivationLayerTraitConst for SignLayer {
+	#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::ActivationLayerTrait for SignLayer {
+	#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl core::AlgorithmTraitConst for SignLayer {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for SignLayer {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::LayerTraitConst for SignLayer {
+	#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::LayerTrait for SignLayer {
+	#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::dnn::SignLayerTraitConst for SignLayer {
+	#[inline] fn as_raw_SignLayer(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::dnn::SignLayerTrait for SignLayer {
+	#[inline] fn as_raw_mut_SignLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl SignLayer {
+	#[inline]
+	pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::SignLayer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_SignLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::dnn::SignLayer>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { SignLayer, crate::dnn::ActivationLayer, cv_SignLayer_to_ActivationLayer }
+
+boxed_cast_base! { SignLayer, core::Algorithm, cv_SignLayer_to_Algorithm }
+
+boxed_cast_base! { SignLayer, crate::dnn::Layer, cv_SignLayer_to_Layer }
 
 pub trait SinLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 	fn as_raw_SinLayer(&self) -> *const c_void;
@@ -12275,7 +12902,7 @@ pub trait TextDetectionModelTraitConst: crate::dnn::ModelTraitConst {
 	/// - top-right
 	/// - bottom-right
 	/// 
-	/// Use cv::getPerspectiveTransform function to retrive image region without perspective transformations.
+	/// Use cv::getPerspectiveTransform function to retrieve image region without perspective transformations.
 	/// 
 	/// 
 	/// Note: If DL model doesn't support that kind of output then result may be derived from detectTextRectangles() output.
@@ -12304,7 +12931,7 @@ pub trait TextDetectionModelTraitConst: crate::dnn::ModelTraitConst {
 	/// - top-right
 	/// - bottom-right
 	/// 
-	/// Use cv::getPerspectiveTransform function to retrive image region without perspective transformations.
+	/// Use cv::getPerspectiveTransform function to retrieve image region without perspective transformations.
 	/// 
 	/// 
 	/// Note: If DL model doesn't support that kind of output then result may be derived from detectTextRectangles() output.
@@ -12419,7 +13046,7 @@ boxed_cast_base! { TextDetectionModel, crate::dnn::Model, cv_TextDetectionModel_
 
 /// This class represents high-level API for text detection DL networks compatible with DB model.
 /// 
-/// Related publications: [liao2020real](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Related publications: [liao2020real](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_liao2020real)
 /// Paper: https://arxiv.org/abs/1911.08947
 /// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
 /// 
@@ -12516,7 +13143,7 @@ pub trait TextDetectionModel_DBTrait: crate::dnn::TextDetectionModelTrait + crat
 
 /// This class represents high-level API for text detection DL networks compatible with DB model.
 /// 
-/// Related publications: [liao2020real](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_liao2020real)
+/// Related publications: [liao2020real](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_liao2020real)
 /// Paper: https://arxiv.org/abs/1911.08947
 /// For more information about the hyper-parameters setting, please refer to https://github.com/MhLiao/DB
 /// 

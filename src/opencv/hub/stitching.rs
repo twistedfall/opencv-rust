@@ -14,9 +14,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //! 
-//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BL07) .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) .
 //! 
-//! ![stitching pipeline](https://docs.opencv.org/4.5.5/StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/4.6.0/StitchingPipeline.jpg)
 //! 
 //! Camera models
 //! -------------
@@ -2934,7 +2934,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_BlocksCompensatorCo
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub trait Detail_BlocksGainCompensatorTraitConst: crate::stitching::Detail_BlocksCompensatorConst {
 	fn as_raw_Detail_BlocksGainCompensator(&self) -> *const c_void;
 
@@ -2975,7 +2975,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub struct Detail_BlocksGainCompensator {
 	ptr: *mut c_void
 }
@@ -4945,7 +4945,7 @@ impl Detail_FisheyeWarper {
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub trait Detail_GainCompensatorTraitConst: crate::stitching::Detail_ExposureCompensatorConst {
 	fn as_raw_Detail_GainCompensator(&self) -> *const c_void;
 
@@ -5041,7 +5041,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub struct Detail_GainCompensator {
 	ptr: *mut c_void
 }
@@ -5171,7 +5171,7 @@ impl Detail_Graph {
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_V03) .
 pub trait Detail_GraphCutSeamFinderTraitConst: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst + crate::stitching::Detail_SeamFinderConst {
 	fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void;
 
@@ -5191,7 +5191,7 @@ pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamF
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_V03) .
 pub struct Detail_GraphCutSeamFinder {
 	ptr: *mut c_void
 }
@@ -5939,7 +5939,7 @@ impl Detail_MercatorWarper {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub trait Detail_MultiBandBlenderTraitConst: crate::stitching::Detail_BlenderTraitConst {
 	fn as_raw_Detail_MultiBandBlender(&self) -> *const c_void;
 
@@ -5999,7 +5999,7 @@ pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait + 
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub struct Detail_MultiBandBlender {
 	ptr: *mut c_void
 }

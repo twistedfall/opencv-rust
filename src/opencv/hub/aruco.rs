@@ -19,9 +19,9 @@
 //! - Detection of ChArUco diamond markers
 //! The samples directory includes easy examples of how to use the module.
 //! 
-//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Aruco2014).
+//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 //! 
-//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 //! ## See also
 //! S. Garrido-Jurado, R. Muñoz-Salinas, F. J. Madrid-Cuevas, and M. J. Marín-Jiménez. 2014.
 //! "Automatic generation and detection of highly reliable fiducial markers under occlusion".
@@ -33,10 +33,18 @@
 //! for Google Summer of Code 2015 (GSoC 15).
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::DictionaryTraitConst, super::DictionaryTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait };
+	pub use { super::DictionaryTraitConst, super::DictionaryTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::EstimateParametersTraitConst, super::EstimateParametersTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait };
 }
 
-/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_wang2016iros)
+/// The marker coordinate system is centered on the middle of the marker.
+/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
+/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
+/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
+/// 
+/// These pattern points define this coordinate system:
+/// ![Image with axes drawn](https://docs.opencv.org/4.6.0/singlemarkersaxes.jpg)
+pub const CCW_center: i32 = 0;
+/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 pub const CORNER_REFINE_APRILTAG: i32 = 3;
 /// ArUco approach and refine the corners locations using the contour-points line fitting
 pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -44,21 +52,45 @@ pub const CORNER_REFINE_CONTOUR: i32 = 2;
 pub const CORNER_REFINE_NONE: i32 = 0;
 /// ArUco approach and refine the corners locations using corner subpixel accuracy
 pub const CORNER_REFINE_SUBPIX: i32 = 1;
+/// The marker coordinate system is centered on the top-left corner of the marker.
+/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
+/// (0, 0, 0), (markerLength, 0, 0),
+/// (markerLength, markerLength, 0), (0, markerLength, 0).
+/// 
+/// These pattern points define this coordinate system:
+/// ![Image with axes drawn](https://docs.opencv.org/4.6.0/singlemarkersaxes2.jpg)
+pub const CW_top_left_corner: i32 = 1;
+/// 4x4 bits, minimum hamming distance between any two codes = 3, 100 codes
 pub const DICT_4X4_100: i32 = 1;
+/// 4x4 bits, minimum hamming distance between any two codes = 2, 1000 codes
 pub const DICT_4X4_1000: i32 = 3;
+/// 4x4 bits, minimum hamming distance between any two codes = 3, 250 codes
 pub const DICT_4X4_250: i32 = 2;
+/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
 pub const DICT_4X4_50: i32 = 0;
+/// 5x5 bits, minimum hamming distance between any two codes = 7, 100 codes
 pub const DICT_5X5_100: i32 = 5;
+/// 5x5 bits, minimum hamming distance between any two codes = 5, 1000 codes
 pub const DICT_5X5_1000: i32 = 7;
+/// 5x5 bits, minimum hamming distance between any two codes = 6, 250 codes
 pub const DICT_5X5_250: i32 = 6;
+/// 5x5 bits, minimum hamming distance between any two codes = 8, 50 codes
 pub const DICT_5X5_50: i32 = 4;
+/// 6x6 bits, minimum hamming distance between any two codes = 12, 100 codes
 pub const DICT_6X6_100: i32 = 9;
+/// 6x6 bits, minimum hamming distance between any two codes = 9, 1000 codes
 pub const DICT_6X6_1000: i32 = 11;
+/// 6x6 bits, minimum hamming distance between any two codes = 11, 250 codes
 pub const DICT_6X6_250: i32 = 10;
+/// 6x6 bits, minimum hamming distance between any two codes = 13, 50 codes
 pub const DICT_6X6_50: i32 = 8;
+/// 7x7 bits, minimum hamming distance between any two codes = 18, 100 codes
 pub const DICT_7X7_100: i32 = 13;
+/// 7x7 bits, minimum hamming distance between any two codes = 14, 1000 codes
 pub const DICT_7X7_1000: i32 = 15;
+/// 7x7 bits, minimum hamming distance between any two codes = 17, 250 codes
 pub const DICT_7X7_250: i32 = 14;
+/// 7x7 bits, minimum hamming distance between any two codes = 19, 50 codes
 pub const DICT_7X7_50: i32 = 12;
 /// 4x4 bits, minimum hamming distance between any two codes = 5, 30 codes
 pub const DICT_APRILTAG_16h5: i32 = 17;
@@ -68,6 +100,7 @@ pub const DICT_APRILTAG_25h9: i32 = 18;
 pub const DICT_APRILTAG_36h10: i32 = 19;
 /// 6x6 bits, minimum hamming distance between any two codes = 11, 587 codes
 pub const DICT_APRILTAG_36h11: i32 = 20;
+/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 pub const DICT_ARUCO_ORIGINAL: i32 = 16;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -78,7 +111,7 @@ pub enum CornerRefineMethod {
 	CORNER_REFINE_SUBPIX = 1,
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	CORNER_REFINE_CONTOUR = 2,
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	CORNER_REFINE_APRILTAG = 3,
 }
 
@@ -91,22 +124,39 @@ opencv_type_enum! { crate::aruco::CornerRefineMethod }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PREDEFINED_DICTIONARY_NAME {
+	/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
 	DICT_4X4_50 = 0,
+	/// 4x4 bits, minimum hamming distance between any two codes = 3, 100 codes
 	DICT_4X4_100 = 1,
+	/// 4x4 bits, minimum hamming distance between any two codes = 3, 250 codes
 	DICT_4X4_250 = 2,
+	/// 4x4 bits, minimum hamming distance between any two codes = 2, 1000 codes
 	DICT_4X4_1000 = 3,
+	/// 5x5 bits, minimum hamming distance between any two codes = 8, 50 codes
 	DICT_5X5_50 = 4,
+	/// 5x5 bits, minimum hamming distance between any two codes = 7, 100 codes
 	DICT_5X5_100 = 5,
+	/// 5x5 bits, minimum hamming distance between any two codes = 6, 250 codes
 	DICT_5X5_250 = 6,
+	/// 5x5 bits, minimum hamming distance between any two codes = 5, 1000 codes
 	DICT_5X5_1000 = 7,
+	/// 6x6 bits, minimum hamming distance between any two codes = 13, 50 codes
 	DICT_6X6_50 = 8,
+	/// 6x6 bits, minimum hamming distance between any two codes = 12, 100 codes
 	DICT_6X6_100 = 9,
+	/// 6x6 bits, minimum hamming distance between any two codes = 11, 250 codes
 	DICT_6X6_250 = 10,
+	/// 6x6 bits, minimum hamming distance between any two codes = 9, 1000 codes
 	DICT_6X6_1000 = 11,
+	/// 7x7 bits, minimum hamming distance between any two codes = 19, 50 codes
 	DICT_7X7_50 = 12,
+	/// 7x7 bits, minimum hamming distance between any two codes = 18, 100 codes
 	DICT_7X7_100 = 13,
+	/// 7x7 bits, minimum hamming distance between any two codes = 17, 250 codes
 	DICT_7X7_250 = 14,
+	/// 7x7 bits, minimum hamming distance between any two codes = 14, 1000 codes
 	DICT_7X7_1000 = 15,
+	/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 	DICT_ARUCO_ORIGINAL = 16,
 	/// 4x4 bits, minimum hamming distance between any two codes = 5, 30 codes
 	DICT_APRILTAG_16h5 = 17,
@@ -119,6 +169,36 @@ pub enum PREDEFINED_DICTIONARY_NAME {
 }
 
 opencv_type_enum! { crate::aruco::PREDEFINED_DICTIONARY_NAME }
+
+/// 
+/// rvec/tvec define the right handed coordinate system of the marker.
+/// PatternPos defines center this system and axes direction.
+/// Axis X (red color) - first coordinate, axis Y (green color) - second coordinate,
+/// axis Z (blue color) - third coordinate.
+/// ## See also
+/// estimatePoseSingleMarkers(), @ref tutorial_aruco_detection
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum PatternPos {
+	/// The marker coordinate system is centered on the middle of the marker.
+	/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
+	/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
+	/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
+	/// 
+	/// These pattern points define this coordinate system:
+	/// ![Image with axes drawn](https://docs.opencv.org/4.6.0/singlemarkersaxes.jpg)
+	CCW_center = 0,
+	/// The marker coordinate system is centered on the top-left corner of the marker.
+	/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
+	/// (0, 0, 0), (markerLength, 0, 0),
+	/// (markerLength, markerLength, 0), (0, markerLength, 0).
+	/// 
+	/// These pattern points define this coordinate system:
+	/// ![Image with axes drawn](https://docs.opencv.org/4.6.0/singlemarkersaxes2.jpg)
+	CW_top_left_corner = 1,
+}
+
+opencv_type_enum! { crate::aruco::PatternPos }
 
 /// Calibrate a camera using aruco markers
 /// 
@@ -292,6 +372,7 @@ pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuc
 /// diamond.
 /// * cameraMatrix: Optional camera calibration matrix.
 /// * distCoeffs: Optional camera distortion coefficients.
+/// * dictionary: dictionary of markers indicating the type of markers.
 /// 
 /// This function detects Diamond markers from the previous detected ArUco markers. The diamonds
 /// are returned in the diamondCorners and diamondIds parameters. If camera calibration parameters
@@ -301,8 +382,9 @@ pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuc
 /// ## C++ default parameters
 /// * camera_matrix: noArray()
 /// * dist_coeffs: noArray()
+/// * dictionary: cv::aruco::getPredefinedDictionary(cv::aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50)
 #[inline]
-pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut dyn core::ToOutputArray, diamond_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray) -> Result<()> {
+pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut dyn core::ToOutputArray, diamond_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, mut dictionary: core::Ptr<crate::aruco::Dictionary>) -> Result<()> {
 	input_array_arg!(image);
 	input_array_arg!(marker_corners);
 	input_array_arg!(marker_ids);
@@ -311,7 +393,7 @@ pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &d
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_aruco_detectCharucoDiamond_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(image.as_raw__InputArray(), marker_corners.as_raw__InputArray(), marker_ids.as_raw__InputArray(), square_marker_length_rate, diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_aruco_detectCharucoDiamond_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_Ptr_Dictionary_(image.as_raw__InputArray(), marker_corners.as_raw__InputArray(), marker_ids.as_raw__InputArray(), square_marker_length_rate, diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), dictionary.as_raw_mut_PtrOfDictionary(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -331,66 +413,28 @@ pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &d
 /// * parameters: marker detection parameters
 /// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
 /// correct codification. Useful for debugging purposes.
-/// * cameraMatrix: optional input 3x3 floating-point camera matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
-/// * distCoeff: optional vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
 /// 
 /// Performs marker detection in the input image. Only markers included in the specific dictionary
 /// are searched. For each detected marker, it returns the 2D position of its corner in the image
 /// and its corresponding identifier.
 /// Note that this function does not perform pose estimation.
+/// 
+/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+/// input image with corresponging camera model, if camera parameters are known
 /// ## See also
-/// estimatePoseSingleMarkers,  estimatePoseBoard
+/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
 /// 
 /// ## C++ default parameters
 /// * parameters: DetectorParameters::create()
 /// * rejected_img_points: noArray()
-/// * camera_matrix: noArray()
-/// * dist_coeff: noArray()
 #[inline]
-pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &core::Ptr<crate::aruco::Dictionary>, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, parameters: &core::Ptr<crate::aruco::DetectorParameters>, rejected_img_points: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeff: &dyn core::ToInputArray) -> Result<()> {
+pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &core::Ptr<crate::aruco::Dictionary>, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, parameters: &core::Ptr<crate::aruco::DetectorParameters>, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(corners);
 	output_array_arg!(ids);
 	output_array_arg!(rejected_img_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeff);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_aruco_detectMarkers_const__InputArrayR_const_Ptr_Dictionary_R_const__OutputArrayR_const__OutputArrayR_const_Ptr_DetectorParameters_R_const__OutputArrayR_const__InputArrayR_const__InputArrayR(image.as_raw__InputArray(), dictionary.as_raw_PtrOfDictionary(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), parameters.as_raw_PtrOfDetectorParameters(), rejected_img_points.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeff.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	Ok(ret)
-}
-
-/// Draw coordinate system axis from pose estimation
-/// 
-/// ## Parameters
-/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
-/// altered.
-/// * cameraMatrix: input 3x3 floating-point camera matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
-/// * distCoeffs: vector of distortion coefficients
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
-/// * rvec: rotation vector of the coordinate system that will be drawn. (see also: Rodrigues).
-/// * tvec: translation vector of the coordinate system that will be drawn.
-/// * length: length of the painted axis in the same unit than tvec (usually in meters)
-/// 
-/// Given the pose estimation of a marker or board, this function draws the axis of the world
-/// coordinate system, i.e. the system centered on the marker/board. Useful for debugging purposes.
-/// 
-/// 
-/// **Deprecated**: use cv::drawFrameAxes
-#[deprecated = "use cv::drawFrameAxes"]
-#[inline]
-pub fn draw_axis(image: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, length: f32) -> Result<()> {
-	input_output_array_arg!(image);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_aruco_drawAxis_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_aruco_detectMarkers_const__InputArrayR_const_Ptr_Dictionary_R_const__OutputArrayR_const__OutputArrayR_const_Ptr_DetectorParameters_R_const__OutputArrayR(image.as_raw__InputArray(), dictionary.as_raw_PtrOfDictionary(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), parameters.as_raw_PtrOfDetectorParameters(), rejected_img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -594,6 +638,8 @@ pub fn draw_planar_board(board: &core::Ptr<crate::aruco::Board>, out_size: core:
 /// Input markers that are not included in the board layout are ignored.
 /// The function returns the number of markers from the input employed for the board pose estimation.
 /// Note that returning a 0 means the pose has not been estimated.
+/// ## See also
+/// use cv::drawFrameAxes to get world coordinate system axis for object points
 /// 
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
@@ -629,6 +675,8 @@ pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToI
 /// This function estimates a Charuco board pose from some detected corners.
 /// The function checks if the input corners are enough and valid to perform pose estimation.
 /// If pose estimation is valid, returns true, else returns false.
+/// ## See also
+/// use cv::drawFrameAxes to get world coordinate system axis for object points
 /// 
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
@@ -666,21 +714,29 @@ pub fn estimate_pose_charuco_board(charuco_corners: &dyn core::ToInputArray, cha
 /// * tvecs: array of output translation vectors (e.g. std::vector<cv::Vec3d>).
 /// Each element in tvecs corresponds to the specific marker in imgPoints.
 /// * _objPoints: array of object points of all the marker corners
+/// * estimateParameters: set the origin of coordinate system and the coordinates of the four corners of the marker
+/// (default estimateParameters.pattern = PatternPos::CCW_center, estimateParameters.useExtrinsicGuess = false,
+/// estimateParameters.solvePnPMethod = SOLVEPNP_ITERATIVE).
 /// 
 /// This function receives the detected markers and returns their pose estimation respect to
 /// the camera individually. So for each marker, one rotation and translation vector is returned.
 /// The returned transformation is the one that transforms points from each marker coordinate system
 /// to the camera coordinate system.
-/// The marker corrdinate system is centered on the middle of the marker, with the Z axis
-/// perpendicular to the marker plane.
-/// The coordinates of the four corners of the marker in its own coordinate system are:
+/// The marker coordinate system is centered on the middle (by default) or on the top-left corner of the marker,
+/// with the Z axis perpendicular to the marker plane.
+/// estimateParameters defines the coordinates of the four corners of the marker in its own coordinate system (by default) are:
 /// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
 /// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0)
+/// use cv::drawFrameAxes to get world coordinate system axis for object points
+/// @ref tutorial_aruco_detection
+/// EstimateParameters
+/// PatternPos
 /// 
 /// ## C++ default parameters
 /// * _obj_points: noArray()
+/// * estimate_parameters: EstimateParameters::create()
 #[inline]
-pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_length: f32, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, _obj_points: &mut dyn core::ToOutputArray) -> Result<()> {
+pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_length: f32, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, _obj_points: &mut dyn core::ToOutputArray, mut estimate_parameters: core::Ptr<crate::aruco::EstimateParameters>) -> Result<()> {
 	input_array_arg!(corners);
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
@@ -688,7 +744,7 @@ pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_len
 	output_array_arg!(tvecs);
 	output_array_arg!(_obj_points);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_aruco_estimatePoseSingleMarkers_const__InputArrayR_float_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(corners.as_raw__InputArray(), marker_length, camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), _obj_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_aruco_estimatePoseSingleMarkers_const__InputArrayR_float_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_Ptr_EstimateParameters_(corners.as_raw__InputArray(), marker_length, camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), _obj_points.as_raw__OutputArray(), estimate_parameters.as_raw_mut_PtrOfEstimateParameters(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -909,7 +965,14 @@ pub trait BoardTraitConst {
 	fn as_raw_Board(&self) -> *const c_void;
 
 	/// array of object points of all the marker corners in the board
-	/// each marker include its 4 corners in CCW order. For M markers, the size is Mx4.
+	///  each marker include its 4 corners in this order:
+	/// *   objPoints[i][0] - left-top point of i-th marker
+	/// *   objPoints[i][1] - right-top point of i-th marker
+	/// *   objPoints[i][2] - right-bottom point of i-th marker
+	/// *   objPoints[i][3] - left-bottom point of i-th marker
+	/// 
+	///  Markers are placed in a certain order - row by row, left to right in every row.
+	///  For M markers, the size is Mx4.
 	#[inline]
 	fn obj_points(&self) -> core::Vector<core::Vector<core::Point3f>> {
 		let ret = unsafe { sys::cv_aruco_Board_getPropObjPoints_const(self.as_raw_Board()) };
@@ -926,13 +989,29 @@ pub trait BoardTraitConst {
 		ret
 	}
 	
+	/// coordinate of the bottom right corner of the board, is set when calling the function create()
+	#[inline]
+	fn right_bottom_border(&self) -> core::Point3f {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_getPropRightBottomBorder_const(self.as_raw_Board(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
 }
 
 pub trait BoardTrait: crate::aruco::BoardTraitConst {
 	fn as_raw_mut_Board(&mut self) -> *mut c_void;
 
 	/// array of object points of all the marker corners in the board
-	/// each marker include its 4 corners in CCW order. For M markers, the size is Mx4.
+	///  each marker include its 4 corners in this order:
+	/// *   objPoints[i][0] - left-top point of i-th marker
+	/// *   objPoints[i][1] - right-top point of i-th marker
+	/// *   objPoints[i][2] - right-bottom point of i-th marker
+	/// *   objPoints[i][3] - left-bottom point of i-th marker
+	/// 
+	///  Markers are placed in a certain order - row by row, left to right in every row.
+	///  For M markers, the size is Mx4.
 	#[inline]
 	fn set_obj_points(&mut self, mut val: core::Vector<core::Vector<core::Point3f>>) {
 		let ret = unsafe { sys::cv_aruco_Board_setPropObjPoints_vector_vector_Point3f__(self.as_raw_mut_Board(), val.as_raw_mut_VectorOfVectorOfPoint3f()) };
@@ -959,6 +1038,13 @@ pub trait BoardTrait: crate::aruco::BoardTraitConst {
 	#[inline]
 	fn set_ids(&mut self, mut val: core::Vector<i32>) {
 		let ret = unsafe { sys::cv_aruco_Board_setPropIds_vector_int_(self.as_raw_mut_Board(), val.as_raw_mut_VectorOfi32()) };
+		ret
+	}
+	
+	/// coordinate of the bottom right corner of the board, is set when calling the function create()
+	#[inline]
+	fn set_right_bottom_border(&mut self, val: core::Point3f) {
+		let ret = unsafe { sys::cv_aruco_Board_setPropRightBottomBorder_Point3f(self.as_raw_mut_Board(), val.opencv_as_extern()) };
 		ret
 	}
 	
@@ -1266,6 +1352,24 @@ boxed_cast_base! { CharucoBoard, crate::aruco::Board, cv_CharucoBoard_to_Board }
 ///   Parameter is the standard deviation in pixels.  Very noisy images benefit from non-zero values (e.g. 0.8). (default 0.0)
 /// - detectInvertedMarker: to check if there is a white marker. In order to generate a "white" marker just
 ///   invert a normal marker by using a tilde, ~markerImage. (default false)
+/// - useAruco3Detection: to enable the new and faster Aruco detection strategy. The most important observation from the authors of
+///   Romero-Ramirez et al: Speeded up detection of squared fiducial markers (2018) is, that the binary
+///   code of a marker can be reliably detected if the canonical image (that is used to extract the binary code)
+///   has a size of minSideLengthCanonicalImg (in practice tau_c=16-32 pixels).
+///   Link to article: https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers
+///   In addition, very small markers are barely useful for pose estimation and thus a we can define a minimum marker size that we
+///   still want to be able to detect (e.g. 50x50 pixel).
+///   To decouple this from the initial image size they propose to resize the input image
+///   to (I_w_r, I_h_r) = (tau_c / tau_dot_i) * (I_w, I_h), with tau_dot_i = tau_c + max(I_w,I_h) * tau_i.
+///   Here tau_i (parameter: minMarkerLengthRatioOriginalImg) is a ratio in the range [0,1].
+///   If we set this to 0, the smallest marker we can detect
+///   has a side length of tau_c. If we set it to 1 the marker would fill the entire image.
+///   For a FullHD video a good value to start with is 0.1.
+/// - minSideLengthCanonicalImg: minimum side length of a marker in the canonical image.
+///   Latter is the binarized image in which contours are searched.
+///   So all contours with a size smaller than minSideLengthCanonicalImg*minSideLengthCanonicalImg will omitted from the search.
+/// - minMarkerLengthRatioOriginalImg:  range [0,1], eq (2) from paper
+///   The parameter tau_i has a direct influence on the processing speed.
 pub trait DetectorParametersTraitConst {
 	fn as_raw_DetectorParameters(&self) -> *const c_void;
 
@@ -1440,6 +1544,24 @@ pub trait DetectorParametersTraitConst {
 	#[inline]
 	fn detect_inverted_marker(&self) -> bool {
 		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropDetectInvertedMarker_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	#[inline]
+	fn use_aruco3_detection(&self) -> bool {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropUseAruco3Detection_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	#[inline]
+	fn min_side_length_canonical_img(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinSideLengthCanonicalImg_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	#[inline]
+	fn min_marker_length_ratio_original_img(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinMarkerLengthRatioOriginalImg_const(self.as_raw_DetectorParameters()) };
 		ret
 	}
 	
@@ -1622,6 +1744,33 @@ pub trait DetectorParametersTrait: crate::aruco::DetectorParametersTraitConst {
 		ret
 	}
 	
+	#[inline]
+	fn set_use_aruco3_detection(&mut self, val: bool) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropUseAruco3Detection_bool(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_min_side_length_canonical_img(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinSideLengthCanonicalImg_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_min_marker_length_ratio_original_img(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinMarkerLengthRatioOriginalImg_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn read_detector_parameters(&mut self, fn_: &core::FileNode) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_DetectorParameters_readDetectorParameters_const_FileNodeR(self.as_raw_mut_DetectorParameters(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Parameters for the detectMarker process:
@@ -1684,6 +1833,24 @@ pub trait DetectorParametersTrait: crate::aruco::DetectorParametersTraitConst {
 ///   Parameter is the standard deviation in pixels.  Very noisy images benefit from non-zero values (e.g. 0.8). (default 0.0)
 /// - detectInvertedMarker: to check if there is a white marker. In order to generate a "white" marker just
 ///   invert a normal marker by using a tilde, ~markerImage. (default false)
+/// - useAruco3Detection: to enable the new and faster Aruco detection strategy. The most important observation from the authors of
+///   Romero-Ramirez et al: Speeded up detection of squared fiducial markers (2018) is, that the binary
+///   code of a marker can be reliably detected if the canonical image (that is used to extract the binary code)
+///   has a size of minSideLengthCanonicalImg (in practice tau_c=16-32 pixels).
+///   Link to article: https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers
+///   In addition, very small markers are barely useful for pose estimation and thus a we can define a minimum marker size that we
+///   still want to be able to detect (e.g. 50x50 pixel).
+///   To decouple this from the initial image size they propose to resize the input image
+///   to (I_w_r, I_h_r) = (tau_c / tau_dot_i) * (I_w, I_h), with tau_dot_i = tau_c + max(I_w,I_h) * tau_i.
+///   Here tau_i (parameter: minMarkerLengthRatioOriginalImg) is a ratio in the range [0,1].
+///   If we set this to 0, the smallest marker we can detect
+///   has a side length of tau_c. If we set it to 1 the marker would fill the entire image.
+///   For a FullHD video a good value to start with is 0.1.
+/// - minSideLengthCanonicalImg: minimum side length of a marker in the canonical image.
+///   Latter is the binarized image in which contours are searched.
+///   So all contours with a size smaller than minSideLengthCanonicalImg*minSideLengthCanonicalImg will omitted from the search.
+/// - minMarkerLengthRatioOriginalImg:  range [0,1], eq (2) from paper
+///   The parameter tau_i has a direct influence on the processing speed.
 pub struct DetectorParameters {
 	ptr: *mut c_void
 }
@@ -1725,15 +1892,6 @@ impl DetectorParameters {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::aruco::DetectorParameters>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-	
-	#[inline]
-	pub fn read_detector_parameters(fn_: &core::FileNode, params: &mut core::Ptr<crate::aruco::DetectorParameters>) -> Result<bool> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_DetectorParameters_readDetectorParameters_const_FileNodeR_Ptr_DetectorParameters_R(fn_.as_raw_FileNode(), params.as_raw_mut_PtrOfDetectorParameters(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1832,6 +1990,38 @@ pub trait DictionaryTrait: crate::aruco::DictionaryTraitConst {
 		ret
 	}
 	
+	/// Read a new dictionary from FileNode. Format:
+	/// 
+	/// nmarkers: 35
+	/// 
+	/// markersize: 6
+	/// 
+	/// maxCorrectionBits: 5
+	/// 
+	/// marker_0: "101011111011111001001001101100000000"
+	/// 
+	/// ...
+	/// 
+	/// marker_34: "011111010000111011111110110101100101"
+	#[inline]
+	fn read_dictionary(&mut self, fn_: &core::FileNode) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_readDictionary_const_FileNodeR(self.as_raw_mut_Dictionary(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Write a dictionary to FileStorage. Format is the same as in readDictionary().
+	#[inline]
+	fn write_dictionary(&mut self, fs: &mut core::Ptr<core::FileStorage>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_writeDictionary_Ptr_FileStorage_R(self.as_raw_mut_Dictionary(), fs.as_raw_mut_PtrOfFileStorage(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Dictionary/Set of markers. It contains the inner codification
@@ -1920,21 +2110,6 @@ impl Dictionary {
 		Ok(ret)
 	}
 	
-	/// Read a new dictionary from FileNode. Format:
-	/// nmarkers: 35
-	/// markersize: 6
-	/// marker_0: "101011111011111001001001101100000000"
-	/// ...
-	/// marker_34: "011111010000111011111110110101100101"
-	#[inline]
-	pub fn read_dictionary(fn_: &core::FileNode, dictionary: &mut core::Ptr<crate::aruco::Dictionary>) -> Result<bool> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_Dictionary_readDictionary_const_FileNodeR_Ptr_Dictionary_R(fn_.as_raw_FileNode(), dictionary.as_raw_mut_PtrOfDictionary(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
 	/// ## See also
 	/// getPredefinedDictionary
 	#[inline]
@@ -1966,6 +2141,122 @@ impl Dictionary {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// 
+/// Pose estimation parameters
+/// ## Parameters
+/// * pattern: Defines center this system and axes direction (default PatternPos::CCW_center).
+/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
+/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
+/// optimizes them (default false).
+/// * solvePnPMethod: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags (default SOLVEPNP_ITERATIVE).
+/// ## See also
+/// PatternPos, solvePnP(), @ref tutorial_aruco_detection
+pub trait EstimateParametersTraitConst {
+	fn as_raw_EstimateParameters(&self) -> *const c_void;
+
+	#[inline]
+	fn pattern(&self) -> crate::aruco::PatternPos {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_EstimateParameters_getPropPattern_const(self.as_raw_EstimateParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+	#[inline]
+	fn use_extrinsic_guess(&self) -> bool {
+		let ret = unsafe { sys::cv_aruco_EstimateParameters_getPropUseExtrinsicGuess_const(self.as_raw_EstimateParameters()) };
+		ret
+	}
+	
+	#[inline]
+	fn solve_pnp_method(&self) -> crate::calib3d::SolvePnPMethod {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_EstimateParameters_getPropSolvePnPMethod_const(self.as_raw_EstimateParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+}
+
+pub trait EstimateParametersTrait: crate::aruco::EstimateParametersTraitConst {
+	fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_pattern(&mut self, val: crate::aruco::PatternPos) {
+		let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropPattern_PatternPos(self.as_raw_mut_EstimateParameters(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_use_extrinsic_guess(&mut self, val: bool) {
+		let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropUseExtrinsicGuess_bool(self.as_raw_mut_EstimateParameters(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_solve_pnp_method(&mut self, val: crate::calib3d::SolvePnPMethod) {
+		let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropSolvePnPMethod_SolvePnPMethod(self.as_raw_mut_EstimateParameters(), val) };
+		ret
+	}
+	
+}
+
+/// 
+/// Pose estimation parameters
+/// ## Parameters
+/// * pattern: Defines center this system and axes direction (default PatternPos::CCW_center).
+/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
+/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
+/// optimizes them (default false).
+/// * solvePnPMethod: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags (default SOLVEPNP_ITERATIVE).
+/// ## See also
+/// PatternPos, solvePnP(), @ref tutorial_aruco_detection
+pub struct EstimateParameters {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { EstimateParameters }
+
+impl Drop for EstimateParameters {
+	fn drop(&mut self) {
+		extern "C" { fn cv_EstimateParameters_delete(instance: *mut c_void); }
+		unsafe { cv_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
+	}
+}
+
+unsafe impl Send for EstimateParameters {}
+
+impl crate::aruco::EstimateParametersTraitConst for EstimateParameters {
+	#[inline] fn as_raw_EstimateParameters(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::aruco::EstimateParametersTrait for EstimateParameters {
+	#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl EstimateParameters {
+	#[inline]
+	pub fn default() -> Result<crate::aruco::EstimateParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_EstimateParameters_EstimateParameters(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::aruco::EstimateParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn create() -> Result<core::Ptr<crate::aruco::EstimateParameters>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_EstimateParameters_create(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::aruco::EstimateParameters>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	

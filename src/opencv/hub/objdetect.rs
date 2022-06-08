@@ -8,12 +8,10 @@
 	clippy::unused_unit,
 )]
 //! # Object Detection
+//!    # Cascade Classifier for Object Detection
 //! 
-//! Haar Feature-based Cascade Classifier for Object Detection
-//! ----------------------------------------------------------
-//! 
-//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Viola01) and
-//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Lienhart02) .
+//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Viola01) and
+//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 //! 
 //! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 //! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -39,7 +37,7 @@
 //! classifiers, and are calculated as described below. The current algorithm uses the following
 //! Haar-like features:
 //! 
-//! ![image](https://docs.opencv.org/4.5.5/haarfeatures.png)
+//! ![image](https://docs.opencv.org/4.6.0/haarfeatures.png)
 //! 
 //! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 //! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -50,8 +48,7 @@
 //! compensate for the differences in the size of areas. The sums of pixel values over a rectangular
 //! regions are calculated rapidly using integral images (see below and the integral description).
 //! 
-//! To see the object detector at work, have a look at the facedetect demo:
-//! <https://github.com/opencv/opencv/tree/4.x/samples/cpp/dbt_face_detection.cpp>
+//! Check @ref tutorial_cascade_classifier "the corresponding tutorial" for more details.
 //! 
 //! The following reference is for the detection part only. There is a separate application called
 //! opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
@@ -60,8 +57,13 @@
 //! Note: In the new C++ interface it is also possible to use LBP (local binary pattern) features in
 //! addition to Haar-like features. .. [Viola01] Paul Viola and Michael J. Jones. Rapid Object Detection
 //! using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
-//! <http://research.microsoft.com/en-us/um/people/viola/Pubs/Detect/violaJones_CVPR2001.pdf>
-//!    # C API
+//! <https://github.com/SvHey/thesis/blob/master/Literature/ObjectDetection/violaJones_CVPR2001.pdf>
+//! 
+//!    # HOG (Histogram of Oriented Gradients) descriptor and object detector
+//!    # QRCode detection and encoding
+//!    # DNN-based face detection and recognition
+//! Check @ref tutorial_dnn_face "the corresponding tutorial" for more details.
+//!    # Common functions and classes
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorConst, super::BaseCascadeClassifier_MaskGenerator, super::BaseCascadeClassifierConst, super::BaseCascadeClassifier, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderConst, super::QRCodeEncoder, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorConst, super::DetectionBasedTracker_IDetector, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNConst, super::FaceDetectorYN, super::FaceRecognizerSFConst, super::FaceRecognizerSF };
@@ -505,7 +507,7 @@ pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst 
 	/// Reads a classifier from a FileStorage node.
 	/// 
 	/// 
-	/// Note: The file may contain a new cascade classifier (trained traincascade application) only.
+	/// Note: The file may contain a new cascade classifier (trained by the traincascade application) only.
 	#[inline]
 	fn read(&mut self, node: &core::FileNode) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -529,13 +531,6 @@ pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst 
 	/// cvHaarDetectObjects. It is not used for a new cascade.
 	/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
 	/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-	/// 
-	/// The function is parallelized with the TBB library.
-	/// 
-	/// 
-	/// Note:
-	///    *   (Python) A face detection example using cascade classifiers can be found at
-	///        opencv_source_code/samples/python/facedetect.py
 	/// 
 	/// ## C++ default parameters
 	/// * scale_factor: 1.1
@@ -567,13 +562,6 @@ pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst 
 	/// cvHaarDetectObjects. It is not used for a new cascade.
 	/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
 	/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-	/// 
-	/// The function is parallelized with the TBB library.
-	/// 
-	/// 
-	/// Note:
-	///    *   (Python) A face detection example using cascade classifiers can be found at
-	///        opencv_source_code/samples/python/facedetect.py
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -621,13 +609,6 @@ pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst 
 	/// cvHaarDetectObjects. It is not used for a new cascade.
 	/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
 	/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-	/// 
-	/// The function is parallelized with the TBB library.
-	/// 
-	/// 
-	/// Note:
-	///    *   (Python) A face detection example using cascade classifiers can be found at
-	///        opencv_source_code/samples/python/facedetect.py
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -1219,7 +1200,9 @@ impl crate::objdetect::DetectionROITrait for DetectionROI {
 impl DetectionROI {
 }
 
-/// DNN-based face detector, model download link: https://github.com/ShiqiYu/libfacedetection.train/tree/master/tasks/task1/onnx.
+/// DNN-based face detector
+/// 
+/// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
 pub trait FaceDetectorYNConst {
 	fn as_raw_FaceDetectorYN(&self) -> *const c_void;
 
@@ -1366,7 +1349,9 @@ impl dyn FaceDetectorYN + '_ {
 	}
 	
 }
-/// DNN-based face recognizer, model download link: https://drive.google.com/file/d/1ClK9WiB492c5OZFKveF3XiHCejoOxINW/view.
+/// DNN-based face recognizer
+/// 
+/// model download link: https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
 pub trait FaceRecognizerSFConst {
 	fn as_raw_FaceRecognizerSF(&self) -> *const c_void;
 
@@ -1389,18 +1374,18 @@ pub trait FaceRecognizerSFConst {
 	
 	/// Calculating the distance between two face features
 	/// ## Parameters
-	/// * _face_feature1: the first input feature
-	/// * _face_feature2: the second input feature of the same size and the same type as _face_feature1
+	/// * face_feature1: the first input feature
+	/// * face_feature2: the second input feature of the same size and the same type as face_feature1
 	/// * dis_type: defining the similarity with optional values "FR_OSINE" or "FR_NORM_L2"
 	/// 
 	/// ## C++ default parameters
 	/// * dis_type: FaceRecognizerSF::FR_COSINE
 	#[inline]
-	fn match_(&self, _face_feature1: &dyn core::ToInputArray, _face_feature2: &dyn core::ToInputArray, dis_type: i32) -> Result<f64> {
-		input_array_arg!(_face_feature1);
-		input_array_arg!(_face_feature2);
+	fn match_(&self, face_feature1: &dyn core::ToInputArray, face_feature2: &dyn core::ToInputArray, dis_type: i32) -> Result<f64> {
+		input_array_arg!(face_feature1);
+		input_array_arg!(face_feature2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR_int(self.as_raw_FaceRecognizerSF(), _face_feature1.as_raw__InputArray(), _face_feature2.as_raw__InputArray(), dis_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR_int(self.as_raw_FaceRecognizerSF(), face_feature1.as_raw__InputArray(), face_feature2.as_raw__InputArray(), dis_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1454,7 +1439,7 @@ impl dyn FaceRecognizerSF + '_ {
 }
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -1617,7 +1602,7 @@ pub trait HOGDescriptorTraitConst {
 		Ok(ret)
 	}
 	
-	/// Stores HOGDescriptor parameters in a cv::FileStorage.
+	/// Stores HOGDescriptor parameters and coefficients for the linear SVM classifier in a file storage.
 	/// ## Parameters
 	/// * fs: File storage
 	/// * objname: Object name
@@ -1750,7 +1735,8 @@ pub trait HOGDescriptorTraitConst {
 	/// * winStride: Window stride. It must be a multiple of block stride.
 	/// * padding: Padding
 	/// * scale: Coefficient of the detection window increase.
-	/// * finalThreshold: Final threshold
+	/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
+	/// by many rectangles. 0 means not to perform grouping.
 	/// * useMeanshiftGrouping: indicates grouping algorithm
 	/// 
 	/// ## C++ default parameters
@@ -1758,13 +1744,13 @@ pub trait HOGDescriptorTraitConst {
 	/// * win_stride: Size()
 	/// * padding: Size()
 	/// * scale: 1.05
-	/// * final_threshold: 2.0
+	/// * group_threshold: 2.0
 	/// * use_meanshift_grouping: false
 	#[inline]
-	fn detect_multi_scale_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+	fn detect_multi_scale_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_vector_double_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, final_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_vector_double_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1781,7 +1767,8 @@ pub trait HOGDescriptorTraitConst {
 	/// * winStride: Window stride. It must be a multiple of block stride.
 	/// * padding: Padding
 	/// * scale: Coefficient of the detection window increase.
-	/// * finalThreshold: Final threshold
+	/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
+	/// by many rectangles. 0 means not to perform grouping.
 	/// * useMeanshiftGrouping: indicates grouping algorithm
 	/// 
 	/// ## C++ default parameters
@@ -1789,13 +1776,13 @@ pub trait HOGDescriptorTraitConst {
 	/// * win_stride: Size()
 	/// * padding: Size()
 	/// * scale: 1.05
-	/// * final_threshold: 2.0
+	/// * group_threshold: 2.0
 	/// * use_meanshift_grouping: false
 	#[inline]
-	fn detect_multi_scale(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+	fn detect_multi_scale(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, final_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2012,7 +1999,7 @@ pub trait HOGDescriptorTrait: crate::objdetect::HOGDescriptorTraitConst {
 		Ok(ret)
 	}
 	
-	/// Reads HOGDescriptor parameters from a cv::FileNode.
+	/// Reads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file node.
 	/// ## Parameters
 	/// * fn: File node
 	#[inline]
@@ -2024,9 +2011,9 @@ pub trait HOGDescriptorTrait: crate::objdetect::HOGDescriptorTraitConst {
 		Ok(ret)
 	}
 	
-	/// loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
+	/// loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file
 	/// ## Parameters
-	/// * filename: Path of the file to read.
+	/// * filename: Name of the file to read.
 	/// * objname: The optional name of the node to read (if empty, the first top-level node will be used).
 	/// 
 	/// ## C++ default parameters
@@ -2046,7 +2033,7 @@ pub trait HOGDescriptorTrait: crate::objdetect::HOGDescriptorTraitConst {
 
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -2083,7 +2070,7 @@ impl crate::objdetect::HOGDescriptorTrait for HOGDescriptor {
 }
 
 impl HOGDescriptor {
-	/// Creates the HOG descriptor and detector with default params.
+	/// Creates the HOG descriptor and detector with default parameters.
 	/// 
 	/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
 	#[inline]
@@ -2096,7 +2083,7 @@ impl HOGDescriptor {
 		Ok(ret)
 	}
 	
-	/// Creates the HOG descriptor and detector with default params.
+	/// Creates the HOG descriptor and detector with default parameters.
 	/// 
 	/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
 	/// 
@@ -2134,12 +2121,14 @@ impl HOGDescriptor {
 		Ok(ret)
 	}
 	
-	/// Creates the HOG descriptor and detector with default params.
+	/// Creates the HOG descriptor and detector with default parameters.
 	/// 
 	/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
 	/// 
 	/// ## Overloaded parameters
 	/// 
+	/// 
+	///    Creates the HOG descriptor and detector and loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
 	/// ## Parameters
 	/// * filename: The file name containing HOGDescriptor properties and coefficients for the linear SVM classifier.
 	#[inline]
@@ -2153,7 +2142,7 @@ impl HOGDescriptor {
 		Ok(ret)
 	}
 	
-	/// Creates the HOG descriptor and detector with default params.
+	/// Creates the HOG descriptor and detector with default parameters.
 	/// 
 	/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
 	/// 
@@ -2500,8 +2489,9 @@ impl QRCodeEncoder_Params {
 	
 }
 
-/// class for grouping object candidates, detected by Cascade Classifier, HOG etc.
-/// instance of the class is to be passed to cv::partition (see cxoperations.hpp)
+/// This class is used for grouping object candidates detected by Cascade Classifier, HOG etc.
+/// 
+/// instance of the class is to be passed to cv::partition
 pub trait SimilarRectsTraitConst {
 	fn as_raw_SimilarRects(&self) -> *const c_void;
 
@@ -2524,8 +2514,9 @@ pub trait SimilarRectsTrait: crate::objdetect::SimilarRectsTraitConst {
 	
 }
 
-/// class for grouping object candidates, detected by Cascade Classifier, HOG etc.
-/// instance of the class is to be passed to cv::partition (see cxoperations.hpp)
+/// This class is used for grouping object candidates detected by Cascade Classifier, HOG etc.
+/// 
+/// instance of the class is to be passed to cv::partition
 pub struct SimilarRects {
 	ptr: *mut c_void
 }

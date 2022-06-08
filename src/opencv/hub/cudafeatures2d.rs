@@ -746,9 +746,72 @@ pub trait CUDA_ORBConst: crate::cudafeatures2d::CUDA_Feature2DAsyncConst {
 	fn as_raw_CUDA_ORB(&self) -> *const c_void;
 
 	#[inline]
-	fn get_blur_for_descriptor(&self) -> Result<bool> {
+	fn get_max_features(&self) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_ORB_getBlurForDescriptor_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_ORB_getMaxFeatures_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_scale_factor(&self) -> Result<f64> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getScaleFactor_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_n_levels(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getNLevels_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_edge_threshold(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getEdgeThreshold_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_first_level(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getFirstLevel_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_wta_k(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getWTA_K_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_score_type(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getScoreType_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_patch_size(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getPatchSize_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -763,16 +826,87 @@ pub trait CUDA_ORBConst: crate::cudafeatures2d::CUDA_Feature2DAsyncConst {
 		Ok(ret)
 	}
 	
+	#[inline]
+	fn get_blur_for_descriptor(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_getBlurForDescriptor_const(self.as_raw_CUDA_ORB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 pub trait CUDA_ORB: crate::cudafeatures2d::CUDA_Feature2DAsync + crate::cudafeatures2d::CUDA_ORBConst {
 	fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void;
 
-	/// if true, image will be blurred before descriptors calculation
 	#[inline]
-	fn set_blur_for_descriptor(&mut self, blur_for_descriptor: bool) -> Result<()> {
+	fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_ORB_setBlurForDescriptor_bool(self.as_raw_mut_CUDA_ORB(), blur_for_descriptor, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_ORB_setMaxFeatures_int(self.as_raw_mut_CUDA_ORB(), max_features, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setScaleFactor_double(self.as_raw_mut_CUDA_ORB(), scale_factor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_n_levels(&mut self, nlevels: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setNLevels_int(self.as_raw_mut_CUDA_ORB(), nlevels, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_edge_threshold(&mut self, edge_threshold: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setEdgeThreshold_int(self.as_raw_mut_CUDA_ORB(), edge_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_first_level(&mut self, first_level: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setFirstLevel_int(self.as_raw_mut_CUDA_ORB(), first_level, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_wta_k(&mut self, wta_k: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setWTA_K_int(self.as_raw_mut_CUDA_ORB(), wta_k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_score_type(&mut self, score_type: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setScoreType_int(self.as_raw_mut_CUDA_ORB(), score_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_patch_size(&mut self, patch_size: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setPatchSize_int(self.as_raw_mut_CUDA_ORB(), patch_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -782,6 +916,16 @@ pub trait CUDA_ORB: crate::cudafeatures2d::CUDA_Feature2DAsync + crate::cudafeat
 	fn set_fast_threshold(&mut self, fast_threshold: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_ORB_setFastThreshold_int(self.as_raw_mut_CUDA_ORB(), fast_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// if true, image will be blurred before descriptors calculation
+	#[inline]
+	fn set_blur_for_descriptor(&mut self, blur_for_descriptor: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_ORB_setBlurForDescriptor_bool(self.as_raw_mut_CUDA_ORB(), blur_for_descriptor, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

@@ -45,7 +45,7 @@ pub mod prelude {
 
 /// Use Navier-Stokes based method
 pub const INPAINT_NS: i32 = 0;
-/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_Telea04)
+/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Telea04)
 pub const INPAINT_TELEA: i32 = 1;
 pub const LDR_SIZE: i32 = 256;
 /// The classic method, color-based selection and alpha masking might be time consuming and often leaves an undesirable
@@ -389,7 +389,7 @@ pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 /// black-and-white photograph rendering, and in many single channel image processing applications
-/// [CL12](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_CL12) .
+/// [CL12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_CL12) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -415,12 +415,12 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 /// exactly what is implemented.
 /// 
 /// It should be noted, that this implementation was taken from the July 2013 blog entry
-/// [MA13](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+/// [MA13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 /// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 /// of July 2013 and finally it was slightly adapted by later authors.
 /// 
 /// Although the thorough discussion and justification of the algorithm involved may be found in
-/// [ChambolleEtAl](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_MA13) . To begin
+/// [ChambolleEtAl](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 /// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 /// pixels (it may be seen as set
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -482,7 +482,7 @@ pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 }
 
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-/// filters are used in many different applications [EM11](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_EM11) .
+/// filters are used in many different applications [EM11](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_EM11) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -833,7 +833,7 @@ pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutput
 /// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 /// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 /// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-/// content [PM03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_PM03) .
+/// content [PM03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_PM03) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -950,7 +950,7 @@ pub trait AlignExposures: core::AlgorithmTrait + crate::photo::AlignExposuresCon
 /// 
 /// In this implementation new image regions are filled with zeros.
 /// 
-/// For more information see [GW03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_GW03) .
+/// For more information see [GW03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTBConst: crate::photo::AlignExposuresConst {
 	fn as_raw_AlignMTB(&self) -> *const c_void;
 
@@ -1127,7 +1127,7 @@ pub trait CalibrateCRF: core::AlgorithmTrait + crate::photo::CalibrateCRFConst {
 /// function as linear system. Objective function is constructed using pixel values on the same position
 /// in all images, extra term is added to make the result smoother.
 /// 
-/// For more information see [DM97](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_DM97) .
+/// For more information see [DM97](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait CalibrateDebevecConst: crate::photo::CalibrateCRFConst {
 	fn as_raw_CalibrateDebevec(&self) -> *const c_void;
 
@@ -1195,7 +1195,7 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF + crate::photo::Calibrate
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
 /// 
-/// For more information see [RB99](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_RB99) .
+/// For more information see [RB99](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait CalibrateRobertsonConst: crate::photo::CalibrateCRFConst {
 	fn as_raw_CalibrateRobertson(&self) -> *const c_void;
 
@@ -1255,7 +1255,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF + crate::photo::Calibra
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see [DM97](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_DM97) .
+/// For more information see [DM97](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevecConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeDebevec(&self) -> *const c_void;
 
@@ -1332,7 +1332,7 @@ pub trait MergeExposures: core::AlgorithmTrait + crate::photo::MergeExposuresCon
 /// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 /// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 /// 
-/// For more information see [MK07](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_MK07) .
+/// For more information see [MK07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertensConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeMertens(&self) -> *const c_void;
 
@@ -1429,7 +1429,7 @@ pub trait MergeMertens: crate::photo::MergeExposures + crate::photo::MergeMerten
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see [RB99](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_RB99) .
+/// For more information see [RB99](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertsonConst: crate::photo::MergeExposuresConst {
 	fn as_raw_MergeRobertson(&self) -> *const c_void;
 
@@ -1516,9 +1516,9 @@ pub trait Tonemap: core::AlgorithmTrait + crate::photo::TonemapConst {
 /// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 /// bias parameter.
 /// 
-/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_FL02) .
+/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_FL02) .
 /// 
-/// For more information see [DM03](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_DM03) .
+/// For more information see [DM03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_DM03) .
 pub trait TonemapDragoConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapDrago(&self) -> *const c_void;
 
@@ -1569,7 +1569,7 @@ pub trait TonemapDrago: crate::photo::Tonemap + crate::photo::TonemapDragoConst 
 /// transforms contrast values to HVS response and scales the response. After this the image is
 /// reconstructed from new contrast values.
 /// 
-/// For more information see [MM06](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_MM06) .
+/// For more information see [MM06](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MM06) .
 pub trait TonemapMantiukConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapMantiuk(&self) -> *const c_void;
 
@@ -1621,7 +1621,7 @@ pub trait TonemapMantiuk: crate::photo::Tonemap + crate::photo::TonemapMantiukCo
 /// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 /// color adaptation.
 /// 
-/// For more information see [RD05](https://docs.opencv.org/4.5.5/d0/de3/citelist.html#CITEREF_RD05) .
+/// For more information see [RD05](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_RD05) .
 pub trait TonemapReinhardConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapReinhard(&self) -> *const c_void;
 

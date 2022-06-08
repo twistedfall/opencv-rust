@@ -73,9 +73,9 @@ pub const IMWRITE_EXR_TYPE_FLOAT: i32 = 2;
 pub const IMWRITE_EXR_TYPE_HALF: i32 = 1;
 /// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 pub const IMWRITE_JPEG2000_COMPRESSION_X1000: i32 = 272;
-/// Separate chroma quality level, 0 - 100, default is 0 - don't use.
+/// Separate chroma quality level, 0 - 100, default is -1 - don't use.
 pub const IMWRITE_JPEG_CHROMA_QUALITY: i32 = 6;
-/// Separate luma quality level, 0 - 100, default is 0 - don't use.
+/// Separate luma quality level, 0 - 100, default is -1 - don't use.
 pub const IMWRITE_JPEG_LUMA_QUALITY: i32 = 5;
 /// Enable JPEG features, 0 or 1, default is False.
 pub const IMWRITE_JPEG_OPTIMIZE: i32 = 3;
@@ -205,9 +205,9 @@ pub enum ImwriteFlags {
 	IMWRITE_JPEG_OPTIMIZE = 3,
 	/// JPEG restart interval, 0 - 65535, default is 0 - no restart.
 	IMWRITE_JPEG_RST_INTERVAL = 4,
-	/// Separate luma quality level, 0 - 100, default is 0 - don't use.
+	/// Separate luma quality level, 0 - 100, default is -1 - don't use.
 	IMWRITE_JPEG_LUMA_QUALITY = 5,
-	/// Separate chroma quality level, 0 - 100, default is 0 - don't use.
+	/// Separate chroma quality level, 0 - 100, default is -1 - don't use.
 	IMWRITE_JPEG_CHROMA_QUALITY = 6,
 	/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 	IMWRITE_PNG_COMPRESSION = 16,
@@ -239,7 +239,7 @@ pub enum ImwriteFlags {
 
 opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
 
-/// Imwrite PAM specific tupletype flags used to define the 'TUPETYPE' field of a PAM file.
+/// Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImwritePAMFlags {
@@ -383,7 +383,7 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 /// result. See cv::imwrite for the list of supported formats and flags description.
 /// 
 /// ## Parameters
-/// * ext: File extension that defines the output format.
+/// * ext: File extension that defines the output format. Must include a leading period.
 /// * img: Image to be written.
 /// * buf: Output buffer resized to fit the compressed image.
 /// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
@@ -472,8 +472,8 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
 /// ## Parameters
 /// * filename: Name of file to be loaded.
+/// * mats: A vector of Mat objects holding each page.
 /// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
-/// * mats: A vector of Mat objects holding each page, if more than one.
 /// ## See also
 /// cv::imread
 /// 
@@ -494,10 +494,10 @@ pub fn imreadmulti(filename: &str, mats: &mut core::Vector<core::Mat>, flags: i3
 /// The function imreadmulti loads a specified range from a multi-page image from the specified file into a vector of Mat objects.
 /// ## Parameters
 /// * filename: Name of file to be loaded.
+/// * mats: A vector of Mat objects holding each page.
 /// * start: Start index of the image to load
 /// * count: Count number of images to load
 /// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
-/// * mats: A vector of Mat objects holding each page, if more than one.
 /// ## See also
 /// cv::imread
 /// 

@@ -23,7 +23,7 @@ jobs:
           - beta
         version:
           - opencv: 3.4.17
-          - opencv: 4.5.5
+          - opencv: 4.6.0
         exclude:
           - os:
               family: osx

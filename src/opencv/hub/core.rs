@@ -39,7 +39,7 @@
 //!        # Parallel backends API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpConst, super::MatOp, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedConst, super::Formatted, super::FormatterConst, super::Formatter, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyConst, super::ParallelLoopBody, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerConst, super::TLSDataContainer, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionConst, super::MinProblemSolver_Function, super::MinProblemSolverConst, super::MinProblemSolver, super::DownhillSolverConst, super::DownhillSolver, super::ConjGradSolverConst, super::ConjGradSolver, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorConst, super::GpuMat_Allocator, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait };
+	pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpConst, super::MatOp, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedConst, super::Formatted, super::FormatterConst, super::Formatter, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyConst, super::ParallelLoopBody, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerConst, super::TLSDataContainer, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionConst, super::MinProblemSolver_Function, super::MinProblemSolverConst, super::MinProblemSolver, super::DownhillSolverConst, super::DownhillSolver, super::ConjGradSolverConst, super::ConjGradSolver, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorConst, super::GpuMat_Allocator, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -372,10 +372,10 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &str = "4.5.5";
+pub const CV_VERSION: &str = "4.6.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
-pub const CV_VERSION_MINOR: i32 = 5;
-pub const CV_VERSION_REVISION: i32 = 5;
+pub const CV_VERSION_MINOR: i32 = 6;
+pub const CV_VERSION_REVISION: i32 = 0;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
 pub const CV_VSX3: i32 = 0;
@@ -1193,7 +1193,7 @@ pub enum FileStorage_Mode {
 	WRITE = 1,
 	/// value, open the file for appending
 	APPEND = 2,
-	/// flag, read data from source or write data to the internal buffer (which is
+	/// < flag, read data from source or write data to the internal buffer (which is
 	/// returned by FileStorage::release)
 	MEMORY = 4,
 	/// mask for format flags
@@ -1538,6 +1538,14 @@ pub enum UMatData_MemoryFlag {
 opencv_type_enum! { core::UMatData_MemoryFlag }
 
 /// Usage flags for allocator
+/// 
+/// @warning  All flags except `USAGE_DEFAULT` are experimental.
+/// 
+/// @warning  For the OpenCL allocator, `USAGE_ALLOCATE_SHARED_MEMORY` depends on
+/// OpenCV's optional, experimental integration with OpenCL SVM. To enable this
+/// integration, build OpenCV using the `WITH_OPENCL_SVM=ON` CMake option and, at
+/// runtime, call `cv::ocl::Context::getDefault().setUseSVM(true);` or similar
+/// code. Note that SVM is incompatible with OpenCL 1.x.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UMatUsageFlags {
@@ -4636,7 +4644,7 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -5222,7 +5230,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.5.5/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.6.0/NormTypes_OneArray_1-2-INF.png)
 /// 
 /// When the mask parameter is specified and it is not empty, the norm is
 /// 
@@ -6650,10 +6658,10 @@ pub fn reduce_arg_min(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// And multi-channel arrays are also supported in these two reduction modes.
 /// 
 /// The following code demonstrates its usage for a single channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// And the following code demonstrates its usage for a two-channel matrix.
-/// [example2](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example2](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input 2D matrix.
@@ -7199,7 +7207,7 @@ pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -7224,7 +7232,7 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -7446,6 +7454,26 @@ pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 	input_array_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Transpose for n-dimensional matrices.
+/// 
+/// 
+/// Note: Input should be continuous single-channel matrix.
+/// ## Parameters
+/// * src: input array.
+/// * order: a permutation of [0,1,..,N-1] where N is the number of axes of src.
+/// The i’th axis of dst will correspond to the axis numbered order[i] of the input.
+/// * dst: output array of the same type as src.
+#[inline]
+pub fn transpose_nd(src: &dyn core::ToInputArray, order: &core::Vector<i32>, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_transposeND_const__InputArrayR_const_vector_int_R_const__OutputArrayR(src.as_raw__InputArray(), order.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -7819,6 +7847,15 @@ pub fn set_log_tag_level(tag: &str, level: core::LogLevel) -> Result<()> {
 	extern_container_arg!(tag);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_logging_setLogTagLevel_const_charX_LogLevel(tag.opencv_as_extern(), level, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+#[inline]
+pub fn test_echo_boolean_function(flag: bool) -> Result<bool> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_utils_nested_testEchoBooleanFunction_bool(flag, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -8208,7 +8245,7 @@ pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<(
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub trait AlgorithmTraitConst {
 	fn as_raw_Algorithm(&self) -> *const c_void;
 
@@ -8309,7 +8346,7 @@ pub trait AlgorithmTrait: core::AlgorithmTraitConst {
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub struct Algorithm {
 	ptr: *mut c_void
 }
@@ -12024,10 +12061,10 @@ pub trait MatTraitConst {
 	///        that an element may have multiple channels.
 	/// 
 	/// The following code demonstrates its usage for a 2-d matrix:
-	/// [example-2d](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-2d](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// The following code demonstrates its usage for a 3-d matrix:
-	/// [example-3d](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-3d](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// ## C++ default parameters
 	/// * depth: -1
@@ -16876,8 +16913,8 @@ impl Range {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.5.5/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.6.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub trait RotatedRectTraitConst {
@@ -16974,8 +17011,8 @@ pub trait RotatedRectTrait: core::RotatedRectTraitConst {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.5.5/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.6.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub struct RotatedRect {
@@ -18642,10 +18679,10 @@ impl TermCriteria {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub trait TickMeterTraitConst {
@@ -18772,10 +18809,10 @@ pub trait TickMeterTrait: core::TickMeterTraitConst {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.5.5/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub struct TickMeter {
@@ -22546,7 +22583,7 @@ impl Event {
 	#[inline]
 	pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_Event_Event_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_Event_Event_const_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Event::opencv_from_extern(ret) };
@@ -29133,6 +29170,118 @@ impl LogTag {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+pub trait OriginalClassNameTraitConst {
+	fn as_raw_OriginalClassName(&self) -> *const c_void;
+
+	#[inline]
+	fn get_int_param(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_getIntParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_float_param(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_getFloatParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait OriginalClassNameTrait: core::OriginalClassNameTraitConst {
+	fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void;
+
+}
+
+pub struct OriginalClassName {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { OriginalClassName }
+
+impl Drop for OriginalClassName {
+	fn drop(&mut self) {
+		extern "C" { fn cv_OriginalClassName_delete(instance: *mut c_void); }
+		unsafe { cv_OriginalClassName_delete(self.as_raw_mut_OriginalClassName()) };
+	}
+}
+
+unsafe impl Send for OriginalClassName {}
+
+impl core::OriginalClassNameTraitConst for OriginalClassName {
+	#[inline] fn as_raw_OriginalClassName(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::OriginalClassNameTrait for OriginalClassName {
+	#[inline] fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl OriginalClassName {
+	/// ## C++ default parameters
+	/// * params: OriginalClassName::Params()
+	#[inline]
+	pub fn new(params: core::OriginalClassName_Params) -> Result<core::OriginalClassName> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_OriginalClassName_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::OriginalClassName::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn original_name() -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_originalName(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * params: OriginalClassName::Params()
+	#[inline]
+	pub fn create(params: core::OriginalClassName_Params) -> Result<core::Ptr<core::OriginalClassName>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_create_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<core::OriginalClassName>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct OriginalClassName_Params {
+	pub int_value: i32,
+	pub float_value: f32,
+}
+
+opencv_type_simple! { core::OriginalClassName_Params }
+
+impl OriginalClassName_Params {
+	/// ## C++ default parameters
+	/// * int_param: 123
+	/// * float_param: 3.5f
+	#[inline]
+	pub fn new(int_param: i32, float_param: f32) -> Result<core::OriginalClassName_Params> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_nested_OriginalClassName_Params_Params_int_float(int_param, float_param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
