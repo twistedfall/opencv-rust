@@ -1012,6 +1012,9 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 	FuncId::new("cv::QRCodeDetector::detectAndDecodeCurved", ["img", "points", "straight_qrcode"]) => hashmap! {
 		"return" => ArgOverride::StringAsBytes,
 	},
+	FuncId::new("cv::getOptimalNewCameraMatrix", ["cameraMatrix", "distCoeffs", "imageSize", "alpha", "newImgSize", "validPixROI", "centerPrincipalPoint"]) => hashmap! {
+		"validPixROI" => ArgOverride::Nullable,
+	},
 });
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| hashmap! {
