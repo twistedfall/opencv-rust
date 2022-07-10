@@ -604,7 +604,7 @@ pub struct CppExternReturnRenderer {
 	pub constness_override: ConstnessOverride,
 }
 
-impl<'s> CppExternReturnRenderer {
+impl CppExternReturnRenderer {
 	pub fn new(constness_override: ConstnessOverride) -> Self {
 		Self { constness_override }
 	}

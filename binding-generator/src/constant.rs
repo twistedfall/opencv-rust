@@ -1,6 +1,6 @@
 use std::{
 	borrow::Cow,
-	fmt,
+	fmt::{self, Write},
 };
 
 use clang::{
@@ -26,7 +26,7 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Op
 	for t in tokens {
 		match t.get_kind() {
 			TokenKind::Comment => {
-				out.value += &format!("/* {} */", t.get_spelling());
+				write!(&mut out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
 			}
 			TokenKind::Identifier => {
 				let spelling = t.get_spelling();

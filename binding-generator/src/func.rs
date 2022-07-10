@@ -1,7 +1,7 @@
 use std::{
 	borrow::Cow,
 	collections::HashMap,
-	fmt,
+	fmt::{self, Write},
 };
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
@@ -498,8 +498,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		self.arguments().into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
-			.map(|t| t.dependent_types(DependentTypeMode::None))
-			.flatten()
+			.flat_map(|t| t.dependent_types(DependentTypeMode::None))
 			.chain(self.return_type().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.collect()
 	}
@@ -513,9 +512,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			let local_name = DefaultElement::cpp_localname(self);
 			let (first_letter, rest) = local_name.split_at(1);
 			if self.as_field_setter().is_some() {
-				out += &format!("setProp{}{}", first_letter.to_uppercase(), rest);
+				write!(&mut out, "setProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
 			} else {
-				out += &format!("getProp{}{}", first_letter.to_uppercase(), rest);
+				write!(&mut out, "getProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
 			}
 			out
 		} else {
@@ -638,7 +637,8 @@ impl Element for Func<'_, '_> {
 					if default_args_comment.is_empty() {
 						default_args_comment += "## C++ default parameters";
 					}
-					default_args_comment += &format!("\n* {name}: {val}", name=arg.rust_leafname(FishStyle::No), val=def_val);
+					write!(&mut default_args_comment, "\n* {name}: {val}", name = arg.rust_leafname(FishStyle::No), val = def_val)
+						.expect("write! to String shouldn't fail");
 				}
 			}
 			if !default_args_comment.is_empty() {

@@ -184,7 +184,7 @@ impl StringExt for String {
 	}
 
 	fn bump_counter(&mut self) {
-		let idx = self.rfind(|c: char| !c.is_digit(10)).map_or_else(|| self.len(), |idx| idx + 1);
+		let idx = self.rfind(|c: char| !c.is_ascii_digit()).map_or_else(|| self.len(), |idx| idx + 1);
 		let counter = &self[idx..];
 		if counter.is_empty() || self.as_bytes()[idx - 1] != b'_' {
 			self.push_str("_1")

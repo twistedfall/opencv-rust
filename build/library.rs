@@ -166,7 +166,7 @@ impl Library {
 
 	fn process_link_paths<'a>(link_paths: Option<EnvList>, sys_link_paths: Vec<PathBuf>, typ: Option<&'a str>) -> impl Iterator<Item=String> + 'a {
 		Self::process_env_var_list(link_paths, sys_link_paths).into_iter()
-			.map(move |path| {
+			.flat_map(move |path| {
 				let out = iter::once(Self::emit_link_search(&path, typ));
 				#[cfg(target_vendor = "apple")] {
 					out.chain(
@@ -177,7 +177,6 @@ impl Library {
 					out
 				}
 			})
-			.flatten()
 	}
 
 	fn process_link_libs<'a>(link_libs: Option<EnvList>, sys_link_libs: Vec<String>, typ: Option<&'a str>) -> impl Iterator<Item=String> + 'a {

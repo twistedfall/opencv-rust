@@ -178,20 +178,18 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn all_bases(&self) -> HashSet<Class<'tu, 'ge>> {
 		self.bases().into_iter()
-			.map(|b| {
+			.flat_map(|b| {
 				let mut out = b.all_bases();
 				out.insert(b);
 				out
 			})
-			.flatten()
 			.collect()
 	}
 
 	pub fn descendants(&self) -> impl Iterator<Item=Class<'tu, 'ge>> {
 		let gen_env = self.gen_env;
 		gen_env.descendants.get(self.cpp_fullname().as_ref()).into_iter()
-			.map(move |desc| desc.iter().map(move |e| Class::new(*e, gen_env)))
-			.flatten()
+			.flat_map(move |desc| desc.iter().map(move |e| Class::new(*e, gen_env)))
 	}
 
 	pub fn has_methods(&self) -> bool {
@@ -252,7 +250,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn field_methods<'f>(&self, fields: impl Iterator<Item=&'f Field<'tu, 'ge>>, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> where 'tu: 'f, 'ge: 'f {
 		let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
 		out.extend(fields
-			.map(|fld| {
+			.flat_map(|fld| {
 				iter::from_fn({
 					let fld_type_ref = fld.type_ref();
 					let read_func = Func::new(fld.entity(), self.gen_env);
@@ -269,7 +267,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					move || read_yield.take().or_else(|| write_yield.take())
 				})
 			})
-			.flatten()
 		);
 		out
 	}
@@ -293,12 +290,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
 		let dep_types = self.fields().into_iter()
 			.filter(|f| !f.is_excluded())
-			.map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
-			.flatten()
+			.flat_map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
 			.chain(self.methods(None).into_iter()
 				.filter(|m| !m.is_excluded())
-				.map(|m| m.dependent_types())
-				.flatten()
+				.flat_map(|m| m.dependent_types())
 			);
 		if !self.is_simple() {
 			dep_types.chain(self.descendants().into_iter()
