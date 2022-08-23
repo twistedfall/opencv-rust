@@ -30,7 +30,7 @@ use crate::{
 	TypeRef,
 };
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum OperatorKind {
 	Unsupported,
 	Index,
@@ -96,7 +96,7 @@ pub enum Kind<'tu, 'ge> {
 	GenericInstanceMethod(Class<'tu, 'ge>),
 }
 
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FunctionTypeHint {
 	None,
 	FieldSetter,

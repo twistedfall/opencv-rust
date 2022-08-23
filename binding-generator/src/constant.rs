@@ -218,7 +218,7 @@ impl fmt::Display for Const<'_> {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ValueKind {
 	Integer,
 	UnsignedInteger,

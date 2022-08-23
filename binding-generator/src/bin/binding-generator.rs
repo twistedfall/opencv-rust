@@ -94,5 +94,5 @@ fn main() {
 	let clang = Clang::new().expect("Cannot initialize clang");
 	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, debug);
 	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir, clang)
-		.process_opencv_module(&module, bindings_writer);
+		.process_opencv_module(module, bindings_writer);
 }

@@ -46,27 +46,27 @@ use crate::settings::ArgOverride;
 
 mod renderer;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum DependentTypeMode {
 	None,
 	ForReturn(DefinitionLocation),
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum StrType {
 	StdString(StrEnc),
 	CvString(StrEnc),
 	CharPtr,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum StrEnc {
 	Text,
 	/// string with binary data, e.g. can contain 0 byte
 	Binary,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Dir<T> {
 	In(T),
 	Out(T),

@@ -14,7 +14,7 @@ pub trait TypeRefRenderer<'a> {
 	fn recurse(&self) -> Self::Recursed;
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Lifetime {
 	Elided,
 	Static,
@@ -109,7 +109,7 @@ impl Iterator for LifetimeIterator {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Constness {
 	Const,
 	Mut,
@@ -172,7 +172,7 @@ impl Constness {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ConstnessOverride {
 	No,
 	Yes(Constness)
@@ -187,7 +187,7 @@ impl ConstnessOverride {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum NameStyle {
 	Declaration,
 	Reference(FishStyle),
@@ -220,7 +220,7 @@ impl NameStyle {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum FishStyle {
 	No,
 	Turbo,

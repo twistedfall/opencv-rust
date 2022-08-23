@@ -30,7 +30,7 @@ use crate::{
 };
 use crate::return_type_wrapper::ReturnTypeWrapper;
 
-#[derive(Clone, Copy, Debug, PartialOrd, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialOrd, PartialEq, Eq)]
 pub enum Kind {
 	Simple,
 	Boxed,

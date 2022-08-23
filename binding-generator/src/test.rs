@@ -31,7 +31,7 @@ fn replace_in_place() {
 		// allocate string after the one already allocated to force realloc to move
 		let _s = "test string".to_string();
 		let ptr_before = s.as_bytes().as_ptr();
-		let big_text = " ".repeat(1024 * 1024).to_string();
+		let big_text = " ".repeat(1024 * 1024);
 		let pad_string = "padding string".to_string();
 		assert!(s.replace_in_place("t", &big_text));
 		let ptr_after = s.as_bytes().as_ptr();
