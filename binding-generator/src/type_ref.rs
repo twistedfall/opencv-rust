@@ -1257,7 +1257,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				format!("{name} as *const _", name=name)
 			} else {
 				format!("{name} as *mut _", name=name)
-			};	return format!(
+			};
+			return format!(
 				"{name}.map_or({null_ptr}, |{name}| {arg})",
 				name=name,
 				null_ptr=constness.with(self.constness()).rust_null_ptr_full(),

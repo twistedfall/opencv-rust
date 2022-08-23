@@ -184,13 +184,16 @@ impl StringExt for String {
 	}
 
 	fn bump_counter(&mut self) {
-		let idx = self.rfind(|c: char| !c.is_ascii_digit()).map_or_else(|| self.len(), |idx| idx + 1);
-		let counter = &self[idx..];
-		if counter.is_empty() || self.as_bytes()[idx - 1] != b'_' {
-			self.push_str("_1")
-		} else {
-			let counter: u32 = counter.parse().unwrap_or(0) + 1;
-			self.replace_range(idx.., &counter.to_string());
+		let idx = self.rfind(|c: char| !c.is_ascii_digit())
+			.map_or_else(|| self.len(), |idx| idx + 1);
+		match self[idx..].parse::<u32>() {
+			// parsing an empty string yields an error so that makes sure that [idx - 1] doesn't panic
+			Ok(counter) if self.as_bytes()[idx - 1] == b'_' => {
+				self.replace_range(idx.., &(counter + 1).to_string())
+			}
+			_ => {
+				self.push_str("_1")
+			}
 		}
 	}
 

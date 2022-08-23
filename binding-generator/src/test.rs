@@ -303,6 +303,18 @@ fn bump_counter() {
 		s.bump_counter();
 		assert_eq!("12345_1", s);
 	}
+
+	{
+		let mut s = "func_-1".to_string();
+		s.bump_counter();
+		assert_eq!("func_-1_1", s);
+	}
+
+	{
+		let mut s = "func_99999999999999999999999".to_string();
+		s.bump_counter();
+		assert_eq!("func_99999999999999999999999_1", s);
+	}
 }
 
 #[test]
