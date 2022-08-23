@@ -105,7 +105,7 @@ default = [
 	"flann",
 	"freetype",
 	"fuzzy",
-	"gapi",
+#	"gapi",
 	"hdf",
 	"hfs",
 	"highgui",
