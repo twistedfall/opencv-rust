@@ -36,13 +36,12 @@ use crate::{
 	GeneratorEnv,
 	IteratorExt,
 	ReturnTypeWrapper,
-	settings,
+	settings::{self, ArgOverride},
 	SmartPtr,
 	StringExt,
 	Typedef,
 	Vector,
 };
-use crate::settings::ArgOverride;
 
 mod renderer;
 
@@ -64,6 +63,12 @@ pub enum StrEnc {
 	Text,
 	/// string with binary data, e.g. can contain 0 byte
 	Binary,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Signedness {
+	Unsigned,
+	Signed,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -696,6 +701,24 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn as_char8(&self) -> Option<Signedness> {
+		if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::Char8AsChar)) {
+			match self.type_ref.get_kind() {
+				TypeKind::CharS => {
+					Some(Signedness::Signed)
+				}
+				TypeKind::CharU => {
+					Some(Signedness::Unsigned)
+				}
+				_ => {
+					None
+				},
+			}
+		} else {
+			None
+		}
+	}
+
 	pub fn is_nullable(&self) -> bool {
 		matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::NullableSlice) | TypeRefTypeHint::ArgOverride(ArgOverride::Nullable))
 	}
@@ -1073,6 +1096,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				break 'decl_type "&mut dyn core::ToInputOutputArray".into();
 			} else if let Some((_, size)) = self.as_string_array() {
 				break 'decl_type self.format_as_array("&str", size).into();
+			} else if self.as_char8().is_some() {
+				break 'decl_type "char".into();
 			}
 			break 'decl_type self.rust_full();
 		};
@@ -1264,6 +1289,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
 				arg=arg,
 			)
+		}
+		match self.as_char8() {
+			Some(Signedness::Unsigned) => {
+				return format!("u8::try_from({name})?", name=name);
+			}
+			Some(Signedness::Signed) => {
+				return format!("u8::try_from({name})? as i8", name=name);
+			}
+			None => {}
 		}
 		name.to_string()
 	}

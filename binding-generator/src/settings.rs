@@ -912,6 +912,8 @@ pub enum ArgOverride {
 	Slice,
 	LenForSlice(&'static str, usize),
 	StringAsBytes,
+	// when C++ char needs to be represented as Rust char
+	Char8AsChar,
 }
 
 pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> = Lazy::new(|| hashmap! {
@@ -1014,6 +1016,12 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 	},
 	FuncId::new("cv::getOptimalNewCameraMatrix", ["cameraMatrix", "distCoeffs", "imageSize", "alpha", "newImgSize", "validPixROI", "centerPrincipalPoint"]) => hashmap! {
 		"validPixROI" => ArgOverride::Nullable,
+	},
+	FuncId::new("cv::VideoWriter::fourcc", ["c1", "c2", "c3", "c4"]) => hashmap! {
+		"c1" => ArgOverride::Char8AsChar,
+		"c2" => ArgOverride::Char8AsChar,
+		"c3" => ArgOverride::Char8AsChar,
+		"c4" => ArgOverride::Char8AsChar,
 	},
 });
 

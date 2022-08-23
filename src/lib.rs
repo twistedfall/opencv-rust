@@ -40,6 +40,7 @@ pub(crate) mod mod_prelude_sys {
 
 /// Prelude for generated modules and types
 pub(crate) mod mod_prelude {
+	pub use std::convert::TryFrom;
 	pub use crate::{
 		Error,
 		Result,

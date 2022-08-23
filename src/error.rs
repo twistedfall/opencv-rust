@@ -1,4 +1,5 @@
 use std::{
+	char::TryFromCharError,
 	ffi::NulError,
 	fmt,
 };
@@ -29,6 +30,13 @@ impl From<NulError> for Error {
 	#[inline]
 	fn from(_: NulError) -> Self {
 		Self::new(core::StsBadArg, "Passed Rust string contains nul byte")
+	}
+}
+
+impl From<TryFromCharError> for Error {
+	#[inline]
+	fn from(_: TryFromCharError) -> Self {
+		Self::new(core::StsBadArg, "Passed Rust char can't be converted to C++ char")
 	}
 }
 
