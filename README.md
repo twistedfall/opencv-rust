@@ -27,6 +27,17 @@ use opencv::prelude::*;
 
 ### Linux
 
+#### Arch Linux:
+
+OpenCV package in Arch is suitable for this.
+
+`pacman -S clang qt5-base opencv`
+
+#### Ubuntu:
+
+`sudo apt install libopencv-dev clang libclang-dev`
+
+#### Other Linux:
 You have several options of getting the OpenCV library:
 
 * install it from the repository, make sure to install `-dev` packages because they contain headers necessary
