@@ -1950,9 +1950,9 @@ impl VideoWriter {
 	/// This static method constructs the fourcc code of the codec to be used in the constructor
 	/// VideoWriter::VideoWriter or VideoWriter::open.
 	#[inline]
-	pub fn fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
+	pub fn fourcc(c1: char, c2: char, c3: char, c4: char) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(c1, c2, c3, c4, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as i8, u8::try_from(c2)? as i8, u8::try_from(c3)? as i8, u8::try_from(c4)? as i8, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
