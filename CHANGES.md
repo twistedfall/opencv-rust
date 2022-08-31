@@ -1,3 +1,7 @@
+* 0.67.0
+  * Change `fourcc` method to accept `char`s instead of `i8`s.
+  * Remove `gapi` feature as this module is not supported at the moment.
+
 * 0.66.0
   * Generate `valid_pix_roi` argument of `get_optimal_new_camera_matrix` as optional argument (fixes [#349](https://github.com/twistedfall/opencv-rust/issues/349)).
   * `clang-runtime` feature has been dropped and the associated behavior is now the default. It's caused by the changed API of the
