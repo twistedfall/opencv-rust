@@ -220,15 +220,15 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	out
 }
 
-fn build_job_server() -> Option<jobserver::Client> {
-	unsafe { jobserver::Client::from_env() }
+fn build_job_server() -> Option<jobslot::Client> {
+	unsafe { jobslot::Client::from_env() }
 		.or_else(|| {
 			let num_jobs = env::var("NUM_JOBS").ok()
 				.and_then(|jobs| jobs.parse().ok())
 				.unwrap_or(2)
 				.max(1);
 			eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
-			jobserver::Client::new(num_jobs).ok()
+			jobslot::Client::new(num_jobs).ok()
 		})
 }
 
