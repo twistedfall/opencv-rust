@@ -394,7 +394,8 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				self.wrap_nullable(type_ref, typ.into())
 			}
 			Kind::SmartPtr(ptr) => {
-				ptr.rust_name(self.name_style).into_owned().into()
+				let typ = ptr.rust_name(self.name_style).into_owned();
+				self.wrap_nullable(type_ref, typ.into())
 			}
 			Kind::Class(cls) => {
 				let fish_style = self.name_style.turbo_fish_style();

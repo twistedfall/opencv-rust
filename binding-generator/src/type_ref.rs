@@ -1239,11 +1239,21 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 		if self.is_by_ptr() {
 			let typ = self.source();
-			return if constness.with(self.constness()).is_const() {
+			let by_ptr = if constness.with(self.constness()).is_const() {
 				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
 			} else {
 				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id_ext(false))
-			}
+			};
+			return if self.is_nullable() {
+				format!(
+					"{name}.map_or({null_ptr}, |{name}| {by_ptr})",
+					name=name,
+					null_ptr=constness.with(self.constness()).rust_null_ptr_full(),
+					by_ptr=by_ptr
+				)
+			} else{
+				by_ptr
+			};
 		}
 		if self.as_variable_array().is_some() {
 			let arr = if constness.with(self.constness()).is_const() {

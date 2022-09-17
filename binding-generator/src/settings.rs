@@ -1023,6 +1023,9 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 		"c3" => ArgOverride::Char8AsChar,
 		"c4" => ArgOverride::Char8AsChar,
 	},
+	FuncId::new("cv::ximgproc::createStructuredEdgeDetection", ["model", "howToGetFeatures"]) => hashmap! {
+		"howToGetFeatures" => ArgOverride::Nullable,
+	},
 });
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| hashmap! {
