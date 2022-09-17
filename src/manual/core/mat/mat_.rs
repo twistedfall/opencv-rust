@@ -6,7 +6,7 @@ use std::{
 };
 
 use crate::{
-	core::{_InputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray},
+	core::{_InputArray, _InputOutputArray, _OutputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray},
 	Error,
 	Result,
 	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
@@ -127,6 +127,20 @@ impl<T> ToInputArray for Mat_<T> {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		self.inner.input_array()
+	}
+}
+
+impl<T> ToOutputArray for Mat_<T> {
+	#[inline]
+	fn output_array(&mut self) -> Result<_OutputArray> {
+		self.inner.output_array()
+	}
+}
+
+impl<T> ToInputOutputArray for Mat_<T> {
+	#[inline]
+	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+		self.inner.input_output_array()
 	}
 }
 
