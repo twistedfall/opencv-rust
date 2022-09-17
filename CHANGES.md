@@ -1,3 +1,7 @@
+* 0.68.0
+  * Make sure that `howToGetFeatures` argument of the `createStructuredEdgeDetection()` is nullable.
+  * Add `OutputArray` and `InputOutputArray` implementations for `Mat_`.
+
 * 0.67.0
   * Change `fourcc` method to accept `char`s instead of `i8`s.
   * Remove `gapi` feature as this module is not supported at the moment.

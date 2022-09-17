@@ -1082,10 +1082,10 @@ pub fn create_scan_segment(image_width: i32, image_height: i32, num_superpixels:
 /// ## C++ default parameters
 /// * how_to_get_features: Ptr<RFFeatureGetter>()
 #[inline]
-pub fn create_structured_edge_detection(model: &str, how_to_get_features: core::Ptr<dyn crate::ximgproc::RFFeatureGetter>) -> Result<core::Ptr<dyn crate::ximgproc::StructuredEdgeDetection>> {
+pub fn create_structured_edge_detection(model: &str, how_to_get_features: Option<core::Ptr<dyn crate::ximgproc::RFFeatureGetter>>) -> Result<core::Ptr<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.map_or(::core::ptr::null(), |how_to_get_features| how_to_get_features.as_raw_PtrOfRFFeatureGetter()), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(ret) };
