@@ -21,7 +21,7 @@ echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows-static
 echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x86-windows.cmake"
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
-choco install -y llvm --version 14.0.6
+choco install -y llvm --version 15.0.1
 "$VCPKG_ROOT/vcpkg" upgrade --no-dry-run
 "$VCPKG_ROOT/vcpkg" install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
 popd

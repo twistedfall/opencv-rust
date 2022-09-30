@@ -70,7 +70,7 @@ impl DefaultElement {
 						parts.push(parent_name);
 					}
 				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {}
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::NotImplemented => {}
 				_ => {
 					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
 				}
@@ -166,7 +166,7 @@ impl DefaultElement {
 					}
 				}
 				EntityKind::Constructor | EntityKind::FunctionTemplate | EntityKind::FunctionDecl
-				| EntityKind::Method => {}
+				| EntityKind::Method | EntityKind::NotImplemented => {}
 				_ => {
 					unreachable!("Can't get kind of parent: {:#?} for element: {:#?}", parent, e)
 				}
