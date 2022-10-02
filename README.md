@@ -133,7 +133,13 @@ You need to set up the following environment variables to point to the installed
    Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
    "1".
 
-6. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in [this issue]
+   (https://github.com/twistedfall/opencv-rust/issues/360).
+
+   Be sure to add `opencv_img_hash460` to your `OPENCV_LINK_LIBS` environment variable because it's being built as a separate
+   file.
+
+7. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
 
    OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
@@ -150,7 +156,7 @@ You need to set up the following environment variables to point to the installed
    You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
    please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
 
-7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
+8. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
 
    Enable the `clang-runtime` feature or use crate version `0.66` and newer. The reason for the issue is that some crates
    (like `bindgen`) depend on `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also 
