@@ -133,8 +133,8 @@ You need to set up the following environment variables to point to the installed
    Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
    "1".
 
-6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in [this issue]
-   (https://github.com/twistedfall/opencv-rust/issues/360).
+6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in
+   [this issue](https://github.com/twistedfall/opencv-rust/issues/360).
 
    Be sure to add `opencv_img_hash460` to your `OPENCV_LINK_LIBS` environment variable because it's being built as a separate
    file.
