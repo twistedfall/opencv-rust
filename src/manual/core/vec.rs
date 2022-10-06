@@ -18,7 +18,7 @@ mod operations;
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 /// Named `VecN` to avoid name clash with std's `Vec`.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd)]
 pub struct VecN<T, const N: usize> (pub [T; N]);
 
 impl<T, const N: usize> Default for VecN<T, N>

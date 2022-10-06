@@ -7,13 +7,12 @@ fn rect_add() {
 	// Point
 	let res = Rect::new(50, 50, 100, 100);
 	{
-		let src = src.clone();
 		let out = src + core::Point::new(50, 50);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out += core::Point::new(50, 50);
 		assert_eq!(out, res);
 	}
@@ -21,13 +20,12 @@ fn rect_add() {
 	// Size
 	let res = Rect::new(0, 0, 200, 200);
 	{
-		let src = src.clone();
 		let out = src + core::Size::new(100, 100);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out += core::Size::new(100, 100);
 		assert_eq!(out, res);
 	}
@@ -40,13 +38,12 @@ fn rect_sub() {
 	// Point
 	let res = Rect::new(25, 25, 100, 100);
 	{
-		let src = src.clone();
 		let out = src - core::Point::new(25, 25);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out -= core::Point::new(25, 25);
 		assert_eq!(out, res);
 	}
@@ -54,13 +51,12 @@ fn rect_sub() {
 	// Size
 	let res = Rect::new(50, 50, 75, 75);
 	{
-		let src = src.clone();
 		let out = src - core::Size::new(25, 25);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out -= core::Size::new(25, 25);
 		assert_eq!(out, res);
 	}

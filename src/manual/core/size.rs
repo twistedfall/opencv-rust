@@ -8,7 +8,7 @@ use crate::{
 };
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/d50/classcv_1_1Size__.html)
 pub struct Size_<T> {
 	pub width: T,

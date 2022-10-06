@@ -293,7 +293,7 @@ fn mat_vec() -> Result<()> {
 		*mat.at_3d_mut::<f64>(1, 1, 1)? = 10.;
 		assert_eq!(3, mat.dims());
 		if mat.to_vec_2d::<f64>().is_ok() {
-			assert!(false, "dims too high");
+			panic!("dims too high");
 		}
 	}
 
@@ -429,7 +429,7 @@ fn mat_from_data() -> Result<()> {
 				None,
 			)?
 		};
-		assert_eq!(Size::new(5_, 3), src.size()?);
+		assert_eq!(Size::new(5, 3), src.size()?);
 		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
 		assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);

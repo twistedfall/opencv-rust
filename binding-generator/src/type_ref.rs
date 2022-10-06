@@ -432,14 +432,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_generic(&self) -> bool {
-		match self.base().kind() {
-			Kind::Generic(..) => {
-				true
-			}
-			_ => {
-				false
-			}
-		}
+		matches!(self.base().kind(), Kind::Generic(..))
 	}
 
 	pub fn constness(&self) -> Constness {
@@ -489,25 +482,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_primitive(&self) -> bool {
-		match self.canonical().kind() {
-			Kind::Primitive(..) => {
-				true
-			}
-			_ => {
-				false
-			}
-		}
+		matches!(self.canonical().kind(), Kind::Primitive(..))
 	}
 
 	pub fn is_enum(&self) -> bool {
-		match self.canonical().kind() {
-			Kind::Enum(..) => {
-				true
-			}
-			_ => {
-				false
-			}
-		}
+		matches!(self.canonical().kind(), Kind::Enum(..))
 	}
 
 	pub fn as_string(&self) -> Option<Dir<StrType>> {

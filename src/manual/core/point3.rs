@@ -8,7 +8,7 @@ use crate::{
 };
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/df/d6c/classcv_1_1Point3__.html)
 pub struct Point3_<T> {
 	pub x: T,

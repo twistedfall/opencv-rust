@@ -21,7 +21,7 @@ fn partial_max<T: PartialOrd>(a: T, b: T) -> T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/d2/d44/classcv_1_1Rect__.html)
 pub struct Rect_<T> {
 	pub x: T,
