@@ -3077,7 +3077,7 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// ## C++ default parameters
 /// * alpha: 0
 #[inline]
-pub fn distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64) -> Result<()> {
+pub fn fisheye_distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64) -> Result<()> {
 	input_array_arg!(undistorted);
 	output_array_arg!(distorted);
 	input_array_arg!(k);

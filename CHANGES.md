@@ -1,4 +1,8 @@
 * 0.68.0
+  * Fix building with clang-15.
+  * Rename `distort_points` to `fisheye_distort_points` for consistency.
+
+* 0.68.0
   * Make sure that `howToGetFeatures` argument of the `createStructuredEdgeDetection()` is nullable.
   * Add `OutputArray` and `InputOutputArray` implementations for `Mat_`.
 
